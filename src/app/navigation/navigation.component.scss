@@ -1,0 +1,31 @@
+.flex-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.flex-container > .mat-flat-button {
+  justify-content: space-evenly;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+.dh-input {
+  max-width: 90%;
+}
+
+.sidenav {
+  width: 38%;
+  padding-left: 2em;
+  padding-right: 1em;
+  min-width: max-content;
+  max-width: 350px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}

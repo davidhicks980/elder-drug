@@ -1,0 +1,69 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <br />
+    <h1>Elder Drug</h1>
+
+    <form>
+      <section *ngFor="let drug of drugs; index as i">
+        <div class="flex-container">
+          <mat-form-field
+            class="dh-input"
+            style="flex-grow: 11; min-width: 200px;"
+          >
+            <mat-label>Enter Drug {{ i + 1 }}</mat-label>
+            <input matInput class="dh-input" type="text" name="name_{{ i }}" />
+          </mat-form-field>
+          <div id="closeIcon_{{ i }}" style="flex-grow: 1; width: 2.5em;">
+            <button
+              mat-icon-button
+              style="position: block; z-index: 1;"
+              [style.display]="i > 0 ? '' : 'none'"
+              color="warn"
+              (click)="removeDrug(i)"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </section>
+    </form>
+    <section>
+      <div class="mat-flex-button flex-container">
+        <div style="padding-left: 0.4em;">
+          <button
+            style="width: 9em;"
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="addDrug()"
+          >
+            Add Drug
+          </button>
+        </div>
+        <div style="padding-left: 2em;">
+          <button
+            style="width: 9em;"
+            mat-flat-button
+            color="accent"
+            type="button"
+            (click)="removeDrug(i)"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </section>
+  </mat-sidenav>
+  <mat-sidenav-content> </mat-sidenav-content>
+</mat-sidenav-container>
