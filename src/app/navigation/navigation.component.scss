@@ -6,26 +6,35 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
-}
-.flex-container > .mat-flat-button {
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
-.sidenav-container {
-  height: 100%;
-}
 .dh-input {
-  max-width: 90%;
+  max-width: 85%;
+  line-height: 1.1em;
 }
 
-.sidenav {
-  width: 38%;
-  padding-left: 2em;
-  padding-right: 1em;
-  min-width: max-content;
-  max-width: 350px;
+.material-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
+.material-sidenav {
+  width: 21em;
+  border-right: 1px solid rgba(70, 70, 70, 0.404);
+  padding-bottom: 2em;
+}
+
+.material-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-sidenav {
+  padding-left: 1.5em;
 }

@@ -2,19 +2,29 @@
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-
-<mat-sidenav-container class="sidenav-container">
+<link
+  href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap"
+  rel="stylesheet"
+/>
+<mat-sidenav-container class="material-container">
   <mat-sidenav
     #drawer
-    class="sidenav"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
+    class="material-sidenav"
+    [class.mat-elevation-z4]="true"
+    opened
+    mode="side"
   >
-    <br />
-    <h1>Elder Drug</h1>
+    <div>
+      <br />
+      <p style="text-align: center;" class="title-text">
+        Elder<span class="caduceus">&#9764;</span>Drug
+      </p>
+    </div>
 
     <form>
+      <br />
+      <br />
+      <br />
       <section *ngFor="let drug of drugs; index as i">
         <div class="flex-container">
           <mat-form-field
@@ -22,48 +32,72 @@
             style="flex-grow: 11; min-width: 200px;"
           >
             <mat-label>Enter Drug {{ i + 1 }}</mat-label>
-            <input matInput class="dh-input" type="text" name="name_{{ i }}" />
+
+            <input
+              class="dh-input"
+              type="text"
+              name="name_{{ i }}"
+              aria-label="Number"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+              (input)="getInputString($event.target.value)"
+              value="$event.target.value"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option"
+                [innerHTML]="boldString(option, activeString)"
+              >
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
-          <div id="closeIcon_{{ i }}" style="flex-grow: 1; width: 2.5em;">
+
+          <div style="flex-grow: 1; width: 2.5em;">
             <button
               mat-icon-button
+              class="closeIcon"
               style="position: block; z-index: 1;"
               [style.display]="i > 0 ? '' : 'none'"
-              color="warn"
               (click)="removeDrug(i)"
             >
-              <mat-icon>close</mat-icon>
+              <mat-icon>highlight_off</mat-icon>
             </button>
           </div>
         </div>
       </section>
     </form>
     <section>
-      <div class="mat-flex-button flex-container">
-        <div style="padding-left: 0.4em;">
+      <div class="flex-container" style="padding-right: 1.5em;">
+        <div>
           <button
-            style="width: 9em;"
-            mat-flat-button
+            style="width: 8em; line-height: 2em;"
+            class="add-item"
+            mat-stroked-button
             color="primary"
             type="button"
             (click)="addDrug()"
           >
-            Add Drug
+            ADD DRUG
           </button>
         </div>
-        <div style="padding-left: 2em;">
+        <div>
           <button
-            style="width: 9em;"
+            style="width: 8em; line-height: 2em;"
             mat-flat-button
-            color="accent"
+            color="primary"
             type="button"
-            (click)="removeDrug(i)"
+            (click)="search(submission)"
           >
-            Search
+            SEARCH
           </button>
         </div>
       </div>
     </section>
   </mat-sidenav>
-  <mat-sidenav-content> </mat-sidenav-content>
+
+  <mat-sidenav-content>
+    <app-tables (pullDrawer)="drawer.toggle()"></app-tables>
+  </mat-sidenav-content>
 </mat-sidenav-container>

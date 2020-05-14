@@ -1,0 +1,58 @@
+2020-05-07 00:04:30.756 EDT [17384] LOG:  database system was shut down at 2020-05-07 00:04:24 EDT
+2020-05-07 00:04:30.792 EDT [13564] LOG:  database system is ready to accept connections
+2020-05-07 00:15:39.824 EDT [16816] FATAL:  password authentication failed for user "davicks"
+2020-05-07 00:15:39.824 EDT [16816] DETAIL:  Role "davicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:15:43.179 EDT [16196] FATAL:  password authentication failed for user "davicks"
+2020-05-07 00:15:43.179 EDT [16196] DETAIL:  Role "davicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:15:54.398 EDT [16268] FATAL:  password authentication failed for user "David Hicks"
+2020-05-07 00:15:54.398 EDT [16268] DETAIL:  Role "David Hicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:03.598 EDT [3320] FATAL:  password authentication failed for user "root"
+2020-05-07 00:16:03.598 EDT [3320] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:11.209 EDT [1560] FATAL:  password authentication failed for user "david"
+2020-05-07 00:16:11.209 EDT [1560] DETAIL:  Role "david" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:18.441 EDT [11512] FATAL:  password authentication failed for user "David Hicks"
+2020-05-07 00:16:18.441 EDT [11512] DETAIL:  Role "David Hicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:32.049 EDT [12812] FATAL:  password authentication failed for user "David Hicks"
+2020-05-07 00:16:32.049 EDT [12812] DETAIL:  Role "David Hicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:41.009 EDT [3060] FATAL:  password authentication failed for user "root"
+2020-05-07 00:16:41.009 EDT [3060] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:16:50.876 EDT [15996] FATAL:  password authentication failed for user "root"
+2020-05-07 00:16:50.876 EDT [15996] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:18:20.617 EDT [7532] FATAL:  password authentication failed for user "David Hicks"
+2020-05-07 00:18:20.617 EDT [7532] DETAIL:  Role "David Hicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:18:20.618 EDT [5600] FATAL:  password authentication failed for user "David Hicks"
+2020-05-07 00:18:20.618 EDT [5600] DETAIL:  Role "David Hicks" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:19:14.504 EDT [2000] FATAL:  password authentication failed for user "root"
+2020-05-07 00:19:14.504 EDT [2000] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:19:14.505 EDT [5944] FATAL:  password authentication failed for user "root"
+2020-05-07 00:19:14.505 EDT [5944] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:19:14.505 EDT [10484] FATAL:  password authentication failed for user "root"
+2020-05-07 00:19:14.505 EDT [10484] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:19:22.397 EDT [11252] FATAL:  password authentication failed for user "root"
+2020-05-07 00:19:22.397 EDT [11252] DETAIL:  Role "root" does not exist.
+	Connection matched pg_hba.conf line 80: "host    all             all             127.0.0.1/32            md5"
+2020-05-07 00:41:16.884 EDT [10688] ERROR:  extra data after last expected column
+2020-05-07 00:41:16.884 EDT [10688] CONTEXT:  COPY druginfo, line 2: "1,2,,Anticholinergics,First-generation antihistamines,Brompheniramine,,,,,,"Highly anticholinergic; ..."
+2020-05-07 00:41:16.884 EDT [10688] STATEMENT:  COPY  public.druginfo ( "EntryID" ) FROM STDIN  DELIMITER ',' CSV   HEADER  QUOTE '"' ESCAPE '''';
+2020-05-07 01:43:01.279 EDT [1104] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2020-05-07 01:43:01.291 EDT [16616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2020-05-07 01:44:08.610 EDT [10416] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2020-05-07 01:44:08.610 EDT [3256] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	

@@ -1,0 +1,988 @@
+"PharmClasses"
+"antihypoglycemic agent [epc],gastrointestinal motility inhibitor [epc],increased gluconeogenesis [pe],increased glycogenolysis [pe],decreased gi smooth muscle tone [pe],decreased gi motility [pe],decreased glycolysis [pe]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"benzodiazepine [epc],benzodiazepines [cs]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa]"
+"gamma-aminobutyric acid-ergic agonist [epc],gaba a agonists [moa],pyridines [cs],central nervous system depression [pe]"
+"genitourinary arterial vasodilation [pe],prostaglandin analog [epc],prostaglandin e1 agonist [epc],prostaglandin receptor agonists [moa],prostaglandins [cs],venous vasodilation [pe]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"anti-epileptic agent [epc],decreased central nervous system disorganized electrical activity [pe]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],aminoglycoside antibacterial [epc],aminoglycosides [cs]"
+"aminoglycoside antibacterial [epc],aminoglycosides [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],sulfonamide antibacterial [epc],sulfonamides [cs]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],cyclooxygenase inhibitor [epc]"
+"barbiturates [cs],barbiturate [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe],full opioid agonists [moa],opioid agonist [epc]"
+"barbiturates [cs],barbiturate [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"antidiarrheal [epc],anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa]"
+"cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],prostaglandin e1 analog [epc],prostaglandins e, synthetic [cs]"
+"histamine h1 receptor antagonists [moa],histamine-1 receptor antagonist [epc],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"anticholinergic [epc],cholinergic antagonists [moa]"
+"gamma-aminobutyric acid a receptor agonist [epc],gaba a agonists [moa],central nervous system depression [pe]"
+"amphetamine anorectic [epc],amphetamines [cs],appetite suppression [pe],central nervous system stimulant [epc],central nervous system stimulation [pe],increased sympathetic activity [pe]"
+"benzodiazepine [epc],benzodiazepines [cs],cytochrome p450 2d6 inhibitors [moa],cytochrome p450 3a4 inducers [moa]"
+"anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa]"
+"aminoglycoside antibacterial [epc],aminoglycosides [cs],polymyxin-class antibacterial [epc],polymyxins [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"quinolone antimicrobial [epc],quinolones [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"anti-epileptic agent [epc],decreased central nervous system disorganized electrical activity [pe],cytochrome p450 1a2 inducers [moa],cytochrome p450 2b6 inducers [moa],cytochrome p450 2c8 inducers [moa],cytochrome p450 2c19 inducers [moa],cytochrome p450 2d6 inducers [moa],cytochrome p450 3a inducers [moa],cytochrome p450 2c9 inducers [moa]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],increased diuresis [pe],thiazide diuretic [epc],thiazides [cs]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],p-glycoprotein inhibitors [moa],calcium channel antagonists [moa],calcium channel blocker [epc],cytochrome p450 3a4 inhibitors [moa],cytochrome p450 3a inhibitors [moa]"
+"decreased central nervous system disorganized electrical activity [pe],anti-epileptic agent [epc]"
+"anti-epileptic agent [epc],decreased central nervous system disorganized electrical activity [pe],mood stabilizer [epc]"
+"calcium channel antagonists [moa],dihydropyridine calcium channel blocker [epc],dihydropyridines [cs],angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],decreased blood pressure [pe]"
+"central nervous system stimulant [epc],central nervous system stimulation [pe]"
+"decreased central nervous system disorganized electrical activity [pe],mood stabilizer [epc],cytochrome p450 3a4 inducers [moa],cytochrome p450 1a2 inducers [moa],cytochrome p450 2b6 inducers [moa],cytochrome p450 2c9 inducers [moa],cytochrome p450 2c19 inducers [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],corticosteroid hormone receptor agonists [moa]"
+"azole antifungal [epc],azoles [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],corticosteroid hormone receptor agonists [moa],adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],decreased blood pressure [pe]"
+"cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],decreased platelet aggregation [pe],platelet aggregation inhibitor [epc]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc]"
+"decreased central nervous system disorganized electrical activity [pe],cytochrome p450 3a4 inducers [moa],cytochrome p450 2c19 inhibitors [moa]"
+"barbiturates [cs],barbiturate [epc]"
+"central nervous system stimulant [epc],central nervous system stimulation [pe],central nervous system stimulant [epc],central nervous system stimulation [pe],central nervous system stimulant [epc],central nervous system stimulation [pe],central nervous system stimulant [epc],central nervous system stimulation [pe]"
+"decreased central nervous system disorganized electrical activity [pe],mood stabilizer [epc],anti-epileptic agent [epc]"
+decreased central nervous system disorganized electrical activity [pe]
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],anticholinergic [epc],cholinergic antagonists [moa],adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc]"
+benzodiazepine antagonist [epc]
+"anticholinergic [epc],antihistamine [epc],cholinergic antagonists [moa],histamine receptor antagonists [moa]"
+"central nervous system stimulation [pe],increased sympathetic activity [pe],sympathomimetic-like agent [epc]"
+"polyene antifungal [epc],polyenes [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"anticholinergic [epc],cholinergic antagonists [moa],adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],decreased blood pressure [pe],increased diuresis [pe],thiazide diuretic [epc],thiazides [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],retinoid [epc],retinoids [cs]"
+"benzodiazepine [epc],benzodiazepines [cs],anticholinergic [epc],decreased parasympathetic acetylcholine activity [pe],gi motility alteration [pe],digestive/gi system activity alteration [pe],cholinergic antagonists [moa]"
+"dna polymerase inhibitors [moa],herpes simplex virus nucleoside analog dna polymerase inhibitor [epc],herpes zoster virus nucleoside analog dna polymerase inhibitor [epc],herpesvirus nucleoside analog dna polymerase inhibitor [epc],nucleoside analog [ext],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"full opioid agonists [moa],opioid agonist [epc],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe],retinoid [epc],retinoids [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],standardized chemical allergen [epc],increased histamine release [pe],cell-mediated immunity [pe],allergens [cs]"
+"benzodiazepine [epc],benzodiazepines [cs],tricyclic antidepressant [epc]"
+"serotonin 1d receptor agonists [moa],serotonin-1b and serotonin-1d receptor agonist [epc],serotonin 1b receptor agonists [moa],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"aminoglycoside antibacterial [epc],aminoglycosides [cs],polymyxin-class antibacterial [epc],polymyxins [cs],decreased cell wall synthesis & repair [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"barbiturates [cs],barbiturate [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],aminoglycoside antibacterial [epc],aminoglycosides [cs],polymyxin-class antibacterial [epc],polymyxins [cs]"
+"increased diuresis [pe],thiazide diuretic [epc],thiazides [cs],angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa]"
+"barbiturates [cs],barbiturate [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe],full opioid agonists [moa],opioid agonist [epc]"
+"full opioid agonists [moa],opioid agonist [epc],barbiturates [cs],barbiturate [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"full opioid agonists [moa],opioid agonist [epc],barbiturates [cs],barbiturate [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"full opioid agonists [moa],opioid agonist [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"anticholinergic [epc],cholinergic antagonists [moa],beta2-adrenergic agonist [epc],adrenergic beta2-agonists [moa]"
+"opioid agonist [epc],opioid agonists [moa],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],opioid agonist [epc],opioid agonists [moa]"
+"decreased central nervous system disorganized electrical activity [pe],anti-epileptic agent [epc],sulfonamides [cs],carbonic anhydrase inhibitors [moa],p-glycoprotein inhibitors [moa]"
+"ergotamine derivative [epc],ergotamines [cs],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"vitamin d [cs],vitamin d analog [epc],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"polymyxin-class antibacterial [epc],polymyxins [cs],aminoglycoside antibacterial [epc],aminoglycosides [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe],barbiturates [cs],barbiturate [epc]"
+"sulfonamide antibacterial [epc],sulfonamides [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"amide local anesthetic [epc],amides [cs],antiarrhythmic [epc],local anesthesia [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"polymyxin-class antibacterial [epc],polymyxins [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa],aminoglycoside antibacterial [epc],aminoglycosides [cs]"
+"adrenergic agonists [moa],adrenergic receptor agonist [epc],anticholinergic [epc],cholinergic antagonists [moa]"
+"anticholinergic [epc],cholinergic antagonists [moa],anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa]"
+"centrally-mediated muscle relaxation [pe],muscle relaxant [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"barbiturate [epc],barbiturates [cs]"
+"central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe],full opioid agonists [moa],opioid agonist [epc]"
+"anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa],anticholinergic [epc],cholinergic antagonists [moa]"
+"anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa],calculi dissolution agent [epc],magnesium ion exchange activity [moa],osmotic laxative [epc],osmotic activity [moa],inhibition small intestine fluid/electrolyte absorption [pe],increased large intestinal motility [pe],stimulation large intestine fluid/electrolyte secretion [pe],inhibition large intestine fluid/electrolyte absorption [pe]"
+"centrally-mediated muscle relaxation [pe],muscle relaxant [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],full opioid agonists [moa],opioid agonist [epc]"
+"centrally-mediated muscle relaxation [pe],muscle relaxant [epc],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],central nervous system stimulant [epc],methylxanthine [epc],xanthines [cs],central nervous system stimulation [pe]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],polyene antifungal [epc],polyenes [cs]"
+"anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa],antidiarrheal [epc]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],proton pump inhibitor [epc],proton pump inhibitors [moa],cytochrome p450 2c19 inhibitors [moa]"
+"prostaglandin e1 analog [epc],prostaglandins e, synthetic [cs],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"adrenergic beta2-agonists [moa],beta2-adrenergic agonist [epc],anticholinergic [epc],cholinergic antagonists [moa]"
+"angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa],calcium channel antagonists [moa],dihydropyridine calcium channel blocker [epc],dihydropyridines [cs]"
+"alpha-1 adrenergic agonist [epc],adrenergic alpha1-agonists [moa],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],cyclooxygenase inhibitor [epc]"
+"appetite suppression [pe],increased sympathetic activity [pe],sympathomimetic amine anorectic [epc],decreased central nervous system disorganized electrical activity [pe],cytochrome p450 3a4 inducers [moa],cytochrome p450 2c19 inhibitors [moa]"
+"decreased central nervous system disorganized electrical activity [pe],cytochrome p450 3a4 inducers [moa],cytochrome p450 2c19 inhibitors [moa],appetite suppression [pe],increased sympathetic activity [pe],sympathomimetic amine anorectic [epc]"
+"proton pump inhibitor [epc],proton pump inhibitors [moa],cytochrome p450 2c19 inhibitors [moa],platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"platelet aggregation inhibitor [epc],decreased platelet aggregation [pe],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],proton pump inhibitor [epc],proton pump inhibitors [moa],cytochrome p450 2c19 inhibitors [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],quinolone antimicrobial [epc],quinolones [cs]"
+"p-glycoprotein inhibitors [moa],calcium channel antagonists [moa],calcium channel blocker [epc],cytochrome p450 3a4 inhibitors [moa],cytochrome p450 3a inhibitors [moa],angiotensin converting enzyme inhibitor [epc],angiotensin-converting enzyme inhibitors [moa]"
+"central nervous system depressant [epc],central nervous system depression [pe],decreased central nervous system organized electrical activity [pe]"
+"calcium channel antagonists [moa],dihydropyridine calcium channel blocker [epc],dihydropyridines [cs],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"oxidation-reduction activity [moa],oxidation-reduction agent [epc],ammonium ion binding activity [moa],nitrogen binding agent [epc],anticholinergic [epc],cholinergic antagonists [moa],cholinergic muscarinic antagonist [epc],cholinergic muscarinic antagonists [moa]"
+"benzodiazepine [epc],benzodiazepines [cs],general anesthesia [pe],general anesthetic [epc],serotonin 3 receptor antagonists [moa],serotonin-3 receptor antagonist [epc]"
+"general anesthesia [pe],general anesthetic [epc],benzodiazepine [epc],benzodiazepines [cs],antihistamine [epc],histamine receptor antagonists [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],quinolone antimicrobial [epc],quinolones [cs],cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],cyclooxygenase inhibitor [epc]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],histamine h2 receptor antagonists [moa],histamine-2 receptor antagonist [epc]"
+"cyclooxygenase inhibitors [moa],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc],azole antifungal [epc],azoles [cs],cytochrome p450 3a4 inhibitors [moa],p-glycoprotein inhibitors [moa],breast cancer resistance protein inhibitors [moa],allylamine [cs],allylamine antifungal [epc],azole antifungal [epc],azoles [cs],cytochrome p450 2c19 inhibitors [moa],cytochrome p450 3a4 inhibitors [moa],cytochrome p450 2c9 inhibitors [moa]"
+"blood viscosity reducer [epc],hematologic activity alteration [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"vitamin d [cs],vitamin d analog [epc],cyclooxygenase inhibitors [moa],decreased prostaglandin production [pe],anti-inflammatory agents, non-steroidal [cs],nonsteroidal anti-inflammatory drug [epc]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],decreased sebaceous gland activity [pe],lincosamide antibacterial [epc],lincosamides [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],azole antifungal [epc],azoles [cs],cytochrome p450 3a4 inhibitors [moa],cytochrome p450 3a5 inhibitors [moa],p-glycoprotein inhibitors [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],histamine h1 receptor antagonists [moa],histamine-1 receptor antagonist [epc]"
+"histamine h1 receptor antagonists [moa],histamine-1 receptor antagonist [epc],rna synthetase inhibitor antibacterial [epc],rna synthetase inhibitors [moa],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"arteriolar vasodilation [pe],arteriolar vasodilator [epc],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"blood viscosity reducer [epc],hematologic activity alteration [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa],arteriolar vasodilation [pe],arteriolar vasodilator [epc]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],arteriolar vasodilation [pe],arteriolar vasodilator [epc]"
+"arteriolar vasodilation [pe],arteriolar vasodilator [epc],5-alpha reductase inhibitor [epc],5-alpha reductase inhibitors [moa],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],5-alpha reductase inhibitor [epc],5-alpha reductase inhibitors [moa],arteriolar vasodilation [pe],arteriolar vasodilator [epc],retinoid [epc],retinoids [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],arteriolar vasodilation [pe],arteriolar vasodilator [epc],retinoid [epc],retinoids [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],arteriolar vasodilation [pe],arteriolar vasodilator [epc],progesterone [cs],progesterone [epc]"
+"melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa],retinoid [epc],retinoids [cs]"
+"corticosteroid [epc],corticosteroid hormone receptor agonists [moa],melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe]"
+"melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe],retinoid [epc],retinoids [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"retinoid [epc],retinoids [cs],corticosteroid [epc],corticosteroid hormone receptor agonists [moa],melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe]"
+"melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"retinoid [epc],retinoids [cs],melanin synthesis inhibitor [epc],melanin synthesis inhibitors [moa],depigmenting activity [pe],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"decreased dna replication [pe],decreased protein synthesis [pe],decreased rna replication [pe],protein synthesis inhibitors [moa],corticosteroid [epc],corticosteroid hormone receptor agonists [moa]"
+"adrenal steroid synthesis inhibitor [epc],adrenal steroid synthesis inhibitors [moa]"
+
+glucagon
+halcinonide
+triamcinolone acetonide
+clonazepam
+lisinopril
+zolpidem tartrate
+pramoxine hydrochloride hydrocortisone acetate
+pramoxine hydrochloride and hydrocortisone acetate
+hydrocortisone acetate
+alprostadil
+nepafenac
+piroxicam
+oxcarbazepine
+methylprednisolone sodium succinate
+hydrocortisone sodium succinate
+hydrocortisone
+triazolam
+methylprednisolone
+alprazolam
+methylprednisolone acetate
+gentamicin sulfate and prednisolone acetate
+"gentamicin, prednisolone acetate"
+sulfacetamide sodium and prednisolone acetate
+fluorometholone
+ketorolac tromethamine
+dexamethasone
+flurandrenolide
+"butalbital, aspirin, caffeine, and codeine phosphate"
+"butalbital, aspirin, and caffeine"
+diphenoxylate hydrochloride and atropine sulfate
+oxaprozin
+diclofenac sodium and misoprostol
+celecoxib
+azelastine hydrochloride and fluticasone propionate
+felbamate
+prednisone
+ipratropium bromide
+zaleplon
+ramipril
+perindopril erbumine
+methamphetamine hydrochloride
+clobazam
+dexamethasone intensol
+diazepam intensol
+diazepam
+fluticasone propionate
+lorazepam
+midazolam hydrochloride
+prednisone intensol
+propantheline bromide
+fluorometholone acetate
+atropine sulfate
+tropicamide
+"neomycin sulfate, polymyxin b sulfate and dexamethasone"
+prednisolone acetate
+tobramycin and dexamethasone
+tobramycin / dexamethasone
+ciprofloxacin hydrochloride and hydrocortisone
+ciprofloxacin and dexamethasone
+scopolamine
+fosphenytoin sodium
+phenytoin
+quinapril hydrochloride and hydrochlorothiazide
+ethosuximide
+extended phenytoin sodium
+gabapentin
+methsuximide
+quinapril hydrochloride
+trandolapril and verapamil hydrochloride
+trimethadione
+divalproex sodium
+amlodipine besylate and benazepril hydrochloride
+methylphenidate hydrochloride
+dexmethylphenidate hydrochloride
+carbamazepine
+mometasone furoate
+betamethasone dipropionate
+clotrimazole and betamethasone dipropionate
+mometasone furoate monohydrate
+mometasone furoate and formoterol fumarate dihydrate
+betamethasone acetate and betamethasone sodium phosphate
+moexipril hydrochloride
+enalapril maleate
+fluocinonide
+flurbiprofen
+diflunisal
+diclofenac potassium
+naproxen
+etodolac
+aspirin and dipyridamole
+diclofenac epolamine
+fluticasone propionate and salmeterol
+tiagabine hydrochloride
+budesonide
+topiramate
+amlodipine and benazepril hydrochloride
+butalbital and acetaminophen tablets
+diclofenac sodium
+"dextroamphetamine saccharate, amphetamine aspartate monohydrate, dextroamphetamine sulfate, and amphetamine sulfate"
+desonide
+lamotrigine
+nabumetone
+dextroamphetamine sulfate
+valproic acid
+prednisolone sodium phosphate
+levetiracetam
+ibuprofen
+lacosamide
+captopril
+cortisone acetate
+dicyclomine hydrochloride
+valproate sodium
+fluticasone furoate and vilanterol trifenatate
+"fluticasone furoate, umeclidinium bromide and vilanterol trifenatate"
+fluticasone furoate
+glycopyrrolate
+flumazenil
+benztropine mesylate
+enalaprilat
+modafinil
+betamethasone valerate
+fluocinolone acetonide
+nystatin and triamcinolone acetonide
+desoximetasone
+clobetasol propionate
+diflorasone diacetate
+alclometasone dipropionate
+amcinonide
+halobetasol propionate
+prednicarbate
+beclomethasone dipropionate monohydrate
+fluticasone propionate and salmeterol xinafoate
+umeclidinium bromide and vilanterol trifenatate
+umeclidinium
+lisinopril and hydrochlorothiazide
+budesonide and formoterol fumarate dihydrate
+meloxicam
+fosinopril sodium
+benazepril hydrochloride
+nabumentone
+benazepril hydrochloride and hydrochlorothiazide
+indomethacin
+"dextroamphetamine saccharate, amphetamine aspartate monohydrate, dextroamphetamine sulfate and amphetamine sulfate"
+enalapril maleate and hydrochlorothiazide
+halobetasol propionate and tazarotene
+chlordiazepoxide hydrochloride and clidinium bromide
+acyclovir and hydrocortisone
+oxazepam
+temazepam
+oxycodone hydrochloride and ibuprofen
+"dextroamphetamine saccharate, amphetamine aspartate monohydrate, dextroamphetamine sulfate, amphetamine sulfate"
+"fluocinolone acetonide, hydroquinone, and tretinoin"
+aclidinium bromide
+glycopyrrolate and formoterol fumarate
+hydrocortisone and iodochlorhydroxyquin
+clorazepate dipotassium
+captopril and hydrochlorothiazide
+chlordiazepoxide and amitriptyline hydrochloride
+tolmetin sodium
+sulindac
+fenoprofen calcium
+phenytoin sodium
+flurazepam hydrochloride
+"dextroamphetamine, amphetamine, dextroamphetamine, amphetamine"
+prednisolone
+sumatriptan and naproxen sodium
+ketoprofen
+diclofenac
+ipratropium bromide and albuterol sulfate
+"neomycin sulfate, polymyxin b sulfate, bacitracin zinc and hydrocortisone"
+dextroamphetamine saccharate and amphetamine aspartate and dextroamphetamine sulfate and amphetamine sulfate
+caffeine citrate
+betamethasone sodium phosphate and betamethasone acetate
+caffeine and sodium benzoate
+primidone
+"butalbital, aspirin, caffeine and codeine phosphate"
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate and amphetamine sulfate"
+"butalbital, acetaminophen, and caffeine"
+"butalbital, acetaminophen and caffeine"
+"butalbital, acetaminophen, and caffeine capsules"
+chlordiazepoxide hydrochloride
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate, and amphetamine sulfate"
+"neomycin and polymyxin b sulfates, bacitracin zinc and hydrocortisone acetate"
+"neomycin, polymyxin b sulfates, dexamethasone"
+estazolam
+"butalbital, acetaminophen, caffeine, and codeine phosphate"
+fluocinolone acetonide topical
+oxycodone and aspirin
+ipratropium bromide and albuterol
+glucagon hydrochloride
+tiotropium bromide
+tiotropium bromide inhalation spray
+tiotropium bromide and olodaterol
+butalbital and acetaminophen
+hydrocodone bitartrate and ibuprofen
+zonisamide
+dexamethasone sodium phosphate
+midazolam
+robinul
+ergotamine tartrate and caffeine
+hydrocortisone valerate
+"butalbital, aspirin, cafeine, and codeine phosphate"
+methylphenidate
+calcipotriene and betamethasone dipropionate
+scopalamine
+hydrocortisone probutate
+halcinonide cream
+methylphenidate hydrochloride extended release
+"benzoyl peroxide, hydrocortisone"
+atropine
+amphetamine sulfate
+lidocaine hydrochloride and hydrocortisone acetate
+"hydrocortisone, iodoquinol"
+"neomycin sulfate, polymyxin b sulfate, and dexamethasone"
+"neomycin sulfate and polymyxin b sulfate, bacitracin zinc and hydrocortisone"
+"neomycin sulfate, polymyxin b sulfate, bacitracin zinc, hydrocortisone"
+hydrocortisone butyrate
+levetiractam
+"hydroxyamphetamine hydrobromide, tropicamide"
+"phenobarbital, hyoscyamine sulfate, atropine sulfate, and scopolamine hydrobromide"
+"fluocinolone acetonide topical solution usp, 0.01%"
+"desonide ointment, 0.05%"
+"diclofenac sodium topical gel, 1%,"
+"clobetasol propionate ointment usp, 0.05%"
+"triamcinolone acetonide ointment usp, 0.05%"
+moexipril hydrochloride and hydrochlorothiazide
+fosinopril sodium and hydrochlorothiazide
+carisoprodol and aspirin
+dicyclomine hydrochloride injection
+loteprednol etabonate
+flurbiprofen sodium
+sulfacetamide sodium and prednisolone sodium phosphate
+flunisolide
+loteprednol etabonate and tobramycin
+bromfenac sodium
+"neomycin sulfate, polymyxin b sulfate, hydrocortisone"
+"neomycin sulfate, polymyxin b sulfate and hydrocortisone"
+(ciprofloxacin and fluocinolone acetonide)
+dextroamphetamine
+amphetamine
+quinapril hydrochloride/hydrochlorothiazide
+ibuprofen lysine
+methohexital sodium
+"acetaminophen, caffeine, dihydrocodeine bitartrate"
+aspirin and extended-release dipyridamole
+phenobarbital elixir
+"phenobarbital, hyoscyamine sulfate, atropine sulfate, scopolamine hydrobromide"
+naproxen sodium
+"butalbital, aspirin and caffeine"
+mefenamic acid
+trandolapril tablets
+sumatriptan succinate and naproxen sodium
+(methylphenidate hydrochloride)
+deflazacort
+methscopolamine bromide
+quinapril hcl and hydrochlorothiazide
+neomycin sulfate and fluocinolone acetonide
+fosinopirl sodium
+clocortolone pivalate
+levetiracetam injection
+amphetamine sulfate tablets
+"hydrocortisone acetate, pramoxine hcl"
+hydrocortisone acetate pramoxine hcl
+scolopamine transdermal system
+"calcipotriene, betamethasone dipropionate"
+"nystatin, triamcinolone acetonide"
+lamotrigine chewable dispersible
+aspirin and dipyridamole extended release
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate, amphetamine sulfate tablets, 10 mg,cll"
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate, amphetamine sulfate tablets, 20 mg,cll"
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate, amphetamine sulfate tablets, 30 mg,cll"
+fluocinonide cream (emulsified base)
+fluocinonide gel
+revefenacin
+bromfenac
+aspirin and extended - release dipyridamole
+lamotrigine extended release
+zolpidem tartrate sublingual
+trandolapril
+quinapril
+"aconitum napellus, ammonium bromide, citrullus colocynthis fruit pulp, atropine sulfate, gelsemium sempervirens root, magnesium phosphate, dibasic trihydrate, veratrum album root, passiflora incarnata flowering top, matricaria recutita, amanita muscaria f"
+hydrocortisone and acetic acid
+"carisoprodol, aspirin and codeine phosphate"
+"1.85% hydrocortisone acetate - 1.15% pramoxine hci cream"
+"orphenadrine citrate, aspirin and caffeine"
+solu-cortef
+solu-medrol
+ketorolac trometham
+solu-medrol(r) methylprednisolone sodium succinat
+"butalbital, acetaminophen, caffeine and codeine phosphate"
+"hydrocortisone acetate, iodoquinol"
+ciprofloxacin and fluocinolone acetonide
+gabapentin enacarbil
+"dextroamphetamine sulfate, dextroamphetamine saccharate, amphetamine sulfate and amphetamine aspartate"
+"dextroamphetamine sulfate, dextroamphetamine saccharate, amphetamine aspartate monohydrate, and amphetamine sulfate"
+difenoxin and atropine sulfate
+hydrocortisone acetate and pramoxine hydrochloride
+naproxen and esomeprazole magnesium
+ethotoin
+hydrocortisone and iodoquinol
+lidocaine hcl and hydrocortisone acetate
+beclomethasone dipropionate hfa
+beclomethasone dipropionate
+lisdexamfetamine dimesylate
+ibuprofen oral
+indomethacin extended-release
+budesonide inhalation
+neomycin and polymyxin b sulfates and dexamethasone
+"neomycin and polymyxin b sulfates, bacitracin zinc, and hydrocortisone"
+"neomycin sulfate, polymyxin b sulfate, and hydrocortisone acetate"
+quazepam
+"perindopril arginine, amlodipine besylate"
+fluticasone
+celebrex
+diclofenac sodium d/r
+ibuorofen
+lisinopril/hctz
+chlordiazepoxide
+neomycin and polymyxin b sulfates and hydrocortisone
+declofenac sodium
+benazepril
+levertiracetam
+amoldipine benazepril hcl
+phenylephrine and ketorolac
+bromfenac ophthalmic solution 0.09%
+phentermine and topiramate
+eslicarbazepine acetate
+indacaterol maleate and glycopyrrolate
+"colistin sulfate, neomycin sulfate, thonzonium bromide and hydrocortisone acetate"
+aspirin and omeprazole
+hydrocortisone 2.5%
+fluocinolone acetonide oil
+"fluocinonide topical solution usp, 0.05%"
+mometasone
+"phenobarbital, hyoscyamine sulfate, atropine sulfate and scopolamine hydrobromide"
+benztropine
+ibu
+lomotil
+triamcinolone acetonide ointment
+dexamethasone 1.5 mg
+"acetaminophen, caffeine and dihydrocodeine bitartrate"
+temazepam civ
+yosprala
+oxycodone hydrochloride and aspirin
+aspirin-dipyridamole
+asprin and extended-release dipyridamole
+emollient
+sodium oxybate
+quinapril and hydrochlorothiazide 10/12.5
+quinapril and hydrochlorothiazide 20/12.5
+quinapril and hydrochlorothiazide 20/25
+fosinopril
+lisinopril and hydrochlorothiazide tablets
+amlodipine besylate and celecoxib
+tiagabine
+"caffeine, green tea, american ginseng"
+"bitter orange, caffeine, green tea, peppermint camphor"
+desonide 0.05%
+"iodoquinol, hydrocortisone acetate and aloe vera leaf"
+fosphenytoin
+neomycin and polymyxin b sulfates and hydrocortisone otic
+glycopyrronium
+clobetasol propionate oint 0.05%
+diclofenac sodium topical solution
+clobetasol propionate cream
+diflorasone diacetate ointment
+hydrocortisone butyrate lotion
+halobetasol propionate ointment
+"methenamine, phenyl salicylate, methylene blue, benzoic acid, atropine sulfate , hyoscyamine"
+"atropine sulfate injection usp, 0.5 mg/0.7 ml"
+"atropine sulfate injection usp, 1 mg/0.7 ml"
+"atropine injection, 2 mg"
+midazolam - ketamine hcl - ondansetron
+midazolam - ketamine hcl - hydroxyzine hcl
+triamcinolone-moxifloxacin pf
+dexamethasone phosphate - moxifloxacin
+dexamethasone phosphate - moxifloxacin - ketorolac tromethamine
+phenobarbital with belladonna alkaloids
+"glucagon injection, solution"
+aclidinium bromide and formoterol fumarte
+methylpred dp
+"fluocinonide 0.1% 120gm cream, 100% soft silicone roll"
+"hydrocortisone, hydroquinone, tretinoin"
+perindopril arginine and amlodipine besylate
+cimetidine 5% / ibuprofen 2% / salicylic acid 17%
+fluconazole 4% / ibuprofen 2% / itraconazole 1% / terbinafine hcl 4%
+diclofenac sodium 3% / hyaluronic acid sodium salt 2% / niacinamide 4%
+fluocinolone acetonide 0.025% / lidocaine hcl monohydrate 1%
+pentoxifylline 0.5% / triamcinolone acetonide 0.1%
+betamethasone dipropionate 0.05% / niacinamide 4%
+calcipotriene 0.005% / diclofenac sodium 3% / hyaluronic acid sodium salt 2% / niacinamide 2%
+clindamycin 1% / hydrocortisone 2.5% / niacinamide 4%
+clobetasol propionate 0.05% / coal tar 8% / salicylic acid 6%
+clobetasol propionate 0.05% / niacinamide 4%
+desoximetasone 0.05% / niacinamide 4%
+fluocinolone acetonide 0.01% / niacinamide 4%
+fluocinolone acetonide 0.01/ niacinamide 4
+fluocinonide 0.05% / hyaluronic acid sodium salt 0.5% / niacinamide 4%
+fluticasone propionate 0.05% / niacinamide 4%
+hyaluronic acid sodium salt 2% / mometasone furoate 0.1% / niacinamide 4%
+hydrocortisone 2.5% / iodoquinol 1% / ketoconazole 2%
+hydrocortisone 2.5% / ketoconazole 2%
+hydrocortisone 2.5% / levocetirizine dihydrochloride 2%
+levocetirizine dihydrochloride 2% / mupirocin 2% / triamcinolone acetonide 0.025%
+niacinamide 4% / triamcinolone acetonide 0.1%
+betamethasone dipropionate 0.05% / minoxidil 5%
+betamethasone dipropionate 0.05% / minoxidil 5% / niacinamide 2% / pentoxifylline 0.5%
+betamethasone diproprionate 0.05% / minoxidil 7%
+calcipotriene 0.005% / clobetasol propionate 0.05%
+dexamethasone sodium phosphate 0.1% / finasteride 0.1% / minoxidil 5%
+dexamethasone sodium phosphate 0.1% / finasteride 0.1% / minoxidil 5% / tretinoin 0.025%
+fluocinolone acetonide 0.01% / minoxidil 5% / tretinoin 0.025%
+fluocinolone acetonide 0.01% / minoxidil 7% / progesterone 0.1%
+niacinamide 4% / clobetasol propionate 0.05%
+calcipotriene 0.005% / triamcinolone acetonide 0.1%
+desoximetasone 0.05% / hydroquinone 6% / tretinoin 0.05%
+hydrocortisone 0.5% / hydroquinone 4% / tretinoin 0.025%
+hydrocortisone 0.5% / hydroquinone 6%
+hydrocortisone 0.5% / hydroquinone 6% / tretinoin 0.025%
+hydrocortisone 0.5% / hydroquinone 8% / tretinoin 0.025%
+hydrocortisone 0.5% / hydroquinone 8% / tretinoin 0.05%
+hydrocortisone 1% / hydroquinone 8% / tretinoin 0.05%
+"hydrocortisone 2.5% / hydroquinone 4% / tretinoin 0.025%,"
+hydroquinone 4% / tretinoin 0.025% / triamcinolone acetonide 0.025%
+hydroquinone 5% / tretinoin 0.025% / triamcinolone acetonide 0.025%
+hydroquinone 6% / tretinoin 0.05% / triamcinolone 0.025%
+hydrocortisone 0.5% / hydroquinone 6% / tretinoin 0.05%
+ciclopirox 1% / clobetasol propionate 0.05%
+ciclopirox olamine 0.77% / clobetasol propionate 0.05% / salicylic acid 3%.
+clobetasol propionate 0.05% / levocetirizine dihydrochloride 2%
+ibuprofen and famotidine
+metyrapone
+baqsimi
+halog
+kenalog-40
+kenalog-80
+kenalog-10
+klonopin
+prinivil
+edluar
+proctofoam
+epifoam
+cortifoam
+muse
+ilevro
+feldene
+trileptal
+cortef
+halcion
+medrol
+xanax
+depo-medrol
+prostin
+caverject
+caverject impulse
+pred-g
+blephamide
+fml
+acular
+ozurdex
+acuvail
+cordran
+fiorinal with codeine
+fiorinal
+acular ls
+ambien
+daypro
+arthrotec
+dymista
+felbatol
+nevanac
+flarex
+isopto atropine
+mydriacyl
+triesence
+maxitrol
+omnipred
+tobradex
+tobradex st
+cipro
+ciprodex
+transderm scop
+cerebyx
+dilantin infatabs
+accuretic
+zarontin
+dilantin
+neurontin
+celontin
+accupril
+dilantin-125
+tarka
+tridione
+depakote
+lotrel
+ritalin
+focalin
+tegretol
+elocon
+diprolene af
+diprolene
+lotrisone
+nasonex
+asmanex
+asmanex hfa
+dulera
+celestone soluspan
+epitol
+methylphenidate hydrochloride (la)
+bupap
+dextroamphetamine sulfateextended-release
+vimpat
+valium
+dicyclomine
+breo ellipta
+trelegy ellipta
+arnuity ellipta
+zolpidem
+clobetasol propionate (emollient)
+beconase
+lamictal
+flovent
+advair
+advair hfa
+anoro ellipta
+incruse ellipta
+texacort
+prednisolone sodium phosphate oral solution
+symbicort
+pulmicort
+pulmicort respules
+bryhali
+ativan
+vasotec
+vaseretic
+duobrii
+diastat
+librax
+xerese
+qudexy
+clobex
+desowen
+tri-luma
+tudorza pressair
+bevespi aerosphere
+ala quin
+alacort
+ala scalp
+triderm
+phenytek
+"dextroamphetamine saccharate, amphetamine aspartate (monohydrate), dextroamphetamine sulfate, amphetamine sulfate"
+olux-e
+olux
+luxiq
+wixela inhub
+methylphenidate hcl oral solution
+mixed salts of a single entity amphetamine product
+restoril
+metadate er
+methylphenidate hydrochloride cd
+colocort
+neo polycin hc
+entocort ec
+valproic
+aggrenox
+combivent respimat
+mobic
+glucagen
+spiriva
+atrovent
+spiriva respimat
+stiolto respimat
+phenytoin infatabs
+cafcit
+migergot
+anucort-hc
+ascomp with codeine
+nabumetone 500 mg
+nabumetone 750 mg
+nabumetone 1000 mg
+cafergot
+maxidex
+sympazan
+pandel
+temovate
+cutivate
+apexicon e
+solaraze
+sinuva
+kenalog
+ultravate
+proctosol-hc
+vanoxide
+tencon
+atropen auto-injector
+seizalam
+pred mild
+pred forte
+fml forte
+gralise
+zipsor
+cambia
+hydrocortisone iodoquinol
+"neomycin and polymyxin b sulfates, bacitracin zinc and hydrocortisone"
+dicyclomine hcl
+hidex 6-day
+glycate
+relafen ds
+verdeso
+hemmorex-hc
+locoid
+locoid lipocream
+paremyd
+trokendi xr
+oxtellar xr
+phenohytro
+procentra
+evekeo
+evekeo odt
+millipred
+lotemax
+alrex
+zylet
+retisert
+lotemax sm
+prolensa
+neomycin polymyxin b sulfates and dexamethasone
+otovel
+zenzedi
+flurandrenolide cream
+quillichew er
+quillivant
+dyanavel xr
+equetro
+lotensin
+lotensin hct
+flector
+flac otic oil
+clobetasol propionate emulsion
+brevital sodium
+taperdex 6-day
+taperdex 7-day
+taperdex 12-day
+nalfon
+zorvolex
+vivlodex
+donnatal
+treximet
+"dextroamphetamine saccharate, amphetamine aspartate monohydrate, dextroamphetamine sulfate, and amphetamine sulfate extended-release"
+aptensio xr
+emflaza
+lisinopril with hydrochlorothiazide
+spritam
+synalar
+neo-synalar
+clodan
+tovet (emollient formulation)
+beser
+scopolamine trandermal system
+butapap
+elepsia xr
+"dextroamphetamine saccharate, amphetamine aspartate, dextroamphetamine sulfate, amphetamine sulfate tablets,cii"
+yupelri
+bromsite
+"aspirin and extended - release dipyridamole capsules, 25 mg / 200 mg"
+chlordiazepoxide hydrochloride/clidinium bromide
+diclofenac sodium delayed release
+procto-med hc
+bentyl
+taclonex
+spascupreel
+enstilar
+desonate
+voltaren
+concerta
+topamax
+keppra
+nayzilam
+procort
+norgesic forte
+oralone
+flo-pred
+u-cort
+topicort
+psorcon
+glyrx-pf
+budesonide (enteric coated)
+lexette
+edex
+naprelan
+zestoretic
+zestril
+fioricet
+fioricet with codeine
+qbrelis
+epaned
+readysharp ketorolac
+readysharp dexamethasone
+readysharp betamethasone
+horizant
+carbatrol
+adderall
+mydayis
+motofen
+pramosone cream
+pramosone
+analpram hc
+micort hc
+desoxyn
+neoprofen
+tranxene
+peganone
+vytone
+nolix
+decadron
+vanatol
+dermazene
+intermezzo
+lidocaine hcl - hydrocortisone acetate
+zonegran
+orapred
+qvar redihaler
+qnasl
+airduo respiclick
+vyvanse
+methylin
+budesonide nasal
+lonhala
+cortisporin
+altace
+doral
+orphengesic forte
+prestalia
+anaprox
+sunlindac
+lisinoril
+omidria
+qsymia
+cortenema
+celecoxib 200 mg
+trezix
+lonhala magnair
+aptiom
+utibron neohaler
+seebri neohaler
+provigil
+gabitril
+coly-mycin s
+cortisporin tc
+dexedrine
+proctozone
+procto-pak
+proctozone-hc
+anusol
+anusol hc
+proctocort
+uceris
+caldolor
+mysoline
+amphetamine extended-release oral suspension
+clocortolone pivalate cream
+onfi
+carnexiv
+cloderm
+trianex 0.05%
+sernivo
+relexxii
+qvar
+esgic
+zebutal
+iluvien
+xyrem
+derma-smoothe/fs
+dermotic
+pediapred
+daytrana
+consensi
+roweepra
+subvenite
+roweepra xr
+fluocinonide cream
+indocin
+sprix
+tivorbex
+"butalbital, acetaminophen, caffeine"
+anaprox ds
+naprosyn
+ec-naprosyn
+vapergy
+vapergy slim
+tridesilon cream
+impoyz
+novacort
+alcortin a
+zolpimist
+deltasone
+ec-naproxen
+naproxen sodium ds
+vtol lq
+adzenys er
+adzenys xr-odt
+cotempla xr-odt
+casporyn hc
+dxevo
+allzital
+dvorah
+dextenza
+qbrexza
+diclofenac sodium 1.5%
+diflorasone diacetate oint
+depakene
+viadox
+protherix
+acunivive 15
+acunivive 30
+acunivive 60
+qmiiz odt
+urised
+n/a
+xhance
+jornay pm
+mko melt dose pack
+mkh dose pack
+dex-moxi
+dex-moxi-ketor
+anjeso
+inveltys
+aspirin and omeprazole delayed-release tab
+dexycu
+yutiq
+gvoke hypopen
+gvoke pfs
+duaklir pressair
+valtoco
+fluoxiv
+olivia quido firm and fade i
+olivia quido firm and fade ii
+adhansia xr
+hydrocortisone acetate pramoxine hydrochloride
+duexis
+rayos
+vimovo
+pennsaid
+metopirone
+triloan suik
+triloan ii suik
+betaloan suik
+toronova suik
+toronova ii suik
+medroloan suik
+medroloan ii suik
+dmt suik
+cogentin
+vanos

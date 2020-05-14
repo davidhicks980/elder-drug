@@ -1,4 +1,109 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./beers-theme.scss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+//prettier-ignore
+button[mat-stroked-button].add-item {
+  border-width: 1px; 
+  border-style: solid; 
+  border-color: mat-color($candy-app-primary);
+  border-radius: 7px;
+  overflow: visible;
+}
+button[mat-stroked-button]:hover {
+  background-image: radial-gradient(
+    mat-color($candy-app-accent),
+    mat-color($candy-app-accent, 500)
+  );
+}
+button[mat-flat-button]:hover {
+  background-image: radial-gradient(
+    mat-color($candy-app-primary, 600),
+    mat-color($candy-app-primary, 700)
+  );
+}
+
+button[mat-flat-button] {
+  border-radius: 7px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: mat-color($candy-app-primary);
+}
+
+button[mat-stroked-button]:focus {
+  color: mat-color($candy-app-primary);
+}
+button[mat-stroked-button]:focus {
+  background-image: linear-gradient(
+    mat-color($candy-app-accent),
+    mat-color($candy-app-accent, 500)
+  );
+  color: mat-color($candy-app-primary);
+}
+
+button[mat-stroked-button]:active {
+  background-image: linear-gradient(
+    mat-color($candy-app-accent, 500),
+    mat-color($candy-app-accent)
+  );
+  color: mat-color($candy-app-primary);
+}
+button[mat-flat-button]:focus {
+  background-image: linear-gradient(
+    mat-color($candy-app-accent),
+    mat-color($candy-app-accent, 500)
+  );
+  color: mat-color($candy-app-primary);
+}
+
+button[mat-flat-button]:active {
+  background-image: linear-gradient(
+    mat-color($candy-app-accent, 500),
+    mat-color($candy-app-accent)
+  );
+  color: mat-color($candy-app-primary);
+}
+.closeIcon {
+  color: maroon;
+}
+.title-text {
+  font-family: "Patua One", "Arial", Arial, sans-serif;
+  font-size: 36pt;
+  position: absolute;
+  text-align: center;
+  padding-top: 0.3em;
+  background: white;
+  z-index: 10;
+  padding-bottom: 10px;
+}
+
+.caduceus {
+  text-shadow: -1px -1px 0 mat-color($candy-app-primary),
+    1px -1px 0 mat-color($candy-app-primary),
+    -1px 1px 0 mat-color($candy-app-primary),
+    1px 1px 0 mat-color($candy-app-primary);
+  font-size: 36pt;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: mat-color($candy-app-accent);
+}
+
+#toolbar {
+  background: rgba(0, 0, 0, 0.027);
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+#toolbar.transition {
+  background: mat-color($candy-app-primary);
+  color: white;
+}
