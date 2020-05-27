@@ -10,8 +10,10 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$candy-app-primary: mat-palette($mat-pink, 900);
-$candy-app-accent: mat-palette($mat-amber, 300, A400, A200);
+$candy-app-primary: mat-palette($mat-deep-purple, 700);
+$candy-app-accent: mat-palette($mat-amber, A400, A400, A200);
+$candy-app-logo: mat-palette($mat-yellow, 400);
+$candy-app-logo-text: mat-palette($mat-blue-grey, 900);
 
 // The warn palette is optional (defaults to red).
 $candy-app-warn: mat-palette($mat-red);

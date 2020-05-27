@@ -9,3 +9,10 @@
 .content-title {
   text-align: center;
 }
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  width: 100%;
+  box-sizing: content-box;
+  height: 8%;
+}

@@ -19,8 +19,26 @@ export class WebsocketService {
       });
     });
   }
+  mapData(data) {
+    const arrayOfMedInfo: BeersEntry[] = data;
+    return arrayOfMedInfo;
+  }
 
   emit(messageID: string, data: any) {
     this.socket.emit(messageID, data);
   }
+}
+export interface BeersEntry {
+  EntryID: number;
+  DiseaseState: string;
+  Table: number;
+  Class: string;
+  MinimumClearance: number;
+  MaximumClearance: number;
+  Interaction: string;
+  Inclusion: string;
+  Exclusion: string;
+  Rationale: string;
+  Recommendation: string;
+  RecommendationLineTwo: string;
 }

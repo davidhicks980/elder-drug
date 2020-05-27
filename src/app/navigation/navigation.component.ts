@@ -1,25 +1,18 @@
 import {
   Component,
   OnInit,
-  ɵConsole,
-  IterableDiffers,
   ViewChild,
-  ElementRef,
   ViewChildren,
   QueryList,
 } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
-import { map, shareReplay, startWith, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { WebsocketService } from '../websocket.service';
-import * as Bloodhound from '../../assets/bloodhound.js';
 import * as data from '../../../database/FullDropdownItems_202005032241.json';
 import { MatSidenav } from '@angular/material/sidenav';
-import { MatButtonToggle } from '@angular/material/button-toggle';
 import { MatInput } from '@angular/material/input';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-navigation',
@@ -74,7 +67,7 @@ export class NavigationComponent implements OnInit {
     return '<p>' + subString.replace(active, active.bold()) + '</p>';
   }
   private _filter(value: string, data: any): string[] {
-    if (value.length > 4) {
+    if (value.length > 2) {
       const filterValue = value.toLowerCase();
       return data.filter((option: any) => {
         let optionString = JSON.stringify(option);
@@ -89,11 +82,15 @@ export class NavigationComponent implements OnInit {
 
   getInputString(input: string) {
     this.activeString = input;
-    if (input.length === 3) {
+    if (input.length === 2) {
       this.webSocketService.emit('drugs-to-filter', input);
     }
   }
-
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      alert('you just pressed the enter key');
+    }
+  }
   search(entry) {
     let outArray = [];
     let results = entry._results;
@@ -111,8 +108,9 @@ export class NavigationComponent implements OnInit {
       for (i = 0; i < length; i++) {
         dropDown.push(data[i].Items.toLowerCase()); //TODO: Column is defined by dot notation
       }
+      console.log(dropDown);
       this.filteredOptions = this.myControl.valueChanges.pipe(
-        map((value) => this._filter(value, dropDown))
+        map((value) => this._filter(value, dropDown).sort())
       );
     });
   }

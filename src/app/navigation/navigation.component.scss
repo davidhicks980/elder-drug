@@ -1,17 +1,26 @@
-.flex-container {
+.flex-container-between {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-container-around {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-around;
 }
 
 .dh-input {
-  max-width: 85%;
-  line-height: 1.1em;
+  width: 90%;
 }
 
 .material-container {
@@ -23,18 +32,25 @@
 }
 
 .material-sidenav {
-  width: 21em;
-  border-right: 1px solid rgba(70, 70, 70, 0.404);
+  width: 22.5em;
+  border-right: 1px inset rgba(70, 70, 70, 0.404);
   padding-bottom: 2em;
 }
 
 .material-sidenav-content {
-  display: flex;
   height: 100%;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+}
+.material-sidenav {
+  padding: 0 1.7em 1.7em 1.7em;
 }
 
-.material-sidenav {
-  padding-left: 1.5em;
+.caduceus {
+  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
+}
+
+.action-button {
+  width: 8.6em;
+  line-height: 2em;
+  height: 2.6em;
 }

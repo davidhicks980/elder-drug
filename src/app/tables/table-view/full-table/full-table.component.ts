@@ -1,0 +1,79 @@
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  AfterViewInit,
+} from '@angular/core';
+import { WebsocketService } from 'src/app/websocket.service';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
+
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { BeersEntry } from '../disease-table/disease-table.component';
+
+@Component({
+  selector: 'app-full-table',
+  templateUrl: './full-table.component.html',
+  styleUrls: ['./full-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
+})
+export class FullTableComponent implements OnInit {
+  queriedMeds: any[];
+  dataSource;
+  /* Displayable Columns
+  columnsToDisplay = [
+    `EntryID`,
+    `DiseaseState`,
+    `Table`,
+    `Class`,
+    `MinimumClearance`,
+    `MaximumClearance`,
+    `Interaction`,
+    `Inclusion`,
+    `Exclusion`,
+    `Rationale`,
+    `Recommendation`,
+    `RecommendationLineTwo`,
+  ];
+  */
+  expandedMeds;
+  selectedColumns: any[] = ['Category', 'Item'];
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.selectedColumns,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
+
+  constructor(public webSocketService: WebsocketService) {}
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource<BeersEntry>();
+
+    this.webSocketService.listen('search-results').subscribe((data: any[]) => {
+      this.queriedMeds = this.webSocketService.mapData(data);
+      this.dataSource = new MatTableDataSource(this.queriedMeds);
+      this.dataSource.sort = this.sort;
+    });
+  }
+}

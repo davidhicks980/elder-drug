@@ -13,6 +13,7 @@ import { TablesComponent } from './tables/tables.component';
 import { TableViewComponent } from './tables/table-view/table-view.component';
 import { ClearanceTableComponent } from './tables/table-view/clearance-table/clearance-table.component';
 import { DiseaseTableComponent } from './tables/table-view/disease-table/disease-table.component';
+import { FullTableComponent } from './tables/table-view/full-table/full-table.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DiseaseTableComponent } from './tables/table-view/disease-table/disease
     TableViewComponent,
     ClearanceTableComponent,
     DiseaseTableComponent,
+    FullTableComponent,
   ],
   imports: [
     BrowserModule,

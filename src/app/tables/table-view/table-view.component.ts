@@ -7,11 +7,5 @@ import { WebsocketService } from '../../websocket.service';
   styleUrls: ['./table-view.component.scss'],
 })
 export class TableViewComponent {
-  queriedData: any[];
-  constructor(public webSocketService: WebsocketService) {
-    this.webSocketService.listen('search-results').subscribe((data: any[]) => {
-      this.queriedData = data;
-      console.log(this.queriedData);
-    });
-  }
+  constructor() {}
 }

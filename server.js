@@ -39,30 +39,13 @@ const conn = mysql.createConnection({
   database: "geridb",
 });
 
-function hasNumbers(t) {
-  var regex = /\d/g;
-  return regex.test(t);
-}
-
-function dropDown() {
-  let sql = "SELECT Items FROM dropdown_items";
-  let dropDownItems = [];
-  conn.query(sql, function (err, result) {
-    if (err) console.log(err);
-    for (item of result) {
-      dropDownItems.push(item.PharmClasses);
-    }
-  });
-  io.emit("dropDown", dropDownItems);
-}
-
 io.on("connection", function (socket) {
   console.log("socket connection successful");
   let stem;
   socket.on("drugs-to-filter", function (drugs) {
-    if (drugs.length === 3 && drugs.substring(0, 3) != stem) {
-      let sql = `SELECT DISTINCT Items FROM dropdown_items WHERE UPPER(Items) like UPPER('%${drugs}%')`;
-      stem = drugs.substring(0, 3);
+    if (drugs.length === 2 && drugs.substring(0, 2) != stem) {
+      let sql = `SELECT DISTINCT Items FROM dropdown_items WHERE UPPER(Items) like UPPER('${drugs}%')`;
+      stem = drugs.substring(0, 2);
       console.log(stem);
       conn.query(sql, function (err, result) {
         if (err) console.log(err);
@@ -72,26 +55,24 @@ io.on("connection", function (socket) {
   });
 
   socket.on("drugs-to-search", function (drugs) {
-    console.log(drugs);
     let queryArray = [];
     for (let drug of drugs) {
       if (drug.length > 2) {
-        queryArray.push(`lower('%${drug}%')`);
+        queryArray.push(`lower(di.DrugExamples) = lower('${drug}')`);
       }
     }
     let stringlist = JSON.stringify(queryArray);
     let querylist = stringlist.replace(/\",\"/g, " OR ");
-    let item;
     let sql = `SELECT DISTINCT
-all_guidance.*
+    all_guidance.*
   FROM
     dropdown_index di
   RIGHT JOIN all_guidance ON
     di.EntryID = all_guidance.EntryID
-    WHERE di.DrugExamples like ${JSON.parse(querylist)}`;
+    WHERE ${JSON.parse(querylist)}`;
+    console.log(sql);
     conn.query(sql, function (err, result) {
       if (err) null;
-      console.log("emit");
       io.emit("search-results", result);
     });
   });
