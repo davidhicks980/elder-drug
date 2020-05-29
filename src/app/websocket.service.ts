@@ -31,8 +31,8 @@ export class WebsocketService {
 export interface BeersEntry {
   EntryID: number;
   DiseaseState: string;
-  Table: number;
-  Class: string;
+  Category: number;
+  Item: string;
   MinimumClearance: number;
   MaximumClearance: number;
   Interaction: string;
@@ -41,4 +41,6 @@ export interface BeersEntry {
   Rationale: string;
   Recommendation: string;
   RecommendationLineTwo: string;
+  ItemType: string;
+  ShortName: string;
 }

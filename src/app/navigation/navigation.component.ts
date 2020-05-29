@@ -100,6 +100,10 @@ export class NavigationComponent implements OnInit {
     this.webSocketService.emit('drugs-to-search', outArray);
   }
 
+  close() {
+    this.sidenav.close();
+  }
+
   constructor(public webSocketService: WebsocketService) {
     this.webSocketService.listen('filter').subscribe((data: any[]) => {
       let i: number;

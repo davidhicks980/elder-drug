@@ -1,3 +1,4 @@
+@import "../../styles.scss";
 .flex-container-between {
   display: -webkit-box;
   display: -webkit-flex;
@@ -20,7 +21,7 @@
 }
 
 .dh-input {
-  width: 90%;
+  width: 100%;
 }
 
 .material-container {
@@ -32,25 +33,31 @@
 }
 
 .material-sidenav {
-  width: 22.5em;
+  width: 23em;
   border-right: 1px inset rgba(70, 70, 70, 0.404);
   padding-bottom: 2em;
+  padding: 0 1.7em 1.7em 1.7em;
 }
 
-.material-sidenav-content {
+.mat-drawer-content {
   height: 100%;
-  width: 100%;
-}
-.material-sidenav {
-  padding: 0 1.7em 1.7em 1.7em;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .caduceus {
   text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
 }
 
-.action-button {
-  width: 8.6em;
-  line-height: 2em;
-  height: 2.6em;
+.drawer-logo-vector {
+  width: 100%;
+  position: relative;
+  height: 4.7em;
+  padding-top: 1em;
+  padding-left: 1em;
+  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
+}
+
+.drawer-logo-vector .b {
+  fill: mat-color($candy-app-accent);
 }

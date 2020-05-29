@@ -11,8 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material-module';
 import { TablesComponent } from './tables/tables.component';
 import { TableViewComponent } from './tables/table-view/table-view.component';
-import { ClearanceTableComponent } from './tables/table-view/clearance-table/clearance-table.component';
-import { DiseaseTableComponent } from './tables/table-view/disease-table/disease-table.component';
+
 import { FullTableComponent } from './tables/table-view/full-table/full-table.component';
 
 @NgModule({
@@ -21,8 +20,6 @@ import { FullTableComponent } from './tables/table-view/full-table/full-table.co
     NavigationComponent,
     TablesComponent,
     TableViewComponent,
-    ClearanceTableComponent,
-    DiseaseTableComponent,
     FullTableComponent,
   ],
   imports: [

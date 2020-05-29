@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./beers-theme.scss";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
-
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&display=swap");
+
+@include mat-core();
 
 //prettier-ignore
 
@@ -13,39 +14,31 @@ body{
 button[mat-stroked-button].add-item {
   border-width: 1px;
   border-style: solid;
-  border-color: mat-color($candy-app-primary);
-  border-radius: 4px;
+  border-color: mat-color($candy-app-accent);
+  border-radius: 5px;
   overflow: visible;
 }
 button[mat-stroked-button]:hover {
-  background-color: mat-color($candy-app-primary, 0.1);
+  background-color: mat-color($candy-app-accent, 0.1);
 }
 button[mat-flat-button]:hover {
   background-image: radial-gradient(
-    mat-color($candy-app-primary, 600),
-    mat-color($candy-app-primary, 700)
+    mat-color($candy-app-accent, 600),
+    mat-color($candy-app-accent, 700)
   );
 }
 
 button[mat-flat-button] {
-  border-radius: 4px;
-  border-width: 0.5px;
-  border-style: solid;
-  border-bottom-color: mat-color($candy-app-primary, 800);
-  border-top-color: mat-color($candy-app-primary, 300);
-  border-left-color: mat-color($candy-app-primary);
-  border-right-color: mat-color($candy-app-primary);
+  border-radius: 5px;
+  border: 1px solid mat-color($candy-app-accent);
 }
 
 button[mat-stroked-button]:focus {
-  color: mat-color($candy-app-primary);
-}
-button[mat-stroked-button]:focus {
-  color: mat-color($candy-app-primary);
+  color: mat-color($candy-app-accent);
 }
 
 button[mat-stroked-button]:active {
-  background-color: mat-color($candy-app-primary, 0.4);
+  background-color: mat-color($candy-app-accent, 0.4);
 }
 
 button[mat-flat-button]:active {
@@ -54,9 +47,8 @@ button[mat-flat-button]:active {
 
 .solid-title-text {
   font-family: "Calistoga", cursive;
-  font-size: 36pt;
-  color: rgb(31, 31, 31);
-
+  font-size: 38pt;
+  color: mat-color($candy-app-accent);
   text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
 }
 
@@ -97,7 +89,7 @@ button[mat-flat-button]:active {
 }
 
 #toolbar {
-  background: rgba(241, 241, 241, 0.027);
+  background: rgb(245, 245, 245);
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -115,4 +107,18 @@ button[mat-flat-button]:active {
   left: 0;
   z-index: 2;
   width: 100% !important;
+}
+
+.action-button {
+  width: 8.1em;
+  height: 2.3em;
+  font-size: 11.5pt;
+}
+
+.mat-drawer-inner-container {
+  overflow: visible !important;
+}
+
+button[mat-button-toggle] {
+  height: 20%;
 }

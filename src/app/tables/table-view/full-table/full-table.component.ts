@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  OnChanges,
-  AfterViewInit,
-} from '@angular/core';
-import { WebsocketService } from 'src/app/websocket.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { WebsocketService, BeersEntry } from 'src/app/websocket.service';
 import {
   trigger,
   state,
@@ -18,7 +11,6 @@ import {
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { BeersEntry } from '../disease-table/disease-table.component';
 
 @Component({
   selector: 'app-full-table',
@@ -26,10 +18,10 @@ import { BeersEntry } from '../disease-table/disease-table.component';
   styleUrls: ['./full-table.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
       transition(
-        'expanded <=> collapsed',
+        'expanded <=> collapsed, void=>expanded',
         animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       ),
     ]),
@@ -73,6 +65,7 @@ export class FullTableComponent implements OnInit {
     this.webSocketService.listen('search-results').subscribe((data: any[]) => {
       this.queriedMeds = this.webSocketService.mapData(data);
       this.dataSource = new MatTableDataSource(this.queriedMeds);
+      console.log(this.queriedMeds);
       this.dataSource.sort = this.sort;
     });
   }

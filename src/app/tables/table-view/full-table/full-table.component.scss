@@ -1,8 +1,9 @@
+@import "../../../../beers-theme.scss";
+
 .size-constraint {
   overflow: auto;
-  max-height: 800px;
-  width: 95%;
-  padding: 2em;
+  width: 98%;
+  padding: 1em;
 }
 
 h2 {
@@ -25,7 +26,7 @@ table {
 }
 
 table[mat-table] {
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
   border-bottom: none;
   background-color: transparent !important;
@@ -74,7 +75,7 @@ td:not(.med-expanded-row) {
   flex-direction: row;
   align-content: center;
   width: fit-content;
-  padding-bottom: 0.5em;
+  padding-bottom: 1em;
 }
 
 .flex-v-container {
@@ -99,10 +100,6 @@ td:not(.med-expanded-row) {
   text-transform: uppercase;
 }
 
-th.mat-header-cell:hover {
-  background-color: rgb(255, 255, 255);
-}
-
 .dropContainer {
   padding: 10px;
   border-bottom: solid 1px #ccc;
@@ -122,9 +119,25 @@ th.mat-header-cell:hover {
   text-align: left;
   border-right: 1px solid lightgray;
   padding: 0 0 0 15px;
+  height: 0.5em;
+  background: mat-color($candy-app-primary);
+  color: whitesmoke;
+}
+
+th.mat-header-cell:hover {
+  background-color: mat-color($candy-app-primary, 0.1);
+  color: rgb(37, 37, 37);
 }
 
 td.mat-cell {
   padding: 0 0 0 15px;
   background-color: white;
+}
+
+.mat-button-toggle-checked {
+  background: rgb(235, 235, 235);
+}
+
+.expand-title {
+  font-size: 10pt;
 }
