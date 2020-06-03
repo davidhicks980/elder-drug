@@ -48,6 +48,7 @@ export class FullTableComponent implements AfterViewInit {
   */
   expandedMeds;
   selectedColumns: any[] = ['Item', 'Category'];
+  displayedColumns;
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.selectedColumns,
@@ -59,6 +60,11 @@ export class FullTableComponent implements AfterViewInit {
   constructor(public webSocketService: WebsocketService) {}
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
+  ngOnChanges() {
+    this.displayedColumns = this.selectedColumns.forEach((column) =>
+      column.replace(/([A-Z])/g, ' $1').trim()
+    );
+  }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource<BeersEntry>();
 

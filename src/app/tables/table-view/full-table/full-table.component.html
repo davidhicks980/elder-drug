@@ -1,6 +1,6 @@
 <mat-expansion-panel #mainTable>
   <mat-expansion-panel-header>
-    <div class="expand-title"><h3>Combined Table</h3></div>
+    <div class="expand-title"><h3>Category Table</h3></div>
   </mat-expansion-panel-header>
   <ng-template matExpansionPanelContent
     ><div class="size-constraint" *ngIf="dataSource != null">
@@ -14,7 +14,7 @@
             Item
           </mat-button-toggle>
           <mat-button-toggle value="Category">Category </mat-button-toggle>
-          <mat-button-toggle value="ShortName">
+          <mat-button-toggle value="ShortTableName">
             Table Name
           </mat-button-toggle>
           <mat-button-toggle value="Recommendation"

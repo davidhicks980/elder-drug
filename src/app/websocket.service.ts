@@ -21,17 +21,17 @@ export class WebsocketService {
   }
   mapData(data: any[], filter?: string) {
     let arrayOfMedInfo: BeersEntry[] = data;
+    let filteredArray = [];
     if (filter != null) {
-      let filtered = Object.keys(data)
-        .filter((key) => filter.includes(key))
-        .reduce((obj, key) => {
-          obj[key] = data[key];
-          return obj;
-        }, {});
-      console.log(filtered);
+      arrayOfMedInfo.forEach((element) => {
+        if (element[filter] != null) {
+          filteredArray.push(element);
+        }
+      });
+    } else {
+      filteredArray = arrayOfMedInfo;
     }
-
-    return arrayOfMedInfo;
+    return filteredArray;
   }
 
   emit(messageID: string, data: any) {

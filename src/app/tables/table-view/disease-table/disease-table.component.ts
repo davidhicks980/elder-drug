@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { WebsocketService, BeersEntry } from 'src/app/websocket.service';
 import { MatSort } from '@angular/material/sort';
@@ -28,7 +28,6 @@ import {
 })
 export class DiseaseTableComponent implements AfterViewInit {
   queriedMeds: any[];
-  diseaseStates: string[];
   dataSource;
   /* Displayable Columns
   columnsToDisplay = [
@@ -47,9 +46,9 @@ export class DiseaseTableComponent implements AfterViewInit {
   ];
   */
   expandedMeds;
-  selectedColumns: any[];
-  arrayOfDiseaseStates: string[];
-  rawData: MatTableDataSource<any>;
+  selectedColumns: string[] = ['DiseaseState', 'Item', 'Recommendation'];
+  displayedColumns;
+  arrayOfDiseaseStates: any[];
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.selectedColumns,
@@ -63,17 +62,17 @@ export class DiseaseTableComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource<BeersEntry>();
-
     this.webSocketService.listen('search-results').subscribe((data: any[]) => {
       let outarray = [];
       this.queriedMeds = this.webSocketService.mapData(data, 'DiseaseState');
       console.log(this.queriedMeds);
-      this.rawData = new MatTableDataSource(this.queriedMeds);
-      this.dataSource.sort = this.rawData.sort;
+      this.dataSource = new MatTableDataSource(this.queriedMeds);
+      this.dataSource.sort = this.sort;
       for (let item of this.queriedMeds) {
         outarray.push(item.DiseaseState);
       }
       this.arrayOfDiseaseStates = [...new Set(outarray)].filter((item) => item);
+      console.log(this.arrayOfDiseaseStates);
     });
   }
 }
