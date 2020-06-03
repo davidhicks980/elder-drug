@@ -1,0 +1,123 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Calistoga&display=swap");
+
+//prettier-ignore
+
+body{
+  margin: 0px;
+}
+
+button[mat-stroked-button].add-item {
+  border-width: 1px;
+  border-style: solid;
+  border-color: mat-color($candy-app-primary);
+  border-radius: 5px;
+  overflow: visible;
+}
+button[mat-stroked-button]:hover {
+  background-color: mat-color($candy-app-primary, 0.1);
+}
+button[mat-flat-button]:hover {
+  background-image: radial-gradient(
+    mat-color($candy-app-primary, 600),
+    mat-color($candy-app-primary, 700)
+  );
+}
+
+button[mat-flat-button] {
+  border-radius: 5px;
+  border: 1px solid mat-color($candy-app-primary);
+}
+
+button[mat-stroked-button]:focus {
+  color: mat-color($candy-app-primary);
+}
+
+button[mat-stroked-button]:active {
+  background-color: mat-color($candy-app-primary, 0.4);
+}
+
+button[mat-flat-button]:active {
+  background-color: white;
+}
+
+.solid-title-text {
+  font-family: "Calistoga", cursive;
+  font-size: 38pt;
+  color: rgba(47, 47, 47);
+  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.4em 0 0.8em 0;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label,
+.mat-form-field-appearance-outline.mat-form-field-can-float
+  .mat-input-server:focus
+  + .mat-form-field-label-wrapper
+  .mat-form-field-label {
+  transform: translateY(-1.25em) scale(0.75);
+}
+
+.mat-form-field-label-wrapper {
+  top: -1.24375em;
+  padding-top: 0.84375em;
+}
+.mat-form-field-appearance-outline .mat-form-field-label {
+  padding-bottom: 0.2em;
+}
+
+.mat-drawer-inner-container {
+  scrollbar-width: none;
+}
+
+.mat-button-toggle {
+  background-color: white;
+}
+
+.mat-button-toggle-checked {
+  background-color: whitesmoke;
+}
+
+.bowl-of-hygieia {
+  color: mat-color($candy-app-primary);
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100% !important;
+}
+
+.action-button {
+  height: 2.3em;
+  font-size: 12pt;
+  letter-spacing: 3px;
+  width: 100%;
+  font-weight: 400;
+}
+
+.mat-drawer-inner-container {
+  overflow: visible !important;
+}
+
+button[mat-button-toggle] {
+  height: 20%;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important ;
+  align-items: flex-start !important;
+}
+
+.mat-grid-tile {
+  height: fit-content;
+}
+
+mat-form-field .mat-form-field-infix {
+  //width: 83% !important;
+  //flex: none;
+}

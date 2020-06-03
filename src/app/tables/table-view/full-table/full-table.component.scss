@@ -1,4 +1,4 @@
-@import "../../../../beers-theme.scss";
+@import "../../../../styles.scss";
 
 .size-constraint {
   overflow: auto;
@@ -125,8 +125,7 @@ td:not(.med-expanded-row) {
 }
 
 th.mat-header-cell:hover {
-  background-color: mat-color($candy-app-primary, 0.1);
-  color: rgb(37, 37, 37);
+  background-color: mat-color($candy-app-primary, 0.8);
 }
 
 td.mat-cell {
@@ -140,4 +139,16 @@ td.mat-cell {
 
 .expand-title {
   font-size: 10pt;
+}
+
+.mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid rgb(218, 218, 218);
+  background: none;
+  width: 100%;
+}
+#tablespan {
+}
+.expand-title h3 {
+  display: inline;
 }

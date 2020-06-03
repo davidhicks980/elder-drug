@@ -1,0 +1,9 @@
+@import "../../app-color-palette.scss";
+.tableModifierList {
+  border-left: 2px solid $accent;
+  overflow: visible;
+  width: 100%;
+}
+.mat-list-base {
+  padding-top: 1px;
+}

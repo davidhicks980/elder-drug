@@ -19,8 +19,18 @@ export class WebsocketService {
       });
     });
   }
-  mapData(data) {
-    const arrayOfMedInfo: BeersEntry[] = data;
+  mapData(data: any[], filter?: string) {
+    let arrayOfMedInfo: BeersEntry[] = data;
+    if (filter != null) {
+      let filtered = Object.keys(data)
+        .filter((key) => filter.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = data[key];
+          return obj;
+        }, {});
+      console.log(filtered);
+    }
+
     return arrayOfMedInfo;
   }
 
@@ -29,18 +39,18 @@ export class WebsocketService {
   }
 }
 export interface BeersEntry {
-  EntryID: number;
-  DiseaseState: string;
-  Category: number;
-  Item: string;
-  MinimumClearance: number;
-  MaximumClearance: number;
-  Interaction: string;
-  Inclusion: string;
-  Exclusion: string;
-  Rationale: string;
-  Recommendation: string;
-  RecommendationLineTwo: string;
-  ItemType: string;
-  ShortName: string;
+  EntryID?: number;
+  DiseaseState?: string;
+  Category?: number;
+  Item?: string;
+  MinimumClearance?: number;
+  MaximumClearance?: number;
+  Interaction?: string;
+  Inclusion?: string;
+  Exclusion?: string;
+  Rationale?: string;
+  Recommendation?: string;
+  RecommendationLineTwo?: string;
+  ItemType?: string;
+  ShortName?: string;
 }

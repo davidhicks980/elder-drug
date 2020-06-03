@@ -1,0 +1,153 @@
+@import "../../../../styles.scss";
+
+.size-constraint {
+  overflow: auto;
+  width: 98%;
+  padding: 1em;
+}
+
+h2 {
+  padding-bottom: 1px;
+  margin-bottom: 0.5em;
+  line-height: 1em;
+}
+
+.mat-standard-chip {
+  min-height: 1.7em;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  overflow: hidden;
+  border-collapse: collapse;
+  border-radius: 6em;
+  border: 1px solid rgb(197, 197, 197);
+}
+
+table[mat-table] {
+  border-radius: 6px;
+  overflow: hidden;
+  border-bottom: none;
+  background-color: transparent !important;
+}
+
+tr.med-detail-row {
+  height: 0;
+}
+
+tr.med-row:not(.med-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.med-row:not(.med-expanded-row):active {
+  background: #efefef;
+}
+
+.expand-detail {
+  overflow: hidden;
+  display: flex;
+  padding-left: 0.5em;
+}
+
+tr.med-row {
+  border-top: 1px solid rgb(223, 223, 223);
+  border-bottom: none;
+}
+td:not(.med-expanded-row):active,
+td:not(.med-expanded-row):focus,
+td:not(.med-expanded-row) {
+  border-bottom: none;
+}
+
+.expand-one--right,
+.expand-one--left {
+  min-width: 200px;
+}
+
+.expand-two--left,
+.expand-two--right {
+  min-width: 200px;
+}
+
+.flex-h-container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: fit-content;
+  padding-bottom: 1em;
+}
+
+.flex-v-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  align-content: center;
+}
+
+.detail-cell {
+  border: none;
+}
+
+.cdk-drag-preview {
+  padding: 15px 60px 15px 60px;
+  border-bottom: solid 1px #ccc;
+  color: rgb(75, 75, 75);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.dropContainer {
+  padding: 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.mat-header-cell {
+  border-left: 1px solid lightgray;
+  text-align: left;
+  border-right: 1px solid lightgray;
+  padding: 0 0 0 15px;
+  height: 0.5em;
+  background: mat-color($candy-app-primary);
+  color: whitesmoke;
+}
+
+th.mat-header-cell:hover {
+  background-color: mat-color($candy-app-primary, 0.8);
+}
+
+td.mat-cell {
+  padding: 0 0 0 15px;
+  background-color: white;
+}
+
+.mat-button-toggle-checked {
+  background: rgb(235, 235, 235);
+}
+
+.expand-title {
+  font-size: 10pt;
+}
+
+.mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid rgb(218, 218, 218);
+  background: none;
+  width: 100%;
+}
+
+.expand-title h3 {
+  display: inline;
+}

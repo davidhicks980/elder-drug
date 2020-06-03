@@ -1,0 +1,48 @@
+@import "../../styles.scss";
+#toolbar .drawer-button {
+  background-color: transparent !important;
+  border-bottom: none;
+}
+
+.hide {
+  display: none;
+}
+
+.content-title {
+  text-align: center;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  width: 100%;
+  box-sizing: content-box;
+}
+
+.bowl-align {
+  margin-top: 0.3em;
+  width: 1em;
+  padding-left: 0.4em;
+  position: relative;
+  text-align: center;
+  font-size: 36pt;
+  padding-right: 0.2em;
+}
+
+.snake-purp {
+  fill: mat-color($candy-app-primary);
+}
+
+#toolbar {
+  background: rgb(245, 245, 245);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+}
+
+#toolbar.transition {
+  background-color: white;
+  color: rgb(47, 47, 47);
+  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+}

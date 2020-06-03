@@ -71,6 +71,7 @@
             d="M190.58,42.7A2.49,2.49,0,0,1,188,41.3a2.25,2.25,0,0,1,.46-2.85c.85-.81,1.81-1.49,2.66-2.34,1-1,3.37-.57,4.29.62a2.52,2.52,0,0,1-.89,3.86C193.21,41.41,192,42.47,190.58,42.7Z"
           /></svg></span
       ><br />
+
       <div
         class="flex-container-around solid-title-text"
         style="padding-bottom: 0.2em; padding-top: 0.15em; width: 100%;"
@@ -79,13 +80,19 @@
       </div>
     </div>
     <br />
+
+    <!--<mat-divider></mat-divider>-->
+    <br />
     <form autocomplete="off">
-      <section *ngFor="let drug of drugs; index as i">
-        <div class="flex-container-between">
+      <section class="height-limit">
+        <div
+          *ngFor="let drug of drugs; index as i"
+          class="flex-container-between"
+        >
           <mat-form-field
             style="width: 100%;"
             appearance="outline"
-            class="input-drug-field"
+            class="input-drug-field disable-text-selection"
           >
             <mat-label>Enter Drug {{ i + 1 }}</mat-label>
 
@@ -111,48 +118,67 @@
               </mat-option>
             </mat-autocomplete>
             <mat-icon
-              mat-icon-button
-              type="button"
-              [style.display]="i > 0 ? '' : 'none'"
-              (click)="removeDrug(i)"
+              class="add-remove"
+              fxFlex
+              fxLayout="row"
+              fxFlex.xl
               matSuffix
-              color="alert"
-              >highlight_off</mat-icon
             >
+              <div
+                matRipple
+                [matRippleCentered]="true"
+                [matRippleRadius]="15"
+                [matRippleUnbounded]="true"
+                class="plus-button"
+                (click)="addDrug()"
+                [style.display]="i < 1 ? '' : 'none'"
+              >
+                add_circle_outline
+              </div>
+              <div
+                matRipple
+                [matRippleCentered]="true"
+                [matRippleRadius]="15"
+                [matRippleUnbounded]="true"
+                class="minus-button"
+                (click)="removeDrug(i)"
+                [style.display]="i >= 1 ? '' : 'none'"
+                color="accent"
+              >
+                remove_circle_outline
+              </div>
+            </mat-icon>
           </mat-form-field>
         </div>
       </section>
-    </form>
-    <section>
-      <div class="flex-container-between">
-        <div>
+      <section>
+        <!--<div>
           <button
             inline="true"
             class="add-item action-button"
-            mat-stroked-button
+            mat-button
             color="primary"
             type="button"
             (click)="addDrug()"
           >
-            <span>ADD DRUG</span>
+            <mat-icon>add</mat-icon>
           </button>
-        </div>
-        <div>
+        </div>-->
+
+        <div class="search-drugs">
           <button
-            mat-flat-button
-            class="action-button drawer-button"
+            mat-raised-button
+            class="action-button sticky"
             color="primary"
             type="button"
             (click)="search(submission)"
           >
-            SEARCH
+            <mat-icon>search</mat-icon> SEARCH
           </button>
         </div>
-      </div>
-    </section>
+      </section>
+    </form>
   </mat-sidenav>
 
-  <mat-sidenav-content>
-    <app-tables (pullDrawer)="drawer.toggle()"></app-tables>
-  </mat-sidenav-content>
+  <app-toolbar (pullDrawer)="drawer.toggle()"></app-toolbar>
 </mat-sidenav-container>

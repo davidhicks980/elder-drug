@@ -1,12 +1,15 @@
-<mat-sidenav-container class="example-container">
-  <!--<mat-sidenav opened mode="side" position="end">End content</mat-sidenav>-->
-  <div style="padding: 1em;">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <div class="expand-title"><h3>Combined Table</h3></div>
-      </mat-expansion-panel-header>
-      <ng-template matExpansionPanelContent>
-        <app-full-table></app-full-table>
-      </ng-template>
-    </mat-expansion-panel></div
-></mat-sidenav-container>
+<div
+  class="flex-layout-container"
+  fxLayout
+  fxLayout.xs="row"
+  fxLayoutGap="10px"
+  fxLayoutGap.xs="0"
+  style="width: 100%; padding: 1em;"
+>
+  <div fxFlex>
+    <app-full-table></app-full-table> <app-disease-table></app-disease-table>
+  </div>
+  <div style="width: 200px;" fxFlexOrder="2">
+    <app-modify-table-panel></app-modify-table-panel>
+  </div>
+</div>

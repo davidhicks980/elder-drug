@@ -1,0 +1,8 @@
+2020-06-02 03:46:04.753 EDT [6524] LOG:  database system was shut down at 2020-06-02 03:45:06 EDT
+2020-06-02 03:46:04.840 EDT [6536] LOG:  database system is ready to accept connections
+2020-06-02 03:54:58.577 EDT [6536] LOG:  received fast shutdown request
+2020-06-02 03:54:58.582 EDT [6536] LOG:  aborting any active transactions
+2020-06-02 03:54:58.588 EDT [7500] ERROR:  canceling statement due to user request
+2020-06-02 03:54:58.608 EDT [6536] LOG:  background worker "logical replication launcher" (PID 7500) exited with exit code 1
+2020-06-02 03:54:58.621 EDT [7436] LOG:  shutting down
+2020-06-02 03:54:58.724 EDT [6536] LOG:  database system is shut down

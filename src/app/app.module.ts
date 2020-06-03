@@ -1,26 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
-import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
-import { TablesComponent } from './tables/tables.component';
+import { ToolbarComponent } from './tables/toobar.component';
 import { TableViewComponent } from './tables/table-view/table-view.component';
-
 import { FullTableComponent } from './tables/table-view/full-table/full-table.component';
+import { ModifyTablePanelComponent } from './modify-table-panel/modify-table-panel.component';
+import { DiseaseTableComponent } from './tables/table-view/disease-table/disease-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    TablesComponent,
+    ToolbarComponent,
     TableViewComponent,
     FullTableComponent,
+    ModifyTablePanelComponent,
+    DiseaseTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,7 @@ import { FullTableComponent } from './tables/table-view/full-table/full-table.co
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

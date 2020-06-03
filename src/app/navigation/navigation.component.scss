@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../app-color-palette.scss";
 .flex-container-between {
   display: -webkit-box;
   display: -webkit-flex;
@@ -33,10 +33,9 @@
 }
 
 .material-sidenav {
-  width: 23em;
+  width: 22em;
   border-right: 1px inset rgba(70, 70, 70, 0.404);
-  padding-bottom: 2em;
-  padding: 0 1.7em 1.7em 1.7em;
+  padding: 0 1.2em 0 1.2em;
 }
 
 .mat-drawer-content {
@@ -59,5 +58,52 @@
 }
 
 .drawer-logo-vector .b {
-  fill: mat-color($candy-app-accent);
+  fill: rgb(46, 46, 46);
+}
+
+.minus-button {
+  cursor: pointer;
+  text-align: center;
+  padding-top: 1px;
+  border-radius: 10;
+  height: 100%;
+  color: $accent;
+  opacity: 90%;
+}
+.minus-button:hover {
+  opacity: 100%;
+}
+
+.plus-button {
+  cursor: pointer;
+  text-align: center;
+  padding-top: 1px;
+  border-radius: 10;
+  color: $primary;
+  opacity: 90%;
+}
+.plus-button:hover {
+  opacity: 100%;
+}
+
+.add-remove {
+  height: 100%;
+}
+
+.search-drugs {
+  padding-top: 2em;
+}
+
+.height-limit {
+  max-height: 65vh;
+  overflow: auto;
+}
+
+.disable-text-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
