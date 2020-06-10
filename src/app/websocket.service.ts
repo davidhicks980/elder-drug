@@ -19,19 +19,9 @@ export class WebsocketService {
       });
     });
   }
-  mapData(data: any[], filter?: string) {
+  mapData(data: any[]) {
     let arrayOfMedInfo: BeersEntry[] = data;
-    let filteredArray = [];
-    if (filter != null) {
-      arrayOfMedInfo.forEach((element) => {
-        if (element[filter] != null) {
-          filteredArray.push(element);
-        }
-      });
-    } else {
-      filteredArray = arrayOfMedInfo;
-    }
-    return filteredArray;
+    return arrayOfMedInfo;
   }
 
   emit(messageID: string, data: any) {

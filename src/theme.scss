@@ -117,7 +117,12 @@ button[mat-button-toggle] {
   height: fit-content;
 }
 
-mat-form-field .mat-form-field-infix {
-  //width: 83% !important;
-  //flex: none;
+tr:not(.med-expanded-row) .ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.white-header-arrow .mat-sort-header-arrow {
+  color: white !important;
 }

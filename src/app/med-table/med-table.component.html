@@ -1,0 +1,126 @@
+<mat-expansion-panel expanded class="size-constraint" #mainTable>
+  <mat-expansion-panel-header>
+    <div class="expand-title">
+      <h3>{{ name | uppercase }} TABLE</h3>
+    </div>
+  </mat-expansion-panel-header>
+  <ng-template matExpansionPanelContent>
+    <div fxLayout="row" fxLayoutAlign="center none">
+      <div fxFlex="40">
+        <app-column-selector
+          [displayed]="displayedColumns"
+          [selected]="selectedColumns"
+        ></app-column-selector>
+      </div>
+      <div fxFlex="60">
+        <app-toggle-options [keys]="displayedColumns"></app-toggle-options>
+      </div>
+    </div>
+    <br />
+
+    <table
+      [class.mat-elevation-z2]="true"
+      mat-table
+      [dataSource]="data"
+      matSort
+      multiTemplateDataRows
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      cdkDropListLockAxis="x"
+      cdkDropListOrientation="horizontal"
+    >
+      <ng-container
+        matColumnDef="{{ column }}"
+        *ngFor="let column of selectedColumns"
+      >
+        <th
+          mat-header-cell
+          mat-sort-header
+          class="white-header-arrow med-header-row expand-title"
+          cdkDrag
+          *matHeaderCellDef
+        >
+          {{ column | CaseSplit | uppercase }}
+          <div #dropcontainer *cdkDragPreview>
+            <mat-list-item>{{ column | CaseSplit | uppercase }}</mat-list-item>
+          </div>
+        </th>
+        <td mat-cell matTooltip="{{ med[column] }}" *matCellDef="let med">
+          <p class="mat-body-1 ellipsis">{{ med[column] }}</p>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          class="detail-cell"
+          *matCellDef="let med"
+          [attr.colspan]="selectedColumns.length"
+        >
+          <div
+            class="expand-detail"
+            [@detailExpand]="med == expandedMeds ? 'expanded' : 'collapsed'"
+          >
+            <div class="flex-v-container">
+              <!--title-->
+              <div class="flex-h-container">
+                <h2>{{ med.Item | titlecase }}</h2>
+              </div>
+
+              <div class="flex-h-container">
+                <mat-chip-list
+                  ><mat-chip color="accent" selected>{{
+                    med.ItemType | titlecase
+                  }}</mat-chip></mat-chip-list
+                >
+              </div>
+
+              <!--first row of details-->
+
+              <div class="flex-h-container">
+                <div
+                  [style.display]="med.Rationale != '' ? '' : 'none'"
+                  class="expand-one--left"
+                >
+                  <b>Rationale: </b>{{ med.Rationale }}
+                </div>
+              </div>
+
+              <!--second row of details-->
+
+              <div class="flex-h-container">
+                <div
+                  [style.display]="med.Inclusion != null ? '' : 'none'"
+                  class="expand-two--left"
+                >
+                  <b>Includes: </b>{{ med.Inclusion }}
+                </div>
+                <div
+                  [style.display]="med.Exclusion != null ? '' : 'none'"
+                  class="expand-two--right"
+                >
+                  <b>Excludes: </b>{{ med.Exclusion }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="selectedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        *matRowDef="let med; columns: selectedColumns"
+        class="med-row"
+        [class.med-expanded-row]="expandedMeds === med"
+        (click)="expandedMeds = expandedMeds === med ? null : med"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="med-detail-row"
+      ></tr>
+    </table>
+  </ng-template>
+</mat-expansion-panel>

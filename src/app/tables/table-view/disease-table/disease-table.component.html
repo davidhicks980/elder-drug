@@ -1,50 +1,31 @@
 <mat-expansion-panel #mainTable>
   <mat-expansion-panel-header>
-    <div class="expand-title"><h3>Category Table</h3></div>
+    <div class="expand-title"><h3>Disease Table</h3></div>
   </mat-expansion-panel-header>
   <ng-template matExpansionPanelContent
-    ><div class="size-constraint" *ngIf="dataSource != null">
-      <div>
-        <mat-button-toggle-group
-          multiple
-          [(value)]="selectedColumns"
-          #fullToggleColumns="matButtonToggleGroup"
-        >
-          <mat-button-toggle selected disabled value="DiseaseState"
-            >Disease State
-          </mat-button-toggle>
-          <mat-button-toggle selected disabled value="Item">
-            Item
-          </mat-button-toggle>
+    ><div>
+      <div fxLayout="row" fxLayoutAlign="center none">
+        <div fxFlex="30">
+          <mat-form-field>
+            <mat-label>Change Columns</mat-label>
+            <mat-select
+              class="column-select"
+              [(value)]="selectedColumns"
+              multiple
+              [formControl]="displayedColumnsList"
+            >
+              <mat-option
+                *ngFor="let column of displayedColumnsList"
+                [value]="column"
+                >{{ column }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="70"></div>
+      </div>
 
-          <mat-button-toggle value="Category">Category </mat-button-toggle>
-          <mat-button-toggle value="ShortTableName">
-            Table Name
-          </mat-button-toggle>
-          <mat-button-toggle value="Recommendation"
-            >Recommendation
-          </mat-button-toggle>
-          <mat-button-toggle value="Inclusion"> Inclusion </mat-button-toggle>
-          <mat-button-toggle value="Exclusion">
-            Exclusion
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
       <br />
-      <div>
-        <mat-button-toggle-group
-          multiple
-          [(value)]="arrayOfDiseaseStates"
-          #diseaseToggle="matButtonToggleGroup"
-        >
-          <mat-button-toggle
-            *ngFor="let state of arrayOfDiseaseStates"
-            [value]="state"
-          >
-            {{ state }}
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
 
       <table
         [class.mat-elevation-z2]="true"
@@ -68,7 +49,7 @@
             cdkDrag
             *matHeaderCellDef
           >
-            {{ column | uppercase }}
+            {{ column | CaseSplit | uppercase }}
             <div #dropcontainer *cdkDragPreview>
               <mat-list-item>{{ column | titlecase }}</mat-list-item>
             </div>

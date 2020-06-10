@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>Change Columns</mat-label>
+  <mat-select class="column-select" [(value)]="selected" multiple>
+    <mat-option *ngFor="let column of displayed" [value]="column">{{
+      column | CaseSplit
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>

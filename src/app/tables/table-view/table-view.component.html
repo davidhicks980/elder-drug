@@ -1,14 +1,6 @@
-<div
-  class="flex-layout-container"
-  fxLayout
-  fxLayout.xs="row"
-  fxLayoutGap="10px"
-  fxLayoutGap.xs="0"
-  style="width: 100%; padding: 1em;"
->
-  <div fxFlex fxLayoutGap="1em">
-    <app-full-table></app-full-table>
-    <app-disease-table></app-disease-table>
+<div fxLayout fxLayout.xs="row" fxLayoutGap="10px" fxLayoutGap.xs="0">
+  <div fxFlex>
+    <app-table-logic></app-table-logic>
   </div>
   <div style="width: 200px;" fxFlexOrder="2">
     <app-modify-table-panel></app-modify-table-panel>

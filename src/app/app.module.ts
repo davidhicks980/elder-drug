@@ -12,9 +12,15 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
 import { ToolbarComponent } from './tables/toobar.component';
 import { TableViewComponent } from './tables/table-view/table-view.component';
-import { FullTableComponent } from './tables/table-view/full-table/full-table.component';
+import { CaseSplitPipe } from './CaseSplitPipe';
 import { ModifyTablePanelComponent } from './modify-table-panel/modify-table-panel.component';
-import { DiseaseTableComponent } from './tables/table-view/disease-table/disease-table.component';
+import { MedTableComponent } from './med-table/med-table.component';
+import { TableLogicComponent } from './table-logic/table-logic.component';
+import { SmallLogoComponent } from './small-logo/small-logo.component';
+import { BigLogoComponent } from './big-logo/big-logo.component';
+import { EnterDrugFormComponent } from './enter-drug-form/enter-drug-form.component';
+import { ColumnSelectorComponent } from './med-table/column-selector/column-selector.component';
+import { ToggleOptionsComponent } from './med-table/toggle-options/toggle-options.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +28,15 @@ import { DiseaseTableComponent } from './tables/table-view/disease-table/disease
     NavigationComponent,
     ToolbarComponent,
     TableViewComponent,
-    FullTableComponent,
     ModifyTablePanelComponent,
-    DiseaseTableComponent,
+    CaseSplitPipe,
+    MedTableComponent,
+    TableLogicComponent,
+    SmallLogoComponent,
+    BigLogoComponent,
+    EnterDrugFormComponent,
+    ColumnSelectorComponent,
+    ToggleOptionsComponent,
   ],
   imports: [
     BrowserModule,

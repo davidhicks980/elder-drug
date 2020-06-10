@@ -3,7 +3,21 @@
   border-left: 2px solid $accent;
   overflow: visible;
   width: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 100px;
 }
 .mat-list-base {
   padding-top: 1px;
+}
+
+.panel-header {
+  padding-left: 5%;
+  padding-top: 10px;
+  line-height: 0.8em;
+}
+
+.mat-list-base .mat-list-option .list-text {
+  font-size: 11pt;
+  white-space: nowrap;
 }

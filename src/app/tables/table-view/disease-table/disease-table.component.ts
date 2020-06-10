@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { WebsocketService, BeersEntry } from 'src/app/websocket.service';
 import { MatSort } from '@angular/material/sort';
@@ -10,6 +10,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-disease-table',
@@ -27,6 +28,7 @@ import {
   ],
 })
 export class DiseaseTableComponent implements AfterViewInit {
+  @ViewChild('diseaseToggle') diseaseToggle: ElementRef;
   queriedMeds: any[];
   dataSource;
   /* Displayable Columns
@@ -46,9 +48,26 @@ export class DiseaseTableComponent implements AfterViewInit {
   ];
   */
   expandedMeds;
-  selectedColumns: string[] = ['DiseaseState', 'Item', 'Recommendation'];
-  displayedColumns;
+  selectedColumns: string[] = [
+    'SearchTerm',
+    'DiseaseState',
+    'Item',
+    'Recommendation',
+  ];
+  displayedColumns = new FormControl();
+
+  displayedColumnsList: string[] = [
+    'SearchTerm',
+    'DiseaseState',
+    'Item',
+    'Category',
+    'ShortTableName',
+    'Recommendation',
+    'Inclusion',
+    'Exclusion',
+  ];
   arrayOfDiseaseStates: any[];
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.selectedColumns,
@@ -64,15 +83,13 @@ export class DiseaseTableComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource<BeersEntry>();
     this.webSocketService.listen('search-results').subscribe((data: any[]) => {
       let outarray = [];
-      this.queriedMeds = this.webSocketService.mapData(data, 'DiseaseState');
-      console.log(this.queriedMeds);
-      this.dataSource = new MatTableDataSource(this.queriedMeds);
+      outarray = this.webSocketService.mapData(data, 'DiseaseState');
+      this.dataSource = new MatTableDataSource(outarray);
       this.dataSource.sort = this.sort;
-      for (let item of this.queriedMeds) {
+      /*for (let item of this.queriedMeds) {
         outarray.push(item.DiseaseState);
       }
-      this.arrayOfDiseaseStates = [...new Set(outarray)].filter((item) => item);
-      console.log(this.arrayOfDiseaseStates);
+      this.arrayOfDiseaseStates = [...new Set(outarray)].filter((item) => item);*/
     });
   }
 }

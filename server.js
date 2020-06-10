@@ -64,7 +64,7 @@ io.on("connection", function (socket) {
     let stringlist = JSON.stringify(queryArray);
     let querylist = stringlist.replace(/\",\"/g, " OR ");
     let sql = `SELECT DISTINCT
-    all_guidance.*
+    all_guidance.*, di.DrugExamples as SearchTerm
   FROM
     dropdown_index di
   RIGHT JOIN all_guidance ON

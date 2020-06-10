@@ -13,6 +13,9 @@
           <mat-button-toggle disabled selected value="Item">
             Item
           </mat-button-toggle>
+          <mat-button-toggle disabled selected value="SearchTerm">
+            Search Term
+          </mat-button-toggle>
           <mat-button-toggle value="Category">Category </mat-button-toggle>
           <mat-button-toggle value="ShortTableName">
             Table Name
@@ -50,7 +53,7 @@
             cdkDrag
             *matHeaderCellDef
           >
-            {{ column | uppercase }}
+            {{ column | CaseSplit }}
             <div #dropcontainer *cdkDragPreview>
               <mat-list-item>{{ column | titlecase }}</mat-list-item>
             </div>

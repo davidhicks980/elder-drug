@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { WebsocketService, BeersEntry } from 'src/app/websocket.service';
 import {
   trigger,
@@ -47,7 +47,7 @@ export class FullTableComponent implements AfterViewInit {
   ];
   */
   expandedMeds;
-  selectedColumns: any[] = ['Item', 'Category'];
+  selectedColumns: any[] = ['SearchTerm', 'Item', 'Category'];
   displayedColumns;
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
@@ -60,11 +60,6 @@ export class FullTableComponent implements AfterViewInit {
   constructor(public webSocketService: WebsocketService) {}
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  ngOnChanges() {
-    this.displayedColumns = this.selectedColumns.forEach((column) =>
-      column.replace(/([A-Z])/g, ' $1').trim()
-    );
-  }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource<BeersEntry>();
 
@@ -72,7 +67,6 @@ export class FullTableComponent implements AfterViewInit {
       this.queriedMeds = this.webSocketService.mapData(data, null);
       this.dataSource = new MatTableDataSource(this.queriedMeds);
       this.dataSource.sort = this.sort;
-      console.log(this.queriedMeds);
     });
   }
 }
