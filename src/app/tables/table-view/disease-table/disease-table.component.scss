@@ -1,5 +1,4 @@
-@import "../../../../styles.scss";
-
+@import "../../../../_colors.scss";
 .size-constraint {
   overflow: auto;
   width: 98%;
@@ -120,12 +119,12 @@ td:not(.med-expanded-row) {
   border-right: 1px solid lightgray;
   padding: 0 0 0 15px;
   height: 0.5em;
-  background: mat-color($candy-app-primary);
+  background: $primary;
   color: whitesmoke;
 }
 
 th.mat-header-cell:hover {
-  background-color: mat-color($candy-app-primary, 0.8);
+  background-color: mat-color($primary, 0.8);
 }
 
 td.mat-cell {

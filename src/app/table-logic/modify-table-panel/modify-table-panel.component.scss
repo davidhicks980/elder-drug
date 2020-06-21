@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap");
+
+@import "../../../colors";
+div.table-modifier-list {
+  border: 1px solid lightgray;
+  overflow: visible;
+  position: relative;
+  right: 2%;
+  border-radius: 3px;
+  background-color: white;
+  width: 10vw;
+}
+
+div.padding {
+  padding-left: 10px;
+}
+
+.panel-header {
+  padding-top: 10px;
+  line-height: none;
+  background-color: $darkgray;
+  border-bottom: 1px solid lightgray;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  font-size: 12pt;
+  color: $textgray;
+
+  & p {
+    padding-left: 5%;
+  }
+}
+
+.mat-list-base .mat-list-option {
+  font-size: 10pt;
+  white-space: nowrap;
+}

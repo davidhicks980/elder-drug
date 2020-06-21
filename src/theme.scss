@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Calistoga&display=swap");
 
 //prettier-ignore
 
@@ -39,13 +38,6 @@ button[mat-stroked-button]:active {
 
 button[mat-flat-button]:active {
   background-color: white;
-}
-
-.solid-title-text {
-  font-family: "Calistoga", cursive;
-  font-size: 38pt;
-  color: rgba(47, 47, 47);
-  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
 }
 
 .mat-form-field-appearance-outline .mat-form-field-infix {
@@ -92,14 +84,6 @@ button[mat-flat-button]:active {
   width: 100% !important;
 }
 
-.action-button {
-  height: 2.3em;
-  font-size: 12pt;
-  letter-spacing: 3px;
-  width: 100%;
-  font-weight: 400;
-}
-
 .mat-drawer-inner-container {
   overflow: visible !important;
 }
@@ -125,4 +109,30 @@ tr:not(.med-expanded-row) .ellipsis {
 
 .white-header-arrow .mat-sort-header-arrow {
   color: white !important;
+}
+
+mat-pseudo-checkbox {
+  border: 1px solid gray !important;
+  width: 16px !important;
+  height: 16px !important;
+  overflow: hidden;
+  color: $accent;
+}
+mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  border: 2px solid $accent !important;
+  width: 16px !important;
+  height: 16px !important;
+  overflow: hidden;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked {
+  color: $accent;
+}
+
+mat-sidenav-content {
+  background-color: rgb(253, 253, 253);
+}
+
+.material-icon {
+  font-family: "Material Icons Round";
 }

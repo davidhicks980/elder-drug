@@ -1,0 +1,71 @@
+<form autocomplete="off">
+  <section class="height-limit border-box">
+    <div *ngFor="let drug of drugs; index as i" fxLayout="column">
+      <mat-form-field class="input-drug-field disable-text-selection">
+        <mat-label>Enter Drug (e.g. zolpidem)</mat-label>
+
+        <input
+          type="text"
+          class="input-drug-field"
+          aria-label="Search your drug"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+          (input)="getInputString($event.target.value)"
+          (keydown.Tab)="addDrug()"
+          (keydown.Enter)="search(submission)"
+          autofocus
+        />
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredOptions | async"
+            [value]="option"
+            [innerHTML]="boldString(option, activeString)"
+          >
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-icon
+          matSuffix
+          matRipple
+          [matRippleCentered]="true"
+          [matRippleRadius]="15"
+          [matRippleUnbounded]="true"
+          class="material-icon"
+          (click)="addDrug()"
+          *ngIf="i === 0"
+          color="accent"
+        >
+          add
+        </mat-icon>
+        <mat-icon
+          matSuffix
+          matRipple
+          [matRippleCentered]="true"
+          [matRippleRadius]="15"
+          [matRippleUnbounded]="true"
+          class="material-icon"
+          (click)="removeDrug(i)"
+          *ngIf="i > 0"
+          color="primary"
+        >
+          remove
+        </mat-icon>
+      </mat-form-field>
+    </div>
+  </section>
+  <section>
+    <div class="search-button-container">
+      <button
+        mat-raised-button
+        class="search-button sticky"
+        type="button"
+        color="primary"
+        (click)="search(submission)"
+      >
+        <mat-icon>search</mat-icon> SEARCH
+      </button>
+    </div>
+  </section>
+</form>

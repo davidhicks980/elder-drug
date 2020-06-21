@@ -1,0 +1,55 @@
+@import "../../../_colors.scss";
+#toolbar .drawer-button {
+  background-color: transparent !important;
+  border-bottom: none;
+}
+
+.content-title {
+  text-align: center;
+}
+
+#toolbar {
+  background: rgb(245, 245, 245);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+}
+#toolbar {
+  position: fixed;
+}
+
+#toolbar.transition {
+  background-color: $primary;
+  color: white;
+  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+}
+
+button.mat-stroked-button.toolbar-white-button {
+  border: 1px solid white;
+  &:active,
+  &:focus,
+  &:hover {
+    color: white;
+    background-color: transparentize($color: white, $amount: 0.8%);
+  }
+  position: fixed;
+  left: 88%;
+}
+
+button.mat-stroked-button.toolbar-red-button {
+  border: 1px solid $primary;
+  color: $primary;
+  &:active,
+  &:focus,
+  &:hover {
+    color: $primary;
+    background-color: transparentize($color: $primary, $amount: 0.8%);
+  }
+  position: fixed;
+  left: 88%;
+}
+.left-row {
+  width: 100px;
+}

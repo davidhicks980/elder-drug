@@ -19,9 +19,23 @@ export class WebsocketService {
       });
     });
   }
-  mapData(data: any[]) {
-    let arrayOfMedInfo: BeersEntry[] = data;
-    return arrayOfMedInfo;
+  mapData(data: any[], filter?: string[]) {
+    let output = [];
+    if (filter[0] != null || filter[1] != null) {
+      data.forEach((element) => {
+        if (
+          element[String(filter[0])] != null ||
+          element[String(filter[1])] != null
+        ) {
+          output.push(element);
+        }
+      });
+    } else if (data.length == 0) {
+      output = null;
+    } else {
+      output = data;
+    }
+    return output;
   }
 
   emit(messageID: string, data: any) {

@@ -1,0 +1,31 @@
+<mat-toolbar
+  id="toolbar"
+  [class]="navToggled ? 'null' : 'transition'"
+  [class.mat-elevation-z0]="navToggled"
+  [class.mat-elevation-z2]="!navToggled"
+>
+  <mat-toolbar-row>
+    <button
+      mat-icon-button
+      #toggleDrawer
+      class="drawer-button"
+      (click)="openDrawer()"
+    >
+      <mat-icon
+        [innerHTML]="navToggled == true ? 'chevron_left' : 'menu'"
+      ></mat-icon>
+    </button>
+
+    <app-small-logo [toggle]="navToggled"></app-small-logo>
+
+    <span>Your Search</span>
+    <span class="spacer"></span>
+    <!--<span #spacer fxFlex fxLayoutAlign="row"></span>-->
+    <button
+      [class]="navToggled ? 'toolbar-red-button' : 'toolbar-white-button'"
+      mat-stroked-button
+    >
+      Disclaimer
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

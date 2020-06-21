@@ -1,0 +1,97 @@
+@import "../../../colors";
+
+.dh-input {
+  width: 100%;
+}
+
+.material-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-drawer-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.caduceus {
+  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
+}
+
+.minus-button {
+  cursor: pointer;
+  text-align: center;
+  padding-top: 1px;
+  border-radius: 10;
+  height: 100%;
+  color: $accent;
+  opacity: 90%;
+}
+.minus-button:hover {
+  opacity: 100%;
+}
+
+.plus-button {
+  cursor: pointer;
+
+  opacity: 90%;
+}
+.plus-button:hover {
+  opacity: 100%;
+}
+
+.add-remove {
+  height: 100%;
+}
+
+.height-limit {
+  max-height: 65vh;
+  overflow: auto;
+}
+
+.disable-text-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#title {
+  padding-bottom: 0.2em;
+  padding-top: 0.15em;
+
+  width: 100%;
+}
+
+.search-button-container {
+  padding-top: 1.5em;
+}
+
+button[mat-raised-button].search-button {
+  width: 100%;
+}
+
+button[mat-raised-button].search-button:hover {
+  transition: ease-out 0.4s;
+  background-color: transparentize(adjust-hue($primary, 8deg), 0.1);
+}
+.gray-border {
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  padding-top: 1em;
+
+  /*
+  padding: 1em;
+  
+  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.185);*/
+}
+
+section.border-box {
+  z-index: -1;
+  padding: 0.5em;
+}

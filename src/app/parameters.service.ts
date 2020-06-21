@@ -1,40 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParametersService {
-  constructor() {}
-
-  public getTableInfo(tables) {
-    let array = [];
-    for (let table of tables) {
-      array.push(this.parametersList.find(({ name }) => name == table));
-    }
-    return array;
-  }
-
-  mapData(data: any[], filter?: string[]) {
-    let filteredArray = [];
-    let output;
-    if (filter[0] != null || filter[1] != null) {
-      data.forEach((element) => {
-        if (
-          element[String(filter[0])] != null ||
-          element[String(filter[1])] != null
-        ) {
-          filteredArray.push(element);
-        }
-      });
-      output = filteredArray;
-    } else {
-      output = data;
-    }
-    return output;
-  }
-  parametersList: TableParameters[] = [
+  public columnDefinitions: columnDefinition[] = [
     {
+      description: 'General Info',
+      active: true,
+      filters: [null],
       name: 'full',
       columnOptions: [
         'SearchTerm',
@@ -53,9 +28,11 @@ export class ParametersService {
         'ShortTableName',
         'Recommendation',
       ],
-      filters: [null, null],
     },
     {
+      description: 'Disease-Specific',
+      active: true,
+      filters: ['DiseaseState'],
       name: 'disease',
       columnOptions: [
         'SearchTerm',
@@ -72,10 +49,12 @@ export class ParametersService {
         'Inclusion',
         'Recommendation',
       ],
-      filters: ['DiseaseState', null],
     },
     {
+      description: 'Clearance Ranges',
       name: 'clearance',
+      active: true,
+      filters: ['MaximumClearance', 'MinimumClearance'],
       columnOptions: [
         'SearchTerm',
         'Item',
@@ -94,9 +73,11 @@ export class ParametersService {
         'Inclusion',
         'Recommendation',
       ],
-      filters: ['MinimumClearance', 'MaximumClearance'],
     },
     {
+      description: 'Drug Interactions',
+      active: true,
+      filters: ['DrugInteractions'],
       name: 'interactions',
       columnOptions: [
         'SearchTerm',
@@ -116,15 +97,31 @@ export class ParametersService {
         `Exclusion`,
         `Recommendation`,
       ],
-      filters: ['Interaction', null],
     },
   ];
+  static receiveTables$: any;
+  constructor() {}
+  // Observable string sources
+  private tableList = new Subject<object>();
+  private optionsList = new Subject<object>();
+
+  // Observable string streams
+  recieveTables$ = this.optionsList.asObservable();
+  recieveOptions$ = this.tableList.asObservable();
+
+  // Service message commands
+  sendTables(tables: object) {
+    this.optionsList.next(tables);
+  }
+  sendOptions(options: object) {
+    this.tableList.next(options);
+  }
 }
-export interface TableParameters {
-  toggleOptions?: string[];
+export interface columnDefinition {
+  description: string;
   name: string;
+  active: boolean;
+  filters: string[];
   columnOptions: string[];
   selectedColumns: string[];
-  filters: string[];
-  data?: any;
 }

@@ -1,0 +1,21 @@
+<mat-form-field color="accent">
+  <mat-label>Change Columns</mat-label>
+  <mat-select
+    *ngIf="selectedOptions"
+    #columnSelect
+    class="column-select"
+    multiple
+    [(ngModel)]="controller"
+  >
+    <mat-select-trigger>
+      {{ selectedOptions[0] | CaseSplit }}
+      <span *ngIf="selectedOptions.length > 1" class="additional-selection">
+        (+{{ selectedOptions.length - 1 }}
+        {{ selectedOptions.length === 2 ? "other" : "others" }})
+      </span>
+    </mat-select-trigger>
+    <mat-option *ngFor="let column of displayedOptions" [value]="column">
+      {{ column | CaseSplit }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

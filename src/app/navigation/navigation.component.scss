@@ -1,28 +1,4 @@
-@import "../../app-color-palette.scss";
-.flex-container-between {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.flex-container-around {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.dh-input {
-  width: 100%;
-}
+@import "../../_colors.scss";
 
 .material-container {
   position: absolute;
@@ -32,16 +8,9 @@
   right: 0;
 }
 
-.material-sidenav {
-  width: 22em;
-  border-right: 1px inset rgba(70, 70, 70, 0.404);
-  padding: 0 1.2em 0 1.2em;
-}
-
 .mat-drawer-content {
   height: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .caduceus {
@@ -94,8 +63,46 @@
   -ms-user-select: none;
   user-select: none;
 }
-#title {
-  padding-bottom: 0.2em;
-  padding-top: 0.15em;
-  width: 100%;
+
+div.logo-title {
+  font-family: $headerfont;
+  font-size: 42pt;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: #414042;
+  text-align: center;
+}
+
+mat-sidenav .logo-buffer {
+  padding-bottom: 2em;
+}
+
+mat-sidenav.material-sidenav {
+  width: 22em;
+  border-right: 1px inset rgba(70, 70, 70, 0.404);
+  padding: 0 1.5em 0 1.5em;
+  overflow: hidden;
+}
+
+mat-sidenav.material-fullscreen-sidenav {
+  width: 100vw;
+  border-right: 1px inset rgba(70, 70, 70, 0.404);
+  padding: 0 3em 0 3em;
+}
+
+button.sidenav-chevron-left {
+  font-size: 24pt;
+  position: sticky;
+  top: 90%;
+  border: 2px solid $primary;
+  color: $primary;
+}
+
+button.sidenav-chevron-left:hover {
+  background-color: transparentize($color: $primary, $amount: 0.5%);
+}
+
+.toolbar {
+  position: fixed;
+  z-index: 100;
 }

@@ -1,12 +1,32 @@
-.table-padding {
-  padding-top: 0.5em;
-  padding-left: 1em;
-  padding-right: 1em;
-}
 .show {
   display: "";
 }
 
 .hide {
   display: none;
+}
+
+.main-content-box {
+  width: 100%;
+  max-width: 100vw;
+  position: absolute;
+  box-sizing: border-box;
+  top: 6em;
+}
+
+.expansionPanel {
+  box-sizing: border-box;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: scroll;
+}
+.modifyPanel {
+  max-width: 30%;
+}
+.gray-big-logo {
+  filter: gray;
+  filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+  opacity: 50%;
+  height: 35em;
 }

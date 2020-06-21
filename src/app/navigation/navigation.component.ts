@@ -1,17 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { WebsocketService } from '../websocket.service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { MatInput } from '@angular/material/input';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navigation',
@@ -21,10 +12,21 @@ import { MatInput } from '@angular/material/input';
 })
 export class NavigationComponent {
   //@ViewChildren('searchInputs') submission: ElementRef;
-  @ViewChild('drawer') public sidenav: MatSidenav;
+  @ViewChild('leftdrawer') public sidenav: MatSidenav;
+  handsetLayout: boolean;
+  navToggled: boolean = true;
   close() {
     this.sidenav.close();
   }
 
-  constructor(public webSocketService: WebsocketService) {}
+  constructor(
+    public webSocketService: WebsocketService,
+    breakpointObserver: BreakpointObserver
+  ) {
+    breakpointObserver
+      .observe([Breakpoints.HandsetLandscape, Breakpoints.HandsetPortrait])
+      .subscribe((result) => {
+        this.handsetLayout = result.matches ? true : false;
+      });
+  }
 }

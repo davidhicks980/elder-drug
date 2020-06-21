@@ -2,35 +2,41 @@
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-<link
-  href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap"
-  rel="stylesheet"
-/>
+
 <mat-sidenav-container
   keyup.enter="search(submission)"
   class="material-container"
   (backdropClick)="close()"
+  fxFlex
 >
   <mat-sidenav
-    #drawer
-    class="material-sidenav"
+    #leftdrawer
+    [class]="
+      handsetLayout === true
+        ? 'material-fullscreen-sidenav'
+        : 'material-sidenav'
+    "
     [class.mat-elevation-z8]="true"
-    opened
+    [opened]="navToggled"
     mode="side"
-    (keydown.escape)="close()"
+    (keydown.escape)="navToggled = false"
+    (keydown.enter)="navToggled = false"
   >
-    <div>
-      <app-big-logo></app-big-logo>
-      <br />
-      <div class="title flex-container-around solid-title-text">
-        Elder Drug
-      </div>
-    </div>
-    <br />
-    <br />
-    <app-enter-drug-form></app-enter-drug-form>
+    <app-side-navigation></app-side-navigation>
   </mat-sidenav>
+  <mat-sidenav-content fxFlex
+    ><app-toolbar
+      class="toolbar"
+      [navToggled]="navToggled"
+      (toggleDrawer)="navToggled = !navToggled"
+    >
+    </app-toolbar>
 
-  <app-toolbar (pullDrawer)="drawer.toggle()"> </app-toolbar>
-  <app-table-logic></app-table-logic>
+    <app-table-logic></app-table-logic>
+  </mat-sidenav-content>
+
+  <!--<app-bottom-navigation
+    *ngIf="handsetLayout && !leftdrawer.opened"
+    (smallPullDrawer)="navToggled = !navToggled"
+  ></app-bottom-navigation>-->
 </mat-sidenav-container>
