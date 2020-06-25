@@ -35,6 +35,8 @@ $custom-typography: mat-typography-config(
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 @import "./theme.scss";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~primeng/resources/primeng.min.css";
 
 @mixin beers-button-component-theme($theme) {
 }

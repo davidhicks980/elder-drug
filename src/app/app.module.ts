@@ -11,7 +11,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
 import { ToolbarComponent } from './navigation/top-toolbar/toolbar.component';
 import { CaseSplitPipe } from './CaseSplitPipe';
-import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
 import { MedTableComponent } from './table-logic/med-table/med-table.component';
 import { TableLogicComponent } from './table-logic/table-logic.component';
 import { SmallLogoComponent } from './logo/small-logo/small-logo.component';
@@ -24,14 +23,18 @@ import { MatSortModule } from '@angular/material/sort';
 import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { MatSelectModule } from '@angular/material/select';
+import { SpyDirective } from './spy.directive';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     ToolbarComponent,
-    ModifyTablePanelComponent,
     CaseSplitPipe,
     MedTableComponent,
     TableLogicComponent,
@@ -42,6 +45,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ToggleOptionsComponent,
     BottomNavigationComponent,
     SideNavigationComponent,
+    ModifyTablePanelComponent,
+    SpyDirective,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    NgxDatatableModule,
+    TableModule,
+    MultiSelectModule,
+    MatSelectModule,
+    ScrollPanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

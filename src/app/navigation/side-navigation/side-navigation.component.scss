@@ -14,13 +14,12 @@ div.logo-title {
 }
 
 .logo-buffer {
-  padding-bottom: 1em;
-}
-
-mat-sidenav.material-fullscreen-sidenav {
-  width: 100vw;
-  border-right: 1px inset rgba(70, 70, 70, 0.404);
-  padding: 0 3em 0 3em;
+  padding-bottom: 4em;
+  padding-top: 1.5em;
+  position: relative;
+  background: white;
+  width: 100%;
+  border-bottom: 1px solid $lightgray;
 }
 
 button.sidenav-chevron-left {

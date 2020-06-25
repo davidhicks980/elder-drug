@@ -1,5 +1,11 @@
-import { Component, Input, ViewChild, OnChanges, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  Component,
+  ViewChild,
+  ViewEncapsulation,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import {
   trigger,
   state,
@@ -7,31 +13,73 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { MatSort } from '@angular/material/sort';
-import {
-  columnDefinition,
-  ParametersService,
-} from 'src/app/parameters.service';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { BeersEntry } from 'src/app/websocket.service';
+
+import { ColumnMode } from '@swimlane/ngx-datatable/';
+import { Table } from 'primeng/table';
+
+import { ParametersService } from 'src/app/parameters.service';
 
 @Component({
   selector: 'app-med-table',
   templateUrl: './med-table.component.html',
   styleUrls: ['./med-table.component.scss'],
   animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
+    trigger('rowExpansionTrigger', [
+      state('void', style({ height: '0px', minHeight: '0', opacity: 0 })),
+      state('active', style({ height: '*', opacity: 1 })),
       transition(
-        'expanded <=> collapsed, void=>expanded',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+        'active <=> void, void=>active',
+        animate('450ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       ),
     ]),
   ],
 })
 export class MedTableComponent implements OnChanges, OnInit {
-  @ViewChild('medTable') dataTable: MatTable<BeersEntry>;
+  @ViewChild('myTable') table: any;
+  @Input() tableData: Table[];
+  rows: any[] = [];
+  loadingIndicator = true;
+  reorderable = true;
+  public columnOptions: { field: string; header: string }[];
+  displayedColumns: string[];
+  ColumnMode = ColumnMode;
+  selectOptions: string[];
+  tableName: string;
+  hideContents: boolean;
+  expandFieldData: { field: string; header: string }[];
+  changeActiveColumns(cols: string[]) {
+    this.columnOptions = this.parameterService.lookupColumns(cols);
+  }
+  ngOnInit() {
+    this.tableName = this.tableData['key'];
+    let initOptions = this.parameterService.columnDefinitions.filter((item) => {
+      return item.name === this.tableName;
+    })[0];
+    this.columnOptions = this.parameterService
+      .lookupColumns(initOptions.selectedColumns)
+      .filter(Boolean);
+    this.expandFieldData = this.parameterService
+      .lookupColumns(initOptions.columnOptions)
+      .filter(Boolean);
+    this.rows = this.tableData['value'];
+    this.selectOptions.length = 0;
+    for (let item of this.columnOptions) {
+      this.selectOptions.push(item.field);
+    }
+  }
+
+  toggleExpandRow(row) {
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {}
+  constructor(public parameterService: ParametersService) {}
+  ngOnChanges() {
+    this.rows = this.tableData['value'];
+  }
+}
+
+/* @ViewChild('medTable') dataTable: MatTable<BeersEntry>;
   @Input() dataSource: MatTableDataSource<BeersEntry>;
   selectedColumns: string[];
   @Input() name: string;
@@ -68,3 +116,4 @@ export class MedTableComponent implements OnChanges, OnInit {
     );
   }
 }
+*/

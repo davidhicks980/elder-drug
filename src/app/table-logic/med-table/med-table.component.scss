@@ -14,24 +14,12 @@ h2 {
 .mat-expansion-panel {
   box-shadow: none !important;
   border: 1px solid rgb(218, 218, 218);
-  background: none;
-  box-sizing: border-box;
-  overflow-x: auto;
-  max-width: 1200px;
-  width: fit-content;
 }
 
-.flex-h-container {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  width: fit-content;
-  padding-bottom: 1em;
+.hide {
+  display: none;
 }
 
-.flex-v-container {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  align-content: center;
+.show {
+  display: "";
 }

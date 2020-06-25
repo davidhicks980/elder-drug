@@ -1,27 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  ViewChild,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import {
   ParametersService,
   columnDefinition,
 } from 'src/app/parameters.service';
+import {
+  Breakpoints,
+  BreakpointState,
+  BreakpointObserver,
+} from '@angular/cdk/layout';
 
 @Component({
-  selector: 'app-modify-table-panel',
+  selector: 'modify-table-panel',
   template: ` <div class="padding">
-    <div class="table-modifier-list">
+    <div *ngIf="smallScreen">
+      <div>
+        <h3>Show Tables</h3>
+      </div>
+      <mat-button-toggle-group
+        (change)="updateOptions($event.value)"
+        [value]="activeTables"
+        multiple
+        class="toggle-group"
+      >
+        <mat-button-toggle
+          class="toggle-button"
+          *ngFor="let option of options"
+          [checked]="isTableActive(option.name)"
+          [value]="option.name"
+          [disabled]="!isTableActive(option.name)"
+        >
+          {{ option.name | CaseSplit }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="table-modifier-list" *ngIf="!smallScreen">
       <div class="panel-header">
         <p>Show Tables</p>
       </div>
       <mat-selection-list
-        (click)="updateOptions(activeTables)"
-        [(ngModel)]="activeTables"
+        (ngModelChange)="updateOptions($event)"
+        [ngModel]="activeTables"
       >
         <div fxFlex fxFlexAlign="center center">
           <mat-list-option
             *ngFor="let option of options"
             [value]="option.name"
-            selected
+            [selected]="isTableActive(option.name)"
+            [disabled]="!isTableActive(option.name)"
           >
-            <div class="list-text">{{ option.name }}</div>
+            <div class="list-text">{{ option.name | CaseSplit }}</div>
           </mat-list-option>
         </div>
       </mat-selection-list>
@@ -29,32 +65,41 @@ import {
   </div>`,
   styleUrls: ['./modify-table-panel.component.scss'],
 })
-export class ModifyTablePanelComponent {
+export class ModifyTablePanelComponent implements OnChanges, OnInit {
   activeTables: string[] = ['full', 'disease'];
   public selectedOptions: string[];
   public message: string;
   options: columnDefinition[];
+  smallScreen: boolean;
+  @Input() tablesWithData: string[];
+  @Output() sendActiveTables: EventEmitter<string[]> = new EventEmitter();
 
-  updateOptions(selectedOptions) {
-    let output = [];
+  updateOptions(selections) {
+    this.sendActiveTables.emit(selections);
+  }
+  ngOnInit() {
     this.options = this.parameterService.columnDefinitions;
-    for (let obj of this.options) {
-      if (selectedOptions.includes(obj.name)) {
-        obj.active = true;
-        output.push(obj);
-      } else {
-        obj.active = false;
-      }
-    }
-    this.parameterService.sendOptions(output);
   }
 
-  public constructor(public parameterService: ParametersService) {
-    this.options = this.parameterService.columnDefinitions;
-    parameterService.recieveTables$.subscribe((options: columnDefinition[]) => {
-      options.forEach((option) => {
-        this.activeTables.push(option.description);
+  isTableActive(table) {
+    return this.tablesWithData.includes(table);
+  }
+
+  ngOnChanges() {
+    this.sendActiveTables.emit(this.activeTables);
+  }
+  public constructor(
+    public parameterService: ParametersService,
+    public breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.XSmall])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.smallScreen = true;
+        } else {
+          this.smallScreen = false;
+        }
       });
-    });
   }
 }

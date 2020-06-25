@@ -9,9 +9,7 @@ export class ToggleOptionsComponent implements OnChanges {
   @Input() keys: string[];
   @Output() buttonSelection: string;
   options: string[];
-  getVal(val) {
-    console.log(val);
-  }
+  getVal(val) {}
 
   constructor() {}
 

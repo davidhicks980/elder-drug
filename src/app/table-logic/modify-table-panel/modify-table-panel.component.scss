@@ -8,11 +8,13 @@ div.table-modifier-list {
   right: 2%;
   border-radius: 3px;
   background-color: white;
-  width: 10vw;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: fit-content;
 }
 
 div.padding {
-  padding-left: 10px;
+  padding: 20px;
 }
 
 .panel-header {
@@ -24,13 +26,33 @@ div.padding {
   border-top-right-radius: 3px;
   font-size: 12pt;
   color: $textgray;
+  font-weight: 500;
 
   & p {
-    padding-left: 5%;
+    padding-left: 1em;
   }
 }
 
+mat-selection-list.mat-list-base {
+  padding-top: 1px;
+}
 .mat-list-base .mat-list-option {
   font-size: 10pt;
   white-space: nowrap;
+}
+mat-button-toggle.toggle-button {
+  min-width: min-content;
+  max-width: 25%;
+  background-color: $darkgray;
+  color: whitesmoke;
+  border: 1px solid black;
+  line-height: 36px;
+  &:hover {
+    background-color: desaturate(darken($accent, 30%), 80%);
+  }
+}
+
+mat-button-toggle-group.toggle-group {
+  width: fit-content;
+  border: none;
 }

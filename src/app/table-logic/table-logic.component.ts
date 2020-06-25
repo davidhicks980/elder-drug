@@ -1,31 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { WebsocketService, BeersEntry } from '../websocket.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ParametersService, columnDefinition } from '../parameters.service';
+import {
+  Breakpoints,
+  BreakpointState,
+  BreakpointObserver,
+} from '@angular/cdk/layout';
 @Component({
   selector: 'app-table-logic',
   template: `
-    <div class="main-content-box gray-big-logo">
-      <app-big-logo *ngIf="!active"></app-big-logo>
-    </div>
-    <div class="main-content-box" fxLayout="row" fxLayoutAlign="center">
-      <div fxLayout="column">
-        <div #expansionPanel *ngFor="let table of activeTables">
-          <app-med-table
-            [ngStyle]="
-              table.active === true ? { display: '' } : { display: 'none' }
-            "
-            [dataSource]="dataSource"
-            [description]="table.description"
-            [name]="table.name"
-            [filters]="table.filters"
+    <div fxLayoutAlign="center none">
+      <div class="main-content-box gray-big-logo"></div>
+      <div
+        class="main-content-box"
+        fxFlex
+        fxFlexOffset="10px"
+        [fxLayout]="smallScreen ? 'column' : 'row'"
+        fxLayoutAlign="smallScreen ? 'start center' : 'center start'"
+      >
+        <div
+          fxFlex
+          [fxFlexOrder]="smallScreen === true ? '2' : '1'"
+          fxLayout="column"
+        >
+          <div
+            #expansionPanel
+            *ngFor="let table of tables | keyvalue; trackBy: trackByFn"
           >
-          </app-med-table>
-          <br />
+            <app-med-table
+              *ngIf="isTableActive(activeTables, table.key)"
+              [tableData]="table"
+            >
+            </app-med-table>
+            <br />
+          </div>
         </div>
-      </div>
-      <div #modifyPanel>
-        <app-modify-table-panel></app-modify-table-panel>
+        <div
+          #modifyPanel
+          fxFlex
+          [fxFlexOrder]="smallScreen === true ? '1' : '2'"
+        >
+          <modify-table-panel
+            [hidden]="!active"
+            [tablesWithData]="tablesWithData"
+            (sendActiveTables)="setActiveTables($event)"
+          ></modify-table-panel>
+        </div>
       </div>
     </div>
   `,
@@ -34,13 +55,11 @@ import { ParametersService, columnDefinition } from '../parameters.service';
 export class TableLogicComponent implements OnInit {
   data: any;
   active: boolean = false;
-  emptyTables: string[];
-  activeTables: columnDefinition[];
-
-  dataSource: MatTableDataSource<BeersEntry>;
-
-  sort: any;
-
+  tablesWithData: string[];
+  tables: Table[];
+  activeTables: string[];
+  smallScreen: boolean;
+  trackByFn: TrackByFunction<any> = (_, item) => item.id;
   ngOnInit() {
     let columnFilter: (data: BeersEntry, filter: string) => boolean = function (
       data: BeersEntry,
@@ -49,20 +68,62 @@ export class TableLogicComponent implements OnInit {
       if (data[filter]) return true;
     };
     //Handles websocket data --> connects to main database to provide Beers info
-    this.webSocketService.listen('search-results').subscribe((data: any[]) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.filterPredicate = columnFilter;
-    });
+    this.webSocketService
+      .listen('search-results')
+      .subscribe((tables: Table[]) => {
+        this.active = true;
+        this.tables = tables;
+        this.tablesWithData = this.parameterService.filterInactiveTables(
+          this.tables
+        );
+      });
+  }
+
+  public isTableActive(activeList: string[], table: string) {
+    return activeList.includes(table);
+  }
+
+  setActiveTables(tables) {
+    this.activeTables = tables;
   }
 
   constructor(
     public webSocketService: WebsocketService,
-    private parameterService: ParametersService
+    private parameterService: ParametersService,
+    private breakpointObserver: BreakpointObserver
   ) {
-    this.parameterService.recieveOptions$.subscribe(
-      (options: columnDefinition[]) => {
-        this.activeTables = options;
-      }
-    );
+    {
+      this.breakpointObserver
+        .observe([Breakpoints.Small, Breakpoints.HandsetPortrait])
+        .subscribe((state: BreakpointState) => {
+          if (state.matches) {
+            this.smallScreen = true;
+          } else {
+            this.smallScreen = false;
+          }
+        });
+    }
   }
+}
+
+export interface Columns {
+  EntryID: number;
+  DiseaseState: string;
+  Category: number;
+  TableDefinition: string;
+  Item: string;
+  MinimumClearance: number;
+  MaximumClearance: number;
+  DrugInteraction: string;
+  Inclusion: string;
+  Exclusion: string;
+  Rationale: string;
+  Recommendation: string;
+  RecommendationLineTwo: string;
+  ItemType: string;
+  ShortTableName: string;
+  SearchTerm: string;
+}
+export interface Table {
+  [key: string]: any;
 }

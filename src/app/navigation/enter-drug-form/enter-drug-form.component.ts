@@ -4,6 +4,7 @@ import {
   ViewChildren,
   QueryList,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -24,7 +25,6 @@ import {
 export class EnterDrugFormComponent implements OnInit {
   @ViewChildren(MatInput) submission: QueryList<MatInput>;
   @ViewChild(MatInput) input: MatInput;
-
   //@ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('drawer') public sidenav: MatSidenav;
   showFiller = true;
@@ -34,7 +34,7 @@ export class EnterDrugFormComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   activeString: string;
   selectedTablesOnSearch: string[];
-
+  @Input() navToggled: boolean = true;
   public drugs: Array<Object> = [
     {
       id: '',
@@ -106,7 +106,6 @@ export class EnterDrugFormComponent implements OnInit {
       for (i = 0; i < length; i++) {
         dropDown.push(data[i].Items.toLowerCase()); //TODO: Column is defined by dot notation
       }
-      console.log(dropDown);
       this.filteredOptions = this.myControl.valueChanges.pipe(
         map((value) => this._filter(value, dropDown).sort())
       );

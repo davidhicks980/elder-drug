@@ -9,22 +9,28 @@
 }
 
 .st0 {
-  fill: #e6e7e8;
+  // cup bowl
+  fill: lighten($color: $gray, $amount: 60%);
 }
 .st1 {
-  fill: lightskyblue;
+  //cup interior
+  fill: lighten($color: $gray, $amount: 30%);
 }
 .st2 {
-  fill: #e6e6e6;
+  //cup stem
+  fill: lighten($color: $gray, $amount: 60%);
 }
 .st3 {
-  fill: #a7a9aa;
+  //cup shadow
+  fill: lighten($color: $gray, $amount: 40%);
 }
 .st4 {
-  fill: $gray;
+  //snake
+  fill: desaturate($color: $accent, $amount: 60%);
 }
 .st5 {
-  fill: #ffffff;
+  //snake eyes
+  fill: whitesmoke;
 }
 
 .hide {

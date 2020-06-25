@@ -61,9 +61,9 @@ io.on("connection", function (socket) {
         queryArray.push(`lower(di.DrugExamples) = lower('${drug}')`);
       }
     }
-    let stringlist = JSON.stringify(queryArray);
-    let querylist = stringlist.replace(/\",\"/g, " OR ");
-    let sql = `SELECT DISTINCT
+    const stringlist = JSON.stringify(queryArray);
+    const querylist = stringlist.replace(/\",\"/g, " OR ");
+    const sql = `SELECT DISTINCT
     all_guidance.*, di.DrugExamples as SearchTerm
   FROM
     dropdown_index di
@@ -72,8 +72,21 @@ io.on("connection", function (socket) {
     WHERE ${JSON.parse(querylist)}`;
     console.log(sql);
     conn.query(sql, function (err, result) {
+      console.log(result);
+      let diseaseGuidanceTable = result.filter((item) => item.Category == 3);
+      let drugInteractionTable = result.filter((item) => item.Category == 5);
+      let clearanceTable = result.filter((item) => item.Category == 6);
+
+      const output = {
+        Clearance: clearanceTable,
+        DrugInteraction: drugInteractionTable,
+        DiseaseGuidance: diseaseGuidanceTable,
+        GeneralInfo: result,
+      };
+
+      console.log(output);
       if (err) null;
-      io.emit("search-results", result);
+      io.emit("search-results", output);
     });
   });
 });

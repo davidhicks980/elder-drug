@@ -2,7 +2,7 @@
 @import "./palette";
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap");
 
-$app-primary: mat-palette($redPalette, 700);
+$app-primary: mat-palette($mat-amber, 700);
 $app-accent: mat-palette($bluePalette, A700);
 
 $primary: mat-color($app-primary);
@@ -11,15 +11,19 @@ $accent: mat-color($app-accent);
 $darkprimary: mat-color($app-primary, 800);
 $darkaccent: mat-color($app-accent, 900);
 
+$brightAccent: mat-color($app-accent, A700);
+
 $darkblue: mat-color($mat-indigo, 900);
 $lightblue: mat-color($mat-indigo, A400);
 
 $lightprimary: mat-color($app-primary, 400);
-$lightaccent: mat-color($app-accent, A200);
+$lightaccent: mat-color($app-accent, 600);
 
 $gray: #414042;
-$darkgray: darken($gray, 10%);
-$lightgray: lighten($gray, 30%);
-$textgray: lighten($gray, 90%);
+$darkgray: darken($gray, 5%);
+$lightgray: lighten($gray, 60%);
+$lightergray: lighten($gray, 70%);
+
+$textgray: lighten($gray, 70%);
 
 $headerfont: "Titillium Web", san-serif;

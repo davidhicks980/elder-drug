@@ -9,24 +9,5 @@
 <div>
   <h4 style="text-align: center; font-family: 'Rubik', sans-serif;"></h4>
 </div>
-<app-enter-drug-form></app-enter-drug-form>
 
-<!--<button
-  mat-icon-button
-  class="sidenav-chevron-left"
-  *ngIf="handsetLayout"
-  (click)="navToggled = !navToggled"         
-
-
-
-  ++
-
-
-
-
-
-  
->
-  <mat-icon>chevron_left</mat-icon>
-</button>
--->
+<app-enter-drug-form [navToggled]="navToggled"></app-enter-drug-form>

@@ -98,7 +98,6 @@ button[mat-button-toggle] {
 }
 
 .mat-grid-tile {
-  height: fit-content;
 }
 
 tr:not(.med-expanded-row) .ellipsis {
@@ -135,4 +134,29 @@ mat-sidenav-content {
 
 .material-icon {
   font-family: "Material Icons Round";
+}
+
+table {
+  border-collapse: collapse !important;
+  border-spacing: none;
+  font-family: "Roboto", sans-serif;
+  min-width: 0px;
+}
+
+.ui-table table {
+  table-layout: auto;
+  min-width: 0px;
+}
+
+mat-button-toggle.mat-button-toggle-checked {
+  background: $accent;
+}
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 36px !important;
+}
+
+.mat-button-toggle-disabled {
+  background-color: transparentize($color: $darkgray, $amount: 0.5%) !important;
+  color: whitesmoke;
+  outline: none;
 }

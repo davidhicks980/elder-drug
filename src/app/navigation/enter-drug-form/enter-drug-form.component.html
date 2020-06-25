@@ -1,12 +1,20 @@
-<form autocomplete="off">
+<form
+  autocomplete="off"
+  *ngIf="navToggled"
+  fxLayout="column"
+  fxLayoutAlign="none center"
+>
   <section class="height-limit border-box">
     <div *ngFor="let drug of drugs; index as i" fxLayout="column">
-      <mat-form-field class="input-drug-field disable-text-selection">
+      <mat-form-field
+        appearance="outline"
+        color="accent"
+        class="disable-text-selection"
+      >
         <mat-label>Enter Drug (e.g. zolpidem)</mat-label>
 
         <input
           type="text"
-          class="input-drug-field"
           aria-label="Search your drug"
           matInput
           [formControl]="myControl"
@@ -37,7 +45,7 @@
           *ngIf="i === 0"
           color="accent"
         >
-          add
+          add_circle
         </mat-icon>
         <mat-icon
           matSuffix
@@ -50,18 +58,19 @@
           *ngIf="i > 0"
           color="primary"
         >
-          remove
+          delete
         </mat-icon>
       </mat-form-field>
     </div>
   </section>
-  <section>
-    <div class="search-button-container">
+  <br />
+  <section class="search-button-container">
+    <div fxLayoutAlign="center none">
       <button
         mat-raised-button
         class="search-button sticky"
         type="button"
-        color="primary"
+        color="accent"
         (click)="search(submission)"
       >
         <mat-icon>search</mat-icon> SEARCH

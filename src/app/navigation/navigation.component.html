@@ -22,7 +22,7 @@
     (keydown.escape)="navToggled = false"
     (keydown.enter)="navToggled = false"
   >
-    <app-side-navigation></app-side-navigation>
+    <app-side-navigation [navToggled]="navToggled"></app-side-navigation>
   </mat-sidenav>
   <mat-sidenav-content fxFlex
     ><app-toolbar

@@ -11,6 +11,7 @@
 .mat-drawer-content {
   height: 100%;
   overflow-y: auto;
+  background: rgb(250, 250, 250);
 }
 
 .caduceus {
@@ -80,7 +81,6 @@ mat-sidenav .logo-buffer {
 mat-sidenav.material-sidenav {
   width: 22em;
   border-right: 1px inset rgba(70, 70, 70, 0.404);
-  padding: 0 1.5em 0 1.5em;
   overflow: hidden;
 }
 
