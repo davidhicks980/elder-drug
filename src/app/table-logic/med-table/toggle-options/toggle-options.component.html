@@ -4,7 +4,7 @@
       <mat-label>Filter</mat-label>
       <mat-select #select (selectionChange)="updateOptions(select.value)">
         <mat-option *ngFor="let key of keys" [value]="key">{{
-          key | CaseSplit
+          key | caseSplit
         }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -16,7 +16,7 @@
       #fullToggleColumns="matButtonToggleGroup"
     >
       <mat-button-toggle *ngFor="let option of options" value="{{ option }}">
-        {{ option | CaseSplit }}
+        {{ option | caseSplit }}
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>

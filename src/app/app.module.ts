@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
 import { ToolbarComponent } from './navigation/top-toolbar/toolbar.component';
-import { CaseSplitPipe } from './CaseSplitPipe';
 import { MedTableComponent } from './table-logic/med-table/med-table.component';
 import { TableLogicComponent } from './table-logic/table-logic.component';
 import { SmallLogoComponent } from './logo/small-logo/small-logo.component';
@@ -27,15 +26,17 @@ import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modi
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { MatSelectModule } from '@angular/material/select';
-import { SpyDirective } from './spy.directive';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { DeferModule } from 'primeng/defer';
+import { ToStringPipe } from './to-string.pipe';
+import { caseSplitPipe } from './case-split.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     ToolbarComponent,
-    CaseSplitPipe,
+    caseSplitPipe,
     MedTableComponent,
     TableLogicComponent,
     SmallLogoComponent,
@@ -46,7 +47,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     BottomNavigationComponent,
     SideNavigationComponent,
     ModifyTablePanelComponent,
-    SpyDirective,
+    ToStringPipe,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +66,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     MultiSelectModule,
     MatSelectModule,
     ScrollPanelModule,
+    DeferModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

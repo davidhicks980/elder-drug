@@ -27,7 +27,6 @@ tr.ptable-body--row.p-table-body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 0px;
 }
 .ptable-body--row .data-cell--padding {
   padding-top: 15px;
@@ -41,7 +40,6 @@ tr.ptable-body--row.p-table-body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 0px;
 }
 .p-table-header-cell.ptable-header-cell--padding {
   padding-top: 1.3em;
@@ -55,13 +53,12 @@ tr.ptable-body--row.p-table-body {
   font-size: 10pt;
   font-weight: 500;
   color: $textgray;
-
   border-spacing: none;
   white-space: nowrap;
-
   letter-spacing: 0.5px;
   cursor: pointer;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:last-of-type {
     border-top-right-radius: 3px;
   }
@@ -84,6 +81,8 @@ tr.ptable-body--row.p-table-body {
   border-radius: 4px;
   border: 2px solid $darkgray;
   border-bottom: 3px solid $darkgray;
+  width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -101,11 +100,15 @@ tr.ptable-body--row.p-table-body {
 .expand-header-cell {
   z-index: 200;
   border-left: 8px solid lighten($accent, 10%);
-  overflow: none;
+
+  & .data-cell {
+    white-space: pre-wrap;
+    text-overflow: unset;
+    max-width: 300px;
+  }
 }
 .expand-header-cell .ptable-body--row {
-  white-space: normal !important;
-  overflow: none;
+  white-space: pre-wrap !important;
 }
 .detail-cell {
   background-color: white;
@@ -113,9 +116,14 @@ tr.ptable-body--row.p-table-body {
   border-left: 8px solid lighten($accent, 25%);
   font-size: 10pt;
   border-top: 1px solid $lightgray;
-  overflow: none;
+  overflow: hidden;
 }
 
 td.expand-icon-cell:not(:hover) {
   color: $gray;
+}
+
+#dataDisplay {
+  width: 100%;
+  box-sizing: border-box;
 }

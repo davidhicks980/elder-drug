@@ -37,7 +37,7 @@ import {
           [value]="option.name"
           [disabled]="!isTableActive(option.name)"
         >
-          {{ option.name | CaseSplit }}
+          {{ option.name | caseSplit }}
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
@@ -57,7 +57,7 @@ import {
             [selected]="isTableActive(option.name)"
             [disabled]="!isTableActive(option.name)"
           >
-            <div class="list-text">{{ option.name | CaseSplit }}</div>
+            <div class="list-text">{{ option.name | caseSplit }}</div>
           </mat-list-option>
         </div>
       </mat-selection-list>
@@ -79,10 +79,15 @@ export class ModifyTablePanelComponent implements OnChanges, OnInit {
   }
   ngOnInit() {
     this.options = this.parameterService.columnDefinitions;
+    this.updateOptions(this.isTableActive);
   }
 
   isTableActive(table) {
-    return this.tablesWithData.includes(table);
+    try {
+      return this.tablesWithData.includes(table);
+    } catch (err) {
+      null;
+    }
   }
 
   ngOnChanges() {

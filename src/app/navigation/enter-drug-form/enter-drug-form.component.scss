@@ -72,19 +72,18 @@
 .search-button-container {
   padding-top: 3em;
   padding-bottom: 75vh;
-  background-color: white;
   width: 100%;
   border-top: 1px solid $lightgray;
 }
 
 button[mat-raised-button].search-button {
   width: 90%;
-  background-color: darken(desaturate($color: $accent, $amount: 30%), 10%);
+  color: white;
 }
 
 button[mat-raised-button].search-button:hover {
   transition: ease-out 0.4s;
-  background-color: desaturate(darken($accent, 10%), 50%);
+  background-color: lighten(saturate($primary, 10%), 10%);
 }
 
 section.border-box {

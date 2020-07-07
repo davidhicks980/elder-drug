@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 8080;
 let server = app.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`)
+  console.log(`Elder Drug listening on port ${port}!`)
 );
 
 app.use(express.static(__dirname + "/public"));
@@ -66,13 +66,11 @@ io.on("connection", function (socket) {
     const sql = `SELECT DISTINCT
     all_guidance.*, di.DrugExamples as SearchTerm
   FROM
-    dropdown_index di
+    dropdown_index_a di
   RIGHT JOIN all_guidance ON
     di.EntryID = all_guidance.EntryID
     WHERE ${JSON.parse(querylist)}`;
-    console.log(sql);
     conn.query(sql, function (err, result) {
-      console.log(result);
       let diseaseGuidanceTable = result.filter((item) => item.Category == 3);
       let drugInteractionTable = result.filter((item) => item.Category == 5);
       let clearanceTable = result.filter((item) => item.Category == 6);

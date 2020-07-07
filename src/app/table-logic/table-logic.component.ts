@@ -1,7 +1,6 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
-import { WebsocketService, BeersEntry } from '../websocket.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { ParametersService, columnDefinition } from '../parameters.service';
+import { WebsocketService } from '../websocket.service';
+import { ParametersService } from '../parameters.service';
 import {
   Breakpoints,
   BreakpointState,
@@ -14,16 +13,11 @@ import {
       <div class="main-content-box gray-big-logo"></div>
       <div
         class="main-content-box"
-        fxFlex
         fxFlexOffset="10px"
         [fxLayout]="smallScreen ? 'column' : 'row'"
         fxLayoutAlign="smallScreen ? 'start center' : 'center start'"
       >
-        <div
-          fxFlex
-          [fxFlexOrder]="smallScreen === true ? '2' : '1'"
-          fxLayout="column"
-        >
+        <div [fxFlexOrder]="smallScreen === true ? '2' : '1'" fxLayout="column">
           <div
             #expansionPanel
             *ngFor="let table of tables | keyvalue; trackBy: trackByFn"
@@ -38,7 +32,7 @@ import {
         </div>
         <div
           #modifyPanel
-          fxFlex
+          fxFlex="20"
           [fxFlexOrder]="smallScreen === true ? '1' : '2'"
         >
           <modify-table-panel
@@ -61,12 +55,6 @@ export class TableLogicComponent implements OnInit {
   smallScreen: boolean;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
   ngOnInit() {
-    let columnFilter: (data: BeersEntry, filter: string) => boolean = function (
-      data: BeersEntry,
-      filter: string
-    ): boolean {
-      if (data[filter]) return true;
-    };
     //Handles websocket data --> connects to main database to provide Beers info
     this.webSocketService
       .listen('search-results')

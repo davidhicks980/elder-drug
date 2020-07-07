@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   socket: any; //socket that connects to socket.io server
-  readonly uri: string = 'ws://localhost:8080';
 
   constructor() {
-    this.socket = io(this.uri); //initiates socket instance
+    this.socket = io(); //initiates socket instance
   }
   listen(eventName: string) {
     return new Observable((subscriber) => {

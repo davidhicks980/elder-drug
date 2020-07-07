@@ -17,7 +17,7 @@
           type="text"
           aria-label="Search your drug"
           matInput
-          [formControl]="myControl"
+          [formControl]="control"
           [matAutocomplete]="auto"
           (input)="getInputString($event.target.value)"
           (keydown.Tab)="addDrug()"
@@ -70,7 +70,7 @@
         mat-raised-button
         class="search-button sticky"
         type="button"
-        color="accent"
+        color="primary"
         (click)="search(submission)"
       >
         <mat-icon>search</mat-icon> SEARCH

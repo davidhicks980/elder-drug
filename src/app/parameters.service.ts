@@ -111,7 +111,7 @@ export class ParametersService {
         `DrugExamples`,
         `SearchTerm`,
         `Item`,
-        `Interaction`,
+        `DrugInteraction`,
         `Inclusion`,
         `Exclusion`,
         `Recommendation`,

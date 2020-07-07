@@ -8,12 +8,11 @@
 
 .main-content-box {
   padding-top: 6em;
-  min-width: 0px;
-  display: inline;
+  overflow: visible;
 }
 
 .modify-panel {
-  width: 100%;
+  width: 30%;
 }
 
 .gray-big-logo {
@@ -27,4 +26,6 @@
 #expansionPanel {
   padding: 1em;
   min-width: 0px;
+  overflow: hidden;
+  max-width: 80%;
 }

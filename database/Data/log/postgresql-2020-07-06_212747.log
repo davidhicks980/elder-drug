@@ -1,0 +1,6 @@
+2020-07-06 21:27:47.094 EDT [6416] LOG:  database system was interrupted; last known up at 2020-06-24 08:37:42 EDT
+2020-07-06 21:27:48.254 EDT [6416] LOG:  database system was not properly shut down; automatic recovery in progress
+2020-07-06 21:27:48.259 EDT [6416] LOG:  redo starts at 0/168ED30
+2020-07-06 21:27:48.261 EDT [6416] LOG:  invalid record length at 0/168EE18: wanted 24, got 0
+2020-07-06 21:27:48.262 EDT [6416] LOG:  redo done at 0/168EDE0
+2020-07-06 21:27:48.286 EDT [5828] LOG:  database system is ready to accept connections

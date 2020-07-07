@@ -1,5 +1,6 @@
 @import "../../../_colors.scss";
 @import "./med-table-styles.scss";
+@import "./grid.med-table-styles.scss";
 h2 {
   padding-bottom: 1px;
   margin-bottom: 0.5em;
@@ -9,11 +10,18 @@ h2 {
 .mat-standard-chip {
   min-height: 1.7em;
   border-radius: 8px;
+  color: white;
+}
+.accent {
+  background-color: $accent;
 }
 
 .mat-expansion-panel {
   box-shadow: none !important;
   border: 1px solid rgb(218, 218, 218);
+  overflow: hidden;
+  max-width: 80vw;
+  box-sizing: border-box;
 }
 
 .hide {

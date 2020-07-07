@@ -5,6 +5,8 @@ import {
   Input,
   OnChanges,
   OnInit,
+  ChangeDetectionStrategy,
+  AfterViewInit,
 } from '@angular/core';
 import {
   trigger,
@@ -34,24 +36,24 @@ import { ParametersService } from 'src/app/parameters.service';
     ]),
   ],
 })
-export class MedTableComponent implements OnChanges, OnInit {
+export class MedTableComponent implements OnChanges, OnInit, AfterViewInit {
   @ViewChild('myTable') table: any;
   @Input() tableData: Table[];
   rows: any[] = [];
-  loadingIndicator = true;
-  reorderable = true;
   public columnOptions: { field: string; header: string }[];
   displayedColumns: string[];
   ColumnMode = ColumnMode;
   selectOptions: string[];
   tableName: string;
-  hideContents: boolean;
   expandFieldData: { field: string; header: string }[];
   changeActiveColumns(cols: string[]) {
     this.columnOptions = this.parameterService.lookupColumns(cols);
   }
   ngOnInit() {
     this.tableName = this.tableData['key'];
+  }
+
+  ngAfterViewInit() {
     let initOptions = this.parameterService.columnDefinitions.filter((item) => {
       return item.name === this.tableName;
     })[0];
@@ -67,7 +69,6 @@ export class MedTableComponent implements OnChanges, OnInit {
       this.selectOptions.push(item.field);
     }
   }
-
   toggleExpandRow(row) {
     this.table.rowDetail.toggleExpandRow(row);
   }

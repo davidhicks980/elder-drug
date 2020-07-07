@@ -22,13 +22,13 @@ import {
   templateUrl: './enter-drug-form.component.html',
   styleUrls: ['./enter-drug-form.component.scss'],
 })
-export class EnterDrugFormComponent implements OnInit {
+export class EnterDrugFormComponent {
   @ViewChildren(MatInput) submission: QueryList<MatInput>;
   @ViewChild(MatInput) input: MatInput;
   //@ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('drawer') public sidenav: MatSidenav;
   showFiller = true;
-  myControl = new FormControl();
+  control = new FormControl();
   newOptions: any;
   filterList: any;
   filteredOptions: Observable<string[]>;
@@ -68,7 +68,6 @@ export class EnterDrugFormComponent implements OnInit {
       });
     }
   }
-  ngOnInit() {}
   ConvertToJSON(product: any) {
     return JSON.parse(product);
   }
@@ -79,11 +78,7 @@ export class EnterDrugFormComponent implements OnInit {
       this.webSocketService.emit('drugs-to-filter', input);
     }
   }
-  keyDownFunction(event) {
-    if (event.keyCode === 13) {
-      alert('you just pressed the enter key');
-    }
-  }
+
   search(entry) {
     let outArray = [];
     let results = entry._results;
@@ -104,9 +99,9 @@ export class EnterDrugFormComponent implements OnInit {
       let length = data.length;
       let dropDown = [];
       for (i = 0; i < length; i++) {
-        dropDown.push(data[i].Items.toLowerCase()); //TODO: Column is defined by dot notation
+        dropDown.push(data[i].Items.toLowerCase());
       }
-      this.filteredOptions = this.myControl.valueChanges.pipe(
+      this.filteredOptions = this.control.valueChanges.pipe(
         map((value) => this._filter(value, dropDown).sort())
       );
     });
