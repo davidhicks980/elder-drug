@@ -5,7 +5,7 @@ div.table-modifier-list {
   border: 1px solid lightgray;
   overflow: visible;
   position: fixed;
-  border-radius: 3px;
+  border-radius: 4px;
   background-color: white;
   margin-left: 10px;
   margin-right: 10px;
@@ -13,19 +13,19 @@ div.table-modifier-list {
 }
 
 div.padding {
-  padding: 20px;
+  //  padding: 20px;
 }
 
 .panel-header {
   padding-top: 10px;
-  line-height: none;
-  background-color: $darkgray;
-  border-bottom: 1px solid lightgray;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  font-size: 12pt;
-  color: $textgray;
-  font-weight: 500;
+  line-height: 20px;
+  background-color: $primary;
+  border-bottom: 2px solid darken($primary, 5%);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-size: 11pt;
+  color: whitesmoke;
+  font-weight: 400;
 
   & p {
     padding-left: 1em;
@@ -37,21 +37,8 @@ mat-selection-list.mat-list-base {
 }
 .mat-list-base .mat-list-option {
   font-size: 10pt;
-  white-space: nowrap;
-}
-mat-button-toggle.toggle-button {
-  min-width: min-content;
-  max-width: 25%;
-  background-color: $darkgray;
-  color: whitesmoke;
-  border: 1px solid black;
-  line-height: 36px;
-  &:hover {
-    background-color: desaturate(darken($accent, 30%), 80%);
-  }
 }
 
 mat-button-toggle-group.toggle-group {
-  width: fit-content;
-  border: none;
+  display: grid;
 }

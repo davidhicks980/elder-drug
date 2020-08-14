@@ -1,11 +1,9 @@
 import {
   Component,
   ViewChild,
-  ViewEncapsulation,
   Input,
   OnChanges,
   OnInit,
-  ChangeDetectionStrategy,
   AfterViewInit,
 } from '@angular/core';
 import {
@@ -26,13 +24,20 @@ import { ParametersService } from 'src/app/parameters.service';
   templateUrl: './med-table.component.html',
   styleUrls: ['./med-table.component.scss'],
   animations: [
-    trigger('rowExpansionTrigger', [
-      state('void', style({ height: '0px', minHeight: '0', opacity: 0 })),
-      state('active', style({ height: '*', opacity: 1 })),
-      transition(
-        'active <=> void, void=>active',
-        animate('450ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
+    trigger('simpleFadeAnimation', [
+      // the "in" style determines the "resting" state of the element when it is visible.
+      state('in', style({ height: '*' })),
+
+      // fade in when created. this could also be written as transition('void => *')
+      transition(':enter', [
+        style({
+          height: '0px',
+        }),
+        animate(150),
+      ]),
+
+      // fade out when destroyed. this could also be written as transition('void => *')
+      transition(':leave', animate(150, style({ opacity: 0 }))),
     ]),
   ],
 })
@@ -64,7 +69,6 @@ export class MedTableComponent implements OnChanges, OnInit, AfterViewInit {
       .lookupColumns(initOptions.columnOptions)
       .filter(Boolean);
     this.rows = this.tableData['value'];
-    this.selectOptions.length = 0;
     for (let item of this.columnOptions) {
       this.selectOptions.push(item.field);
     }
@@ -73,7 +77,7 @@ export class MedTableComponent implements OnChanges, OnInit, AfterViewInit {
     this.table.rowDetail.toggleExpandRow(row);
   }
 
-  onDetailToggle(event) {}
+  onDetailToggle() {}
   constructor(public parameterService: ParametersService) {}
   ngOnChanges() {
     this.rows = this.tableData['value'];

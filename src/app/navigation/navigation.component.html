@@ -6,7 +6,7 @@
 <mat-sidenav-container
   keyup.enter="search(submission)"
   class="material-container"
-  (backdropClick)="close()"
+  (backdropClick)="stateService.sidenavOpen = false"
   fxFlex
 >
   <mat-sidenav
@@ -17,26 +17,21 @@
         : 'material-sidenav'
     "
     [class.mat-elevation-z8]="true"
-    [opened]="navToggled"
+    [opened]="sidenavActive"
     mode="side"
-    (keydown.escape)="navToggled = false"
-    (keydown.enter)="navToggled = false"
+    (keydown.escape)="stateService.sidenavOpen = false"
+    (keydown.enter)="stateService.sidenavOpen = false"
   >
-    <app-side-navigation [navToggled]="navToggled"></app-side-navigation>
+    <app-side-navigation></app-side-navigation>
   </mat-sidenav>
   <mat-sidenav-content fxFlex
-    ><app-toolbar
-      class="toolbar"
-      [navToggled]="navToggled"
-      (toggleDrawer)="navToggled = !navToggled"
-    >
-    </app-toolbar>
+    ><app-toolbar class="toolbar"> </app-toolbar>
 
     <app-table-logic></app-table-logic>
   </mat-sidenav-content>
 
   <!--<app-bottom-navigation
     *ngIf="handsetLayout && !leftdrawer.opened"
-    (smallPullDrawer)="navToggled = !navToggled"
+    (smallPullDrawer)="sidenavActive = !sidenavActive"
   ></app-bottom-navigation>-->
 </mat-sidenav-container>

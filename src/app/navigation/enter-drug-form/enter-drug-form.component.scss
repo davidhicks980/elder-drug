@@ -79,11 +79,21 @@
 button[mat-raised-button].search-button {
   width: 90%;
   color: white;
+  font-size: 12pt;
+  background-image: linear-gradient(
+    to right,
+    $primary,
+    adjust-hue($primary, 20deg)
+  );
 }
 
 button[mat-raised-button].search-button:hover {
   transition: ease-out 0.4s;
-  background-color: lighten(saturate($primary, 10%), 10%);
+  background-image: linear-gradient(
+    to right,
+    adjust-hue($primary, 20deg),
+    adjust-hue($primary, 40deg)
+  );
 }
 
 section.border-box {

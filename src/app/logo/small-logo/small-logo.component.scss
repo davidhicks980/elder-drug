@@ -10,89 +10,25 @@
 
 .st0 {
   // cup bowl
-  fill: lighten($color: $gray, $amount: 60%);
+  fill: lighten($color: $gray, $amount: 80%);
 }
 .st1 {
   //cup interior
-  fill: lighten($color: $gray, $amount: 30%);
+  fill: lighten($color: $gray, $amount: 55%);
 }
 .st2 {
   //cup stem
-  fill: lighten($color: $gray, $amount: 60%);
+  fill: lighten($color: $gray, $amount: 80%);
 }
 .st3 {
   //cup shadow
-  fill: lighten($color: $gray, $amount: 40%);
+  fill: lighten($color: $gray, $amount: 55%);
 }
 .st4 {
   //snake
-  fill: $accent;
+  fill: lighten($accent, 15%);
 }
 .st5 {
   //snake eyes
   fill: whitesmoke;
-}
-
-.hide {
-  display: none;
-  width: 0em;
-  animation: fadeOutFromNone 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-}
-
-.show {
-  display: "";
-  opacity: 100%;
-  width: 3.5em;
-  animation-delay: fadeInFromNone 1s;
-  animation: fadeInFromNone 0.3s ease-in;
-}
-
-@keyframes fadeInFromNone {
-  0% {
-    opacity: 0;
-    width: 1em;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-
-  70% {
-    opacity: 0.7;
-    width: 3.55em;
-  }
-  100% {
-    opacity: 1;
-    width: 3.5em;
-  }
-}
-
-@keyframes fadeOutFromNone {
-  0% {
-    opacity: 1;
-    width: 0em;
-  }
-
-  50% {
-    opacity: 1;
-    width: 1em;
-  }
-
-  100% {
-    opacity: 0;
-    width: fit-content;
-  }
-}
-
-@keyframes borderFade {
-  0% {
-    fill: rgb(24, 39, 2);
-  }
-  80% {
-    fill: rgb(6, 59, 6);
-  }
-
-  100% {
-    fill: $primary;
-  }
 }

@@ -10,7 +10,7 @@ export class WebsocketService {
   socket: any; //socket that connects to socket.io server
 
   constructor() {
-    this.socket = io(); //initiates socket instance
+    this.socket = io('ws://localhost:3000'); //initiates socket instance. Delete port
   }
   listen(eventName: string) {
     return new Observable((subscriber) => {

@@ -6,16 +6,19 @@ import {
   BreakpointState,
   BreakpointObserver,
 } from '@angular/cdk/layout';
+import { StateService } from '../state.service';
 @Component({
   selector: 'app-table-logic',
   template: `
     <div fxLayoutAlign="center none">
-      <div class="main-content-box gray-big-logo"></div>
+      <div [hidden]="active" class="main-content-box gray-big-logo">
+        <app-big-logo></app-big-logo>
+      </div>
       <div
         class="main-content-box"
         fxFlexOffset="10px"
         [fxLayout]="smallScreen ? 'column' : 'row'"
-        fxLayoutAlign="smallScreen ? 'start center' : 'center start'"
+        [fxLayoutAlign]="smallScreen ? 'start center' : 'center start'"
       >
         <div [fxFlexOrder]="smallScreen === true ? '2' : '1'" fxLayout="column">
           <div
@@ -27,18 +30,18 @@ import {
               [tableData]="table"
             >
             </app-med-table>
-            <br />
+            <div class="table-spacer"></div>
           </div>
         </div>
         <div
           #modifyPanel
-          fxFlex="20"
+          [fxFlex]="xSmallScreen ? 40 : 20"
           [fxFlexOrder]="smallScreen === true ? '1' : '2'"
+          class="panel-width"
         >
           <modify-table-panel
             [hidden]="!active"
             [tablesWithData]="tablesWithData"
-            (sendActiveTables)="setActiveTables($event)"
           ></modify-table-panel>
         </div>
       </div>
@@ -51,9 +54,10 @@ export class TableLogicComponent implements OnInit {
   active: boolean = false;
   tablesWithData: string[];
   tables: Table[];
-  activeTables: string[];
+  activeTables: string[] = ['GeneralInfo'];
   smallScreen: boolean;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
+  xSmallScreen: boolean;
   ngOnInit() {
     //Handles websocket data --> connects to main database to provide Beers info
     this.webSocketService
@@ -71,26 +75,34 @@ export class TableLogicComponent implements OnInit {
     return activeList.includes(table);
   }
 
-  setActiveTables(tables) {
-    this.activeTables = tables;
-  }
-
   constructor(
     public webSocketService: WebsocketService,
     private parameterService: ParametersService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private stateService: StateService
   ) {
-    {
-      this.breakpointObserver
-        .observe([Breakpoints.Small, Breakpoints.HandsetPortrait])
-        .subscribe((state: BreakpointState) => {
-          if (state.matches) {
-            this.smallScreen = true;
-          } else {
-            this.smallScreen = false;
-          }
-        });
-    }
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.HandsetPortrait])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.smallScreen = true;
+        } else {
+          this.smallScreen = false;
+        }
+      });
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.xSmallScreen = true;
+        } else {
+          this.xSmallScreen = false;
+        }
+      });
+    this.stateService.tableStatus$.subscribe((active) => {
+      this.activeTables = active;
+      console.log(this.activeTables);
+    });
   }
 }
 

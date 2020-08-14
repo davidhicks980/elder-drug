@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  Input,
-  ViewChild,
-  OnChanges,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import {
   ParametersService,
   columnDefinition,
@@ -16,37 +8,41 @@ import {
   BreakpointState,
   BreakpointObserver,
 } from '@angular/cdk/layout';
+import { StateService } from 'src/app/state.service';
+import { MatSelectionList } from '@angular/material/list';
+import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'modify-table-panel',
   template: ` <div class="padding">
-    <div *ngIf="smallScreen">
+    <div *ngIf="smallScreen || xSmallScreen">
       <div>
         <h3>Show Tables</h3>
       </div>
       <mat-button-toggle-group
+        #tableToggleGroup="matButtonToggleGroup"
         (change)="updateOptions($event.value)"
-        [value]="activeTables"
         multiple
-        class="toggle-group"
+        [class]="xSmallScreen ? 'toggle-group' : ''"
       >
         <mat-button-toggle
           class="toggle-button"
           *ngFor="let option of options"
           [checked]="isTableActive(option.name)"
-          [value]="option.name"
           [disabled]="!isTableActive(option.name)"
+          [value]="option.name"
         >
           {{ option.name | caseSplit }}
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
-    <div class="table-modifier-list" *ngIf="!smallScreen">
+    <div class="table-modifier-list" *ngIf="!smallScreen && !xSmallScreen">
       <div class="panel-header">
         <p>Show Tables</p>
       </div>
       <mat-selection-list
+        #tableSelectionList
         (ngModelChange)="updateOptions($event)"
         [ngModel]="activeTables"
       >
@@ -65,21 +61,23 @@ import {
   </div>`,
   styleUrls: ['./modify-table-panel.component.scss'],
 })
-export class ModifyTablePanelComponent implements OnChanges, OnInit {
+export class ModifyTablePanelComponent implements OnInit {
+  @ViewChild('tableSelectionList') selectList: MatSelectionList;
+  @ViewChild('tableToggleGroup') toggleGroup: MatButtonToggleGroup;
   activeTables: string[] = ['full', 'disease'];
   public selectedOptions: string[];
   public message: string;
   options: columnDefinition[];
   smallScreen: boolean;
   @Input() tablesWithData: string[];
-  @Output() sendActiveTables: EventEmitter<string[]> = new EventEmitter();
+  xSmallScreen: boolean;
 
   updateOptions(selections) {
-    this.sendActiveTables.emit(selections);
+    this.stateService.emitSelectedTables(selections);
   }
+
   ngOnInit() {
     this.options = this.parameterService.columnDefinitions;
-    this.updateOptions(this.isTableActive);
   }
 
   isTableActive(table) {
@@ -90,12 +88,10 @@ export class ModifyTablePanelComponent implements OnChanges, OnInit {
     }
   }
 
-  ngOnChanges() {
-    this.sendActiveTables.emit(this.activeTables);
-  }
   public constructor(
     public parameterService: ParametersService,
-    public breakpointObserver: BreakpointObserver
+    public breakpointObserver: BreakpointObserver,
+    public stateService: StateService
   ) {
     this.breakpointObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
@@ -104,6 +100,16 @@ export class ModifyTablePanelComponent implements OnChanges, OnInit {
           this.smallScreen = true;
         } else {
           this.smallScreen = false;
+        }
+      });
+
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.xSmallScreen = true;
+        } else {
+          this.xSmallScreen = false;
         }
       });
   }

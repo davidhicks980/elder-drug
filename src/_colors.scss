@@ -2,7 +2,9 @@
 @import "./palette";
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap");
 
-$app-primary: mat-palette($mat-indigo, 900);
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap");
+
+$app-primary: mat-palette($bluePalette, 600);
 $app-accent: mat-palette($mat-amber, A700);
 
 $primary: mat-color($app-primary);
@@ -20,9 +22,13 @@ $lightprimary: mat-color($app-primary, 400);
 $lightaccent: mat-color($app-accent, 600);
 
 $gray: #414042;
-$darkgray: darken($darkblue, 5%);
+$darkgray: $primary;
+$tablebackground: white;
+$tableaccent: $primary;
 $lightgray: lighten($gray, 60%);
 $lightergray: lighten($gray, 70%);
+
+$gradient: linear-gradient(to right, $primary, adjust-hue($primary, 20deg));
 
 $textgray: lighten($gray, 70%);
 

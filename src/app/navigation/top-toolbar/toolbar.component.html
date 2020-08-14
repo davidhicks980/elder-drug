@@ -1,27 +1,27 @@
 <mat-toolbar
   id="toolbar"
-  [class]="navToggled ? 'null' : 'transition'"
-  [class.mat-elevation-z0]="navToggled"
-  [class.mat-elevation-z2]="!navToggled"
+  [class]="sidenavActive ? 'null' : 'transition'"
+  [class.mat-elevation-z2]="!sidenavActive"
+  [class.mat-elevation-z4]="sidenavActive"
 >
   <mat-toolbar-row>
     <button
       mat-icon-button
       #toggleDrawer
       class="drawer-button"
-      (click)="openDrawer()"
+      (click)="stateService.toggleSidenav()"
     >
       <mat-icon
-        [innerHTML]="navToggled == true ? 'chevron_left' : 'menu'"
+        [innerHTML]="sidenavActive == true ? 'chevron_left' : 'menu'"
       ></mat-icon>
     </button>
 
-    <app-small-logo [toggle]="navToggled"></app-small-logo>
+    <app-small-logo></app-small-logo>
 
     <span>Your Search</span>
     <!--<span #spacer fxFlex fxLayoutAlign="row"></span>-->
     <button
-      [class]="navToggled ? 'toolbar-red-button' : 'toolbar-white-button'"
+      [class]="sidenavActive ? 'toolbar-red-button' : 'toolbar-white-button'"
       mat-stroked-button
     >
       Disclaimer

@@ -1,4 +1,6 @@
 @import "../../../_colors.scss";
+$toolbarActiveColor: $primary;
+$toolbarInactiveColor: rgb(250, 250, 250);
 #toolbar .drawer-button {
   background-color: transparent !important;
   border-bottom: none;
@@ -9,21 +11,23 @@
 }
 
 #toolbar {
-  background: rgb(250, 250, 250);
+  //background: rgb(250, 250, 250);
+
+  background: $toolbarInactiveColor;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+  border-bottom: 2px solid darken($toolbarInactiveColor, 7%);
 }
 #toolbar {
   position: fixed;
 }
 
 #toolbar.transition {
-  background-color: $darkgray;
+  background: $primary;
   color: white;
-  border-bottom: 1px solid rgba(155, 155, 155, 0.363);
+  border-bottom: 2px solid darken($primary, 5%);
 }
 
 button.mat-stroked-button.toolbar-white-button {

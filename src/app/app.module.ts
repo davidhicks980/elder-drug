@@ -2,10 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { TableModule } from 'primeng/table';
+import { ToStringPipe } from './to-string.pipe';
+import { caseSplitPipe } from './case-split.pipe';
+//import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
@@ -17,19 +22,14 @@ import { BigLogoComponent } from './logo/big-logo/big-logo.component';
 import { EnterDrugFormComponent } from './navigation/enter-drug-form/enter-drug-form.component';
 import { ColumnSelectorComponent } from './table-logic/med-table/column-selector/column-selector.component';
 import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
-import { BottomNavigationComponent } from './navigation/bottom-navigation/bottom-navigation.component';
-import { MatSortModule } from '@angular/material/sort';
+//import { BottomNavigationComponent } from './navigation/bottom-navigation/bottom-navigation.component';
+//import { MatSortModule } from '@angular/material/sort';
 import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+
 import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
-import { TableModule } from 'primeng/table';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { MatSelectModule } from '@angular/material/select';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { DeferModule } from 'primeng/defer';
-import { ToStringPipe } from './to-string.pipe';
-import { caseSplitPipe } from './case-split.pipe';
+
+//import { MultiSelectModule } from 'primeng/multiselect';
+//import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
@@ -44,29 +44,26 @@ import { caseSplitPipe } from './case-split.pipe';
     EnterDrugFormComponent,
     ColumnSelectorComponent,
     ToggleOptionsComponent,
-    BottomNavigationComponent,
+    //BottomNavigationComponent,
     SideNavigationComponent,
     ModifyTablePanelComponent,
     ToStringPipe,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    MatSliderModule,
+    //AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     TableModule,
-    MultiSelectModule,
+    //MultiSelectModule,
     MatSelectModule,
-    ScrollPanelModule,
-    DeferModule,
+    //ScrollPanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -11,16 +11,13 @@
   overflow: visible;
 }
 
-.modify-panel {
-  width: 30%;
-}
-
 .gray-big-logo {
-  filter: gray;
   filter: grayscale(1);
-  -webkit-filter: grayscale(1);
+
   opacity: 50%;
   height: 35em;
+  animation: colorPulse 15s ease-in-out;
+  animation-iteration-count: 5;
 }
 
 #expansionPanel {
@@ -28,4 +25,27 @@
   min-width: 0px;
   overflow: hidden;
   max-width: 80%;
+}
+
+.panel-width {
+  width: 100%;
+}
+
+div.table-spacer {
+  padding-bottom: 0.3em;
+}
+
+@keyframes colorPulse {
+  40% {
+    filter: grayscale(1);
+    opacity: 50%;
+  }
+  50% {
+    filter: grayscale(0);
+    opacity: 80%;
+  }
+  70% {
+    filter: grayscale(1);
+    opacity: 50%;
+  }
 }

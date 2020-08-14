@@ -7,6 +7,7 @@ import {
   Input,
 } from '@angular/core';
 import { MatButtonToggle } from '@angular/material/button-toggle';
+import { StateService } from 'src/app/state.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,15 +15,17 @@ import { MatButtonToggle } from '@angular/material/button-toggle';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-  @Output() toggleDrawer = new EventEmitter<boolean>();
-  @Input() navToggled: boolean = true;
+  sidenavActive: boolean;
   addNewItem(value: string) {}
   iconName: string = 'menu';
-  openDrawer() {
-    this.toggleDrawer.emit();
+
+  constructor(public stateService: StateService) {
+    stateService.sidenavStatus$.subscribe((isOpen: boolean) => {
+      this.sidenavActive = isOpen;
+    });
   }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sidenavActive = true;
+  }
 }

@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,23 +10,29 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ['./navigation.component.scss'],
   providers: [WebsocketService],
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
   //@ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('leftdrawer') public sidenav: MatSidenav;
   handsetLayout: boolean;
-  navToggled: boolean = true;
-  close() {
-    this.sidenav.close();
+  sidenavActive: boolean;
+
+  ngOnInit() {
+    this.sidenavActive = this.stateService.sidenavOpen;
   }
 
   constructor(
     public webSocketService: WebsocketService,
-    breakpointObserver: BreakpointObserver
+    breakpointObserver: BreakpointObserver,
+    public stateService: StateService
   ) {
     breakpointObserver
       .observe([Breakpoints.HandsetLandscape, Breakpoints.HandsetPortrait])
       .subscribe((result) => {
         this.handsetLayout = result.matches ? true : false;
       });
+
+    stateService.sidenavStatus$.subscribe((isOpen: boolean) => {
+      this.sidenavActive = isOpen;
+    });
   }
 }

@@ -10,12 +10,11 @@ create table propriety_nonpropriety_concatenation as
  SELECT
 	gki.*,
 	ndc_info.PROPRIETARYNAME ,
-	ndc_info.NONPROPRIETARYNAME
+	ndc_info.SUBSTANCENAME 
 FROM
 	guidance_key_item gki
 RIGHT JOIN ndc_info ON
-	lower(ndc_info.NONPROPRIETARYNAME) like lower(CONCAT('%', gki.Item, '%'));
-
+	lower(ndc_info.SUBSTANCENAME ) like lower(CONCAT('%', gki.Item, '%')) WHERE ndc_info.SUBSTANCENAME NOT LIKE '%;%' AND gki.EntryID IS NOT NULL
 
 
 select uccim.EntryID, uccim.DrugExamples, orange_book_generic_brand.Trade_Name from usp_class_category_item_match uccim RIGHT JOIN orange_book_generic_brand on lower(orange_book_generic_brand.Ingredient) like CONCAT('%',lower(uccim.DrugExamples),'%') ;

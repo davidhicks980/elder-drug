@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { StateService } from 'src/app/state.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -6,11 +7,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./side-navigation.component.scss'],
 })
 export class SideNavigationComponent implements OnInit {
-  @Input() navToggled: boolean;
+  sidenavActive: boolean;
   @Input() handsetLayout: boolean;
-  @Output() toggleDrawer = new EventEmitter<boolean>();
+  constructor(public stateService: StateService) {
+    stateService.sidenavStatus$.subscribe((isOpen: boolean) => {
+      this.sidenavActive = isOpen;
+    });
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sidenavActive = this.stateService.sidenavOpen;
+  }
 }

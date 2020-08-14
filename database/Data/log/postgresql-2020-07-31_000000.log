@@ -1,0 +1,7 @@
+2020-08-03 20:16:06.676 EDT [5844] LOG:  received fast shutdown request
+2020-08-03 20:16:06.682 EDT [5844] LOG:  aborting any active transactions
+2020-08-03 20:16:06.683 EDT [6924] ERROR:  canceling statement due to user request
+2020-08-03 20:16:06.683 EDT [6940] ERROR:  canceling statement due to user request
+2020-08-03 20:16:06.693 EDT [5844] LOG:  background worker "logical replication launcher" (PID 6940) exited with exit code 1
+2020-08-03 20:16:06.719 EDT [6892] LOG:  shutting down
+2020-08-03 20:16:06.899 EDT [5844] LOG:  database system is shut down

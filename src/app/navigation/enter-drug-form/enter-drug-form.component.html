@@ -1,6 +1,6 @@
 <form
   autocomplete="off"
-  *ngIf="navToggled"
+  *ngIf="sidenavActive"
   fxLayout="column"
   fxLayoutAlign="none center"
 >
@@ -17,9 +17,9 @@
           type="text"
           aria-label="Search your drug"
           matInput
-          [formControl]="control"
+          [formControl]="drug.control"
           [matAutocomplete]="auto"
-          (input)="getInputString($event.target.value)"
+          (input)="getInputString($event.target.value, i)"
           (keydown.Tab)="addDrug()"
           (keydown.Enter)="search(submission)"
           autofocus
@@ -29,7 +29,7 @@
           <mat-option
             *ngFor="let option of filteredOptions | async"
             [value]="option"
-            [innerHTML]="boldString(option, activeString)"
+            [innerHTML]="boldDropdownText(option, activeString)"
           >
           </mat-option>
         </mat-autocomplete>
@@ -70,10 +70,10 @@
         mat-raised-button
         class="search-button sticky"
         type="button"
-        color="primary"
         (click)="search(submission)"
+        (keydown.enter)="search(submission)"
       >
-        <mat-icon>search</mat-icon> SEARCH
+        <mat-icon>search</mat-icon> Search
       </button>
     </div>
   </section>

@@ -28,18 +28,16 @@
           </tr>
         </ng-template>
         <ng-template #dataDisplay pTemplate="header" let-columns>
-          <ng-container [class.mat-elevation-z4]="true">
-            <tr class="p-table-empty-header">
-              <th class="expand-cell" style="width: 3em;"></th>
-              <th
-                class="p-table-header-cell ptable-header-cell--padding"
-                *ngFor="let col of columns"
-                [pSortableColumn]="col.field"
-              >
-                {{ col.header | caseSplit | uppercase }}
-              </th>
-            </tr>
-          </ng-container>
+          <tr class="p-table-empty-header">
+            <th class="expand-cell" style="width: 3em;"></th>
+            <th
+              class="p-table-header-cell ptable-header-cell--padding"
+              *ngFor="let col of columns"
+              [pSortableColumn]="col.field"
+            >
+              {{ col.header | caseSplit }}
+            </th>
+          </tr>
         </ng-template>
         <ng-template
           pTemplate="body"
@@ -66,6 +64,7 @@
               class="data-cell data-cell--padding"
               *ngFor="let col of columns"
             >
+              <span class="ui-column-title">{{ col.header }}</span>
               {{ rowData[col.field] | toString | titlecase }}
             </td>
           </tr>
@@ -73,79 +72,77 @@
         <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
           <tr>
             <td [attr.colspan]="columns.length + 1" class="detail-cell">
-              <div [@rowExpansionTrigger]="'active'">
-                <br />
-                <div class="grid-list">
-                  <ng-container *ngFor="let col of expandFieldData">
-                    <ng-container [ngSwitch]="col.field">
-                      <div class="title" *ngSwitchCase="'Item'">
-                        <h2>
-                          {{ rowData[col.field] }}
-                        </h2>
-                        <mat-chip-list>
-                          <mat-chip
-                            class="mat-standard-chip"
-                            color="primary"
-                            selected
-                          >
-                            {{ rowData["ItemType"] | titlecase }}</mat-chip
-                          >
-                          <mat-chip
-                            class="mat-standard-chip accent"
-                            selected
-                            *ngIf="rowData['DiseaseState'] != null"
-                          >
-                            {{ rowData["DiseaseState"] | caseSplit }}</mat-chip
-                          >
-                        </mat-chip-list>
-                      </div>
+              <br />
+              <div [@simpleFadeAnimation]="'in'" class="grid-list">
+                <ng-container *ngFor="let col of expandFieldData">
+                  <ng-container [ngSwitch]="col.field">
+                    <div class="title" *ngSwitchCase="'Item'">
+                      <h2>
+                        {{ rowData[col.field] }}
+                      </h2>
+                      <mat-chip-list>
+                        <mat-chip
+                          class="mat-standard-chip"
+                          color="primary"
+                          selected
+                        >
+                          {{ rowData["ItemType"] | titlecase }}</mat-chip
+                        >
+                        <mat-chip
+                          class="mat-standard-chip accent"
+                          selected
+                          *ngIf="rowData['DiseaseState'] != null"
+                        >
+                          {{ rowData["DiseaseState"] | caseSplit }}</mat-chip
+                        >
+                      </mat-chip-list>
+                    </div>
 
-                      <div class="term" *ngSwitchCase="'SearchTerm'">
-                        <b>Term:</b> {{ rowData[col.field] }}
-                      </div>
-                      <div *ngSwitchCase="'TableDefinition'">
-                        <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                      </div>
+                    <div class="term" *ngSwitchCase="'SearchTerm'">
+                      <b>Term:</b> {{ rowData[col.field] }}
+                    </div>
+                    <div *ngSwitchCase="'TableDefinition'">
+                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
+                    </div>
 
-                      <div class="incl-excl" *ngSwitchCase="'Inclusion'">
-                        <div fxLayoutGap="10px" fxLayout="row">
-                          <div
-                            *ngIf="rowData['Inclusion']?.length > 0"
-                            fxFlex="50"
-                            class="tile incl"
-                          >
-                            <b>ONLY applies when:</b> {{ rowData["Inclusion"] }}
-                          </div>
-                          <div
-                            *ngIf="rowData['Exclusion']?.length > 0"
-                            fxFlex="50"
-                            class="tile excl"
-                          >
-                            <b>DOES NOT apply when:</b>
-                            {{ rowData["Exclusion"] }}
-                          </div>
+                    <div class="incl-excl" *ngSwitchCase="'Inclusion'">
+                      <div fxLayoutGap="10px" fxLayout="row">
+                        <div
+                          *ngIf="rowData['Inclusion']?.length > 0"
+                          fxFlex="50"
+                          class="tile incl"
+                        >
+                          <b>ONLY applies when:</b> {{ rowData["Inclusion"] }}
+                        </div>
+                        <div
+                          *ngIf="rowData['Exclusion']?.length > 0"
+                          fxFlex="50"
+                          class="tile excl"
+                        >
+                          <b>DOES NOT apply when:</b>
+                          {{ rowData["Exclusion"] }}
                         </div>
                       </div>
-                      <div class="crcl" *ngSwitchCase="'MinimumClearance'">
-                        <b>{{ rowData["Recommendation"] }}</b> with clearance
-                        <i><b>below</b></i>
-                        {{ rowData["MaximumClearance"] }} and
-                        <i><b>above</b></i>
-                        {{ rowData["MinimumClearance"] }}
-                      </div>
-                      <div class="seven" *ngSwitchCase="'Recommendation'">
-                        <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                      </div>
-                      <div class="eight" *ngSwitchCase="'ShortTableName'">
-                        <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                      </div>
-                      <div class="six" *ngSwitchCase="'Rationale'">
-                        <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                      </div>
-                    </ng-container>
+                    </div>
+                    <div class="crcl" *ngSwitchCase="'MinimumClearance'">
+                      <b>{{ rowData["Recommendation"] }}</b> with clearance
+                      <i><b>below</b></i>
+                      {{ rowData["MaximumClearance"] }} and
+                      <i><b>above</b></i>
+                      {{ rowData["MinimumClearance"] }}
+                    </div>
+                    <div class="seven" *ngSwitchCase="'Recommendation'">
+                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
+                    </div>
+                    <div class="eight" *ngSwitchCase="'ShortTableName'">
+                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
+                    </div>
+                    <div class="six" *ngSwitchCase="'Rationale'">
+                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
+                    </div>
                   </ng-container>
-                  <br />
-                </div>
+                </ng-container>
+                <br />
               </div>
             </td>
           </tr>
