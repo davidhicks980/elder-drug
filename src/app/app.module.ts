@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TableModule } from 'primeng/table';
 import { ToStringPipe } from './to-string.pipe';
 import { caseSplitPipe } from './case-split.pipe';
-//import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MaterialModule } from './material-module';
@@ -51,7 +51,7 @@ import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modi
   ],
   imports: [
     BrowserModule,
-    //AppRoutingModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
     MaterialModule,

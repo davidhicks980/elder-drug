@@ -14,7 +14,6 @@ import {
   animate,
 } from '@angular/animations';
 
-import { ColumnMode } from '@swimlane/ngx-datatable/';
 import { Table } from 'primeng/table';
 
 import { ParametersService } from 'src/app/parameters.service';
@@ -47,7 +46,6 @@ export class MedTableComponent implements OnChanges, OnInit, AfterViewInit {
   rows: any[] = [];
   public columnOptions: { field: string; header: string }[];
   displayedColumns: string[];
-  ColumnMode = ColumnMode;
   selectOptions: string[];
   tableName: string;
   expandFieldData: { field: string; header: string }[];
