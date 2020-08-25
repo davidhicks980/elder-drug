@@ -60,15 +60,6 @@ export class TableLogicComponent implements OnInit {
   xSmallScreen: boolean;
   ngOnInit() {
     //Handles websocket data --> connects to main database to provide Beers info
-    this.webSocketService
-      .listen('search-results')
-      .subscribe((tables: Table[]) => {
-        this.active = true;
-        this.tables = tables;
-        this.tablesWithData = this.parameterService.filterInactiveTables(
-          this.tables
-        );
-      });
   }
 
   public isTableActive(activeList: string[], table: string) {

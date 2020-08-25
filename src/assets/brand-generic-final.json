@@ -1,0 +1,1634 @@
+[
+  {
+    "name": "Brompheniramine",
+    "rxnormId": ["1767"],
+    "EntryID": 1,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1767/related.json?tty=bn",
+    "brands": [
+      {
+        "name": "Dimetapp Children's Cold and Allergy Reformulated Jan 2011",
+        "rxcui": "1053259"
+      },
+      { "name": "Wal-Tap Children's Cold & Allergy", "rxcui": "1090458" },
+      { "name": "Bromfed DM", "rxcui": "215741" },
+      { "name": "Siltane", "rxcui": "219904" },
+      { "name": "Bromaxefed RF", "rxcui": "353460" },
+      { "name": "Bromplex HD", "rxcui": "404905" },
+      { "name": "Lodrane D", "rxcui": "544190" },
+      { "name": "Respa-BR", "rxcui": "748663" },
+      { "name": "Dimetapp Cold", "rxcui": "796199" },
+      { "name": "Bromaline Reformulated Jun 2008", "rxcui": "796936" },
+      { "name": "Zotex PE", "rxcui": "801096" },
+      { "name": "Nalex AC", "rxcui": "802738" },
+      { "name": "BroveX CB", "rxcui": "804570" },
+      { "name": "Brovex PB", "rxcui": "804579" },
+      { "name": "Brovex PBC", "rxcui": "804585" },
+      { "name": "Dimetapp Children's Cold and Allergy", "rxcui": "808119" },
+      { "name": "M-End PE", "rxcui": "830707" },
+      { "name": "Mar-cof BP", "rxcui": "877459" },
+      { "name": "Bromax", "rxcui": "892537" },
+      { "name": "Vazobid-PD", "rxcui": "1244524" }
+    ]
+  },
+  {
+    "name": "Dimenhydrinate",
+    "rxnormId": ["3444"],
+    "EntryID": 8,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3444/related.json?tty=bn",
+    "brands": [
+      { "name": "Wal-Dram", "rxcui": "1086951" },
+      { "name": "Dramamine", "rxcui": "151666" },
+      { "name": "Driminate", "rxcui": "216742" },
+      { "name": "TripTone", "rxcui": "220486" },
+      { "name": "Airmit", "rxcui": "1241480" }
+    ]
+  },
+  {
+    "name": "Dexchlorpheniramine",
+    "rxnormId": ["22697"],
+    "EntryID": 7,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22697/related.json?tty=bn",
+    "brands": [
+      { "name": "Ryclora", "rxcui": "2058851" },
+      { "name": "Rymed-D", "rxcui": "1086745" },
+      { "name": "Sutan Suspension", "rxcui": "729220" },
+      { "name": "Rescon-MX Reformulated Jan 2010", "rxcui": "892855" },
+      { "name": "Rescon Tablets", "rxcui": "1293403" }
+    ]
+  },
+  {
+    "name": "Chlorpheniramine",
+    "rxnormId": ["2400"],
+    "EntryID": 3,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2400/related.json?tty=bn",
+    "brands": [
+      { "name": "Tuxarin", "rxcui": "2099281" },
+      { "name": "Wal-Phed Sinus & Allergy", "rxcui": "1043496" },
+      { "name": "Wal-Finate-D", "rxcui": "1087038" },
+      { "name": "Wal-Phed PE Sinus & Allergy", "rxcui": "1090092" },
+      { "name": "Allerest", "rxcui": "1090700" },
+      { "name": "Bactimicina Childrens Cough & Cold", "rxcui": "1111441" },
+      { "name": "Zutripro", "rxcui": "1112221" },
+      { "name": "Codar AR", "rxcui": "1113999" },
+      { "name": "Children's Nyquil Cold and Cough", "rxcui": "1114362" },
+      { "name": "Chlor-Trimeton", "rxcui": "202384" },
+      { "name": "Aller-Chlor", "rxcui": "215124" },
+      { "name": "Chlo-Amine", "rxcui": "216015" },
+      { "name": "Deconamine", "rxcui": "216403" },
+      { "name": "Scot-Tussin Sugar Free DM", "rxcui": "219826" },
+      { "name": "Ventuss", "rxcui": "220776" },
+      { "name": "B-Tuss", "rxcui": "284665" },
+      { "name": "Coricidin HBP Cough and Cold", "rxcui": "352556" },
+      { "name": "De-Chlor HC", "rxcui": "352575" },
+      { "name": "Hydro-PC II", "rxcui": "352694" },
+      { "name": "Hydron CP", "rxcui": "352699" },
+      { "name": "Tannic-12 S", "rxcui": "353007" },
+      { "name": "Triant-HC", "rxcui": "405367" },
+      { "name": "Ricobid", "rxcui": "542021" },
+      { "name": "Tussionex", "rxcui": "544165" },
+      { "name": "C-Tanna 12", "rxcui": "544199" },
+      { "name": "Poly Hist PD", "rxcui": "604665" },
+      { "name": "Dallergy Drops", "rxcui": "606447" },
+      { "name": "Dicel", "rxcui": "645849" },
+      { "name": "Relasin HC", "rxcui": "647309" },
+      { "name": "Wal-finate", "rxcui": "692677" },
+      { "name": "Actifed Cold & Allergy", "rxcui": "700603" },
+      { "name": "ChlorTan D", "rxcui": "700634" },
+      { "name": "ChlorTan", "rxcui": "700638" },
+      { "name": "Dimetapp Long Acting Cough Plus Cold", "rxcui": "704303" },
+      { "name": "TussiCaps", "rxcui": "730984" },
+      { "name": "Dallergy-JR Reformulated Feb 2009", "rxcui": "744376" },
+      { "name": "ColdCough PD", "rxcui": "801156" },
+      { "name": "Maxichlor PEH", "rxcui": "804696" },
+      { "name": "Maxichlor PSE", "rxcui": "804704" },
+      { "name": "Allerest PE", "rxcui": "832101" },
+      { "name": "Z Tuss AC", "rxcui": "995129" },
+      { "name": "SudoGest Sinus & Allergy", "rxcui": "998246" },
+      { "name": "Zodryl DAC", "rxcui": "1372725" },
+      { "name": "Zodryl AC", "rxcui": "1372746" },
+      { "name": "Vituz", "rxcui": "1372868" },
+      { "name": "Coricidin HBP Cold & Flu", "rxcui": "1439770" },
+      { "name": "Tuzistra", "rxcui": "1652088" },
+      { "name": "Stonarhini", "rxcui": "1242241" }
+    ]
+  },
+  {
+    "name": "Carbinoxamine",
+    "rxnormId": ["20220"],
+    "EntryID": 2,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/20220/related.json?tty=bn",
+    "brands": [
+      { "name": "Karbinal", "rxcui": "1374771" },
+      { "name": "Ryvent", "rxcui": "1869878" }
+    ]
+  },
+  {
+    "name": "Methscopolamine",
+    "rxnormId": ["89785"],
+    "EntryID": 21,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn",
+    "brands": [{ "name": "Pamine", "rxcui": "219055" }]
+  },
+  {
+    "name": "Scopolamine",
+    "rxnormId": ["9601"],
+    "EntryID": 23,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn",
+    "brands": [
+      { "name": "Donnatal", "rxcui": "115141" },
+      { "name": "D-Tal", "rxcui": "216326" },
+      { "name": "Transderm Scop", "rxcui": "220372" },
+      { "name": "Isopto Hyoscine", "rxcui": "93000" },
+      { "name": "Phenohytro", "rxcui": "1739882" }
+    ]
+  },
+  {
+    "name": "Diltiazem",
+    "rxnormId": ["3443"],
+    "EntryID": 118,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3443/related.json?tty=bn",
+    "brands": [
+      { "name": "Tiadylt", "rxcui": "1988303" },
+      { "name": "Matzim", "rxcui": "1091620" },
+      { "name": "Cardizem", "rxcui": "203494" },
+      { "name": "Tiazac", "rxcui": "220309" },
+      { "name": "Taztia", "rxcui": "405349" },
+      { "name": "Cartia", "rxcui": "491095" },
+      { "name": "Dilt", "rxcui": "540618" },
+      { "name": "Diltzac", "rxcui": "629300" }
+    ]
+  },
+  {
+    "name": "Benztropine",
+    "rxnormId": ["1424"],
+    "EntryID": 24,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn",
+    "brands": [{ "name": "Cogentin", "rxcui": "151532" }]
+  },
+  {
+    "name": "Dexbrompheniramine",
+    "rxnormId": ["22696"],
+    "EntryID": 6,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22696/related.json?tty=bn",
+    "brands": [
+      { "name": "Ala-Hist PE", "rxcui": "1041505" },
+      { "name": "Ala-Hist IR", "rxcui": "1041509" },
+      { "name": "Drixoral", "rxcui": "23676" },
+      { "name": "Dallergy Reformulated Mar 2014", "rxcui": "1491652" },
+      { "name": "Dologesic Reformulated Jun 2016", "rxcui": "1798454" },
+      { "name": "M-End Max D", "rxcui": "1190581" },
+      { "name": "Dologen", "rxcui": "1242037" }
+    ]
+  },
+  {
+    "name": "Clemastine",
+    "rxnormId": ["2578"],
+    "EntryID": 4,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2578/related.json?tty=bn",
+    "brands": [
+      { "name": "Dayhist-1", "rxcui": "1095722" },
+      { "name": "Allerhist-1", "rxcui": "215147" },
+      { "name": "Tavist", "rxcui": "42602" },
+      { "name": "Wal-Hist 12 HR Relief", "rxcui": "1423962" }
+    ]
+  },
+  {
+    "name": "Triprolidine",
+    "rxnormId": ["10849"],
+    "EntryID": 15,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10849/related.json?tty=bn",
+    "brands": [
+      { "name": "Wal-Act", "rxcui": "1014651" },
+      { "name": "A-Phedrin", "rxcui": "214907" },
+      { "name": "Aphedrid", "rxcui": "215364" },
+      {
+        "name": "Genac brand of pseudoephedrine/triprolidine",
+        "rxcui": "217282"
+      },
+      { "name": "Histafed", "rxcui": "217541" },
+      { "name": "Vi-Sudo", "rxcui": "220801" },
+      { "name": "Vanahist PD", "rxcui": "1429434" },
+      { "name": "Vanaclear", "rxcui": "1789509" },
+      { "name": "Pediaclear Childrens", "rxcui": "2179642" }
+    ]
+  },
+  {
+    "name": "Meclizine",
+    "rxnormId": ["6676"],
+    "EntryID": 12,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6676/related.json?tty=bn",
+    "brands": [
+      { "name": "Bonine", "rxcui": "1694" },
+      { "name": "Travel-Ease", "rxcui": "284897" },
+      { "name": "Dramamine Less Drowsy", "rxcui": "827176" },
+      { "name": "Antivert", "rxcui": "91818" },
+      { "name": "Zentrip", "rxcui": "996063" },
+      { "name": "Naus-ease", "rxcui": "1372658" },
+      { "name": "Wal-Dram 2", "rxcui": "1673792" },
+      { "name": "Verticalm", "rxcui": "1251680" },
+      { "name": "Dramamine Nausea Relief", "rxcui": "2110522" }
+    ]
+  },
+  {
+    "name": "Propantheline",
+    "rxnormId": ["8761"],
+    "EntryID": 22,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn",
+    "brands": [{ "name": "Probanthine", "rxcui": "224918" }]
+  },
+  {
+    "name": "Doxylamine",
+    "rxnormId": ["3642"],
+    "EntryID": 10,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3642/related.json?tty=bn",
+    "brands": [
+      { "name": "Nocto", "rxcui": "2257280" },
+      { "name": "Safetussin PM", "rxcui": "1115330" },
+      { "name": "Unisom", "rxcui": "220672" },
+      { "name": "Nyquil Cough", "rxcui": "702274" },
+      { "name": "Aldex AN", "rxcui": "707263" },
+      { "name": "Diclegis", "rxcui": "1375949" },
+      { "name": "Poly Hist Forte Reformulated Nov 2013", "rxcui": "1441832" },
+      { "name": "Wal-Som (doxylamine)", "rxcui": "1746506" },
+      { "name": "Poly Hist Forte", "rxcui": "2172492" },
+      { "name": "Bonjesta", "rxcui": "1999652" }
+    ]
+  },
+  {
+    "name": "Doxazosin",
+    "rxnormId": ["49276"],
+    "EntryID": 28,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn",
+    "brands": [{ "name": "Cardura", "rxcui": "196468" }]
+  },
+  {
+    "name": "Hyoscyamine",
+    "rxnormId": ["153970"],
+    "EntryID": 20,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/153970/related.json?tty=bn",
+    "brands": [
+      { "name": "Hyophen", "rxcui": "1037229" },
+      { "name": "Phosphasal", "rxcui": "1037297" },
+      { "name": "Ustell", "rxcui": "1039802" },
+      { "name": "Oscimin", "rxcui": "1146685" },
+      { "name": "Donnatal", "rxcui": "115141" },
+      { "name": "D-Tal", "rxcui": "216326" },
+      { "name": "Levbid", "rxcui": "217993" },
+      { "name": "Levsin", "rxcui": "218003" },
+      { "name": "Uretron DS", "rxcui": "220683" },
+      { "name": "Nulev", "rxcui": "284812" },
+      { "name": "Ed Spaz", "rxcui": "352618" },
+      { "name": "Urelle", "rxcui": "353527" },
+      { "name": "Utira", "rxcui": "405385" },
+      { "name": "Symax", "rxcui": "541626" },
+      { "name": "Digex", "rxcui": "606562" },
+      { "name": "Anaspaz", "rxcui": "769" },
+      { "name": "Uribel", "rxcui": "998338" },
+      { "name": "Urimar Reformulated Oct 2013", "rxcui": "1440870" },
+      { "name": "Urin DS", "rxcui": "1547941" },
+      { "name": "Uro-Blue", "rxcui": "1597576" },
+      { "name": "UTA Capsule Reformulated Feb 2016", "rxcui": "1738131" },
+      { "name": "Phenohytro", "rxcui": "1739882" },
+      { "name": "Prosed DS", "rxcui": "1245487" },
+      { "name": "Urogesic Blue Reformulated Apr 2012", "rxcui": "1251285" }
+    ]
+  },
+  {
+    "name": "Promethazine",
+    "rxnormId": ["8745"],
+    "EntryID": 13,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8745/related.json?tty=bn",
+    "brands": [
+      { "name": "Phenergan", "rxcui": "152218" },
+      { "name": "Promethegan", "rxcui": "219442" },
+      { "name": "Phenadoz", "rxcui": "541158" }
+    ]
+  },
+  {
+    "name": "Nitrofurantoin",
+    "rxnormId": ["7454"],
+    "EntryID": 27,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7454/related.json?tty=bn",
+    "brands": [
+      { "name": "Macrobid", "rxcui": "152001" },
+      { "name": "Macrodantin", "rxcui": "203054" },
+      { "name": "Furadantin", "rxcui": "258353" }
+    ]
+  },
+  {
+    "name": "Prazosin",
+    "rxnormId": ["8629"],
+    "EntryID": 29,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn",
+    "brands": [{ "name": "Minipress", "rxcui": "71515" }]
+  },
+  {
+    "name": "Guanfacine",
+    "rxnormId": ["40114"],
+    "EntryID": 34,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/40114/related.json?tty=bn",
+    "brands": [{ "name": "Intuniv", "rxcui": "862007" }]
+  },
+  {
+    "name": "Disopyramide",
+    "rxnormId": ["3541"],
+    "EntryID": 37,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3541/related.json?tty=bn",
+    "brands": [{ "name": "Norpace", "rxcui": "203631" }]
+  },
+  {
+    "name": "Nifedipine",
+    "rxnormId": ["7417"],
+    "EntryID": 40,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7417/related.json?tty=bn",
+    "brands": [
+      { "name": "Adalat", "rxcui": "151131" },
+      { "name": "Procardia", "rxcui": "203423" },
+      { "name": "Nifedical", "rxcui": "491311" },
+      { "name": "Afeditab CR", "rxcui": "542720" }
+    ]
+  },
+  {
+    "name": "Diphenhydramine",
+    "rxnormId": ["3498"],
+    "EntryID": 9,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3498/related.json?tty=bn",
+    "brands": [
+      { "name": "Ivarest", "rxcui": "1233688" },
+      { "name": "Percogesic Reformulated Jan 2011", "rxcui": "1052463" },
+      { "name": "Wal-Dryl", "rxcui": "1053139" },
+      { "name": "Compoz", "rxcui": "1085965" },
+      { "name": "Wal-Dryl Childrens", "rxcui": "1086764" },
+      { "name": "Wal-Dryl-D", "rxcui": "1087034" },
+      { "name": "Wal-Dryl Allergy", "rxcui": "1090073" },
+      { "name": "Wal-Som Maximum Strength", "rxcui": "1090453" },
+      { "name": "Nytol", "rxcui": "1092413" },
+      { "name": "Banophen Cream", "rxcui": "1092425" },
+      { "name": "Diphenhist with Zinc", "rxcui": "1092451" },
+      { "name": "Unisom Sleep", "rxcui": "1093099" },
+      { "name": "Scot-Tussin Allergy", "rxcui": "1094448" },
+      { "name": "Panadol PM", "rxcui": "1094715" },
+      { "name": "Rest Simply", "rxcui": "1101108" },
+      { "name": "Kids-Eeze Allergy", "rxcui": "1111092" },
+      { "name": "Acetadryl", "rxcui": "1116529" },
+      { "name": "Dermamycin", "rxcui": "1146880" },
+      { "name": "Sominex", "rxcui": "152371" },
+      { "name": "Benadryl", "rxcui": "203457" },
+      { "name": "Allermax", "rxcui": "215150" },
+      { "name": "Banophen", "rxcui": "215558" },
+      { "name": "Diphedryl", "rxcui": "216654" },
+      { "name": "Diphenhist", "rxcui": "216660" },
+      { "name": "Doans PM", "rxcui": "216685" },
+      { "name": "Dytuss", "rxcui": "216819" },
+      { "name": "Excedrin PM", "rxcui": "217025" },
+      { "name": "Legatrin PM", "rxcui": "217990" },
+      { "name": "Mapap PM", "rxcui": "218208" },
+      { "name": "Siladryl", "rxcui": "219896" },
+      { "name": "Sleepinal", "rxcui": "219956" },
+      { "name": "Twilite", "rxcui": "220559" },
+      { "name": "Tylenol PM", "rxcui": "220581" },
+      { "name": "Unisom with Pain Relief", "rxcui": "220674" },
+      { "name": "Simply Sleep", "rxcui": "262241" },
+      { "name": "Tylenol Severe Allergy", "rxcui": "346199" },
+      { "name": "Dytan-D", "rxcui": "405033" },
+      { "name": "Benadryl Itch Stopping", "rxcui": "607032" },
+      { "name": "Advil PM", "rxcui": "643061" },
+      { "name": "Aldex CT", "rxcui": "656688" },
+      { "name": "Benadryl-D Allergy and Sinus", "rxcui": "701329" },
+      { "name": "Buckley's Bedtime Formula", "rxcui": "702204" },
+      { "name": "Calagel", "rxcui": "794924" },
+      { "name": "Dimetapp Nighttime Cold & Congestion", "rxcui": "829351" },
+      { "name": "Tekral", "rxcui": "866224" },
+      { "name": "Motrin PM", "rxcui": "895656" },
+      { "name": "Advil PM Liqui Gels", "rxcui": "902630" },
+      { "name": "Ivarest Maximum Strength", "rxcui": "1314972" },
+      { "name": "Wal-Sleep Z", "rxcui": "1363470" },
+      { "name": "Allegra Cooling Relief Anti-Itch", "rxcui": "1420993" },
+      { "name": "ZZZ Sleep", "rxcui": "1437301" },
+      { "name": "Z-Sleep", "rxcui": "1488697" },
+      { "name": "Dr. Cocoa Nighttime Cough and Cold", "rxcui": "1535703" },
+      { "name": "Aleve PM", "rxcui": "1550958" },
+      { "name": "Excedrin PM Triple Action", "rxcui": "1593111" },
+      { "name": "Wal-Dryl PE", "rxcui": "1608060" },
+      { "name": "Somnapure", "rxcui": "1609065" },
+      { "name": "Vanamine", "rxcui": "1789741" },
+      { "name": "Bayer Aspirin PM Reformulated Nov 2011", "rxcui": "1193079" },
+      { "name": "Zzzquil", "rxcui": "1233547" },
+      { "name": "Dytan-D Chewable", "rxcui": "1297569" },
+      { "name": "Vetadryl", "rxcui": "1310476" },
+      { "name": "Sleeptabs", "rxcui": "1092740" },
+      { "name": "Calagel Reformulated Jun 2019", "rxcui": "2174797" },
+      { "name": "Dormin", "rxcui": "1919068" },
+      { "name": "Wal-Dryl-D Allergy", "rxcui": "1922722" },
+      { "name": "Genahist", "rxcui": "217286" },
+      { "name": "Benadryl Allergy Plus Congestion", "rxcui": "1926216" },
+      { "name": "Pediaclear Cough", "rxcui": "2200118" },
+      { "name": "Tact", "rxcui": "2380356" }
+    ]
+  },
+  {
+    "name": "Pyrilamine",
+    "rxnormId": ["9009"],
+    "EntryID": 14,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9009/related.json?tty=bn",
+    "brands": [
+      { "name": "Pamprin Multi-Symptom", "rxcui": "1052436" },
+      { "name": "Premsyn PMS", "rxcui": "1052638" },
+      { "name": "De-Chlor MR", "rxcui": "404977" },
+      { "name": "Poly Hist PD", "rxcui": "604665" },
+      { "name": "Zotex C", "rxcui": "996581" },
+      { "name": "Ninjacof", "rxcui": "1593751" },
+      { "name": "Ninjacof A", "rxcui": "1593766" },
+      { "name": "Pediaclear", "rxcui": "2176451" },
+      { "name": "Vanacof AC", "rxcui": "1940455" },
+      { "name": "Vanatab AC", "rxcui": "1941199" }
+    ]
+  },
+  {
+    "name": "Hydroxyzine",
+    "rxnormId": ["5553"],
+    "EntryID": 11,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5553/related.json?tty=bn",
+    "brands": [{ "name": "Vistaril", "rxcui": "282519" }]
+  },
+  {
+    "name": "Dronedarone",
+    "rxnormId": ["233698"],
+    "EntryID": 38,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/233698/related.json?tty=bn",
+    "brands": [{ "name": "Multaq", "rxcui": "677229" }]
+  },
+  {
+    "name": "Imipramine",
+    "rxnormId": ["5691"],
+    "EntryID": 47,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5691/related.json?tty=bn",
+    "brands": [{ "name": "Tofranil", "rxcui": "6716" }]
+  },
+  {
+    "name": "Clonidine",
+    "rxnormId": ["2599"],
+    "EntryID": 31,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2599/related.json?tty=bn",
+    "brands": [
+      { "name": "Kapvay", "rxcui": "1013931" },
+      { "name": "Catapres", "rxcui": "202941" },
+      { "name": "Clorpres", "rxcui": "216099" },
+      { "name": "Duraclon", "rxcui": "216778" }
+    ]
+  },
+  {
+    "name": "Amitriptyline",
+    "rxnormId": ["704"],
+    "EntryID": 42,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/704/related.json?tty=bn",
+    "brands": [
+      { "name": "Limbitrol", "rxcui": "28727" },
+      { "name": "Elavil", "rxcui": "42940" }
+    ]
+  },
+  {
+    "name": "Atropine",
+    "rxnormId": ["1223"],
+    "EntryID": 16,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn",
+    "brands": [
+      { "name": "Donnatal", "rxcui": "115141" },
+      { "name": "D-Tal", "rxcui": "216326" },
+      { "name": "Enlon-Plus", "rxcui": "216913" },
+      { "name": "Lonox", "rxcui": "218071" },
+      { "name": "Motofen", "rxcui": "218445" },
+      { "name": "Lomotil", "rxcui": "28874" },
+      { "name": "Atropen", "rxcui": "404863" },
+      { "name": "Duodote", "rxcui": "717229" },
+      { "name": "Isopto Atropine", "rxcui": "92995" },
+      { "name": "Phenohytro", "rxcui": "1739882" }
+    ]
+  },
+  {
+    "name": "Desipramine",
+    "rxnormId": ["3247"],
+    "EntryID": 45,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3247/related.json?tty=bn",
+    "brands": [{ "name": "Norpramin", "rxcui": "203771" }]
+  },
+  {
+    "name": "Trimipramine",
+    "rxnormId": ["10834"],
+    "EntryID": 51,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10834/related.json?tty=bn",
+    "brands": [{ "name": "Surmontil", "rxcui": "225029" }]
+  },
+  {
+    "name": "Doxepin",
+    "rxnormId": ["3638"],
+    "EntryID": 46,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3638/related.json?tty=bn",
+    "brands": [
+      { "name": "Prudoxin", "rxcui": "261625" },
+      { "name": "Silenor", "rxcui": "966788" },
+      { "name": "Zonalon", "rxcui": "9801" }
+    ]
+  },
+  {
+    "name": "Nortriptyline",
+    "rxnormId": ["7531"],
+    "EntryID": 48,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7531/related.json?tty=bn",
+    "brands": [{ "name": "Pamelor", "rxcui": "7866" }]
+  },
+  {
+    "name": "Clomipramine",
+    "rxnormId": ["2597"],
+    "EntryID": 44,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2597/related.json?tty=bn",
+    "brands": [
+      { "name": "Anafranil", "rxcui": "756" },
+      { "name": "Clomicalm", "rxcui": "892743" },
+      { "name": "Caniquell", "rxcui": "2375708" }
+    ]
+  },
+  {
+    "name": "Digoxin",
+    "rxnormId": ["3407"],
+    "EntryID": 39,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3407/related.json?tty=bn",
+    "brands": [
+      { "name": "Lanoxin", "rxcui": "202988" },
+      { "name": "Digitek", "rxcui": "261504" },
+      { "name": "Digox", "rxcui": "1245368" }
+    ]
+  },
+  {
+    "name": "Butabarbital",
+    "rxnormId": ["477631"],
+    "EntryID": 54,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/477631/related.json?tty=bn",
+    "brands": [{ "name": "Butisol", "rxcui": "1251601" }]
+  },
+  {
+    "name": "Amiodarone",
+    "rxnormId": ["703"],
+    "EntryID": 41,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/703/related.json?tty=bn",
+    "brands": [
+      { "name": "Cordarone", "rxcui": "203588" },
+      { "name": "Pacerone", "rxcui": "219038" },
+      { "name": "Nexterone", "rxcui": "832067" }
+    ]
+  },
+  {
+    "name": "Paroxetine",
+    "rxnormId": ["32937"],
+    "EntryID": 49,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn",
+    "brands": [
+      { "name": "Paxil", "rxcui": "114228" },
+      { "name": "Pexeva", "rxcui": "541657" },
+      { "name": "Brisdelle", "rxcui": "1430123" }
+    ]
+  },
+  {
+    "name": "Pentobarbital",
+    "rxnormId": ["8004"],
+    "EntryID": 57,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8004/related.json?tty=bn",
+    "brands": [
+      { "name": "Euthasol", "rxcui": "1100450" },
+      { "name": "Nembutal", "rxcui": "204354" },
+      { "name": "Somnasol", "rxcui": "1549828" },
+      { "name": "Fatal-Plus", "rxcui": "1602557" },
+      { "name": "Beuthanasia", "rxcui": "1666950" },
+      { "name": "Socumb", "rxcui": "1673871" }
+    ]
+  },
+  {
+    "name": "Lorazepam",
+    "rxnormId": ["6470"],
+    "EntryID": 62,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6470/related.json?tty=bn",
+    "brands": [{ "name": "Ativan", "rxcui": "202479" }]
+  },
+  {
+    "name": "Butalbital",
+    "rxnormId": ["19860"],
+    "EntryID": 55,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19860/related.json?tty=bn",
+    "brands": [
+      { "name": "Vtol", "rxcui": "2261398" },
+      { "name": "Capacet", "rxcui": "1100904" },
+      { "name": "Fioricet", "rxcui": "175184" },
+      { "name": "Bupap", "rxcui": "215777" },
+      { "name": "Esgic", "rxcui": "216971" },
+      { "name": "Fioricet with Codeine", "rxcui": "217126" },
+      { "name": "Fiorinal with Codeine", "rxcui": "217127" },
+      { "name": "Marten-Tab", "rxcui": "218227" },
+      { "name": "Phrenilin", "rxcui": "219238" },
+      { "name": "Repan", "rxcui": "219624" },
+      { "name": "Tencon", "rxcui": "220211" },
+      { "name": "Zebutal", "rxcui": "221003" },
+      { "name": "Fiorinal", "rxcui": "25027" },
+      { "name": "Ascomp", "rxcui": "1372693" },
+      { "name": "Vanatol", "rxcui": "1648579" },
+      { "name": "Phrenilin Forte", "rxcui": "219239" },
+      { "name": "Allzital", "rxcui": "2279002" }
+    ]
+  },
+  {
+    "name": "Secobarbital",
+    "rxnormId": ["9624"],
+    "EntryID": 59,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9624/related.json?tty=bn",
+    "brands": [{ "name": "Seconal Sodium", "rxcui": "152350" }]
+  },
+  {
+    "name": "Phenobarbital",
+    "rxnormId": ["8134"],
+    "EntryID": 58,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8134/related.json?tty=bn",
+    "brands": [
+      { "name": "Donnatal", "rxcui": "115141" },
+      { "name": "D-Tal", "rxcui": "216326" },
+      { "name": "Phenohytro", "rxcui": "1739882" }
+    ]
+  },
+  {
+    "name": "Triazolam",
+    "rxnormId": ["10767"],
+    "EntryID": 65,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10767/related.json?tty=bn",
+    "brands": [{ "name": "Halcion", "rxcui": "227423" }]
+  },
+  {
+    "name": "Clorazepate",
+    "rxnormId": ["2353"],
+    "EntryID": 68,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2353/related.json?tty=bn",
+    "brands": [{ "name": "Tranxene", "rxcui": "202966" }]
+  },
+  {
+    "name": "Temazepam",
+    "rxnormId": ["10355"],
+    "EntryID": 64,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10355/related.json?tty=bn",
+    "brands": [{ "name": "Restoril", "rxcui": "219641" }]
+  },
+  {
+    "name": "Chlordiazepoxide",
+    "rxnormId": ["2356"],
+    "EntryID": 66,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2356/related.json?tty=bn",
+    "brands": [
+      { "name": "Librax", "rxcui": "28697" },
+      { "name": "Limbitrol", "rxcui": "28727" }
+    ]
+  },
+  {
+    "name": "Amobarbital",
+    "rxnormId": ["719"],
+    "EntryID": 53,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/719/related.json?tty=bn",
+    "brands": [{ "name": "Amytal", "rxcui": "151348" }]
+  },
+  {
+    "name": "Clonazepam",
+    "rxnormId": ["2598"],
+    "EntryID": 67,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2598/related.json?tty=bn",
+    "brands": [{ "name": "Klonopin", "rxcui": "202585" }]
+  },
+  {
+    "name": "Diazepam",
+    "rxnormId": ["3322"],
+    "EntryID": 69,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3322/related.json?tty=bn",
+    "brands": [
+      { "name": "Valium", "rxcui": "202472" },
+      { "name": "Diastat", "rxcui": "216586" },
+      { "name": "Valtoco", "rxcui": "2272614" }
+    ]
+  },
+  {
+    "name": "Quazepam",
+    "rxnormId": ["35185"],
+    "EntryID": 71,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35185/related.json?tty=bn",
+    "brands": [{ "name": "Doral", "rxcui": "216726" }]
+  },
+  {
+    "name": "Eszopiclone",
+    "rxnormId": ["461016"],
+    "EntryID": 73,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn",
+    "brands": [{ "name": "Lunesta", "rxcui": "540404" }]
+  },
+  {
+    "name": "Zaleplon",
+    "rxnormId": ["74667"],
+    "EntryID": 74,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn",
+    "brands": [{ "name": "Sonata", "rxcui": "261654" }]
+  },
+  {
+    "name": "Methyltestosterone",
+    "rxnormId": ["6904"],
+    "EntryID": 78,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6904/related.json?tty=bn",
+    "brands": [
+      { "name": "Testred", "rxcui": "281615" },
+      { "name": "Methitest", "rxcui": "541521" },
+      { "name": "Covaryx", "rxcui": "705916" },
+      { "name": "Android", "rxcui": "731594" },
+      { "name": "Syntest", "rxcui": "1372767" }
+    ]
+  },
+  {
+    "name": "Alprazolam",
+    "rxnormId": ["596"],
+    "EntryID": 60,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/596/related.json?tty=bn",
+    "brands": [{ "name": "Xanax", "rxcui": "202363" }]
+  },
+  {
+    "name": "Insulin",
+    "rxnormId": ["253182"],
+    "EntryID": 83,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/253182/related.json?tty=bn",
+    "brands": [
+      { "name": "Humulin R", "rxcui": "92881" },
+      { "name": "Novolin R", "rxcui": "93560" },
+      { "name": "Novolin", "rxcui": "1372723" },
+      { "name": "Humulin", "rxcui": "1372744" },
+      { "name": "Afrezza", "rxcui": "1543203" },
+      { "name": "Myxredlin", "rxcui": "2179745" }
+    ]
+  },
+  {
+    "name": "Growth hormone",
+    "rxnormId": ["61148"],
+    "EntryID": 82,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/61148/related.json?tty=bn",
+    "brands": [
+      { "name": "Humatrope", "rxcui": "197123" },
+      { "name": "Genotropin", "rxcui": "202828" },
+      { "name": "Norditropin", "rxcui": "202829" },
+      { "name": "Saizen", "rxcui": "202830" },
+      { "name": "Nutropin", "rxcui": "202831" },
+      { "name": "Zorbtive", "rxcui": "405411" },
+      { "name": "Omnitrope", "rxcui": "644964" },
+      { "name": "Serostim", "rxcui": "744286" },
+      { "name": "Zomacton", "rxcui": "1648156" }
+    ]
+  },
+  {
+    "name": "Zolpidem",
+    "rxnormId": ["39993"],
+    "EntryID": 75,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn",
+    "brands": [
+      { "name": "Ambien", "rxcui": "131725" },
+      { "name": "Zolpimist", "rxcui": "828693" },
+      { "name": "Edluar", "rxcui": "836642" },
+      { "name": "Intermezzo", "rxcui": "1232195" }
+    ]
+  },
+  {
+    "name": "Testosterone",
+    "rxnormId": ["10379"],
+    "EntryID": 79,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10379/related.json?tty=bn",
+    "brands": [
+      { "name": "Axiron", "rxcui": "1047139" },
+      { "name": "Fortesta", "rxcui": "1051071" },
+      { "name": "Androderm", "rxcui": "215283" },
+      { "name": "Delatestryl", "rxcui": "216431" },
+      { "name": "Androgel", "rxcui": "261448" },
+      { "name": "Testim", "rxcui": "353016" },
+      { "name": "Testopel", "rxcui": "353017" },
+      { "name": "Striant", "rxcui": "405337" },
+      { "name": "Depo-testosterone", "rxcui": "48877" },
+      { "name": "Aveed", "rxcui": "1490662" },
+      { "name": "Vogelxo", "rxcui": "1539902" },
+      { "name": "Natesto", "rxcui": "1543191" },
+      { "name": "Jatenzo", "rxcui": "2121771" },
+      { "name": "Xyosted", "rxcui": "2099682" }
+    ]
+  },
+  {
+    "name": "Meprobamate",
+    "rxnormId": ["6760"],
+    "EntryID": 72,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6760/related.json?tty=bn",
+    "brands": [{ "name": "Equagesic", "rxcui": "24292" }]
+  },
+  {
+    "name": "Glimepiride",
+    "rxnormId": ["25789"],
+    "EntryID": 86,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/25789/related.json?tty=bn",
+    "brands": [
+      { "name": "Amaryl", "rxcui": "153592" },
+      { "name": "Duetact", "rxcui": "647208" }
+    ]
+  },
+  {
+    "name": "Etodolac",
+    "rxnormId": ["24605"],
+    "EntryID": 95,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn",
+    "brands": [{ "name": "Lodine", "rxcui": "202998" }]
+  },
+  {
+    "name": "Metoclopramide",
+    "rxnormId": ["6915"],
+    "EntryID": 88,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6915/related.json?tty=bn",
+    "brands": [
+      { "name": "Metozolv", "rxcui": "863583" },
+      { "name": "Reglan", "rxcui": "9230" },
+      { "name": "Pileran", "rxcui": "1431137" },
+      { "name": "Gimoti", "rxcui": "2380565" }
+    ]
+  },
+  {
+    "name": "Mineral Oil",
+    "rxnormId": ["6972"],
+    "EntryID": 89,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6972/related.json?tty=bn",
+    "brands": [
+      { "name": "tetraVIV", "rxcui": "2257319" },
+      { "name": "Stye", "rxcui": "1053143" },
+      { "name": "Lubrifresh P.M.", "rxcui": "1086610" },
+      { "name": "Tears Again Ointment", "rxcui": "1086895" },
+      { "name": "Altalube", "rxcui": "1088143" },
+      { "name": "Tears Naturale PM", "rxcui": "1089808" },
+      { "name": "Puralube", "rxcui": "1115889" },
+      { "name": "Akwa Tears", "rxcui": "215067" },
+      { "name": "Kondremul Plain", "rxcui": "217916" },
+      { "name": "Moisture Eyes PM", "rxcui": "606031" },
+      { "name": "Systane Nighttime", "rxcui": "827263" },
+      { "name": "Formulation R Ointment", "rxcui": "904511" },
+      { "name": "Preparation H Reformulated Jun 2013", "rxcui": "1427400" },
+      { "name": "Soothe Mineral Oil", "rxcui": "1594958" },
+      { "name": "RectiCare Advance Cream", "rxcui": "1745451" },
+      { "name": "Soothe Night Time", "rxcui": "1235258" },
+      { "name": "GRX Hemorrhoidal", "rxcui": "1313812" }
+    ]
+  },
+  {
+    "name": "Glyburide",
+    "rxnormId": ["4815"],
+    "EntryID": 87,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4815/related.json?tty=bn",
+    "brands": [
+      { "name": "Glucovance", "rxcui": "284743" },
+      { "name": "Glynase", "rxcui": "881404" }
+    ]
+  },
+  {
+    "name": "Diclofenac",
+    "rxnormId": ["3355"],
+    "EntryID": 93,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn",
+    "brands": [
+      { "name": "Surpass Anti-Inflammatory", "rxcui": "1043480" },
+      { "name": "Flector", "rxcui": "135123" },
+      { "name": "Voltaren", "rxcui": "202976" },
+      { "name": "Cataflam", "rxcui": "215916" },
+      { "name": "Solaraze", "rxcui": "284870" },
+      { "name": "Arthrotec", "rxcui": "68373" },
+      { "name": "Zipsor", "rxcui": "858343" },
+      { "name": "Cambia", "rxcui": "858655" },
+      { "name": "Pennsaid", "rxcui": "967941" },
+      { "name": "Zorvolex", "rxcui": "1442117" },
+      { "name": "Dyloject", "rxcui": "1607578" },
+      { "name": "Licart", "rxcui": "2385121" }
+    ]
+  },
+  {
+    "name": "Megestrol",
+    "rxnormId": ["6703"],
+    "EntryID": 84,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6703/related.json?tty=bn",
+    "brands": [{ "name": "Megace", "rxcui": "203000" }]
+  },
+  {
+    "name": "Meloxicam",
+    "rxnormId": ["41493"],
+    "EntryID": 101,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn",
+    "brands": [
+      { "name": "Metacam", "rxcui": "1086708" },
+      { "name": "Mobic", "rxcui": "152699" },
+      { "name": "Loxicom", "rxcui": "1364057" },
+      { "name": "Meloxidyl", "rxcui": "1439977" },
+      { "name": "Ostilox", "rxcui": "1482670" },
+      { "name": "Vivlodex", "rxcui": "1722350" },
+      { "name": "EloxiOral", "rxcui": "1788847" },
+      { "name": "Qmiiz", "rxcui": "2118582" },
+      { "name": "Alloxate", "rxcui": "2267587" },
+      { "name": "Anjeso", "rxcui": "2281107" }
+    ]
+  },
+  {
+    "name": "Nabumetone",
+    "rxnormId": ["31448"],
+    "EntryID": 102,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn",
+    "brands": [{ "name": "Relafen", "rxcui": "203754" }]
+  },
+  {
+    "name": "Oxaprozin",
+    "rxnormId": ["32613"],
+    "EntryID": 104,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn",
+    "brands": [{ "name": "Daypro", "rxcui": "157381" }]
+  },
+  {
+    "name": "Ibuprofen",
+    "rxnormId": ["5640"],
+    "EntryID": 97,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn",
+    "brands": [
+      { "name": "Wal-Profen Cold and Sinus", "rxcui": "1090447" },
+      { "name": "Duexis", "rxcui": "1100067" },
+      { "name": "Counteract IB", "rxcui": "1101916" },
+      { "name": "Advil", "rxcui": "153010" },
+      { "name": "Motrin", "rxcui": "202488" },
+      { "name": "Advil Cold and Sinus", "rxcui": "215041" },
+      { "name": "Genpril", "rxcui": "217324" },
+      { "name": "Ibu", "rxcui": "217693" },
+      { "name": "Vicoprofen", "rxcui": "220826" },
+      { "name": "Reprexain", "rxcui": "579458" },
+      { "name": "Neoprofen", "rxcui": "637194" },
+      { "name": "Advil PM", "rxcui": "643061" },
+      { "name": "Wal-Profen", "rxcui": "643099" },
+      { "name": "Ibuprohm", "rxcui": "850404" },
+      { "name": "Caldolor", "rxcui": "854184" },
+      { "name": "Motrin PM", "rxcui": "895656" },
+      { "name": "Addaprin", "rxcui": "900431" },
+      { "name": "Advil PM Liqui Gels", "rxcui": "902630" },
+      { "name": "Ibutab", "rxcui": "1359092" },
+      { "name": "Ibudone", "rxcui": "1372755" },
+      { "name": "Xylon", "rxcui": "1542983" },
+      { "name": "Advil Sinus Congestion and Pain", "rxcui": "1722328" },
+      { "name": "Proprinal", "rxcui": "1300262" },
+      { "name": "Samson 8", "rxcui": "541710" },
+      { "name": "Wal-Profen Congestion Relief and Pain", "rxcui": "1940582" }
+    ]
+  },
+  {
+    "name": "Piroxicam",
+    "rxnormId": ["8356"],
+    "EntryID": 105,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn",
+    "brands": [{ "name": "Feldene", "rxcui": "197288" }]
+  },
+  {
+    "name": "Naproxen",
+    "rxnormId": ["7258"],
+    "EntryID": 103,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn",
+    "brands": [
+      { "name": "Anaprox", "rxcui": "202399" },
+      { "name": "Naprosyn", "rxcui": "203012" },
+      { "name": "Aleve", "rxcui": "215101" },
+      { "name": "Naprelan", "rxcui": "218599" },
+      { "name": "Wal-Proxen", "rxcui": "643130" },
+      { "name": "Treximet", "rxcui": "794765" },
+      { "name": "Aleve-D", "rxcui": "849730" },
+      { "name": "Sudafed Sinus & Pain", "rxcui": "880900" },
+      { "name": "Vimovo", "rxcui": "1372705" },
+      { "name": "Aleve PM", "rxcui": "1550958" },
+      { "name": "Menstridol", "rxcui": "1593655" }
+    ]
+  },
+  {
+    "name": "Meperidine",
+    "rxnormId": ["6754"],
+    "EntryID": 91,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn",
+    "brands": [{ "name": "Demerol", "rxcui": "282381" }]
+  },
+  {
+    "name": "Mefenamic acid",
+    "rxnormId": ["6693"],
+    "EntryID": 100,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn",
+    "brands": [{ "name": "Ponstel", "rxcui": "202494" }]
+  },
+  {
+    "name": "Carisoprodol",
+    "rxnormId": ["2101"],
+    "EntryID": 110,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2101/related.json?tty=bn",
+    "brands": [
+      { "name": "Soma", "rxcui": "204362" },
+      { "name": "Vanadom", "rxcui": "220735" }
+    ]
+  },
+  {
+    "name": "Chlorzoxazone",
+    "rxnormId": ["2410"],
+    "EntryID": 111,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2410/related.json?tty=bn",
+    "brands": [
+      { "name": "Parafon Forte DSC", "rxcui": "219108" },
+      { "name": "Lorzone", "rxcui": "1189093" }
+    ]
+  },
+  {
+    "name": "Ketorolac",
+    "rxnormId": ["35827"],
+    "EntryID": 109,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn",
+    "brands": [
+      { "name": "Acular", "rxcui": "152819" },
+      { "name": "Acuvail", "rxcui": "858359" },
+      { "name": "Sprix", "rxcui": "992421" },
+      { "name": "Omidria", "rxcui": "1540231" }
+    ]
+  },
+  {
+    "name": "Olanzapine",
+    "rxnormId": ["61381"],
+    "EntryID": 135,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn",
+    "brands": [
+      { "name": "Zyprexa", "rxcui": "135423" },
+      { "name": "Symbyax", "rxcui": "405343" }
+    ]
+  },
+  {
+    "name": "Orphenadrine",
+    "rxnormId": ["7715"],
+    "EntryID": 115,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7715/related.json?tty=bn",
+    "brands": [
+      { "name": "Orphengesic", "rxcui": "261599" },
+      { "name": "Norgesic", "rxcui": "218776" }
+    ]
+  },
+  {
+    "name": "Metaxalone",
+    "rxnormId": ["59078"],
+    "EntryID": 113,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/59078/related.json?tty=bn",
+    "brands": [
+      { "name": "Skelaxin", "rxcui": "204315" },
+      { "name": "Metaxall", "rxcui": "1720607" }
+    ]
+  },
+  {
+    "name": "Fenoprofen",
+    "rxnormId": ["4331"],
+    "EntryID": 96,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn",
+    "brands": [
+      { "name": "Nalfon", "rxcui": "203313" },
+      { "name": "Fenortho", "rxcui": "1799318" },
+      { "name": "Profeno", "rxcui": "1945845" }
+    ]
+  },
+  {
+    "name": "Aspirin",
+    "rxnormId": ["1191"],
+    "EntryID": 92,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn",
+    "brands": [
+      { "name": "Arthriten Max", "rxcui": "1944108" },
+      { "name": "Ecpirin", "rxcui": "1001473" },
+      { "name": "Pamprin Max Formula", "rxcui": "1052413" },
+      {
+        "name": "Stanback Headache Powder Reformulated Jan 2011",
+        "rxcui": "1053324"
+      },
+      { "name": "Alka-Seltzer", "rxcui": "17315" },
+      { "name": "Ascriptin", "rxcui": "18385" },
+      { "name": "Aspergum", "rxcui": "202546" },
+      { "name": "Ecotrin", "rxcui": "202554" },
+      { "name": "Anacin", "rxcui": "215256" },
+      { "name": "Aspir-Low", "rxcui": "215431" },
+      { "name": "Bayer Aspirin", "rxcui": "215568" },
+      { "name": "Bufferin", "rxcui": "215770" },
+      { "name": "Excedrin", "rxcui": "217020" },
+      { "name": "Fiorinal with Codeine", "rxcui": "217127" },
+      { "name": "Norwich Aspirin", "rxcui": "218783" },
+      { "name": "P-A-C Analgesic", "rxcui": "219010" },
+      { "name": "Saleto", "rxcui": "219779" },
+      { "name": "St. Joseph Aspirin", "rxcui": "220011" },
+      { "name": "Synalgos-DC", "rxcui": "220143" },
+      { "name": "Vanquish", "rxcui": "220751" },
+      { "name": "Aggrenox", "rxcui": "226718" },
+      { "name": "Equagesic", "rxcui": "24292" },
+      { "name": "Fiorinal", "rxcui": "25027" },
+      { "name": "Bayer Back and Body Pain", "rxcui": "702317" },
+      { "name": "Excedrin Back & Body", "rxcui": "707765" },
+      { "name": "Anacin Advanced Headache Formula", "rxcui": "721973" },
+      { "name": "Anacin Aspirin Regimen", "rxcui": "724441" },
+      { "name": "Fasprin", "rxcui": "747233" },
+      { "name": "Stanback Headache Powder", "rxcui": "796658" },
+      { "name": "Miniprin", "rxcui": "847088" },
+      { "name": "Endodan Reformulated May 2009", "rxcui": "848763" },
+      { "name": "BC Headache", "rxcui": "896890" },
+      { "name": "Exaprin", "rxcui": "1358848" },
+      { "name": "Painaid ESF", "rxcui": "1359078" },
+      { "name": "Backaid IPF", "rxcui": "1361397" },
+      { "name": "Ascomp", "rxcui": "1372693" },
+      { "name": "Excedrin PM Triple Action", "rxcui": "1593111" },
+      { "name": "Aspi-Cor", "rxcui": "1600986" },
+      { "name": "Durlaza", "rxcui": "1665357" },
+      { "name": "Bayer Womens", "rxcui": "1722690" },
+      { "name": "Yosprala", "rxcui": "1811911" },
+      { "name": "Bayer Aspirin PM Reformulated Nov 2011", "rxcui": "1193079" },
+      { "name": "BC Arthritis", "rxcui": "1247393" },
+      { "name": "BC Original Formula", "rxcui": "1247398" },
+      { "name": "Arthriten Inflammatory Pain", "rxcui": "1303154" },
+      { "name": "Bromo Seltzer Antacid Pain Reliever", "rxcui": "1312950" },
+      { "name": "Orphengesic", "rxcui": "261599" },
+      { "name": "Norgesic", "rxcui": "218776" }
+    ]
+  },
+  {
+    "name": "Ranitidine",
+    "rxnormId": ["9143"],
+    "EntryID": 143,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9143/related.json?tty=bn",
+    "brands": [
+      { "name": "Zantac", "rxcui": "152523" },
+      { "name": "Wal-Zan", "rxcui": "643043" }
+    ]
+  },
+  {
+    "name": "Famotidine",
+    "rxnormId": ["4278"],
+    "EntryID": 141,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4278/related.json?tty=bn",
+    "brands": [
+      { "name": "Duexis", "rxcui": "1100067" },
+      { "name": "Pepcid", "rxcui": "196458" },
+      { "name": "Pepcid Complete", "rxcui": "284831" },
+      { "name": "Tums Dual Action", "rxcui": "867494" },
+      { "name": "Duo Fusion", "rxcui": "1744392" }
+    ]
+  },
+  {
+    "name": "Verapamil",
+    "rxnormId": ["11170"],
+    "EntryID": 305,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/11170/related.json?tty=bn",
+    "brands": [
+      { "name": "Tarka", "rxcui": "153752" },
+      { "name": "Isoptin", "rxcui": "203489" },
+      { "name": "Calan", "rxcui": "203490" },
+      { "name": "Verelan", "rxcui": "220778" }
+    ]
+  },
+  {
+    "name": "Ketoprofen",
+    "rxnormId": ["6142"],
+    "EntryID": 98,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn",
+    "brands": [{ "name": "Ketofen", "rxcui": "1551478" }]
+  },
+  {
+    "name": "zaleplon",
+    "rxnormId": ["74667"],
+    "EntryID": 148,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn",
+    "brands": [{ "name": "Sonata", "rxcui": "261654" }]
+  },
+  {
+    "name": "Indomethacin",
+    "rxnormId": ["5781"],
+    "EntryID": 108,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn",
+    "brands": [
+      { "name": "Indocin", "rxcui": "203365" },
+      { "name": "Tivorbex", "rxcui": "1491522" }
+    ]
+  },
+  {
+    "name": "Methocarbamol",
+    "rxnormId": ["6845"],
+    "EntryID": 114,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6845/related.json?tty=bn",
+    "brands": [{ "name": "Robaxin", "rxcui": "202955" }]
+  },
+  {
+    "name": "Rivaroxaban",
+    "rxnormId": ["1114195"],
+    "EntryID": 177,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn",
+    "brands": [{ "name": "Xarelto", "rxcui": "1114199" }]
+  },
+  {
+    "name": "amiloride",
+    "rxnormId": ["644"],
+    "EntryID": 193,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/644/related.json?tty=bn",
+    "brands": [{ "name": "Midamor", "rxcui": "6958" }]
+  },
+  {
+    "name": "Desmopressin",
+    "rxnormId": ["3251"],
+    "EntryID": 116,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3251/related.json?tty=bn",
+    "brands": [
+      { "name": "Noctiva", "rxcui": "1874125" },
+      { "name": "DDAVP", "rxcui": "203658" },
+      { "name": "Stimate", "rxcui": "405336" },
+      { "name": "Nocdurna", "rxcui": "2048573" }
+    ]
+  },
+  {
+    "name": "Cimetidine",
+    "rxnormId": ["2541"],
+    "EntryID": 140,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2541/related.json?tty=bn",
+    "brands": [{ "name": "Tagamet", "rxcui": "152402" }]
+  },
+  {
+    "name": "eszopiclone",
+    "rxnormId": ["461016"],
+    "EntryID": 147,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn",
+    "brands": [{ "name": "Lunesta", "rxcui": "540404" }]
+  },
+  {
+    "name": "Oxcarbazepine",
+    "rxnormId": ["32624"],
+    "EntryID": 183,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn",
+    "brands": [
+      { "name": "Trileptal", "rxcui": "261680" },
+      { "name": "Oxtellar", "rxcui": "1365655" }
+    ]
+  },
+  {
+    "name": "zolpidem",
+    "rxnormId": ["39993"],
+    "EntryID": 149,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn",
+    "brands": [
+      { "name": "Ambien", "rxcui": "131725" },
+      { "name": "Zolpimist", "rxcui": "828693" },
+      { "name": "Edluar", "rxcui": "836642" },
+      { "name": "Intermezzo", "rxcui": "1232195" }
+    ]
+  },
+  {
+    "name": "triamterene",
+    "rxnormId": ["10763"],
+    "EntryID": 194,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn",
+    "brands": [
+      { "name": "Dyrenium", "rxcui": "203238" },
+      { "name": "Dyazide", "rxcui": "23742" },
+      { "name": "Maxzide", "rxcui": "52440" }
+    ]
+  },
+  {
+    "name": "Warfarin",
+    "rxnormId": ["11289"],
+    "EntryID": 213,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/11289/related.json?tty=bn",
+    "brands": [
+      { "name": "Coumadin", "rxcui": "202421" },
+      { "name": "Jantoven", "rxcui": "405155" }
+    ]
+  },
+  {
+    "name": "Nizatidine",
+    "rxnormId": ["42319"],
+    "EntryID": 142,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/42319/related.json?tty=bn",
+    "brands": [
+      { "name": "Axid", "rxcui": "196464" },
+      { "name": "Axid AR", "rxcui": "215493" }
+    ]
+  },
+  {
+    "name": "Tramadol",
+    "rxnormId": ["10689"],
+    "EntryID": 187,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn",
+    "brands": [
+      { "name": "ConZip", "rxcui": "1148479" },
+      { "name": "Ultram", "rxcui": "220606" },
+      { "name": "Ultracet", "rxcui": "353062" }
+    ]
+  },
+  {
+    "name": "Phenytoin",
+    "rxnormId": ["8183"],
+    "EntryID": 210,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn",
+    "brands": [
+      { "name": "Euthasol", "rxcui": "1100450" },
+      { "name": "Dilantin", "rxcui": "202740" },
+      { "name": "Phenytek", "rxcui": "352891" },
+      { "name": "Somnasol", "rxcui": "1549828" },
+      { "name": "Beuthanasia", "rxcui": "1666950" }
+    ]
+  },
+  {
+    "name": "Trimethoprim-sulfamethoxazole",
+    "rxnormId": ["10831"],
+    "EntryID": 189,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn",
+    "brands": [
+      { "name": "Sulfatrim", "rxcui": "220091" },
+      { "name": "Bactrim", "rxcui": "151399" }
+    ]
+  },
+  {
+    "name": "Mirtazapine",
+    "rxnormId": ["15996"],
+    "EntryID": 182,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/15996/related.json?tty=bn",
+    "brands": [
+      { "name": "Remeron", "rxcui": "134774" },
+      { "name": "Mirataz", "rxcui": "2049252" }
+    ]
+  },
+  {
+    "name": "Cyclobenzaprine",
+    "rxnormId": ["21949"],
+    "EntryID": 112,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21949/related.json?tty=bn",
+    "brands": [
+      { "name": "Flexeril", "rxcui": "224954" },
+      { "name": "Fexmid", "rxcui": "705009" },
+      { "name": "Amrix", "rxcui": "725085" }
+    ]
+  },
+  {
+    "name": "Dextromethorphan/quinidine",
+    "rxnormId": ["1040053"],
+    "EntryID": 188,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1040053/related.json?tty=bn",
+    "brands": [{ "name": "Nuedexta", "rxcui": "1040055" }]
+  },
+  {
+    "name": "Prasugrel",
+    "rxnormId": ["613391"],
+    "EntryID": 178,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/613391/related.json?tty=bn",
+    "brands": [{ "name": "Effient", "rxcui": "855813" }]
+  },
+  {
+    "name": "enoxaparin",
+    "rxnormId": ["67108"],
+    "EntryID": 227,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/67108/related.json?tty=bn",
+    "brands": [{ "name": "Lovenox", "rxcui": "225036" }]
+  },
+  {
+    "name": "Carbamazepine",
+    "rxnormId": ["2002"],
+    "EntryID": 180,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn",
+    "brands": [
+      { "name": "Tegretol", "rxcui": "203029" },
+      { "name": "Epitol", "rxcui": "203251" },
+      { "name": "Carbatrol", "rxcui": "215879" },
+      { "name": "Equetro", "rxcui": "583135" },
+      { "name": "Carnexiv", "rxcui": "1813509" }
+    ]
+  },
+  {
+    "name": "Ciprofloxacin",
+    "rxnormId": ["2551"],
+    "EntryID": 218,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2551/related.json?tty=bn",
+    "brands": [
+      { "name": "Cipro", "rxcui": "203563" },
+      { "name": "Ciloxan", "rxcui": "203565" },
+      { "name": "Cipro HC", "rxcui": "216063" },
+      { "name": "Ciprodex", "rxcui": "404930" },
+      { "name": "Proquin", "rxcui": "602786" },
+      { "name": "Cetraxal", "rxcui": "848957" },
+      { "name": "Otiprio", "rxcui": "1739998" },
+      { "name": "Otovel", "rxcui": "1792387" }
+    ]
+  },
+  {
+    "name": "fondaparinux",
+    "rxnormId": ["321208"],
+    "EntryID": 228,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/321208/related.json?tty=bn",
+    "brands": [{ "name": "Arixtra", "rxcui": "322155" }]
+  },
+  {
+    "name": "apixaban",
+    "rxnormId": ["1364430"],
+    "EntryID": 222,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1364430/related.json?tty=bn",
+    "brands": [{ "name": "Eliquis", "rxcui": "1364436" }]
+  },
+  {
+    "name": "dofetilide",
+    "rxnormId": ["49247"],
+    "EntryID": 224,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49247/related.json?tty=bn",
+    "brands": [{ "name": "Tikosyn", "rxcui": "261672" }]
+  },
+  {
+    "name": "Triamterene",
+    "rxnormId": ["10763"],
+    "EntryID": 233,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn",
+    "brands": [
+      { "name": "Dyrenium", "rxcui": "203238" },
+      { "name": "Dyazide", "rxcui": "23742" },
+      { "name": "Maxzide", "rxcui": "52440" }
+    ]
+  },
+  {
+    "name": "rivaroxaban",
+    "rxnormId": ["1114195"],
+    "EntryID": 229,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn",
+    "brands": [{ "name": "Xarelto", "rxcui": "1114199" }]
+  },
+  {
+    "name": "Prochlorperazine",
+    "rxnormId": ["8704"],
+    "EntryID": 167,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8704/related.json?tty=bn",
+    "brands": [
+      { "name": "Compazine", "rxcui": "203546" },
+      { "name": "Compro", "rxcui": "285056" }
+    ]
+  },
+  {
+    "name": "Spironolactone",
+    "rxnormId": ["9997"],
+    "EntryID": 232,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9997/related.json?tty=bn",
+    "brands": [
+      { "name": "Carospir", "rxcui": "1943340" },
+      { "name": "Aldactone", "rxcui": "151317" },
+      { "name": "Aldactazide", "rxcui": "17276" }
+    ]
+  },
+  {
+    "name": "Tolterodine",
+    "rxnormId": ["119565"],
+    "EntryID": 265,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn",
+    "brands": [{ "name": "Detrol", "rxcui": "216511" }]
+  },
+  {
+    "name": "edoxaban",
+    "rxnormId": ["1599538"],
+    "EntryID": 225,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1599538/related.json?tty=bn",
+    "brands": [{ "name": "Savaysa", "rxcui": "1599544" }]
+  },
+  {
+    "name": "Levetiracetam",
+    "rxnormId": ["114477"],
+    "EntryID": 236,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn",
+    "brands": [
+      { "name": "Keppra", "rxcui": "261547" },
+      { "name": "Elepsia", "rxcui": "1605363" },
+      { "name": "Roweepra", "rxcui": "1731015" },
+      { "name": "Spritam", "rxcui": "1736038" }
+    ]
+  },
+  {
+    "name": "Gabapentin",
+    "rxnormId": ["25480"],
+    "EntryID": 235,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn",
+    "brands": [
+      { "name": "Gralise", "rxcui": "1087976" },
+      { "name": "Horizant", "rxcui": "1095698" },
+      { "name": "Neurontin", "rxcui": "196498" }
+    ]
+  },
+  {
+    "name": "Oxybutynin",
+    "rxnormId": ["32675"],
+    "EntryID": 263,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn",
+    "brands": [
+      { "name": "Ditropan", "rxcui": "151651" },
+      { "name": "Oxytrol", "rxcui": "356886" },
+      { "name": "Gelnique", "rxcui": "831887" }
+    ]
+  },
+  {
+    "name": "trimethoprim-sulfamethoxazole",
+    "rxnormId": ["10831"],
+    "EntryID": 219,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn",
+    "brands": [
+      { "name": "Sulfatrim", "rxcui": "220091" },
+      { "name": "Bactrim", "rxcui": "151399" }
+    ]
+  },
+  {
+    "name": "Theophylline",
+    "rxnormId": ["10438"],
+    "EntryID": 211,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10438/related.json?tty=bn",
+    "brands": [
+      { "name": "Theo-24", "rxcui": "203388" },
+      { "name": "Elixophyllin", "rxcui": "203394" }
+    ]
+  },
+  {
+    "name": "Duloxetine",
+    "rxnormId": ["72625"],
+    "EntryID": 234,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn",
+    "brands": [
+      { "name": "Cymbalta", "rxcui": "482574" },
+      { "name": "Irenka", "rxcui": "1652064" },
+      { "name": "Drizalma", "rxcui": "2200169" }
+    ]
+  },
+  {
+    "name": "Pregabalin",
+    "rxnormId": ["187832"],
+    "EntryID": 237,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/187832/related.json?tty=bn",
+    "brands": [{ "name": "Lyrica", "rxcui": "593441" }]
+  },
+  {
+    "name": "Colchicine",
+    "rxnormId": ["2683"],
+    "EntryID": 244,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2683/related.json?tty=bn",
+    "brands": [
+      { "name": "Colcrys", "rxcui": "858068" },
+      { "name": "Mitigare", "rxcui": "1550941" },
+      { "name": "Gloperba", "rxcui": "2180553" }
+    ]
+  },
+  {
+    "name": "Homatropine",
+    "rxnormId": ["27084"],
+    "EntryID": 286,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn",
+    "brands": [
+      { "name": "Hydromet", "rxcui": "151875" },
+      { "name": "Tussigon", "rxcui": "220542" },
+      { "name": "Homatropaire", "rxcui": "604021" },
+      { "name": "Hycodan", "rxcui": "992657" }
+    ]
+  },
+  {
+    "name": "Fesoterodine",
+    "rxnormId": ["797195"],
+    "EntryID": 261,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn",
+    "brands": [{ "name": "Toviaz", "rxcui": "810072" }]
+  },
+  {
+    "name": "Dicyclomine",
+    "rxnormId": ["3361"],
+    "EntryID": 285,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn",
+    "brands": [{ "name": "Bentyl", "rxcui": "203018" }]
+  },
+  {
+    "name": "Clozapine",
+    "rxnormId": ["2626"],
+    "EntryID": 295,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn",
+    "brands": [
+      { "name": "Clozaril", "rxcui": "216102" },
+      { "name": "Fazaclo", "rxcui": "542974" },
+      { "name": "Versacloz", "rxcui": "1369826" }
+    ]
+  },
+  {
+    "name": "Solifenacin",
+    "rxnormId": ["322167"],
+    "EntryID": 264,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn",
+    "brands": [{ "name": "Vesicare", "rxcui": "539812" }]
+  },
+  {
+    "name": "Dipyridamole",
+    "rxnormId": ["3521"],
+    "EntryID": 26,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3521/related.json?tty=bn",
+    "brands": [
+      { "name": "Persantine", "rxcui": "203015" },
+      { "name": "Aggrenox", "rxcui": "226718" }
+    ]
+  },
+  {
+    "name": "Loxapine",
+    "rxnormId": ["6475"],
+    "EntryID": 296,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn",
+    "brands": [{ "name": "Adasuve", "rxcui": "1364415" }]
+  }
+]

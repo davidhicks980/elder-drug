@@ -1,46 +1,23 @@
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WebsocketService {
-  socket: any; //socket that connects to socket.io server
+export class WebsocketService {}
 
-  constructor() {
-    this.socket = io('ws://localhost:3000'); //initiates socket instance. Delete port
-  }
-  listen(eventName: string) {
-    return new Observable((subscriber) => {
-      this.socket.on(eventName, (data) => {
-        subscriber.next(data);
-      });
-    });
-  }
-  mapData(data: any[], filter?: string[]) {
-    let output = [];
-    if (filter[0] != null || filter[1] != null) {
-      data.forEach((element) => {
-        if (
-          element[String(filter[0])] != null ||
-          element[String(filter[1])] != null
-        ) {
-          output.push(element);
-        }
-      });
-    } else if (data.length == 0) {
-      output = null;
-    } else {
-      output = data;
+export interface Drug {
+  name: string;
+  rxnormId: number;
+  EntryID: number;
+  uri: string;
+  brands?: [
+    {
+      name: string;
+      rxcui: number;
     }
-    return output;
-  }
-
-  emit(messageID: string, data: any) {
-    this.socket.emit(messageID, data);
-  }
+  ];
 }
 export interface BeersEntry {
   EntryID?: number;

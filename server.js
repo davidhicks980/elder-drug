@@ -13,8 +13,7 @@ app.use(express.static(__dirname + "/public"));
 var socket = require("socket.io");
 var mysql = require("mysql");
 const bodyParser = require("body-parser");
-const querystring = require("querystring");
-const { Output } = require("@angular/core");
+
 let dropdownItems = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,14 +32,6 @@ const conn = mysql.createConnection({
 })*/
 
 var io = socket(server);
-
-const conn = mysql.createConnection({
-  host: "127.0.0.1",
-  port: "3306",
-  user: "davicks",
-  password: "burrito7",
-  database: "geridb",
-});
 
 io.on("connection", function (socket) {
   console.log("socket connection successful");

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "elder-drug"
+  },
+  "targets": {
+    "elder-drug": {
+      "hosting": {
+        "search-angular": [
+          "elder-drug"
+        ]
+      }
+    }
+  }
+}

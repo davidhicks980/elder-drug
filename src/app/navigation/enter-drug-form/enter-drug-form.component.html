@@ -19,7 +19,7 @@
           matInput
           [formControl]="drug.control"
           [matAutocomplete]="auto"
-          (input)="getInputString($event.target.value, i)"
+          (input)="searchIndex($event.target.value)"
           (keydown.Tab)="addDrug()"
           (keydown.Enter)="search(submission)"
           autofocus
@@ -29,7 +29,7 @@
           <mat-option
             *ngFor="let option of filteredOptions | async"
             [value]="option"
-            [innerHTML]="boldDropdownText(option, activeString)"
+            [innerHTML]="boldDropdownText(option, entryValue)"
           >
           </mat-option>
         </mat-autocomplete>
