@@ -1,0 +1,3536 @@
+[
+  { "name": "Doral", "rxcui": "216726", "id": 71, "parentRxNormId": ["35185"] },
+  {
+    "name": "Cardura",
+    "rxcui": "196468",
+    "id": 28,
+    "parentRxNormId": ["49276"]
+  },
+  {
+    "name": "Phenergan",
+    "rxcui": "152218",
+    "id": 13,
+    "parentRxNormId": ["8745"]
+  },
+  {
+    "name": "Promethegan",
+    "rxcui": "219442",
+    "id": 13,
+    "parentRxNormId": ["8745"]
+  },
+  {
+    "name": "Phenadoz",
+    "rxcui": "541158",
+    "id": 13,
+    "parentRxNormId": ["8745"]
+  },
+  {
+    "name": "Karbinal",
+    "rxcui": "1374771",
+    "id": 2,
+    "parentRxNormId": ["20220"]
+  },
+  {
+    "name": "Ryvent",
+    "rxcui": "1869878",
+    "id": 2,
+    "parentRxNormId": ["20220"]
+  },
+  {
+    "name": "Minipress",
+    "rxcui": "71515",
+    "id": 29,
+    "parentRxNormId": ["8629"]
+  },
+  { "name": "Xanax", "rxcui": "202363", "id": 60, "parentRxNormId": ["596"] },
+  {
+    "name": "Halcion",
+    "rxcui": "227423",
+    "id": 65,
+    "parentRxNormId": ["10767"]
+  },
+  { "name": "Amytal", "rxcui": "151348", "id": 53, "parentRxNormId": ["719"] },
+  {
+    "name": "Lanoxin",
+    "rxcui": "202988",
+    "id": 39,
+    "parentRxNormId": ["3407"]
+  },
+  {
+    "name": "Digitek",
+    "rxcui": "261504",
+    "id": 39,
+    "parentRxNormId": ["3407"]
+  },
+  { "name": "Digox", "rxcui": "1245368", "id": 39, "parentRxNormId": ["3407"] },
+  {
+    "name": "Restoril",
+    "rxcui": "219641",
+    "id": 64,
+    "parentRxNormId": ["10355"]
+  },
+  {
+    "name": "Limbitrol",
+    "rxcui": "28727",
+    "id": 42,
+    "parentRxNormId": ["704"]
+  },
+  { "name": "Elavil", "rxcui": "42940", "id": 42, "parentRxNormId": ["704"] },
+  {
+    "name": "Ivarest",
+    "rxcui": "1233688",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Percogesic Reformulated Jan 2011",
+    "rxcui": "1052463",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Dryl",
+    "rxcui": "1053139",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Compoz", "rxcui": "1085965", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Wal-Dryl Childrens",
+    "rxcui": "1086764",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Dryl-D",
+    "rxcui": "1087034",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Dryl Allergy",
+    "rxcui": "1090073",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Som Maximum Strength",
+    "rxcui": "1090453",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Nytol", "rxcui": "1092413", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Banophen Cream",
+    "rxcui": "1092425",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Diphenhist with Zinc",
+    "rxcui": "1092451",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Unisom Sleep",
+    "rxcui": "1093099",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Scot-Tussin Allergy",
+    "rxcui": "1094448",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Panadol PM",
+    "rxcui": "1094715",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Rest Simply",
+    "rxcui": "1101108",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Kids-Eeze Allergy",
+    "rxcui": "1111092",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Acetadryl",
+    "rxcui": "1116529",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Dermamycin",
+    "rxcui": "1146880",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Sominex", "rxcui": "152371", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Benadryl",
+    "rxcui": "203457",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Allermax",
+    "rxcui": "215150",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Banophen",
+    "rxcui": "215558",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Diphedryl",
+    "rxcui": "216654",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Diphenhist",
+    "rxcui": "216660",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Doans PM",
+    "rxcui": "216685",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Dytuss", "rxcui": "216819", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Excedrin PM",
+    "rxcui": "217025",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Legatrin PM",
+    "rxcui": "217990",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Mapap PM",
+    "rxcui": "218208",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Siladryl",
+    "rxcui": "219896",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Sleepinal",
+    "rxcui": "219956",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Twilite", "rxcui": "220559", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Tylenol PM",
+    "rxcui": "220581",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Unisom with Pain Relief",
+    "rxcui": "220674",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Simply Sleep",
+    "rxcui": "262241",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Tylenol Severe Allergy",
+    "rxcui": "346199",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Dytan-D", "rxcui": "405033", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Benadryl Itch Stopping",
+    "rxcui": "607032",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Advil PM",
+    "rxcui": "643061",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Aldex CT",
+    "rxcui": "656688",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Benadryl-D Allergy and Sinus",
+    "rxcui": "701329",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Buckley's Bedtime Formula",
+    "rxcui": "702204",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Calagel", "rxcui": "794924", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Dimetapp Nighttime Cold & Congestion",
+    "rxcui": "829351",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Tekral", "rxcui": "866224", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Motrin PM",
+    "rxcui": "895656",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Advil PM Liqui Gels",
+    "rxcui": "902630",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Ivarest Maximum Strength",
+    "rxcui": "1314972",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Sleep Z",
+    "rxcui": "1363470",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Allegra Cooling Relief Anti-Itch",
+    "rxcui": "1420993",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "ZZZ Sleep",
+    "rxcui": "1437301",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Z-Sleep",
+    "rxcui": "1488697",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Dr. Cocoa Nighttime Cough and Cold",
+    "rxcui": "1535703",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Aleve PM",
+    "rxcui": "1550958",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Excedrin PM Triple Action",
+    "rxcui": "1593111",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Wal-Dryl PE",
+    "rxcui": "1608060",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Somnapure",
+    "rxcui": "1609065",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Vanamine",
+    "rxcui": "1789741",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Bayer Aspirin PM Reformulated Nov 2011",
+    "rxcui": "1193079",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Zzzquil",
+    "rxcui": "1233547",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Dytan-D Chewable",
+    "rxcui": "1297569",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Vetadryl",
+    "rxcui": "1310476",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Sleeptabs",
+    "rxcui": "1092740",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Calagel Reformulated Jun 2019",
+    "rxcui": "2174797",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Dormin", "rxcui": "1919068", "id": 9, "parentRxNormId": ["3498"] },
+  {
+    "name": "Wal-Dryl-D Allergy",
+    "rxcui": "1922722",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Genahist",
+    "rxcui": "217286",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Benadryl Allergy Plus Congestion",
+    "rxcui": "1926216",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  {
+    "name": "Pediaclear Cough",
+    "rxcui": "2200118",
+    "id": 9,
+    "parentRxNormId": ["3498"]
+  },
+  { "name": "Tact", "rxcui": "2380356", "id": 9, "parentRxNormId": ["3498"] },
+  { "name": "Anafranil", "rxcui": "756", "id": 44, "parentRxNormId": ["2597"] },
+  {
+    "name": "Clomicalm",
+    "rxcui": "892743",
+    "id": 44,
+    "parentRxNormId": ["2597"]
+  },
+  {
+    "name": "Caniquell",
+    "rxcui": "2375708",
+    "id": 44,
+    "parentRxNormId": ["2597"]
+  },
+  {
+    "name": "Dimetapp Children's Cold and Allergy Reformulated Jan 2011",
+    "rxcui": "1053259",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Wal-Tap Children's Cold & Allergy",
+    "rxcui": "1090458",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Bromfed DM",
+    "rxcui": "215741",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  { "name": "Siltane", "rxcui": "219904", "id": 1, "parentRxNormId": ["1767"] },
+  {
+    "name": "Bromaxefed RF",
+    "rxcui": "353460",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Bromplex HD",
+    "rxcui": "404905",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Lodrane D",
+    "rxcui": "544190",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Respa-BR",
+    "rxcui": "748663",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Dimetapp Cold",
+    "rxcui": "796199",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Bromaline Reformulated Jun 2008",
+    "rxcui": "796936",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Zotex PE",
+    "rxcui": "801096",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Nalex AC",
+    "rxcui": "802738",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "BroveX CB",
+    "rxcui": "804570",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Brovex PB",
+    "rxcui": "804579",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Brovex PBC",
+    "rxcui": "804585",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Dimetapp Children's Cold and Allergy",
+    "rxcui": "808119",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "M-End PE",
+    "rxcui": "830707",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Mar-cof BP",
+    "rxcui": "877459",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  { "name": "Bromax", "rxcui": "892537", "id": 1, "parentRxNormId": ["1767"] },
+  {
+    "name": "Vazobid-PD",
+    "rxcui": "1244524",
+    "id": 1,
+    "parentRxNormId": ["1767"]
+  },
+  {
+    "name": "Dayhist-1",
+    "rxcui": "1095722",
+    "id": 4,
+    "parentRxNormId": ["2578"]
+  },
+  {
+    "name": "Allerhist-1",
+    "rxcui": "215147",
+    "id": 4,
+    "parentRxNormId": ["2578"]
+  },
+  { "name": "Tavist", "rxcui": "42602", "id": 4, "parentRxNormId": ["2578"] },
+  {
+    "name": "Wal-Hist 12 HR Relief",
+    "rxcui": "1423962",
+    "id": 4,
+    "parentRxNormId": ["2578"]
+  },
+  { "name": "Librax", "rxcui": "28697", "id": 66, "parentRxNormId": ["2356"] },
+  {
+    "name": "Limbitrol",
+    "rxcui": "28727",
+    "id": 66,
+    "parentRxNormId": ["2356"]
+  },
+  {
+    "name": "Euthasol",
+    "rxcui": "1100450",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  {
+    "name": "Nembutal",
+    "rxcui": "204354",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  {
+    "name": "Somnasol",
+    "rxcui": "1549828",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  {
+    "name": "Fatal-Plus",
+    "rxcui": "1602557",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  {
+    "name": "Beuthanasia",
+    "rxcui": "1666950",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  {
+    "name": "Socumb",
+    "rxcui": "1673871",
+    "id": 57,
+    "parentRxNormId": ["8004"]
+  },
+  { "name": "Adalat", "rxcui": "151131", "id": 40, "parentRxNormId": ["7417"] },
+  {
+    "name": "Procardia",
+    "rxcui": "203423",
+    "id": 40,
+    "parentRxNormId": ["7417"]
+  },
+  {
+    "name": "Nifedical",
+    "rxcui": "491311",
+    "id": 40,
+    "parentRxNormId": ["7417"]
+  },
+  {
+    "name": "Afeditab CR",
+    "rxcui": "542720",
+    "id": 40,
+    "parentRxNormId": ["7417"]
+  },
+  {
+    "name": "Ala-Hist PE",
+    "rxcui": "1041505",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Ala-Hist IR",
+    "rxcui": "1041509",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Drixoral",
+    "rxcui": "23676",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Dallergy Reformulated Mar 2014",
+    "rxcui": "1491652",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Dologesic Reformulated Jun 2016",
+    "rxcui": "1798454",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "M-End Max D",
+    "rxcui": "1190581",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Dologen",
+    "rxcui": "1242037",
+    "id": 6,
+    "parentRxNormId": ["22696"]
+  },
+  {
+    "name": "Norpace",
+    "rxcui": "203631",
+    "id": 37,
+    "parentRxNormId": ["3541"]
+  },
+  {
+    "name": "Ryclora",
+    "rxcui": "2058851",
+    "id": 7,
+    "parentRxNormId": ["22697"]
+  },
+  {
+    "name": "Rymed-D",
+    "rxcui": "1086745",
+    "id": 7,
+    "parentRxNormId": ["22697"]
+  },
+  {
+    "name": "Sutan Suspension",
+    "rxcui": "729220",
+    "id": 7,
+    "parentRxNormId": ["22697"]
+  },
+  {
+    "name": "Rescon-MX Reformulated Jan 2010",
+    "rxcui": "892855",
+    "id": 7,
+    "parentRxNormId": ["22697"]
+  },
+  {
+    "name": "Rescon Tablets",
+    "rxcui": "1293403",
+    "id": 7,
+    "parentRxNormId": ["22697"]
+  },
+  { "name": "Vtol", "rxcui": "2261398", "id": 55, "parentRxNormId": ["19860"] },
+  {
+    "name": "Capacet",
+    "rxcui": "1100904",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Fioricet",
+    "rxcui": "175184",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  { "name": "Bupap", "rxcui": "215777", "id": 55, "parentRxNormId": ["19860"] },
+  { "name": "Esgic", "rxcui": "216971", "id": 55, "parentRxNormId": ["19860"] },
+  {
+    "name": "Fioricet with Codeine",
+    "rxcui": "217126",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Fiorinal with Codeine",
+    "rxcui": "217127",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Marten-Tab",
+    "rxcui": "218227",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Phrenilin",
+    "rxcui": "219238",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  { "name": "Repan", "rxcui": "219624", "id": 55, "parentRxNormId": ["19860"] },
+  {
+    "name": "Tencon",
+    "rxcui": "220211",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Zebutal",
+    "rxcui": "221003",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Fiorinal",
+    "rxcui": "25027",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Ascomp",
+    "rxcui": "1372693",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Vanatol",
+    "rxcui": "1648579",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Phrenilin Forte",
+    "rxcui": "219239",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Allzital",
+    "rxcui": "2279002",
+    "id": 55,
+    "parentRxNormId": ["19860"]
+  },
+  {
+    "name": "Butisol",
+    "rxcui": "1251601",
+    "id": 54,
+    "parentRxNormId": ["477631"]
+  },
+  {
+    "name": "Vistaril",
+    "rxcui": "282519",
+    "id": 11,
+    "parentRxNormId": ["5553"]
+  },
+  {
+    "name": "Surmontil",
+    "rxcui": "225029",
+    "id": 51,
+    "parentRxNormId": ["10834"]
+  },
+  {
+    "name": "Wal-Dram",
+    "rxcui": "1086951",
+    "id": 8,
+    "parentRxNormId": ["3444"]
+  },
+  {
+    "name": "Dramamine",
+    "rxcui": "151666",
+    "id": 8,
+    "parentRxNormId": ["3444"]
+  },
+  {
+    "name": "Driminate",
+    "rxcui": "216742",
+    "id": 8,
+    "parentRxNormId": ["3444"]
+  },
+  {
+    "name": "TripTone",
+    "rxcui": "220486",
+    "id": 8,
+    "parentRxNormId": ["3444"]
+  },
+  { "name": "Airmit", "rxcui": "1241480", "id": 8, "parentRxNormId": ["3444"] },
+  { "name": "Nocto", "rxcui": "2257280", "id": 10, "parentRxNormId": ["3642"] },
+  {
+    "name": "Safetussin PM",
+    "rxcui": "1115330",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  { "name": "Unisom", "rxcui": "220672", "id": 10, "parentRxNormId": ["3642"] },
+  {
+    "name": "Nyquil Cough",
+    "rxcui": "702274",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Aldex AN",
+    "rxcui": "707263",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Diclegis",
+    "rxcui": "1375949",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Poly Hist Forte Reformulated Nov 2013",
+    "rxcui": "1441832",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Wal-Som (doxylamine)",
+    "rxcui": "1746506",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Poly Hist Forte",
+    "rxcui": "2172492",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Bonjesta",
+    "rxcui": "1999652",
+    "id": 10,
+    "parentRxNormId": ["3642"]
+  },
+  {
+    "name": "Donnatal",
+    "rxcui": "115141",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  { "name": "D-Tal", "rxcui": "216326", "id": 16, "parentRxNormId": ["1223"] },
+  {
+    "name": "Enlon-Plus",
+    "rxcui": "216913",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  { "name": "Lonox", "rxcui": "218071", "id": 16, "parentRxNormId": ["1223"] },
+  {
+    "name": "Motofen",
+    "rxcui": "218445",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  { "name": "Lomotil", "rxcui": "28874", "id": 16, "parentRxNormId": ["1223"] },
+  {
+    "name": "Atropen",
+    "rxcui": "404863",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  {
+    "name": "Duodote",
+    "rxcui": "717229",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  {
+    "name": "Isopto Atropine",
+    "rxcui": "92995",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  {
+    "name": "Phenohytro",
+    "rxcui": "1739882",
+    "id": 16,
+    "parentRxNormId": ["1223"]
+  },
+  {
+    "name": "Tuxarin",
+    "rxcui": "2099281",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Wal-Phed Sinus & Allergy",
+    "rxcui": "1043496",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Wal-Finate-D",
+    "rxcui": "1087038",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Wal-Phed PE Sinus & Allergy",
+    "rxcui": "1090092",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Allerest",
+    "rxcui": "1090700",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Bactimicina Childrens Cough & Cold",
+    "rxcui": "1111441",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Zutripro",
+    "rxcui": "1112221",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Codar AR",
+    "rxcui": "1113999",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Children's Nyquil Cold and Cough",
+    "rxcui": "1114362",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Chlor-Trimeton",
+    "rxcui": "202384",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Aller-Chlor",
+    "rxcui": "215124",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Chlo-Amine",
+    "rxcui": "216015",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Deconamine",
+    "rxcui": "216403",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Scot-Tussin Sugar Free DM",
+    "rxcui": "219826",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  { "name": "Ventuss", "rxcui": "220776", "id": 3, "parentRxNormId": ["2400"] },
+  { "name": "B-Tuss", "rxcui": "284665", "id": 3, "parentRxNormId": ["2400"] },
+  {
+    "name": "Coricidin HBP Cough and Cold",
+    "rxcui": "352556",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "De-Chlor HC",
+    "rxcui": "352575",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Hydro-PC II",
+    "rxcui": "352694",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Hydron CP",
+    "rxcui": "352699",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Tannic-12 S",
+    "rxcui": "353007",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Triant-HC",
+    "rxcui": "405367",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  { "name": "Ricobid", "rxcui": "542021", "id": 3, "parentRxNormId": ["2400"] },
+  {
+    "name": "Tussionex",
+    "rxcui": "544165",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "C-Tanna 12",
+    "rxcui": "544199",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Poly Hist PD",
+    "rxcui": "604665",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Dallergy Drops",
+    "rxcui": "606447",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  { "name": "Dicel", "rxcui": "645849", "id": 3, "parentRxNormId": ["2400"] },
+  {
+    "name": "Relasin HC",
+    "rxcui": "647309",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Wal-finate",
+    "rxcui": "692677",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Actifed Cold & Allergy",
+    "rxcui": "700603",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "ChlorTan D",
+    "rxcui": "700634",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "ChlorTan",
+    "rxcui": "700638",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Dimetapp Long Acting Cough Plus Cold",
+    "rxcui": "704303",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "TussiCaps",
+    "rxcui": "730984",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Dallergy-JR Reformulated Feb 2009",
+    "rxcui": "744376",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "ColdCough PD",
+    "rxcui": "801156",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Maxichlor PEH",
+    "rxcui": "804696",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Maxichlor PSE",
+    "rxcui": "804704",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Allerest PE",
+    "rxcui": "832101",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Z Tuss AC",
+    "rxcui": "995129",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "SudoGest Sinus & Allergy",
+    "rxcui": "998246",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Zodryl DAC",
+    "rxcui": "1372725",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Zodryl AC",
+    "rxcui": "1372746",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  { "name": "Vituz", "rxcui": "1372868", "id": 3, "parentRxNormId": ["2400"] },
+  {
+    "name": "Coricidin HBP Cold & Flu",
+    "rxcui": "1439770",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Tuzistra",
+    "rxcui": "1652088",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Stonarhini",
+    "rxcui": "1242241",
+    "id": 3,
+    "parentRxNormId": ["2400"]
+  },
+  {
+    "name": "Cogentin",
+    "rxcui": "151532",
+    "id": 24,
+    "parentRxNormId": ["1424"]
+  },
+  {
+    "name": "Cordarone",
+    "rxcui": "203588",
+    "id": 41,
+    "parentRxNormId": ["703"]
+  },
+  {
+    "name": "Pacerone",
+    "rxcui": "219038",
+    "id": 41,
+    "parentRxNormId": ["703"]
+  },
+  {
+    "name": "Nexterone",
+    "rxcui": "832067",
+    "id": 41,
+    "parentRxNormId": ["703"]
+  },
+  {
+    "name": "Macrobid",
+    "rxcui": "152001",
+    "id": 27,
+    "parentRxNormId": ["7454"]
+  },
+  {
+    "name": "Macrodantin",
+    "rxcui": "203054",
+    "id": 27,
+    "parentRxNormId": ["7454"]
+  },
+  {
+    "name": "Furadantin",
+    "rxcui": "258353",
+    "id": 27,
+    "parentRxNormId": ["7454"]
+  },
+  { "name": "Bonine", "rxcui": "1694", "id": 12, "parentRxNormId": ["6676"] },
+  {
+    "name": "Travel-Ease",
+    "rxcui": "284897",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Dramamine Less Drowsy",
+    "rxcui": "827176",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Antivert",
+    "rxcui": "91818",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Zentrip",
+    "rxcui": "996063",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Naus-ease",
+    "rxcui": "1372658",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Wal-Dram 2",
+    "rxcui": "1673792",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Verticalm",
+    "rxcui": "1251680",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Dramamine Nausea Relief",
+    "rxcui": "2110522",
+    "id": 12,
+    "parentRxNormId": ["6676"]
+  },
+  {
+    "name": "Norpramin",
+    "rxcui": "203771",
+    "id": 45,
+    "parentRxNormId": ["3247"]
+  },
+  {
+    "name": "Amaryl",
+    "rxcui": "153592",
+    "id": 86,
+    "parentRxNormId": ["25789"]
+  },
+  {
+    "name": "Duetact",
+    "rxcui": "647208",
+    "id": 86,
+    "parentRxNormId": ["25789"]
+  },
+  { "name": "Paxil", "rxcui": "114228", "id": 49, "parentRxNormId": ["32937"] },
+  {
+    "name": "Pexeva",
+    "rxcui": "541657",
+    "id": 49,
+    "parentRxNormId": ["32937"]
+  },
+  {
+    "name": "Brisdelle",
+    "rxcui": "1430123",
+    "id": 49,
+    "parentRxNormId": ["32937"]
+  },
+  { "name": "Tofranil", "rxcui": "6716", "id": 47, "parentRxNormId": ["5691"] },
+  {
+    "name": "Wal-Profen Cold and Sinus",
+    "rxcui": "1090447",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Duexis",
+    "rxcui": "1100067",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Counteract IB",
+    "rxcui": "1101916",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  { "name": "Advil", "rxcui": "153010", "id": 97, "parentRxNormId": ["5640"] },
+  { "name": "Motrin", "rxcui": "202488", "id": 97, "parentRxNormId": ["5640"] },
+  {
+    "name": "Advil Cold and Sinus",
+    "rxcui": "215041",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Genpril",
+    "rxcui": "217324",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  { "name": "Ibu", "rxcui": "217693", "id": 97, "parentRxNormId": ["5640"] },
+  {
+    "name": "Vicoprofen",
+    "rxcui": "220826",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Reprexain",
+    "rxcui": "579458",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Neoprofen",
+    "rxcui": "637194",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Advil PM",
+    "rxcui": "643061",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Wal-Profen",
+    "rxcui": "643099",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Ibuprohm",
+    "rxcui": "850404",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Caldolor",
+    "rxcui": "854184",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Motrin PM",
+    "rxcui": "895656",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Addaprin",
+    "rxcui": "900431",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Advil PM Liqui Gels",
+    "rxcui": "902630",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Ibutab",
+    "rxcui": "1359092",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Ibudone",
+    "rxcui": "1372755",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  { "name": "Xylon", "rxcui": "1542983", "id": 97, "parentRxNormId": ["5640"] },
+  {
+    "name": "Advil Sinus Congestion and Pain",
+    "rxcui": "1722328",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Proprinal",
+    "rxcui": "1300262",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Samson 8",
+    "rxcui": "541710",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Wal-Profen Congestion Relief and Pain",
+    "rxcui": "1940582",
+    "id": 97,
+    "parentRxNormId": ["5640"]
+  },
+  {
+    "name": "Hyophen",
+    "rxcui": "1037229",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Phosphasal",
+    "rxcui": "1037297",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Ustell",
+    "rxcui": "1039802",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Oscimin",
+    "rxcui": "1146685",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Donnatal",
+    "rxcui": "115141",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "D-Tal",
+    "rxcui": "216326",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Levbid",
+    "rxcui": "217993",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Levsin",
+    "rxcui": "218003",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Uretron DS",
+    "rxcui": "220683",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Nulev",
+    "rxcui": "284812",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Ed Spaz",
+    "rxcui": "352618",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Urelle",
+    "rxcui": "353527",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Utira",
+    "rxcui": "405385",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Symax",
+    "rxcui": "541626",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Digex",
+    "rxcui": "606562",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  { "name": "Anaspaz", "rxcui": "769", "id": 20, "parentRxNormId": ["153970"] },
+  {
+    "name": "Uribel",
+    "rxcui": "998338",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Urimar Reformulated Oct 2013",
+    "rxcui": "1440870",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Urin DS",
+    "rxcui": "1547941",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Uro-Blue",
+    "rxcui": "1597576",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "UTA Capsule Reformulated Feb 2016",
+    "rxcui": "1738131",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Phenohytro",
+    "rxcui": "1739882",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Prosed DS",
+    "rxcui": "1245487",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Urogesic Blue Reformulated Apr 2012",
+    "rxcui": "1251285",
+    "id": 20,
+    "parentRxNormId": ["153970"]
+  },
+  {
+    "name": "Klonopin",
+    "rxcui": "202585",
+    "id": 67,
+    "parentRxNormId": ["2598"]
+  },
+  {
+    "name": "Wal-Act",
+    "rxcui": "1014651",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "A-Phedrin",
+    "rxcui": "214907",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Aphedrid",
+    "rxcui": "215364",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Genac brand of pseudoephedrine/triprolidine",
+    "rxcui": "217282",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Histafed",
+    "rxcui": "217541",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Vi-Sudo",
+    "rxcui": "220801",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Vanahist PD",
+    "rxcui": "1429434",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Vanaclear",
+    "rxcui": "1789509",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  {
+    "name": "Pediaclear Childrens",
+    "rxcui": "2179642",
+    "id": 15,
+    "parentRxNormId": ["10849"]
+  },
+  { "name": "Pamelor", "rxcui": "7866", "id": 48, "parentRxNormId": ["7531"] },
+  {
+    "name": "Humulin R",
+    "rxcui": "92881",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Novolin R",
+    "rxcui": "93560",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Novolin",
+    "rxcui": "1372723",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Humulin",
+    "rxcui": "1372744",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Afrezza",
+    "rxcui": "1543203",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Myxredlin",
+    "rxcui": "2179745",
+    "id": 83,
+    "parentRxNormId": ["253182"]
+  },
+  {
+    "name": "Metacam",
+    "rxcui": "1086708",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Mobic",
+    "rxcui": "152699",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Loxicom",
+    "rxcui": "1364057",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Meloxidyl",
+    "rxcui": "1439977",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Ostilox",
+    "rxcui": "1482670",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Vivlodex",
+    "rxcui": "1722350",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "EloxiOral",
+    "rxcui": "1788847",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Qmiiz",
+    "rxcui": "2118582",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Alloxate",
+    "rxcui": "2267587",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Anjeso",
+    "rxcui": "2281107",
+    "id": 101,
+    "parentRxNormId": ["41493"]
+  },
+  {
+    "name": "Sonata",
+    "rxcui": "261654",
+    "id": 74,
+    "parentRxNormId": ["74667"]
+  },
+  {
+    "name": "Prudoxin",
+    "rxcui": "261625",
+    "id": 46,
+    "parentRxNormId": ["3638"]
+  },
+  {
+    "name": "Silenor",
+    "rxcui": "966788",
+    "id": 46,
+    "parentRxNormId": ["3638"]
+  },
+  { "name": "Zonalon", "rxcui": "9801", "id": 46, "parentRxNormId": ["3638"] },
+  {
+    "name": "Kapvay",
+    "rxcui": "1013931",
+    "id": 31,
+    "parentRxNormId": ["2599"]
+  },
+  {
+    "name": "Catapres",
+    "rxcui": "202941",
+    "id": 31,
+    "parentRxNormId": ["2599"]
+  },
+  {
+    "name": "Clorpres",
+    "rxcui": "216099",
+    "id": 31,
+    "parentRxNormId": ["2599"]
+  },
+  {
+    "name": "Duraclon",
+    "rxcui": "216778",
+    "id": 31,
+    "parentRxNormId": ["2599"]
+  },
+  {
+    "name": "Axiron",
+    "rxcui": "1047139",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Fortesta",
+    "rxcui": "1051071",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Androderm",
+    "rxcui": "215283",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Delatestryl",
+    "rxcui": "216431",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Androgel",
+    "rxcui": "261448",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Testim",
+    "rxcui": "353016",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Testopel",
+    "rxcui": "353017",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Striant",
+    "rxcui": "405337",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Depo-testosterone",
+    "rxcui": "48877",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Aveed",
+    "rxcui": "1490662",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Vogelxo",
+    "rxcui": "1539902",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Natesto",
+    "rxcui": "1543191",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Jatenzo",
+    "rxcui": "2121771",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Xyosted",
+    "rxcui": "2099682",
+    "id": 79,
+    "parentRxNormId": ["10379"]
+  },
+  {
+    "name": "Glucovance",
+    "rxcui": "284743",
+    "id": 87,
+    "parentRxNormId": ["4815"]
+  },
+  {
+    "name": "Glynase",
+    "rxcui": "881404",
+    "id": 87,
+    "parentRxNormId": ["4815"]
+  },
+  {
+    "name": "Equagesic",
+    "rxcui": "24292",
+    "id": 72,
+    "parentRxNormId": ["6760"]
+  },
+  {
+    "name": "Intuniv",
+    "rxcui": "862007",
+    "id": 34,
+    "parentRxNormId": ["40114"]
+  },
+  {
+    "name": "Lodine",
+    "rxcui": "202998",
+    "id": 95,
+    "parentRxNormId": ["24605"]
+  },
+  {
+    "name": "Donnatal",
+    "rxcui": "115141",
+    "id": 58,
+    "parentRxNormId": ["8134"]
+  },
+  { "name": "D-Tal", "rxcui": "216326", "id": 58, "parentRxNormId": ["8134"] },
+  {
+    "name": "Phenohytro",
+    "rxcui": "1739882",
+    "id": 58,
+    "parentRxNormId": ["8134"]
+  },
+  {
+    "name": "Ketofen",
+    "rxcui": "1551478",
+    "id": 98,
+    "parentRxNormId": ["6142"]
+  },
+  { "name": "Axid", "rxcui": "196464", "id": 142, "parentRxNormId": ["42319"] },
+  {
+    "name": "Axid AR",
+    "rxcui": "215493",
+    "id": 142,
+    "parentRxNormId": ["42319"]
+  },
+  {
+    "name": "Pamine",
+    "rxcui": "219055",
+    "id": 21,
+    "parentRxNormId": ["89785"]
+  },
+  {
+    "name": "Testred",
+    "rxcui": "281615",
+    "id": 78,
+    "parentRxNormId": ["6904"]
+  },
+  {
+    "name": "Methitest",
+    "rxcui": "541521",
+    "id": 78,
+    "parentRxNormId": ["6904"]
+  },
+  {
+    "name": "Covaryx",
+    "rxcui": "705916",
+    "id": 78,
+    "parentRxNormId": ["6904"]
+  },
+  {
+    "name": "Android",
+    "rxcui": "731594",
+    "id": 78,
+    "parentRxNormId": ["6904"]
+  },
+  {
+    "name": "Syntest",
+    "rxcui": "1372767",
+    "id": 78,
+    "parentRxNormId": ["6904"]
+  },
+  {
+    "name": "Multaq",
+    "rxcui": "677229",
+    "id": 38,
+    "parentRxNormId": ["233698"]
+  },
+  {
+    "name": "Donnatal",
+    "rxcui": "115141",
+    "id": 23,
+    "parentRxNormId": ["9601"]
+  },
+  { "name": "D-Tal", "rxcui": "216326", "id": 23, "parentRxNormId": ["9601"] },
+  {
+    "name": "Transderm Scop",
+    "rxcui": "220372",
+    "id": 23,
+    "parentRxNormId": ["9601"]
+  },
+  {
+    "name": "Isopto Hyoscine",
+    "rxcui": "93000",
+    "id": 23,
+    "parentRxNormId": ["9601"]
+  },
+  {
+    "name": "Phenohytro",
+    "rxcui": "1739882",
+    "id": 23,
+    "parentRxNormId": ["9601"]
+  },
+  {
+    "name": "Ambien",
+    "rxcui": "131725",
+    "id": 75,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Zolpimist",
+    "rxcui": "828693",
+    "id": 75,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Edluar",
+    "rxcui": "836642",
+    "id": 75,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Intermezzo",
+    "rxcui": "1232195",
+    "id": 75,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Indocin",
+    "rxcui": "203365",
+    "id": 108,
+    "parentRxNormId": ["5781"]
+  },
+  {
+    "name": "Tivorbex",
+    "rxcui": "1491522",
+    "id": 108,
+    "parentRxNormId": ["5781"]
+  },
+  {
+    "name": "Eliquis",
+    "rxcui": "1364436",
+    "id": 222,
+    "parentRxNormId": ["1364430"]
+  },
+  {
+    "name": "Metozolv",
+    "rxcui": "863583",
+    "id": 88,
+    "parentRxNormId": ["6915"]
+  },
+  { "name": "Reglan", "rxcui": "9230", "id": 88, "parentRxNormId": ["6915"] },
+  {
+    "name": "Pileran",
+    "rxcui": "1431137",
+    "id": 88,
+    "parentRxNormId": ["6915"]
+  },
+  {
+    "name": "Gimoti",
+    "rxcui": "2380565",
+    "id": 88,
+    "parentRxNormId": ["6915"]
+  },
+  {
+    "name": "Lunesta",
+    "rxcui": "540404",
+    "id": 73,
+    "parentRxNormId": ["461016"]
+  },
+  {
+    "name": "Probanthine",
+    "rxcui": "224918",
+    "id": 22,
+    "parentRxNormId": ["8761"]
+  },
+  {
+    "name": "Acular",
+    "rxcui": "152819",
+    "id": 109,
+    "parentRxNormId": ["35827"]
+  },
+  {
+    "name": "Acuvail",
+    "rxcui": "858359",
+    "id": 109,
+    "parentRxNormId": ["35827"]
+  },
+  {
+    "name": "Sprix",
+    "rxcui": "992421",
+    "id": 109,
+    "parentRxNormId": ["35827"]
+  },
+  {
+    "name": "Omidria",
+    "rxcui": "1540231",
+    "id": 109,
+    "parentRxNormId": ["35827"]
+  },
+  {
+    "name": "Tegretol",
+    "rxcui": "203029",
+    "id": 180,
+    "parentRxNormId": ["2002"]
+  },
+  {
+    "name": "Epitol",
+    "rxcui": "203251",
+    "id": 180,
+    "parentRxNormId": ["2002"]
+  },
+  {
+    "name": "Carbatrol",
+    "rxcui": "215879",
+    "id": 180,
+    "parentRxNormId": ["2002"]
+  },
+  {
+    "name": "Equetro",
+    "rxcui": "583135",
+    "id": 180,
+    "parentRxNormId": ["2002"]
+  },
+  {
+    "name": "Carnexiv",
+    "rxcui": "1813509",
+    "id": 180,
+    "parentRxNormId": ["2002"]
+  },
+  {
+    "name": "Theo-24",
+    "rxcui": "203388",
+    "id": 211,
+    "parentRxNormId": ["10438"]
+  },
+  {
+    "name": "Elixophyllin",
+    "rxcui": "203394",
+    "id": 211,
+    "parentRxNormId": ["10438"]
+  },
+  {
+    "name": "Daypro",
+    "rxcui": "157381",
+    "id": 104,
+    "parentRxNormId": ["32613"]
+  },
+  {
+    "name": "Humatrope",
+    "rxcui": "197123",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Genotropin",
+    "rxcui": "202828",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Norditropin",
+    "rxcui": "202829",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Saizen",
+    "rxcui": "202830",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Nutropin",
+    "rxcui": "202831",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Zorbtive",
+    "rxcui": "405411",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Omnitrope",
+    "rxcui": "644964",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Serostim",
+    "rxcui": "744286",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Zomacton",
+    "rxcui": "1648156",
+    "id": 82,
+    "parentRxNormId": ["61148"]
+  },
+  {
+    "name": "Zyprexa",
+    "rxcui": "135423",
+    "id": 135,
+    "parentRxNormId": ["61381"]
+  },
+  {
+    "name": "Symbyax",
+    "rxcui": "405343",
+    "id": 135,
+    "parentRxNormId": ["61381"]
+  },
+  {
+    "name": "Pamprin Multi-Symptom",
+    "rxcui": "1052436",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Premsyn PMS",
+    "rxcui": "1052638",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "De-Chlor MR",
+    "rxcui": "404977",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Poly Hist PD",
+    "rxcui": "604665",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Zotex C",
+    "rxcui": "996581",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Ninjacof",
+    "rxcui": "1593751",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Ninjacof A",
+    "rxcui": "1593766",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Pediaclear",
+    "rxcui": "2176451",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Vanacof AC",
+    "rxcui": "1940455",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  {
+    "name": "Vanatab AC",
+    "rxcui": "1941199",
+    "id": 14,
+    "parentRxNormId": ["9009"]
+  },
+  { "name": "Ativan", "rxcui": "202479", "id": 62, "parentRxNormId": ["6470"] },
+  {
+    "name": "Dyrenium",
+    "rxcui": "203238",
+    "id": 233,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Dyazide",
+    "rxcui": "23742",
+    "id": 233,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Maxzide",
+    "rxcui": "52440",
+    "id": 233,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Relafen",
+    "rxcui": "203754",
+    "id": 102,
+    "parentRxNormId": ["31448"]
+  },
+  {
+    "name": "Noctiva",
+    "rxcui": "1874125",
+    "id": 116,
+    "parentRxNormId": ["3251"]
+  },
+  { "name": "DDAVP", "rxcui": "203658", "id": 116, "parentRxNormId": ["3251"] },
+  {
+    "name": "Stimate",
+    "rxcui": "405336",
+    "id": 116,
+    "parentRxNormId": ["3251"]
+  },
+  {
+    "name": "Nocdurna",
+    "rxcui": "2048573",
+    "id": 116,
+    "parentRxNormId": ["3251"]
+  },
+  {
+    "name": "Demerol",
+    "rxcui": "282381",
+    "id": 91,
+    "parentRxNormId": ["6754"]
+  },
+  {
+    "name": "Savaysa",
+    "rxcui": "1599544",
+    "id": 225,
+    "parentRxNormId": ["1599538"]
+  },
+  {
+    "name": "Tagamet",
+    "rxcui": "152402",
+    "id": 140,
+    "parentRxNormId": ["2541"]
+  },
+  {
+    "name": "Zantac",
+    "rxcui": "152523",
+    "id": 143,
+    "parentRxNormId": ["9143"]
+  },
+  {
+    "name": "Wal-Zan",
+    "rxcui": "643043",
+    "id": 143,
+    "parentRxNormId": ["9143"]
+  },
+  {
+    "name": "Seconal Sodium",
+    "rxcui": "152350",
+    "id": 59,
+    "parentRxNormId": ["9624"]
+  },
+  {
+    "name": "tetraVIV",
+    "rxcui": "2257319",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  { "name": "Stye", "rxcui": "1053143", "id": 89, "parentRxNormId": ["6972"] },
+  {
+    "name": "Lubrifresh P.M.",
+    "rxcui": "1086610",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Tears Again Ointment",
+    "rxcui": "1086895",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Altalube",
+    "rxcui": "1088143",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Tears Naturale PM",
+    "rxcui": "1089808",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Puralube",
+    "rxcui": "1115889",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Akwa Tears",
+    "rxcui": "215067",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Kondremul Plain",
+    "rxcui": "217916",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Moisture Eyes PM",
+    "rxcui": "606031",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Systane Nighttime",
+    "rxcui": "827263",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Formulation R Ointment",
+    "rxcui": "904511",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Preparation H Reformulated Jun 2013",
+    "rxcui": "1427400",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Soothe Mineral Oil",
+    "rxcui": "1594958",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "RectiCare Advance Cream",
+    "rxcui": "1745451",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Soothe Night Time",
+    "rxcui": "1235258",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "GRX Hemorrhoidal",
+    "rxcui": "1313812",
+    "id": 89,
+    "parentRxNormId": ["6972"]
+  },
+  {
+    "name": "Robaxin",
+    "rxcui": "202955",
+    "id": 114,
+    "parentRxNormId": ["6845"]
+  },
+  {
+    "name": "Persantine",
+    "rxcui": "203015",
+    "id": 26,
+    "parentRxNormId": ["3521"]
+  },
+  {
+    "name": "Aggrenox",
+    "rxcui": "226718",
+    "id": 26,
+    "parentRxNormId": ["3521"]
+  },
+  {
+    "name": "Ambien",
+    "rxcui": "131725",
+    "id": 149,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Zolpimist",
+    "rxcui": "828693",
+    "id": 149,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Edluar",
+    "rxcui": "836642",
+    "id": 149,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Intermezzo",
+    "rxcui": "1232195",
+    "id": 149,
+    "parentRxNormId": ["39993"]
+  },
+  {
+    "name": "Xarelto",
+    "rxcui": "1114199",
+    "id": 177,
+    "parentRxNormId": ["1114195"]
+  },
+  { "name": "Soma", "rxcui": "204362", "id": 110, "parentRxNormId": ["2101"] },
+  {
+    "name": "Vanadom",
+    "rxcui": "220735",
+    "id": 110,
+    "parentRxNormId": ["2101"]
+  },
+  {
+    "name": "Sonata",
+    "rxcui": "261654",
+    "id": 148,
+    "parentRxNormId": ["74667"]
+  },
+  { "name": "Midamor", "rxcui": "6958", "id": 193, "parentRxNormId": ["644"] },
+  {
+    "name": "ConZip",
+    "rxcui": "1148479",
+    "id": 187,
+    "parentRxNormId": ["10689"]
+  },
+  {
+    "name": "Ultram",
+    "rxcui": "220606",
+    "id": 187,
+    "parentRxNormId": ["10689"]
+  },
+  {
+    "name": "Ultracet",
+    "rxcui": "353062",
+    "id": 187,
+    "parentRxNormId": ["10689"]
+  },
+  { "name": "Valium", "rxcui": "202472", "id": 69, "parentRxNormId": ["3322"] },
+  {
+    "name": "Diastat",
+    "rxcui": "216586",
+    "id": 69,
+    "parentRxNormId": ["3322"]
+  },
+  {
+    "name": "Valtoco",
+    "rxcui": "2272614",
+    "id": 69,
+    "parentRxNormId": ["3322"]
+  },
+  {
+    "name": "Dyrenium",
+    "rxcui": "203238",
+    "id": 194,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Dyazide",
+    "rxcui": "23742",
+    "id": 194,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Maxzide",
+    "rxcui": "52440",
+    "id": 194,
+    "parentRxNormId": ["10763"]
+  },
+  {
+    "name": "Coumadin",
+    "rxcui": "202421",
+    "id": 213,
+    "parentRxNormId": ["11289"]
+  },
+  {
+    "name": "Jantoven",
+    "rxcui": "405155",
+    "id": 213,
+    "parentRxNormId": ["11289"]
+  },
+  {
+    "name": "Tikosyn",
+    "rxcui": "261672",
+    "id": 224,
+    "parentRxNormId": ["49247"]
+  },
+  {
+    "name": "Orphengesic",
+    "rxcui": "261599",
+    "id": 115,
+    "parentRxNormId": ["7715"]
+  },
+  {
+    "name": "Norgesic",
+    "rxcui": "218776",
+    "id": 115,
+    "parentRxNormId": ["7715"]
+  },
+  {
+    "name": "Effient",
+    "rxcui": "855813",
+    "id": 178,
+    "parentRxNormId": ["613391"]
+  },
+  {
+    "name": "Clozaril",
+    "rxcui": "216102",
+    "id": 295,
+    "parentRxNormId": ["2626"]
+  },
+  {
+    "name": "Fazaclo",
+    "rxcui": "542974",
+    "id": 295,
+    "parentRxNormId": ["2626"]
+  },
+  {
+    "name": "Versacloz",
+    "rxcui": "1369826",
+    "id": 295,
+    "parentRxNormId": ["2626"]
+  },
+  {
+    "name": "Remeron",
+    "rxcui": "134774",
+    "id": 182,
+    "parentRxNormId": ["15996"]
+  },
+  {
+    "name": "Mirataz",
+    "rxcui": "2049252",
+    "id": 182,
+    "parentRxNormId": ["15996"]
+  },
+  {
+    "name": "Duexis",
+    "rxcui": "1100067",
+    "id": 141,
+    "parentRxNormId": ["4278"]
+  },
+  {
+    "name": "Pepcid",
+    "rxcui": "196458",
+    "id": 141,
+    "parentRxNormId": ["4278"]
+  },
+  {
+    "name": "Pepcid Complete",
+    "rxcui": "284831",
+    "id": 141,
+    "parentRxNormId": ["4278"]
+  },
+  {
+    "name": "Tums Dual Action",
+    "rxcui": "867494",
+    "id": 141,
+    "parentRxNormId": ["4278"]
+  },
+  {
+    "name": "Duo Fusion",
+    "rxcui": "1744392",
+    "id": 141,
+    "parentRxNormId": ["4278"]
+  },
+  {
+    "name": "Arixtra",
+    "rxcui": "322155",
+    "id": 228,
+    "parentRxNormId": ["321208"]
+  },
+  {
+    "name": "Compazine",
+    "rxcui": "203546",
+    "id": 167,
+    "parentRxNormId": ["8704"]
+  },
+  {
+    "name": "Compro",
+    "rxcui": "285056",
+    "id": 167,
+    "parentRxNormId": ["8704"]
+  },
+  { "name": "Nalfon", "rxcui": "203313", "id": 96, "parentRxNormId": ["4331"] },
+  {
+    "name": "Fenortho",
+    "rxcui": "1799318",
+    "id": 96,
+    "parentRxNormId": ["4331"]
+  },
+  {
+    "name": "Profeno",
+    "rxcui": "1945845",
+    "id": 96,
+    "parentRxNormId": ["4331"]
+  },
+  {
+    "name": "Detrol",
+    "rxcui": "216511",
+    "id": 265,
+    "parentRxNormId": ["119565"]
+  },
+  {
+    "name": "Flexeril",
+    "rxcui": "224954",
+    "id": 112,
+    "parentRxNormId": ["21949"]
+  },
+  {
+    "name": "Fexmid",
+    "rxcui": "705009",
+    "id": 112,
+    "parentRxNormId": ["21949"]
+  },
+  {
+    "name": "Amrix",
+    "rxcui": "725085",
+    "id": 112,
+    "parentRxNormId": ["21949"]
+  },
+  {
+    "name": "Arthriten Max",
+    "rxcui": "1944108",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Ecpirin",
+    "rxcui": "1001473",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Pamprin Max Formula",
+    "rxcui": "1052413",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Stanback Headache Powder Reformulated Jan 2011",
+    "rxcui": "1053324",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Alka-Seltzer",
+    "rxcui": "17315",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Ascriptin",
+    "rxcui": "18385",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Aspergum",
+    "rxcui": "202546",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Ecotrin",
+    "rxcui": "202554",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  { "name": "Anacin", "rxcui": "215256", "id": 92, "parentRxNormId": ["1191"] },
+  {
+    "name": "Aspir-Low",
+    "rxcui": "215431",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bayer Aspirin",
+    "rxcui": "215568",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bufferin",
+    "rxcui": "215770",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Excedrin",
+    "rxcui": "217020",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Fiorinal with Codeine",
+    "rxcui": "217127",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Norwich Aspirin",
+    "rxcui": "218783",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "P-A-C Analgesic",
+    "rxcui": "219010",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  { "name": "Saleto", "rxcui": "219779", "id": 92, "parentRxNormId": ["1191"] },
+  {
+    "name": "St. Joseph Aspirin",
+    "rxcui": "220011",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Synalgos-DC",
+    "rxcui": "220143",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Vanquish",
+    "rxcui": "220751",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Aggrenox",
+    "rxcui": "226718",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Equagesic",
+    "rxcui": "24292",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Fiorinal",
+    "rxcui": "25027",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bayer Back and Body Pain",
+    "rxcui": "702317",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Excedrin Back & Body",
+    "rxcui": "707765",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Anacin Advanced Headache Formula",
+    "rxcui": "721973",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Anacin Aspirin Regimen",
+    "rxcui": "724441",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Fasprin",
+    "rxcui": "747233",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Stanback Headache Powder",
+    "rxcui": "796658",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Miniprin",
+    "rxcui": "847088",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Endodan Reformulated May 2009",
+    "rxcui": "848763",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "BC Headache",
+    "rxcui": "896890",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Exaprin",
+    "rxcui": "1358848",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Painaid ESF",
+    "rxcui": "1359078",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Backaid IPF",
+    "rxcui": "1361397",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Ascomp",
+    "rxcui": "1372693",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Excedrin PM Triple Action",
+    "rxcui": "1593111",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Aspi-Cor",
+    "rxcui": "1600986",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Durlaza",
+    "rxcui": "1665357",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bayer Womens",
+    "rxcui": "1722690",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Yosprala",
+    "rxcui": "1811911",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bayer Aspirin PM Reformulated Nov 2011",
+    "rxcui": "1193079",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "BC Arthritis",
+    "rxcui": "1247393",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "BC Original Formula",
+    "rxcui": "1247398",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Arthriten Inflammatory Pain",
+    "rxcui": "1303154",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Bromo Seltzer Antacid Pain Reliever",
+    "rxcui": "1312950",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Orphengesic",
+    "rxcui": "261599",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Norgesic",
+    "rxcui": "218776",
+    "id": 92,
+    "parentRxNormId": ["1191"]
+  },
+  {
+    "name": "Euthasol",
+    "rxcui": "1100450",
+    "id": 210,
+    "parentRxNormId": ["8183"]
+  },
+  {
+    "name": "Dilantin",
+    "rxcui": "202740",
+    "id": 210,
+    "parentRxNormId": ["8183"]
+  },
+  {
+    "name": "Phenytek",
+    "rxcui": "352891",
+    "id": 210,
+    "parentRxNormId": ["8183"]
+  },
+  {
+    "name": "Somnasol",
+    "rxcui": "1549828",
+    "id": 210,
+    "parentRxNormId": ["8183"]
+  },
+  {
+    "name": "Beuthanasia",
+    "rxcui": "1666950",
+    "id": 210,
+    "parentRxNormId": ["8183"]
+  },
+  {
+    "name": "Anaprox",
+    "rxcui": "202399",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Naprosyn",
+    "rxcui": "203012",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  { "name": "Aleve", "rxcui": "215101", "id": 103, "parentRxNormId": ["7258"] },
+  {
+    "name": "Naprelan",
+    "rxcui": "218599",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Wal-Proxen",
+    "rxcui": "643130",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Treximet",
+    "rxcui": "794765",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Aleve-D",
+    "rxcui": "849730",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Sudafed Sinus & Pain",
+    "rxcui": "880900",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Vimovo",
+    "rxcui": "1372705",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Aleve PM",
+    "rxcui": "1550958",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Menstridol",
+    "rxcui": "1593655",
+    "id": 103,
+    "parentRxNormId": ["7258"]
+  },
+  {
+    "name": "Cymbalta",
+    "rxcui": "482574",
+    "id": 234,
+    "parentRxNormId": ["72625"]
+  },
+  {
+    "name": "Irenka",
+    "rxcui": "1652064",
+    "id": 234,
+    "parentRxNormId": ["72625"]
+  },
+  {
+    "name": "Drizalma",
+    "rxcui": "2200169",
+    "id": 234,
+    "parentRxNormId": ["72625"]
+  },
+  {
+    "name": "Adasuve",
+    "rxcui": "1364415",
+    "id": 296,
+    "parentRxNormId": ["6475"]
+  },
+  {
+    "name": "Surpass Anti-Inflammatory",
+    "rxcui": "1043480",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Flector",
+    "rxcui": "135123",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Voltaren",
+    "rxcui": "202976",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Cataflam",
+    "rxcui": "215916",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Solaraze",
+    "rxcui": "284870",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Arthrotec",
+    "rxcui": "68373",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  { "name": "Zipsor", "rxcui": "858343", "id": 93, "parentRxNormId": ["3355"] },
+  { "name": "Cambia", "rxcui": "858655", "id": 93, "parentRxNormId": ["3355"] },
+  {
+    "name": "Pennsaid",
+    "rxcui": "967941",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Zorvolex",
+    "rxcui": "1442117",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Dyloject",
+    "rxcui": "1607578",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Licart",
+    "rxcui": "2385121",
+    "id": 93,
+    "parentRxNormId": ["3355"]
+  },
+  {
+    "name": "Ponstel",
+    "rxcui": "202494",
+    "id": 100,
+    "parentRxNormId": ["6693"]
+  },
+  {
+    "name": "Lyrica",
+    "rxcui": "593441",
+    "id": 237,
+    "parentRxNormId": ["187832"]
+  },
+  {
+    "name": "Lunesta",
+    "rxcui": "540404",
+    "id": 147,
+    "parentRxNormId": ["461016"]
+  },
+  {
+    "name": "Hydromet",
+    "rxcui": "151875",
+    "id": 286,
+    "parentRxNormId": ["27084"]
+  },
+  {
+    "name": "Tussigon",
+    "rxcui": "220542",
+    "id": 286,
+    "parentRxNormId": ["27084"]
+  },
+  {
+    "name": "Homatropaire",
+    "rxcui": "604021",
+    "id": 286,
+    "parentRxNormId": ["27084"]
+  },
+  {
+    "name": "Hycodan",
+    "rxcui": "992657",
+    "id": 286,
+    "parentRxNormId": ["27084"]
+  },
+  {
+    "name": "Sulfatrim",
+    "rxcui": "220091",
+    "id": 189,
+    "parentRxNormId": ["10831"]
+  },
+  {
+    "name": "Bactrim",
+    "rxcui": "151399",
+    "id": 189,
+    "parentRxNormId": ["10831"]
+  },
+  {
+    "name": "Sulfatrim",
+    "rxcui": "220091",
+    "id": 219,
+    "parentRxNormId": ["10831"]
+  },
+  {
+    "name": "Bactrim",
+    "rxcui": "151399",
+    "id": 219,
+    "parentRxNormId": ["10831"]
+  },
+  {
+    "name": "Carospir",
+    "rxcui": "1943340",
+    "id": 232,
+    "parentRxNormId": ["9997"]
+  },
+  {
+    "name": "Aldactone",
+    "rxcui": "151317",
+    "id": 232,
+    "parentRxNormId": ["9997"]
+  },
+  {
+    "name": "Aldactazide",
+    "rxcui": "17276",
+    "id": 232,
+    "parentRxNormId": ["9997"]
+  },
+  {
+    "name": "Gralise",
+    "rxcui": "1087976",
+    "id": 235,
+    "parentRxNormId": ["25480"]
+  },
+  {
+    "name": "Horizant",
+    "rxcui": "1095698",
+    "id": 235,
+    "parentRxNormId": ["25480"]
+  },
+  {
+    "name": "Neurontin",
+    "rxcui": "196498",
+    "id": 235,
+    "parentRxNormId": ["25480"]
+  },
+  {
+    "name": "Colcrys",
+    "rxcui": "858068",
+    "id": 244,
+    "parentRxNormId": ["2683"]
+  },
+  {
+    "name": "Mitigare",
+    "rxcui": "1550941",
+    "id": 244,
+    "parentRxNormId": ["2683"]
+  },
+  {
+    "name": "Gloperba",
+    "rxcui": "2180553",
+    "id": 244,
+    "parentRxNormId": ["2683"]
+  },
+  {
+    "name": "Skelaxin",
+    "rxcui": "204315",
+    "id": 113,
+    "parentRxNormId": ["59078"]
+  },
+  {
+    "name": "Metaxall",
+    "rxcui": "1720607",
+    "id": 113,
+    "parentRxNormId": ["59078"]
+  },
+  {
+    "name": "Keppra",
+    "rxcui": "261547",
+    "id": 236,
+    "parentRxNormId": ["114477"]
+  },
+  {
+    "name": "Elepsia",
+    "rxcui": "1605363",
+    "id": 236,
+    "parentRxNormId": ["114477"]
+  },
+  {
+    "name": "Roweepra",
+    "rxcui": "1731015",
+    "id": 236,
+    "parentRxNormId": ["114477"]
+  },
+  {
+    "name": "Spritam",
+    "rxcui": "1736038",
+    "id": 236,
+    "parentRxNormId": ["114477"]
+  },
+  {
+    "name": "Feldene",
+    "rxcui": "197288",
+    "id": 105,
+    "parentRxNormId": ["8356"]
+  },
+  { "name": "Megace", "rxcui": "203000", "id": 84, "parentRxNormId": ["6703"] },
+  {
+    "name": "Nuedexta",
+    "rxcui": "1040055",
+    "id": 188,
+    "parentRxNormId": ["1040053"]
+  },
+  {
+    "name": "Parafon Forte DSC",
+    "rxcui": "219108",
+    "id": 111,
+    "parentRxNormId": ["2410"]
+  },
+  {
+    "name": "Lorzone",
+    "rxcui": "1189093",
+    "id": 111,
+    "parentRxNormId": ["2410"]
+  },
+  {
+    "name": "Xarelto",
+    "rxcui": "1114199",
+    "id": 229,
+    "parentRxNormId": ["1114195"]
+  },
+  {
+    "name": "Ditropan",
+    "rxcui": "151651",
+    "id": 263,
+    "parentRxNormId": ["32675"]
+  },
+  {
+    "name": "Oxytrol",
+    "rxcui": "356886",
+    "id": 263,
+    "parentRxNormId": ["32675"]
+  },
+  {
+    "name": "Gelnique",
+    "rxcui": "831887",
+    "id": 263,
+    "parentRxNormId": ["32675"]
+  },
+  {
+    "name": "Trileptal",
+    "rxcui": "261680",
+    "id": 183,
+    "parentRxNormId": ["32624"]
+  },
+  {
+    "name": "Oxtellar",
+    "rxcui": "1365655",
+    "id": 183,
+    "parentRxNormId": ["32624"]
+  },
+  {
+    "name": "Bentyl",
+    "rxcui": "203018",
+    "id": 285,
+    "parentRxNormId": ["3361"]
+  },
+  {
+    "name": "Lovenox",
+    "rxcui": "225036",
+    "id": 227,
+    "parentRxNormId": ["67108"]
+  },
+  {
+    "name": "Tarka",
+    "rxcui": "153752",
+    "id": 305,
+    "parentRxNormId": ["11170"]
+  },
+  {
+    "name": "Isoptin",
+    "rxcui": "203489",
+    "id": 305,
+    "parentRxNormId": ["11170"]
+  },
+  {
+    "name": "Calan",
+    "rxcui": "203490",
+    "id": 305,
+    "parentRxNormId": ["11170"]
+  },
+  {
+    "name": "Verelan",
+    "rxcui": "220778",
+    "id": 305,
+    "parentRxNormId": ["11170"]
+  },
+  {
+    "name": "Toviaz",
+    "rxcui": "810072",
+    "id": 261,
+    "parentRxNormId": ["797195"]
+  },
+  {
+    "name": "Vesicare",
+    "rxcui": "539812",
+    "id": 264,
+    "parentRxNormId": ["322167"]
+  },
+  { "name": "Cipro", "rxcui": "203563", "id": 218, "parentRxNormId": ["2551"] },
+  {
+    "name": "Ciloxan",
+    "rxcui": "203565",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Cipro HC",
+    "rxcui": "216063",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Ciprodex",
+    "rxcui": "404930",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Proquin",
+    "rxcui": "602786",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Cetraxal",
+    "rxcui": "848957",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Otiprio",
+    "rxcui": "1739998",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Otovel",
+    "rxcui": "1792387",
+    "id": 218,
+    "parentRxNormId": ["2551"]
+  },
+  {
+    "name": "Tiadylt",
+    "rxcui": "1988303",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Matzim",
+    "rxcui": "1091620",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Cardizem",
+    "rxcui": "203494",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Tiazac",
+    "rxcui": "220309",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Taztia",
+    "rxcui": "405349",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Cartia",
+    "rxcui": "491095",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  { "name": "Dilt", "rxcui": "540618", "id": 118, "parentRxNormId": ["3443"] },
+  {
+    "name": "Diltzac",
+    "rxcui": "629300",
+    "id": 118,
+    "parentRxNormId": ["3443"]
+  },
+  {
+    "name": "Tranxene",
+    "rxcui": "202966",
+    "id": 68,
+    "parentRxNormId": ["2353"]
+  },
+  {}
+]

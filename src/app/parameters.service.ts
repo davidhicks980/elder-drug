@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Table } from './table-logic/table-logic.component';
+import { Table } from './table-logic/content.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParametersService {
+  constructor() {}
+  static receiveTables$: any;
   public allColumns = [
     { field: 'EntryID', header: 'Entry Number' },
     { field: 'DiseaseState', header: 'Disease State' },
@@ -36,10 +38,9 @@ export class ParametersService {
         'Item',
         'Inclusion',
         'Exclusion',
-        'Rationale',
         'Recommendation',
         'DiseaseState',
-        'Interaction',
+        'DrugInteraction',
       ],
       selectedColumns: [
         'SearchTerm',
@@ -58,16 +59,9 @@ export class ParametersService {
         'Item',
         'Inclusion',
         'Exclusion',
-        'Rationale',
         'Recommendation',
       ],
-      selectedColumns: [
-        'DiseaseState',
-        'SearchTerm',
-        'Item',
-        'Inclusion',
-        'Recommendation',
-      ],
+      selectedColumns: ['DiseaseState', 'SearchTerm', 'Item', 'Recommendation'],
     },
     {
       description: 'Clearance Ranges',
@@ -81,7 +75,6 @@ export class ParametersService {
         `MaximumClearance`,
         'Inclusion',
         'Exclusion',
-        'Rationale',
         'Recommendation',
       ],
       selectedColumns: [
@@ -89,26 +82,24 @@ export class ParametersService {
         'Item',
         `MinimumClearance`,
         `MaximumClearance`,
-        'Inclusion',
         'Recommendation',
       ],
     },
     {
       description: 'Drug Interactions',
       active: true,
-      filters: ['DrugInteractions'],
+      filters: ['DrugInteraction'],
       name: 'DrugInteraction',
       columnOptions: [
         'SearchTerm',
         'Item',
-        `Interaction`,
+        `DrugInteraction`,
         'Inclusion',
         'Exclusion',
         'Rationale',
         'Recommendation',
       ],
       selectedColumns: [
-        `DrugExamples`,
         `SearchTerm`,
         `Item`,
         `DrugInteraction`,
@@ -118,18 +109,6 @@ export class ParametersService {
       ],
     },
   ];
-  filterInactiveTables(tables: Table[]) {
-    let output: string[] = [];
-    for (let [key, value] of Object.entries(tables)) {
-      let len = value.length;
-      if (len > 0) {
-        output.push(key);
-      }
-    }
-    return output;
-  }
-  static receiveTables$: any;
-  constructor() {}
   // Observable string sources
   private tableList = new Subject<object>();
   private optionsList = new Subject<object>();
@@ -137,6 +116,35 @@ export class ParametersService {
   // Observable string streams
   recieveTables$ = this.optionsList.asObservable();
   recieveOptions$ = this.tableList.asObservable();
+
+  mapData(data: any[], filter?: string[]) {
+    let output = [];
+    if (filter[0] != null || filter[1] != null) {
+      data.forEach((element) => {
+        if (
+          element[String(filter[0])] != null ||
+          element[String(filter[1])] != null
+        ) {
+          output.push(element);
+        }
+      });
+    } else if (data.length == 0) {
+      output = null;
+    } else {
+      output = data;
+    }
+    return output;
+  }
+  filterActiveTables(tables: Table[]) {
+    const output: string[] = [];
+    for (const [key, value] of Object.entries(tables)) {
+      const len = value.length;
+      if (len > 0) {
+        output.push(key);
+      }
+    }
+    return output;
+  }
 
   // Service message commands
   sendTables(tables: object) {
@@ -146,8 +154,8 @@ export class ParametersService {
     this.tableList.next(options);
   }
   lookupColumns(columns: string[]) {
-    let output: { field: string; header: string }[] = [];
-    for (let col of columns) {
+    const output: { field: string; header: string }[] = [];
+    for (const col of columns) {
       output.push(
         this.allColumns.filter((name) => {
           return name.field === col;

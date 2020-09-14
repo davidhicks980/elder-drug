@@ -1,10 +1,28 @@
 @import "~@angular/material/theming";
 @import "./palette";
-@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap");
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Round';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconsround/v26/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmPq_HTTw.woff2) format('woff2');
+}
+@font-face {
+  font-family: "Titillium Web";
+  src: url("./assets/TitilliumWeb-Bold.ttf");
+}
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
-$app-primary: mat-palette($bluePalette, 600);
+
+$app-primary: mat-palette($calm-palette, 500);
 $app-accent: mat-palette($mat-amber, A700);
 
 $primary: mat-color($app-primary);
@@ -15,7 +33,7 @@ $darkaccent: mat-color($app-accent, 900);
 
 $brightAccent: mat-color($app-accent, A700);
 
-$darkblue: mat-color($mat-indigo, 900);
+$darkblue: mat-color($mat-deep-purple, 700);
 $lightblue: mat-color($mat-indigo, A400);
 
 $lightprimary: mat-color($app-primary, 400);
@@ -23,13 +41,21 @@ $lightaccent: mat-color($app-accent, 600);
 
 $gray: #414042;
 $darkgray: $primary;
+$logogray: #292230;
+
 $tablebackground: white;
 $tableaccent: $primary;
 $lightgray: lighten($gray, 60%);
 $lightergray: lighten($gray, 70%);
 
 $gradient: linear-gradient(to right, $primary, adjust-hue($primary, 20deg));
+$table-gradient: linear-gradient(
+  to right,
+  lighten($primary, 8%),
+  adjust-hue(lighten($primary, 8%), 20deg)
+);
 
 $textgray: lighten($gray, 70%);
 
-$headerfont: "Titillium Web", san-serif;
+$headerfont: "Titillium Web";
+$subtitlefont: "Lato" sans-serif;

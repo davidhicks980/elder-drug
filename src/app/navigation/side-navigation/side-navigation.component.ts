@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { StateService } from 'src/app/state.service';
+import { ScreenWidth } from '../../state.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -8,14 +9,18 @@ import { StateService } from 'src/app/state.service';
 })
 export class SideNavigationComponent implements OnInit {
   sidenavActive: boolean;
-  @Input() handsetLayout: boolean;
-  constructor(public stateService: StateService) {
-    stateService.sidenavStatus$.subscribe((isOpen: boolean) => {
+  screenSize: ScreenWidth;
+
+  constructor(public state: StateService) {
+    state.sidenavStatus$.subscribe((isOpen: boolean) => {
       this.sidenavActive = isOpen;
     });
   }
 
   ngOnInit(): void {
-    this.sidenavActive = this.stateService.sidenavOpen;
+    this.sidenavActive = this.state.sidenavOpen;
+    this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
+      this.screenSize = screenSize;
+    });
   }
 }

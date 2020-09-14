@@ -1,0 +1,17 @@
+[
+  { "id": 644, "name": "amiloride" },
+  { "id": 1369, "name": "bendroflumethiazide" },
+  { "id": 1808, "name": "bumetanide" },
+  { "id": 2396, "name": "chlorothiazide" },
+  { "id": 2409, "name": "chlorthalidone" },
+  { "id": 62349, "name": "ethacrynate" },
+  { "id": 4603, "name": "furosemide" },
+  { "id": 5487, "name": "hydrochlorothiazide" },
+  { "id": 5495, "name": "hydroflumethiazide" },
+  { "id": 5764, "name": "indapamide" },
+  { "id": 6628, "name": "mannitol" },
+  { "id": 6916, "name": "metolazone" },
+  { "id": 8565, "name": "polythiazide" },
+  { "id": 38413, "name": "torsemide" },
+  { "id": 10763, "name": "triamterene" }
+]

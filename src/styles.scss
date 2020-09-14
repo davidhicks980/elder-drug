@@ -1,7 +1,7 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -19,7 +19,11 @@ $search-angular-accent: mat-palette($mat-pink, A200, A100, A400);
 $search-angular-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$search-angular-theme: mat-light-theme($search-angular-primary, $search-angular-accent, $search-angular-warn);
+$search-angular-theme: mat-light-theme(
+  $search-angular-primary,
+  $search-angular-accent,
+  $search-angular-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -29,7 +33,7 @@ $search-angular-theme: mat-light-theme($search-angular-primary, $search-angular-
 @import "./colors";
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap");
+
 
 @include mat-core();
 
@@ -59,11 +63,44 @@ $candy-app-theme: mat-light-theme(
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 @import "./theme.scss";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~primeng/resources/primeng.min.css";
-
-@mixin beers-button-component-theme($theme) {
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-round {
+  font-family: 'Material Icons Round';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

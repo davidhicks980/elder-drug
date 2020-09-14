@@ -4,16 +4,11 @@
 div.table-modifier-list {
   border: 1px solid lightgray;
   overflow: visible;
-  position: fixed;
   border-radius: 4px;
   background-color: white;
   margin-left: 10px;
-  margin-right: 10px;
-  width: fit-content;
-}
-
-div.padding {
-  //  padding: 20px;
+  margin-right: 1.61em;
+  width: 12.3em;
 }
 
 .panel-header {
@@ -39,6 +34,23 @@ mat-selection-list.mat-list-base {
   font-size: 10pt;
 }
 
-mat-button-toggle-group.toggle-group {
+ul.toggle-group {
+  position: relative;
+  background: lighten($lightprimary, 50%);
+  border: 1px solid lighten($primary, 15%);
+  border-radius: 4px;
+  list-style: none;
   display: grid;
+  grid-template-columns: 50% 50%;
+  padding-inline-start: 1.7em;
+  width: 92vw;
+  margin-left: 2vw;
+  font-weight: 500;
+  color: darken($primary, 10%);
+}
+
+ul li {
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+  font-size: small;
 }

@@ -12,7 +12,7 @@ const jsonToFirestore = async () => {
       firebaseConfig.databaseURL
     );
     console.log("Firebase Initialized");
-    await firestoreService.restore("./dropdown-map.json");
+    await firestoreService.restore("./dropdown.json");
     console.log("Upload Success");
   } catch (error) {
     console.log(error);

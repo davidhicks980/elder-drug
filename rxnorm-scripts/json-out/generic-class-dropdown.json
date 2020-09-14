@@ -1,0 +1,2720 @@
+[
+  {
+    "rxcui": "1191",
+    "name": "aspirin",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19737",
+    "name": "bromfenac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19737/related.json?tty=bn"
+  },
+  {
+    "rxcui": "140587",
+    "name": "celecoxib",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/140587/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3355",
+    "name": "diclofenac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3393",
+    "name": "diflunisal",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "24605",
+    "name": "etodolac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4331",
+    "name": "fenoprofen",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4502",
+    "name": "flurbiprofen",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4502/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5640",
+    "name": "ibuprofen",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5781",
+    "name": "indomethacin",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6142",
+    "name": "ketoprofen",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35827",
+    "name": "ketorolac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6693",
+    "name": "mefenamic acid",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41493",
+    "name": "meloxicam",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "31448",
+    "name": "nabumetone",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7258",
+    "name": "naproxen",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "298665",
+    "name": "nepafenac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/298665/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32613",
+    "name": "oxaprozin",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8356",
+    "name": "piroxicam",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10237",
+    "name": "sulindac",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10636",
+    "name": "tolmetin",
+    "id": 120,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1292",
+    "name": "baclofen",
+    "id": 145,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1292/related.json?tty=bn"
+  },
+  {
+    "rxcui": "74667",
+    "name": "zaleplon",
+    "id": 145,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "rxcui": "39993",
+    "name": "zolpidem",
+    "id": 145,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "rxcui": "620",
+    "name": "amantadine",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/620/related.json?tty=bn"
+  },
+  {
+    "rxcui": "816346",
+    "name": "dexlansoprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/816346/related.json?tty=bn"
+  },
+  {
+    "rxcui": "283742",
+    "name": "esomeprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/283742/related.json?tty=bn"
+  },
+  {
+    "rxcui": "17128",
+    "name": "lansoprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/17128/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7646",
+    "name": "omeprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7646/related.json?tty=bn"
+  },
+  {
+    "rxcui": "40790",
+    "name": "pantoprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/40790/related.json?tty=bn"
+  },
+  {
+    "rxcui": "114979",
+    "name": "rabeprazole",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/114979/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9386",
+    "name": "rimantadine",
+    "id": 90,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9386/related.json?tty=bn"
+  },
+  {
+    "rxcui": "480",
+    "name": "alfentanil",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/480/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1819",
+    "name": "buprenorphine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1819/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1841",
+    "name": "butorphanol",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1841/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545976",
+    "name": "codeine anhydrous",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545976/related.json?tty=bn"
+  },
+  {
+    "rxcui": "23088",
+    "name": "dihydrocodeine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/23088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1653781",
+    "name": "eluxadoline",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1653781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4337",
+    "name": "fentanyl",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4337/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5489",
+    "name": "hydrocodone",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5489/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3423",
+    "name": "hydromorphone",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3423/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6378",
+    "name": "levorphanol",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6378/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6468",
+    "name": "loperamide",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6468/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6754",
+    "name": "meperidine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6813",
+    "name": "methadone",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6813/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7052",
+    "name": "morphine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7052/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7238",
+    "name": "nalbuphine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7238/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7804",
+    "name": "oxycodone",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7804/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7814",
+    "name": "oxymorphone",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7814/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8001",
+    "name": "pentazocine",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8001/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8785",
+    "name": "propoxyphene",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "73032",
+    "name": "remifentanil",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/73032/related.json?tty=bn"
+  },
+  {
+    "rxcui": "56795",
+    "name": "sufentanil",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/56795/related.json?tty=bn"
+  },
+  {
+    "rxcui": "787390",
+    "name": "tapentadol",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/787390/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10689",
+    "name": "tramadol",
+    "id": 205,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1292",
+    "name": "baclofen",
+    "id": 203,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1292/related.json?tty=bn"
+  },
+  {
+    "rxcui": "74667",
+    "name": "zaleplon",
+    "id": 203,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "rxcui": "39993",
+    "name": "zolpidem",
+    "id": 203,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1303098",
+    "name": "aclidinium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1303098/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1223",
+    "name": "atropine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1424",
+    "name": "benztropine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21232",
+    "name": "clidinium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21232/related.json?tty=bn"
+  },
+  {
+    "rxcui": "136198",
+    "name": "darifenacin",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3361",
+    "name": "dicyclomine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4440",
+    "name": "flavoxate",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546438",
+    "name": "glycopyrronium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546438/related.json?tty=bn"
+  },
+  {
+    "rxcui": "27084",
+    "name": "homatropine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7213",
+    "name": "ipratropium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7213/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546373",
+    "name": "ipratropium cation",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546373/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89785",
+    "name": "methscopolamine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32675",
+    "name": "oxybutynin",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8761",
+    "name": "propantheline",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2102775",
+    "name": "revefenacin",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2102775/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9601",
+    "name": "scopolamine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "rxcui": "322167",
+    "name": "solifenacin",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "rxcui": "69120",
+    "name": "tiotropium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/69120/related.json?tty=bn"
+  },
+  {
+    "rxcui": "119565",
+    "name": "tolterodine",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10869",
+    "name": "tropicamide",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10869/related.json?tty=bn"
+  },
+  {
+    "rxcui": "236778",
+    "name": "trospium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1487514",
+    "name": "umeclidinium",
+    "id": 136,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1487514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "17300",
+    "name": "alfuzosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/17300/related.json?tty=bn"
+  },
+  {
+    "rxcui": "20352",
+    "name": "carvedilol",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/20352/related.json?tty=bn"
+  },
+  {
+    "rxcui": "22298",
+    "name": "dapiprazole",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22298/related.json?tty=bn"
+  },
+  {
+    "rxcui": "49276",
+    "name": "doxazosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8149",
+    "name": "phenoxybenzamine",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8149/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8153",
+    "name": "phentolamine",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8153/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8629",
+    "name": "prazosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn"
+  },
+  {
+    "rxcui": "720825",
+    "name": "silodosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/720825/related.json?tty=bn"
+  },
+  {
+    "rxcui": "77492",
+    "name": "tamsulosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/77492/related.json?tty=bn"
+  },
+  {
+    "rxcui": "37798",
+    "name": "terazosin",
+    "id": 209,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/37798/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1303098",
+    "name": "aclidinium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1303098/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1223",
+    "name": "atropine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1424",
+    "name": "benztropine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21232",
+    "name": "clidinium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21232/related.json?tty=bn"
+  },
+  {
+    "rxcui": "136198",
+    "name": "darifenacin",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3361",
+    "name": "dicyclomine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4440",
+    "name": "flavoxate",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546438",
+    "name": "glycopyrronium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546438/related.json?tty=bn"
+  },
+  {
+    "rxcui": "27084",
+    "name": "homatropine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7213",
+    "name": "ipratropium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7213/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546373",
+    "name": "ipratropium cation",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546373/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89785",
+    "name": "methscopolamine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32675",
+    "name": "oxybutynin",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8761",
+    "name": "propantheline",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2102775",
+    "name": "revefenacin",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2102775/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9601",
+    "name": "scopolamine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "rxcui": "322167",
+    "name": "solifenacin",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "rxcui": "69120",
+    "name": "tiotropium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/69120/related.json?tty=bn"
+  },
+  {
+    "rxcui": "119565",
+    "name": "tolterodine",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10869",
+    "name": "tropicamide",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10869/related.json?tty=bn"
+  },
+  {
+    "rxcui": "236778",
+    "name": "trospium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1487514",
+    "name": "umeclidinium",
+    "id": 153,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1487514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1292",
+    "name": "baclofen",
+    "id": 204,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1292/related.json?tty=bn"
+  },
+  {
+    "rxcui": "74667",
+    "name": "zaleplon",
+    "id": 204,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "rxcui": "39993",
+    "name": "zolpidem",
+    "id": 204,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1091643",
+    "name": "azilsartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1091643/related.json?tty=bn"
+  },
+  {
+    "rxcui": "214354",
+    "name": "candesartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/214354/related.json?tty=bn"
+  },
+  {
+    "rxcui": "83515",
+    "name": "eprosartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/83515/related.json?tty=bn"
+  },
+  {
+    "rxcui": "83818",
+    "name": "irbesartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/83818/related.json?tty=bn"
+  },
+  {
+    "rxcui": "52175",
+    "name": "losartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/52175/related.json?tty=bn"
+  },
+  {
+    "rxcui": "321064",
+    "name": "olmesartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/321064/related.json?tty=bn"
+  },
+  {
+    "rxcui": "73494",
+    "name": "telmisartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/73494/related.json?tty=bn"
+  },
+  {
+    "rxcui": "69749",
+    "name": "valsartan",
+    "id": 190,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/69749/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1303098",
+    "name": "aclidinium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1303098/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1223",
+    "name": "atropine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1424",
+    "name": "benztropine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21232",
+    "name": "clidinium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21232/related.json?tty=bn"
+  },
+  {
+    "rxcui": "136198",
+    "name": "darifenacin",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3361",
+    "name": "dicyclomine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4440",
+    "name": "flavoxate",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546438",
+    "name": "glycopyrronium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546438/related.json?tty=bn"
+  },
+  {
+    "rxcui": "27084",
+    "name": "homatropine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7213",
+    "name": "ipratropium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7213/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546373",
+    "name": "ipratropium cation",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546373/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89785",
+    "name": "methscopolamine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32675",
+    "name": "oxybutynin",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8761",
+    "name": "propantheline",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2102775",
+    "name": "revefenacin",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2102775/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9601",
+    "name": "scopolamine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "rxcui": "322167",
+    "name": "solifenacin",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "rxcui": "69120",
+    "name": "tiotropium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/69120/related.json?tty=bn"
+  },
+  {
+    "rxcui": "119565",
+    "name": "tolterodine",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10869",
+    "name": "tropicamide",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10869/related.json?tty=bn"
+  },
+  {
+    "rxcui": "236778",
+    "name": "trospium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1487514",
+    "name": "umeclidinium",
+    "id": 198,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1487514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1191",
+    "name": "aspirin",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19737",
+    "name": "bromfenac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19737/related.json?tty=bn"
+  },
+  {
+    "rxcui": "140587",
+    "name": "celecoxib",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/140587/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3355",
+    "name": "diclofenac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3393",
+    "name": "diflunisal",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "24605",
+    "name": "etodolac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4331",
+    "name": "fenoprofen",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4502",
+    "name": "flurbiprofen",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4502/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5640",
+    "name": "ibuprofen",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5781",
+    "name": "indomethacin",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6142",
+    "name": "ketoprofen",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35827",
+    "name": "ketorolac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6693",
+    "name": "mefenamic acid",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41493",
+    "name": "meloxicam",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "31448",
+    "name": "nabumetone",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7258",
+    "name": "naproxen",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "298665",
+    "name": "nepafenac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/298665/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32613",
+    "name": "oxaprozin",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8356",
+    "name": "piroxicam",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10237",
+    "name": "sulindac",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10636",
+    "name": "tolmetin",
+    "id": 124,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1191",
+    "name": "aspirin",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19737",
+    "name": "bromfenac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19737/related.json?tty=bn"
+  },
+  {
+    "rxcui": "140587",
+    "name": "celecoxib",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/140587/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3355",
+    "name": "diclofenac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3393",
+    "name": "diflunisal",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "24605",
+    "name": "etodolac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4331",
+    "name": "fenoprofen",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4502",
+    "name": "flurbiprofen",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4502/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5640",
+    "name": "ibuprofen",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5781",
+    "name": "indomethacin",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6142",
+    "name": "ketoprofen",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35827",
+    "name": "ketorolac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6693",
+    "name": "mefenamic acid",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41493",
+    "name": "meloxicam",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "31448",
+    "name": "nabumetone",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7258",
+    "name": "naproxen",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "298665",
+    "name": "nepafenac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/298665/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32613",
+    "name": "oxaprozin",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8356",
+    "name": "piroxicam",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10237",
+    "name": "sulindac",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10636",
+    "name": "tolmetin",
+    "id": 119,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2599",
+    "name": "clonidine",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2599/related.json?tty=bn"
+  },
+  {
+    "rxcui": "48937",
+    "name": "dexmedetomidine",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/48937/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5033",
+    "name": "guanabenz",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5033/related.json?tty=bn"
+  },
+  {
+    "rxcui": "40114",
+    "name": "guanfacine",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/40114/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545996",
+    "name": "methyldopa anhydrous",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545996/related.json?tty=bn"
+  },
+  {
+    "rxcui": "57258",
+    "name": "tizanidine",
+    "id": 32,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/57258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "135447",
+    "name": "donepezil",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/135447/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89778",
+    "name": "ecothiopate",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546421",
+    "name": "edrophonium cation",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546421/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4637",
+    "name": "galantamine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4637/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6606",
+    "name": "malathion",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6606/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7315",
+    "name": "neostigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7315/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9000",
+    "name": "pyridostigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9000/related.json?tty=bn"
+  },
+  {
+    "rxcui": "183379",
+    "name": "rivastigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/183379/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2556",
+    "name": "citalopram",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2556/related.json?tty=bn"
+  },
+  {
+    "rxcui": "734064",
+    "name": "desvenlafaxine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/734064/related.json?tty=bn"
+  },
+  {
+    "rxcui": "72625",
+    "name": "duloxetine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn"
+  },
+  {
+    "rxcui": "321988",
+    "name": "escitalopram",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/321988/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4493",
+    "name": "fluoxetine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "42355",
+    "name": "fluvoxamine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/42355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1433212",
+    "name": "levomilnacipran",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1433212/related.json?tty=bn"
+  },
+  {
+    "rxcui": "588250",
+    "name": "milnacipran",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/588250/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32937",
+    "name": "paroxetine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn"
+  },
+  {
+    "rxcui": "36437",
+    "name": "sertraline",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/36437/related.json?tty=bn"
+  },
+  {
+    "rxcui": "39786",
+    "name": "venlafaxine",
+    "id": 163,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39786/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2556",
+    "name": "citalopram",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2556/related.json?tty=bn"
+  },
+  {
+    "rxcui": "734064",
+    "name": "desvenlafaxine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/734064/related.json?tty=bn"
+  },
+  {
+    "rxcui": "72625",
+    "name": "duloxetine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn"
+  },
+  {
+    "rxcui": "321988",
+    "name": "escitalopram",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/321988/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4493",
+    "name": "fluoxetine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "42355",
+    "name": "fluvoxamine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/42355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1433212",
+    "name": "levomilnacipran",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1433212/related.json?tty=bn"
+  },
+  {
+    "rxcui": "588250",
+    "name": "milnacipran",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/588250/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32937",
+    "name": "paroxetine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn"
+  },
+  {
+    "rxcui": "36437",
+    "name": "sertraline",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/36437/related.json?tty=bn"
+  },
+  {
+    "rxcui": "39786",
+    "name": "venlafaxine",
+    "id": 185,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39786/related.json?tty=bn"
+  },
+  {
+    "rxcui": "18867",
+    "name": "benazepril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/18867/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546196",
+    "name": "benazeprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546196/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1998",
+    "name": "captopril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1998/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3827",
+    "name": "enalapril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545989",
+    "name": "enalaprilat anhydrous",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545989/related.json?tty=bn"
+  },
+  {
+    "rxcui": "50166",
+    "name": "fosinopril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/50166/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546393",
+    "name": "fosinoprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546022",
+    "name": "lisinopril anhydrous",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546022/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546358",
+    "name": "moexiprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546358/related.json?tty=bn"
+  },
+  {
+    "rxcui": "54552",
+    "name": "perindopril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/54552/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546400",
+    "name": "perindoprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546400/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35208",
+    "name": "quinapril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35208/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546359",
+    "name": "quinaprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546359/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35296",
+    "name": "ramipril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35296/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546377",
+    "name": "ramiprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546377/related.json?tty=bn"
+  },
+  {
+    "rxcui": "38454",
+    "name": "trandolapril",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/38454/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546379",
+    "name": "trandolaprilat",
+    "id": 191,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546379/related.json?tty=bn"
+  },
+  {
+    "rxcui": "17300",
+    "name": "alfuzosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/17300/related.json?tty=bn"
+  },
+  {
+    "rxcui": "20352",
+    "name": "carvedilol",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/20352/related.json?tty=bn"
+  },
+  {
+    "rxcui": "22298",
+    "name": "dapiprazole",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22298/related.json?tty=bn"
+  },
+  {
+    "rxcui": "49276",
+    "name": "doxazosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8149",
+    "name": "phenoxybenzamine",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8149/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8153",
+    "name": "phentolamine",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8153/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8629",
+    "name": "prazosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn"
+  },
+  {
+    "rxcui": "720825",
+    "name": "silodosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/720825/related.json?tty=bn"
+  },
+  {
+    "rxcui": "77492",
+    "name": "tamsulosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/77492/related.json?tty=bn"
+  },
+  {
+    "rxcui": "37798",
+    "name": "terazosin",
+    "id": 127,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/37798/related.json?tty=bn"
+  },
+  {
+    "rxcui": "108088",
+    "name": "alclometasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/108088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "17652",
+    "name": "amcinonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/17652/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1347",
+    "name": "beclomethasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1347/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1514",
+    "name": "betamethasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19831",
+    "name": "budesonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19831/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2590",
+    "name": "clobetasol",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2590/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21249",
+    "name": "clocortolone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21249/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2878",
+    "name": "cortisone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2878/related.json?tty=bn"
+  },
+  {
+    "rxcui": "22396",
+    "name": "deflazacort",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22396/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3254",
+    "name": "desonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3254/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3255",
+    "name": "desoximetasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3255/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3264",
+    "name": "dexamethasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3264/related.json?tty=bn"
+  },
+  {
+    "rxcui": "91311",
+    "name": "diflorasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/91311/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546428",
+    "name": "flunisolide anhydrous",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546428/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4461",
+    "name": "fluocinolone acetonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4461/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4462",
+    "name": "fluocinonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4462/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4491",
+    "name": "fluorometholone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4491/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4500",
+    "name": "flurandrenolide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4500/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41126",
+    "name": "fluticasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41126/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5084",
+    "name": "halcinonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41208",
+    "name": "halobetasol",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41208/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5492",
+    "name": "hydrocortisone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5492/related.json?tty=bn"
+  },
+  {
+    "rxcui": "237027",
+    "name": "loteprednol",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/237027/related.json?tty=bn"
+  },
+  {
+    "rxcui": "29439",
+    "name": "medrysone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/29439/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6902",
+    "name": "methylprednisolone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6902/related.json?tty=bn"
+  },
+  {
+    "rxcui": "108118",
+    "name": "mometasone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/108118/related.json?tty=bn"
+  },
+  {
+    "rxcui": "34369",
+    "name": "prednicarbate",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/34369/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8638",
+    "name": "prednisolone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8638/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8640",
+    "name": "prednisone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10759",
+    "name": "triamcinolone",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10759/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10761",
+    "name": "triamcinolone acetonide",
+    "id": 139,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1191",
+    "name": "aspirin",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19737",
+    "name": "bromfenac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19737/related.json?tty=bn"
+  },
+  {
+    "rxcui": "140587",
+    "name": "celecoxib",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/140587/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3355",
+    "name": "diclofenac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3393",
+    "name": "diflunisal",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "24605",
+    "name": "etodolac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4331",
+    "name": "fenoprofen",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4502",
+    "name": "flurbiprofen",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4502/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5640",
+    "name": "ibuprofen",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5781",
+    "name": "indomethacin",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6142",
+    "name": "ketoprofen",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35827",
+    "name": "ketorolac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6693",
+    "name": "mefenamic acid",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41493",
+    "name": "meloxicam",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "31448",
+    "name": "nabumetone",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7258",
+    "name": "naproxen",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "298665",
+    "name": "nepafenac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/298665/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32613",
+    "name": "oxaprozin",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8356",
+    "name": "piroxicam",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10237",
+    "name": "sulindac",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10636",
+    "name": "tolmetin",
+    "id": 171,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "rxcui": "480",
+    "name": "alfentanil",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/480/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1819",
+    "name": "buprenorphine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1819/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1841",
+    "name": "butorphanol",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1841/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545976",
+    "name": "codeine anhydrous",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545976/related.json?tty=bn"
+  },
+  {
+    "rxcui": "23088",
+    "name": "dihydrocodeine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/23088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1653781",
+    "name": "eluxadoline",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1653781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4337",
+    "name": "fentanyl",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4337/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5489",
+    "name": "hydrocodone",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5489/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3423",
+    "name": "hydromorphone",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3423/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6378",
+    "name": "levorphanol",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6378/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6468",
+    "name": "loperamide",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6468/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6754",
+    "name": "meperidine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6813",
+    "name": "methadone",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6813/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7052",
+    "name": "morphine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7052/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7238",
+    "name": "nalbuphine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7238/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7804",
+    "name": "oxycodone",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7804/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7814",
+    "name": "oxymorphone",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7814/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8001",
+    "name": "pentazocine",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8001/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8785",
+    "name": "propoxyphene",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "73032",
+    "name": "remifentanil",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/73032/related.json?tty=bn"
+  },
+  {
+    "rxcui": "56795",
+    "name": "sufentanil",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/56795/related.json?tty=bn"
+  },
+  {
+    "rxcui": "787390",
+    "name": "tapentadol",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/787390/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10689",
+    "name": "tramadol",
+    "id": 195,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1191",
+    "name": "aspirin",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19737",
+    "name": "bromfenac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19737/related.json?tty=bn"
+  },
+  {
+    "rxcui": "140587",
+    "name": "celecoxib",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/140587/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3355",
+    "name": "diclofenac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3393",
+    "name": "diflunisal",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "rxcui": "24605",
+    "name": "etodolac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4331",
+    "name": "fenoprofen",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4502",
+    "name": "flurbiprofen",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4502/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5640",
+    "name": "ibuprofen",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5781",
+    "name": "indomethacin",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6142",
+    "name": "ketoprofen",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "rxcui": "35827",
+    "name": "ketorolac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6693",
+    "name": "mefenamic acid",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41493",
+    "name": "meloxicam",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "rxcui": "31448",
+    "name": "nabumetone",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7258",
+    "name": "naproxen",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "rxcui": "298665",
+    "name": "nepafenac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/298665/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32613",
+    "name": "oxaprozin",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8356",
+    "name": "piroxicam",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10237",
+    "name": "sulindac",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10636",
+    "name": "tolmetin",
+    "id": 123,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "rxcui": "480",
+    "name": "alfentanil",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/480/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1819",
+    "name": "buprenorphine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1819/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1841",
+    "name": "butorphanol",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1841/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545976",
+    "name": "codeine anhydrous",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545976/related.json?tty=bn"
+  },
+  {
+    "rxcui": "23088",
+    "name": "dihydrocodeine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/23088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1653781",
+    "name": "eluxadoline",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1653781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4337",
+    "name": "fentanyl",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4337/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5489",
+    "name": "hydrocodone",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5489/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3423",
+    "name": "hydromorphone",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3423/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6378",
+    "name": "levorphanol",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6378/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6468",
+    "name": "loperamide",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6468/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6754",
+    "name": "meperidine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6813",
+    "name": "methadone",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6813/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7052",
+    "name": "morphine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7052/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7238",
+    "name": "nalbuphine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7238/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7804",
+    "name": "oxycodone",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7804/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7814",
+    "name": "oxymorphone",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7814/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8001",
+    "name": "pentazocine",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8001/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8785",
+    "name": "propoxyphene",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "73032",
+    "name": "remifentanil",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/73032/related.json?tty=bn"
+  },
+  {
+    "rxcui": "56795",
+    "name": "sufentanil",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/56795/related.json?tty=bn"
+  },
+  {
+    "rxcui": "787390",
+    "name": "tapentadol",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/787390/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10689",
+    "name": "tramadol",
+    "id": 197,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "rxcui": "480",
+    "name": "alfentanil",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/480/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1819",
+    "name": "buprenorphine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1819/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1841",
+    "name": "butorphanol",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1841/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1545976",
+    "name": "codeine anhydrous",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1545976/related.json?tty=bn"
+  },
+  {
+    "rxcui": "23088",
+    "name": "dihydrocodeine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/23088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1653781",
+    "name": "eluxadoline",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1653781/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4337",
+    "name": "fentanyl",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4337/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5489",
+    "name": "hydrocodone",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5489/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3423",
+    "name": "hydromorphone",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3423/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6378",
+    "name": "levorphanol",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6378/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6468",
+    "name": "loperamide",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6468/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6754",
+    "name": "meperidine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6813",
+    "name": "methadone",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6813/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7052",
+    "name": "morphine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7052/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7238",
+    "name": "nalbuphine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7238/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7804",
+    "name": "oxycodone",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7804/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7814",
+    "name": "oxymorphone",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7814/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8001",
+    "name": "pentazocine",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8001/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8785",
+    "name": "propoxyphene",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "73032",
+    "name": "remifentanil",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/73032/related.json?tty=bn"
+  },
+  {
+    "rxcui": "56795",
+    "name": "sufentanil",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/56795/related.json?tty=bn"
+  },
+  {
+    "rxcui": "787390",
+    "name": "tapentadol",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/787390/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10689",
+    "name": "tramadol",
+    "id": 196,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "rxcui": "108088",
+    "name": "alclometasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/108088/related.json?tty=bn"
+  },
+  {
+    "rxcui": "17652",
+    "name": "amcinonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/17652/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1347",
+    "name": "beclomethasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1347/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1514",
+    "name": "betamethasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "19831",
+    "name": "budesonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19831/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2590",
+    "name": "clobetasol",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2590/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21249",
+    "name": "clocortolone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21249/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2878",
+    "name": "cortisone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2878/related.json?tty=bn"
+  },
+  {
+    "rxcui": "22396",
+    "name": "deflazacort",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22396/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3254",
+    "name": "desonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3254/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3255",
+    "name": "desoximetasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3255/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3264",
+    "name": "dexamethasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3264/related.json?tty=bn"
+  },
+  {
+    "rxcui": "91311",
+    "name": "diflorasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/91311/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546428",
+    "name": "flunisolide anhydrous",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546428/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4461",
+    "name": "fluocinolone acetonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4461/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4462",
+    "name": "fluocinonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4462/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4491",
+    "name": "fluorometholone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4491/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4500",
+    "name": "flurandrenolide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4500/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41126",
+    "name": "fluticasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41126/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5084",
+    "name": "halcinonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "41208",
+    "name": "halobetasol",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41208/related.json?tty=bn"
+  },
+  {
+    "rxcui": "5492",
+    "name": "hydrocortisone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5492/related.json?tty=bn"
+  },
+  {
+    "rxcui": "237027",
+    "name": "loteprednol",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/237027/related.json?tty=bn"
+  },
+  {
+    "rxcui": "29439",
+    "name": "medrysone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/29439/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6902",
+    "name": "methylprednisolone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6902/related.json?tty=bn"
+  },
+  {
+    "rxcui": "108118",
+    "name": "mometasone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/108118/related.json?tty=bn"
+  },
+  {
+    "rxcui": "34369",
+    "name": "prednicarbate",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/34369/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8638",
+    "name": "prednisolone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8638/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8640",
+    "name": "prednisone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8640/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10759",
+    "name": "triamcinolone",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10759/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10761",
+    "name": "triamcinolone acetonide",
+    "id": 206,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1303098",
+    "name": "aclidinium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1303098/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1223",
+    "name": "atropine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1424",
+    "name": "benztropine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "rxcui": "21232",
+    "name": "clidinium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21232/related.json?tty=bn"
+  },
+  {
+    "rxcui": "136198",
+    "name": "darifenacin",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
+  },
+  {
+    "rxcui": "3361",
+    "name": "dicyclomine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4440",
+    "name": "flavoxate",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546438",
+    "name": "glycopyrronium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546438/related.json?tty=bn"
+  },
+  {
+    "rxcui": "27084",
+    "name": "homatropine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7213",
+    "name": "ipratropium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7213/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546373",
+    "name": "ipratropium cation",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546373/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89785",
+    "name": "methscopolamine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "rxcui": "32675",
+    "name": "oxybutynin",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "rxcui": "8761",
+    "name": "propantheline",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "rxcui": "2102775",
+    "name": "revefenacin",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2102775/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9601",
+    "name": "scopolamine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "rxcui": "322167",
+    "name": "solifenacin",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "rxcui": "69120",
+    "name": "tiotropium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/69120/related.json?tty=bn"
+  },
+  {
+    "rxcui": "119565",
+    "name": "tolterodine",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "rxcui": "10869",
+    "name": "tropicamide",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10869/related.json?tty=bn"
+  },
+  {
+    "rxcui": "236778",
+    "name": "trospium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1487514",
+    "name": "umeclidinium",
+    "id": 173,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1487514/related.json?tty=bn"
+  },
+  {
+    "rxcui": "135447",
+    "name": "donepezil",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/135447/related.json?tty=bn"
+  },
+  {
+    "rxcui": "89778",
+    "name": "ecothiopate",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89778/related.json?tty=bn"
+  },
+  {
+    "rxcui": "1546421",
+    "name": "edrophonium cation",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546421/related.json?tty=bn"
+  },
+  {
+    "rxcui": "4637",
+    "name": "galantamine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4637/related.json?tty=bn"
+  },
+  {
+    "rxcui": "6606",
+    "name": "malathion",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6606/related.json?tty=bn"
+  },
+  {
+    "rxcui": "7315",
+    "name": "neostigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7315/related.json?tty=bn"
+  },
+  {
+    "rxcui": "9000",
+    "name": "pyridostigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9000/related.json?tty=bn"
+  },
+  {
+    "rxcui": "183379",
+    "name": "rivastigmine",
+    "id": 128,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/183379/related.json?tty=bn"
+  }
+]

@@ -5,12 +5,15 @@ let dropdownPaths = ['all-dropdown-items.json'];
 
 writeFileSync('./dropdown-map.json', '');
 let outMap = {};
-function combineFiles(paths: string[], out: WriteStream) {
+function combineFiles(paths: string[]) {
   for (let path of paths) {
     readFile(path, (err, data) => {
       let parsedData = JSON.parse(data.toString());
+
       for (let item of parsedData) {
-        item.name = `${item.name}`.replace(/\s+/g, '__');
+        item.name = `${item.name}`.toLowerCase();
+
+        item.name = item.name.replace(/\s+/g, ' ');
         outMap[`${item.name}`] = [];
       }
       for (let item of parsedData) {
@@ -24,4 +27,4 @@ function combineFiles(paths: string[], out: WriteStream) {
     });
   }
 }
-combineFiles(dropdownPaths, dropdownStream);
+combineFiles(dropdownPaths);

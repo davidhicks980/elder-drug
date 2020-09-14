@@ -2,7 +2,7 @@
 
 .dh-input {
   color: $accent;
-  z-index: 200;
+  z-index: 5000;
 }
 
 .material-container {
@@ -23,34 +23,21 @@
   text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
 }
 
-.minus-button {
-  cursor: pointer;
-  text-align: center;
-  padding-top: 1px;
-  border-radius: 10;
-  height: 100%;
-  color: $accent;
-  opacity: 90%;
-}
-.minus-button:hover {
-  opacity: 100%;
-}
-
 .plus-button {
+  text-align: center;
   cursor: pointer;
-
-  opacity: 90%;
-}
-.plus-button:hover {
-  opacity: 100%;
+  font-family: 'Material Icons Round';
 }
 
-.add-remove {
-  height: 100%;
+.trash-button {
+  text-align: center;
+  cursor: pointer;
+    font-family: 'Material Icons Round';
+
 }
 
 .height-limit {
-  max-height: 65vh;
+  height: 60vh;
   overflow: auto;
 }
 
@@ -70,30 +57,34 @@
 }
 
 .search-button-container {
-  padding-top: 3em;
-  padding-bottom: 75vh;
+  padding-top: 2em;
   width: 100%;
   border-top: 1px solid $lightgray;
 }
 
-button[mat-raised-button].search-button {
+button[mat-flat-button].search-button {
   width: 90%;
   color: white;
-  font-size: 12pt;
+  font-size: 14pt;
   background-image: linear-gradient(
     to right,
-    $primary,
-    adjust-hue($primary, 20deg)
+    adjust-hue($primary, -15deg),
+    $primary
   );
+  font-weight: 400;
+  max-width: 30em;
+  height: 2.2em;
 }
 
-button[mat-raised-button].search-button:hover {
-  transition: ease-out 0.4s;
+button[mat-button].search-button:hover {
+  transition: ease-in 0.05s;
   background-image: linear-gradient(
     to right,
     adjust-hue($primary, 20deg),
-    adjust-hue($primary, 40deg)
+    adjust-hue($primary, 30deg)
   );
+  color: primary;
+  text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
 }
 
 section.border-box {
@@ -101,4 +92,14 @@ section.border-box {
   padding-left: 0.3em;
   padding-right: 0.3em;
   width: 85%;
+}
+
+
+
+span.spacer {
+  padding-bottom: 0.4em;
+}
+
+div.form-height-limit {
+  height: 65vh;
 }

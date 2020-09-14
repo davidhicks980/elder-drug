@@ -1,8 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
 //prettier-ignore
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Round");
+@import "./primeflex.min.css";
 
-body{
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px 6px rgba(0,0,0,0.1); 
+    color: rgb(226, 226, 226);
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    color: rgb(226, 226, 226);
+
+    -webkit-box-shadow: inset 0 0 6px 6px rgba(0, 0, 0, 0.3); 
+}
+body {
   margin: 0px;
 }
 
@@ -59,7 +78,11 @@ button[mat-flat-button]:active {
 .mat-form-field-appearance-outline .mat-form-field-label {
   padding-bottom: 0.2em;
 }
-
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled)
+  .mat-form-field-flex:hover
+  .mat-form-field-outline-thick {
+  color: desaturate(lighten($primary, 20%), 20%);
+}
 .mat-drawer-inner-container {
   scrollbar-width: none;
 }
@@ -70,10 +93,6 @@ button[mat-flat-button]:active {
 
 .mat-button-toggle-checked {
   background-color: whitesmoke;
-}
-
-.bowl-of-hygieia {
-  color: mat-color($candy-app-primary);
 }
 
 .fixed-header {
@@ -107,23 +126,6 @@ tr:not(.med-expanded-row) .ellipsis {
   color: white !important;
 }
 
-mat-pseudo-checkbox {
-  border: 1px solid gray !important;
-  width: 16px !important;
-  height: 16px !important;
-  overflow: hidden;
-  color: $accent;
-}
-mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
-  border: 2px solid $accent !important;
-  width: 16px !important;
-  height: 16px !important;
-  overflow: hidden;
-}
-
-.mat-primary .mat-pseudo-checkbox-checked {
-  color: $accent;
-}
 
 mat-sidenav-content {
   background-color: rgb(253, 253, 253);
@@ -164,3 +166,4 @@ table {
 .mat-list-base .mat-list-option {
   height: 45px;
 }
+

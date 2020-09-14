@@ -47,7 +47,8 @@ function combineFiles(paths, out) {
                 try {
                     for (var parsedData_1 = (e_2 = void 0, __values(parsedData)), parsedData_1_1 = parsedData_1.next(); !parsedData_1_1.done; parsedData_1_1 = parsedData_1.next()) {
                         var item = parsedData_1_1.value;
-                        item.name = ("" + item.name).replace(/\s+/g, '__');
+                        item.name = ("" + item.name).toLowerCase();
+                        item.name = item.name.replace(/\s+/g, ' ');
                         outMap["" + item.name] = [];
                     }
                 }

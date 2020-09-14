@@ -79,7 +79,7 @@ mat-sidenav .logo-buffer {
 }
 
 mat-sidenav.material-sidenav {
-  width: 22em;
+  width: 21.8em;
   border-right: 1px inset rgba(70, 70, 70, 0.404);
   overflow: hidden;
 }
@@ -87,7 +87,6 @@ mat-sidenav.material-sidenav {
 mat-sidenav.material-fullscreen-sidenav {
   width: 100vw;
   border-right: 1px inset rgba(70, 70, 70, 0.404);
-  padding: 0 3em 0 3em;
 }
 
 button.sidenav-chevron-left {

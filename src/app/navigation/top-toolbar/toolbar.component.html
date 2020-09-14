@@ -1,30 +1,48 @@
 <mat-toolbar
   id="toolbar"
   [class]="sidenavActive ? 'null' : 'transition'"
-  [class.mat-elevation-z2]="!sidenavActive"
-  [class.mat-elevation-z4]="sidenavActive"
+  *ngIf="loaded"
+  @dropIn
+  [class.mat-elevation-z4]="!sidenavActive && !state.fullScreenSearch"
+  [class.mat-elevation-z8]="sidenavActive && !state.fullScreenSearch"
 >
-  <mat-toolbar-row>
+  <mat-toolbar-row
+    [class.mat-elevation-z4]="state.fullScreenSearch"
+    [fxLayoutAlign]="
+      !state.fullScreenSearch ? 'start center' : 'space-between center'
+    "
+  >
     <button
       mat-icon-button
-      #toggleDrawer
-      class="drawer-button"
-      (click)="stateService.toggleSidenav()"
+      [class]="sidenavActive ? 'dark-menu' : 'light-menu'"
+      (click)="state.toggleSidenav()"
     >
       <mat-icon
         [innerHTML]="sidenavActive == true ? 'chevron_left' : 'menu'"
       ></mat-icon>
     </button>
 
-    <app-small-logo></app-small-logo>
+    <app-logo
+      [altColor]="sidenavActive && state.fullScreenSearch ? true : false"
+    ></app-logo>
+    <div *ngIf="!state.fullScreenSearch">
+      <span class="tool-title">Your Search</span>
+    </div>
 
-    <span>Your Search</span>
     <!--<span #spacer fxFlex fxLayoutAlign="row"></span>-->
+    <div style="width: 2.7em"></div>
     <button
       [class]="sidenavActive ? 'toolbar-red-button' : 'toolbar-white-button'"
       mat-stroked-button
+      (click)="openDialog()"
     >
       Disclaimer
     </button>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    *ngIf="state.fullScreenSearch"
+    fxLayoutAlign="space-between center"
+  >
+    <div><span class="tool-title">Your Search</span></div>
   </mat-toolbar-row>
 </mat-toolbar>

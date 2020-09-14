@@ -1,12 +1,17 @@
-<mat-expansion-panel #expand>
+<mat-expansion-panel
+  aria-label="expand this panel to see drugs that match your search"
+  class="table-expansion-panel"
+  matExpansionPanelContent
+>
   <mat-expansion-panel-header>{{
     tableName | caseSplit
   }}</mat-expansion-panel-header>
 
   <div>
     <app-column-selector
+      *ngIf="tableName"
       (columnUpdates)="changeActiveColumns($event)"
-      [table]="tableName"
+      [tableName]="tableName"
     ></app-column-selector>
     <div *ngIf="tableName === 'GeneralInfo'">
       This table is meant to display all drugs that flag, no matter the reason.
@@ -22,16 +27,14 @@
       >
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
-            <td [attr.colspan]="columns.length">
-              No records found
-            </td>
+            <td [attr.colspan]="columns.length">No records found</td>
           </tr>
         </ng-template>
         <ng-template #dataDisplay pTemplate="header" let-columns>
-          <tr class="p-table-empty-header">
-            <th class="expand-cell" style="width: 3em;"></th>
+          <tr class="ptable-empty-header">
+            <th class="ptable-chevron-header" style="width: 3em"></th>
             <th
-              class="p-table-header-cell ptable-header-cell--padding"
+              class="ptable-header-cell ptable-header-cell--padding"
               *ngFor="let col of columns"
               [pSortableColumn]="col.field"
             >
@@ -48,11 +51,11 @@
           <tr
             [class]="
               expanded
-                ? 'expand-header-cell p-table-body ptable-body--row'
-                : 'ptable-body--row p-table-body'
+                ? 'ptable-body ptable-body--row'
+                : 'ptable-body--row ptable-body'
             "
           >
-            <td class="expand-icon-cell">
+            <td class="ptable-body-chevron-cell">
               <a [pRowToggler]="rowData">
                 <mat-icon
                   [innerHTML]="expanded ? 'expand_less' : 'chevron_right'"
@@ -61,7 +64,7 @@
             </td>
             <td
               [pRowToggler]="rowData"
-              class="data-cell data-cell--padding"
+              class="ptable-data-cell ptable-data-cell--padding"
               *ngFor="let col of columns"
             >
               <span class="ui-column-title">{{ col.header }}</span>
@@ -69,81 +72,129 @@
             </td>
           </tr>
         </ng-template>
-        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-          <tr>
-            <td [attr.colspan]="columns.length + 1" class="detail-cell">
+        <ng-template
+          pTemplate="rowexpansion"
+          let-rowData
+          let-columns="columns"
+          let-i="rowIndex"
+        >
+          <tr class="ptable-expand-row">
+            <td [attr.colspan]="columns.length + 1" class="ptable-expand-body">
               <br />
-              <div [@simpleFadeAnimation]="'in'" class="grid-list">
-                <ng-container *ngFor="let col of expandFieldData">
-                  <ng-container [ngSwitch]="col.field">
-                    <div class="title" *ngSwitchCase="'Item'">
-                      <h2>
-                        {{ rowData[col.field] }}
-                      </h2>
-                      <mat-chip-list>
-                        <mat-chip
-                          class="mat-standard-chip"
-                          color="primary"
-                          selected
-                        >
-                          {{ rowData["ItemType"] | titlecase }}</mat-chip
-                        >
-                        <mat-chip
-                          class="mat-standard-chip accent"
-                          selected
-                          *ngIf="rowData['DiseaseState'] != null"
-                        >
-                          {{ rowData["DiseaseState"] | caseSplit }}</mat-chip
-                        >
-                      </mat-chip-list>
+              <div @slideDown>
+                <div class="p-grid grid-height">
+                  <div class="p-col-12 grid-term">
+                    <b>Term: </b>{{ rowData["SearchTerm"] }}
+                  </div>
+                  <div class="p-col-12">
+                    <strong class="grid-title">{{ rowData["Item"] }}</strong>
+                  </div>
+                  <div class="p-col-12">
+                    <mat-chip-list>
+                      <mat-chip class="mat-standard-chip">
+                        {{ rowData["ItemType"] | titlecase }}</mat-chip
+                      >
+                    </mat-chip-list>
+                  </div>
+                  <div *ngIf="rowData['Inclusion']" class="p-col p-sm-6">
+                    <div fxLayout="row" fxLayoutGap="0.5em">
+                      <mat-icon color="accent" inline="true" class="mat-icon-24"
+                        >unfold_less</mat-icon
+                      ><span class="expanded-grid-text"
+                        ><b>Guidance Includes:</b>
+                        {{ rowData["Inclusion"] }}</span
+                      >
                     </div>
-
-                    <div class="term" *ngSwitchCase="'SearchTerm'">
-                      <b>Term:</b> {{ rowData[col.field] }}
+                  </div>
+                  <div *ngIf="rowData['Exclusion']" class="p-col p-sm-6">
+                    <div fxLayout="row" fxLayoutGap="0.5em">
+                      <mat-icon color="accent" inline="true" class="mat-icon-24"
+                        >unfold_more</mat-icon
+                      ><span class="expanded-grid-text"
+                        ><b>Guidance Excludes:</b>
+                        {{ rowData["Exclusion"] }}</span
+                      >
                     </div>
-                    <div *ngSwitchCase="'TableDefinition'">
-                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
+                  </div>
+                  <div *ngIf="rowData['DiseaseState']" class="p-col p-sm-6">
+                    <div fxLayout="row" fxLayoutGap="0.5em">
+                      <mat-icon
+                        color="accent"
+                        aria-label="caution using drug in disease state "
+                        inline="true"
+                        class="mat-icon-24"
+                        >error</mat-icon
+                      >
+                      <span class="expanded-grid-text"
+                        >Caution In
+                        {{ rowData["DiseaseState"] | caseSplit }}</span
+                      >
                     </div>
-
-                    <div class="incl-excl" *ngSwitchCase="'Inclusion'">
-                      <div fxLayoutGap="10px" fxLayout="row">
+                  </div>
+                  <div
+                    *ngIf="
+                      rowData['MaximumClearance'] || rowData['MinimumClearance']
+                    "
+                    class="p-col p-sm-6"
+                  >
+                    <b>{{ rowData["Recommendation"] }}</b> with clearance
+                    <i><b>below</b></i>
+                    {{ rowData["MaximumClearance"] }} and
+                    <i><b>above</b></i>
+                    {{ rowData["MinimumClearance"] }}
+                  </div>
+                  <div class="p-col-12">
+                    <div class="rationale">
+                      <div
+                        fxLayout="column"
+                        fxLayoutAlign="start space-between"
+                        class="rationale-panel"
+                      >
                         <div
-                          *ngIf="rowData['Inclusion']?.length > 0"
-                          fxFlex="50"
-                          class="tile incl"
+                          fxLayout="row"
+                          fxLayoutAlign="space-between center"
+                          [class]="
+                            rationale[i].expanded
+                              ? 'rationale-header'
+                              : 'rationale-header collapse'
+                          "
+                          (click)="expandRationale(i)"
+                          matRipple
+                          matRippleColor="rgb(44, 60, 201,0.1)"
                         >
-                          <b>ONLY applies when:</b> {{ rowData["Inclusion"] }}
+                          <span class="rationale-title">Rationale</span>
+                          <button #openButton mat-icon-button>
+                            <mat-icon
+                              class="mat-icon-16"
+                              inline="true"
+                              #icon
+                              [@expandButton]="
+                                rationale[i].expanded ? 'default' : 'rotated'
+                              "
+                              [innerHTML]="
+                                rationale[i].expanded
+                                  ? 'remove_circle_outline'
+                                  : 'add_circle_outline'
+                              "
+                            ></mat-icon>
+                          </button>
                         </div>
+
                         <div
-                          *ngIf="rowData['Exclusion']?.length > 0"
-                          fxFlex="50"
-                          class="tile excl"
+                          fxLayout="row"
+                          fxLayoutAlign="space-between center"
+                          @translateRationale
+                          class="rationale-content"
+                          *ngIf="rationale[i].expanded"
                         >
-                          <b>DOES NOT apply when:</b>
-                          {{ rowData["Exclusion"] }}
+                          <p>{{ rowData["Rationale"] }}</p>
                         </div>
                       </div>
                     </div>
-                    <div class="crcl" *ngSwitchCase="'MinimumClearance'">
-                      <b>{{ rowData["Recommendation"] }}</b> with clearance
-                      <i><b>below</b></i>
-                      {{ rowData["MaximumClearance"] }} and
-                      <i><b>above</b></i>
-                      {{ rowData["MinimumClearance"] }}
-                    </div>
-                    <div class="seven" *ngSwitchCase="'Recommendation'">
-                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                    </div>
-                    <div class="eight" *ngSwitchCase="'ShortTableName'">
-                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                    </div>
-                    <div class="six" *ngSwitchCase="'Rationale'">
-                      <b>{{ col.header }}:</b> {{ rowData[col.field] }}
-                    </div>
-                  </ng-container>
-                </ng-container>
-                <br />
+                  </div>
+                </div>
               </div>
+              <br />
             </td>
           </tr>
         </ng-template>
@@ -151,20 +202,3 @@
     </div>
   </div>
 </mat-expansion-panel>
-
-<!-- EntryID: number;
-  DiseaseState: string;
-  Category: number;
-  TableDefinition: string;
-  Item: string;
-  MinimumClearance: number;
-  MaximumClearance: number;
-  DrugInteraction: string;
-  Inclusion: string;
-  Exclusion: string;
-  Rationale: string;
-  Recommendation: string;
-  RecommendationLineTwo: string;
-  ItemType: string;
-  ShortTableName: string;
-  SearchTerm: string;-->

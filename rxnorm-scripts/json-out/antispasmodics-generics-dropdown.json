@@ -1,0 +1,25 @@
+[
+  {
+    "name": "butabarbital / hyoscyamine / phenazopyridine",
+    "rxcui": "261407",
+    "id": 199
+  },
+  { "name": "darifenacin", "rxcui": "136198", "id": 199 },
+  { "name": "fesoterodine", "rxcui": "797195", "id": 199 },
+  { "name": "flavoxate", "rxcui": "4440", "id": 199 },
+  {
+    "name": "hyoscyamine / methenamine / methylene blue / phenyl salicylate / sodium phosphate, monobasic",
+    "rxcui": "1007374",
+    "id": 199
+  },
+  {
+    "name": "hyoscyamine / methenamine / methylene blue / sodium phosphate, monobasic",
+    "rxcui": "1050324",
+    "id": 199
+  },
+  { "name": "mirabegron", "rxcui": "1300786", "id": 199 },
+  { "name": "oxybutynin", "rxcui": "32675", "id": 199 },
+  { "name": "solifenacin", "rxcui": "322167", "id": 199 },
+  { "name": "tolterodine", "rxcui": "119565", "id": 199 },
+  { "name": "trospium", "rxcui": "236778", "id": 199 }
+]

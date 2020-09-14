@@ -1,80 +1,99 @@
-<form
-  autocomplete="off"
-  *ngIf="sidenavActive"
+<div
+  fxFlex
   fxLayout="column"
   fxLayoutAlign="none center"
+  [formGroup]="drugsGroup"
+  class="form-height-limit"
 >
-  <section class="height-limit border-box">
-    <div *ngFor="let drug of drugs; index as i" fxLayout="column">
-      <mat-form-field
-        appearance="outline"
-        color="accent"
-        class="disable-text-selection"
-      >
-        <mat-label>Enter Drug (e.g. zolpidem)</mat-label>
-
-        <input
-          type="text"
-          aria-label="Search your drug"
-          matInput
-          [formControl]="drug.control"
-          [matAutocomplete]="auto"
-          (input)="searchIndex($event.target.value)"
-          (keydown.Tab)="addDrug()"
-          (keydown.Enter)="search(submission)"
-          autofocus
-        />
-
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let option of filteredOptions | async"
-            [value]="option"
-            [innerHTML]="boldDropdownText(option, entryValue)"
-          >
-          </mat-option>
-        </mat-autocomplete>
-
-        <mat-icon
-          matSuffix
-          matRipple
-          [matRippleCentered]="true"
-          [matRippleRadius]="15"
-          [matRippleUnbounded]="true"
-          class="material-icon"
-          (click)="addDrug()"
-          *ngIf="i === 0"
+  <section
+    class="height-limit border-box"
+    fxFlex
+    cdkScrollable
+    aria-label="You can look up drugs on Beers Criteria using this form"
+  >
+    <div formArrayName="drugs">
+      <div *ngFor="let drug of drugs.controls; let i = index" fxLayout="column">
+        <mat-form-field
+          appearance="outline"
           color="accent"
+          class="disable-text-selection"
         >
-          add_circle
-        </mat-icon>
-        <mat-icon
-          matSuffix
-          matRipple
-          [matRippleCentered]="true"
-          [matRippleRadius]="15"
-          [matRippleUnbounded]="true"
-          class="material-icon"
-          (click)="removeDrug(i)"
-          *ngIf="i > 0"
-          color="primary"
+          <mat-label>Enter Drug (e.g. zolpidem)</mat-label>
+
+          <input
+            type="text"
+            [formControlName]="i"
+            appearance="outline"
+            matInput
+            [matAutocomplete]="autoDropdown"
+            (input)="
+              name(i).errors ? null : getDropdownItems($event.target.value)
+            "
+            (keydown.Tab)="addDrug()"
+            (keydown.Enter)="search(); trigger.closePanel()"
+            autofocus
+            #trigger="matAutocompleteTrigger"
+            value="Enter Drug (e.g. zolpidem)"
+            aria-label="Enter your drug name here. For example, zolpidem"
+          />
+
+          <mat-icon
+            matSuffix
+            matRipple
+            [matRippleCentered]="true"
+            [matRippleRadius]="14"
+            [matRippleUnbounded]="true"
+            class="material-icons material-icons-round plus-button"
+            (click)="addDrug(); trigger.closePanel(); stopPropagation()"
+            *ngIf="i === 0"
+            color="accent"
+          >
+            add_circle_outline
+          </mat-icon>
+          <mat-icon
+            matSuffix
+            matRipple
+            [matRippleCentered]="true"
+            [matRippleRadius]="14"
+            [matRippleUnbounded]="true"
+            class="material-icons-round trash-button"
+            (click)="
+              deleteFormControl(i); trigger.closePanel(); stopPropagation()
+            "
+            *ngIf="i > 0"
+            color="primary"
+          >
+            delete
+          </mat-icon>
+          <mat-error *ngIf="name(i).errors">
+            Choose a drug from the dropdown
+          </mat-error>
+        </mat-form-field>
+
+        <span class="spacer" *ngIf="name(i).errors"></span>
+      </div>
+      <mat-autocomplete autoActiveFirstOption #autoDropdown="matAutocomplete">
+        <mat-option
+          *ngFor="let option of dropdownItems"
+          [value]="option"
+          [innerHTML]="boldDropdownText(option, entryValue)"
         >
-          delete
-        </mat-icon>
-      </mat-form-field>
+        </mat-option>
+      </mat-autocomplete>
     </div>
   </section>
-  <br />
   <section class="search-button-container">
-    <div fxLayoutAlign="center none">
+    <div fxLayoutAlign="start center" fxLayoutGap="5px" fxLayout="column">
       <button
-        mat-raised-button
+        mat-flat-button
         class="search-button sticky"
         type="button"
-        (click)="search(submission)"
-        (keydown.enter)="search(submission)"
+        (click)="search()"
+        (keydown.enter)="search()"
+        type="submit"
       >
         <mat-icon>search</mat-icon> Search
       </button>
     </div>
   </section>
-</form>
+</div>

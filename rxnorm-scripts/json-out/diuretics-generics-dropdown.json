@@ -1,0 +1,17 @@
+[
+  { "name": "amiloride", "rxcui": "644", "id": 181 },
+  { "name": "bendroflumethiazide", "rxcui": "1369", "id": 181 },
+  { "name": "bumetanide", "rxcui": "1808", "id": 181 },
+  { "name": "chlorothiazide", "rxcui": "2396", "id": 181 },
+  { "name": "chlorthalidone", "rxcui": "2409", "id": 181 },
+  { "name": "ethacrynate", "rxcui": "62349", "id": 181 },
+  { "name": "furosemide", "rxcui": "4603", "id": 181 },
+  { "name": "hydrochlorothiazide", "rxcui": "5487", "id": 181 },
+  { "name": "hydroflumethiazide", "rxcui": "5495", "id": 181 },
+  { "name": "indapamide", "rxcui": "5764", "id": 181 },
+  { "name": "mannitol", "rxcui": "6628", "id": 181 },
+  { "name": "metolazone", "rxcui": "6916", "id": 181 },
+  { "name": "polythiazide", "rxcui": "8565", "id": 181 },
+  { "name": "torsemide", "rxcui": "38413", "id": 181 },
+  { "name": "triamterene", "rxcui": "10763", "id": 181 }
+]

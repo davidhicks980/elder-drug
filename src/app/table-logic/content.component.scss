@@ -1,0 +1,59 @@
+.show {
+  display: "";
+}
+
+.hide {
+  display: none;
+}
+
+.main-content-box {
+  padding-top: 6em;
+  overflow: visible;
+}
+
+.gray-big-logo {
+  filter: grayscale(0.5);
+  opacity: 70%;
+  height: 35em;
+  animation: colorPulse 60s ease-in-out;
+  animation-iteration-count: 5;
+}
+
+#expansionPanel {
+  min-width: 0px;
+  overflow: hidden;
+  width: 70%;
+}
+
+.panel-width {
+  width: 100%;
+}
+
+div.table-spacer {
+  padding-bottom: 0.3em;
+}
+
+#modifyPanel {
+  width: 20%;
+  position: fixed;
+  left: 88%;
+}
+
+@keyframes colorPulse {
+  40% {
+    filter: grayscale(0.5);
+    opacity: 30%;
+  }
+  50% {
+    filter: grayscale(0);
+    opacity: 60%;
+  }
+  70% {
+    filter: grayscale(0.5);
+    opacity: 30%;
+  }
+}
+
+div.content-container {
+  width: 95%;
+}

@@ -1,0 +1,56 @@
+@import "../../../colors.scss";
+
+.header-bowl {
+  width: 1em;
+  padding-left: 0.2em;
+  position: relative;
+  text-align: center;
+  font-size: 36pt;
+  padding-right: 0.2em;
+}
+
+.title-bowl {
+  width: 100%;
+  position: relative;
+  padding-bottom: 0.4em;
+  fill: $primary;
+  height: 100%;
+}
+
+.bowl {
+  fill: lighten($color: $gray, $amount: 80%);
+}
+.interior {
+  fill: lighten($color: $gray, $amount: 55%);
+}
+.stem {
+  fill: lighten($color: $gray, $amount: 80%);
+}
+.shadow {
+  fill: lighten($color: $gray, $amount: 55%);
+}
+.snake {
+  fill: lighten($accent, 15%);
+}
+.eyes {
+  fill: whitesmoke;
+}
+////////////
+.bowl-alt {
+  fill: #e6e6e6;
+}
+.interior-alt {
+  fill: $darkgray;
+}
+.stem-alt {
+  fill: #e6e6e6;
+}
+.shadow-alt {
+  fill: #a7a9aa;
+}
+.snake-alt {
+  fill: $gray;
+}
+.eyes-alt {
+  fill: #ffffff;
+}

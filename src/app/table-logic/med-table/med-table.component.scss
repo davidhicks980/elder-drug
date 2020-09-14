@@ -7,26 +7,43 @@ h2 {
   line-height: 1em;
 }
 
-.mat-standard-chip {
+mat-chip-list mat-chip.mat-standard-chip {
   min-height: 1.7em;
-  border-radius: 8px;
+  border-radius: 4px;
+  background-image: $table-gradient;
   color: white;
-}
-.accent {
-  background-color: $accent;
+  font-weight: 400;
+  cursor: pointer;
+  &:hover {
+    color: lighten($accent, 10%);
+    background: lighten($primary, 20%);
+  }
+  &:hover::after {
+    opacity: 0;
+  }
 }
 
-.mat-expansion-panel {
+mat-expansion-panel.table-expansion-panel {
   box-shadow: none !important;
   border: 1px solid rgb(218, 218, 218);
   overflow: hidden;
-  max-width: 95vw;
+  margin-left: 2vw;
 }
 
-.hide {
-  display: none;
-}
+mat-icon.mat-icon-16 {
+  font-size: 14pt;
+  color: rgb(226, 235, 255);
+  transition: ease 0.5s;
+  font-family: 'Material Icons Round';
 
-.show {
-  display: "";
+  &:hover {
+    color: $accent;
+    transition: ease;
+  }
+}
+mat-icon.mat-icon-24 {
+  font-size: 24pt;
+  color: $accent;
+  font-family: 'Material Icons Round';
+
 }

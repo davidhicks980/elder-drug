@@ -1,59 +1,53 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
-import {
-  ParametersService,
-  columnDefinition,
-} from 'src/app/parameters.service';
-import {
-  Breakpoints,
-  BreakpointState,
-  BreakpointObserver,
-} from '@angular/cdk/layout';
+import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { ParametersService } from 'src/app/parameters.service';
 import { StateService } from 'src/app/state.service';
 import { MatSelectionList } from '@angular/material/list';
-import { MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { ScreenWidth } from '../../state.service';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'modify-table-panel',
-  template: ` <div class="padding">
-    <div *ngIf="smallScreen || xSmallScreen">
+  template: ` <div class="selection-panel">
+    <div *ngIf="state.fullScreenSearch">
       <div>
         <h3>Show Tables</h3>
       </div>
-      <mat-button-toggle-group
-        #tableToggleGroup="matButtonToggleGroup"
-        (change)="updateOptions($event.value)"
-        multiple
-        [class]="xSmallScreen ? 'toggle-group' : ''"
-      >
-        <mat-button-toggle
-          class="toggle-button"
-          *ngFor="let option of options"
-          [checked]="isTableActive(option.name)"
-          [disabled]="!isTableActive(option.name)"
-          [value]="option.name"
-        >
-          {{ option.name | caseSplit }}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <section>
+        <ul [class]="'toggle-group'">
+          <li *ngFor="let option of options">
+            <mat-checkbox
+              class="toggle-button"
+              [disabled]="!this.tablesWithData.includes(option)"
+              (change)="
+                processMobileCheckboxes($event.checked, $event.source.value)
+              "
+              [value]="option"
+              [checked]="this.tablesWithData.includes(option)"
+            >
+              {{ option | caseSplit }}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </section>
     </div>
 
-    <div class="table-modifier-list" *ngIf="!smallScreen && !xSmallScreen">
+    <div class="table-modifier-list" *ngIf="!state.fullScreenSearch">
       <div class="panel-header">
         <p>Show Tables</p>
       </div>
       <mat-selection-list
         #tableSelectionList
         (ngModelChange)="updateOptions($event)"
-        [ngModel]="activeTables"
+        [(ngModel)]="activeTables"
       >
         <div fxFlex fxFlexAlign="center center">
           <mat-list-option
             *ngFor="let option of options"
-            [value]="option.name"
-            [selected]="isTableActive(option.name)"
-            [disabled]="!isTableActive(option.name)"
+            [value]="option"
+            [selected]="this.tablesWithData.includes(option)"
+            [disabled]="!this.tablesWithData.includes(option)"
           >
-            <div class="list-text">{{ option.name | caseSplit }}</div>
+            <div class="list-text">{{ option | caseSplit }}</div>
           </mat-list-option>
         </div>
       </mat-selection-list>
@@ -61,56 +55,59 @@ import { MatButtonToggleGroup } from '@angular/material/button-toggle';
   </div>`,
   styleUrls: ['./modify-table-panel.component.scss'],
 })
-export class ModifyTablePanelComponent implements OnInit {
+export class ModifyTablePanelComponent {
+  // Selection list for desktop option list
   @ViewChild('tableSelectionList') selectList: MatSelectionList;
-  @ViewChild('tableToggleGroup') toggleGroup: MatButtonToggleGroup;
-  activeTables: string[] = ['full', 'disease'];
+  private tableStore: Map<string, boolean> = new Map();
+  public activeTables: string[]; // Subject<string[]> = new Subject();
+  // Tables containing data => to be
+  @Input() tablesWithData: string[];
+  public tablesChanged: Subject<Map<string, boolean>> = new Subject();
   public selectedOptions: string[];
   public message: string;
-  options: columnDefinition[];
-  smallScreen: boolean;
-  @Input() tablesWithData: string[];
-  xSmallScreen: boolean;
+  public options: string[];
+  public screenSize: ScreenWidth;
 
-  updateOptions(selections) {
-    this.stateService.emitSelectedTables(selections);
+  updateOptions(selections: string[]): void {
+    this.state.emitSelectedTables(selections);
   }
 
-  ngOnInit() {
-    this.options = this.parameterService.columnDefinitions;
-  }
-
-  isTableActive(table) {
+  isTableActive(table: string): boolean {
     try {
       return this.tablesWithData.includes(table);
     } catch (err) {
       null;
     }
   }
+  processMobileCheckboxes(checked: boolean, name: string): void {
+    this.tableStore.set(name, checked);
+    this.tablesChanged.next(this.tableStore);
+  }
+  processDesktopCheckboxes(names: string[]): void {
+    for (const name of names) {
+      this.tableStore.set(name, true);
+    }
+    this.tablesChanged.next(this.tableStore);
+  }
 
-  public constructor(
-    public parameterService: ParametersService,
-    public breakpointObserver: BreakpointObserver,
-    public stateService: StateService
+  constructor(
+    private parameterService: ParametersService,
+    public state: StateService
   ) {
-    this.breakpointObserver
-      .observe([Breakpoints.Small, Breakpoints.XSmall])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.smallScreen = true;
-        } else {
-          this.smallScreen = false;
+    this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
+      this.screenSize = screenSize;
+    });
+    this.options = this.parameterService.columnDefinitions.map(
+      (col) => col.name
+    );
+    this.tablesChanged.subscribe((store: Map<string, boolean>) => {
+      const selectedTables = [] as string[];
+      for (const [key, value] of store) {
+        if (value) {
+          selectedTables.push(key);
         }
-      });
-
-    this.breakpointObserver
-      .observe([Breakpoints.XSmall])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.xSmallScreen = true;
-        } else {
-          this.xSmallScreen = false;
-        }
-      });
+      }
+      this.state.emitSelectedTables(selectedTables);
+    });
   }
 }

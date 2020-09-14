@@ -6,32 +6,35 @@
 <mat-sidenav-container
   keyup.enter="search(submission)"
   class="material-container"
-  (backdropClick)="stateService.sidenavOpen = false"
+  (backdropClick)="state.sidenavOpen = false"
   fxFlex
 >
   <mat-sidenav
+    *ngIf="webSocketService.loaded"
     #leftdrawer
     [class]="
-      handsetLayout === true
+      state.fullScreenSearch
         ? 'material-fullscreen-sidenav'
         : 'material-sidenav'
     "
     [class.mat-elevation-z8]="true"
     [opened]="sidenavActive"
     mode="side"
-    (keydown.escape)="stateService.sidenavOpen = false"
-    (keydown.enter)="stateService.sidenavOpen = false"
+    (keydown.escape)="state.sidenavOpen = false"
+    (keydown.enter)="state.sidenavOpen = false"
+    @slideInLeft
+    cdkScrollable
   >
     <app-side-navigation></app-side-navigation>
   </mat-sidenav>
-  <mat-sidenav-content fxFlex
-    ><app-toolbar class="toolbar"> </app-toolbar>
+  <mat-sidenav-content
+    ><app-toolbar
+      class="toolbar"
+      *ngIf="webSocketService.loaded"
+      [loaded]="webSocketService.loaded"
+    >
+    </app-toolbar>
 
-    <app-table-logic></app-table-logic>
+    <app-content></app-content>
   </mat-sidenav-content>
-
-  <!--<app-bottom-navigation
-    *ngIf="handsetLayout && !leftdrawer.opened"
-    (smallPullDrawer)="sidenavActive = !sidenavActive"
-  ></app-bottom-navigation>-->
 </mat-sidenav-container>

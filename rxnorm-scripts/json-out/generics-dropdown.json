@@ -1,0 +1,1047 @@
+[
+  {
+    "name": "Diphenhydramine",
+    "rxnormId": ["3498"],
+    "id": 9,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3498/related.json?tty=bn"
+  },
+  {
+    "name": "Clidinium-chlordiazepoxide",
+    "id": 18,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "Quazepam",
+    "rxnormId": ["35185"],
+    "id": 71,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35185/related.json?tty=bn"
+  },
+  {
+    "name": "Trihexyphidyl",
+    "id": 25,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "Mephobarbital",
+    "rxnormId": ["6758"],
+    "id": 56,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6758/related.json?tty=bn"
+  },
+  {
+    "name": "Alprazolam",
+    "rxnormId": ["596"],
+    "id": 60,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/596/related.json?tty=bn"
+  },
+  {
+    "name": "Promethazine",
+    "rxnormId": ["8745"],
+    "id": 13,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8745/related.json?tty=bn"
+  },
+  {
+    "name": "Doxazosin",
+    "rxnormId": ["49276"],
+    "id": 28,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn"
+  },
+  {
+    "name": "Reserpine",
+    "rxnormId": ["9260"],
+    "id": 36,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9260/related.json?tty=bn"
+  },
+  {
+    "name": "Prazosin",
+    "rxnormId": ["8629"],
+    "id": 29,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn"
+  },
+  {
+    "name": "Triazolam",
+    "rxnormId": ["10767"],
+    "id": 65,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10767/related.json?tty=bn"
+  },
+  {
+    "name": "Carbinoxamine",
+    "rxnormId": ["20220"],
+    "id": 2,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/20220/related.json?tty=bn"
+  },
+  {
+    "name": "Digoxin",
+    "rxnormId": ["3407"],
+    "id": 39,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3407/related.json?tty=bn"
+  },
+  {
+    "name": "Chlordiazepoxide",
+    "rxnormId": ["2356"],
+    "id": 66,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2356/related.json?tty=bn"
+  },
+  {
+    "name": "Amobarbital",
+    "rxnormId": ["719"],
+    "id": 53,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/719/related.json?tty=bn"
+  },
+  {
+    "name": "Clemastine",
+    "rxnormId": ["2578"],
+    "id": 4,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2578/related.json?tty=bn"
+  },
+  {
+    "name": "Guanabenz",
+    "rxnormId": ["5033"],
+    "id": 33,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5033/related.json?tty=bn"
+  },
+  {
+    "name": "Chlorpheniramine",
+    "rxnormId": ["2400"],
+    "id": 3,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2400/related.json?tty=bn"
+  },
+  {
+    "name": "Brompheniramine",
+    "rxnormId": ["1767"],
+    "id": 1,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1767/related.json?tty=bn"
+  },
+  {
+    "name": "Amitriptyline",
+    "rxnormId": ["704"],
+    "id": 42,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/704/related.json?tty=bn"
+  },
+  {
+    "name": "Temazepam",
+    "rxnormId": ["10355"],
+    "id": 64,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10355/related.json?tty=bn"
+  },
+  {
+    "name": "Dexbrompheniramine",
+    "rxnormId": ["22696"],
+    "id": 6,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22696/related.json?tty=bn"
+  },
+  {
+    "name": "Clomipramine",
+    "rxnormId": ["2597"],
+    "id": 44,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2597/related.json?tty=bn"
+  },
+  {
+    "name": "Dimenhydrinate",
+    "rxnormId": ["3444"],
+    "id": 8,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3444/related.json?tty=bn"
+  },
+  {
+    "name": "Hydroxyzine",
+    "rxnormId": ["5553"],
+    "id": 11,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5553/related.json?tty=bn"
+  },
+  {
+    "name": "Doxylamine",
+    "rxnormId": ["3642"],
+    "id": 10,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3642/related.json?tty=bn"
+  },
+  {
+    "name": "Trimipramine",
+    "rxnormId": ["10834"],
+    "id": 51,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10834/related.json?tty=bn"
+  },
+  {
+    "name": "Butabarbital",
+    "rxnormId": ["477631"],
+    "id": 54,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/477631/related.json?tty=bn"
+  },
+  {
+    "name": "Butalbital",
+    "rxnormId": ["19860"],
+    "id": 55,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/19860/related.json?tty=bn"
+  },
+  {
+    "name": "Pentobarbital",
+    "rxnormId": ["8004"],
+    "id": 57,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8004/related.json?tty=bn"
+  },
+  {
+    "name": "Disopyramide",
+    "rxnormId": ["3541"],
+    "id": 37,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3541/related.json?tty=bn"
+  },
+  {
+    "name": "Atropine",
+    "rxnormId": ["1223"],
+    "id": 16,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "name": "Nifedipine",
+    "rxnormId": ["7417"],
+    "id": 40,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7417/related.json?tty=bn"
+  },
+  {
+    "name": "Dexchlorpheniramine",
+    "rxnormId": ["22697"],
+    "id": 7,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/22697/related.json?tty=bn"
+  },
+  {
+    "name": "Nitrofurantoin",
+    "rxnormId": ["7454"],
+    "id": 27,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7454/related.json?tty=bn"
+  },
+  {
+    "name": "Dicyclomine Homatropine",
+    "id": 19,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "Terazosin",
+    "rxnormId": ["37798"],
+    "id": 30,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/37798/related.json?tty=bn"
+  },
+  {
+    "name": "Glimepiride",
+    "rxnormId": ["25789"],
+    "id": 86,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/25789/related.json?tty=bn"
+  },
+  {
+    "name": "Imipramine",
+    "rxnormId": ["5691"],
+    "id": 47,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5691/related.json?tty=bn"
+  },
+  {
+    "name": "Amiodarone",
+    "rxnormId": ["703"],
+    "id": 41,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/703/related.json?tty=bn"
+  },
+  {
+    "name": "Desipramine",
+    "rxnormId": ["3247"],
+    "id": 45,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3247/related.json?tty=bn"
+  },
+  {
+    "name": "Meclizine",
+    "rxnormId": ["6676"],
+    "id": 12,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6676/related.json?tty=bn"
+  },
+  {
+    "name": "Benztropine",
+    "rxnormId": ["1424"],
+    "id": 24,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "name": "Belladonna alkaloids",
+    "rxnormId": ["1359"],
+    "id": 17,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1359/related.json?tty=bn"
+  },
+  {
+    "name": "Protriptyline",
+    "rxnormId": ["8886"],
+    "id": 50,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8886/related.json?tty=bn"
+  },
+  {
+    "name": "Methyldopa",
+    "rxnormId": ["6876"],
+    "id": 35,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6876/related.json?tty=bn"
+  },
+  {
+    "name": "Flurazepam",
+    "rxnormId": ["4501"],
+    "id": 70,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4501/related.json?tty=bn"
+  },
+  {
+    "name": "Amoxapine",
+    "rxnormId": ["722"],
+    "id": 43,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/722/related.json?tty=bn"
+  },
+  {
+    "name": "Paroxetine",
+    "rxnormId": ["32937"],
+    "id": 49,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn"
+  },
+  {
+    "name": "Ibuprofen",
+    "rxnormId": ["5640"],
+    "id": 97,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "name": "Cyproheptadine",
+    "rxnormId": ["3013"],
+    "id": 5,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3013/related.json?tty=bn"
+  },
+  {
+    "name": "Nortriptyline",
+    "rxnormId": ["7531"],
+    "id": 48,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7531/related.json?tty=bn"
+  },
+  {
+    "name": "Hyoscyamine",
+    "rxnormId": ["153970"],
+    "id": 20,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/153970/related.json?tty=bn"
+  },
+  {
+    "name": "Triprolidine",
+    "rxnormId": ["10849"],
+    "id": 15,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10849/related.json?tty=bn"
+  },
+  {
+    "name": "Sulindac",
+    "rxnormId": ["10237"],
+    "id": 106,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "name": "Insulin",
+    "rxnormId": ["253182"],
+    "id": 83,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/253182/related.json?tty=bn"
+  },
+  {
+    "name": "Clonazepam",
+    "rxnormId": ["2598"],
+    "id": 67,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2598/related.json?tty=bn"
+  },
+  {
+    "name": "Meloxicam",
+    "rxnormId": ["41493"],
+    "id": 101,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "name": "Zaleplon",
+    "rxnormId": ["74667"],
+    "id": 74,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "name": "Tolmetin",
+    "rxnormId": ["10636"],
+    "id": 107,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "name": "Doxepin",
+    "rxnormId": ["3638"],
+    "id": 46,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3638/related.json?tty=bn"
+  },
+  {
+    "name": "Clonidine",
+    "rxnormId": ["2599"],
+    "id": 31,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2599/related.json?tty=bn"
+  },
+  {
+    "name": "Phenobarbital",
+    "rxnormId": ["8134"],
+    "id": 58,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8134/related.json?tty=bn"
+  },
+  {
+    "name": "Meprobamate",
+    "rxnormId": ["6760"],
+    "id": 72,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6760/related.json?tty=bn"
+  },
+  {
+    "name": "Guanfacine",
+    "rxnormId": ["40114"],
+    "id": 34,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/40114/related.json?tty=bn"
+  },
+  {
+    "name": "Glyburide",
+    "rxnormId": ["4815"],
+    "id": 87,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4815/related.json?tty=bn"
+  },
+  {
+    "name": "Chlorpropamide",
+    "rxnormId": ["2404"],
+    "id": 85,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2404/related.json?tty=bn"
+  },
+  {
+    "name": "Etodolac",
+    "rxnormId": ["24605"],
+    "id": 95,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "name": "Testosterone",
+    "rxnormId": ["10379"],
+    "id": 79,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10379/related.json?tty=bn"
+  },
+  {
+    "name": "Indomethacin",
+    "rxnormId": ["5781"],
+    "id": 108,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "name": "Methscopolamine",
+    "rxnormId": ["89785"],
+    "id": 21,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "name": "Zolpidem",
+    "rxnormId": ["39993"],
+    "id": 75,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "name": "Dronedarone",
+    "rxnormId": ["233698"],
+    "id": 38,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/233698/related.json?tty=bn"
+  },
+  {
+    "name": "Methyltestosterone",
+    "rxnormId": ["6904"],
+    "id": 78,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6904/related.json?tty=bn"
+  },
+  {
+    "name": "Meclofenamate",
+    "rxnormId": ["588003"],
+    "id": 99,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/588003/related.json?tty=bn"
+  },
+  {
+    "name": "Nizatidine",
+    "rxnormId": ["42319"],
+    "id": 142,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/42319/related.json?tty=bn"
+  },
+  {
+    "name": "Ketoprofen",
+    "rxnormId": ["6142"],
+    "id": 98,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "name": "Scopolamine",
+    "rxnormId": ["9601"],
+    "id": 23,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "name": "Chlorpromazine",
+    "rxnormId": ["2403"],
+    "id": 133,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
+  },
+  {
+    "name": "Ketorolac",
+    "rxnormId": ["35827"],
+    "id": 109,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "name": "Oxaprozin",
+    "rxnormId": ["32613"],
+    "id": 104,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "name": "Propantheline",
+    "rxnormId": ["8761"],
+    "id": 22,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "name": "Metoclopramide",
+    "rxnormId": ["6915"],
+    "id": 88,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6915/related.json?tty=bn"
+  },
+  {
+    "name": "Theophylline",
+    "rxnormId": ["10438"],
+    "id": 211,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10438/related.json?tty=bn"
+  },
+  {
+    "name": "Carbamazepine",
+    "rxnormId": ["2002"],
+    "id": 180,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn"
+  },
+  {
+    "name": "dabigatran",
+    "rxnormId": ["1546356"],
+    "id": 223,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
+  },
+  {
+    "name": "Lorazepam",
+    "rxnormId": ["6470"],
+    "id": 62,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6470/related.json?tty=bn"
+  },
+  {
+    "name": "apixaban",
+    "rxnormId": ["1364430"],
+    "id": 222,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1364430/related.json?tty=bn"
+  },
+  {
+    "name": "Eszopiclone",
+    "rxnormId": ["461016"],
+    "id": 73,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
+  },
+  {
+    "name": "Estrogens",
+    "rxnormId": ["4100"],
+    "id": 81,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
+  },
+  {
+    "name": "Olanzapine",
+    "rxnormId": ["61381"],
+    "id": 135,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "name": "Pyrilamine",
+    "rxnormId": ["9009"],
+    "id": 14,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9009/related.json?tty=bn"
+  },
+  {
+    "name": "Methocarbamol",
+    "rxnormId": ["6845"],
+    "id": 114,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6845/related.json?tty=bn"
+  },
+  {
+    "name": "Mineral Oil",
+    "rxnormId": ["6972"],
+    "id": 89,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6972/related.json?tty=bn"
+  },
+  {
+    "name": "Nabumetone",
+    "rxnormId": ["31448"],
+    "id": 102,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "name": "Diflunisal",
+    "rxnormId": ["3393"],
+    "id": 94,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "name": "Secobarbital",
+    "rxnormId": ["9624"],
+    "id": 59,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9624/related.json?tty=bn"
+  },
+  {
+    "name": "Growth hormone",
+    "rxnormId": ["61148"],
+    "id": 82,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/61148/related.json?tty=bn"
+  },
+  {
+    "name": "Isoxsuprine",
+    "rxnormId": ["6066"],
+    "id": 77,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6066/related.json?tty=bn"
+  },
+  {
+    "name": "Meperidine",
+    "rxnormId": ["6754"],
+    "id": 91,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "name": "Cimetidine",
+    "rxnormId": ["2541"],
+    "id": 140,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2541/related.json?tty=bn"
+  },
+  {
+    "name": "Ranitidine",
+    "rxnormId": ["9143"],
+    "id": 143,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9143/related.json?tty=bn"
+  },
+  {
+    "name": "Triamterene",
+    "rxnormId": ["10763"],
+    "id": 233,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
+  },
+  {
+    "name": "edoxaban",
+    "rxnormId": ["1599538"],
+    "id": 225,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1599538/related.json?tty=bn"
+  },
+  {
+    "name": "Desmopressin",
+    "rxnormId": ["3251"],
+    "id": 116,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3251/related.json?tty=bn"
+  },
+  {
+    "name": "Estazolam",
+    "rxnormId": ["4077"],
+    "id": 61,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4077/related.json?tty=bn"
+  },
+  {
+    "name": "zolpidem",
+    "rxnormId": ["39993"],
+    "id": 149,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "name": "Dipyridamole",
+    "rxnormId": ["3521"],
+    "id": 26,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3521/related.json?tty=bn"
+  },
+  {
+    "name": "Rivaroxaban",
+    "rxnormId": ["1114195"],
+    "id": 177,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
+  },
+  {
+    "name": "Estrogen",
+    "rxnormId": ["4100"],
+    "id": 172,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
+  },
+  {
+    "name": "Carisoprodol",
+    "rxnormId": ["2101"],
+    "id": 110,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2101/related.json?tty=bn"
+  },
+  {
+    "name": "Warfarin",
+    "rxnormId": ["11289"],
+    "id": 213,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/11289/related.json?tty=bn"
+  },
+  {
+    "name": "zaleplon",
+    "rxnormId": ["74667"],
+    "id": 148,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "name": "amiloride",
+    "rxnormId": ["644"],
+    "id": 193,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/644/related.json?tty=bn"
+  },
+  {
+    "name": "Tramadol",
+    "rxnormId": ["10689"],
+    "id": 187,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "name": "Diazepam",
+    "rxnormId": ["3322"],
+    "id": 69,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3322/related.json?tty=bn"
+  },
+  {
+    "name": "Orphenadrine",
+    "rxnormId": ["7715"],
+    "id": 115,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7715/related.json?tty=bn"
+  },
+  {
+    "name": "Thioridazine",
+    "rxnormId": ["10502"],
+    "id": 134,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "name": "triamterene",
+    "rxnormId": ["10763"],
+    "id": 194,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
+  },
+  {
+    "name": "Aspirin",
+    "rxnormId": ["1191"],
+    "id": 92,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "name": "Fenoprofen",
+    "rxnormId": ["4331"],
+    "id": 96,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "name": "Prochlorperazine",
+    "rxnormId": ["8704"],
+    "id": 167,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8704/related.json?tty=bn"
+  },
+  {
+    "name": "dofetilide",
+    "rxnormId": ["49247"],
+    "id": 224,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/49247/related.json?tty=bn"
+  },
+  {
+    "name": "Prasugrel",
+    "rxnormId": ["613391"],
+    "id": 178,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/613391/related.json?tty=bn"
+  },
+  {
+    "name": "fondaparinux",
+    "rxnormId": ["321208"],
+    "id": 228,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/321208/related.json?tty=bn"
+  },
+  {
+    "name": "Probenecid",
+    "rxnormId": ["8698"],
+    "id": 245,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8698/related.json?tty=bn"
+  },
+  {
+    "name": "Mirtazapine",
+    "rxnormId": ["15996"],
+    "id": 182,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/15996/related.json?tty=bn"
+  },
+  {
+    "name": "Clozapine",
+    "rxnormId": ["2626"],
+    "id": 295,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
+  },
+  {
+    "name": "Cyclobenzaprine",
+    "rxnormId": ["21949"],
+    "id": 112,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21949/related.json?tty=bn"
+  },
+  {
+    "name": "Famotidine",
+    "rxnormId": ["4278"],
+    "id": 141,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4278/related.json?tty=bn"
+  },
+  {
+    "name": "Trospium",
+    "rxnormId": ["236778"],
+    "id": 260,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "name": "Loxapine",
+    "rxnormId": ["6475"],
+    "id": 296,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
+  },
+  {
+    "name": "Tolterodine",
+    "rxnormId": ["119565"],
+    "id": 265,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "name": "Duloxetine",
+    "rxnormId": ["72625"],
+    "id": 234,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn"
+  },
+  {
+    "name": "Phenytoin",
+    "rxnormId": ["8183"],
+    "id": 210,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn"
+  },
+  {
+    "name": "Naproxen",
+    "rxnormId": ["7258"],
+    "id": 103,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "name": "Diclofenac",
+    "rxnormId": ["3355"],
+    "id": 93,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "name": "eszopiclone",
+    "rxnormId": ["461016"],
+    "id": 147,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
+  },
+  {
+    "name": "Ergoloid mesylates",
+    "rxnormId": ["4024"],
+    "id": 76,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4024/related.json?tty=bn"
+  },
+  {
+    "name": "trimethoprim-sulfamethoxazole",
+    "rxnormId": ["10831"],
+    "id": 219,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+  },
+  {
+    "name": "Mefenamic acid",
+    "rxnormId": ["6693"],
+    "id": 100,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "name": "Perphenazine",
+    "rxnormId": ["8076"],
+    "id": 298,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
+  },
+  {
+    "name": "Homatropine",
+    "rxnormId": ["27084"],
+    "id": 286,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "name": "Trihexyphenidyl",
+    "rxnormId": ["10811"],
+    "id": 268,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10811/related.json?tty=bn"
+  },
+  {
+    "name": "Trimethoprim-sulfamethoxazole",
+    "rxnormId": ["10831"],
+    "id": 189,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+  },
+  {
+    "name": "Gabapentin",
+    "rxnormId": ["25480"],
+    "id": 235,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn"
+  },
+  {
+    "name": "Desiccated thyroid",
+    "id": 80,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "Pregabalin",
+    "rxnormId": ["187832"],
+    "id": 237,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/187832/related.json?tty=bn"
+  },
+  {
+    "name": "Colchicine",
+    "rxnormId": ["2683"],
+    "id": 244,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2683/related.json?tty=bn"
+  },
+  {
+    "name": "Spironolactone",
+    "rxnormId": ["9997"],
+    "id": 232,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/9997/related.json?tty=bn"
+  },
+  {
+    "name": "Metaxalone",
+    "rxnormId": ["59078"],
+    "id": 113,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/59078/related.json?tty=bn"
+  },
+  {
+    "name": "Megestrol",
+    "rxnormId": ["6703"],
+    "id": 84,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6703/related.json?tty=bn"
+  },
+  {
+    "name": "Piroxicam",
+    "rxnormId": ["8356"],
+    "id": 105,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "name": "Levetiracetam",
+    "rxnormId": ["114477"],
+    "id": 236,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn"
+  },
+  {
+    "name": "Cilostazol",
+    "rxnormId": ["21107"],
+    "id": 117,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/21107/related.json?tty=bn"
+  },
+  {
+    "name": "Chlorzoxazone",
+    "rxnormId": ["2410"],
+    "id": 111,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2410/related.json?tty=bn"
+  },
+  {
+    "name": "rivaroxaban",
+    "rxnormId": ["1114195"],
+    "id": 229,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
+  },
+  {
+    "name": "Dextromethorphan/quinidine",
+    "rxnormId": ["1040053"],
+    "id": 188,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1040053/related.json?tty=bn"
+  },
+  {
+    "name": "Lithium",
+    "rxnormId": ["6448"],
+    "id": 207,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/6448/related.json?tty=bn"
+  },
+  {
+    "name": "Oxybutynin",
+    "rxnormId": ["32675"],
+    "id": 263,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "name": "Oxcarbazepine",
+    "rxnormId": ["32624"],
+    "id": 183,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn"
+  },
+  {
+    "name": "Dabigatran",
+    "rxnormId": ["1546356"],
+    "id": 176,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
+  },
+  {
+    "name": "Dicyclomine",
+    "rxnormId": ["3361"],
+    "id": 285,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "name": "Analgesics",
+    "id": 165,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "enoxaparin",
+    "rxnormId": ["67108"],
+    "id": 227,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/67108/related.json?tty=bn"
+  },
+  {
+    "name": "Solifenacin",
+    "rxnormId": ["322167"],
+    "id": 264,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "name": "Verapamil",
+    "rxnormId": ["11170"],
+    "id": 305,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/11170/related.json?tty=bn"
+  },
+  {
+    "name": "Thiazolidinediones",
+    "id": 121,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "name": "Fesoterodine",
+    "rxnormId": ["797195"],
+    "id": 261,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn"
+  },
+  {
+    "name": "Ciprofloxacin",
+    "rxnormId": ["2551"],
+    "id": 218,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2551/related.json?tty=bn"
+  },
+  {
+    "name": "Trifluoperazine",
+    "rxnormId": ["10800"],
+    "id": 300,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
+  },
+  {
+    "name": "Flavoxate",
+    "rxnormId": ["4440"],
+    "id": 262,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "name": "Diltiazem",
+    "rxnormId": ["3443"],
+    "id": 118,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/3443/related.json?tty=bn"
+  },
+  {
+    "name": "Oxazepam",
+    "rxnormId": ["7781"],
+    "id": 63,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/7781/related.json?tty=bn"
+  },
+  {
+    "name": "Clorazepate",
+    "rxnormId": ["2353"],
+    "id": 68,
+    "uri": "https://rxnav.nlm.nih.gov/REST/rxcui/2353/related.json?tty=bn"
+  },
+  {}
+]

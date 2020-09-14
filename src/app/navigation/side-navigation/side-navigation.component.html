@@ -1,16 +1,40 @@
-<div class="logo-buffer">
-  <div fxFlex fxLayout="column" fxLayoutAlign="space-around center">
-    <div style="height: 5.5em;">
-      <app-big-logo class="big-logo"></app-big-logo>
-    </div>
-    <div class="spacer"></div>
-    <div class="logo-title">
-      Elder Drug
+<div class="top-background effect7">
+  <div
+    (click)="state.toggleSidenav()"
+    *ngIf="state.fullScreenSearch"
+    fxLayoutAlign="end center"
+    class="close-fab-container"
+  >
+    <mat-icon>arrow_forward_ios</mat-icon>
+  </div>
+
+  <div class="logo-buffer effect7">
+    <div fxFlex fxLayout="column" fxLayoutAlign="space-around center">
+      <div style="height: 5em">
+        <app-logo [altColor]="true" [title]="true" class="big-logo"></app-logo>
+      </div>
+      <div class="spacer"></div>
+      <div
+        [style]="state.fullScreenSearch ? 'font-size: 50pt' : 'font-size: 43pt'"
+        class="logo-title"
+      >
+        Elder Drug
+      </div>
     </div>
   </div>
 </div>
-<div>
-  <h4 style="text-align: center; font-family: 'Rubik', sans-serif;"></h4>
+<div [class]="!state.fullScreenSearch ? 'round-borders' : 'sharp-borders'">
+  <body
+    style="text-align: center; font-size: 14pt"
+    [class]="
+      !state.fullScreenSearch
+        ? 'main-subtitle round-borders'
+        : 'main-subtitle sharp-borders'
+    "
+  >
+    A Tool for Beers Criteria
+  </body>
 </div>
+<div class="spacer"></div>
 
-<app-enter-drug-form></app-enter-drug-form>
+<app-enter-drug-form class="drug-form-height"></app-enter-drug-form>

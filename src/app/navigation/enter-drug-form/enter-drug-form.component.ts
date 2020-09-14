@@ -5,141 +5,139 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  FormArray,
+  Validators,
+} from '@angular/forms';
+
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-import { FormControl } from '@angular/forms';
+
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { WebsocketService } from '../../websocket.service';
 import { StateService } from 'src/app/state.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+
+import { MatDialog } from '@angular/material/dialog';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+
 @Component({
   selector: 'app-enter-drug-form',
   templateUrl: './enter-drug-form.component.html',
   styleUrls: ['./enter-drug-form.component.scss'],
 })
 export class EnterDrugFormComponent implements OnInit {
+  @ViewChildren(MatAutocompleteTrigger) trigger: QueryList<
+    MatAutocompleteTrigger
+  >;
   @ViewChildren(MatInput) submission: QueryList<MatInput>;
-  @ViewChild(MatInput) input: MatInput;
-  //@ViewChildren('searchInputs') submission: ElementRef;
+  // @ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('drawer') public sidenav: MatSidenav;
-  showFiller = true;
-  newOptions: any;
+  drugsGroup: FormGroup = this.fb.group({
+    drugs: this.fb.array([
+      this.fb.control('', [
+        Validators.pattern('[a-zA-Z ]*'),
+        Validators.minLength(2),
+        Validators.maxLength(70),
+      ]),
+    ]),
+  });
   filterList: any;
-  activeRoot: string;
   sidenavActive: boolean;
   activeString: string;
-  public drugs: DrugInput[] = [
-    {
-      id: 1,
-      control: new FormControl(),
-    },
-  ];
-
   i: number;
-  activeInput: number = 0;
-  BrandGenerics: {
-    name: string;
-    rxnormId: string[];
-    EntryID: number;
-    uri: string;
-    brands: { name: string; rxcui: string }[];
-  }[];
+  activeInput = 0;
   items: any;
-  dropdownItems: [any];
+  dropdownItems: any[];
   out: any;
   dropdownItemsSearch: any;
   dropdownArray: {};
   filteredOptions: Observable<string[]>;
   entryValue: string;
 
-  addDrug() {
-    let index = this.drugs.length + 1;
-    if (this.drugs.length <= 30)
-      this.drugs.push({ id: index, control: new FormControl() });
-    this.activeInput++;
-  }
+  sideOpen: boolean;
 
-  removeDrug(i: number) {
-    if (this.drugs.length > 1) {
-      this.drugs.splice(i, 1);
-      this.activeInput--;
-    }
-  }
   boldDropdownText(option: string, active: string) {
-    let index = option.search(active);
-    let subString = option.substring(index, index + 50);
+    const index = option.search(active);
+    const subString = option.substring(index, index + 50);
     return '<p>' + subString.replace(active, active.bold()) + '</p>';
   }
-  ConvertToJSON(product: any) {
-    return JSON.parse(product);
-  }
 
-  getInputString(input: string, inputIndex: number) {
-    this.activeString = input;
-    this.activeInput = inputIndex;
-    if (input.length === 2 || !input.includes(this.activeRoot)) {
-      this.activeRoot = input;
+  name(i: number) {
+    return this.drugs.at(i);
+  }
+  get drugs() {
+    return this.drugsGroup.get('drugs') as FormArray;
+  }
+  search() {
+    const out = [];
+    let index = 0;
+    this.drugs.value.filter((drug) => {
+      this.fire.entryMap.has(drug.toLowerCase())
+        ? out.push(drug)
+        : this.drugs.controls[index].setErrors({
+            notDrug: true,
+          });
+      index++;
+    });
+    if (out.length > 0) {
+      this.fire.searchDrugs(out);
+      this.stateService.toggleSidenav();
+    } else {
+      this.openDialog();
     }
   }
-
-  search(entry) {
-    let outArray = [];
-    let results = entry._results;
-    results.forEach((element) => {
-      outArray.push(element.value);
-    });
-    this.stateService.toggleSidenav();
+  stopPropagation() {
+    event.stopPropagation();
   }
 
+  addDrug() {
+    this.drugs.push(
+      this.fb.control('', [
+        Validators.pattern('[a-zA-Z ]*'),
+        Validators.minLength(2),
+        Validators.maxLength(70),
+      ])
+    );
+  }
   ngOnInit() {
     this.sidenavActive = this.stateService.sidenavOpen;
   }
+  deleteFormControl(index: number) {
+    this.drugs.removeAt(index);
+  }
 
-  private _filter(value: string): string[] {
-    let first = value[0];
-    return this.dropdownArray[`${first}`].filter((val) =>
-      val.startsWith(value)
-    );
-  }
-  searchIndex(entry: string) {
-    this.entryValue = entry;
-  }
-  setMap(list: {}) {
-    let dropdown = [];
-    let indexedObj = {};
-    for (let item in list) {
-      dropdown.push(item.replace(/\+/gi, ' ').toLowerCase());
+  async getDropdownItems(input: string) {
+    if (input.length > 1) {
+      this.entryValue = input;
+      const filteredOptions = await this.fire.filterValues(input);
+      if (filteredOptions) {
+        this.dropdownItems = filteredOptions.slice(0, 5);
+      }
     }
+  }
 
-    let i = 0;
-    for (i = 0; i < 26; i++) {
-      let letter = (i + 10).toString(36);
-      indexedObj[letter] = dropdown.filter((name) => name.startsWith(letter));
-    }
-    this.dropdownArray = indexedObj;
-  }
   constructor(
-    public webSocketService: WebsocketService,
     public stateService: StateService,
-    public firestore: AngularFirestore
+    public fire: WebsocketService,
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ) {
-    this.items = firestore
-      .collection('dropdown')
-      .doc('dropdownItems')
-      .valueChanges();
-    this.items.subscribe((data: any): void => this.setMap(data));
-    this.filteredOptions = this.drugs[
-      this.activeInput
-    ].control.valueChanges.pipe(
-      map(() => {
-        if (this.entryValue) {
-          return this._filter(this.entryValue).sort();
-        }
-      })
-    );
+    this.sideOpen = this.stateService.sidenavOpen;
+  }
+  openDialog() {
+    this.dialog.open(EmptyInputComponent, { width: '20em' });
   }
 }
+
+@Component({
+  selector: 'empty-input-dialog-component',
+  templateUrl: 'empty-input.html',
+})
+export class EmptyInputComponent {}
+
 export interface DrugInput {
   id: number;
   control: FormControl;

@@ -5,7 +5,7 @@
 }
 
 div.logo-title {
-  font-family: $headerfont;
+  font-family: "Titillium Web" sans-serif;
   font-size: 42pt;
   font-weight: 700;
   letter-spacing: -2px;
@@ -14,12 +14,13 @@ div.logo-title {
 }
 
 .logo-buffer {
-  padding-bottom: 4em;
-  padding-top: 1.5em;
+  padding-bottom: 3em;
+  padding-top: 1.4em;
   position: relative;
   background: white;
   width: 100%;
-  border-bottom: 1px solid $lightgray;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 button.sidenav-chevron-left {
@@ -44,4 +45,100 @@ app-big-logo.big-logo {
 
 .spacer {
   padding: 0.4em;
+}
+
+enter-drug-form.drug-form-height {
+  height: 60vh;
+}
+
+div body.main-subtitle {
+  font-family: "Roboto" sans-serif;
+  background-image: linear-gradient(
+    to right,
+    adjust-hue($primary, -15deg),
+    $primary
+  );
+  color: white;
+  padding: 0.5em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.295);
+  font-size: 11pt;
+  &.round-borders {
+   
+  }
+  &.sharp-borders {
+    border-radius: none;
+  }
+  &::before {
+    content: "💊";
+    filter: hue-rotate(180deg);
+  }
+  &::after {
+    content: "💊";
+  }
+}
+div {
+  &.round-borders {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  &.sharp-borders {
+    border-radius: none;
+  }
+}
+
+div.top-background {
+  background-color: $primary;
+}
+div.close-fab-container {
+  width: 2.5em;
+  position: fixed;
+  z-index: 10000;
+  background-color: rgba(8, 43, 73, 0.123);
+  height: 12%;
+  top: 44%;
+  right: 0%;
+  border: 1px solid rgba(4, 55, 75, 0.26);
+  border-top-left-radius: 60px;
+  border-bottom-left-radius: 60px;
+  &:hover {
+    background-color: transparentize($color: $accent, $amount: 0.8%);
+    cursor: pointer;
+  }
+  & mat-icon {
+    margin-left: 5px;
+    color: adjust-hue($color: $primary, $degrees: 10deg);
+  }
+}
+
+.effect7 {
+  position: relative;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.247),
+    0 0 20px rgba(0, 0, 0, 0.04) inset;
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 0, 0, 0.04) inset;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.04) inset;
+}
+.effect7:before,
+.effect7:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.637);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.568);
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  -moz-border-radius: 100px / 10px;
+  border-radius: 100px / 10px;
+}
+.effect7:after {
+  right: 10px;
+  left: auto;
+  -webkit-transform: skew(8deg) rotate(3deg);
+  -moz-transform: skew(8deg) rotate(3deg);
+  -ms-transform: skew(8deg) rotate(3deg);
+  -o-transform: skew(8deg) rotate(3deg);
+  transform: skew(8deg) rotate(3deg);
 }
