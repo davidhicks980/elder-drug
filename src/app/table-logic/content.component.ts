@@ -7,7 +7,7 @@ import { fadeInAnimation } from '../animations';
   selector: 'app-content',
   template: `
     <div fxLayoutAlign="center none" class="content-container">
-      <div @fadeIn class="main-content-box gray-big-logo" *ngIf="!loaded">
+      <div class="main-content-box big-logo-container" *ngIf="!modifyLoaded">
         <app-logo [altColor]="true" [contentPlaceholder]="true"></app-logo>
       </div>
       <div
@@ -19,6 +19,7 @@ import { fadeInAnimation } from '../animations';
         <div
           [fxFlexOrder]="state.fullScreenSearch ? '2' : '1'"
           fxLayout="column"
+          *ngIf="modifyLoaded"
         >
           <div
             #expansionPanel
@@ -40,6 +41,7 @@ import { fadeInAnimation } from '../animations';
           <modify-table-panel
             *ngIf="loaded"
             [tablesWithData]="tablesWithData"
+            (loaded)="modifyLoaded = true"
           ></modify-table-panel>
         </div>
       </div>
@@ -49,7 +51,6 @@ import { fadeInAnimation } from '../animations';
   animations: [fadeInAnimation],
 })
 export class ContentComponent {
-
   constructor(
     public firestore: WebsocketService,
     private parameterService: ParametersService,
@@ -58,13 +59,14 @@ export class ContentComponent {
     firestore.groupedTables.subscribe((items) => {
       this.tables = items;
       this.tablesWithData = this.parameterService.filterActiveTables(items);
+      this.loaded = true;
+      this.activeTables = this.tablesWithData;
     });
     this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
       this.screenSize = screenSize;
     });
     this.state.tableStatus$.subscribe((active) => {
       this.activeTables = active;
-
     });
   }
   data: any;
@@ -74,6 +76,7 @@ export class ContentComponent {
   activeTables: string[] = ['GeneralInfo'];
   screenSize: ScreenWidth;
   loaded: boolean;
+  public modifyLoaded: boolean = false;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
 }
 

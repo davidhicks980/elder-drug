@@ -9,35 +9,64 @@
   <mat-toolbar-row
     [class.mat-elevation-z4]="state.fullScreenSearch"
     [fxLayoutAlign]="
-      !state.fullScreenSearch ? 'start center' : 'space-between center'
+      !state.fullScreenSearch ? 'space-between center' : 'space-between center'
     "
+    fxLayout="row"
   >
-    <button
-      mat-icon-button
-      [class]="sidenavActive ? 'dark-menu' : 'light-menu'"
-      (click)="state.toggleSidenav()"
-    >
-      <mat-icon
-        [innerHTML]="sidenavActive == true ? 'chevron_left' : 'menu'"
-      ></mat-icon>
-    </button>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button
+        mat-icon-button
+        [disableRipple]="true"
+        [class]="sidenavActive ? 'dark-menu' : 'light-menu'"
+        (click)="state.toggleSidenav()"
+      >
+        <mat-icon
+          matRipple
+          [matRippleCentered]="true"
+          [matRippleUnbounded]="true"
+          [matRippleRadius]="20"
+          [inline]="true"
+          class="mat-icon-24"
+          [innerHTML]="sidenavActive ? 'chevron_left' : 'menu'"
+        ></mat-icon>
+      </button>
 
-    <app-logo
-      [altColor]="sidenavActive && state.fullScreenSearch ? true : false"
-    ></app-logo>
-    <div *ngIf="!state.fullScreenSearch">
-      <span class="tool-title">Your Search</span>
+      <app-logo
+        [hidden]="sidenavActive ? true : false"
+        [altColor]="state.fullScreenSearch && sidenavActive ? true : false"
+      ></app-logo>
+
+      <div *ngIf="!state.fullScreenSearch">
+        <span class="tool-title">Your Search</span>
+      </div>
     </div>
 
-    <!--<span #spacer fxFlex fxLayoutAlign="row"></span>-->
     <div style="width: 2.7em"></div>
-    <button
-      [class]="sidenavActive ? 'toolbar-red-button' : 'toolbar-white-button'"
-      mat-stroked-button
-      (click)="openDialog()"
+    <div
+      fxLayout="end center"
+      fxLayoutGap="20px"
+      fxFlexLayout="row"
+      [@toolbarMargin]="sidenavActive ? 'slideIn' : 'slideOut'"
     >
-      Disclaimer
-    </button>
+      <button
+        [class]="
+          sidenavActive ? 'toolbar-primary-button' : 'toolbar-white-button'
+        "
+        mat-button
+        (click)="openDisclaimerDialog()"
+      >
+        Disclaimer
+      </button>
+      <button
+        [class]="
+          sidenavActive ? 'toolbar-primary-button' : 'toolbar-white-button'
+        "
+        mat-button
+        (click)="openAboutDialog()"
+      >
+        About
+      </button>
+    </div>
   </mat-toolbar-row>
   <mat-toolbar-row
     *ngIf="state.fullScreenSearch"

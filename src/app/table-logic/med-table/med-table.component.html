@@ -12,6 +12,7 @@
       *ngIf="tableName"
       (columnUpdates)="changeActiveColumns($event)"
       [tableName]="tableName"
+      (loaded)="selectorInitiated = true"
     ></app-column-selector>
     <div *ngIf="tableName === 'GeneralInfo'">
       This table is meant to display all drugs that flag, no matter the reason.

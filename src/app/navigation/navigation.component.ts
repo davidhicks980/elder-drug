@@ -11,14 +11,14 @@ import { slideInLeft, dropInAnimation } from '../animations';
   providers: [WebsocketService],
   animations: [slideInLeft, dropInAnimation],
 })
-export class NavigationComponent implements AfterViewInit {
+export class NavigationComponent implements AfterViewInit, OnInit {
   @ViewChild('leftdrawer') public sidenav: MatSidenav;
   sidenavActive: boolean;
   public screenSize: ScreenWidth;
   breakpointWidth: ScreenWidth;
+  stateLoaded: boolean;
 
   ngAfterViewInit() {
-    this.sidenavActive = this.state.sidenavOpen;
     if (this.state.breakpointObserver.isMatched('(max-width: 599.99px)')) {
       this.breakpointWidth = ScreenWidth.xSmall;
     } else if (
@@ -32,14 +32,16 @@ export class NavigationComponent implements AfterViewInit {
     }
     this.state.windowWidthSource.next(this.breakpointWidth);
   }
-
+  ngOnInit() {
+    this.state.sidenavStatus$.subscribe((isOpen: boolean) => {
+      this.sidenavActive = isOpen;
+      this.stateLoaded = true;
+    });
+  }
   constructor(
     public webSocketService: WebsocketService,
     public state: StateService
   ) {
-    state.sidenavStatus$.subscribe((isOpen: boolean) => {
-      this.sidenavActive = isOpen;
-    });
     this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
       this.screenSize = screenSize;
     });

@@ -24,11 +24,15 @@ export class ColumnSelectorComponent {
     this.displayedOptions = columns.columnOptions;
   }
   @Output() columnUpdates: EventEmitter<string[]> = new EventEmitter();
+  @Output() loaded = new EventEmitter();
   displayedOptions: string[];
   selectOptions: string[] = [null];
 
   emitUpdatedColumns(cols) {
     this.columnUpdates.emit(cols);
+  }
+  ngAfterViewInit() {
+    this.loaded.emit(true);
   }
 
   constructor(private parameterService: ParametersService) {}

@@ -1,44 +1,16 @@
 @import "../../../colors";
 
-.dh-input {
-  color: $accent;
-  z-index: 5000;
-}
-
-.material-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.mat-drawer-content {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.caduceus {
-  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
-}
-
-.plus-button {
-  text-align: center;
-  cursor: pointer;
-  font-family: 'Material Icons Round';
-}
-
-.trash-button {
-  text-align: center;
-  cursor: pointer;
-    font-family: 'Material Icons Round';
-
-}
-
-.height-limit {
-  height: 60vh;
-  overflow: auto;
+mat-icon {
+  &.plus-button {
+    cursor: pointer;
+    font-family: "Material Icons Round";
+    font-size: 16pt;
+  }
+  &.trash-button {
+    cursor: pointer;
+    font-family: "Material Icons Round";
+    font-size: 16pt;
+  }
 }
 
 .disable-text-selection {
@@ -49,57 +21,32 @@
   -ms-user-select: none;
   user-select: none;
 }
-#title {
-  padding-bottom: 0.2em;
-  padding-top: 0.15em;
 
+section.drug-inputs {
+  overflow: auto;
   width: 100%;
+  min-height: 0px;
+  max-height: 60vh;
+  position: relative;
+  margin-top: 1em;
+  z-index: 1;
+  & mat-form-field.form-array-width {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 }
 
-.search-button-container {
-  padding-top: 2em;
-  width: 100%;
-  border-top: 1px solid $lightgray;
+@media (max-width: 599.99px) {
+  section.drug-inputs {
+    padding-top: 1.5em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    width: 80%;
+    overflow: auto;
+  }
 }
-
-button[mat-flat-button].search-button {
-  width: 90%;
-  color: white;
-  font-size: 14pt;
-  background-image: linear-gradient(
-    to right,
-    adjust-hue($primary, -15deg),
-    $primary
-  );
-  font-weight: 400;
-  max-width: 30em;
-  height: 2.2em;
-}
-
-button[mat-button].search-button:hover {
-  transition: ease-in 0.05s;
-  background-image: linear-gradient(
-    to right,
-    adjust-hue($primary, 20deg),
-    adjust-hue($primary, 30deg)
-  );
-  color: primary;
-  text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
-}
-
-section.border-box {
-  padding-top: 1.5em;
-  padding-left: 0.3em;
-  padding-right: 0.3em;
-  width: 85%;
-}
-
-
 
 span.spacer {
   padding-bottom: 0.4em;
-}
-
-div.form-height-limit {
-  height: 65vh;
 }

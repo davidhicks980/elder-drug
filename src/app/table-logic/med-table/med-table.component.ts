@@ -5,16 +5,11 @@ import { Table } from 'primeng/table';
 import { ParametersService } from 'src/app/parameters.service';
 import { slideDownAnimation } from '../../animations';
 import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
-import {
   expandButtonAnimation,
   translateRationaleContent,
 } from '../../animations';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-med-table',
@@ -23,19 +18,21 @@ import {
   animations: [
     expandButtonAnimation,
     translateRationaleContent,
-    slideDownAnimation
+    slideDownAnimation,
   ],
 })
 export class MedTableComponent implements OnChanges, OnInit {
   @ViewChild('myTable') table: any;
   @Input() tableData: Table[];
-  rows: any[] = [];
+  public rows: any[] = [];
   public columnOptions: { field: string; header: string }[];
-  displayedColumns: string[];
-  selectOptions: string[] = [];
-  tableName: string;
-  expandFieldData: { field: string; header: string }[];
-  loaded = false;
+  public displayedColumns: string[];
+  public selectOptions: string[] = [];
+  public tableName: string;
+  public expandFieldData: { field: string; header: string }[];
+  public loaded: boolean = false;
+  public selectorInitiated: boolean = false;
+
   public rationale: { expanded: boolean }[] = [];
 
   changeActiveColumns(cols: string[]) {
@@ -46,9 +43,11 @@ export class MedTableComponent implements OnChanges, OnInit {
   }
   ngOnInit() {
     this.tableName = this.tableData['key'];
-    const initOptions = this.parameterService.columnDefinitions.filter((item) => {
-      return item.name === this.tableName;
-    })[0];
+    const initOptions = this.parameterService.columnDefinitions.filter(
+      (item) => {
+        return item.name === this.tableName;
+      }
+    )[0];
     this.columnOptions = this.parameterService
       .lookupColumns(initOptions.selectedColumns)
       .filter(Boolean);
@@ -68,7 +67,28 @@ export class MedTableComponent implements OnChanges, OnInit {
   }
 
   onDetailToggle() {}
-  constructor(public parameterService: ParametersService) {}
+  constructor(
+    public parameterService: ParametersService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    iconRegistry.addSvgIcon(
+      'error.svg',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'unfold_less.svg',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/unfold_less.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'unfold_more.svg',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/unfold_more.svg'
+      )
+    );
+  }
 
   ngOnChanges() {
     this.rows = this.tableData['value'];

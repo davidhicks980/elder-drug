@@ -34,7 +34,7 @@ mat-icon.mat-icon-16 {
   font-size: 14pt;
   color: rgb(226, 235, 255);
   transition: ease 0.5s;
-  font-family: 'Material Icons Round';
+  font-family: "Material Icons Round";
 
   &:hover {
     color: $accent;
@@ -44,6 +44,5 @@ mat-icon.mat-icon-16 {
 mat-icon.mat-icon-24 {
   font-size: 24pt;
   color: $accent;
-  font-family: 'Material Icons Round';
-
+  font-family: "Material Icons Round";
 }

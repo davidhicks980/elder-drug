@@ -21,16 +21,16 @@
   fill: lighten($color: $gray, $amount: 80%);
 }
 .interior {
-  fill: lighten($color: $gray, $amount: 55%);
+  fill: lighten($primary, 40%);
 }
 .stem {
   fill: lighten($color: $gray, $amount: 80%);
 }
 .shadow {
-  fill: lighten($color: $gray, $amount: 55%);
+  fill: lighten($color: #111d4a, $amount: 55%);
 }
 .snake {
-  fill: lighten($accent, 15%);
+  fill: lighten($accent, 5%);
 }
 .eyes {
   fill: whitesmoke;

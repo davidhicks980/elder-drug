@@ -4,22 +4,21 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Round");
 @import "./primeflex.min.css";
 
-
 ::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
- 
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px 6px rgba(0,0,0,0.1); 
-    color: rgb(226, 226, 226);
-    border-radius: 10px;
-}
- 
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    color: rgb(226, 226, 226);
 
-    -webkit-box-shadow: inset 0 0 6px 6px rgba(0, 0, 0, 0.3); 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px 6px rgba(0, 0, 0, 0.1);
+  color: rgb(226, 226, 226);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  color: rgb(226, 226, 226);
+
+  -webkit-box-shadow: inset 0 0 6px 6px rgba(0, 0, 0, 0.3);
 }
 body {
   margin: 0px;
@@ -81,7 +80,10 @@ button[mat-flat-button]:active {
 .mat-form-field-appearance-outline:not(.mat-form-field-disabled)
   .mat-form-field-flex:hover
   .mat-form-field-outline-thick {
-  color: desaturate(lighten($primary, 20%), 20%);
+  color: lighten($accent, 20%);
+  & :active {
+    color: $accent;
+  }
 }
 .mat-drawer-inner-container {
   scrollbar-width: none;
@@ -126,7 +128,6 @@ tr:not(.med-expanded-row) .ellipsis {
   color: white !important;
 }
 
-
 mat-sidenav-content {
   background-color: rgb(253, 253, 253);
 }
@@ -166,4 +167,3 @@ table {
 .mat-list-base .mat-list-option {
   height: 45px;
 }
-

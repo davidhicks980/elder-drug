@@ -36,8 +36,8 @@ mat-selection-list.mat-list-base {
 
 ul.toggle-group {
   position: relative;
-  background: lighten($lightprimary, 50%);
-  border: 1px solid lighten($primary, 15%);
+  background: lighten($lightprimary, 40%);
+  border: 1px solid lighten($primary, 10%);
   border-radius: 4px;
   list-style: none;
   display: grid;

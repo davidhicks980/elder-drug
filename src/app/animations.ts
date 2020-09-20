@@ -5,9 +5,7 @@ import {
   state,
   transition,
   sequence,
-  keyframes,
 } from '@angular/animations';
-import { SELECT_PANEL_MAX_HEIGHT } from '@angular/material/select';
 
 export const fadeInAnimation = trigger('fadeIn', [
   // the "in" style determines the "resting" state of the element when it is visible.
@@ -19,8 +17,6 @@ export const fadeInAnimation = trigger('fadeIn', [
     animate('500ms ease-in', style({ opacity: '*' })),
   ]),
 ]);
-
-
 
 export const slideInLeft = trigger('slideInLeft', [
   transition(':enter', [
@@ -89,11 +85,39 @@ export const translateRationaleContent = trigger('translateRationale', [
 ]);
 
 export const slideDownAnimation = trigger('slideDown', [
-      // fade in when created. this could also be written as transition('void => *')
-      transition(':enter', [
-        style({
-          height: '0px',
-        }),
-        animate('500ms ease'),
-      ]),
-    ]);
+  // fade in when created. this could also be written as transition('void => *')
+  transition(':enter', [
+    style({
+      height: '0px',
+    }),
+    animate('500ms ease'),
+  ]),
+  transition(':leave', [
+    style({
+      height: '700px',
+    }),
+    animate('500ms ease'),
+  ]),
+]);
+
+export const toolbarButtonAnimation = trigger('toolbarMargin', [
+  // fade in when created. this could also be written as transition('void => *')
+  state('slideIn', style({ transform: 'translateX(-320px)' })),
+  state('slideOut', style({ transform: 'translateX(0px)' })),
+  transition('slideIn <=> slideOut', animate('240ms ease')),
+]);
+
+export const inputAnimation = trigger('inputSlideIn', [
+  transition(':enter', [
+    style({
+      transform: 'translateX(-300px)',
+    }),
+    animate('400ms ease'),
+  ]),
+  transition(':leave', [
+    style({
+      transform: 'translateX(0px)',
+    }),
+    animate('200ms ease'),
+  ]),
+]);

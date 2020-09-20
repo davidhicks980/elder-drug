@@ -13,6 +13,10 @@ tr.ptable-body {
 tr.ptable-body--row {
   font-size: 10pt;
   background: $tablebackground;
+  &:hover {
+    box-shadow: 0 0 0 200px inset
+      transparentize($color: $lightblue, $amount: 0.95%);
+  }
 }
 
 tr.ptable-body--row.p-table-body {
@@ -27,9 +31,6 @@ td.ptable-data-cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  &:last-child {
-    padding-bottom: 1em;
-  }
 }
 
 /** Bottom right radius on table -- very important to not mess this up! */

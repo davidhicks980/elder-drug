@@ -1,40 +1,56 @@
-<div class="top-background effect7">
-  <div
-    (click)="state.toggleSidenav()"
-    *ngIf="state.fullScreenSearch"
-    fxLayoutAlign="end center"
-    class="close-fab-container"
-  >
-    <mat-icon>arrow_forward_ios</mat-icon>
-  </div>
-
-  <div class="logo-buffer effect7">
-    <div fxFlex fxLayout="column" fxLayoutAlign="space-around center">
-      <div style="height: 5em">
-        <app-logo [altColor]="true" [title]="true" class="big-logo"></app-logo>
-      </div>
-      <div class="spacer"></div>
+<div class="sidenav-flex">
+  <div class="header">
+    <div class="top-background effect7">
       <div
-        [style]="state.fullScreenSearch ? 'font-size: 50pt' : 'font-size: 43pt'"
-        class="logo-title"
+        (click)="state.toggleSidenav()"
+        *ngIf="state.fullScreenSearch"
+        fxLayoutAlign="end center"
+        class="close-sidenav-fab"
       >
-        Elder Drug
+        <mat-icon class="close-sidenav-icon">arrow_forward_ios</mat-icon>
+      </div>
+
+      <div class="logo-buffer effect7">
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+          <div>
+            <app-logo [altColor]="true" [title]="true"></app-logo>
+          </div>
+          <div class="spacer"></div>
+          <div
+            [style]="
+              state.fullScreenSearch ? 'font-size: 50pt' : 'font-size: 43pt'
+            "
+            class="logo-title"
+          >
+            Elder Drug
+          </div>
+        </div>
       </div>
     </div>
+    <div [class]="!state.fullScreenSearch ? 'round-borders' : 'sharp-borders'">
+      <body
+        style="text-align: center; font-size: 14pt"
+        [class]="
+          !state.fullScreenSearch
+            ? 'main-subtitle round-borders'
+            : 'main-subtitle sharp-borders'
+        "
+      >
+        A Tool for Beers Criteria
+      </body>
+    </div>
+  </div>
+  <app-enter-drug-form #searchForm></app-enter-drug-form>
+  <div fxLayout="column" fxLayoutAlign="start center" class="search">
+    <button
+      mat-flat-button
+      class="search-button"
+      type="button"
+      (click)="searchForm.search()"
+      (keydown.enter)="searchForm.search()"
+      type="submit"
+    >
+      <mat-icon>search</mat-icon> Search
+    </button>
   </div>
 </div>
-<div [class]="!state.fullScreenSearch ? 'round-borders' : 'sharp-borders'">
-  <body
-    style="text-align: center; font-size: 14pt"
-    [class]="
-      !state.fullScreenSearch
-        ? 'main-subtitle round-borders'
-        : 'main-subtitle sharp-borders'
-    "
-  >
-    A Tool for Beers Criteria
-  </body>
-</div>
-<div class="spacer"></div>
-
-<app-enter-drug-form class="drug-form-height"></app-enter-drug-form>

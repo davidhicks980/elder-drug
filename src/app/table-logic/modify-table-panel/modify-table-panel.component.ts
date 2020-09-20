@@ -1,4 +1,11 @@
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { ParametersService } from 'src/app/parameters.service';
 import { StateService } from 'src/app/state.service';
 import { MatSelectionList } from '@angular/material/list';
@@ -67,6 +74,7 @@ export class ModifyTablePanelComponent {
   public message: string;
   public options: string[];
   public screenSize: ScreenWidth;
+  @Output() loaded = new EventEmitter();
 
   updateOptions(selections: string[]): void {
     this.state.emitSelectedTables(selections);
@@ -90,6 +98,9 @@ export class ModifyTablePanelComponent {
     this.tablesChanged.next(this.tableStore);
   }
 
+  ngAfterViewInit() {
+    this.loaded.emit(true);
+  }
   constructor(
     private parameterService: ParametersService,
     public state: StateService

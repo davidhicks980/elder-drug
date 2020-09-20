@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -38,6 +37,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { AccordionModule } from 'primeng/accordion';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AboutComponent } from './navigation/top-toolbar/toolbar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,9 +56,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ModifyTablePanelComponent,
     ToStringPipe,
     DisclaimerComponent,
+    AboutComponent,
   ],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,
@@ -74,7 +75,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFirestoreModule,
     ScrollingModule,
     AccordionModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,7 +3,11 @@
 .caduceus {
   text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
 }
-
+div.header {
+  overflow: hidden;
+  z-index: 500;
+  width: 100%;
+}
 div.logo-title {
   font-family: "Titillium Web" sans-serif;
   font-size: 42pt;
@@ -16,17 +20,14 @@ div.logo-title {
 .logo-buffer {
   padding-bottom: 3em;
   padding-top: 1.4em;
-  position: relative;
+  position: absolute;
   background: white;
-  width: 100%;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
 button.sidenav-chevron-left {
   font-size: 24pt;
-  position: sticky;
-  top: 90%;
   border: 2px solid $primary;
   color: $primary;
 }
@@ -35,20 +36,8 @@ button.sidenav-chevron-left:hover {
   background-color: transparentize($color: $primary, $amount: 0.5%);
 }
 
-.toolbar {
-  position: fixed;
-  z-index: 100;
-}
-app-big-logo.big-logo {
-  height: 5em;
-}
-
 .spacer {
   padding: 0.4em;
-}
-
-enter-drug-form.drug-form-height {
-  height: 60vh;
 }
 
 div body.main-subtitle {
@@ -61,20 +50,7 @@ div body.main-subtitle {
   color: white;
   padding: 0.5em;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.295);
-  font-size: 11pt;
-  &.round-borders {
-   
-  }
-  &.sharp-borders {
-    border-radius: none;
-  }
-  &::before {
-    content: "💊";
-    filter: hue-rotate(180deg);
-  }
-  &::after {
-    content: "💊";
-  }
+  font-size: 10pt;
 }
 div {
   &.round-borders {
@@ -89,25 +65,61 @@ div {
 div.top-background {
   background-color: $primary;
 }
-div.close-fab-container {
+div.close-sidenav-fab {
   width: 2.5em;
-  position: fixed;
+  position: absolute;
   z-index: 10000;
-  background-color: rgba(8, 43, 73, 0.123);
+  background-color: rgba(8, 43, 73, 0.055);
+  min-height: 5em;
   height: 12%;
   top: 44%;
   right: 0%;
-  border: 1px solid rgba(4, 55, 75, 0.26);
+  border: 1px solid rgba(4, 55, 75, 0.198);
   border-top-left-radius: 60px;
   border-bottom-left-radius: 60px;
+
   &:hover {
     background-color: transparentize($color: $accent, $amount: 0.8%);
     cursor: pointer;
   }
-  & mat-icon {
+  & mat-icon.close-sidenav-icon {
     margin-left: 5px;
-    color: adjust-hue($color: $primary, $degrees: 10deg);
+    color: $gray;
+    cursor: pointer;
+    font-family: "Material Icons Round";
   }
+}
+
+section.search {
+  background-color: white;
+  width: 100%;
+}
+
+button[mat-flat-button].search-button {
+  width: 90%;
+  color: white;
+  font-size: 14pt;
+  background-image: linear-gradient(
+    to right,
+    adjust-hue($primary, -15deg),
+    $primary
+  );
+  font-weight: 400;
+  max-width: 30em;
+  height: 2.2em;
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+}
+
+button[mat-flat-button].search-button:hover {
+  transition: ease-in 0.05s;
+  background-image: linear-gradient(
+    to right,
+    adjust-hue($primary, 10deg),
+    adjust-hue($primary, 20deg)
+  );
+  color: primary;
+  text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
 }
 
 .effect7 {
@@ -118,6 +130,7 @@ div.close-fab-container {
     0 0 20px rgba(0, 0, 0, 0.04) inset;
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.04) inset;
 }
+
 .effect7:before,
 .effect7:after {
   content: "";
@@ -141,4 +154,14 @@ div.close-fab-container {
   -ms-transform: skew(8deg) rotate(3deg);
   -o-transform: skew(8deg) rotate(3deg);
   transform: skew(8deg) rotate(3deg);
+}
+
+.sidenav-flex {
+  max-height: 100vh;
+  display: grid;
+  grid-template-rows: 20vh auto 20vh;
+}
+
+#searchForm {
+  align-content: stretch;
 }

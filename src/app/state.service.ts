@@ -1,4 +1,4 @@
-import { Injectable, OnInit, AfterViewInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   BreakpointObserver,
@@ -10,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class StateService {
-  public sidenavOpen = true;
+  public sidenavOpen: boolean = false;
   private sidenavSource = new Subject<boolean>();
   public windowWidthSource = new Subject<{}>();
   public windowWidth$ = this.windowWidthSource.asObservable();

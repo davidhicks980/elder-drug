@@ -3,15 +3,18 @@
   rel="stylesheet"
 />
 
-<mat-sidenav-container
+<div class="grid">
+  <header class="outline toolbar"></header>
+  <div class="outline sidebar"></div>
+  <footer class="outline content"></footer>
+</div>
+
+<!--<mat-sidenav-container
   keyup.enter="search(submission)"
   class="material-container"
   (backdropClick)="state.sidenavOpen = false"
-  fxFlex
 >
   <mat-sidenav
-    *ngIf="webSocketService.loaded"
-    #leftdrawer
     [class]="
       state.fullScreenSearch
         ? 'material-fullscreen-sidenav'
@@ -22,7 +25,6 @@
     mode="side"
     (keydown.escape)="state.sidenavOpen = false"
     (keydown.enter)="state.sidenavOpen = false"
-    @slideInLeft
     cdkScrollable
   >
     <app-side-navigation></app-side-navigation>
@@ -38,3 +40,4 @@
     <app-content></app-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
+-->

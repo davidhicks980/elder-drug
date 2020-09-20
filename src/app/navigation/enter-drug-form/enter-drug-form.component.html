@@ -1,22 +1,16 @@
-<div
-  fxFlex
-  fxLayout="column"
-  fxLayoutAlign="none center"
-  [formGroup]="drugsGroup"
-  class="form-height-limit"
->
+<div [formGroup]="drugsGroup">
   <section
-    class="height-limit border-box"
-    fxFlex
     cdkScrollable
     aria-label="You can look up drugs on Beers Criteria using this form"
+    class="drug-inputs"
   >
     <div formArrayName="drugs">
-      <div *ngFor="let drug of drugs.controls; let i = index" fxLayout="column">
+      <div *ngFor="let drug of drugs.controls; let i = index">
         <mat-form-field
           appearance="outline"
           color="accent"
-          class="disable-text-selection"
+          @inputSlideIn
+          class="form-array-width"
         >
           <mat-label>Enter Drug (e.g. zolpidem)</mat-label>
 
@@ -47,6 +41,7 @@
             (click)="addDrug(); trigger.closePanel(); stopPropagation()"
             *ngIf="i === 0"
             color="accent"
+            [inline]="true"
           >
             add_circle_outline
           </mat-icon>
@@ -56,6 +51,7 @@
             [matRippleCentered]="true"
             [matRippleRadius]="14"
             [matRippleUnbounded]="true"
+            [inline]="true"
             class="material-icons-round trash-button"
             (click)="
               deleteFormControl(i); trigger.closePanel(); stopPropagation()
@@ -80,20 +76,6 @@
         >
         </mat-option>
       </mat-autocomplete>
-    </div>
-  </section>
-  <section class="search-button-container">
-    <div fxLayoutAlign="start center" fxLayoutGap="5px" fxLayout="column">
-      <button
-        mat-flat-button
-        class="search-button sticky"
-        type="button"
-        (click)="search()"
-        (keydown.enter)="search()"
-        type="submit"
-      >
-        <mat-icon>search</mat-icon> Search
-      </button>
     </div>
   </section>
 </div>

@@ -22,11 +22,15 @@ import { StateService } from 'src/app/state.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { inputAnimation } from '../../animations';
 
 @Component({
   selector: 'app-enter-drug-form',
   templateUrl: './enter-drug-form.component.html',
   styleUrls: ['./enter-drug-form.component.scss'],
+  animations: [inputAnimation],
 })
 export class EnterDrugFormComponent implements OnInit {
   @ViewChildren(MatAutocompleteTrigger) trigger: QueryList<
@@ -94,16 +98,19 @@ export class EnterDrugFormComponent implements OnInit {
   }
 
   addDrug() {
-    this.drugs.push(
-      this.fb.control('', [
-        Validators.pattern('[a-zA-Z ]*'),
-        Validators.minLength(2),
-        Validators.maxLength(70),
-      ])
-    );
+    if (this.drugs.length < 10) {
+      this.drugs.push(
+        this.fb.control('', [
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.minLength(2),
+          Validators.maxLength(70),
+        ])
+      );
+    }
   }
   ngOnInit() {
     this.sidenavActive = this.stateService.sidenavOpen;
+    this.stateService.toggleSidenav();
   }
   deleteFormControl(index: number) {
     this.drugs.removeAt(index);
@@ -123,9 +130,21 @@ export class EnterDrugFormComponent implements OnInit {
     public stateService: StateService,
     public fire: WebsocketService,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
   ) {
     this.sideOpen = this.stateService.sidenavOpen;
+    iconRegistry.addSvgIcon(
+      'add-circle-outline.svg',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/add_circle_outline.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'delete.svg',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg')
+    );
   }
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });

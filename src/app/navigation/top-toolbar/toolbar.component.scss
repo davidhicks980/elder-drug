@@ -1,23 +1,27 @@
 @import "../../../_colors.scss";
 $toolbarActiveColor: $primary;
 $toolbarInactiveColor: rgb(250, 250, 250);
-#toolbar .drawer-button {
-  background-color: transparent !important;
-  border-bottom: none;
-  color: white;
-}
-
-#toolbar .mobile-drawer-button {
-  border-bottom: none;
-  color: white;
-}
 
 mat-toolbar-row {
   & .light-menu {
-    color: white;
+    & .mat-icon-24 {
+      font-family: "Material Icons Round";
+      font-size: 20pt;
+      color: white;
+      &:hover {
+        color: $accent;
+      }
+    }
   }
   & .dark-menu {
-    color: $primary;
+    & .mat-icon-24 {
+      font-family: "Material Icons Round";
+      font-size: 20pt;
+      color: $primary;
+      &:hover {
+        color: $accent;
+      }
+    }
   }
 }
 
@@ -33,13 +37,15 @@ mat-toolbar-row {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid darken($toolbarInactiveColor, 7%);
+  color: $gray;
 }
 #toolbar {
   position: fixed;
+  z-index: 10000;
 }
 
 #toolbar.transition {
-  background: $primary;
+  background: $gradient;
   color: white;
   border-bottom: 2px solid darken($primary, 5%);
 }
@@ -56,7 +62,7 @@ button.mat-stroked-button.toolbar-white-button {
   right: 1.71em;
 }
 
-button.mat-stroked-button.toolbar-red-button {
+button.mat-stroked-button.toolbar-primary-button {
   border: 1px solid $primary;
   color: $primary;
   &:active,
@@ -77,4 +83,10 @@ div.dialog {
 
 mat-toolbar mat-toolbar-row span.tool-title::before {
   margin: 0.2em;
+}
+
+mat-icon.mat-icon-24 {
+  font-size: 20pt;
+  color: $accent;
+  font-family: "Material Icons Round";
 }

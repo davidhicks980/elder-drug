@@ -11,12 +11,12 @@
   overflow: visible;
 }
 
-.gray-big-logo {
+.big-logo-container {
   filter: grayscale(0.5);
   opacity: 70%;
   height: 35em;
-  animation: colorPulse 60s ease-in-out;
-  animation-iteration-count: 5;
+
+  padding-left: 2em;
 }
 
 #expansionPanel {
@@ -37,21 +37,6 @@ div.table-spacer {
   width: 20%;
   position: fixed;
   left: 88%;
-}
-
-@keyframes colorPulse {
-  40% {
-    filter: grayscale(0.5);
-    opacity: 30%;
-  }
-  50% {
-    filter: grayscale(0);
-    opacity: 60%;
-  }
-  70% {
-    filter: grayscale(0.5);
-    opacity: 30%;
-  }
 }
 
 div.content-container {
