@@ -2,14 +2,30 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { StateService, ScreenWidth } from '../state.service';
-import { slideInLeft, dropInAnimation } from '../animations';
+import {
+  tableVisibleAnimation,
+  mobileSidenavAnimation,
+  logoSlideAnimation,
+} from '../animations';
+import {
+  slideInLeft,
+  dropInAnimation,
+  formVisibleAnimation,
+} from '../animations';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
   providers: [WebsocketService],
-  animations: [slideInLeft, dropInAnimation],
+  animations: [
+    slideInLeft,
+    dropInAnimation,
+    formVisibleAnimation,
+    tableVisibleAnimation,
+    mobileSidenavAnimation,
+    logoSlideAnimation,
+  ],
 })
 export class NavigationComponent implements AfterViewInit, OnInit {
   @ViewChild('leftdrawer') public sidenav: MatSidenav;
@@ -17,6 +33,7 @@ export class NavigationComponent implements AfterViewInit, OnInit {
   public screenSize: ScreenWidth;
   breakpointWidth: ScreenWidth;
   stateLoaded: boolean;
+  public tablesLoaded: boolean = false;
 
   ngAfterViewInit() {
     if (this.state.breakpointObserver.isMatched('(max-width: 599.99px)')) {
@@ -44,6 +61,9 @@ export class NavigationComponent implements AfterViewInit, OnInit {
   ) {
     this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
       this.screenSize = screenSize;
+    });
+    this.state.sidenavStatus$.subscribe((status) => {
+      this.sidenavActive = status;
     });
   }
 }

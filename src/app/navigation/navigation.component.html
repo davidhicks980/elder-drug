@@ -3,10 +3,62 @@
   rel="stylesheet"
 />
 
-<div class="grid">
-  <header class="outline toolbar"></header>
-  <div class="outline sidebar"></div>
-  <footer class="outline content"></footer>
+<header [class]="state.mobileWidth ? 'small-toolbar' : 'large-toolbar'">
+  <app-toolbar></app-toolbar>
+</header>
+
+<div
+  fxShow.xs="true"
+  fxHide.gt-xs="true"
+  class="side-arrow"
+  fxLayoutAlign="end center"
+  (click)="state.toggleSidenav()"
+  matRipple
+  *ngIf="sidenavActive"
+>
+  <mat-icon> chevron_right</mat-icon>
+</div>
+<div
+  class="overlay-container"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+></div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="!tablesLoaded"
+>
+  <div
+    [@logoAnimation]="sidenavActive ? 'partial' : 'fullScreen'"
+    class="big-logo-container"
+    [fxShow.gt-xs]="true"
+    [fxHide.lt-sm]="true"
+  >
+    <app-logo
+      [title]="true"
+      [altColor]="true"
+      [contentPlaceholder]="true"
+    ></app-logo>
+  </div>
+</ng-template>
+<div
+  [@toggleForm]="sidenavActive ? 'visible' : 'hidden'"
+  [class]="state.mobileWidth && sidenavActive ? 'full-layout' : 'grid-layout'"
+>
+  <aside [class]="state.mobileWidth ? 'sidebar small' : 'sidebar'">
+    <div
+      fxLayoutAlign="center center"
+      *ngIf="!state.mobileWidth"
+      class="subtitle"
+    >
+      A Tool for Beers Criteria
+    </div>
+
+    <app-side-navigation #sideNav></app-side-navigation>
+  </aside>
+  <main class="content">
+    <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
+  </main>
 </div>
 
 <!--<mat-sidenav-container
@@ -16,7 +68,7 @@
 >
   <mat-sidenav
     [class]="
-      state.fullScreenSearch
+      state.mobileWidth
         ? 'material-fullscreen-sidenav'
         : 'material-sidenav'
     "

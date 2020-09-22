@@ -1,29 +1,54 @@
-import { Component, TrackByFunction, Input } from '@angular/core';
+import {
+  Component,
+  TrackByFunction,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { ParametersService } from '../parameters.service';
 import { StateService, ScreenWidth } from '../state.service';
-import { fadeInAnimation } from '../animations';
+import {
+  fadeInAnimation,
+  tableVisibleAnimation,
+  contentAnimation,
+} from '../animations';
+import { BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'app-content',
   template: `
-    <div fxLayoutAlign="center none" class="content-container">
-      <div class="main-content-box big-logo-container" *ngIf="!modifyLoaded">
-        <app-logo [altColor]="true" [contentPlaceholder]="true"></app-logo>
-      </div>
+    <div class="topnav">
+      <button
+        style="margin-left: 0.4em"
+        mat-icon-button
+        (click)="this.state.toggleSidenav()"
+      >
+        <mat-icon
+          [innerHTML]="sidenavActive ? 'chevron_left' : 'menu'"
+        ></mat-icon>
+      </button>
+    </div>
+
+    <div [class]="sidenavActive ? 'partial content' : 'full content'">
       <div
         [hidden]="loaded"
         class="main-content-box"
         fxFlexOffset="10px"
-        [fxLayout]="state.fullScreenSearch ? 'column' : 'row'"
+        fxLayout="row"
+        [fxLayout.sm]="sidenavActive ? 'column' : 'row'"
+        fxLayout.xs="column"
       >
         <div
-          [fxFlexOrder]="state.fullScreenSearch ? '2' : '1'"
-          fxLayout="column"
+          [fxFlexOrder.sm]="sidenavActive ? '2' : '1'"
+          fxFlexOrder.xs="2"
+          fxFlexOrder="1"
           *ngIf="modifyLoaded"
         >
           <div
             #expansionPanel
             *ngFor="let table of tables | keyvalue; trackBy: trackByFn"
+            [class]="sidenavActive ? 'partial tables' : 'full tables'"
           >
             <app-med-table
               *ngIf="this.activeTables.includes(table.key)"
@@ -35,7 +60,9 @@ import { fadeInAnimation } from '../animations';
         </div>
         <div
           #modifyPanel
-          [fxFlexOrder]="state.fullScreenSearch ? '1' : '2'"
+          [fxFlexOrder.sm]="sidenavActive ? '1' : '2'"
+          fxFlexOrder.xs="1"
+          fxFlexOrder="2"
           class="panel-width"
         >
           <modify-table-panel
@@ -48,36 +75,55 @@ import { fadeInAnimation } from '../animations';
     </div>
   `,
   styleUrls: ['./content.component.scss'],
-  animations: [fadeInAnimation],
+  animations: [fadeInAnimation, tableVisibleAnimation, contentAnimation],
 })
 export class ContentComponent {
+  sidenavActive: boolean;
+  smallScreen: boolean;
   constructor(
     public firestore: WebsocketService,
     private parameterService: ParametersService,
-    public state: StateService
+    public state: StateService,
+    public widthObserver: BreakpointObserver
   ) {
     firestore.groupedTables.subscribe((items) => {
       this.tables = items;
       this.tablesWithData = this.parameterService.filterActiveTables(items);
-      this.loaded = true;
+
       this.activeTables = this.tablesWithData;
+      this.loaded = true;
+      this.tablesLoaded.emit(true);
     });
     this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      this.screenSize = screenSize;
+      if (
+        (this.sidenavActive && screenSize === 'SMALL') ||
+        screenSize === 'XSMALL'
+      ) {
+        this.smallScreen = true;
+      } else {
+        this.smallScreen = false;
+      }
     });
     this.state.tableStatus$.subscribe((active) => {
       this.activeTables = active;
+    });
+    this.state.sidenavStatus$.subscribe((sidenavOpen) => {
+      this.smallScreen = sidenavOpen
+        ? this.widthObserver.isMatched('(max-width: 959.59px)')
+        : this.widthObserver.isMatched('(max-width: 599px)');
+
+      this.sidenavActive = sidenavOpen;
     });
   }
   data: any;
   active = false;
   tablesWithData: string[];
   tables: Table[];
-  activeTables: string[] = ['GeneralInfo'];
-  screenSize: ScreenWidth;
+  activeTables: string[];
   loaded: boolean;
   public modifyLoaded: boolean = false;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
+  @Output() tablesLoaded: EventEmitter<boolean> = new EventEmitter();
 }
 
 export interface Columns {

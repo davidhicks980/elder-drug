@@ -102,7 +102,7 @@ export const slideDownAnimation = trigger('slideDown', [
 
 export const toolbarButtonAnimation = trigger('toolbarMargin', [
   // fade in when created. this could also be written as transition('void => *')
-  state('slideIn', style({ transform: 'translateX(-320px)' })),
+  state('slideIn', style({ transform: 'translateX(0px)' })),
   state('slideOut', style({ transform: 'translateX(0px)' })),
   transition('slideIn <=> slideOut', animate('240ms ease')),
 ]);
@@ -120,4 +120,38 @@ export const inputAnimation = trigger('inputSlideIn', [
     }),
     animate('200ms ease'),
   ]),
+]);
+
+export const formVisibleAnimation = trigger('toggleForm', [
+  state('visible', style({ transform: 'translateX(0em)' })),
+  state('hidden', style({ transform: 'translateX(-20.5em)' })),
+  transition('visible => hidden', animate('200ms ease-in')),
+  transition('hidden => visible', animate('200ms ease-out')),
+]);
+
+export const tableVisibleAnimation = trigger('toggleTables', [
+  state('static', style({ width: 'calc(98vw-(20.5em+20em)' })),
+  state('slide', style({ width: 'calc(98vw-20em)' })),
+  transition('static => slide', animate('400ms ease-out')),
+  transition('slide => static', animate('400ms ease-in')),
+]);
+
+export const contentAnimation = trigger('toggleContent', [
+  state('partial', style({ width: 'calc(100vw-20.5em)' })),
+  state('full', style({ width: '100vw' })),
+  transition('static => slide', animate('400ms ease-out')),
+  transition('slide => static', animate('400ms ease-in')),
+]);
+
+export const mobileSidenavAnimation = trigger('toggleMobileSidenav', [
+  state('visible', style({ transform: 'translateX(0em)' })),
+  state('hidden', style({ transform: 'translateX(-25em)' })),
+  transition('visible => hidden', animate('200ms ease-in')),
+  transition('hidden => visible', animate('200ms ease-out')),
+]);
+export const logoSlideAnimation = trigger('logoAnimation', [
+  state('fullScreen', style({ transform: 'translateX(-9.75em)' })),
+  state('partial', style({ transform: 'translateX(0em)' })),
+  transition('fullScreen => partial', animate('200ms ease-in')),
+  transition('partial => fullScreen', animate('200ms ease-out')),
 ]);

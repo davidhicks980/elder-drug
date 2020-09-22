@@ -98,7 +98,7 @@ export class EnterDrugFormComponent implements OnInit {
   }
 
   addDrug() {
-    if (this.drugs.length < 10) {
+    if (this.drugs.length < 8) {
       this.drugs.push(
         this.fb.control('', [
           Validators.pattern('[a-zA-Z ]*'),

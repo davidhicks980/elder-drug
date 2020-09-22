@@ -10,6 +10,7 @@ import {
 } from '../../animations';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { StateService, ScreenWidth } from '../../state.service';
 
 @Component({
   selector: 'app-med-table',
@@ -34,6 +35,8 @@ export class MedTableComponent implements OnChanges, OnInit {
   public selectorInitiated: boolean = false;
 
   public rationale: { expanded: boolean }[] = [];
+  sidenavActive: boolean;
+  smallScreen: boolean;
 
   changeActiveColumns(cols: string[]) {
     this.columnOptions = this.parameterService.lookupColumns(cols);
@@ -70,7 +73,8 @@ export class MedTableComponent implements OnChanges, OnInit {
   constructor(
     public parameterService: ParametersService,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private state: StateService
   ) {
     iconRegistry.addSvgIcon(
       'error.svg',

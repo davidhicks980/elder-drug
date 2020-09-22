@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   ViewChild,
-  AfterViewInit,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -15,8 +14,8 @@ import { Subject } from 'rxjs/internal/Subject';
 @Component({
   selector: 'modify-table-panel',
   template: ` <div class="selection-panel">
-    <div *ngIf="state.fullScreenSearch">
-      <div>
+    <div [fxShow.sm]="sidenavActive ? true : false" [fxShow.xs]="true" fxHide>
+      <div style="margin-left:2%">
         <h3>Show Tables</h3>
       </div>
       <section>
@@ -38,9 +37,14 @@ import { Subject } from 'rxjs/internal/Subject';
       </section>
     </div>
 
-    <div class="table-modifier-list" *ngIf="!state.fullScreenSearch">
+    <div
+      class="table-modifier-list"
+      [fxHide.sm]="sidenavActive ? true : false"
+      [fxHide.xs]="true"
+      fxShow
+    >
       <div class="panel-header">
-        <p>Show Tables</p>
+        <b>Active Tables</b>
       </div>
       <mat-selection-list
         #tableSelectionList
@@ -75,6 +79,8 @@ export class ModifyTablePanelComponent {
   public options: string[];
   public screenSize: ScreenWidth;
   @Output() loaded = new EventEmitter();
+  sidenavActive: boolean;
+  smallScreen: boolean;
 
   updateOptions(selections: string[]): void {
     this.state.emitSelectedTables(selections);
@@ -105,9 +111,10 @@ export class ModifyTablePanelComponent {
     private parameterService: ParametersService,
     public state: StateService
   ) {
-    this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      this.screenSize = screenSize;
+    this.state.sidenavStatus$.subscribe((active) => {
+      this.sidenavActive = active;
     });
+
     this.options = this.parameterService.columnDefinitions.map(
       (col) => col.name
     );

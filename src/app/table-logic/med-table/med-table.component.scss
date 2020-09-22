@@ -24,10 +24,12 @@ mat-chip-list mat-chip.mat-standard-chip {
 }
 
 mat-expansion-panel.table-expansion-panel {
-  box-shadow: none !important;
+  box-shadow: none;
   border: 1px solid rgb(218, 218, 218);
   overflow: hidden;
-  margin-left: 2vw;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  width: 95%;
 }
 
 mat-icon.mat-icon-16 {
@@ -45,4 +47,18 @@ mat-icon.mat-icon-24 {
   font-size: 24pt;
   color: $accent;
   font-family: "Material Icons Round";
+}
+
+div.padding {
+  margin: 0.5em;
+}
+
+span.show-when-small {
+  display: none;
+}
+
+@media screen and (max-width: 40em) {
+  span.show-when-small {
+    display: inherit;
+  }
 }

@@ -68,7 +68,9 @@
               class="ptable-data-cell ptable-data-cell--padding"
               *ngFor="let col of columns"
             >
-              <span class="ui-column-title">{{ col.header }}</span>
+              <span class="show-when-small ui-column-title"
+                ><b>{{ col.header }}</b></span
+              >
               {{ rowData[col.field] | toString | titlecase }}
             </td>
           </tr>
@@ -82,7 +84,7 @@
           <tr class="ptable-expand-row">
             <td [attr.colspan]="columns.length + 1" class="ptable-expand-body">
               <br />
-              <div @slideDown>
+              <div class="padding" @slideDown>
                 <div class="p-grid grid-height">
                   <div class="p-col-12 grid-term">
                     <b>Term: </b>{{ rowData["SearchTerm"] }}

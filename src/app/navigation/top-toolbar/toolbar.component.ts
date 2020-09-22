@@ -6,7 +6,6 @@ import { WebsocketService } from '../../websocket.service';
 import { ScreenWidth } from '../../state.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -50,6 +49,10 @@ export class ToolbarComponent {
   openAboutDialog() {
     this.dialog.open(AboutComponent, { width: '700px' });
   }
+
+  openDesignDialog() {
+    this.dialog.open(DesignComponent, { width: '700px' });
+  }
 }
 
 @Component({
@@ -63,3 +66,9 @@ export class DisclaimerComponent {}
   templateUrl: './about.html',
 })
 export class AboutComponent {}
+
+@Component({
+  selector: 'Design-component',
+  templateUrl: './design.html',
+})
+export class DesignComponent {}

@@ -5,11 +5,16 @@ mat-icon {
     cursor: pointer;
     font-family: "Material Icons Round";
     font-size: 16pt;
+    color: $primary;
   }
   &.trash-button {
     cursor: pointer;
     font-family: "Material Icons Round";
     font-size: 16pt;
+    color: gray;
+    &:hover {
+      color: red;
+    }
   }
 }
 
@@ -23,27 +28,24 @@ mat-icon {
 }
 
 section.drug-inputs {
-  overflow: auto;
+  overflow: visible;
   width: 100%;
-  min-height: 0px;
-  max-height: 60vh;
   position: relative;
-  margin-top: 1em;
   z-index: 1;
   & mat-form-field.form-array-width {
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
+    width: 95%;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
   }
 }
 
 @media (max-width: 599.99px) {
   section.drug-inputs {
-    padding-top: 1.5em;
-    padding-left: 0.3em;
-    padding-right: 0.3em;
-    width: 80%;
-    overflow: auto;
+    & mat-form-field.form-array-width {
+      width: 70%;
+      margin-left: 15%;
+      margin-right: 15%;
+    }
   }
 }
 

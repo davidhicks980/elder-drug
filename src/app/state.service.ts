@@ -15,6 +15,7 @@ export class StateService {
   public windowWidthSource = new Subject<{}>();
   public windowWidth$ = this.windowWidthSource.asObservable();
   public width: ScreenWidth;
+
   sidenavStatus$ = this.sidenavSource.asObservable();
 
   private tableStatusSource = new Subject<string[]>();
@@ -22,7 +23,8 @@ export class StateService {
   tableStatus$ = this.tableStatusSource.asObservable();
   matcher: any;
   mediaMatcher: any;
-  fullScreenSearch: boolean;
+  mobileWidth: boolean;
+
   toggleSidenav() {
     this.sidenavOpen = !this.sidenavOpen;
     this.sidenavSource.next(this.sidenavOpen);
@@ -37,15 +39,15 @@ export class StateService {
       .subscribe((state: BreakpointState) => {
         if (state.breakpoints['(max-width: 599.99px)']) {
           this.width = ScreenWidth.xSmall;
-          this.fullScreenSearch = true;
+          this.mobileWidth = true;
         } else if (
           state.breakpoints['(min-width: 600px) and (max-width: 959.99px)']
         ) {
           this.width = ScreenWidth.small;
-          this.fullScreenSearch = false;
+          this.mobileWidth = false;
         } else {
           this.width = ScreenWidth.large;
-          this.fullScreenSearch = false;
+          this.mobileWidth = false;
         }
         this.windowWidthSource.next(this.width);
       });

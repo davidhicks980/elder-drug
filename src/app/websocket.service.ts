@@ -27,7 +27,6 @@ export class WebsocketService {
 
   private queryBeers(drugs: number[]) {
     const compiledArray = [];
-    console.log(drugs);
     for (const drug of drugs) {
       compiledArray.push(this.beersMap.get(drug));
     }
@@ -124,7 +123,7 @@ export class WebsocketService {
 
   getUniqueListBy = (arr, key) => {
     return [...new Map(arr.map((item) => [item[key], item])).values()];
-  }
+  };
 
   constructor(private firestore: AngularFirestore) {
     this.queryBeersDropdown(firestore).then((res) => {

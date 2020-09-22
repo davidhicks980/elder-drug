@@ -4,7 +4,11 @@
     aria-label="You can look up drugs on Beers Criteria using this form"
     class="drug-inputs"
   >
-    <div formArrayName="drugs">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center space-around"
+      formArrayName="drugs"
+    >
       <div *ngFor="let drug of drugs.controls; let i = index">
         <mat-form-field
           appearance="outline"
@@ -40,8 +44,8 @@
             class="material-icons material-icons-round plus-button"
             (click)="addDrug(); trigger.closePanel(); stopPropagation()"
             *ngIf="i === 0"
-            color="accent"
             [inline]="true"
+            color="accent"
           >
             add_circle_outline
           </mat-icon>
@@ -49,7 +53,6 @@
             matSuffix
             matRipple
             [matRippleCentered]="true"
-            [matRippleRadius]="14"
             [matRippleUnbounded]="true"
             [inline]="true"
             class="material-icons-round trash-button"
@@ -57,9 +60,9 @@
               deleteFormControl(i); trigger.closePanel(); stopPropagation()
             "
             *ngIf="i > 0"
-            color="primary"
+            color="accent"
           >
-            delete
+            remove_circle_outline
           </mat-icon>
           <mat-error *ngIf="name(i).errors">
             Choose a drug from the dropdown

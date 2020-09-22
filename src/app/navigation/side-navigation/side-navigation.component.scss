@@ -1,102 +1,10 @@
 @import "../../../_colors.scss";
 
-.caduceus {
-  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
+div.search {
+  padding-top: 1em;
+  border-top: 1px solid lightgray;
 }
-div.header {
-  overflow: hidden;
-  z-index: 500;
-  width: 100%;
-}
-div.logo-title {
-  font-family: "Titillium Web" sans-serif;
-  font-size: 42pt;
-  font-weight: 700;
-  letter-spacing: -2px;
-  color: $gray;
-  text-align: center;
-}
-
-.logo-buffer {
-  padding-bottom: 3em;
-  padding-top: 1.4em;
-  position: absolute;
-  background: white;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-button.sidenav-chevron-left {
-  font-size: 24pt;
-  border: 2px solid $primary;
-  color: $primary;
-}
-
-button.sidenav-chevron-left:hover {
-  background-color: transparentize($color: $primary, $amount: 0.5%);
-}
-
-.spacer {
-  padding: 0.4em;
-}
-
-div body.main-subtitle {
-  font-family: "Roboto" sans-serif;
-  background-image: linear-gradient(
-    to right,
-    adjust-hue($primary, -15deg),
-    $primary
-  );
-  color: white;
-  padding: 0.5em;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.295);
-  font-size: 10pt;
-}
-div {
-  &.round-borders {
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
-  &.sharp-borders {
-    border-radius: none;
-  }
-}
-
-div.top-background {
-  background-color: $primary;
-}
-div.close-sidenav-fab {
-  width: 2.5em;
-  position: absolute;
-  z-index: 10000;
-  background-color: rgba(8, 43, 73, 0.055);
-  min-height: 5em;
-  height: 12%;
-  top: 44%;
-  right: 0%;
-  border: 1px solid rgba(4, 55, 75, 0.198);
-  border-top-left-radius: 60px;
-  border-bottom-left-radius: 60px;
-
-  &:hover {
-    background-color: transparentize($color: $accent, $amount: 0.8%);
-    cursor: pointer;
-  }
-  & mat-icon.close-sidenav-icon {
-    margin-left: 5px;
-    color: $gray;
-    cursor: pointer;
-    font-family: "Material Icons Round";
-  }
-}
-
-section.search {
-  background-color: white;
-  width: 100%;
-}
-
 button[mat-flat-button].search-button {
-  width: 90%;
   color: white;
   font-size: 14pt;
   background-image: linear-gradient(
@@ -118,7 +26,6 @@ button[mat-flat-button].search-button:hover {
     adjust-hue($primary, 10deg),
     adjust-hue($primary, 20deg)
   );
-  color: primary;
   text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
 }
 
@@ -156,12 +63,17 @@ button[mat-flat-button].search-button:hover {
   transform: skew(8deg) rotate(3deg);
 }
 
-.sidenav-flex {
-  max-height: 100vh;
-  display: grid;
-  grid-template-rows: 20vh auto 20vh;
+#searchForm {
+  height: 50em;
+  box-sizing: border-box;
 }
 
-#searchForm {
-  align-content: stretch;
+div.full-height {
+  height: calc(100vh - (12em));
+}
+
+app-enter-drug-form {
+  margin-top: 1em;
+  max-height: 70vh;
+  overflow: auto;
 }

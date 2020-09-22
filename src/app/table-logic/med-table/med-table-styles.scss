@@ -12,7 +12,7 @@ tr.ptable-body {
 
 tr.ptable-body--row {
   font-size: 10pt;
-  background: $tablebackground;
+  background: white;
   &:hover {
     box-shadow: 0 0 0 200px inset
       transparentize($color: $lightblue, $amount: 0.95%);
@@ -57,7 +57,6 @@ th.ptable-header-cell.ptable-header-cell--padding {
 }
 th.ptable-header-cell {
   text-align: left;
-  background: $tableaccent;
   font-size: 10pt;
   color: lighten($tableaccent, 70%);
   border-spacing: none;
@@ -70,12 +69,6 @@ th.ptable-header-cell {
   font-weight: 400;
   line-height: 7px;
 
-  &:last-of-type {
-    border-top-right-radius: 3px;
-  }
-  &:first-of-type {
-    border-top-left-radius: 3px;
-  }
   &:hover {
     color: lighten($brightAccent, 25%);
     background: lighten($tableaccent, 10%);
@@ -96,15 +89,15 @@ th.ptable-header-cell {
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  border: 2px solid $tableaccent;
+  border: 1px solid $tableaccent;
 }
 
 th.ptable-chevron-header {
-  border-top-left-radius: 4px;
   height: fit-content;
+  background: $primary !important;
 }
-.p-table-empty-header {
-  background: $tableaccent;
+.ptable-empty-header {
+  background: $primary !important;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   width: 100%;

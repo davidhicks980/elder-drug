@@ -1,77 +1,30 @@
-<mat-toolbar
-  id="toolbar"
-  [class]="sidenavActive ? 'null' : 'transition'"
-  *ngIf="loaded"
-  @dropIn
-  [class.mat-elevation-z4]="!sidenavActive && !state.fullScreenSearch"
-  [class.mat-elevation-z8]="sidenavActive && !state.fullScreenSearch"
+<div
+  fxLayoutAlign="space-between center"
+  [fxLayout]="state.mobileWidth ? 'column' : 'row'"
+  class="toolbar-content-height"
 >
-  <mat-toolbar-row
-    [class.mat-elevation-z4]="state.fullScreenSearch"
-    [fxLayoutAlign]="
-      !state.fullScreenSearch ? 'space-between center' : 'space-between center'
-    "
-    fxLayout="row"
+  <div
+    [fxLayout]="state.mobileWidth ? 'column' : 'row'"
+    fxLayoutAlign="start center"
   >
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <button
-        mat-icon-button
-        [disableRipple]="true"
-        [class]="sidenavActive ? 'dark-menu' : 'light-menu'"
-        (click)="state.toggleSidenav()"
-      >
-        <mat-icon
-          matRipple
-          [matRippleCentered]="true"
-          [matRippleUnbounded]="true"
-          [matRippleRadius]="20"
-          [inline]="true"
-          class="mat-icon-24"
-          [innerHTML]="sidenavActive ? 'chevron_left' : 'menu'"
-        ></mat-icon>
-      </button>
-
-      <app-logo
-        [hidden]="sidenavActive ? true : false"
-        [altColor]="state.fullScreenSearch && sidenavActive ? true : false"
-      ></app-logo>
-
-      <div *ngIf="!state.fullScreenSearch">
-        <span class="tool-title">Your Search</span>
-      </div>
-    </div>
-
-    <div style="width: 2.7em"></div>
-    <div
-      fxLayout="end center"
-      fxLayoutGap="20px"
-      fxFlexLayout="row"
-      [@toolbarMargin]="sidenavActive ? 'slideIn' : 'slideOut'"
+    <app-logo [title]="true" [altColor]="true"></app-logo>
+    <span [class]="state.mobileWidth ? 'large-title' : 'small-title'"
+      >Elder Drug</span
     >
-      <button
-        [class]="
-          sidenavActive ? 'toolbar-primary-button' : 'toolbar-white-button'
-        "
-        mat-button
-        (click)="openDisclaimerDialog()"
-      >
-        Disclaimer
-      </button>
-      <button
-        [class]="
-          sidenavActive ? 'toolbar-primary-button' : 'toolbar-white-button'
-        "
-        mat-button
-        (click)="openAboutDialog()"
-      >
-        About
-      </button>
-    </div>
-  </mat-toolbar-row>
-  <mat-toolbar-row
-    *ngIf="state.fullScreenSearch"
-    fxLayoutAlign="space-between center"
+  </div>
+
+  <div
+    class="buttons-div"
+    fxLayoutGap="1.5em"
+    fxLayout="row"
+    fxLayoutAlign="space-evenly center"
   >
-    <div><span class="tool-title">Your Search</span></div>
-  </mat-toolbar-row>
-</mat-toolbar>
+    <a class="toolbar-primary-button" (click)="openDesignDialog()">Design</a>
+    <span>/</span>
+    <a class="toolbar-primary-button" (click)="openAboutDialog()">About</a>
+    <span>/</span>
+    <a class="toolbar-primary-button" (click)="openDisclaimerDialog()">
+      Disclaimer
+    </a>
+  </div>
+</div>

@@ -1,52 +1,5 @@
 @import "../../_colors.scss";
 
-.material-container {
-  height: 100vh;
-}
-
-.mat-drawer-content {
-  height: 100vh;
-  overflow-y: auto;
-  background: rgb(250, 250, 250);
-}
-
-.caduceus {
-  text-shadow: 0 0.5px 0 rgba(105, 105, 105, 0.4);
-}
-
-.minus-button {
-  cursor: pointer;
-  text-align: center;
-  padding-top: 1px;
-  border-radius: 10;
-  height: 100%;
-  color: $accent;
-  opacity: 90%;
-}
-.minus-button:hover {
-  opacity: 100%;
-}
-
-.plus-button {
-  cursor: pointer;
-  text-align: center;
-  padding-top: 1px;
-  border-radius: 10;
-  color: $primary;
-  opacity: 90%;
-}
-.plus-button:hover {
-  opacity: 100%;
-}
-
-.add-remove {
-  height: 100%;
-}
-
-.search-drugs {
-  padding-top: 2em;
-}
-
 .disable-text-selection {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -54,30 +7,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-div.logo-title {
-  font-family: $headerfont;
-  font-size: 42pt;
-  font-weight: 700;
-  letter-spacing: -2px;
-  color: #414042;
-  text-align: center;
-}
-
-mat-sidenav .logo-buffer {
-  padding-bottom: 2em;
-}
-
-mat-sidenav.material-sidenav {
-  width: 21.8em;
-  border-right: 1px inset rgba(70, 70, 70, 0.404);
-  height: 100vh;
-}
-
-mat-sidenav.material-fullscreen-sidenav {
-  width: 100vw;
-  border-right: 1px inset rgba(70, 70, 70, 0.404);
 }
 
 button.sidenav-chevron-left {
@@ -90,19 +19,91 @@ button.sidenav-chevron-left:hover {
   background-color: transparentize($color: $primary, $amount: 0.5%);
 }
 
-$toolbar: 6em;
+$toolbar: 5em;
 
-.toolbar {
-  height: $toolbar;
-  width: 100%;
+div.grid-layout {
+  display: grid;
+  grid-template-columns: 20.5em auto;
+  border-bottom: 1px solid lightgray;
+  overflow: visible;
+}
+div.full-layout {
+  position: absolute;
+  width: 100vw;
+}
+
+.small-toolbar {
+  color: $gray;
+  height: 9.5em;
+  border-bottom: 1px solid lightgray;
+}
+
+.large-toolbar {
+  background: white;
+  color: $gray;
+  height: 5em;
+  border-bottom: 1px solid lightgray;
+  & app-toolbar {
+    height: 100%;
+  }
 }
 
 .sidebar {
   height: calc(100vh - #{$toolbar});
-  width: 21em;
-  box-sizing: border-box;
+  max-height: calc(100vh - #{$toolbar});
+  border-right: 1px solid lightgray;
+  max-width: 100vw;
+  & app-side-navigation {
+    height: 100%;
+  }
+  & .small {
+    position: absolute;
+    z-index: 10000;
+  }
 }
 
-.outline {
-  border: 1px solid gray;
+.content {
+  background-color: rgb(250, 250, 253);
+  height: 100vh;
+  overflow: visible;
+}
+
+div.subtitle {
+  background-image: $toolbar-gradient;
+  z-index: 200;
+  color: white;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  max-height: 40px;
+  line-height: 0px;
+  font-size: 12pt;
+}
+
+div.side-arrow {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 100;
+  height: 100%;
+  width: 2em;
+  border-left: 1px solid lighten($primary, 10%);
+  cursor: pointer;
+  background: lighten($lightprimary, 40%);
+  color: $primary;
+  &:hover {
+    background: lighten($primary, 53%);
+  }
+}
+
+.big-logo-container {
+  filter: grayscale(0.5);
+  opacity: 70%;
+  background-size: 20em 10%;
+}
+
+.overlay-container {
+  position: absolute;
+  margin-left: 50vw;
+  margin-top: 5vh;
 }

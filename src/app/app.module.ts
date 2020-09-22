@@ -35,9 +35,12 @@ import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modi
 import { environment } from '../environments/environment';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { AccordionModule } from 'primeng/accordion';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AboutComponent } from './navigation/top-toolbar/toolbar.component';
+import {
+  AboutComponent,
+  DesignComponent,
+} from './navigation/top-toolbar/toolbar.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import { AboutComponent } from './navigation/top-toolbar/toolbar.component';
     ToStringPipe,
     DisclaimerComponent,
     AboutComponent,
+    DesignComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -74,10 +78,10 @@ import { AboutComponent } from './navigation/top-toolbar/toolbar.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ScrollingModule,
-    AccordionModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    OverlayModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
