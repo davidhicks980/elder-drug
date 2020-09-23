@@ -6,14 +6,14 @@
 .main-content-box {
   overflow: auto;
   min-width: calc(100vw-20.5em);
-  max-height: calc(100vh - (40px + 5em));
   margin-top: 13px;
   width: 100%;
   margin-bottom: 20em;
+  height: 100%;
 }
 @media (max-width: 599.99px) {
   .main-content-box {
-    max-height: calc(100vh - (40px + 9.5em));
+    height: 100%;
   }
 }
 
@@ -36,13 +36,6 @@ div.content-container {
   overflow: auto;
 }
 
-div.topnav {
-  background-image: $nav-gradient;
-  height: 40px;
-  max-height: 40px;
-  color: white;
-}
-
 div.panel-width {
   width: 100%;
 }
@@ -61,5 +54,29 @@ div.full {
   }
   &.tables {
     width: calc(98vw-20em);
+  }
+}
+
+p-scrollPanel {
+  p {
+    padding: 0.5rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &.custombar1 {
+    .p-scrollpanel-wrapper {
+      border-right: 9px solid var(--layer-1);
+    }
+
+    .p-scrollpanel-bar {
+      background-color: var(--primary-color);
+      opacity: 1;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #007ad9;
+      }
+    }
   }
 }

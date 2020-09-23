@@ -32,10 +32,11 @@ section.drug-inputs {
   width: 100%;
   position: relative;
   z-index: 1;
+  margin-top: 0.5em;
   & mat-form-field.form-array-width {
-    width: 95%;
-    margin-left: 0.4em;
-    margin-right: 0.4em;
+    width: 90%;
+    margin-left: 0.975em;
+    margin-right: 0.975em;
   }
 }
 

@@ -20,28 +20,27 @@ button.sidenav-chevron-left:hover {
 }
 
 $toolbar: 5em;
-
+$toolbar-small: 9.5em;
 div.grid-layout {
   display: grid;
   grid-template-columns: 20.5em auto;
-  border-bottom: 1px solid lightgray;
-  overflow: visible;
+  overflow-x: visible;
 }
 div.full-layout {
-  position: absolute;
+  position: relative;
   width: 100vw;
 }
 
 .small-toolbar {
   color: $gray;
-  height: 9.5em;
+  height: $toolbar-small;
   border-bottom: 1px solid lightgray;
 }
 
 .large-toolbar {
   background: white;
   color: $gray;
-  height: 5em;
+  height: $toolbar;
   border-bottom: 1px solid lightgray;
   & app-toolbar {
     height: 100%;
@@ -49,8 +48,6 @@ div.full-layout {
 }
 
 .sidebar {
-  height: calc(100vh - #{$toolbar});
-  max-height: calc(100vh - #{$toolbar});
   border-right: 1px solid lightgray;
   max-width: 100vw;
   & app-side-navigation {
@@ -64,8 +61,13 @@ div.full-layout {
 
 .content {
   background-color: rgb(250, 250, 253);
-  height: 100vh;
-  overflow: visible;
+  overflow-y: auto;
+  &.large {
+    height: calc(100vh - #{$toolbar});
+  }
+  &.small {
+    height: calc(100vh - #{$toolbar-small});
+  }
 }
 
 div.subtitle {
@@ -105,5 +107,25 @@ div.side-arrow {
 .overlay-container {
   position: absolute;
   margin-left: 50vw;
-  margin-top: 5vh;
+  margin-top: 15vh;
+}
+main.main-box {
+  max-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+}
+
+div.topnav {
+  background-image: $nav-gradient;
+  height: 40px;
+  max-height: 40px;
+  color: white;
+  position: fixed;
+  width: 100%;
+  border-left: lighten($primary, 20%);
+  overflow: visible;
+  box-sizing: content-box;
+  &:hover {
+    background-image: $toolbar-gradient;
+  }
 }

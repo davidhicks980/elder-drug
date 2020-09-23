@@ -3,10 +3,6 @@
   rel="stylesheet"
 />
 
-<header [class]="state.mobileWidth ? 'small-toolbar' : 'large-toolbar'">
-  <app-toolbar></app-toolbar>
-</header>
-
 <div
   fxShow.xs="true"
   fxHide.gt-xs="true"
@@ -41,25 +37,59 @@
     ></app-logo>
   </div>
 </ng-template>
-<div
-  [@toggleForm]="sidenavActive ? 'visible' : 'hidden'"
-  [class]="state.mobileWidth && sidenavActive ? 'full-layout' : 'grid-layout'"
->
-  <aside [class]="state.mobileWidth ? 'sidebar small' : 'sidebar'">
+<main class="p-grid p-nogutter">
+  <div class="p-col-12">
+    <header [class]="state.mobileWidth ? 'small-toolbar' : 'large-toolbar'">
+      <app-toolbar></app-toolbar>
+    </header>
+  </div>
+  <div
+    class="p-col-12"
+    [style]="
+      state.mobileWidth || sidenavActive
+        ? 'width:100vw'
+        : 'width:calc(100vw + 20.5em)'
+    "
+  >
     <div
-      fxLayoutAlign="center center"
-      *ngIf="!state.mobileWidth"
-      class="subtitle"
+      [@toggleForm]="sidenavActive ? 'visible' : 'hidden'"
+      [class]="
+        state.mobileWidth && sidenavActive ? 'full-layout' : 'grid-layout'
+      "
     >
-      A Tool for Beers Criteria
-    </div>
+      <aside [class]="state.mobileWidth ? 'sidebar small' : 'sidebar'">
+        <div
+          fxLayoutAlign="center center"
+          *ngIf="!state.mobileWidth"
+          class="subtitle p-shadow-4"
+        >
+          A Tool for Beers Criteria
+        </div>
 
-    <app-side-navigation #sideNav></app-side-navigation>
-  </aside>
-  <main class="content">
-    <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
-  </main>
-</div>
+        <app-side-navigation #sideNav></app-side-navigation>
+      </aside>
+      <div>
+        <div class="topnav p-shadow-4">
+          <button
+            style="margin-left: 0.4em"
+            mat-icon-button
+            (click)="this.state.toggleSidenav()"
+          >
+            <mat-icon
+              [innerHTML]="sidenavActive ? 'chevron_left' : 'menu'"
+            ></mat-icon>
+          </button>
+        </div>
+        <main
+          style="margin-top: 40px"
+          [class]="state.mobileWidth ? 'content small' : 'content large'"
+        >
+          <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
+        </main>
+      </div>
+    </div>
+  </div>
+</main>
 
 <!--<mat-sidenav-container
   keyup.enter="search(submission)"

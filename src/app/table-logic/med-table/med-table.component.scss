@@ -25,11 +25,18 @@ mat-chip-list mat-chip.mat-standard-chip {
 
 mat-expansion-panel.table-expansion-panel {
   box-shadow: none;
-  border: 1px solid rgb(218, 218, 218);
+  border: 1px solid lightgray;
   overflow: hidden;
   margin-left: 2.5%;
   margin-right: 2.5%;
-  width: 95%;
+  transition: 0.3s cubic-bezier(0.1, 0.2, 0.2, 0.1);
+  &:hover {
+    border: 1px solid $gray;
+    background: white;
+  }
+  & > mat-expansion-panel-header.according-header {
+    background: white;
+  }
 }
 
 mat-icon.mat-icon-16 {

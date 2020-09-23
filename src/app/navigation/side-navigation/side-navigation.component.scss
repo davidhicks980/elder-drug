@@ -3,15 +3,12 @@
 div.search {
   padding-top: 1em;
   border-top: 1px solid lightgray;
+  margin-bottom: 10vh;
 }
 button[mat-flat-button].search-button {
   color: white;
   font-size: 14pt;
-  background-image: linear-gradient(
-    to right,
-    adjust-hue($primary, -15deg),
-    $primary
-  );
+  background: $primary;
   font-weight: 400;
   max-width: 30em;
   height: 2.2em;
@@ -21,11 +18,7 @@ button[mat-flat-button].search-button {
 
 button[mat-flat-button].search-button:hover {
   transition: ease-in 0.05s;
-  background-image: linear-gradient(
-    to right,
-    adjust-hue($primary, 10deg),
-    adjust-hue($primary, 20deg)
-  );
+  background-image: $toolbar-gradient;
   text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
 }
 

@@ -12,7 +12,7 @@
       <div *ngFor="let drug of drugs.controls; let i = index">
         <mat-form-field
           appearance="outline"
-          color="accent"
+          color="primary"
           @inputSlideIn
           class="form-array-width"
         >
@@ -45,7 +45,6 @@
             (click)="addDrug(); trigger.closePanel(); stopPropagation()"
             *ngIf="i === 0"
             [inline]="true"
-            color="accent"
           >
             add_circle_outline
           </mat-icon>
@@ -60,7 +59,6 @@
               deleteFormControl(i); trigger.closePanel(); stopPropagation()
             "
             *ngIf="i > 0"
-            color="accent"
           >
             remove_circle_outline
           </mat-icon>

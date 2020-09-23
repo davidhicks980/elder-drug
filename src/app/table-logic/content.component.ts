@@ -18,18 +18,6 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'app-content',
   template: `
-    <div class="topnav">
-      <button
-        style="margin-left: 0.4em"
-        mat-icon-button
-        (click)="this.state.toggleSidenav()"
-      >
-        <mat-icon
-          [innerHTML]="sidenavActive ? 'chevron_left' : 'menu'"
-        ></mat-icon>
-      </button>
-    </div>
-
     <div [class]="sidenavActive ? 'partial content' : 'full content'">
       <div
         [hidden]="loaded"
@@ -57,6 +45,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
             </app-med-table>
             <div class="table-spacer"></div>
           </div>
+          <br />
         </div>
         <div
           #modifyPanel

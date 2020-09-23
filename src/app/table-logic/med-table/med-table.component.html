@@ -3,7 +3,7 @@
   class="table-expansion-panel"
   matExpansionPanelContent
 >
-  <mat-expansion-panel-header>{{
+  <mat-expansion-panel-header class="accordion-header">{{
     tableName | caseSplit
   }}</mat-expansion-panel-header>
 
@@ -17,6 +17,7 @@
     <div *ngIf="tableName === 'GeneralInfo'">
       This table is meant to display all drugs that flag, no matter the reason.
       More specific sorting can be found in other tables
+      <br />
     </div>
     <div class="p-table-background">
       <p-table
@@ -204,4 +205,6 @@
       </p-table>
     </div>
   </div>
+
+  <br />
 </mat-expansion-panel>

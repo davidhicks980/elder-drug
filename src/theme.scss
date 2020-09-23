@@ -80,9 +80,9 @@ button[mat-flat-button]:active {
 .mat-form-field-appearance-outline:not(.mat-form-field-disabled)
   .mat-form-field-flex:hover
   .mat-form-field-outline-thick {
-  color: lighten($accent, 20%);
+  color: lighten($gray, 20%);
   & :active {
-    color: $accent;
+    color: $gray;
   }
 }
 .mat-drawer-inner-container {
@@ -189,4 +189,41 @@ table {
 
 .p-datatable table {
   background: white;
+}
+
+.mat-expansion-panel
+  .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled="true"]),
+.mat-expansion-panel
+  .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled="true"]),
+.mat-expansion-panel:not(.mat-expanded)
+  .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+  background: none;
+}
+
+mat-pseudo-checkbox.mat-pseudo-checkbox {
+  border: 1px solid $gray !important;
+  & .mat-pseudo-checkbox-checked,
+  .mat-pseudo-checkbox-indeterminate,
+  .mat-accent .mat-pseudo-checkbox-checked,
+  .mat-accent .mat-pseudo-checkbox-indeterminate {
+    background: $gray !important;
+  }
+}
+
+.mat-pseudo-checkbox-checked::after {
+  left: 2px !important;
+}
+
+mat-list-option {
+  & .mat-list-text > div.list-text {
+    font-size: 9.5pt !important;
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 4px 0 0 4px !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 0 4px 4px 0 !important;
 }

@@ -41,6 +41,8 @@ import {
   DesignComponent,
 } from './navigation/top-toolbar/toolbar.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
       enabled: environment.production,
     }),
     OverlayModule,
+    ScrollPanelModule,
+    PanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

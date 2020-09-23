@@ -13,18 +13,17 @@ div.table-modifier-list {
 .panel-header {
   padding-top: 10px;
   line-height: 20px;
-
   font-size: 11pt;
   color: $gray;
   font-weight: 400;
   padding-left: 0.5em;
 }
+mat-list-option.color-list-option {
+  color: $gray;
+}
 
 mat-selection-list.mat-list-base {
   padding-top: 1px;
-}
-.mat-list-base .mat-list-option {
-  font-size: 10pt;
 }
 
 ul.toggle-group {
