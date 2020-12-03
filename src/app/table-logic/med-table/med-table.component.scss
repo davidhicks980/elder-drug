@@ -27,9 +27,8 @@ mat-expansion-panel.table-expansion-panel {
   box-shadow: none;
   border: 1px solid lightgray;
   overflow: hidden;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
   transition: 0.3s cubic-bezier(0.1, 0.2, 0.2, 0.1);
+
   &:hover {
     border: 1px solid $gray;
     background: white;
@@ -40,10 +39,10 @@ mat-expansion-panel.table-expansion-panel {
 }
 
 mat-icon.mat-icon-16 {
-  font-size: 14pt;
-  color: rgb(226, 235, 255);
-  transition: ease 0.5s;
-  font-family: "Material Icons Round";
+  height: 25px;
+  color: white;
+  transition: ease 0.4s;
+  transform-origin: center;
 
   &:hover {
     color: $accent;
@@ -51,9 +50,10 @@ mat-icon.mat-icon-16 {
   }
 }
 mat-icon.mat-icon-24 {
-  font-size: 24pt;
   color: $accent;
-  font-family: "Material Icons Round";
+  height: 40px;
+  width: 20%;
+  margin-top: 5px;
 }
 
 div.padding {
@@ -63,8 +63,12 @@ div.padding {
 span.show-when-small {
   display: none;
 }
-
-@media screen and (max-width: 40em) {
+.grid-header {
+  font-weight: 500;
+  margin: 0 0 0 0;
+  color: black;
+}
+@media screen and (max-width: 599px) {
   span.show-when-small {
     display: inherit;
   }

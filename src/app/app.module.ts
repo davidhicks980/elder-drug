@@ -34,7 +34,7 @@ import { SideNavigationComponent } from './navigation/side-navigation/side-navig
 import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
 import { environment } from '../environments/environment';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {
   AboutComponent,
@@ -43,6 +43,7 @@ import {
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PanelModule } from 'primeng/panel';
+import { LogoLargeComponent } from './logo-large/logo-large.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PanelModule } from 'primeng/panel';
     DisclaimerComponent,
     AboutComponent,
     DesignComponent,
+    LogoLargeComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -86,6 +88,7 @@ import { PanelModule } from 'primeng/panel';
     OverlayModule,
     ScrollPanelModule,
     PanelModule,
+    NgxDatatableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

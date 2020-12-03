@@ -1,14 +1,18 @@
 <div
   fxLayoutAlign="space-between center"
-  [fxLayout]="state.mobileWidth ? 'column' : 'row'"
+  [fxLayout]="state.mobileWidth && !shrinkHeader ? 'column' : 'row'"
   class="toolbar-content-height"
 >
   <div
-    [fxLayout]="state.mobileWidth ? 'column' : 'row'"
+    [fxLayout]="state.mobileWidth && !shrinkHeader ? 'column' : 'row'"
     fxLayoutAlign="start center"
+    class="title-container"
   >
     <app-logo [title]="true" [altColor]="true"></app-logo>
-    <span [class]="state.mobileWidth ? 'large-title' : 'small-title'"
+    <span
+      [class]="
+        state.mobileWidth && !shrinkHeader ? 'large-title' : 'small-title'
+      "
       >Elder Drug</span
     >
   </div>

@@ -5,16 +5,12 @@
 
 .main-content-box {
   overflow: auto;
-  min-width: calc(100vw-20.5em);
   margin-top: 13px;
-  width: 100%;
-  margin-bottom: 20em;
+  min-width: inherit;
+
+  margin-bottom: 210px;
   height: 100%;
-}
-@media (max-width: 599.99px) {
-  .main-content-box {
-    height: 100%;
-  }
+  padding: 8px;
 }
 
 #expansionPanel {
@@ -28,55 +24,29 @@ div.table-spacer {
 }
 
 #modifyPanel {
-  width: 20em;
-  position: fixed;
+  width: 210px;
 }
 
 div.content-container {
   overflow: auto;
 }
 
-div.panel-width {
-  width: 100%;
-}
-
-div.partial {
+div.sidenav-open {
   &.content {
-    width: calc(100vw-20.5em);
+    width: calc(100vw - 285px);
+  }
+}
+div.sidenav-closed {
+  &.content {
+    width: calc(100vw + 20px);
   }
   &.tables {
-    width: calc(98vw- (20.5em+20em));
-  }
-}
-div.full {
-  &.content {
-    width: 100vw;
-  }
-  &.tables {
-    width: calc(98vw-20em);
+    width: calc(100vw - 215px);
   }
 }
 
-p-scrollPanel {
-  p {
-    padding: 0.5rem;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  &.custombar1 {
-    .p-scrollpanel-wrapper {
-      border-right: 9px solid var(--layer-1);
-    }
-
-    .p-scrollpanel-bar {
-      background-color: var(--primary-color);
-      opacity: 1;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background-color: #007ad9;
-      }
-    }
+@media screen and (max-width: 599.9px) {
+  div.sidenav-closed.tables {
+    width: 100%;
   }
 }

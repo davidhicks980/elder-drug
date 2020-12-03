@@ -1,8 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 //prettier-ignore
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Round");
-@import "./primeflex.min.css";
 
 ::-webkit-scrollbar {
   width: 12px;
@@ -201,7 +199,7 @@ table {
 }
 
 mat-pseudo-checkbox.mat-pseudo-checkbox {
-  border: 1px solid $gray !important;
+  border-radius: 4px;
   & .mat-pseudo-checkbox-checked,
   .mat-pseudo-checkbox-indeterminate,
   .mat-accent .mat-pseudo-checkbox-checked,

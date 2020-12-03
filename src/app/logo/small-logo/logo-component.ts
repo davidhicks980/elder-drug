@@ -8,13 +8,6 @@ import { StateService, ScreenWidth } from '../../state.service';
   styleUrls: ['./logo.component.scss'],
   animations: [
     trigger('openClose', [
-      transition(':enter', [
-        style({
-          width: '0px',
-          opacity: 0.01,
-        }),
-        animate('0.3s ease-out'),
-      ]),
       transition(':leave', [
         style({
           width: '3.5em',

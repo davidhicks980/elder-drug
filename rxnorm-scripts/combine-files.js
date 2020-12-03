@@ -17,6 +17,7 @@ var dropdownPaths = [
     './json-out/diuretics-generics-dropdown.json',
     './json-out/antispasmodics-generics-dropdown.json',
     './json-out/antidepressives-generics-dropdown.json',
+    './json-out/antiepileptics-generics-dropdown.json',
 ];
 fs_1.writeFileSync('./all-generics-items.json', '');
 function combineFiles(paths, out) {

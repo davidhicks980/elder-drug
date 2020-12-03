@@ -12,7 +12,6 @@ a.toolbar-primary-button {
   font-weight: bold;
   cursor: pointer;
   color: $primary;
-  transition: 400ms ease;
   &:hover {
     color: $accent;
   }
@@ -23,16 +22,20 @@ div.dialog {
 }
 
 span {
-  font-family: $headerfont;
-
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 600;
   &.small-title {
     font-size: 32pt;
+    letter-spacing: -1px;
   }
   &.large-title {
     font-size: 35pt;
   }
 }
 
+.title-container {
+  padding-left: 0.5em;
+}
 mat-icon.mat-icon-24 {
   font-size: 20pt;
   color: $accent;

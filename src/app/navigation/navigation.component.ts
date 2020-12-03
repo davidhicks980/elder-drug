@@ -2,12 +2,12 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { StateService, ScreenWidth } from '../state.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import {
   tableVisibleAnimation,
   mobileSidenavAnimation,
   logoSlideAnimation,
-} from '../animations';
-import {
   slideInLeft,
   dropInAnimation,
   formVisibleAnimation,
@@ -27,13 +27,14 @@ import {
     logoSlideAnimation,
   ],
 })
-export class NavigationComponent implements AfterViewInit, OnInit {
+export class NavigationComponent implements AfterViewInit {
   @ViewChild('leftdrawer') public sidenav: MatSidenav;
-  sidenavActive: boolean;
+  sidenavActive: boolean = true;
   public screenSize: ScreenWidth;
   breakpointWidth: ScreenWidth;
   stateLoaded: boolean;
   public tablesLoaded: boolean = false;
+  shrinkHeader: boolean;
 
   ngAfterViewInit() {
     if (this.state.breakpointObserver.isMatched('(max-width: 599.99px)')) {
@@ -49,15 +50,12 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     }
     this.state.windowWidthSource.next(this.breakpointWidth);
   }
-  ngOnInit() {
-    this.state.sidenavStatus$.subscribe((isOpen: boolean) => {
-      this.sidenavActive = isOpen;
-      this.stateLoaded = true;
-    });
-  }
+
   constructor(
     public webSocketService: WebsocketService,
-    public state: StateService
+    public state: StateService,
+    iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
   ) {
     this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
       this.screenSize = screenSize;
@@ -65,5 +63,22 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     this.state.sidenavStatus$.subscribe((status) => {
       this.sidenavActive = status;
     });
+
+    iconRegistry.addSvgIcon(
+      'chevron_right',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/chevron_right.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'chevron_left',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/chevron_left.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'menu',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
+    );
   }
 }

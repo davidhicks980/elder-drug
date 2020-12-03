@@ -41,8 +41,8 @@ yarn-error.log
 testem.log
 /typings
 /keys
-
-
+/rxnorm-scripts
+/database
 # System Files
 .DS_Store
 Thumbs.db

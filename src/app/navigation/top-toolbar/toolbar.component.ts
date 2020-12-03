@@ -1,29 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StateService } from 'src/app/state.service';
-import { dropInAnimation, toolbarButtonAnimation } from '../../animations';
 import { MatDialog } from '@angular/material/dialog';
 import { WebsocketService } from '../../websocket.service';
 import { ScreenWidth } from '../../state.service';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  animations: [dropInAnimation, toolbarButtonAnimation],
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
   sidenavActive: boolean = true;
   public iconName = 'menu';
   @Input() loaded = false;
   screenSize: ScreenWidth;
+  shrinkHeader: boolean;
 
   constructor(
     public fire: WebsocketService,
     public state: StateService,
-    public dialog: MatDialog,
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    public dialog: MatDialog
   ) {
     state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
       this.screenSize = screenSize;
@@ -31,16 +27,19 @@ export class ToolbarComponent {
     this.state.sidenavStatus$.subscribe((isOpen: boolean) => {
       this.sidenavActive = isOpen;
     });
-    iconRegistry.addSvgIcon(
-      'menu.svg',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'chevron_left.svg',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_left.svg'
-      )
-    );
+  }
+  ngOnInit(): void {
+    this.animateHeader();
+  }
+
+  animateHeader() {
+    window.onscroll = () => {
+      if (window.pageYOffset > 120) {
+        this.shrinkHeader = true;
+      } else {
+        this.shrinkHeader = false;
+      }
+    };
   }
 
   openDisclaimerDialog() {

@@ -1,872 +1,844 @@
 [
   {
-    "id": 9,
-    "name": "Diphenhydramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3498/related.json?tty=bn"
+    "id": 137,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 18,
-    "name": "Clidinium",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21232/related.json?tty=bn"
+    "id": 155,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 71,
-    "name": "Quazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35185/related.json?tty=bn"
+    "id": 157,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 25,
-    "name": "Trihexyphidyl",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10811/related.json?tty=bn"
+    "id": 169,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 56,
-    "name": "Mephobarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6758/related.json?tty=bn"
+    "id": 179,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 60,
-    "name": "Alprazolam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/596/related.json?tty=bn"
+    "id": 200,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 13,
-    "name": "Promethazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8745/related.json?tty=bn"
+    "id": 52,
+    "name": "aripiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
   },
   {
-    "id": 28,
-    "name": "Doxazosin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn"
+    "id": 137,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 36,
-    "name": "Reserpine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9260/related.json?tty=bn"
+    "id": 155,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 29,
-    "name": "Prazosin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn"
+    "id": 157,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 65,
-    "name": "Triazolam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10767/related.json?tty=bn"
+    "id": 169,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 2,
-    "name": "Carbinoxamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/20220/related.json?tty=bn"
+    "id": 179,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 39,
-    "name": "Digoxin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3407/related.json?tty=bn"
+    "id": 200,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 66,
-    "name": "Chlordiazepoxide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2356/related.json?tty=bn"
+    "id": 52,
+    "name": "aripiprazole lauroxil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
   },
   {
-    "id": 53,
-    "name": "Amobarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/719/related.json?tty=bn"
+    "id": 137,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 4,
-    "name": "Clemastine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2578/related.json?tty=bn"
+    "id": 155,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 33,
-    "name": "Guanabenz",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5033/related.json?tty=bn"
+    "id": 157,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 3,
-    "name": "Chlorpheniramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2400/related.json?tty=bn"
+    "id": 169,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 1,
-    "name": "Brompheniramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1767/related.json?tty=bn"
+    "id": 179,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 42,
-    "name": "Amitriptyline",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/704/related.json?tty=bn"
+    "id": 200,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 64,
-    "name": "Temazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10355/related.json?tty=bn"
+    "id": 52,
+    "name": "asenapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
   },
   {
-    "id": 6,
-    "name": "Dexbrompheniramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/22696/related.json?tty=bn"
+    "id": 137,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 44,
-    "name": "Clomipramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2597/related.json?tty=bn"
+    "id": 155,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 8,
-    "name": "Dimenhydrinate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3444/related.json?tty=bn"
+    "id": 157,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 11,
-    "name": "Hydroxyzine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5553/related.json?tty=bn"
+    "id": 169,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 10,
-    "name": "Doxylamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3642/related.json?tty=bn"
+    "id": 179,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 51,
-    "name": "Trimipramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10834/related.json?tty=bn"
+    "id": 200,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 54,
-    "name": "Butabarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/477631/related.json?tty=bn"
+    "id": 52,
+    "name": "brexpiprazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
   },
   {
-    "id": 55,
-    "name": "Butalbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/19860/related.json?tty=bn"
+    "id": 137,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 57,
-    "name": "Pentobarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8004/related.json?tty=bn"
+    "id": 155,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 37,
-    "name": "Disopyramide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3541/related.json?tty=bn"
+    "id": 157,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 16,
-    "name": "Atropine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+    "id": 169,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 40,
-    "name": "Nifedipine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7417/related.json?tty=bn"
+    "id": 179,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 7,
-    "name": "Dexchlorpheniramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/22697/related.json?tty=bn"
+    "id": 200,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 27,
-    "name": "Nitrofurantoin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7454/related.json?tty=bn"
+    "id": 52,
+    "name": "cariprazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
   },
   {
-    "id": 19,
-    "name": "Dicyclomine Homatropine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
-  },
-  {
-    "id": 30,
-    "name": "Terazosin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/37798/related.json?tty=bn"
-  },
-  {
-    "id": 86,
-    "name": "Glimepiride",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25789/related.json?tty=bn"
-  },
-  {
-    "id": 47,
-    "name": "Imipramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5691/related.json?tty=bn"
-  },
-  {
-    "id": 41,
-    "name": "Amiodarone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/703/related.json?tty=bn"
-  },
-  {
-    "id": 45,
-    "name": "Desipramine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3247/related.json?tty=bn"
-  },
-  {
-    "id": 12,
-    "name": "Meclizine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6676/related.json?tty=bn"
-  },
-  {
-    "id": 24,
-    "name": "Benztropine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
-  },
-  {
-    "id": 17,
-    "name": "Belladonna alkaloids",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1359/related.json?tty=bn"
-  },
-  {
-    "id": 50,
-    "name": "Protriptyline",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8886/related.json?tty=bn"
-  },
-  {
-    "id": 35,
-    "name": "Methyldopa",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6876/related.json?tty=bn"
-  },
-  {
-    "id": 70,
-    "name": "Flurazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4501/related.json?tty=bn"
-  },
-  {
-    "id": 43,
-    "name": "Amoxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/722/related.json?tty=bn"
-  },
-  {
-    "id": 49,
-    "name": "Paroxetine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn"
-  },
-  {
-    "id": 97,
-    "name": "Ibuprofen",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
-  },
-  {
-    "id": 5,
-    "name": "Cyproheptadine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3013/related.json?tty=bn"
-  },
-  {
-    "id": 48,
-    "name": "Nortriptyline",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7531/related.json?tty=bn"
-  },
-  {
-    "id": 20,
-    "name": "Hyoscyamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/153970/related.json?tty=bn"
-  },
-  {
-    "id": 15,
-    "name": "Triprolidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10849/related.json?tty=bn"
-  },
-  {
-    "id": 106,
-    "name": "Sulindac",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
-  },
-  {
-    "id": 83,
-    "name": "Insulin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/253182/related.json?tty=bn"
-  },
-  {
-    "id": 67,
-    "name": "Clonazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2598/related.json?tty=bn"
-  },
-  {
-    "id": 101,
-    "name": "Meloxicam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
-  },
-  {
-    "id": 74,
-    "name": "Zaleplon",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
-  },
-  {
-    "id": 107,
-    "name": "Tolmetin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
-  },
-  {
-    "id": 46,
-    "name": "Doxepin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3638/related.json?tty=bn"
-  },
-  {
-    "id": 31,
-    "name": "Clonidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2599/related.json?tty=bn"
-  },
-  {
-    "id": 58,
-    "name": "Phenobarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8134/related.json?tty=bn"
-  },
-  {
-    "id": 72,
-    "name": "Meprobamate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6760/related.json?tty=bn"
-  },
-  {
-    "id": 34,
-    "name": "Guanfacine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40114/related.json?tty=bn"
-  },
-  {
-    "id": 87,
-    "name": "Glyburide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4815/related.json?tty=bn"
-  },
-  {
-    "id": 85,
-    "name": "Chlorpropamide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2404/related.json?tty=bn"
-  },
-  {
-    "id": 95,
-    "name": "Etodolac",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
-  },
-  {
-    "id": 79,
-    "name": "Testosterone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10379/related.json?tty=bn"
-  },
-  {
-    "id": 108,
-    "name": "Indomethacin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
-  },
-  {
-    "id": 21,
-    "name": "Methscopolamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
-  },
-  {
-    "id": 75,
-    "name": "Zolpidem",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
-  },
-  {
-    "id": 38,
-    "name": "Dronedarone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/233698/related.json?tty=bn"
-  },
-  {
-    "id": 78,
-    "name": "Methyltestosterone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6904/related.json?tty=bn"
-  },
-  {
-    "id": 99,
-    "name": "Meclofenamate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/588003/related.json?tty=bn"
-  },
-  {
-    "id": 142,
-    "name": "Nizatidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/42319/related.json?tty=bn"
-  },
-  {
-    "id": 98,
-    "name": "Ketoprofen",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
-  },
-  {
-    "id": 23,
-    "name": "Scopolamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
-  },
-  {
-    "id": 133,
-    "name": "Chlorpromazine",
+    "id": 137,
+    "name": "chlorpromazine",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 109,
-    "name": "Ketorolac",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+    "id": 155,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 104,
-    "name": "Oxaprozin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+    "id": 157,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 22,
-    "name": "Propantheline",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+    "id": 169,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 88,
-    "name": "Metoclopramide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6915/related.json?tty=bn"
+    "id": 179,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 211,
-    "name": "Theophylline",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10438/related.json?tty=bn"
+    "id": 200,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 180,
-    "name": "Carbamazepine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn"
+    "id": 52,
+    "name": "chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
   },
   {
-    "id": 223,
-    "name": "dabigatran",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
-  },
-  {
-    "id": 62,
-    "name": "Lorazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6470/related.json?tty=bn"
-  },
-  {
-    "id": 222,
-    "name": "apixaban",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1364430/related.json?tty=bn"
-  },
-  {
-    "id": 73,
-    "name": "Eszopiclone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
-  },
-  {
-    "id": 81,
-    "name": "Estrogens",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
-  },
-  {
-    "id": 135,
-    "name": "Olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 14,
-    "name": "Pyrilamine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9009/related.json?tty=bn"
-  },
-  {
-    "id": 114,
-    "name": "Methocarbamol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6845/related.json?tty=bn"
-  },
-  {
-    "id": 89,
-    "name": "Mineral Oil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6972/related.json?tty=bn"
-  },
-  {
-    "id": 102,
-    "name": "Nabumetone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
-  },
-  {
-    "id": 94,
-    "name": "Diflunisal",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
-  },
-  {
-    "id": 59,
-    "name": "Secobarbital",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9624/related.json?tty=bn"
-  },
-  {
-    "id": 82,
-    "name": "Growth hormone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61148/related.json?tty=bn"
-  },
-  {
-    "id": 77,
-    "name": "Isoxsuprine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6066/related.json?tty=bn"
-  },
-  {
-    "id": 91,
-    "name": "Meperidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
-  },
-  {
-    "id": 140,
-    "name": "Cimetidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2541/related.json?tty=bn"
-  },
-  {
-    "id": 143,
-    "name": "Ranitidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9143/related.json?tty=bn"
-  },
-  {
-    "id": 233,
-    "name": "Triamterene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
-  },
-  {
-    "id": 225,
-    "name": "edoxaban",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1599538/related.json?tty=bn"
-  },
-  {
-    "id": 116,
-    "name": "Desmopressin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3251/related.json?tty=bn"
-  },
-  {
-    "id": 61,
-    "name": "Estazolam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4077/related.json?tty=bn"
-  },
-  {
-    "id": 149,
-    "name": "zolpidem",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
-  },
-  {
-    "id": 26,
-    "name": "Dipyridamole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3521/related.json?tty=bn"
-  },
-  {
-    "id": 177,
-    "name": "Rivaroxaban",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
-  },
-  {
-    "id": 172,
-    "name": "Estrogen",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
-  },
-  {
-    "id": 110,
-    "name": "Carisoprodol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2101/related.json?tty=bn"
-  },
-  {
-    "id": 213,
-    "name": "Warfarin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11289/related.json?tty=bn"
-  },
-  {
-    "id": 148,
-    "name": "zaleplon",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
-  },
-  {
-    "id": 193,
-    "name": "amiloride",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/644/related.json?tty=bn"
-  },
-  {
-    "id": 187,
-    "name": "Tramadol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
-  },
-  {
-    "id": 69,
-    "name": "Diazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3322/related.json?tty=bn"
-  },
-  {
-    "id": 115,
-    "name": "Orphenadrine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7715/related.json?tty=bn"
-  },
-  {
-    "id": 134,
-    "name": "Thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 194,
-    "name": "triamterene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
-  },
-  {
-    "id": 92,
-    "name": "Aspirin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
-  },
-  {
-    "id": 96,
-    "name": "Fenoprofen",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
-  },
-  {
-    "id": 167,
-    "name": "Prochlorperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8704/related.json?tty=bn"
-  },
-  {
-    "id": 224,
-    "name": "dofetilide",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/49247/related.json?tty=bn"
-  },
-  {
-    "id": 178,
-    "name": "Prasugrel",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/613391/related.json?tty=bn"
-  },
-  {
-    "id": 228,
-    "name": "fondaparinux",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/321208/related.json?tty=bn"
-  },
-  {
-    "id": 245,
-    "name": "Probenecid",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8698/related.json?tty=bn"
-  },
-  {
-    "id": 182,
-    "name": "Mirtazapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/15996/related.json?tty=bn"
-  },
-  {
-    "id": 295,
-    "name": "Clozapine",
+    "id": 137,
+    "name": "clozapine",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
   },
   {
-    "id": 112,
-    "name": "Cyclobenzaprine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21949/related.json?tty=bn"
+    "id": 155,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
   },
   {
-    "id": 141,
-    "name": "Famotidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4278/related.json?tty=bn"
+    "id": 157,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
   },
   {
-    "id": 260,
-    "name": "Trospium",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+    "id": 169,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
   },
   {
-    "id": 296,
-    "name": "Loxapine",
+    "id": 179,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "fluphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "haloperidol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "iloperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "loxapine",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 265,
-    "name": "Tolterodine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+    "id": 155,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 234,
-    "name": "Duloxetine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn"
+    "id": 157,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 210,
-    "name": "Phenytoin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn"
+    "id": 169,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 103,
-    "name": "Naproxen",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+    "id": 179,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 93,
-    "name": "Diclofenac",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+    "id": 200,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 147,
-    "name": "eszopiclone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
+    "id": 52,
+    "name": "loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
   },
   {
-    "id": 76,
-    "name": "Ergoloid mesylates",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4024/related.json?tty=bn"
+    "id": 137,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
   },
   {
-    "id": 219,
-    "name": "trimethoprim-sulfamethoxazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+    "id": 155,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
   },
   {
-    "id": 100,
-    "name": "Mefenamic acid",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+    "id": 157,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
   },
   {
-    "id": 298,
-    "name": "Perphenazine",
+    "id": 169,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "Lumateperone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "lurasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "molindone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "paliperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "perphenazine",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 286,
-    "name": "Homatropine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+    "id": 155,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 268,
-    "name": "Trihexyphenidyl",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10811/related.json?tty=bn"
+    "id": 157,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 189,
-    "name": "Trimethoprim-sulfamethoxazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+    "id": 169,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 235,
-    "name": "Gabapentin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn"
+    "id": 179,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 80,
-    "name": "Desiccated thyroid",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10572/related.json?tty=bn"
+    "id": 200,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 237,
-    "name": "Pregabalin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/187832/related.json?tty=bn"
+    "id": 52,
+    "name": "perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
   },
   {
-    "id": 244,
-    "name": "Colchicine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2683/related.json?tty=bn"
+    "id": 137,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 232,
-    "name": "Spironolactone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9997/related.json?tty=bn"
+    "id": 155,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 113,
-    "name": "Metaxalone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/59078/related.json?tty=bn"
+    "id": 157,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 84,
-    "name": "Megestrol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6703/related.json?tty=bn"
+    "id": 169,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 105,
-    "name": "Piroxicam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+    "id": 179,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 236,
-    "name": "Levetiracetam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn"
+    "id": 200,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 117,
-    "name": "Cilostazol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21107/related.json?tty=bn"
+    "id": 52,
+    "name": "pimavanserin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
   },
   {
-    "id": 111,
-    "name": "Chlorzoxazone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2410/related.json?tty=bn"
+    "id": 137,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 229,
-    "name": "rivaroxaban",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
+    "id": 155,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 188,
-    "name": "Dextromethorphan/quinidine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040053/related.json?tty=bn"
+    "id": 157,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 207,
-    "name": "Lithium",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6448/related.json?tty=bn"
+    "id": 169,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 263,
-    "name": "Oxybutynin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+    "id": 179,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 183,
-    "name": "Oxcarbazepine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn"
+    "id": 200,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 176,
-    "name": "Dabigatran",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
+    "id": 52,
+    "name": "quetiapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
   },
   {
-    "id": 285,
-    "name": "Dicyclomine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
-  },
-
-  {
-    "id": 227,
-    "name": "enoxaparin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/67108/related.json?tty=bn"
+    "id": 137,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
   },
   {
-    "id": 264,
-    "name": "Solifenacin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+    "id": 155,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
   },
   {
-    "id": 305,
-    "name": "Verapamil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11170/related.json?tty=bn"
-  },
-
-  {
-    "id": 261,
-    "name": "Fesoterodine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn"
+    "id": 157,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
   },
   {
-    "id": 218,
-    "name": "Ciprofloxacin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2551/related.json?tty=bn"
+    "id": 169,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
   },
   {
-    "id": 300,
-    "name": "Trifluoperazine",
+    "id": 179,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "risperidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "thiothixene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "trifluoperazine",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
   },
   {
-    "id": 262,
-    "name": "Flavoxate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+    "id": 155,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
   },
   {
-    "id": 118,
-    "name": "Diltiazem",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3443/related.json?tty=bn"
+    "id": 157,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
   },
   {
-    "id": 63,
-    "name": "Oxazepam",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7781/related.json?tty=bn"
+    "id": 169,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
   },
   {
-    "id": 68,
-    "name": "Clorazepate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2353/related.json?tty=bn"
+    "id": 179,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
   },
-
+  {
+    "id": 200,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
+  },
+  {
+    "id": 137,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 155,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 157,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 169,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 179,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 200,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
+  {
+    "id": 52,
+    "name": "ziprasidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
+  },
   {
     "id": 120,
     "name": "aspirin",
@@ -3133,6 +3105,1199 @@
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/183379/related.json?tty=bn"
   },
   {
+    "id": 199,
+    "name": "butabarbital / hyoscyamine / phenazopyridine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/261407/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "darifenacin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "fesoterodine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "flavoxate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "hyoscyamine / methenamine / methylene blue / phenyl salicylate / sodium phosphate, monobasic",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1007374/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "hyoscyamine / methenamine / methylene blue / sodium phosphate, monobasic",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1050324/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "mirabegron",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1300786/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "oxybutynin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "solifenacin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "tolterodine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "id": 199,
+    "name": "trospium",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "cannabidiol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2045371/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "cannabidiol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2045371/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "carbamazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "carbamazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "cenobamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2265690/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "cenobamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2265690/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "clobazam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21241/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "clobazam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21241/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "eslicarbazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1482502/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "eslicarbazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1482502/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "ethosuximide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4135/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "ethosuximide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4135/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "ethotoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4136/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "ethotoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4136/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "felbamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/24812/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "felbamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/24812/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "fenfluramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4328/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "fenfluramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4328/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "fosphenytoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/72236/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "fosphenytoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/72236/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "gabapentin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "gabapentin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "lacosamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/623400/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "lacosamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/623400/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "lamotrigine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/28439/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "lamotrigine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/28439/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "levetiracetam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "levetiracetam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "methsuximide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/47858/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "methsuximide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/47858/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "oxcarbazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "oxcarbazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "perampanel",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1356552/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "perampanel",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1356552/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "phenytoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "phenytoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "primidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8691/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "primidone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8691/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "rufinamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/69036/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "rufinamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/69036/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "stiripentol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2054968/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "stiripentol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2054968/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "tiagabine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/31914/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "tiagabine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/31914/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "topiramate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/38404/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "topiramate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/38404/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "valproate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40254/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "valproate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40254/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "vigabatrin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/14851/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "vigabatrin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/14851/related.json?tty=bn"
+  },
+  {
+    "id": 156,
+    "name": "zonisamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39998/related.json?tty=bn"
+  },
+  {
+    "id": 201,
+    "name": "zonisamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39998/related.json?tty=bn"
+  },
+  {
+    "id": 9,
+    "name": "Diphenhydramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3498/related.json?tty=bn"
+  },
+  {
+    "id": 18,
+    "name": "Clidinium-chlordiazepoxide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 71,
+    "name": "Quazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35185/related.json?tty=bn"
+  },
+  {
+    "id": 25,
+    "name": "Trihexyphidyl",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 56,
+    "name": "Mephobarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6758/related.json?tty=bn"
+  },
+  {
+    "id": 60,
+    "name": "Alprazolam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/596/related.json?tty=bn"
+  },
+  {
+    "id": 13,
+    "name": "Promethazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8745/related.json?tty=bn"
+  },
+  {
+    "id": 28,
+    "name": "Doxazosin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/related.json?tty=bn"
+  },
+  {
+    "id": 36,
+    "name": "Reserpine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9260/related.json?tty=bn"
+  },
+  {
+    "id": 29,
+    "name": "Prazosin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/related.json?tty=bn"
+  },
+  {
+    "id": 65,
+    "name": "Triazolam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10767/related.json?tty=bn"
+  },
+  {
+    "id": 2,
+    "name": "Carbinoxamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/20220/related.json?tty=bn"
+  },
+  {
+    "id": 39,
+    "name": "Digoxin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3407/related.json?tty=bn"
+  },
+  {
+    "id": 66,
+    "name": "Chlordiazepoxide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2356/related.json?tty=bn"
+  },
+  {
+    "id": 53,
+    "name": "Amobarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/719/related.json?tty=bn"
+  },
+  {
+    "id": 4,
+    "name": "Clemastine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2578/related.json?tty=bn"
+  },
+  {
+    "id": 33,
+    "name": "Guanabenz",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5033/related.json?tty=bn"
+  },
+  {
+    "id": 3,
+    "name": "Chlorpheniramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2400/related.json?tty=bn"
+  },
+  {
+    "id": 1,
+    "name": "Brompheniramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1767/related.json?tty=bn"
+  },
+  {
+    "id": 42,
+    "name": "Amitriptyline",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/704/related.json?tty=bn"
+  },
+  {
+    "id": 64,
+    "name": "Temazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10355/related.json?tty=bn"
+  },
+  {
+    "id": 6,
+    "name": "Dexbrompheniramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/22696/related.json?tty=bn"
+  },
+  {
+    "id": 44,
+    "name": "Clomipramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2597/related.json?tty=bn"
+  },
+  {
+    "id": 8,
+    "name": "Dimenhydrinate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3444/related.json?tty=bn"
+  },
+  {
+    "id": 11,
+    "name": "Hydroxyzine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5553/related.json?tty=bn"
+  },
+  {
+    "id": 10,
+    "name": "Doxylamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3642/related.json?tty=bn"
+  },
+  {
+    "id": 51,
+    "name": "Trimipramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10834/related.json?tty=bn"
+  },
+  {
+    "id": 54,
+    "name": "Butabarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/477631/related.json?tty=bn"
+  },
+  {
+    "id": 55,
+    "name": "Butalbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/19860/related.json?tty=bn"
+  },
+  {
+    "id": 57,
+    "name": "Pentobarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8004/related.json?tty=bn"
+  },
+  {
+    "id": 37,
+    "name": "Disopyramide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3541/related.json?tty=bn"
+  },
+  {
+    "id": 16,
+    "name": "Atropine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1223/related.json?tty=bn"
+  },
+  {
+    "id": 40,
+    "name": "Nifedipine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7417/related.json?tty=bn"
+  },
+  {
+    "id": 7,
+    "name": "Dexchlorpheniramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/22697/related.json?tty=bn"
+  },
+  {
+    "id": 27,
+    "name": "Nitrofurantoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7454/related.json?tty=bn"
+  },
+  {
+    "id": 19,
+    "name": "Dicyclomine Homatropine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 30,
+    "name": "Terazosin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/37798/related.json?tty=bn"
+  },
+  {
+    "id": 86,
+    "name": "Glimepiride",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25789/related.json?tty=bn"
+  },
+  {
+    "id": 47,
+    "name": "Imipramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5691/related.json?tty=bn"
+  },
+  {
+    "id": 41,
+    "name": "Amiodarone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/703/related.json?tty=bn"
+  },
+  {
+    "id": 45,
+    "name": "Desipramine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3247/related.json?tty=bn"
+  },
+  {
+    "id": 12,
+    "name": "Meclizine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6676/related.json?tty=bn"
+  },
+  {
+    "id": 24,
+    "name": "Benztropine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1424/related.json?tty=bn"
+  },
+  {
+    "id": 17,
+    "name": "Belladonna alkaloids",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1359/related.json?tty=bn"
+  },
+  {
+    "id": 50,
+    "name": "Protriptyline",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8886/related.json?tty=bn"
+  },
+  {
+    "id": 35,
+    "name": "Methyldopa",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6876/related.json?tty=bn"
+  },
+  {
+    "id": 70,
+    "name": "Flurazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4501/related.json?tty=bn"
+  },
+  {
+    "id": 43,
+    "name": "Amoxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/722/related.json?tty=bn"
+  },
+  {
+    "id": 49,
+    "name": "Paroxetine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32937/related.json?tty=bn"
+  },
+  {
+    "id": 97,
+    "name": "Ibuprofen",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5640/related.json?tty=bn"
+  },
+  {
+    "id": 5,
+    "name": "Cyproheptadine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3013/related.json?tty=bn"
+  },
+  {
+    "id": 48,
+    "name": "Nortriptyline",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7531/related.json?tty=bn"
+  },
+  {
+    "id": 20,
+    "name": "Hyoscyamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/153970/related.json?tty=bn"
+  },
+  {
+    "id": 15,
+    "name": "Triprolidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10849/related.json?tty=bn"
+  },
+  {
+    "id": 106,
+    "name": "Sulindac",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10237/related.json?tty=bn"
+  },
+  {
+    "id": 83,
+    "name": "Insulin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/253182/related.json?tty=bn"
+  },
+  {
+    "id": 67,
+    "name": "Clonazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2598/related.json?tty=bn"
+  },
+  {
+    "id": 101,
+    "name": "Meloxicam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/41493/related.json?tty=bn"
+  },
+  {
+    "id": 74,
+    "name": "Zaleplon",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "id": 107,
+    "name": "Tolmetin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10636/related.json?tty=bn"
+  },
+  {
+    "id": 46,
+    "name": "Doxepin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3638/related.json?tty=bn"
+  },
+  {
+    "id": 31,
+    "name": "Clonidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2599/related.json?tty=bn"
+  },
+  {
+    "id": 58,
+    "name": "Phenobarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8134/related.json?tty=bn"
+  },
+  {
+    "id": 72,
+    "name": "Meprobamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6760/related.json?tty=bn"
+  },
+  {
+    "id": 34,
+    "name": "Guanfacine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40114/related.json?tty=bn"
+  },
+  {
+    "id": 87,
+    "name": "Glyburide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4815/related.json?tty=bn"
+  },
+  {
+    "id": 85,
+    "name": "Chlorpropamide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2404/related.json?tty=bn"
+  },
+  {
+    "id": 95,
+    "name": "Etodolac",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/24605/related.json?tty=bn"
+  },
+  {
+    "id": 79,
+    "name": "Testosterone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10379/related.json?tty=bn"
+  },
+  {
+    "id": 108,
+    "name": "Indomethacin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5781/related.json?tty=bn"
+  },
+  {
+    "id": 21,
+    "name": "Methscopolamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89785/related.json?tty=bn"
+  },
+  {
+    "id": 75,
+    "name": "Zolpidem",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "id": 38,
+    "name": "Dronedarone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/233698/related.json?tty=bn"
+  },
+  {
+    "id": 78,
+    "name": "Methyltestosterone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6904/related.json?tty=bn"
+  },
+  {
+    "id": 99,
+    "name": "Meclofenamate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/588003/related.json?tty=bn"
+  },
+  {
+    "id": 142,
+    "name": "Nizatidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/42319/related.json?tty=bn"
+  },
+  {
+    "id": 98,
+    "name": "Ketoprofen",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6142/related.json?tty=bn"
+  },
+  {
+    "id": 23,
+    "name": "Scopolamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9601/related.json?tty=bn"
+  },
+  {
+    "id": 133,
+    "name": "Chlorpromazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
+  },
+  {
+    "id": 109,
+    "name": "Ketorolac",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35827/related.json?tty=bn"
+  },
+  {
+    "id": 104,
+    "name": "Oxaprozin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32613/related.json?tty=bn"
+  },
+  {
+    "id": 22,
+    "name": "Propantheline",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8761/related.json?tty=bn"
+  },
+  {
+    "id": 88,
+    "name": "Metoclopramide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6915/related.json?tty=bn"
+  },
+  {
+    "id": 211,
+    "name": "Theophylline",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10438/related.json?tty=bn"
+  },
+  {
+    "id": 180,
+    "name": "Carbamazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2002/related.json?tty=bn"
+  },
+  {
+    "id": 223,
+    "name": "dabigatran",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
+  },
+  {
+    "id": 62,
+    "name": "Lorazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6470/related.json?tty=bn"
+  },
+  {
+    "id": 222,
+    "name": "apixaban",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1364430/related.json?tty=bn"
+  },
+  {
+    "id": 73,
+    "name": "Eszopiclone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
+  },
+  {
+    "id": 81,
+    "name": "Estrogens",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
+  },
+  {
+    "id": 135,
+    "name": "Olanzapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
+  },
+  {
+    "id": 14,
+    "name": "Pyrilamine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9009/related.json?tty=bn"
+  },
+  {
+    "id": 114,
+    "name": "Methocarbamol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6845/related.json?tty=bn"
+  },
+  {
+    "id": 89,
+    "name": "Mineral Oil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6972/related.json?tty=bn"
+  },
+  {
+    "id": 102,
+    "name": "Nabumetone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/31448/related.json?tty=bn"
+  },
+  {
+    "id": 94,
+    "name": "Diflunisal",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3393/related.json?tty=bn"
+  },
+  {
+    "id": 59,
+    "name": "Secobarbital",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9624/related.json?tty=bn"
+  },
+  {
+    "id": 82,
+    "name": "Growth hormone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61148/related.json?tty=bn"
+  },
+  {
+    "id": 77,
+    "name": "Isoxsuprine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6066/related.json?tty=bn"
+  },
+  {
+    "id": 91,
+    "name": "Meperidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6754/related.json?tty=bn"
+  },
+  {
+    "id": 140,
+    "name": "Cimetidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2541/related.json?tty=bn"
+  },
+  {
+    "id": 143,
+    "name": "Ranitidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9143/related.json?tty=bn"
+  },
+  {
+    "id": 233,
+    "name": "Triamterene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
+  },
+  {
+    "id": 225,
+    "name": "edoxaban",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1599538/related.json?tty=bn"
+  },
+  {
+    "id": 116,
+    "name": "Desmopressin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3251/related.json?tty=bn"
+  },
+  {
+    "id": 61,
+    "name": "Estazolam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4077/related.json?tty=bn"
+  },
+  {
+    "id": 149,
+    "name": "zolpidem",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39993/related.json?tty=bn"
+  },
+  {
+    "id": 26,
+    "name": "Dipyridamole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3521/related.json?tty=bn"
+  },
+  {
+    "id": 177,
+    "name": "Rivaroxaban",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
+  },
+  {
+    "id": 172,
+    "name": "Estrogen",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4100/related.json?tty=bn"
+  },
+  {
+    "id": 110,
+    "name": "Carisoprodol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2101/related.json?tty=bn"
+  },
+  {
+    "id": 213,
+    "name": "Warfarin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11289/related.json?tty=bn"
+  },
+  {
+    "id": 148,
+    "name": "zaleplon",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/74667/related.json?tty=bn"
+  },
+  {
+    "id": 193,
+    "name": "amiloride",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/644/related.json?tty=bn"
+  },
+  {
+    "id": 187,
+    "name": "Tramadol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10689/related.json?tty=bn"
+  },
+  {
+    "id": 69,
+    "name": "Diazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3322/related.json?tty=bn"
+  },
+  {
+    "id": 115,
+    "name": "Orphenadrine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7715/related.json?tty=bn"
+  },
+  {
+    "id": 134,
+    "name": "Thioridazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
+  },
+  {
+    "id": 194,
+    "name": "triamterene",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
+  },
+  {
+    "id": 92,
+    "name": "Aspirin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1191/related.json?tty=bn"
+  },
+  {
+    "id": 96,
+    "name": "Fenoprofen",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/related.json?tty=bn"
+  },
+  {
+    "id": 167,
+    "name": "Prochlorperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8704/related.json?tty=bn"
+  },
+  {
+    "id": 224,
+    "name": "dofetilide",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/49247/related.json?tty=bn"
+  },
+  {
+    "id": 178,
+    "name": "Prasugrel",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/613391/related.json?tty=bn"
+  },
+  {
+    "id": 228,
+    "name": "fondaparinux",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/321208/related.json?tty=bn"
+  },
+  {
+    "id": 245,
+    "name": "Probenecid",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8698/related.json?tty=bn"
+  },
+  {
+    "id": 182,
+    "name": "Mirtazapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/15996/related.json?tty=bn"
+  },
+  {
+    "id": 295,
+    "name": "Clozapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
+  },
+  {
+    "id": 112,
+    "name": "Cyclobenzaprine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21949/related.json?tty=bn"
+  },
+  {
+    "id": 141,
+    "name": "Famotidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4278/related.json?tty=bn"
+  },
+  {
+    "id": 260,
+    "name": "Trospium",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
+  },
+  {
+    "id": 296,
+    "name": "Loxapine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
+  },
+  {
+    "id": 265,
+    "name": "Tolterodine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
+  },
+  {
+    "id": 234,
+    "name": "Duloxetine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/72625/related.json?tty=bn"
+  },
+  {
+    "id": 210,
+    "name": "Phenytoin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/related.json?tty=bn"
+  },
+  {
+    "id": 103,
+    "name": "Naproxen",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/related.json?tty=bn"
+  },
+  {
+    "id": 93,
+    "name": "Diclofenac",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3355/related.json?tty=bn"
+  },
+  {
+    "id": 147,
+    "name": "eszopiclone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/461016/related.json?tty=bn"
+  },
+  {
+    "id": 76,
+    "name": "Ergoloid mesylates",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4024/related.json?tty=bn"
+  },
+  {
+    "id": 219,
+    "name": "trimethoprim-sulfamethoxazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+  },
+  {
+    "id": 100,
+    "name": "Mefenamic acid",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6693/related.json?tty=bn"
+  },
+  {
+    "id": 298,
+    "name": "Perphenazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
+  },
+  {
+    "id": 286,
+    "name": "Homatropine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/27084/related.json?tty=bn"
+  },
+  {
+    "id": 268,
+    "name": "Trihexyphenidyl",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10811/related.json?tty=bn"
+  },
+  {
+    "id": 189,
+    "name": "Trimethoprim-sulfamethoxazole",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10831/related.json?tty=bn"
+  },
+  {
+    "id": 235,
+    "name": "Gabapentin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/25480/related.json?tty=bn"
+  },
+  {
+    "id": 80,
+    "name": "Desiccated thyroid",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 237,
+    "name": "Pregabalin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/187832/related.json?tty=bn"
+  },
+  {
+    "id": 244,
+    "name": "Colchicine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2683/related.json?tty=bn"
+  },
+  {
+    "id": 232,
+    "name": "Spironolactone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9997/related.json?tty=bn"
+  },
+  {
+    "id": 113,
+    "name": "Metaxalone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/59078/related.json?tty=bn"
+  },
+  {
+    "id": 84,
+    "name": "Megestrol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6703/related.json?tty=bn"
+  },
+  {
+    "id": 105,
+    "name": "Piroxicam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8356/related.json?tty=bn"
+  },
+  {
+    "id": 236,
+    "name": "Levetiracetam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/114477/related.json?tty=bn"
+  },
+  {
+    "id": 117,
+    "name": "Cilostazol",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21107/related.json?tty=bn"
+  },
+  {
+    "id": 111,
+    "name": "Chlorzoxazone",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2410/related.json?tty=bn"
+  },
+  {
+    "id": 229,
+    "name": "rivaroxaban",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1114195/related.json?tty=bn"
+  },
+  {
+    "id": 188,
+    "name": "Dextromethorphan/quinidine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040053/related.json?tty=bn"
+  },
+  {
+    "id": 207,
+    "name": "Lithium",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6448/related.json?tty=bn"
+  },
+  {
+    "id": 263,
+    "name": "Oxybutynin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
+  },
+  {
+    "id": 183,
+    "name": "Oxcarbazepine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32624/related.json?tty=bn"
+  },
+  {
+    "id": 176,
+    "name": "Dabigatran",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1546356/related.json?tty=bn"
+  },
+  {
+    "id": 285,
+    "name": "Dicyclomine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3361/related.json?tty=bn"
+  },
+  {
+    "id": 165,
+    "name": "Analgesics",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 227,
+    "name": "enoxaparin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/67108/related.json?tty=bn"
+  },
+  {
+    "id": 264,
+    "name": "Solifenacin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
+  },
+  {
+    "id": 305,
+    "name": "Verapamil",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11170/related.json?tty=bn"
+  },
+  {
+    "id": 121,
+    "name": "Thiazolidinediones",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
+    "id": 261,
+    "name": "Fesoterodine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn"
+  },
+  {
+    "id": 218,
+    "name": "Ciprofloxacin",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2551/related.json?tty=bn"
+  },
+  {
+    "id": 300,
+    "name": "Trifluoperazine",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
+  },
+  {
+    "id": 262,
+    "name": "Flavoxate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
+  },
+  {
+    "id": 118,
+    "name": "Diltiazem",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3443/related.json?tty=bn"
+  },
+  {
+    "id": 63,
+    "name": "Oxazepam",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7781/related.json?tty=bn"
+  },
+  {
+    "id": 68,
+    "name": "Clorazepate",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2353/related.json?tty=bn"
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/undefined/related.json?tty=bn"
+  },
+  {
     "id": 136,
     "name": "Amitriptyline",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/704/related.json?tty=bn"
@@ -3906,901 +5071,6 @@
     "id": 181,
     "name": "triamterene",
     "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10763/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "aripiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/89013/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "aripiprazole lauroxil",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1673265/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "asenapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/784649/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "brexpiprazole",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1658314/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "cariprazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1667655/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "chlorpromazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2403/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "clozapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2626/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "fluphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4496/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "haloperidol",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5093/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "iloperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/73178/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "loxapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6475/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "Lumateperone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2275602/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "lurasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1040028/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "molindone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7019/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "olanzapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/61381/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "paliperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/679314/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "perphenazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8076/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "pimavanserin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1791685/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "quetiapine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/51272/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "risperidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/35636/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "thioridazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10502/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "thiothixene",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10510/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "trifluoperazine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10800/related.json?tty=bn"
-  },
-  {
-    "id": 137,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 155,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 157,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 169,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 179,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 200,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 52,
-    "name": "ziprasidone",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/115698/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "butabarbital / hyoscyamine / phenazopyridine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/261407/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "darifenacin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/136198/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "fesoterodine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/797195/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "flavoxate",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4440/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "hyoscyamine / methenamine / methylene blue / phenyl salicylate / sodium phosphate, monobasic",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1007374/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "hyoscyamine / methenamine / methylene blue / sodium phosphate, monobasic",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1050324/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "mirabegron",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1300786/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "oxybutynin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/32675/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "solifenacin",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/322167/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "tolterodine",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/119565/related.json?tty=bn"
-  },
-  {
-    "id": 199,
-    "name": "trospium",
-    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236778/related.json?tty=bn"
   },
   {
     "id": 137,

@@ -15,14 +15,18 @@ import {
   contentAnimation,
 } from '../animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
+
 @Component({
   selector: 'app-content',
   template: `
-    <div [class]="sidenavActive ? 'partial content' : 'full content'">
+    <div
+      [class]="
+        sidenavActive ? 'sidenav-open content' : 'sidenav-closed content'
+      "
+    >
       <div
         [hidden]="loaded"
         class="main-content-box"
-        fxFlexOffset="10px"
         fxLayout="row"
         [fxLayout.sm]="sidenavActive ? 'column' : 'row'"
         fxLayout.xs="column"
@@ -31,12 +35,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
           [fxFlexOrder.sm]="sidenavActive ? '2' : '1'"
           fxFlexOrder.xs="2"
           fxFlexOrder="1"
-          *ngIf="modifyLoaded"
+          fxShrink="0"
         >
           <div
-            #expansionPanel
             *ngFor="let table of tables | keyvalue; trackBy: trackByFn"
-            [class]="sidenavActive ? 'partial tables' : 'full tables'"
+            [class]="
+              sidenavActive ? 'sidenav-open tables' : 'sidenav-closed tables'
+            "
           >
             <app-med-table
               *ngIf="this.activeTables.includes(table.key)"
@@ -52,12 +57,10 @@ import { BreakpointObserver } from '@angular/cdk/layout';
           [fxFlexOrder.sm]="sidenavActive ? '1' : '2'"
           fxFlexOrder.xs="1"
           fxFlexOrder="2"
-          class="panel-width"
         >
           <modify-table-panel
             *ngIf="loaded"
             [tablesWithData]="tablesWithData"
-            (loaded)="modifyLoaded = true"
           ></modify-table-panel>
         </div>
       </div>
@@ -104,13 +107,13 @@ export class ContentComponent {
       this.sidenavActive = sidenavOpen;
     });
   }
+
   data: any;
   active = false;
   tablesWithData: string[];
   tables: Table[];
   activeTables: string[];
   loaded: boolean;
-  public modifyLoaded: boolean = false;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
   @Output() tablesLoaded: EventEmitter<boolean> = new EventEmitter();
 }

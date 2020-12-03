@@ -22,10 +22,8 @@ export class SideNavigationComponent implements OnInit {
       this.sidenavActive = isOpen;
     });
     iconRegistry.addSvgIcon(
-      'arrow_forward.svg',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/arrow_forward.svg'
-      )
+      'search',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')
     );
   }
 

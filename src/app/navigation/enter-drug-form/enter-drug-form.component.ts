@@ -21,6 +21,8 @@ import { WebsocketService } from '../../websocket.service';
 import { StateService } from 'src/app/state.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { MatButton } from '@angular/material/button';
+
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';

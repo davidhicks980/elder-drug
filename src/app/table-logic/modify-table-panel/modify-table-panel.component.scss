@@ -28,20 +28,18 @@ mat-selection-list.mat-list-base {
 
 ul.toggle-group {
   position: relative;
-  background: lighten($lightprimary, 40%);
-  border: 1px solid lighten($primary, 10%);
+  background: lighten(saturate($lightprimary, 35%), 40%);
+  border: 1px solid $primary;
   border-radius: 4px;
   list-style: none;
   display: grid;
   grid-template-columns: 50% 50%;
   padding-inline-start: 1.7em;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
+
   font-weight: 500;
   color: darken($primary, 10%);
   min-width: 95%;
   box-sizing: border-box;
-  width: 95%;
 }
 
 ul li {

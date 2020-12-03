@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~10.0.9",
     "@angular/router": "^10.0.9",
     "@angular/service-worker": "~10.0.9",
+    "@swimlane/ngx-datatable": "^18.0.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.6.5",
     "cross-fetch": "^3.0.6",
@@ -35,12 +36,14 @@
     "firestore-export-import": "^0.6.1",
     "js-polyfills": "^0.1.43",
     "mysql": "^2.18.1",
+    "node-expat": "^2.3.18",
     "primeflex": "^2.0.0",
     "primeng": "^10.0.0",
     "rxjs": "~6.5.4",
     "socket.io-client": "^2.3.0",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",
+    "xml2js": "^0.4.23",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

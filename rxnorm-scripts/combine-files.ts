@@ -9,6 +9,7 @@ let dropdownPaths = [
   './json-out/diuretics-generics-dropdown.json',
   './json-out/antispasmodics-generics-dropdown.json',
   './json-out/antidepressives-generics-dropdown.json',
+  './json-out/antiepileptics-generics-dropdown.json',
 ];
 
 writeFileSync('./all-generics-items.json', '');
@@ -20,14 +21,13 @@ function combineFiles(paths: string[], out: WriteStream) {
     readFile(path, (err, data) => {
       let parsedData = JSON.parse(data.toString());
       for (let item of parsedData) {
-        
         let rxcui = item.rxnormId ? item.rxnormId[0] : item.rxcui;
         outData.push({
           id: item.id,
           name: item.name,
           url: `https://rxnav.nlm.nih.gov/REST/rxcui/${rxcui}/related.json?tty=bn`,
         });
-        console.log( rxcui);
+        console.log(rxcui);
       }
       i++;
       if (i === paths.length) {

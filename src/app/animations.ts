@@ -88,15 +88,9 @@ export const slideDownAnimation = trigger('slideDown', [
   // fade in when created. this could also be written as transition('void => *')
   transition(':enter', [
     style({
-      height: '0px',
+      transform: 'translateY(-200px)',
     }),
-    animate('500ms ease'),
-  ]),
-  transition(':leave', [
-    style({
-      height: '700px',
-    }),
-    animate('500ms ease'),
+    animate('200ms ease', style({ transform: 'translateY(0px)' })),
   ]),
 ]);
 
@@ -124,20 +118,20 @@ export const inputAnimation = trigger('inputSlideIn', [
 
 export const formVisibleAnimation = trigger('toggleForm', [
   state('visible', style({ transform: 'translateX(0em)' })),
-  state('hidden', style({ transform: 'translateX(-20.5em)' })),
+  state('hidden', style({ transform: 'translateX(-285px)' })),
   transition('visible => hidden', animate('200ms ease-in')),
   transition('hidden => visible', animate('200ms ease-out')),
 ]);
 
 export const tableVisibleAnimation = trigger('toggleTables', [
-  state('static', style({ width: 'calc(98vw-(20.5em+20em)' })),
-  state('slide', style({ width: 'calc(98vw-20em)' })),
+  state('static', style({ width: 'calc(100vw - (285px + 200px)' })),
+  state('slide', style({ width: 'calc(100vw - 200px)' })),
   transition('static => slide', animate('400ms ease-out')),
   transition('slide => static', animate('400ms ease-in')),
 ]);
 
 export const contentAnimation = trigger('toggleContent', [
-  state('partial', style({ width: 'calc(100vw-20.5em)' })),
+  state('partial', style({ width: 'calc(100vw - 285px)' })),
   state('full', style({ width: '100vw' })),
   transition('static => slide', animate('400ms ease-out')),
   transition('slide => static', animate('400ms ease-in')),
@@ -145,7 +139,7 @@ export const contentAnimation = trigger('toggleContent', [
 
 export const mobileSidenavAnimation = trigger('toggleMobileSidenav', [
   state('visible', style({ transform: 'translateX(0em)' })),
-  state('hidden', style({ transform: 'translateX(-25em)' })),
+  state('hidden', style({ transform: 'translateX(-100vw)' })),
   transition('visible => hidden', animate('200ms ease-in')),
   transition('hidden => visible', animate('200ms ease-out')),
 ]);

@@ -10,7 +10,7 @@ import {
 } from '../../animations';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { StateService, ScreenWidth } from '../../state.service';
+import { StateService } from '../../state.service';
 
 @Component({
   selector: 'app-med-table',
@@ -22,7 +22,7 @@ import { StateService, ScreenWidth } from '../../state.service';
     slideDownAnimation,
   ],
 })
-export class MedTableComponent implements OnChanges, OnInit {
+export class MedTableComponent implements OnInit {
   @ViewChild('myTable') table: any;
   @Input() tableData: Table[];
   public rows: any[] = [];
@@ -37,9 +37,23 @@ export class MedTableComponent implements OnChanges, OnInit {
   public rationale: { expanded: boolean }[] = [];
   sidenavActive: boolean;
   smallScreen: boolean;
-
+  columns: string[];
+  cols: {}[];
   changeActiveColumns(cols: string[]) {
     this.columnOptions = this.parameterService.lookupColumns(cols);
+    this.cols = this.formatColumns(
+      this.columnOptions.map((item) => item.field)
+    );
+    this.rows = this.tableData['value'].reduce((acc, item) => {
+      let out = {};
+      Object.entries(item).map(([key, val]) => {
+        if (key && this.columns.includes(key)) {
+          out[key] = val;
+        }
+      });
+      acc.push(out);
+      return acc;
+    }, []);
   }
   expandRationale(index: number) {
     this.rationale[index].expanded = !this.rationale[index].expanded;
@@ -54,10 +68,22 @@ export class MedTableComponent implements OnChanges, OnInit {
     this.columnOptions = this.parameterService
       .lookupColumns(initOptions.selectedColumns)
       .filter(Boolean);
+
+    this.columns = this.columnOptions.map((item) => item.field);
     this.expandFieldData = this.parameterService
       .lookupColumns(initOptions.columnOptions)
       .filter(Boolean);
-    this.rows = this.tableData['value'];
+    this.rows = this.tableData['value'].reduce((acc, item) => {
+      let out = {};
+      Object.entries(item).map(([key, val]) => {
+        if (key && this.columns.includes(key)) {
+          out[key] = val;
+        }
+      });
+      acc.push(out);
+      return acc;
+    }, []);
+    this.cols = this.formatColumns(this.columns);
     if (this.columnOptions) {
       for (const item of this.columnOptions) {
         this.selectOptions.push(item.field);
@@ -65,38 +91,59 @@ export class MedTableComponent implements OnChanges, OnInit {
     }
   }
 
-  toggleExpandRow(row) {
-    this.table.rowDetail.toggleExpandRow(row);
+  formatColumns(cols) {
+    return cols.map((col) => {
+      return { prop: `${col}` };
+    });
   }
 
   onDetailToggle() {}
   constructor(
     public parameterService: ParametersService,
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
-    private state: StateService
+    public iconRegistry: MatIconRegistry,
+    public sanitizer: DomSanitizer,
+    public state: StateService
   ) {
     iconRegistry.addSvgIcon(
-      'error.svg',
+      'error',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
     );
     iconRegistry.addSvgIcon(
-      'unfold_less.svg',
+      'unfold_less',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/unfold_less.svg'
       )
     );
     iconRegistry.addSvgIcon(
-      'unfold_more.svg',
+      'remove_circle_outline',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/remove_circle_outline.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'add_circle_outline',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/add_circle_outline.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'unfold_more',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/unfold_more.svg'
       )
     );
-  }
-
-  ngOnChanges() {
-    this.rows = this.tableData['value'];
-    this.setExpandedVariables(this.rows);
+    iconRegistry.addSvgIcon(
+      'expand_less',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/expand_less.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'chevron_right',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/chevron_right.svg'
+      )
+    );
   }
 
   private setExpandedVariables(rows: any[]) {

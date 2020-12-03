@@ -2,27 +2,12 @@
 @import "./palette";
 /* fallback */
 @font-face {
-  font-family: "Material Icons";
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)
-    format("woff2");
-}
-/* fallback */
-@font-face {
-  font-family: "Material Icons Round";
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialiconsround/v26/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmPq_HTTw.woff2)
-    format("woff2");
-}
-@font-face {
   font-family: "Titillium Web";
-  font-weight: 300;
-  src: url("./assets/TitilliumWeb-Bold.ttf");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./assets/TitilliumWeb-SemiBold.ttf) format("ttf");
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 $app-primary: mat-palette($mat-indigo, 800);
 $app-accent: mat-palette($mat-amber, A700);
 
@@ -68,5 +53,4 @@ $table-gradient: linear-gradient(
 
 $textgray: lighten($gray, 70%);
 
-$headerfont: "Titillium Web";
-$subtitlefont: "Lato" sans-serif;
+$headerfont: "Titillium Web", sans-serif;

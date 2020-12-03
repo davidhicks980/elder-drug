@@ -1,6 +1,5 @@
 import { readFile, writeFileSync, createWriteStream, write } from 'fs';
 import { fetch } from 'cross-fetch';
-import { promises } from 'dns';
 let inFile = './json-out/antipsychotics.json';
 let outFile = './json-out/antipsychotics-generics-dropdown.json';
 let outArray = [];

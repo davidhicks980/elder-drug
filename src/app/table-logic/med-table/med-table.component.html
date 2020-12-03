@@ -7,84 +7,32 @@
     tableName | caseSplit
   }}</mat-expansion-panel-header>
 
-  <div>
-    <app-column-selector
-      *ngIf="tableName"
-      (columnUpdates)="changeActiveColumns($event)"
-      [tableName]="tableName"
-      (loaded)="selectorInitiated = true"
-    ></app-column-selector>
+  <app-column-selector
+    *ngIf="tableName"
+    (columnUpdates)="changeActiveColumns($event)"
+    [tableName]="tableName"
+    (loaded)="selectorInitiated = true"
+  ></app-column-selector>
+
+  <ngx-datatable [columns]="cols" [rows]="rows"> </ngx-datatable>
+</mat-expansion-panel>
+<!--
     <div *ngIf="tableName === 'GeneralInfo'">
       This table is meant to display all drugs that flag, no matter the reason.
       More specific sorting can be found in other tables
       <br />
     </div>
-    <div class="p-table-background">
-      <p-table
-        #dataDisplay
-        [columns]="columnOptions"
-        [value]="rows"
-        dataKey="EntryID"
-        [responsive]="true"
-      >
-        <ng-template pTemplate="emptymessage" let-columns>
-          <tr>
-            <td [attr.colspan]="columns.length">No records found</td>
-          </tr>
-        </ng-template>
-        <ng-template #dataDisplay pTemplate="header" let-columns>
-          <tr class="ptable-empty-header">
-            <th class="ptable-chevron-header" style="width: 3em"></th>
-            <th
-              class="ptable-header-cell ptable-header-cell--padding"
-              *ngFor="let col of columns"
-              [pSortableColumn]="col.field"
-            >
-              {{ col.header | caseSplit }}
-            </th>
-          </tr>
-        </ng-template>
+   
         <ng-template
-          pTemplate="body"
-          let-rowData
-          let-expanded="expanded"
-          let-columns="columns"
+          
         >
-          <tr
-            [class]="
-              expanded
-                ? 'ptable-body ptable-body--row'
-                : 'ptable-body--row ptable-body'
-            "
-          >
-            <td class="ptable-body-chevron-cell">
+       
               <a [pRowToggler]="rowData">
                 <mat-icon
-                  [innerHTML]="expanded ? 'expand_less' : 'chevron_right'"
+                  [svgIcon]="expanded ? 'expand_less' : 'chevron_right'"
                 ></mat-icon>
               </a>
-            </td>
-            <td
-              [pRowToggler]="rowData"
-              class="ptable-data-cell ptable-data-cell--padding"
-              *ngFor="let col of columns"
-            >
-              <span class="show-when-small ui-column-title"
-                ><b>{{ col.header }}</b></span
-              >
-              {{ rowData[col.field] | toString | titlecase }}
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template
-          pTemplate="rowexpansion"
-          let-rowData
-          let-columns="columns"
-          let-i="rowIndex"
-        >
-          <tr class="ptable-expand-row">
-            <td [attr.colspan]="columns.length + 1" class="ptable-expand-body">
-              <br />
+           
               <div class="padding" @slideDown>
                 <div class="p-grid grid-height">
                   <div class="p-col-12 grid-term">
@@ -101,36 +49,56 @@
                     </mat-chip-list>
                   </div>
                   <div *ngIf="rowData['Inclusion']" class="p-col p-sm-6">
-                    <div fxLayout="row" fxLayoutGap="0.5em">
-                      <mat-icon color="accent" inline="true" class="mat-icon-24"
-                        >unfold_less</mat-icon
+                    <div
+                      fxLayoutAlign="start start"
+                      fxLayout="row"
+                      fxLayoutGap="0.5em"
+                    >
+                      <mat-icon
+                        svgIcon="unfold_less"
+                        color="accent"
+                        inline="true"
+                        class="mat-icon-24"
+                      ></mat-icon
                       ><span class="expanded-grid-text"
-                        ><b>Guidance Includes:</b>
+                        ><h3 class="grid-header">Guidance Includes</h3>
                         {{ rowData["Inclusion"] }}</span
                       >
                     </div>
                   </div>
-                  <div *ngIf="rowData['Exclusion']" class="p-col p-sm-6">
+                  <div
+                    *ngIf="rowData['Exclusion']"
+                    fxLayoutAlign="start start"
+                    class="p-col p-sm-6"
+                  >
                     <div fxLayout="row" fxLayoutGap="0.5em">
-                      <mat-icon color="accent" inline="true" class="mat-icon-24"
-                        >unfold_more</mat-icon
+                      <mat-icon
+                        svgIcon="unfold_more"
+                        color="accent"
+                        inline="true"
+                        class="mat-icon-24"
+                      ></mat-icon
                       ><span class="expanded-grid-text"
-                        ><b>Guidance Excludes:</b>
+                        ><h3 class="grid-header">Guidance Excludes</h3>
                         {{ rowData["Exclusion"] }}</span
                       >
                     </div>
                   </div>
                   <div *ngIf="rowData['DiseaseState']" class="p-col p-sm-6">
-                    <div fxLayout="row" fxLayoutGap="0.5em">
+                    <div
+                      fxLayout="row"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="5px"
+                    >
                       <mat-icon
+                        svgIcon="error"
                         color="accent"
                         aria-label="caution using drug in disease state "
                         inline="true"
                         class="mat-icon-24"
-                        >error</mat-icon
-                      >
+                      ></mat-icon>
                       <span class="expanded-grid-text"
-                        >Caution In
+                        ><h3 class="grid-header">Caution In</h3>
                         {{ rowData["DiseaseState"] | caseSplit }}</span
                       >
                     </div>
@@ -175,7 +143,7 @@
                               [@expandButton]="
                                 rationale[i].expanded ? 'default' : 'rotated'
                               "
-                              [innerHTML]="
+                              [svgIcon]="
                                 rationale[i].expanded
                                   ? 'remove_circle_outline'
                                   : 'add_circle_outline'
@@ -198,13 +166,5 @@
                   </div>
                 </div>
               </div>
-              <br />
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-  </div>
-
-  <br />
-</mat-expansion-panel>
+              
+            -->
