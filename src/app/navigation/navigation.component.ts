@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { StateService, ScreenWidth } from '../state.service';
+import { StateService, ScreenStatus, LayoutStatus } from '../state.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
@@ -27,29 +27,14 @@ import {
     logoSlideAnimation,
   ],
 })
-export class NavigationComponent implements AfterViewInit {
+export class NavigationComponent {
   @ViewChild('leftdrawer') public sidenav: MatSidenav;
-  sidenavActive: boolean = true;
-  public screenSize: ScreenWidth;
-  breakpointWidth: ScreenWidth;
+  public screenSize: ScreenStatus;
+  breakpointWidth: ScreenStatus;
   stateLoaded: boolean;
   public tablesLoaded: boolean = false;
   shrinkHeader: boolean;
-
-  ngAfterViewInit() {
-    if (this.state.breakpointObserver.isMatched('(max-width: 599.99px)')) {
-      this.breakpointWidth = ScreenWidth.xSmall;
-    } else if (
-      this.state.breakpointObserver.isMatched(
-        '(min-width: 600px) and (max-width: 959.99px)'
-      )
-    ) {
-      this.breakpointWidth = ScreenWidth.small;
-    } else {
-      this.breakpointWidth = ScreenWidth.large;
-    }
-    this.state.windowWidthSource.next(this.breakpointWidth);
-  }
+  layout: LayoutStatus;
 
   constructor(
     public webSocketService: WebsocketService,
@@ -57,11 +42,8 @@ export class NavigationComponent implements AfterViewInit {
     iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      this.screenSize = screenSize;
-    });
-    this.state.sidenavStatus$.subscribe((status) => {
-      this.sidenavActive = status;
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus) => {
+      this.layout = layoutStatus;
     });
 
     iconRegistry.addSvgIcon(

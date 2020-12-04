@@ -49,8 +49,9 @@ var input_1 = require("@angular/material/input");
 var autocomplete_1 = require("@angular/material/autocomplete");
 var animations_1 = require("../../animations");
 var EnterDrugFormComponent = /** @class */ (function () {
-    function EnterDrugFormComponent(stateService, fire, fb, dialog, iconRegistry, sanitizer) {
-        this.stateService = stateService;
+    function EnterDrugFormComponent(state, fire, fb, dialog, iconRegistry, sanitizer) {
+        var _this = this;
+        this.state = state;
         this.fire = fire;
         this.fb = fb;
         this.dialog = dialog;
@@ -66,9 +67,11 @@ var EnterDrugFormComponent = /** @class */ (function () {
             ])
         });
         this.activeInput = 0;
-        this.sideOpen = this.stateService.sidenavOpen;
-        iconRegistry.addSvgIcon('add-circle-outline.svg', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_circle_outline.svg'));
-        iconRegistry.addSvgIcon('delete.svg', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg'));
+        this.state.windowWidth$.subscribe(function (layoutStatus) {
+            _this.layout = layoutStatus;
+        });
+        this.iconRegistry.addSvgIcon('add-circle-outline.svg', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_circle_outline.svg'));
+        this.iconRegistry.addSvgIcon('delete.svg', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg'));
     }
     EnterDrugFormComponent.prototype.boldDropdownText = function (option, active) {
         var index = option.search(active);
@@ -99,7 +102,7 @@ var EnterDrugFormComponent = /** @class */ (function () {
         });
         if (out.length > 0) {
             this.fire.searchDrugs(out);
-            this.stateService.toggleSidenav();
+            this.state.toggleSidenav();
         }
         else {
             this.openDialog();
@@ -117,10 +120,7 @@ var EnterDrugFormComponent = /** @class */ (function () {
             ]));
         }
     };
-    EnterDrugFormComponent.prototype.ngOnInit = function () {
-        this.sidenavActive = this.stateService.sidenavOpen;
-        this.stateService.toggleSidenav();
-    };
+    EnterDrugFormComponent.prototype.ngOnInit = function () { };
     EnterDrugFormComponent.prototype.deleteFormControl = function (index) {
         this.drugs.removeAt(index);
     };

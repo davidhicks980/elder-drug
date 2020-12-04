@@ -2,44 +2,32 @@ import { Component, Input, OnInit } from '@angular/core';
 import { StateService } from 'src/app/state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { WebsocketService } from '../../websocket.service';
-import { ScreenWidth } from '../../state.service';
+import { ScreenStatus, LayoutStatus } from '../../state.service';
+import { toolbarItemsFade } from '../../animations';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
+  animations: [toolbarItemsFade],
 })
-export class ToolbarComponent implements OnInit {
-  sidenavActive: boolean = true;
+export class ToolbarComponent {
   public iconName = 'menu';
   @Input() loaded = false;
-  screenSize: ScreenWidth;
+  screenSize: ScreenStatus;
   shrinkHeader: boolean;
-
+  layout: LayoutStatus;
+  sidenavOpenMobileWidth: boolean;
   constructor(
     public fire: WebsocketService,
     public state: StateService,
     public dialog: MatDialog
   ) {
-    state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      this.screenSize = screenSize;
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
+      this.layout = layoutStatus;
+      this.sidenavOpenMobileWidth =
+        this.layout.sidenavOpen && this.layout.mobileWidth;
     });
-    this.state.sidenavStatus$.subscribe((isOpen: boolean) => {
-      this.sidenavActive = isOpen;
-    });
-  }
-  ngOnInit(): void {
-    this.animateHeader();
-  }
-
-  animateHeader() {
-    window.onscroll = () => {
-      if (window.pageYOffset > 120) {
-        this.shrinkHeader = true;
-      } else {
-        this.shrinkHeader = false;
-      }
-    };
   }
 
   openDisclaimerDialog() {

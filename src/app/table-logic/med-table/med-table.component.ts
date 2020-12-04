@@ -3,7 +3,7 @@ import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
 
 import { ParametersService } from 'src/app/parameters.service';
-import { slideDownAnimation } from '../../animations';
+import { slideDownAnimation, fadeInAnimation } from '../../animations';
 import {
   expandButtonAnimation,
   translateRationaleContent,
@@ -20,9 +20,10 @@ import { StateService } from '../../state.service';
     expandButtonAnimation,
     translateRationaleContent,
     slideDownAnimation,
+    fadeInAnimation,
   ],
 })
-export class MedTableComponent implements OnInit {
+export class MedTableComponent implements OnChanges, OnInit {
   @ViewChild('myTable') table: any;
   @Input() tableData: Table[];
   public rows: any[] = [];
@@ -37,23 +38,9 @@ export class MedTableComponent implements OnInit {
   public rationale: { expanded: boolean }[] = [];
   sidenavActive: boolean;
   smallScreen: boolean;
-  columns: string[];
-  cols: {}[];
+
   changeActiveColumns(cols: string[]) {
     this.columnOptions = this.parameterService.lookupColumns(cols);
-    this.cols = this.formatColumns(
-      this.columnOptions.map((item) => item.field)
-    );
-    this.rows = this.tableData['value'].reduce((acc, item) => {
-      let out = {};
-      Object.entries(item).map(([key, val]) => {
-        if (key && this.columns.includes(key)) {
-          out[key] = val;
-        }
-      });
-      acc.push(out);
-      return acc;
-    }, []);
   }
   expandRationale(index: number) {
     this.rationale[index].expanded = !this.rationale[index].expanded;
@@ -68,22 +55,10 @@ export class MedTableComponent implements OnInit {
     this.columnOptions = this.parameterService
       .lookupColumns(initOptions.selectedColumns)
       .filter(Boolean);
-
-    this.columns = this.columnOptions.map((item) => item.field);
     this.expandFieldData = this.parameterService
       .lookupColumns(initOptions.columnOptions)
       .filter(Boolean);
-    this.rows = this.tableData['value'].reduce((acc, item) => {
-      let out = {};
-      Object.entries(item).map(([key, val]) => {
-        if (key && this.columns.includes(key)) {
-          out[key] = val;
-        }
-      });
-      acc.push(out);
-      return acc;
-    }, []);
-    this.cols = this.formatColumns(this.columns);
+    this.rows = this.tableData['value'];
     if (this.columnOptions) {
       for (const item of this.columnOptions) {
         this.selectOptions.push(item.field);
@@ -91,10 +66,8 @@ export class MedTableComponent implements OnInit {
     }
   }
 
-  formatColumns(cols) {
-    return cols.map((col) => {
-      return { prop: `${col}` };
-    });
+  toggleExpandRow(row) {
+    this.table.rowDetail.toggleExpandRow(row);
   }
 
   onDetailToggle() {}
@@ -144,6 +117,11 @@ export class MedTableComponent implements OnInit {
         'assets/icons/chevron_right.svg'
       )
     );
+  }
+
+  ngOnChanges() {
+    this.rows = this.tableData['value'];
+    this.setExpandedVariables(this.rows);
   }
 
   private setExpandedVariables(rows: any[]) {

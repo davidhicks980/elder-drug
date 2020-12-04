@@ -7,6 +7,14 @@ import {
   sequence,
 } from '@angular/animations';
 
+export const toolbarItemsFade = trigger('toolbarItemsFade', [
+  transition(':enter', [
+    style({ opacity: 0 }),
+
+    animate('300ms ease-out', style({ opacity: 1 })),
+  ]),
+]);
+
 export const fadeInAnimation = trigger('fadeIn', [
   // the "in" style determines the "resting" state of the element when it is visible.
 
@@ -14,7 +22,7 @@ export const fadeInAnimation = trigger('fadeIn', [
   transition(':enter', [
     style({ opacity: 0 }),
 
-    animate('500ms ease-in', style({ opacity: '*' })),
+    animate('10s ease', style({ opacity: 1 })),
   ]),
 ]);
 

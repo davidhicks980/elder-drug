@@ -23,7 +23,6 @@ import {
 import { MedTableComponent } from './table-logic/med-table/med-table.component';
 import { ContentComponent } from './table-logic/content.component';
 import { LogoComponent } from './logo/small-logo/logo-component';
-
 import {
   EnterDrugFormComponent,
   EmptyInputComponent,
@@ -34,16 +33,12 @@ import { SideNavigationComponent } from './navigation/side-navigation/side-navig
 import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
 import { environment } from '../environments/environment';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {
   AboutComponent,
   DesignComponent,
 } from './navigation/top-toolbar/toolbar.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { PanelModule } from 'primeng/panel';
-import { LogoLargeComponent } from './logo-large/logo-large.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +59,6 @@ import { LogoLargeComponent } from './logo-large/logo-large.component';
     DisclaimerComponent,
     AboutComponent,
     DesignComponent,
-    LogoLargeComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -86,9 +80,6 @@ import { LogoLargeComponent } from './logo-large/logo-large.component';
       enabled: environment.production,
     }),
     OverlayModule,
-    ScrollPanelModule,
-    PanelModule,
-    NgxDatatableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -14,18 +14,11 @@ var SideNavigationComponent = /** @class */ (function () {
         this.state = state;
         this.iconRegistry = iconRegistry;
         this.sanitizer = sanitizer;
-        state.sidenavStatus$.subscribe(function (isOpen) {
-            _this.sidenavActive = isOpen;
+        this.state.windowWidth$.subscribe(function (layoutStatus) {
+            _this.layout = layoutStatus;
         });
         iconRegistry.addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg'));
     }
-    SideNavigationComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.sidenavActive = this.state.sidenavOpen;
-        this.state.windowWidth$.subscribe(function (screenSize) {
-            _this.screenSize = screenSize;
-        });
-    };
     SideNavigationComponent = __decorate([
         core_1.Component({
             selector: 'app-side-navigation',

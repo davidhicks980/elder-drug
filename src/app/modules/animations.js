@@ -1,13 +1,19 @@
 "use strict";
 exports.__esModule = true;
-exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.formVisibleAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.translateRationaleContent = exports.expandButtonAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = void 0;
+exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.formVisibleAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.translateRationaleContent = exports.expandButtonAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = exports.toolbarItemsFade = void 0;
 var animations_1 = require("@angular/animations");
+exports.toolbarItemsFade = animations_1.trigger('toolbarItemsFade', [
+    animations_1.transition(':enter', [
+        animations_1.style({ opacity: 0 }),
+        animations_1.animate('300ms ease-out', animations_1.style({ opacity: 1 })),
+    ]),
+]);
 exports.fadeInAnimation = animations_1.trigger('fadeIn', [
     // the "in" style determines the "resting" state of the element when it is visible.
     // fade in when created. this could also be written as transition('void => *')
     animations_1.transition(':enter', [
         animations_1.style({ opacity: 0 }),
-        animations_1.animate('500ms ease-in', animations_1.style({ opacity: '*' })),
+        animations_1.animate('10s ease', animations_1.style({ opacity: 1 })),
     ]),
 ]);
 exports.slideInLeft = animations_1.trigger('slideInLeft', [

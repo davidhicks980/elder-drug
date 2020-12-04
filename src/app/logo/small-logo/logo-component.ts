@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { StateService, ScreenWidth } from '../../state.service';
+import { StateService, ScreenStatus, LayoutStatus } from '../../state.service';
 
 @Component({
   selector: 'app-logo',
@@ -29,14 +29,14 @@ export class LogoComponent {
   // alt defines whether the alternative palette should be used
   @Input() altColor = false;
   @Input() title = false;
-  public drawerOpened: boolean;
   public showLogo = true;
   @Input() contentPlaceholder = false;
-  screenSize: ScreenWidth;
+  screenSize: ScreenStatus;
+  layout: LayoutStatus;
 
   checkLogoStatus() {
     if (!this.title) {
-      if (this.screenSize != 'LARGE' || !this.drawerOpened) {
+      if (this.layout.screenWidth != 3 || !this.layout.sidenavOpen) {
         this.showLogo = true;
       } else {
         this.showLogo = false;
@@ -44,15 +44,9 @@ export class LogoComponent {
     }
   }
 
-  constructor(public stateService: StateService) {
-    this.stateService.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      this.screenSize = screenSize;
-      this.checkLogoStatus();
-    });
-
-    stateService.sidenavStatus$.subscribe((isOpen: boolean) => {
-      this.drawerOpened = isOpen;
-      this.checkLogoStatus();
+  constructor(public state: StateService) {
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
+      this.layout = layoutStatus;
     });
   }
 }

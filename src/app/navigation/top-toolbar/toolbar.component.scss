@@ -21,21 +21,19 @@ div.dialog {
   width: 50vh;
 }
 
-span {
+header {
   font-family: "Titillium Web", sans-serif;
   font-weight: 600;
   &.small-title {
-    font-size: 32pt;
+    font-size: 28pt;
     letter-spacing: -1px;
+    white-space: nowrap;
   }
   &.large-title {
-    font-size: 35pt;
+    font-size: 32pt;
   }
 }
 
-.title-container {
-  padding-left: 0.5em;
-}
 mat-icon.mat-icon-24 {
   font-size: 20pt;
   color: $accent;
@@ -45,13 +43,15 @@ mat-icon.mat-icon-24 {
 div.center-left {
   place-items: center;
 }
-div.buttons-div {
+.buttons {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
   margin-right: 1em;
   margin-left: 1em;
 }
-
-div.toolbar-content-height {
+.logo {
+  margin: 7px;
+}
+.toolbar-content-height {
   height: 100%;
 }

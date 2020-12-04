@@ -30,20 +30,7 @@ var MedTableComponent = /** @class */ (function () {
         iconRegistry.addSvgIcon('chevron_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg'));
     }
     MedTableComponent.prototype.changeActiveColumns = function (cols) {
-        var _this = this;
         this.columnOptions = this.parameterService.lookupColumns(cols);
-        this.cols = this.formatColumns(this.columnOptions.map(function (item) { return item.field; }));
-        this.rows = this.tableData['value'].reduce(function (acc, item) {
-            var out = {};
-            Object.entries(item).map(function (_a) {
-                var key = _a[0], val = _a[1];
-                if (key && _this.columns.includes(key)) {
-                    out[key] = val;
-                }
-            });
-            acc.push(out);
-            return acc;
-        }, []);
     };
     MedTableComponent.prototype.expandRationale = function (index) {
         this.rationale[index].expanded = !this.rationale[index].expanded;
@@ -57,22 +44,10 @@ var MedTableComponent = /** @class */ (function () {
         this.columnOptions = this.parameterService
             .lookupColumns(initOptions.selectedColumns)
             .filter(Boolean);
-        this.columns = this.columnOptions.map(function (item) { return item.field; });
         this.expandFieldData = this.parameterService
             .lookupColumns(initOptions.columnOptions)
             .filter(Boolean);
-        this.rows = this.tableData['value'].reduce(function (acc, item) {
-            var out = {};
-            Object.entries(item).map(function (_a) {
-                var key = _a[0], val = _a[1];
-                if (key && _this.columns.includes(key)) {
-                    out[key] = val;
-                }
-            });
-            acc.push(out);
-            return acc;
-        }, []);
-        this.cols = this.formatColumns(this.columns);
+        this.rows = this.tableData['value'];
         if (this.columnOptions) {
             for (var _i = 0, _a = this.columnOptions; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -80,12 +55,14 @@ var MedTableComponent = /** @class */ (function () {
             }
         }
     };
-    MedTableComponent.prototype.formatColumns = function (cols) {
-        return cols.map(function (col) {
-            return { prop: "" + col };
-        });
+    MedTableComponent.prototype.toggleExpandRow = function (row) {
+        this.table.rowDetail.toggleExpandRow(row);
     };
     MedTableComponent.prototype.onDetailToggle = function () { };
+    MedTableComponent.prototype.ngOnChanges = function () {
+        this.rows = this.tableData['value'];
+        this.setExpandedVariables(this.rows);
+    };
     MedTableComponent.prototype.setExpandedVariables = function (rows) {
         for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
             var _a = rows_1[_i];
@@ -107,6 +84,7 @@ var MedTableComponent = /** @class */ (function () {
                 animations_2.expandButtonAnimation,
                 animations_2.translateRationaleContent,
                 animations_1.slideDownAnimation,
+                animations_1.fadeInAnimation,
             ]
         })
     ], MedTableComponent);

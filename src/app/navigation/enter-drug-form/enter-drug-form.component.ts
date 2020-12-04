@@ -27,6 +27,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { inputAnimation } from '../../animations';
+import { LayoutStatus } from '../../state.service';
 
 @Component({
   selector: 'app-enter-drug-form',
@@ -64,6 +65,7 @@ export class EnterDrugFormComponent implements OnInit {
   entryValue: string;
 
   sideOpen: boolean;
+  layout: LayoutStatus;
 
   boldDropdownText(option: string, active: string) {
     const index = option.search(active);
@@ -90,7 +92,7 @@ export class EnterDrugFormComponent implements OnInit {
     });
     if (out.length > 0) {
       this.fire.searchDrugs(out);
-      this.stateService.toggleSidenav();
+      this.state.toggleSidenav();
     } else {
       this.openDialog();
     }
@@ -110,10 +112,7 @@ export class EnterDrugFormComponent implements OnInit {
       );
     }
   }
-  ngOnInit() {
-    this.sidenavActive = this.stateService.sidenavOpen;
-    this.stateService.toggleSidenav();
-  }
+  ngOnInit() {}
   deleteFormControl(index: number) {
     this.drugs.removeAt(index);
   }
@@ -129,23 +128,25 @@ export class EnterDrugFormComponent implements OnInit {
   }
 
   constructor(
-    public stateService: StateService,
+    public state: StateService,
     public fire: WebsocketService,
     private fb: FormBuilder,
     public dialog: MatDialog,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    this.sideOpen = this.stateService.sidenavOpen;
-    iconRegistry.addSvgIcon(
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
+      this.layout = layoutStatus;
+    });
+    this.iconRegistry.addSvgIcon(
       'add-circle-outline.svg',
-      sanitizer.bypassSecurityTrustResourceUrl(
+      this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/add_circle_outline.svg'
       )
     );
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'delete.svg',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg')
     );
   }
   openDialog() {

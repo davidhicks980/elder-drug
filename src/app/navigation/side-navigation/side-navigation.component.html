@@ -4,7 +4,7 @@
     <button
       mat-flat-button
       class="search-button p-shadow-10"
-      [style]="state.mobileWidth ? 'width: 70%' : 'width:90%'"
+      [style]="layout.sidenavOpen ? 'width: 70%' : 'width:90%'"
       type="button"
       (click)="searchForm.search()"
       (keydown.enter)="searchForm.search()"

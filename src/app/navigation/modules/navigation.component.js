@@ -9,7 +9,6 @@ exports.__esModule = true;
 exports.NavigationComponent = void 0;
 var core_1 = require("@angular/core");
 var websocket_service_1 = require("../websocket.service");
-var state_service_1 = require("../state.service");
 var animations_1 = require("../animations");
 var NavigationComponent = /** @class */ (function () {
     function NavigationComponent(webSocketService, state, iconRegistry, sanitizer) {
@@ -17,30 +16,14 @@ var NavigationComponent = /** @class */ (function () {
         this.webSocketService = webSocketService;
         this.state = state;
         this.sanitizer = sanitizer;
-        this.sidenavActive = true;
         this.tablesLoaded = false;
-        this.state.windowWidth$.subscribe(function (screenSize) {
-            _this.screenSize = screenSize;
-        });
-        this.state.sidenavStatus$.subscribe(function (status) {
-            _this.sidenavActive = status;
+        this.state.windowWidth$.subscribe(function (layoutStatus) {
+            _this.layout = layoutStatus;
         });
         iconRegistry.addSvgIcon('chevron_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg'));
         iconRegistry.addSvgIcon('chevron_left', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_left.svg'));
         iconRegistry.addSvgIcon('menu', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
     }
-    NavigationComponent.prototype.ngAfterViewInit = function () {
-        if (this.state.breakpointObserver.isMatched('(max-width: 599.99px)')) {
-            this.breakpointWidth = state_service_1.ScreenWidth.xSmall;
-        }
-        else if (this.state.breakpointObserver.isMatched('(min-width: 600px) and (max-width: 959.99px)')) {
-            this.breakpointWidth = state_service_1.ScreenWidth.small;
-        }
-        else {
-            this.breakpointWidth = state_service_1.ScreenWidth.large;
-        }
-        this.state.windowWidthSource.next(this.breakpointWidth);
-    };
     __decorate([
         core_1.ViewChild('leftdrawer')
     ], NavigationComponent.prototype, "sidenav");

@@ -38,7 +38,7 @@ div.sidenav-open {
 }
 div.sidenav-closed {
   &.content {
-    width: calc(100vw + 20px);
+    width: calc(101vw);
   }
   &.tables {
     width: calc(100vw - 215px);

@@ -10,27 +10,22 @@ exports.LogoComponent = void 0;
 var core_1 = require("@angular/core");
 var animations_1 = require("@angular/animations");
 var LogoComponent = /** @class */ (function () {
-    function LogoComponent(stateService) {
+    function LogoComponent(state) {
         var _this = this;
-        this.stateService = stateService;
+        this.state = state;
         // show defines whether the logo should be shown
         // alt defines whether the alternative palette should be used
         this.altColor = false;
         this.title = false;
         this.showLogo = true;
         this.contentPlaceholder = false;
-        this.stateService.windowWidth$.subscribe(function (screenSize) {
-            _this.screenSize = screenSize;
-            _this.checkLogoStatus();
-        });
-        stateService.sidenavStatus$.subscribe(function (isOpen) {
-            _this.drawerOpened = isOpen;
-            _this.checkLogoStatus();
+        this.state.windowWidth$.subscribe(function (layoutStatus) {
+            _this.layout = layoutStatus;
         });
     }
     LogoComponent.prototype.checkLogoStatus = function () {
         if (!this.title) {
-            if (this.screenSize != 'LARGE' || !this.drawerOpened) {
+            if (this.layout.screenWidth != 3 || !this.layout.sidenavOpen) {
                 this.showLogo = true;
             }
             else {

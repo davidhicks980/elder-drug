@@ -51,6 +51,9 @@ $table-gradient: linear-gradient(
   adjust-hue(lighten($primary, 8%), 20deg)
 );
 
+$header-shrunken: 80px;
+$header-full: 142px;
+
 $textgray: lighten($gray, 70%);
 
 $headerfont: "Titillium Web", sans-serif;

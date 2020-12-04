@@ -113,10 +113,17 @@ export class ParametersService {
   private tableList = new Subject<object>();
   private optionsList = new Subject<object>();
 
+  private name = 'ParametersService';
+
   // Observable string streams
   recieveTables$ = this.optionsList.asObservable();
   recieveOptions$ = this.tableList.asObservable();
-
+  sendTables(tables: object) {
+    this.optionsList.next(tables);
+  }
+  sendOptions(options: object) {
+    this.tableList.next(options);
+  }
   mapData(data: any[], filter?: string[]) {
     let output = [];
     if (filter[0] != null || filter[1] != null) {
@@ -147,12 +154,7 @@ export class ParametersService {
   }
 
   // Service message commands
-  sendTables(tables: object) {
-    this.optionsList.next(tables);
-  }
-  sendOptions(options: object) {
-    this.tableList.next(options);
-  }
+
   lookupColumns(columns: string[]) {
     const output: { field: string; header: string }[] = [];
     for (const col of columns) {

@@ -8,36 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.DesignComponent = exports.AboutComponent = exports.DisclaimerComponent = exports.ToolbarComponent = void 0;
 var core_1 = require("@angular/core");
+var animations_1 = require("../../animations");
 var ToolbarComponent = /** @class */ (function () {
     function ToolbarComponent(fire, state, dialog) {
         var _this = this;
         this.fire = fire;
         this.state = state;
         this.dialog = dialog;
-        this.sidenavActive = true;
         this.iconName = 'menu';
         this.loaded = false;
-        state.windowWidth$.subscribe(function (screenSize) {
-            _this.screenSize = screenSize;
-        });
-        this.state.sidenavStatus$.subscribe(function (isOpen) {
-            _this.sidenavActive = isOpen;
+        this.state.windowWidth$.subscribe(function (layoutStatus) {
+            _this.layout = layoutStatus;
+            _this.sidenavOpenMobileWidth =
+                _this.layout.sidenavOpen && _this.layout.mobileWidth;
         });
     }
-    ToolbarComponent.prototype.ngOnInit = function () {
-        this.animateHeader();
-    };
-    ToolbarComponent.prototype.animateHeader = function () {
-        var _this = this;
-        window.onscroll = function () {
-            if (window.pageYOffset > 120) {
-                _this.shrinkHeader = true;
-            }
-            else {
-                _this.shrinkHeader = false;
-            }
-        };
-    };
     ToolbarComponent.prototype.openDisclaimerDialog = function () {
         this.dialog.open(DisclaimerComponent, { width: '700px' });
     };
@@ -54,7 +39,8 @@ var ToolbarComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'app-toolbar',
             templateUrl: './toolbar.component.html',
-            styleUrls: ['./toolbar.component.scss']
+            styleUrls: ['./toolbar.component.scss'],
+            animations: [animations_1.toolbarItemsFade]
         })
     ], ToolbarComponent);
     return ToolbarComponent;

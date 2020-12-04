@@ -36,13 +36,9 @@ var side_navigation_component_1 = require("./navigation/side-navigation/side-nav
 var modify_table_panel_component_1 = require("./table-logic/modify-table-panel/modify-table-panel.component");
 var environment_1 = require("../environments/environment");
 var scrolling_1 = require("@angular/cdk/scrolling");
-var ngx_datatable_1 = require("@swimlane/ngx-datatable");
 var service_worker_1 = require("@angular/service-worker");
 var toolbar_component_2 = require("./navigation/top-toolbar/toolbar.component");
 var overlay_1 = require("@angular/cdk/overlay");
-var scrollpanel_1 = require("primeng/scrollpanel");
-var panel_1 = require("primeng/panel");
-var logo_large_component_1 = require("./logo-large/logo-large.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -66,7 +62,6 @@ var AppModule = /** @class */ (function () {
                 toolbar_component_1.DisclaimerComponent,
                 toolbar_component_2.AboutComponent,
                 toolbar_component_2.DesignComponent,
-                logo_large_component_1.LogoLargeComponent,
             ],
             imports: [
                 animations_1.BrowserAnimationsModule,
@@ -88,9 +83,6 @@ var AppModule = /** @class */ (function () {
                     enabled: environment_1.environment.production
                 }),
                 overlay_1.OverlayModule,
-                scrollpanel_1.ScrollPanelModule,
-                panel_1.PanelModule,
-                ngx_datatable_1.NgxDatatableModule,
             ],
             providers: [],
             bootstrap: [app_component_1.AppComponent]

@@ -8,13 +8,13 @@ import {
 import { ParametersService } from 'src/app/parameters.service';
 import { StateService } from 'src/app/state.service';
 import { MatSelectionList } from '@angular/material/list';
-import { ScreenWidth } from '../../state.service';
+import { LayoutStatus } from '../../state.service';
 import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'modify-table-panel',
   template: ` <div class="selection-panel">
-    <div [fxShow.sm]="sidenavActive ? true : false" [fxShow.xs]="true" fxHide>
+    <div [fxShow.sm]="layout.sidenavOpen" [fxShow.xs]="true" fxHide>
       <div style="margin-left:2%">
         <h3>Show Tables</h3>
       </div>
@@ -39,7 +39,7 @@ import { Subject } from 'rxjs/internal/Subject';
 
     <div
       class="table-modifier-list"
-      [fxHide.sm]="sidenavActive ? true : false"
+      [fxHide.sm]="layout.sidenavOpen ? true : false"
       [fxHide.xs]="true"
       fxShow
     >
@@ -76,22 +76,19 @@ export class ModifyTablePanelComponent {
   public tablesChanged: Subject<Map<string, boolean>> = new Subject();
   public selectedOptions: string[];
   public message: string;
-  public options: string[];
-  public screenSize: ScreenWidth;
+  public options: string[] = [];
   @Output() loaded = new EventEmitter();
-  sidenavActive: boolean;
   smallScreen: boolean;
+  layout: LayoutStatus = this.state.layoutStatus;
+  public pageLoaded: Subject<boolean> = new Subject();
+  value: any;
 
   updateOptions(selections: string[]): void {
     this.state.emitSelectedTables(selections);
   }
 
   isTableActive(table: string): boolean {
-    try {
-      return this.tablesWithData.includes(table);
-    } catch (err) {
-      null;
-    }
+    return this.tablesWithData.includes(table);
   }
   processMobileCheckboxes(checked: boolean, name: string): void {
     this.tableStore.set(name, checked);
@@ -111,10 +108,14 @@ export class ModifyTablePanelComponent {
     private parameterService: ParametersService,
     public state: StateService
   ) {
-    this.state.sidenavStatus$.subscribe((active) => {
-      this.sidenavActive = active;
+    this.state.requestComponentProperty(
+      'ModifyTablePanel',
+      'StateService',
+      'layoutStatus'
+    );
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
+      this.layout = layoutStatus;
     });
-
     this.options = this.parameterService.columnDefinitions.map(
       (col) => col.name
     );

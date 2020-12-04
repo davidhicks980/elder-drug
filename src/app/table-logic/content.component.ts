@@ -1,38 +1,35 @@
 import {
   Component,
   TrackByFunction,
-  Input,
-  OnChanges,
   Output,
   EventEmitter,
+  AfterViewInit,
 } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { ParametersService } from '../parameters.service';
-import { StateService, ScreenWidth } from '../state.service';
-import {
-  fadeInAnimation,
-  tableVisibleAnimation,
-  contentAnimation,
-} from '../animations';
+import { StateService, ScreenStatus, LayoutStatus } from '../state.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-content',
   template: `
     <div
       [class]="
-        sidenavActive ? 'sidenav-open content' : 'sidenav-closed content'
+        layout.sidenavOpen ? 'sidenav-open content' : 'sidenav-closed content'
       "
     >
       <div
-        [hidden]="loaded"
+        *ngIf="loaded"
         class="main-content-box"
         fxLayout="row"
-        [fxLayout.sm]="sidenavActive ? 'column' : 'row'"
+        [fxLayout.sm]="layout.sidenavOpen ? 'column' : 'row'"
         fxLayout.xs="column"
+        [@fadeIn]="loaded"
       >
         <div
-          [fxFlexOrder.sm]="sidenavActive ? '2' : '1'"
+          [fxFlexOrder.sm]="layout.sidenavOpen ? '2' : '1'"
           fxFlexOrder.xs="2"
           fxFlexOrder="1"
           fxShrink="0"
@@ -40,11 +37,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
           <div
             *ngFor="let table of tables | keyvalue; trackBy: trackByFn"
             [class]="
-              sidenavActive ? 'sidenav-open tables' : 'sidenav-closed tables'
+              layout.sidenavOpen
+                ? 'sidenav-open tables'
+                : 'sidenav-closed tables'
             "
           >
             <app-med-table
-              *ngIf="this.activeTables.includes(table.key)"
+              *ngIf="activeTables.includes(table.key)"
               [tableData]="table"
             >
             </app-med-table>
@@ -54,24 +53,33 @@ import { BreakpointObserver } from '@angular/cdk/layout';
         </div>
         <div
           #modifyPanel
-          [fxFlexOrder.sm]="sidenavActive ? '1' : '2'"
+          [fxFlexOrder.sm]="layout.sidenavOpen ? '1' : '2'"
           fxFlexOrder.xs="1"
           fxFlexOrder="2"
         >
           <modify-table-panel
-            *ngIf="loaded"
-            [tablesWithData]="tablesWithData"
+            [hidden]="!loaded"
+            [tablesWithData]="loaded ? activeTables : null"
           ></modify-table-panel>
         </div>
       </div>
     </div>
   `,
   styleUrls: ['./content.component.scss'],
-  animations: [fadeInAnimation, tableVisibleAnimation, contentAnimation],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('2s', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('2s', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class ContentComponent {
   sidenavActive: boolean;
-  smallScreen: boolean;
+  contentIsMobileWidth: boolean;
+  layout: LayoutStatus;
   constructor(
     public firestore: WebsocketService,
     private parameterService: ParametersService,
@@ -81,41 +89,28 @@ export class ContentComponent {
     firestore.groupedTables.subscribe((items) => {
       this.tables = items;
       this.tablesWithData = this.parameterService.filterActiveTables(items);
-
-      this.activeTables = this.tablesWithData;
       this.loaded = true;
+      this.activeTables = this.tablesWithData;
       this.tablesLoaded.emit(true);
     });
-    this.state.windowWidth$.subscribe((screenSize: ScreenWidth) => {
-      if (
-        (this.sidenavActive && screenSize === 'SMALL') ||
-        screenSize === 'XSMALL'
-      ) {
-        this.smallScreen = true;
-      } else {
-        this.smallScreen = false;
-      }
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus) => {
+      this.layout = layoutStatus;
     });
     this.state.tableStatus$.subscribe((active) => {
       this.activeTables = active;
-    });
-    this.state.sidenavStatus$.subscribe((sidenavOpen) => {
-      this.smallScreen = sidenavOpen
-        ? this.widthObserver.isMatched('(max-width: 959.59px)')
-        : this.widthObserver.isMatched('(max-width: 599px)');
-
-      this.sidenavActive = sidenavOpen;
     });
   }
 
   data: any;
   active = false;
-  tablesWithData: string[];
+  tablesWithData: string[] = [];
   tables: Table[];
   activeTables: string[];
   loaded: boolean;
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
   @Output() tablesLoaded: EventEmitter<boolean> = new EventEmitter();
+
+  // Create observer object
 }
 
 export interface Columns {

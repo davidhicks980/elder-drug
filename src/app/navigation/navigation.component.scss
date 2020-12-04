@@ -19,8 +19,6 @@ button.sidenav-chevron-left:hover {
   background-color: transparentize($color: $primary, $amount: 0.5%);
 }
 
-$toolbar: 5em;
-$toolbar-small: 9.5em;
 div.grid-layout {
   display: grid;
   grid-template-columns: 285px auto;
@@ -33,14 +31,14 @@ div.full-layout {
 
 .small-toolbar {
   color: $gray;
-  height: $toolbar-small;
+  height: $header-full;
   border-bottom: 1px solid lightgray;
 }
 
 .large-toolbar {
   background: white;
   color: $gray;
-  height: $toolbar;
+  height: $header-shrunken;
   border-bottom: 1px solid lightgray;
   & app-toolbar {
     height: 100%;
@@ -63,10 +61,10 @@ div.full-layout {
   background-color: rgb(250, 250, 253);
   overflow-y: auto;
   &.large {
-    height: calc(100vh - #{$toolbar});
+    height: calc(100vh - #{$header-full});
   }
   &.small {
-    height: calc(100vh - #{$toolbar-small});
+    height: calc(100vh - #{$header-shrunken});
   }
 }
 

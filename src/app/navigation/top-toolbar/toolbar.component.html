@@ -1,25 +1,33 @@
 <div
   fxLayoutAlign="space-between center"
-  [fxLayout]="state.mobileWidth && !shrinkHeader ? 'column' : 'row'"
+  [fxLayout]="layout.mobileWidth && layout.sidenavOpen ? 'column' : 'row'"
   class="toolbar-content-height"
 >
   <div
-    [fxLayout]="state.mobileWidth && !shrinkHeader ? 'column' : 'row'"
+    [fxLayout]="layout.mobileWidth && layout.sidenavOpen ? 'column' : 'row'"
     fxLayoutAlign="start center"
-    class="title-container"
   >
-    <app-logo [title]="true" [altColor]="true"></app-logo>
-    <span
-      [class]="
-        state.mobileWidth && !shrinkHeader ? 'large-title' : 'small-title'
-      "
-      >Elder Drug</span
+    <app-logo class="logo" [title]="true" [altColor]="true"></app-logo>
+    <ng-template
+      [ngIf]="layout.mobileWidth && layout.sidenavOpen"
+      [ngIfElse]="desktopToolbar"
+    >
+      <header @toolbarItemsFade class="large-title">
+        Elder Drug
+      </header></ng-template
+    >
+    <ng-template #desktopToolbar
+      ><header @toolbarItemsFade class="small-title">
+        Elder Drug
+      </header></ng-template
     >
   </div>
 
-  <div
-    class="buttons-div"
-    fxLayoutGap="1.5em"
+  <nav
+    class="buttons"
+    [fxLayoutGap]="
+      layout.mobileWidth && !layout.sidenavOpen ? '0.5em' : '1.5em'
+    "
     fxLayout="row"
     fxLayoutAlign="space-evenly center"
   >
@@ -30,5 +38,5 @@
     <a class="toolbar-primary-button" (click)="openDisclaimerDialog()">
       Disclaimer
     </a>
-  </div>
+  </nav>
 </div>
