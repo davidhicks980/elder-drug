@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SideNavigationComponent } from './side-navigation.component';
 
@@ -6,7 +6,7 @@ describe('SideNavigationComponent', () => {
   let component: SideNavigationComponent;
   let fixture: ComponentFixture<SideNavigationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SideNavigationComponent],
     }).compileComponents();
