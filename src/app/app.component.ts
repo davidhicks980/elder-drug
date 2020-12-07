@@ -1,6 +1,5 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ScreenStatus, StateService } from './state.service';
+import { Component, OnInit } from '@angular/core';
+import { StateService } from './state.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +9,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.state.toggleSidenav();
   }
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private state: StateService
-  ) {}
+  constructor(private state: StateService) {}
   title = 'ElderDrug';
 }

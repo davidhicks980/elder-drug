@@ -3,14 +3,12 @@ import {
   TrackByFunction,
   Output,
   EventEmitter,
-  AfterViewInit,
 } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { ParametersService } from '../parameters.service';
-import { StateService, ScreenStatus, LayoutStatus } from '../state.service';
+import { StateService, LayoutStatus } from '../state.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-content',
@@ -58,8 +56,7 @@ import { Observable, of } from 'rxjs';
           fxFlexOrder="2"
         >
           <modify-table-panel
-            [hidden]="!loaded"
-            [tablesWithData]="loaded ? activeTables : null"
+            [tablesWithData]="activeTables"
           ></modify-table-panel>
         </div>
       </div>
@@ -77,15 +74,15 @@ import { Observable, of } from 'rxjs';
   ],
 })
 export class ContentComponent {
-  sidenavActive: boolean;
-  contentIsMobileWidth: boolean;
-  layout: LayoutStatus;
+  layout!: LayoutStatus;
+  loaded: boolean = false;
   constructor(
     public firestore: WebsocketService,
     private parameterService: ParametersService,
     public state: StateService,
     public widthObserver: BreakpointObserver
   ) {
+    this.tables = [];
     firestore.groupedTables.subscribe((items) => {
       this.tables = items;
       this.tablesWithData = this.parameterService.filterActiveTables(items);
@@ -105,8 +102,7 @@ export class ContentComponent {
   active = false;
   tablesWithData: string[] = [];
   tables: Table[];
-  activeTables: string[];
-  loaded: boolean;
+  activeTables!: string[];
   trackByFn: TrackByFunction<any> = (_, item) => item.id;
   @Output() tablesLoaded: EventEmitter<boolean> = new EventEmitter();
 

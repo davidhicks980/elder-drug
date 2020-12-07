@@ -9,7 +9,6 @@ exports.__esModule = true;
 exports.StateService = exports.ScreenStatus = void 0;
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
-var layout_1 = require("@angular/cdk/layout");
 var ScreenStatus;
 (function (ScreenStatus) {
     ScreenStatus[ScreenStatus["xSmall"] = 1] = "xSmall";
@@ -17,41 +16,54 @@ var ScreenStatus;
     ScreenStatus[ScreenStatus["large"] = 3] = "large";
 })(ScreenStatus = exports.ScreenStatus || (exports.ScreenStatus = {}));
 var StateService = /** @class */ (function () {
-    function StateService(breakpointObserver) {
+    function StateService(_ruler) {
         var _this = this;
-        this.breakpointObserver = breakpointObserver;
+        this.sidenavOpen = true;
         this.windowWidthSource = new rxjs_1.Subject();
         this.windowWidth$ = this.windowWidthSource.asObservable();
+        this.width = ScreenStatus.large;
         this.sidenavStatus$ = this.windowWidthSource.asObservable();
         this.tableStatusSource = new rxjs_1.Subject();
+        this.activeTables = [];
         this.tableStatus$ = this.tableStatusSource.asObservable();
+        this.mobileWidth = false;
         this.requestPropertySource = new rxjs_1.Subject();
         this.sendPropertySource = new rxjs_1.Subject();
         // Observable string streams
         this.receivedRequestedProperties$ = this.requestPropertySource.asObservable();
         this.sentPropertyResponse$ = this.sendPropertySource.asObservable();
         this.name = 'StateService';
-        this.breakpointObserver
-            .observe([layout_1.Breakpoints.Small, layout_1.Breakpoints.XSmall])
-            .subscribe(function (state) {
-            if (state.breakpoints['(max-width: 599.99px)']) {
-                _this.width = ScreenStatus.xSmall;
-                _this.mobileWidth = true;
-            }
-            else if (state.breakpoints['(min-width: 600px) and (max-width: 959.99px)']) {
-                _this.width = ScreenStatus.small;
-                _this.mobileWidth = false;
-            }
-            else {
-                _this.width = ScreenStatus.large;
-                _this.mobileWidth = false;
-            }
-            _this.windowWidthSource.next({
-                sidenavOpen: _this.sidenavOpen,
-                screenWidth: _this.width,
-                mobileWidth: _this.mobileWidth
+        try {
+            _ruler.change(16).subscribe(function () {
+                var layoutType = 0;
+                if (_ruler.getViewportSize().width < 599.99) {
+                    _this.mobileWidth = true;
+                    _this.width = ScreenStatus.xSmall;
+                    layoutType = 1 * (Number(_this.sidenavOpen) + 1);
+                }
+                else if (_ruler.getViewportSize().width < 959.99) {
+                    _this.width = ScreenStatus.small;
+                    _this.mobileWidth = false;
+                    layoutType = 2 * (Number(_this.sidenavOpen) + 1);
+                }
+                else {
+                    _this.width = ScreenStatus.large;
+                    _this.mobileWidth = false;
+                    layoutType = 3 * (Number(_this.sidenavOpen) + 1);
+                }
+                if (_this.layoutType !== layoutType) {
+                    _this.layoutType = layoutType;
+                    _this.windowWidthSource.next({
+                        sidenavOpen: _this.sidenavOpen,
+                        screenWidth: _this.width,
+                        mobileWidth: _this.mobileWidth
+                    });
+                }
             });
-        });
+        }
+        catch (err) {
+            console.log(err);
+        }
         this.tableStatus$.subscribe(function (active) {
             _this.activeTables = active;
         });
@@ -71,7 +83,7 @@ var StateService = /** @class */ (function () {
     StateService.prototype.requestComponentProperty = function (sourceComponent, targetComponent, targetProperty) {
         if (targetComponent === this.name) {
             console.log('sending native property');
-            this.sendComponentProperty('howdy');
+            this.sendComponentProperty(targetProperty);
         }
         else {
             this.requestPropertySource.next({
@@ -83,7 +95,6 @@ var StateService = /** @class */ (function () {
     };
     StateService.prototype.sendComponentProperty = function (propertyValue) {
         this.sendPropertySource.next(propertyValue);
-        console.log("sent " + propertyValue);
     };
     StateService.prototype.toggleSidenav = function () {
         this.sidenavOpen = !this.sidenavOpen;

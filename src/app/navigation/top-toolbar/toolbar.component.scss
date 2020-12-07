@@ -2,35 +2,34 @@
 $toolbarActiveColor: $primary;
 $toolbarInactiveColor: white;
 
-div.transition {
-  background: $gradient;
-  color: white;
-}
-
-a.toolbar-primary-button {
-  text-align: center;
-  font-weight: bold;
-  cursor: pointer;
-  color: $primary;
-  &:hover {
-    color: $accent;
-  }
-}
-
 div.dialog {
-  width: 50vh;
+  width: 50vw;
 }
 
 header {
-  font-family: "Titillium Web", sans-serif;
-  font-weight: 600;
-  &.small-title {
-    font-size: 28pt;
-    letter-spacing: -1px;
-    white-space: nowrap;
+  width: 100vw;
+  height: 120px;
+  background-color: $primary;
+  position: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+div.logo-title {
+  width: 60px;
+  .logo {
+    margin: 7px;
   }
-  &.large-title {
-    font-size: 32pt;
+  & span {
+    font-family: $headerfont;
+    font-weight: 700;
+    &.title {
+      font-size: 30pt;
+      white-space: nowrap;
+      color: #414042;
+    }
+    &.mobile-sidenav-title {
+      font-size: 28pt;
+    }
   }
 }
 
@@ -43,15 +42,27 @@ mat-icon.mat-icon-24 {
 div.center-left {
   place-items: center;
 }
-.buttons {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-  margin-right: 1em;
-  margin-left: 1em;
+
+div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 30px;
+  transform-origin: left;
+  & button.toolbar-primary-button {
+    background: none;
+    border: none;
+    color: $primary;
+    cursor: pointer;
+    font-weight: 600;
+    &:hover {
+      color: $accent;
+    }
+  }
 }
-.logo {
-  margin: 7px;
-}
-.toolbar-content-height {
-  height: 100%;
+
+div.flex-toolbar {
+  background: white;
+  height: 80px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.28);
 }

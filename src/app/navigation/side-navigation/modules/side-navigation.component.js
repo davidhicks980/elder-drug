@@ -16,6 +16,7 @@ var SideNavigationComponent = /** @class */ (function () {
         this.sanitizer = sanitizer;
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
+            _this.sidenavOpen = _this.layout.sidenavOpen;
         });
         iconRegistry.addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg'));
     }

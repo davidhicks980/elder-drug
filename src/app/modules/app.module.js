@@ -7,38 +7,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.AppModule = void 0;
-var core_1 = require("@angular/core");
-var flex_layout_1 = require("@angular/flex-layout");
-var animations_1 = require("@angular/platform-browser/animations");
+var textfield_1 = require("@angular-mdc/web/textfield");
 var layout_1 = require("@angular/cdk/layout");
+var overlay_1 = require("@angular/cdk/overlay");
+var scrolling_1 = require("@angular/cdk/scrolling");
+var http_1 = require("@angular/common/http");
+var core_1 = require("@angular/core");
+var fire_1 = require("@angular/fire");
+var firestore_1 = require("@angular/fire/firestore");
+var flex_layout_1 = require("@angular/flex-layout");
 var forms_1 = require("@angular/forms");
 var form_field_1 = require("@angular/material/form-field");
 var input_1 = require("@angular/material/input");
 var select_1 = require("@angular/material/select");
-var http_1 = require("@angular/common/http");
-var fire_1 = require("@angular/fire");
-var firestore_1 = require("@angular/fire/firestore");
-var app_component_1 = require("./app.component");
-var table_1 = require("primeng/table");
-var to_string_pipe_1 = require("./to-string.pipe");
-var case_split_pipe_1 = require("./case-split.pipe");
-var app_routing_module_1 = require("./app-routing.module");
-var navigation_component_1 = require("./navigation/navigation.component");
-var material_module_1 = require("./material-module");
-var toolbar_component_1 = require("./navigation/top-toolbar/toolbar.component");
-var med_table_component_1 = require("./table-logic/med-table/med-table.component");
-var content_component_1 = require("./table-logic/content.component");
-var logo_component_1 = require("./logo/small-logo/logo-component");
-var enter_drug_form_component_1 = require("./navigation/enter-drug-form/enter-drug-form.component");
-var column_selector_component_1 = require("./table-logic/med-table/column-selector/column-selector.component");
-var toggle_options_component_1 = require("./table-logic/med-table/toggle-options/toggle-options.component");
-var side_navigation_component_1 = require("./navigation/side-navigation/side-navigation.component");
-var modify_table_panel_component_1 = require("./table-logic/modify-table-panel/modify-table-panel.component");
-var environment_1 = require("../environments/environment");
-var scrolling_1 = require("@angular/cdk/scrolling");
+var animations_1 = require("@angular/platform-browser/animations");
 var service_worker_1 = require("@angular/service-worker");
-var toolbar_component_2 = require("./navigation/top-toolbar/toolbar.component");
-var overlay_1 = require("@angular/cdk/overlay");
+var table_1 = require("primeng/table");
+var environment_1 = require("../environments/environment");
+var app_routing_module_1 = require("./app-routing.module");
+var app_component_1 = require("./app.component");
+var case_split_pipe_1 = require("./case-split.pipe");
+var logo_component_1 = require("./logo/small-logo/logo-component");
+var material_module_1 = require("./material-module");
+var enter_drug_form_component_1 = require("./navigation/enter-drug-form/enter-drug-form.component");
+var navigation_component_1 = require("./navigation/navigation.component");
+var side_navigation_component_1 = require("./navigation/side-navigation/side-navigation.component");
+var toolbar_component_1 = require("./navigation/top-toolbar/toolbar.component");
+var content_component_1 = require("./table-logic/content.component");
+var column_selector_component_1 = require("./table-logic/med-table/column-selector/column-selector.component");
+var med_table_component_1 = require("./table-logic/med-table/med-table.component");
+var toggle_options_component_1 = require("./table-logic/med-table/toggle-options/toggle-options.component");
+var modify_table_panel_component_1 = require("./table-logic/modify-table-panel/modify-table-panel.component");
+var to_string_pipe_1 = require("./to-string.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -60,10 +60,11 @@ var AppModule = /** @class */ (function () {
                 modify_table_panel_component_1.ModifyTablePanelComponent,
                 to_string_pipe_1.ToStringPipe,
                 toolbar_component_1.DisclaimerComponent,
-                toolbar_component_2.AboutComponent,
-                toolbar_component_2.DesignComponent,
+                toolbar_component_1.AboutComponent,
+                toolbar_component_1.DesignComponent,
             ],
             imports: [
+                textfield_1.MdcTextFieldModule,
                 animations_1.BrowserAnimationsModule,
                 app_routing_module_1.AppRoutingModule,
                 layout_1.LayoutModule,

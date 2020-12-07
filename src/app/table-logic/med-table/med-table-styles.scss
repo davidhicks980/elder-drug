@@ -2,7 +2,7 @@
 $tablebackground: $tablebackground;
 
 tr.ptable-body {
-  border-top: 1px solid $lightgray;
+  border-top: 1px solid $border-1;
 
   border-radius: 4px;
 
@@ -15,7 +15,7 @@ tr.ptable-body--row {
   background: white;
   &:hover {
     box-shadow: 0 0 0 200px inset
-      transparentize($color: $lightblue, $amount: 0.95%);
+      transparentize($color: $primary, $amount: 0.93%);
   }
 }
 
@@ -23,7 +23,7 @@ tr.ptable-body--row.p-table-body {
   &:hover {
     transition: ease-in 100ms;
     background: rgb(245, 245, 245);
-    color: black;
+    color: $accent;
   }
 }
 
@@ -31,6 +31,7 @@ td.ptable-data-cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-left: 1em;
 }
 
 tr.ptable-body--row .data-cell--padding {
@@ -44,6 +45,7 @@ th.ptable-header-cell.ptable-header-cell--padding {
   padding-top: 1.1em;
   padding-bottom: 1.1em;
   padding-right: 1.5em;
+  padding-left: 1em;
 }
 th.ptable-header-cell {
   text-align: left;
@@ -55,21 +57,17 @@ th.ptable-header-cell {
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid $lightgray;
+  border-bottom: 1px solid $border-1;
   font-weight: 400;
   line-height: 7px;
 
   &:hover {
     color: lighten($brightAccent, 25%);
-    background: lighten($tableaccent, 10%);
+    background: lighten($primary, 10%);
   }
   &:focus {
     outline: none;
-    background-image: linear-gradient(
-      to left,
-      $tableaccent,
-      darken($primary, 5%)
-    );
+    background-color: rgb(0, 0, 0, 0.2);
   }
 }
 
@@ -113,12 +111,15 @@ tr.ptable-expand-header-cell {
 td.ptable-body-chevron-cell:not(:hover) {
   color: $gray;
   padding-top: 7px;
-  border-top: 1px solid $lightgray;
+  border-top: 1px solid $border-1;
+  padding-left: 1em;
 }
 
 td.ptable-body-chevron-cell:hover {
-  border-top: 1px solid $lightgray;
+  border-top: 1px solid $border-1;
   padding-top: 7px;
+  padding-left: 1em;
+  width: 3em;
 }
 span.expanded-grid-text {
   width: 85%;
@@ -134,14 +135,8 @@ div.rationale {
 }
 div.rationale-header {
   overflow: hidden;
-  background-image: linear-gradient(
-    to right,
-    lighten($primary, 8%),
-    adjust-hue(lighten($primary, 8%), 20deg)
-  );
-  border-top: 1px solid $primary;
-  border-left: 1px solid $primary;
-  border-right: 1px solid $primary;
+  background-color: $primary;
+
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   position: block;
@@ -158,10 +153,7 @@ div.rationale-header {
     border-radius: 4px;
     border-bottom: 1px solid $primary;
   }
-  &:hover {
-    background: lighten($primary, 20%);
-    font-weight: 500;
-  }
+
   & span.rationale-title {
     align-items: baseline;
   }
@@ -169,21 +161,21 @@ div.rationale-header {
 
 div.rationale-content {
   position: block;
-  background: lighten($gray, 70%);
-  border: 1px solid $primary;
+  background: $gray-elev-1;
+  border: 1px solid $border-1;
   width: inherit;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   padding: 0.5em 1em 0.1em 1em;
-  color: darken($primary, 5%);
+  color: $darkgray;
 }
 
 td.ptable-expand-body {
   background-color: white;
-  color: black;
+  color: $darkgray;
   border-left: 8px solid lighten($accent, 25%);
   font-size: 10pt;
-  border-top: 1px solid $lightgray;
+  border-top: 1px solid $border-1;
   overflow: hidden;
 }
 .ptable-expand-row {

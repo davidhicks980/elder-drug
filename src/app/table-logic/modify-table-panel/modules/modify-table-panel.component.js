@@ -15,12 +15,11 @@ var ModifyTablePanelComponent = /** @class */ (function () {
         this.parameterService = parameterService;
         this.state = state;
         this.tableStore = new Map();
+        this.activeTables = []; // Subject<string[]> = new Subject();
         this.tablesChanged = new Subject_1.Subject();
-        this.options = [];
-        this.loaded = new core_1.EventEmitter();
         this.layout = this.state.layoutStatus;
         this.pageLoaded = new Subject_1.Subject();
-        this.state.requestComponentProperty('ModifyTablePanel', 'StateService', 'layoutStatus');
+        this._initialTables = [];
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
         });
@@ -36,11 +35,15 @@ var ModifyTablePanelComponent = /** @class */ (function () {
             _this.state.emitSelectedTables(selectedTables);
         });
     }
+    Object.defineProperty(ModifyTablePanelComponent.prototype, "initialTables", {
+        get: function () {
+            return this._initialTables;
+        },
+        enumerable: false,
+        configurable: true
+    });
     ModifyTablePanelComponent.prototype.updateOptions = function (selections) {
         this.state.emitSelectedTables(selections);
-    };
-    ModifyTablePanelComponent.prototype.isTableActive = function (table) {
-        return this.tablesWithData.includes(table);
     };
     ModifyTablePanelComponent.prototype.processMobileCheckboxes = function (checked, name) {
         this.tableStore.set(name, checked);
@@ -54,7 +57,7 @@ var ModifyTablePanelComponent = /** @class */ (function () {
         this.tablesChanged.next(this.tableStore);
     };
     ModifyTablePanelComponent.prototype.ngAfterViewInit = function () {
-        this.loaded.emit(true);
+        this._initialTables = this.tablesWithData;
     };
     __decorate([
         core_1.ViewChild('tableSelectionList')
@@ -62,13 +65,10 @@ var ModifyTablePanelComponent = /** @class */ (function () {
     __decorate([
         core_1.Input()
     ], ModifyTablePanelComponent.prototype, "tablesWithData");
-    __decorate([
-        core_1.Output()
-    ], ModifyTablePanelComponent.prototype, "loaded");
     ModifyTablePanelComponent = __decorate([
         core_1.Component({
             selector: 'modify-table-panel',
-            template: " <div class=\"selection-panel\">\n    <div [fxShow.sm]=\"layout.sidenavOpen\" [fxShow.xs]=\"true\" fxHide>\n      <div style=\"margin-left:2%\">\n        <h3>Show Tables</h3>\n      </div>\n      <section>\n        <ul [class]=\"'toggle-group'\">\n          <li *ngFor=\"let option of options\">\n            <mat-checkbox\n              class=\"toggle-button\"\n              [disabled]=\"!this.tablesWithData.includes(option)\"\n              (change)=\"\n                processMobileCheckboxes($event.checked, $event.source.value)\n              \"\n              [value]=\"option\"\n              [checked]=\"this.tablesWithData.includes(option)\"\n            >\n              {{ option | caseSplit }}\n            </mat-checkbox>\n          </li>\n        </ul>\n      </section>\n    </div>\n\n    <div\n      class=\"table-modifier-list\"\n      [fxHide.sm]=\"layout.sidenavOpen ? true : false\"\n      [fxHide.xs]=\"true\"\n      fxShow\n    >\n      <div class=\"panel-header\">\n        <b>Active Tables</b>\n      </div>\n      <mat-selection-list\n        #tableSelectionList\n        (ngModelChange)=\"updateOptions($event)\"\n        [(ngModel)]=\"activeTables\"\n      >\n        <div fxFlex fxFlexAlign=\"center center\">\n          <mat-list-option\n            *ngFor=\"let option of options\"\n            [value]=\"option\"\n            [selected]=\"this.tablesWithData.includes(option)\"\n            [disabled]=\"!this.tablesWithData.includes(option)\"\n          >\n            <div class=\"list-text\">{{ option | caseSplit }}</div>\n          </mat-list-option>\n        </div>\n      </mat-selection-list>\n    </div>\n  </div>",
+            template: " <div class=\"selection-panel\">\n    <div [fxShow.sm]=\"layout.sidenavOpen\" [fxShow.xs]=\"true\" fxHide>\n      <div style=\"margin-left:2%\">\n        <h3>Show Tables</h3>\n      </div>\n      <section>\n        <ul [class]=\"'toggle-group'\">\n          <li *ngFor=\"let option of options\">\n            <mat-checkbox\n              class=\"toggle-button\"\n              (change)=\"\n                processMobileCheckboxes($event.checked, $event.source.value)\n              \"\n              [value]=\"option\"\n              [checked]=\"initialTables.includes(option)\"\n            >\n              {{ option | caseSplit }}\n            </mat-checkbox>\n          </li>\n        </ul>\n      </section>\n    </div>\n\n    <div\n      class=\"table-modifier-list\"\n      [fxHide.sm]=\"layout.sidenavOpen\"\n      [fxHide.xs]=\"true\"\n      fxShow\n    >\n      <div class=\"panel-header\">\n        <b>Active Tables</b>\n      </div>\n      <mat-selection-list\n        #tableSelectionList\n        (ngModelChange)=\"updateOptions($event)\"\n        [(ngModel)]=\"activeTables\"\n      >\n        <div fxFlex fxFlexAlign=\"center center\">\n          <mat-list-option\n            *ngFor=\"let option of options\"\n            [value]=\"option\"\n            [selected]=\"initialTables.includes(option)\"\n            [disabled]=\"!initialTables.includes(option)\"\n          >\n            <div class=\"list-text\">{{ option | caseSplit }}</div>\n          </mat-list-option>\n        </div>\n      </mat-selection-list>\n    </div>\n  </div>",
             styleUrls: ['./modify-table-panel.component.scss']
         })
     ], ModifyTablePanelComponent);

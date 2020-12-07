@@ -6,10 +6,10 @@ button {
     background-color: transparent;
     border: none;
     outline: 0px;
-    bottom: 8px;
-    left: 5px;
+    bottom: 0.7em;
+    right: 0em;
     & .icon-inline {
-      fill: $primary;
+      fill: black;
     }
     &:hover {
       color: $primary;
@@ -20,19 +20,23 @@ button {
     background-color: transparent;
     border: none;
     outline: 0px;
-    bottom: 8px;
-    left: 5px;
+    right: 0em;
+    bottom: 0.7em;
     & .icon-inline {
-      fill: rgb(90, 90, 90);
+      fill: $accent-2;
+    }
+    &:hover {
+      color: black;
     }
   }
-  &:hover {
-    color: red;
-  }
+
   & .icon-inline {
     position: absolute;
-    bottom: 5px;
-    right: 5.5px;
+    bottom: 0.35em;
+    right: 0.35em;
+    fill: #283593;
+    stroke: $gray-elev-1;
+    stroke-width: 0.5;
   }
 }
 
@@ -68,6 +72,16 @@ section.drug-inputs {
   }
 }
 
+mat-form-field::before {
+  border: 5px solid green;
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
 span.spacer {
   padding-bottom: 0.4em;
 }

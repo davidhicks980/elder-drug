@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { StateService } from 'src/app/state.service';
-import { ScreenStatus, LayoutStatus } from '../../state.service';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { StateService } from 'src/app/state.service';
+
+import { LayoutStatus, ScreenStatus } from '../../state.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -13,6 +14,7 @@ export class SideNavigationComponent {
   sidenavActive: boolean;
   screenSize: ScreenStatus;
   layout: LayoutStatus;
+  sidenavOpen: boolean;
 
   constructor(
     public state: StateService,
@@ -21,6 +23,7 @@ export class SideNavigationComponent {
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
+      this.sidenavOpen = this.layout.sidenavOpen;
     });
     iconRegistry.addSvgIcon(
       'search',

@@ -23,12 +23,11 @@ import { Subject } from 'rxjs/internal/Subject';
           <li *ngFor="let option of options">
             <mat-checkbox
               class="toggle-button"
-              [disabled]="!this.tablesWithData.includes(option)"
               (change)="
                 processMobileCheckboxes($event.checked, $event.source.value)
               "
               [value]="option"
-              [checked]="this.tablesWithData.includes(option)"
+              [checked]="initialTables.includes(option)"
             >
               {{ option | caseSplit }}
             </mat-checkbox>
@@ -39,7 +38,7 @@ import { Subject } from 'rxjs/internal/Subject';
 
     <div
       class="table-modifier-list"
-      [fxHide.sm]="layout.sidenavOpen ? true : false"
+      [fxHide.sm]="layout.sidenavOpen"
       [fxHide.xs]="true"
       fxShow
     >
@@ -55,8 +54,8 @@ import { Subject } from 'rxjs/internal/Subject';
           <mat-list-option
             *ngFor="let option of options"
             [value]="option"
-            [selected]="this.tablesWithData.includes(option)"
-            [disabled]="!this.tablesWithData.includes(option)"
+            [selected]="initialTables.includes(option)"
+            [disabled]="!initialTables.includes(option)"
           >
             <div class="list-text">{{ option | caseSplit }}</div>
           </mat-list-option>
@@ -68,28 +67,27 @@ import { Subject } from 'rxjs/internal/Subject';
 })
 export class ModifyTablePanelComponent {
   // Selection list for desktop option list
-  @ViewChild('tableSelectionList') selectList: MatSelectionList;
+  @ViewChild('tableSelectionList')
+  selectList!: MatSelectionList;
   private tableStore: Map<string, boolean> = new Map();
-  public activeTables: string[]; // Subject<string[]> = new Subject();
+  public activeTables: string[] = []; // Subject<string[]> = new Subject();
+  // Subject<string[]> = new Subject();
   // Tables containing data => to be
-  @Input() tablesWithData: string[];
+  @Input() tablesWithData!: string[];
   public tablesChanged: Subject<Map<string, boolean>> = new Subject();
-  public selectedOptions: string[];
-  public message: string;
-  public options: string[] = [];
-  @Output() loaded = new EventEmitter();
-  smallScreen: boolean;
+  public options!: string[];
   layout: LayoutStatus = this.state.layoutStatus;
   public pageLoaded: Subject<boolean> = new Subject();
-  value: any;
+  private _initialTables: string[] = [];
+
+  public get initialTables() {
+    return this._initialTables;
+  }
 
   updateOptions(selections: string[]): void {
     this.state.emitSelectedTables(selections);
   }
 
-  isTableActive(table: string): boolean {
-    return this.tablesWithData.includes(table);
-  }
   processMobileCheckboxes(checked: boolean, name: string): void {
     this.tableStore.set(name, checked);
     this.tablesChanged.next(this.tableStore);
@@ -102,17 +100,12 @@ export class ModifyTablePanelComponent {
   }
 
   ngAfterViewInit() {
-    this.loaded.emit(true);
+    this._initialTables = this.tablesWithData;
   }
   constructor(
     private parameterService: ParametersService,
     public state: StateService
   ) {
-    this.state.requestComponentProperty(
-      'ModifyTablePanel',
-      'StateService',
-      'layoutStatus'
-    );
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
     });

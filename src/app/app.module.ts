@@ -1,44 +1,41 @@
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdcTextFieldModule } from '@angular-mdc/web/textfield';
 import { LayoutModule } from '@angular/cdk/layout';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AppComponent } from './app.component';
-import { TableModule } from 'primeng/table';
-import { ToStringPipe } from './to-string.pipe';
-import { caseSplitPipe } from './case-split.pipe';
-import { AppRoutingModule } from './app-routing.module';
-import { NavigationComponent } from './navigation/navigation.component';
-import { MaterialModule } from './material-module';
-import {
-  ToolbarComponent,
-  DisclaimerComponent,
-} from './navigation/top-toolbar/toolbar.component';
-import { MedTableComponent } from './table-logic/med-table/med-table.component';
-import { ContentComponent } from './table-logic/content.component';
-import { LogoComponent } from './logo/small-logo/logo-component';
-import {
-  EnterDrugFormComponent,
-  EmptyInputComponent,
-} from './navigation/enter-drug-form/enter-drug-form.component';
-import { ColumnSelectorComponent } from './table-logic/med-table/column-selector/column-selector.component';
-import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
-import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
-import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
-import { environment } from '../environments/environment';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { TableModule } from 'primeng/table';
+
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { caseSplitPipe } from './case-split.pipe';
+import { LogoComponent } from './logo/small-logo/logo-component';
+import { MaterialModule } from './material-module';
+import { EmptyInputComponent, EnterDrugFormComponent } from './navigation/enter-drug-form/enter-drug-form.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
 import {
   AboutComponent,
   DesignComponent,
+  DisclaimerComponent,
+  ToolbarComponent,
 } from './navigation/top-toolbar/toolbar.component';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { ContentComponent } from './table-logic/content.component';
+import { ColumnSelectorComponent } from './table-logic/med-table/column-selector/column-selector.component';
+import { MedTableComponent } from './table-logic/med-table/med-table.component';
+import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
+import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
+import { ToStringPipe } from './to-string.pipe';
 
 @NgModule({
   declarations: [
@@ -61,6 +58,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     DesignComponent,
   ],
   imports: [
+    MdcTextFieldModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,

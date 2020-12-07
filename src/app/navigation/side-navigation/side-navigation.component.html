@@ -1,10 +1,9 @@
-<div class="full-height" fxLayout="column" fxLayoutAlign="space-between none">
+<div class="side-panel" fxLayout="column" fxLayoutAlign="space-between center">
   <app-enter-drug-form #searchForm></app-enter-drug-form>
-  <div fxLayout="column" fxLayoutAlign="start center" class="search">
+  <div class="button-container">
     <button
       mat-flat-button
       class="search-button p-shadow-10"
-      [style]="layout.sidenavOpen ? 'width: 70%' : 'width:90%'"
       type="button"
       (click)="searchForm.search()"
       (keydown.enter)="searchForm.search()"

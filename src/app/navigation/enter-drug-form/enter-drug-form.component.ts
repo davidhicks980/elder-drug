@@ -1,33 +1,17 @@
-import {
-  Component,
-  OnInit,
-  ViewChildren,
-  QueryList,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  Validators,
-} from '@angular/forms';
-
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { WebsocketService } from '../../websocket.service';
 import { StateService } from 'src/app/state.service';
 
-import { MatDialog } from '@angular/material/dialog';
-import { MatButton } from '@angular/material/button';
-
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { inputAnimation } from '../../animations';
 import { LayoutStatus } from '../../state.service';
+import { WebsocketService } from '../../websocket.service';
 
 @Component({
   selector: 'app-enter-drug-form',

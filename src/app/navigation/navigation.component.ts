@@ -1,17 +1,20 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { WebsocketService } from '../websocket.service';
-import { MatSidenav } from '@angular/material/sidenav';
-import { StateService, ScreenStatus, LayoutStatus } from '../state.service';
+import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { Component, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import {
-  tableVisibleAnimation,
-  mobileSidenavAnimation,
-  logoSlideAnimation,
-  slideInLeft,
   dropInAnimation,
-  formVisibleAnimation,
+  logoSlideAnimation,
+  mobileSidenavAnimation,
+  slideInLeft,
+  slidingContentAnimation,
+  slidingSidenavAnimation,
+  tableVisibleAnimation,
 } from '../animations';
+import { LayoutStatus, StateService } from '../state.service';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-navigation',
@@ -21,31 +24,72 @@ import {
   animations: [
     slideInLeft,
     dropInAnimation,
-    formVisibleAnimation,
+    slidingSidenavAnimation,
     tableVisibleAnimation,
     mobileSidenavAnimation,
     logoSlideAnimation,
+    slidingContentAnimation,
+    trigger('sidenavExpand', [
+      state('closed', style({ transform: 'translateX(0px)' })),
+      state('open', style({ transform: 'translateX(0px)' })),
+
+      transition(
+        'open => closed',
+        group([
+          animate(
+            '200ms ease',
+            keyframes([style({ transform: 'translateX(-285px)', offset: 1 })])
+          ),
+        ])
+      ),
+
+      transition(
+        'closed => open',
+        animate(
+          '400ms ease',
+          keyframes([
+            style({ transform: 'translateX(-285px)', offset: 0 }),
+            style({ transform: 'translateX(0px)', offset: 1 }),
+          ])
+        )
+      ),
+      transition(':enter', [
+        style({
+          transform: 'translateX(-285px)',
+        }),
+        animate('400ms ease', style({ transform: 'translate(0px)' })),
+      ]),
+      transition(':leave', [
+        style({
+          transform: 'translateX(0px)',
+        }),
+        animate(
+          '200ms ease',
+          style({
+            transform: 'translateX(-285px)',
+          })
+        ),
+      ]),
+    ]),
   ],
 })
 export class NavigationComponent {
-  @ViewChild('leftdrawer') public sidenav: MatSidenav;
-  public screenSize: ScreenStatus;
-  breakpointWidth: ScreenStatus;
-  stateLoaded: boolean;
+  @ViewChild('leftdrawer')
+  public sidenav!: MatSidenav;
   public tablesLoaded: boolean = false;
-  shrinkHeader: boolean;
-  layout: LayoutStatus;
-
+  layout: LayoutStatus = this.state.layoutStatus;
+  public sidenavOpen: boolean = true;
   constructor(
     public webSocketService: WebsocketService,
     public state: StateService,
-    iconRegistry: MatIconRegistry,
+    public iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus) => {
+    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
-    });
 
+      this.sidenavOpen = this.layout.sidenavOpen;
+    });
     iconRegistry.addSvgIcon(
       'chevron_right',
       this.sanitizer.bypassSecurityTrustResourceUrl(

@@ -10,77 +10,49 @@
   <mat-icon svgIcon="chevron_right"> </mat-icon>
 </div>
 
-<main class="p-grid p-nogutter">
-  <div class="p-col-12">
+<div class="viewport-grid">
+  <section class="header">
     <header
-      [class]="
-        this.layout.mobileWidth && this.layout.sidenavOpen
-          ? 'small-toolbar'
-          : 'large-toolbar'
-      "
+      [ngClass.xs]="sidenavOpen ? 'large' : 'small'"
+      ngClass.gt-xs="small"
     >
-      <app-toolbar class="toolbar-content"></app-toolbar>
+      <app-toolbar></app-toolbar>
     </header>
-  </div>
-  <div
-    class="p-col-12"
-    [style]="
-      this.layout.mobileWidth || this.layout.sidenavOpen
-        ? 'width:100vw'
-        : 'width:calc(100vw + 20.5em)'
-    "
+  </section>
+  <section
+    ngClass.gt-xs="content"
+    ngClass.xs="content small-screen"
+    fxLayout="row"
   >
-    <div
-      [@toggleForm]="this.layout.sidenavOpen ? 'visible' : 'hidden'"
-      [class]="
-        this.layout.mobileWidth && this.layout.sidenavOpen
-          ? 'full-layout'
-          : 'grid-layout'
-      "
+    <aside
+      @slidingSidenav
+      [class]="sidenavOpen ? 'sidenav-open' : ''"
+      *ngIf="sidenavOpen"
     >
-      <aside
-        [class]="
-          this.layout.mobileWidth && this.layout.sidenavOpen
-            ? 'sidebar small'
-            : 'sidebar'
-        "
-      >
-        <div
-          fxLayoutAlign="center center"
-          *ngIf="!this.layout.mobileWidth"
-          class="subtitle topbar-shadow"
-        >
-          A Tool for Beers Criteria
-        </div>
-
-        <app-side-navigation #sideNav></app-side-navigation>
-      </aside>
-      <div>
-        <div class="topnav topbar-shadow">
-          <button
-            style="margin-left: 0.4em"
-            mat-icon-button
-            (click)="this.state.toggleSidenav()"
-          >
-            <mat-icon
-              [svgIcon]="this.layout.sidenavOpen ? 'chevron_left' : 'menu'"
-            ></mat-icon>
-          </button>
-        </div>
-        <main
-          style="margin-top: 40px"
-          [class]="
-            this.layout.mobileWidth && this.layout.sidenavOpen
-              ? 'content small'
-              : 'content large'
-          "
-        >
-          <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
-        </main>
+      <div fxLayoutAlign="center center" class="subtitle topbar-shadow">
+        A Tool for Beers Criteria
       </div>
-    </div>
-  </div>
-</main>
+
+      <app-side-navigation #sideNav></app-side-navigation>
+    </aside>
+    <main [@sidenavExpand]="sidenavOpen ? 'open' : 'closed'">
+      <nav class="topnav shadow">
+        <button
+          class="nav-button"
+          mat-icon-button
+          (click)="this.state.toggleSidenav()"
+        >
+          <mat-icon
+            [svgIcon]="this.layout.sidenavOpen ? 'chevron_left' : 'menu'"
+          ></mat-icon>
+        </button>
+      </nav>
+      <div style="margin-top: 40px">
+        <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
+      </div>
+    </main>
+  </section>
+</div>
 
 <!--<mat-sidenav-container
   keyup.enter="search(submission)"

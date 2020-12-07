@@ -2,7 +2,7 @@
 
 @import "../../../colors";
 div.table-modifier-list {
-  border-left: 3px solid $primary;
+  border-left: 3px solid $border-1;
   overflow: visible;
   margin-left: 10px;
   margin-right: 1.61em;
@@ -28,7 +28,7 @@ mat-selection-list.mat-list-base {
 
 ul.toggle-group {
   position: relative;
-  background: lighten(saturate($lightprimary, 35%), 40%);
+  background: lighten(saturate($lightprimary, 25%), 40%);
   border: 1px solid $primary;
   border-radius: 4px;
   list-style: none;
@@ -37,7 +37,7 @@ ul.toggle-group {
   padding-inline-start: 1.7em;
 
   font-weight: 500;
-  color: darken($primary, 10%);
+  color: rgb(5, 65, 59);
   min-width: 95%;
   box-sizing: border-box;
 }

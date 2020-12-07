@@ -1,42 +1,28 @@
-<div
-  fxLayoutAlign="space-between center"
-  [fxLayout]="layout.mobileWidth && layout.sidenavOpen ? 'column' : 'row'"
-  class="toolbar-content-height"
->
-  <div
-    [fxLayout]="layout.mobileWidth && layout.sidenavOpen ? 'column' : 'row'"
-    fxLayoutAlign="start center"
-  >
-    <app-logo class="logo" [title]="true" [altColor]="true"></app-logo>
-    <ng-template
-      [ngIf]="layout.mobileWidth && layout.sidenavOpen"
-      [ngIfElse]="desktopToolbar"
-    >
-      <header @toolbarItemsFade class="large-title">
-        Elder Drug
-      </header></ng-template
-    >
-    <ng-template #desktopToolbar
-      ><header @toolbarItemsFade class="small-title">
-        Elder Drug
-      </header></ng-template
-    >
-  </div>
+<header>
+  <div class="flex-toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayoutAlign="space-between center" class="logo-title">
+      <app-logo
+        gdArea="logo"
+        class="logo"
+        [title]="true"
+        [altColor]="true"
+      ></app-logo>
 
-  <nav
-    class="buttons"
-    [fxLayoutGap]="
-      layout.mobileWidth && !layout.sidenavOpen ? '0.5em' : '1.5em'
-    "
-    fxLayout="row"
-    fxLayoutAlign="space-evenly center"
-  >
-    <a class="toolbar-primary-button" (click)="openDesignDialog()">Design</a>
-    <span>/</span>
-    <a class="toolbar-primary-button" (click)="openAboutDialog()">About</a>
-    <span>/</span>
-    <a class="toolbar-primary-button" (click)="openDisclaimerDialog()">
-      Disclaimer
-    </a>
-  </nav>
-</div>
+      <span class="title">Elder Drug</span>
+    </div>
+
+    <div class="buttons">
+      <div fxLayoutGap="10px">
+        <button class="toolbar-primary-button" (click)="openDesignDialog()">
+          Design
+        </button>
+        <button class="toolbar-primary-button" (click)="openAboutDialog()">
+          About
+        </button>
+        <button class="toolbar-primary-button" (click)="openDisclaimerDialog()">
+          Disclaimer
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

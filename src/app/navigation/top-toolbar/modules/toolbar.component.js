@@ -19,8 +19,6 @@ var ToolbarComponent = /** @class */ (function () {
         this.loaded = false;
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
-            _this.sidenavOpenMobileWidth =
-                _this.layout.sidenavOpen && _this.layout.mobileWidth;
         });
     }
     ToolbarComponent.prototype.openDisclaimerDialog = function () {

@@ -1,72 +1,65 @@
 @import "../../../_colors.scss";
 
-div.search {
-  padding-top: 1em;
-  border-top: 1px solid lightgray;
-  margin-bottom: 10vh;
-}
-button[mat-flat-button].search-button {
-  color: white;
-  font-size: 14pt;
-  background: $primary;
-  font-weight: 400;
-  max-width: 30em;
-  height: 2.2em;
-  margin-top: 0.7em;
-  margin-bottom: 0.7em;
+.button-container {
+  min-height: 20px;
+  max-height: 200px;
+  flex: 0 1 200px;
+  border-top: 1px dotted lightgray;
+  padding-top: 20px;
+  & button[mat-flat-button].search-button {
+    color: white;
+    font-size: 14pt;
+    background: $primary;
+    font-weight: 400;
+    max-width: 30em;
+    height: 2.2em;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+    width: 250px;
+  }
+
+  & button[mat-flat-button].search-button:hover {
+    transition: ease-in 0.05s;
+    background-image: $toolbar-gradient;
+    text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
+  }
 }
 
-button[mat-flat-button].search-button:hover {
-  transition: ease-in 0.05s;
-  background-image: $toolbar-gradient;
-  text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
-}
-
-.effect7 {
-  position: relative;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.247),
-    0 0 20px rgba(0, 0, 0, 0.04) inset;
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 0, 0, 0.04) inset;
-  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.04) inset;
-}
-
-.effect7:before,
-.effect7:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
-  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.637);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.568);
-  top: 0;
-  bottom: 0;
-  left: 10px;
-  right: 10px;
-  -moz-border-radius: 100px / 10px;
-  border-radius: 100px / 10px;
-}
-.effect7:after {
-  right: 10px;
-  left: auto;
-  -webkit-transform: skew(8deg) rotate(3deg);
-  -moz-transform: skew(8deg) rotate(3deg);
-  -ms-transform: skew(8deg) rotate(3deg);
-  -o-transform: skew(8deg) rotate(3deg);
-  transform: skew(8deg) rotate(3deg);
-}
-
-#searchForm {
-  height: 50em;
+div.side-panel {
+  height: calc(100vh - #{$header-shrunken-buffer});
   box-sizing: border-box;
-}
+  width: 285px;
+  background: white;
 
-div.full-height {
-  height: calc(100vh - (12em));
+  margin-right: 1px;
+  &:hover {
+    transition: 500ms;
+  }
+  /*  &::before {
+  
+    opacity: 1;
+    transition: opacity 500ms;
+    content: "";
+
+   
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.28);
+    transition: opacity 500ms;
+    width: 285px;
+    position: absolute;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  &:hover::before {
+   Show the pseudo-element on hover. 
+    opacity: 1;
+  }*/
 }
 
 app-enter-drug-form {
   margin-top: 1em;
   max-height: 70vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1 0 70%;
 }

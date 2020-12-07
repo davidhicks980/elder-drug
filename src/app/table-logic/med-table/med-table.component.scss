@@ -10,32 +10,17 @@ h2 {
 mat-chip-list mat-chip.mat-standard-chip {
   min-height: 1.7em;
   border-radius: 4px;
-  background-image: $table-gradient;
+  background-color: $primary;
   color: white;
   font-weight: 400;
   cursor: pointer;
-  &:hover {
-    color: lighten($accent, 10%);
-    background: lighten($primary, 20%);
-  }
-  &:hover::after {
-    opacity: 0;
-  }
 }
 
 mat-expansion-panel.table-expansion-panel {
   box-shadow: none;
-  border: 1px solid lightgray;
+  border: 1px solid $border-1;
   overflow: hidden;
   transition: 0.3s cubic-bezier(0.1, 0.2, 0.2, 0.1);
-
-  &:hover {
-    border: 1px solid $gray;
-    background: white;
-  }
-  & > mat-expansion-panel-header.according-header {
-    background: white;
-  }
 }
 
 mat-icon.mat-icon-16 {
@@ -66,7 +51,7 @@ span.show-when-small {
 .grid-header {
   font-weight: 500;
   margin: 0 0 0 0;
-  color: black;
+  color: $darkgray;
 }
 @media screen and (max-width: 599px) {
   span.show-when-small {

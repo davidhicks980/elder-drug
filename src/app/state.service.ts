@@ -1,11 +1,6 @@
 import { Injectable, OnInit, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ToStringPipe } from './to-string.pipe';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState,
-} from '@angular/cdk/layout';
+import { ViewportRuler } from '@angular/cdk/overlay';
 
 export enum ScreenStatus {
   xSmall = 1,
@@ -23,19 +18,20 @@ export type LayoutStatus = {
   providedIn: 'root',
 })
 export class StateService {
-  public sidenavOpen: boolean;
+  public sidenavOpen: boolean = true;
   public windowWidthSource = new Subject<LayoutStatus>();
   public windowWidth$ = this.windowWidthSource.asObservable();
-  public width: ScreenStatus;
+  public width: ScreenStatus = ScreenStatus.large;
 
   sidenavStatus$ = this.windowWidthSource.asObservable();
 
   private tableStatusSource = new Subject<string[]>();
-  public activeTables: string[];
+  public activeTables: string[] = [];
   tableStatus$ = this.tableStatusSource.asObservable();
   matcher: any;
   mediaMatcher: any;
-  mobileWidth: boolean;
+  mobileWidth: boolean = false;
+  layoutType: number;
   get layoutStatus() {
     return {
       sidenavOpen: this.sidenavOpen,
@@ -58,7 +54,7 @@ export class StateService {
   ) {
     if (targetComponent === this.name) {
       console.log('sending native property');
-      this.sendComponentProperty('howdy');
+      this.sendComponentProperty(targetProperty);
     } else {
       this.requestPropertySource.next({
         source: sourceComponent,
@@ -70,7 +66,6 @@ export class StateService {
 
   sendComponentProperty(propertyValue: any) {
     this.sendPropertySource.next(propertyValue);
-    console.log(`sent ${propertyValue}`);
   }
 
   toggleSidenav() {
@@ -85,28 +80,36 @@ export class StateService {
     this.tableStatusSource.next(selections);
   }
 
-  constructor(public breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe([Breakpoints.Small, Breakpoints.XSmall])
-      .subscribe((state: BreakpointState) => {
-        if (state.breakpoints['(max-width: 599.99px)']) {
-          this.width = ScreenStatus.xSmall;
+  constructor(_ruler: ViewportRuler) {
+    try {
+      _ruler.change(16).subscribe((): void => {
+        let layoutType = 0;
+        if (_ruler.getViewportSize().width < 599.99) {
           this.mobileWidth = true;
-        } else if (
-          state.breakpoints['(min-width: 600px) and (max-width: 959.99px)']
-        ) {
+          this.width = ScreenStatus.xSmall;
+          layoutType = 1 * (Number(this.sidenavOpen) + 1);
+        } else if (_ruler.getViewportSize().width < 959.99) {
           this.width = ScreenStatus.small;
           this.mobileWidth = false;
+          layoutType = 2 * (Number(this.sidenavOpen) + 1);
         } else {
           this.width = ScreenStatus.large;
           this.mobileWidth = false;
+          layoutType = 3 * (Number(this.sidenavOpen) + 1);
         }
-        this.windowWidthSource.next({
-          sidenavOpen: this.sidenavOpen,
-          screenWidth: this.width,
-          mobileWidth: this.mobileWidth,
-        });
+        if (this.layoutType !== layoutType) {
+          this.layoutType = layoutType;
+
+          this.windowWidthSource.next({
+            sidenavOpen: this.sidenavOpen,
+            screenWidth: this.width,
+            mobileWidth: this.mobileWidth,
+          });
+        }
       });
+    } catch (err) {
+      console.log(err);
+    }
 
     this.tableStatus$.subscribe((active) => {
       this.activeTables = active;

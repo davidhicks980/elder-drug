@@ -1,11 +1,4 @@
-import {
-  animate,
-  style,
-  trigger,
-  state,
-  transition,
-  sequence,
-} from '@angular/animations';
+import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 
 export const toolbarItemsFade = trigger('toolbarItemsFade', [
   transition(':enter', [
@@ -124,13 +117,31 @@ export const inputAnimation = trigger('inputSlideIn', [
   ]),
 ]);
 
-export const formVisibleAnimation = trigger('toggleForm', [
-  state('visible', style({ transform: 'translateX(0em)' })),
-  state('hidden', style({ transform: 'translateX(-285px)' })),
-  transition('visible => hidden', animate('200ms ease-in')),
-  transition('hidden => visible', animate('200ms ease-out')),
+export const slidingContentAnimation = trigger('slidingContent', [
+  state('closed', style({ transform: 'translateX(0px)' })),
+  state('open', style({ transform: 'translateX(285px)' })),
+  transition('open => closed', animate('200ms ease-in')),
+  transition('closed => open', animate('200ms ease-out')),
 ]);
-
+export const slidingSidenavAnimation = trigger('slidingSidenav', [
+  transition(':enter', [
+    style({
+      transform: 'translateX(-285px)',
+    }),
+    animate('400ms ease', style({ transform: 'translate(0px)' })),
+  ]),
+  transition(':leave', [
+    style({
+      transform: 'translateX(0px)',
+    }),
+    animate(
+      '200ms ease',
+      style({
+        transform: 'translateX(-285px)',
+      })
+    ),
+  ]),
+]);
 export const tableVisibleAnimation = trigger('toggleTables', [
   state('static', style({ width: 'calc(100vw - (285px + 200px)' })),
   state('slide', style({ width: 'calc(100vw - 200px)' })),

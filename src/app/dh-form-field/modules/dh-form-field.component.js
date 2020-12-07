@@ -6,22 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.AppComponent = void 0;
+exports.DhFormFieldComponent = void 0;
 var core_1 = require("@angular/core");
-var AppComponent = /** @class */ (function () {
-    function AppComponent(state) {
-        this.state = state;
-        this.title = 'ElderDrug';
+var DhFormFieldComponent = /** @class */ (function () {
+    function DhFormFieldComponent() {
     }
-    AppComponent.prototype.ngOnInit = function () {
-        this.state.toggleSidenav();
-    };
-    AppComponent = __decorate([
+    DhFormFieldComponent.prototype.ngOnInit = function () { };
+    DhFormFieldComponent = __decorate([
         core_1.Component({
-            selector: 'app-root',
-            templateUrl: './app.component.html'
+            selector: 'app-dh-form-field',
+            templateUrl: './dh-form-field.component.html',
+            styleUrls: ['./dh-form-field.component.scss']
         })
-    ], AppComponent);
-    return AppComponent;
+    ], DhFormFieldComponent);
+    return DhFormFieldComponent;
 }());
-exports.AppComponent = AppComponent;
+exports.DhFormFieldComponent = DhFormFieldComponent;

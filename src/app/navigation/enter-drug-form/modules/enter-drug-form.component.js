@@ -45,8 +45,8 @@ exports.__esModule = true;
 exports.EmptyInputComponent = exports.EnterDrugFormComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var input_1 = require("@angular/material/input");
 var autocomplete_1 = require("@angular/material/autocomplete");
+var input_1 = require("@angular/material/input");
 var animations_1 = require("../../animations");
 var EnterDrugFormComponent = /** @class */ (function () {
     function EnterDrugFormComponent(state, fire, fb, dialog, iconRegistry, sanitizer) {

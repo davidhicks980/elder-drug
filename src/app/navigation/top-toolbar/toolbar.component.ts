@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { StateService } from 'src/app/state.service';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WebsocketService } from '../../websocket.service';
-import { ScreenStatus, LayoutStatus } from '../../state.service';
+import { StateService } from 'src/app/state.service';
+
 import { toolbarItemsFade } from '../../animations';
+import { LayoutStatus, ScreenStatus } from '../../state.service';
+import { WebsocketService } from '../../websocket.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -18,6 +19,7 @@ export class ToolbarComponent {
   shrinkHeader: boolean;
   layout: LayoutStatus;
   sidenavOpenMobileWidth: boolean;
+  smallGridLayout: any;
   constructor(
     public fire: WebsocketService,
     public state: StateService,
@@ -25,8 +27,6 @@ export class ToolbarComponent {
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
-      this.sidenavOpenMobileWidth =
-        this.layout.sidenavOpen && this.layout.mobileWidth;
     });
   }
 

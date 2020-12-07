@@ -16,10 +16,12 @@ var ContentComponent = /** @class */ (function () {
         this.parameterService = parameterService;
         this.state = state;
         this.widthObserver = widthObserver;
+        this.loaded = false;
         this.active = false;
         this.tablesWithData = [];
         this.trackByFn = function (_, item) { return item.id; };
         this.tablesLoaded = new core_1.EventEmitter();
+        this.tables = [];
         firestore.groupedTables.subscribe(function (items) {
             _this.tables = items;
             _this.tablesWithData = _this.parameterService.filterActiveTables(items);
@@ -40,7 +42,7 @@ var ContentComponent = /** @class */ (function () {
     ContentComponent = __decorate([
         core_1.Component({
             selector: 'app-content',
-            template: "\n    <div\n      [class]=\"\n        layout.sidenavOpen ? 'sidenav-open content' : 'sidenav-closed content'\n      \"\n    >\n      <div\n        *ngIf=\"loaded\"\n        class=\"main-content-box\"\n        fxLayout=\"row\"\n        [fxLayout.sm]=\"layout.sidenavOpen ? 'column' : 'row'\"\n        fxLayout.xs=\"column\"\n        [@fadeIn]=\"loaded\"\n      >\n        <div\n          [fxFlexOrder.sm]=\"layout.sidenavOpen ? '2' : '1'\"\n          fxFlexOrder.xs=\"2\"\n          fxFlexOrder=\"1\"\n          fxShrink=\"0\"\n        >\n          <div\n            *ngFor=\"let table of tables | keyvalue; trackBy: trackByFn\"\n            [class]=\"\n              layout.sidenavOpen\n                ? 'sidenav-open tables'\n                : 'sidenav-closed tables'\n            \"\n          >\n            <app-med-table\n              *ngIf=\"activeTables.includes(table.key)\"\n              [tableData]=\"table\"\n            >\n            </app-med-table>\n            <div class=\"table-spacer\"></div>\n          </div>\n          <br />\n        </div>\n        <div\n          #modifyPanel\n          [fxFlexOrder.sm]=\"layout.sidenavOpen ? '1' : '2'\"\n          fxFlexOrder.xs=\"1\"\n          fxFlexOrder=\"2\"\n        >\n          <modify-table-panel\n            [hidden]=\"!loaded\"\n            [tablesWithData]=\"loaded ? activeTables : null\"\n          ></modify-table-panel>\n        </div>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      [class]=\"\n        layout.sidenavOpen ? 'sidenav-open content' : 'sidenav-closed content'\n      \"\n    >\n      <div\n        *ngIf=\"loaded\"\n        class=\"main-content-box\"\n        fxLayout=\"row\"\n        [fxLayout.sm]=\"layout.sidenavOpen ? 'column' : 'row'\"\n        fxLayout.xs=\"column\"\n        [@fadeIn]=\"loaded\"\n      >\n        <div\n          [fxFlexOrder.sm]=\"layout.sidenavOpen ? '2' : '1'\"\n          fxFlexOrder.xs=\"2\"\n          fxFlexOrder=\"1\"\n          fxShrink=\"0\"\n        >\n          <div\n            *ngFor=\"let table of tables | keyvalue; trackBy: trackByFn\"\n            [class]=\"\n              layout.sidenavOpen\n                ? 'sidenav-open tables'\n                : 'sidenav-closed tables'\n            \"\n          >\n            <app-med-table\n              *ngIf=\"activeTables.includes(table.key)\"\n              [tableData]=\"table\"\n            >\n            </app-med-table>\n            <div class=\"table-spacer\"></div>\n          </div>\n          <br />\n        </div>\n        <div\n          #modifyPanel\n          [fxFlexOrder.sm]=\"layout.sidenavOpen ? '1' : '2'\"\n          fxFlexOrder.xs=\"1\"\n          fxFlexOrder=\"2\"\n        >\n          <modify-table-panel\n            [tablesWithData]=\"activeTables\"\n          ></modify-table-panel>\n        </div>\n      </div>\n    </div>\n  ",
             styleUrls: ['./content.component.scss'],
             animations: [
                 animations_1.trigger('fadeIn', [
