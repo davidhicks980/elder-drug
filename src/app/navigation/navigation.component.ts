@@ -1,5 +1,5 @@
 import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -7,34 +7,53 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
   dropInAnimation,
   logoSlideAnimation,
-  mobileSidenavAnimation,
+  mobileSlidingSidenavAnimation,
   slideInLeft,
   slidingContentAnimation,
-  slidingSidenavAnimation,
   tableVisibleAnimation,
 } from '../animations';
+import { FirebaseService } from '../firebase.service';
 import { LayoutStatus, StateService } from '../state.service';
-import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
-  providers: [WebsocketService],
+  providers: [FirebaseService],
   animations: [
     slideInLeft,
     dropInAnimation,
-    slidingSidenavAnimation,
     tableVisibleAnimation,
-    mobileSidenavAnimation,
+    mobileSlidingSidenavAnimation,
     logoSlideAnimation,
     slidingContentAnimation,
-    trigger('sidenavExpand', [
-      state('closed', style({ transform: 'translateX(0px)' })),
-      state('open', style({ transform: 'translateX(0px)' })),
 
+    trigger('sidenavExpand', [
+      state('close', style({ transform: 'translateX(0px)' })),
+      state('open', style({ transform: 'translateX(0px)' })),
+      state('mobileClose', style({ transform: 'translateX(0px)' })),
+      state('mobileOpen', style({ transform: 'translateX(0px)' })),
       transition(
-        'open => closed',
+        'mobileOpen => mobileClose',
+        group([
+          animate(
+            '200ms ease',
+            keyframes([style({ transform: 'translateX(-500px)', offset: 1 })])
+          ),
+        ])
+      ),
+      transition(
+        'mobileClose => mobileOpen',
+        animate(
+          '400ms ease',
+          keyframes([
+            style({ transform: 'translateX(-500px)', offset: 0 }),
+            style({ transform: 'translateX(0px)', offset: 1 }),
+          ])
+        )
+      ),
+      transition(
+        'open => close',
         group([
           animate(
             '200ms ease',
@@ -44,7 +63,7 @@ import { WebsocketService } from '../websocket.service';
       ),
 
       transition(
-        'closed => open',
+        'close => open',
         animate(
           '400ms ease',
           keyframes([
@@ -74,20 +93,21 @@ import { WebsocketService } from '../websocket.service';
   ],
 })
 export class NavigationComponent {
-  @ViewChild('leftdrawer')
   public sidenav!: MatSidenav;
   public tablesLoaded: boolean = false;
   layout: LayoutStatus = this.state.layoutStatus;
   public sidenavOpen: boolean = true;
+  public mobileWidth: boolean;
+
   constructor(
-    public webSocketService: WebsocketService,
+    public webSocketService: FirebaseService,
     public state: StateService,
     public iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
-
+      this.mobileWidth = this.layout.mobileWidth;
       this.sidenavOpen = this.layout.sidenavOpen;
     });
     iconRegistry.addSvgIcon(
@@ -100,6 +120,12 @@ export class NavigationComponent {
       'chevron_left',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/chevron_left.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'arrow-right',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/arrow-right.svg'
       )
     );
     iconRegistry.addSvgIcon(

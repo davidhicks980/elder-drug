@@ -1,125 +1,129 @@
-import {
-  Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { ParametersService } from 'src/app/parameters.service';
-import { StateService } from 'src/app/state.service';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectionList } from '@angular/material/list';
+import { StateService } from 'src/app/state.service';
+
+import { ColumnService } from '../../columns.service';
 import { LayoutStatus } from '../../state.service';
-import { Subject } from 'rxjs/internal/Subject';
+import { TableService } from '../../table.service';
 
 @Component({
   selector: 'modify-table-panel',
-  template: ` <div class="selection-panel">
-    <div [fxShow.sm]="layout.sidenavOpen" [fxShow.xs]="true" fxHide>
-      <div style="margin-left:2%">
-        <h3>Show Tables</h3>
-      </div>
-      <section>
-        <ul [class]="'toggle-group'">
-          <li *ngFor="let option of options">
-            <mat-checkbox
-              class="toggle-button"
-              (change)="
-                processMobileCheckboxes($event.checked, $event.source.value)
-              "
-              [value]="option"
-              [checked]="initialTables.includes(option)"
-            >
-              {{ option | caseSplit }}
-            </mat-checkbox>
-          </li>
-        </ul>
-      </section>
-    </div>
-
+  template: ` <form [formGroup]="tableOptions">
     <div
-      class="table-modifier-list"
-      [fxHide.sm]="layout.sidenavOpen"
-      [fxHide.xs]="true"
-      fxShow
+      class="panel-container"
+      [class.small-screen]="this.state.smallContent$ | async"
     >
-      <div class="panel-header">
-        <b>Active Tables</b>
-      </div>
-      <mat-selection-list
-        #tableSelectionList
-        (ngModelChange)="updateOptions($event)"
-        [(ngModel)]="activeTables"
+      <h3 style="margin: 0 0 0 10px"><b>Show Tables</b></h3>
+
+      <ul
+        [class.small-screen]="this.state.smallContent$ | async"
+        formArrayName="optionControls"
       >
-        <div fxFlex fxFlexAlign="center center">
-          <mat-list-option
-            *ngFor="let option of options"
-            [value]="option"
-            [selected]="initialTables.includes(option)"
-            [disabled]="!initialTables.includes(option)"
+        <li *ngFor="let option of formOptions.controls; let i = index">
+          <label
+            [style.direction]="
+              (this.state.smallContent$ | async) ? 'rtl' : 'ltr'
+            "
+            [for]="'checkbox_' + i"
+            class="checkbox"
           >
-            <div class="list-text">{{ option | caseSplit }}</div>
-          </mat-list-option>
-        </div>
-      </mat-selection-list>
+            <span class="checkbox-label">{{ options[i].description }}</span>
+
+            <span class="checkbox-input">
+              <input
+                matRipple
+                [id]="'checkbox_' + i"
+                [formControlName]="i"
+                checked="checked"
+                type="checkbox"
+                name="checkbox"
+              />
+              <span class="checkbox-control">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    d="M1.73 12.91l6.37 6.37L22.79 4.59"
+                  />
+                </svg>
+              </span>
+            </span>
+          </label>
+        </li>
+      </ul>
     </div>
-  </div>`,
+  </form>`,
   styleUrls: ['./modify-table-panel.component.scss'],
 })
-export class ModifyTablePanelComponent {
+export class ModifyTablePanelComponent implements AfterViewInit {
   // Selection list for desktop option list
   @ViewChild('tableSelectionList')
   selectList!: MatSelectionList;
-  private tableStore: Map<string, boolean> = new Map();
   public activeTables: string[] = []; // Subject<string[]> = new Subject();
-  // Subject<string[]> = new Subject();
-  // Tables containing data => to be
-  @Input() tablesWithData!: string[];
-  public tablesChanged: Subject<Map<string, boolean>> = new Subject();
-  public options!: string[];
+  public options!: { id: number; description: string }[];
   layout: LayoutStatus = this.state.layoutStatus;
-  public pageLoaded: Subject<boolean> = new Subject();
-  private _initialTables: string[] = [];
 
-  public get initialTables() {
-    return this._initialTables;
-  }
+  public tableOptions: FormGroup = this.fb.group({
+    optionControls: this.fb.array([]),
+  });
+  enabledTables: number[];
+  loaded: boolean;
+  checkboxOrder: Map<number, number> = new Map();
+  contentIsSmall: boolean;
 
-  updateOptions(selections: string[]): void {
-    this.state.emitSelectedTables(selections);
+  get formOptions(): FormArray {
+    return this.tableOptions.get('optionControls') as FormArray;
   }
-
-  processMobileCheckboxes(checked: boolean, name: string): void {
-    this.tableStore.set(name, checked);
-    this.tablesChanged.next(this.tableStore);
+  addTable(disabled: boolean, value: number) {
+    let i = this.formOptions.length;
+    this.formOptions.insert(
+      i,
+      this.fb.control({ value: !disabled, disabled: disabled })
+    );
+    this.checkboxOrder.set(i, value);
   }
-  processDesktopCheckboxes(names: string[]): void {
-    for (const name of names) {
-      this.tableStore.set(name, true);
-    }
-    this.tablesChanged.next(this.tableStore);
-  }
-
   ngAfterViewInit() {
-    this._initialTables = this.tablesWithData;
+    this.loaded = true;
   }
   constructor(
-    private parameterService: ParametersService,
-    public state: StateService
+    private tableService: TableService,
+    public state: StateService,
+    public fb: FormBuilder,
+    public columnService: ColumnService
   ) {
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
-      this.layout = layoutStatus;
+    state.smallContent$.subscribe((i) => console.log(i));
+    this.options = columnService.columnDefinitions.map((col) => {
+      return { id: col.id, description: col.description };
     });
-    this.options = this.parameterService.columnDefinitions.map(
-      (col) => col.name
-    );
-    this.tablesChanged.subscribe((store: Map<string, boolean>) => {
-      const selectedTables = [] as string[];
-      for (const [key, value] of store) {
-        if (value) {
-          selectedTables.push(key);
-        }
-      }
-      this.state.emitSelectedTables(selectedTables);
+    this.tableService.tableStatus$.subscribe((tables: number[]) => {
+      this.enabledTables = tables;
     });
+    for (let option of this.options) {
+      this.enabledTables.includes(option.id)
+        ? this.addTable(false, option.id)
+        : this.addTable(true, option.id);
+    }
+
+    this.formOptions.valueChanges.subscribe((tables: boolean[]) => {
+      this.tableService.emitSelectedTables(
+        this.find(true, tables).map((item) => this.checkboxOrder.get(item))
+      );
+    });
+  }
+  find(needle: boolean, haystack: boolean[]) {
+    const results = [];
+    let idx = haystack.indexOf(needle);
+    while (idx != -1) {
+      results.push(idx);
+      idx = haystack.indexOf(needle, idx + 1);
+    }
+    return results;
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.slidingSidenavAnimation = exports.slidingContentAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.translateRationaleContent = exports.expandButtonAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = exports.toolbarItemsFade = void 0;
+exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.mobileSlidingSidenavAnimation = exports.slidingContentAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.translateRationaleContent = exports.expandButtonAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = exports.toolbarItemsFade = void 0;
 var animations_1 = require("@angular/animations");
 exports.toolbarItemsFade = animations_1.trigger('toolbarItemsFade', [
     animations_1.transition(':enter', [
@@ -96,19 +96,19 @@ exports.slidingContentAnimation = animations_1.trigger('slidingContent', [
     animations_1.transition('open => closed', animations_1.animate('200ms ease-in')),
     animations_1.transition('closed => open', animations_1.animate('200ms ease-out')),
 ]);
-exports.slidingSidenavAnimation = animations_1.trigger('slidingSidenav', [
+exports.mobileSlidingSidenavAnimation = animations_1.trigger('mobileSlidingSidenav', [
     animations_1.transition(':enter', [
         animations_1.style({
-            transform: 'translateX(-285px)'
+            transform: 'translateX(calc(-100vw))'
         }),
-        animations_1.animate('400ms ease', animations_1.style({ transform: 'translate(0px)' })),
+        animations_1.animate('400ms ease', animations_1.style({ transform: 'translateX(0px)' })),
     ]),
     animations_1.transition(':leave', [
         animations_1.style({
             transform: 'translateX(0px)'
         }),
         animations_1.animate('200ms ease', animations_1.style({
-            transform: 'translateX(-285px)'
+            transform: 'translateX(calc(-100vw))'
         })),
     ]),
 ]);

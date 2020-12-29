@@ -9,6 +9,7 @@ exports.__esModule = true;
 exports.StateService = exports.ScreenStatus = void 0;
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
+var ReplaySubject_1 = require("rxjs/internal/ReplaySubject");
 var ScreenStatus;
 (function (ScreenStatus) {
     ScreenStatus[ScreenStatus["xSmall"] = 1] = "xSmall";
@@ -19,19 +20,17 @@ var StateService = /** @class */ (function () {
     function StateService(_ruler) {
         var _this = this;
         this.sidenavOpen = true;
-        this.windowWidthSource = new rxjs_1.Subject();
+        this.windowWidthSource = new ReplaySubject_1.ReplaySubject();
         this.windowWidth$ = this.windowWidthSource.asObservable();
+        this.smallContentSource = new ReplaySubject_1.ReplaySubject();
+        this.smallContent$ = this.smallContentSource.asObservable();
         this.width = ScreenStatus.large;
         this.sidenavStatus$ = this.windowWidthSource.asObservable();
-        this.tableStatusSource = new rxjs_1.Subject();
         this.activeTables = [];
-        this.tableStatus$ = this.tableStatusSource.asObservable();
         this.mobileWidth = false;
         this.requestPropertySource = new rxjs_1.Subject();
         this.sendPropertySource = new rxjs_1.Subject();
         // Observable string streams
-        this.receivedRequestedProperties$ = this.requestPropertySource.asObservable();
-        this.sentPropertyResponse$ = this.sendPropertySource.asObservable();
         this.name = 'StateService';
         try {
             _ruler.change(16).subscribe(function () {
@@ -64,9 +63,6 @@ var StateService = /** @class */ (function () {
         catch (err) {
             console.log(err);
         }
-        this.tableStatus$.subscribe(function (active) {
-            _this.activeTables = active;
-        });
     }
     Object.defineProperty(StateService.prototype, "layoutStatus", {
         get: function () {
@@ -79,22 +75,8 @@ var StateService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    // Service message commands
-    StateService.prototype.requestComponentProperty = function (sourceComponent, targetComponent, targetProperty) {
-        if (targetComponent === this.name) {
-            console.log('sending native property');
-            this.sendComponentProperty(targetProperty);
-        }
-        else {
-            this.requestPropertySource.next({
-                source: sourceComponent,
-                target: targetComponent,
-                property: targetProperty
-            });
-        }
-    };
-    StateService.prototype.sendComponentProperty = function (propertyValue) {
-        this.sendPropertySource.next(propertyValue);
+    StateService.prototype.emitContentWidthStatus = function (contentIsSmall) {
+        this.smallContentSource.next(contentIsSmall);
     };
     StateService.prototype.toggleSidenav = function () {
         this.sidenavOpen = !this.sidenavOpen;
@@ -103,9 +85,6 @@ var StateService = /** @class */ (function () {
             screenWidth: this.width,
             mobileWidth: this.mobileWidth
         });
-    };
-    StateService.prototype.emitSelectedTables = function (selections) {
-        this.tableStatusSource.next(selections);
     };
     StateService = __decorate([
         core_1.Injectable({

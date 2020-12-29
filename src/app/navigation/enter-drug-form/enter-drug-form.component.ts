@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,12 +6,13 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 import { StateService } from 'src/app/state.service';
 
 import { inputAnimation } from '../../animations';
+import { FirebaseService } from '../../firebase.service';
 import { LayoutStatus } from '../../state.service';
-import { WebsocketService } from '../../websocket.service';
 
 @Component({
   selector: 'app-enter-drug-form',
@@ -19,7 +20,7 @@ import { WebsocketService } from '../../websocket.service';
   styleUrls: ['./enter-drug-form.component.scss'],
   animations: [inputAnimation],
 })
-export class EnterDrugFormComponent implements OnInit {
+export class EnterDrugFormComponent {
   @ViewChildren(MatAutocompleteTrigger) trigger: QueryList<
     MatAutocompleteTrigger
   >;
@@ -28,40 +29,35 @@ export class EnterDrugFormComponent implements OnInit {
   @ViewChild('drawer') public sidenav: MatSidenav;
   drugsGroup: FormGroup = this.fb.group({
     drugs: this.fb.array([
-      this.fb.control('', [
-        Validators.pattern('[a-zA-Z ]*'),
+      new FormControl('', [
+        Validators.pattern('[a-zA-Z0-9 -]*'),
         Validators.minLength(2),
         Validators.maxLength(70),
       ]),
     ]),
   });
-  filterList: any;
   sidenavActive: boolean;
-  activeString: string;
   i: number;
   activeInput = 0;
-  items: any;
-  dropdownItems: any[];
-  out: any;
   dropdownItemsSearch: any;
   dropdownArray: {};
+  dropdownItems: Observable<string[][]>;
   filteredOptions: Observable<string[]>;
   entryValue: string;
-
   sideOpen: boolean;
   layout: LayoutStatus;
-
-  boldDropdownText(option: string, active: string) {
+  private _activeInputIndex: number;
+  boldInputText(option: string, active: string) {
     const index = option.search(active);
     const subString = option.substring(index, index + 50);
     return '<p>' + subString.replace(active, active.bold()) + '</p>';
   }
 
-  name(i: number) {
-    return this.drugs.at(i);
-  }
-  get drugs() {
+  get drugs(): FormArray {
     return this.drugsGroup.get('drugs') as FormArray;
+  }
+  get inputLength(): number {
+    return this.drugs.length;
   }
   search() {
     const out = [];
@@ -84,53 +80,56 @@ export class EnterDrugFormComponent implements OnInit {
   stopPropagation() {
     event.stopPropagation();
   }
+  set activeInputIndex(index: number) {
+    this._activeInputIndex = index;
+  }
 
-  addDrug() {
+  addInput() {
     if (this.drugs.length < 8) {
       this.drugs.push(
         this.fb.control('', [
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('[a-zA-Z0-9 -]*'),
           Validators.minLength(2),
           Validators.maxLength(70),
         ])
       );
     }
   }
-  ngOnInit() {}
-  deleteFormControl(index: number) {
+  removeInputAt(index: number) {
     this.drugs.removeAt(index);
-  }
-
-  async getDropdownItems(input: string) {
-    if (input.length > 1) {
-      this.entryValue = input;
-      const filteredOptions = await this.fire.filterValues(input);
-      if (filteredOptions) {
-        this.dropdownItems = filteredOptions.slice(0, 5);
-      }
-    }
   }
 
   constructor(
     public state: StateService,
-    public fire: WebsocketService,
+    public fire: FirebaseService,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    private iconRegistry: MatIconRegistry,
+    public iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
+    /* const index = option.search(active);
+    const subString = option.substring(index, index + 50);
+    return '<p>' + subString.replace(active, active.bold()) + '</p>';*/
+    this.drugs.valueChanges
+      .pipe(debounce(() => interval(50)))
+      .subscribe((res) => {
+        fire.filterValues(res[this._activeInputIndex]);
+      });
+    this.dropdownItems = fire.filteredItems$;
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
     });
     this.iconRegistry.addSvgIcon(
-      'add-circle-outline.svg',
+      'add--outline',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/add_circle_outline.svg'
+        'assets/icons/ion-add-circle-outline.svg'
       )
     );
     this.iconRegistry.addSvgIcon(
-      'delete.svg',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg')
+      'delete',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/ion-trash.svg'
+      )
     );
   }
   openDialog() {

@@ -28,21 +28,63 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
 }
 
 section.content {
+  overflow-x: hidden;
   & main {
     height: 100%;
     width: 100vw;
   }
   & aside.sidenav-open {
     width: 285px;
+    box-sizing: border-box;
+    transition: opacity 500ms;
+    position: absolute;
+    & app-side-navigation {
+      height: 100%;
+    }
+    & .small {
+      position: absolute;
+      z-index: 10000;
+    }
+    & .subtitle {
+      z-index: 200;
+      color: white;
+      position: relative;
+      width: 100%;
+      height: 40px;
+      max-height: 40px;
+      line-height: 0px;
+      font-size: 12pt;
+      background-color: $logogray;
+    }
+    &::before {
+      opacity: 1;
+      transition: opacity 500ms;
+      content: "";
+      box-shadow: 0 1px 2px rgba(78, 78, 78, 0.12),
+        0 2px 4px rgba(0, 0, 0, 0.24), 0 4px 8px rgba(0, 0, 0, 0.36);
+      width: 285px;
+      position: absolute;
+      height: 100%;
+      opacity: 0.5;
+    }
+
+    &:hover {
+      &::before {
+        /* Show the pseudo-element on hover. */
+        opacity: 1;
+      }
+    }
     & + main {
-      width: calc(100vw - 285px);
+      margin-left: 285px;
     }
   }
   &.small-screen {
     aside {
-      display: none;
       &.sidenav-open {
         width: 100vw;
+        &::before {
+          width: 100%;
+        }
       }
       &.sidenav-open + main {
         width: 0px;
@@ -75,55 +117,6 @@ section.header {
     border-bottom: 1px solid lightgray;
     & app-toolbar {
       height: 100%;
-    }
-  }
-}
-
-aside {
-  max-width: 100vw;
-  box-sizing: border-box;
-  transition: opacity 500ms;
-  & app-side-navigation {
-    height: 100%;
-  }
-  & .small {
-    position: absolute;
-    z-index: 10000;
-  }
-  & .subtitle {
-    z-index: 200;
-    color: white;
-    position: relative;
-    width: 100%;
-    height: 40px;
-    max-height: 40px;
-    line-height: 0px;
-    font-size: 12pt;
-  }
-  &::before {
-    /* Hidden by default. */
-    opacity: 1;
-    transition: opacity 500ms;
-    content: "";
-
-    /* width: 100%; */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24),
-      0 4px 8px rgba(0, 0, 0, 0.36);
-    width: 285px;
-    /* border-right: 10px; */
-    position: absolute;
-    height: 100%;
-    opacity: 0.5;
-  }
-
-  &:hover {
-    & .subtitle {
-      background-color: rgb(255, 255, 255, 0.1);
-      transition: 500ms;
-    }
-    &::before {
-      /* Show the pseudo-element on hover. */
-      opacity: 1;
     }
   }
 }
@@ -169,6 +162,7 @@ div.side-arrow {
 
 main {
   grid-template-rows: 40px auto;
+  width: 100%;
 }
 nav.topnav {
   height: 40px;
@@ -177,11 +171,19 @@ nav.topnav {
   border-left: lighten($primary, 20%);
   box-sizing: content-box;
   position: fixed;
+  left: 0px;
   &:hover {
-    color: orange;
-    background: rgba(255, 255, 255, 0.05);
+    color: lighten($accent, 35%);
   }
   &.nav-button {
     margin-left: 10px;
   }
+}
+
+.arrow-right-fab {
+  position: fixed;
+  right: 40px;
+  fill: white;
+  color: white;
+  padding: 0px;
 }

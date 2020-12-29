@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "editor.fontFamily": "PT Mono",
   "editor.formatOnPaste": true,
   "editor.tabCompletion": "on",
@@ -25,5 +24,8 @@
 "typescript.format.insertSpaceAfterTypeAssertion": true,
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true
+"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+"editor.formatOnSave": true,
+"editor.formatOnType": true,
+"diffEditor.codeLens": true
 }

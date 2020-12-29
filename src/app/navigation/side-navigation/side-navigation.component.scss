@@ -6,29 +6,34 @@
   flex: 0 1 200px;
   border-top: 1px dotted lightgray;
   padding-top: 20px;
-  & button[mat-flat-button].search-button {
-    color: white;
+  z-index: 10000;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  & button.search-button {
+    width: 100%;
+    height: 40px;
+    background-color: #5739df;
     font-size: 14pt;
-    background: $primary;
-    font-weight: 400;
-    max-width: 30em;
-    height: 2.2em;
-    margin-top: 0.7em;
-    margin-bottom: 0.7em;
-    width: 250px;
+    color: white;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    border: none;
+    justify-content: center;
+    border-radius: 5px;
   }
 
-  & button[mat-flat-button].search-button:hover {
-    transition: ease-in 0.05s;
-    background-image: $toolbar-gradient;
-    text-shadow: 0 0 5px rgba(41, 41, 41, 0.164);
+  & button.search-button:hover {
+    transition: ease-in 0.1s;
+    background-color: darken($primary, 35%);
   }
 }
 
 div.side-panel {
   height: calc(100vh - #{$header-shrunken-buffer});
   box-sizing: border-box;
-  width: 285px;
+  width: 100%;
   background: white;
 
   margin-right: 1px;
@@ -57,9 +62,9 @@ div.side-panel {
 }
 
 app-enter-drug-form {
-  margin-top: 1em;
   max-height: 70vh;
   overflow-y: auto;
-  overflow-x: hidden;
-  flex: 1 0 70%;
+  flex: 1 0 80%;
+  place-self: center;
+  width: 285px;
 }

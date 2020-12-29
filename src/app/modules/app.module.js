@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.AppModule = void 0;
-var textfield_1 = require("@angular-mdc/web/textfield");
 var layout_1 = require("@angular/cdk/layout");
 var overlay_1 = require("@angular/cdk/overlay");
 var scrolling_1 = require("@angular/cdk/scrolling");
@@ -17,6 +16,7 @@ var fire_1 = require("@angular/fire");
 var firestore_1 = require("@angular/fire/firestore");
 var flex_layout_1 = require("@angular/flex-layout");
 var forms_1 = require("@angular/forms");
+var core_2 = require("@angular/material/core");
 var form_field_1 = require("@angular/material/form-field");
 var input_1 = require("@angular/material/input");
 var select_1 = require("@angular/material/select");
@@ -35,7 +35,7 @@ var side_navigation_component_1 = require("./navigation/side-navigation/side-nav
 var toolbar_component_1 = require("./navigation/top-toolbar/toolbar.component");
 var content_component_1 = require("./table-logic/content.component");
 var column_selector_component_1 = require("./table-logic/med-table/column-selector/column-selector.component");
-var med_table_component_1 = require("./table-logic/med-table/med-table.component");
+var table_component_1 = require("./table-logic/med-table/table.component");
 var toggle_options_component_1 = require("./table-logic/med-table/toggle-options/toggle-options.component");
 var modify_table_panel_component_1 = require("./table-logic/modify-table-panel/modify-table-panel.component");
 var to_string_pipe_1 = require("./to-string.pipe");
@@ -50,7 +50,7 @@ var AppModule = /** @class */ (function () {
                 toolbar_component_1.ToolbarComponent,
                 enter_drug_form_component_1.EmptyInputComponent,
                 case_split_pipe_1.caseSplitPipe,
-                med_table_component_1.MedTableComponent,
+                table_component_1.MedTableComponent,
                 content_component_1.ContentComponent,
                 logo_component_1.LogoComponent,
                 enter_drug_form_component_1.EnterDrugFormComponent,
@@ -64,7 +64,6 @@ var AppModule = /** @class */ (function () {
                 toolbar_component_1.DesignComponent,
             ],
             imports: [
-                textfield_1.MdcTextFieldModule,
                 animations_1.BrowserAnimationsModule,
                 app_routing_module_1.AppRoutingModule,
                 layout_1.LayoutModule,
@@ -84,6 +83,7 @@ var AppModule = /** @class */ (function () {
                     enabled: environment_1.environment.production
                 }),
                 overlay_1.OverlayModule,
+                core_2.MatRippleModule,
             ],
             providers: [],
             bootstrap: [app_component_1.AppComponent]

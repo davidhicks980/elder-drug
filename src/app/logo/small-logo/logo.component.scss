@@ -4,7 +4,7 @@
   width: 1em;
 
   position: relative;
-  font-size: 36pt;
+  font-size: 35pt;
 }
 
 .title-bowl {
@@ -16,7 +16,7 @@
 }
 
 .bowl {
-  fill: lighten($color: $gray, $amount: 80%);
+  fill: lighten($color: $gray, $amount: 70%);
 }
 .interior {
   fill: lighten($primary, 40%);
@@ -35,13 +35,13 @@
 }
 ////////////
 .bowl-alt {
-  fill: #e6e6e6;
+  fill: #dbdbdb;
 }
 .interior-alt {
   fill: $darkgray;
 }
 .stem-alt {
-  fill: #e6e6e6;
+  fill: #dfdfdf;
 }
 .shadow-alt {
   fill: #a7a9aa;

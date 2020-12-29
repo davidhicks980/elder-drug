@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { StateService } from 'src/app/state.service';
 
 import { toolbarItemsFade } from '../../animations';
+import { FirebaseService } from '../../firebase.service';
 import { LayoutStatus, ScreenStatus } from '../../state.service';
-import { WebsocketService } from '../../websocket.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -21,7 +21,7 @@ export class ToolbarComponent {
   sidenavOpenMobileWidth: boolean;
   smallGridLayout: any;
   constructor(
-    public fire: WebsocketService,
+    public fire: FirebaseService,
     public state: StateService,
     public dialog: MatDialog
   ) {

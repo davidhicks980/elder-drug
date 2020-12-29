@@ -1,6 +1,7 @@
-import { Injectable, OnInit, AfterViewInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { ViewportRuler } from '@angular/cdk/overlay';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 export enum ScreenStatus {
   xSmall = 1,
@@ -19,15 +20,15 @@ export type LayoutStatus = {
 })
 export class StateService {
   public sidenavOpen: boolean = true;
-  public windowWidthSource = new Subject<LayoutStatus>();
+  public windowWidthSource = new ReplaySubject<LayoutStatus>();
   public windowWidth$ = this.windowWidthSource.asObservable();
+  private smallContentSource = new ReplaySubject<boolean>();
+  public smallContent$ = this.smallContentSource.asObservable();
   public width: ScreenStatus = ScreenStatus.large;
 
   sidenavStatus$ = this.windowWidthSource.asObservable();
 
-  private tableStatusSource = new Subject<string[]>();
   public activeTables: string[] = [];
-  tableStatus$ = this.tableStatusSource.asObservable();
   matcher: any;
   mediaMatcher: any;
   mobileWidth: boolean = false;
@@ -39,34 +40,14 @@ export class StateService {
       mobileWidth: this.mobileWidth,
     };
   }
+  emitContentWidthStatus(contentIsSmall: boolean) {
+    this.smallContentSource.next(contentIsSmall);
+  }
   public requestPropertySource = new Subject<any>();
   public sendPropertySource = new Subject<any>();
   // Observable string streams
-  receivedRequestedProperties$ = this.requestPropertySource.asObservable();
-  sentPropertyResponse$ = this.sendPropertySource.asObservable();
+
   name: string = 'StateService';
-
-  // Service message commands
-  requestComponentProperty(
-    sourceComponent: string,
-    targetComponent: string,
-    targetProperty: string
-  ) {
-    if (targetComponent === this.name) {
-      console.log('sending native property');
-      this.sendComponentProperty(targetProperty);
-    } else {
-      this.requestPropertySource.next({
-        source: sourceComponent,
-        target: targetComponent,
-        property: targetProperty,
-      });
-    }
-  }
-
-  sendComponentProperty(propertyValue: any) {
-    this.sendPropertySource.next(propertyValue);
-  }
 
   toggleSidenav() {
     this.sidenavOpen = !this.sidenavOpen;
@@ -75,9 +56,6 @@ export class StateService {
       screenWidth: this.width,
       mobileWidth: this.mobileWidth,
     });
-  }
-  emitSelectedTables(selections: string[]) {
-    this.tableStatusSource.next(selections);
   }
 
   constructor(_ruler: ViewportRuler) {
@@ -97,6 +75,7 @@ export class StateService {
           this.mobileWidth = false;
           layoutType = 3 * (Number(this.sidenavOpen) + 1);
         }
+
         if (this.layoutType !== layoutType) {
           this.layoutType = layoutType;
 
@@ -110,9 +89,5 @@ export class StateService {
     } catch (err) {
       console.log(err);
     }
-
-    this.tableStatus$.subscribe((active) => {
-      this.activeTables = active;
-    });
   }
 }

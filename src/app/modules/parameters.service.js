@@ -1,132 +1,155 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 exports.__esModule = true;
-exports.ParametersService = void 0;
-var core_1 = require("@angular/core");
+exports.ColumnService = exports.Cols = void 0;
 var rxjs_1 = require("rxjs");
-var ParametersService = /** @class */ (function () {
-    function ParametersService() {
+var Cols;
+(function (Cols) {
+    Cols[Cols["EntryID"] = 0] = "EntryID";
+    Cols[Cols["DiseaseState"] = 1] = "DiseaseState";
+    Cols[Cols["Category"] = 2] = "Category";
+    Cols[Cols["TableDefinition"] = 3] = "TableDefinition";
+    Cols[Cols["Item"] = 4] = "Item";
+    Cols[Cols["MinCl"] = 5] = "MinCl";
+    Cols[Cols["MaxCl"] = 6] = "MaxCl";
+    Cols[Cols["DrugInter"] = 7] = "DrugInter";
+    Cols[Cols["Incl"] = 8] = "Incl";
+    Cols[Cols["Excl"] = 9] = "Excl";
+    Cols[Cols["Rationale"] = 10] = "Rationale";
+    Cols[Cols["Recommendation"] = 11] = "Recommendation";
+    Cols[Cols["RecommendationLineTwo"] = 12] = "RecommendationLineTwo";
+    Cols[Cols["ShortName"] = 13] = "ShortName";
+    Cols[Cols["SearchTerm"] = 14] = "SearchTerm";
+})(Cols = exports.Cols || (exports.Cols = {}));
+var ColumnService = /** @class */ (function () {
+    function ColumnService() {
         this.allColumns = [
-            { field: 'EntryID', header: 'Entry Number' },
-            { field: 'DiseaseState', header: 'Disease State' },
-            { field: 'Category', header: 'Category Number' },
-            { field: 'TableDefinition', header: 'Table Definition' },
-            { field: 'Item', header: 'Item' },
-            { field: 'MinimumClearance', header: 'Min Clearance' },
-            { field: 'MaximumClearance', header: 'Max Clearance' },
-            { field: 'DrugInteraction', header: 'Drug Interaction' },
-            { field: 'Inclusion', header: 'Includes' },
-            { field: 'Exclusion', header: 'Excludes' },
-            { field: 'Rationale', header: 'Rationale' },
-            { field: 'Recommendation', header: 'Recommendation' },
-            { field: 'RecommendationLineTwo', header: 'LineTwo' },
-            { field: 'ItemType', header: 'Type' },
-            { field: 'ShortTableName', header: 'Table' },
-            { field: 'SearchTerm', header: 'Search Term' },
+            { id: 1, field: 'EntryID', header: 'Entry Number' },
+            { id: 2, field: 'DiseaseState', header: 'Disease State' },
+            { id: 3, field: 'Category', header: 'Category Number' },
+            { id: 4, field: 'TableDefinition', header: 'Table Definition' },
+            { id: 5, field: 'Item', header: 'Item' },
+            { id: 6, field: 'MinimumClearance', header: 'Min Clearance' },
+            { id: 7, field: 'MaximumClearance', header: 'Max Clearance' },
+            { id: 8, field: 'DrugInteraction', header: 'Drug Interaction' },
+            { id: 9, field: 'Inclusion', header: 'Includes' },
+            { id: 10, field: 'Exclusion', header: 'Excludes' },
+            { id: 11, field: 'Rationale', header: 'Rationale' },
+            { id: 12, field: 'Recommendation', header: 'Recommendation' },
+            { id: 13, field: 'RecommendationLineTwo', header: 'LineTwo' },
+            { id: 14, field: 'ItemType', header: 'Type' },
+            { id: 15, field: 'ShortTableName', header: 'Table' },
+            { id: 16, field: 'SearchTerm', header: 'Search Term' },
+        ];
+        this.tables = [
+            {
+                TableNumber: 2,
+                TableDefinition: 'Potentially Inappropriate Medication Use in Older Adults ',
+                ShortName: 'Potentially Innappropriate',
+                Identifier: 'PotenInappropriate'
+            },
+            {
+                TableNumber: 3,
+                TableDefinition: 'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
+                ShortName: 'Disease-Specific',
+                Identifier: 'DiseaseGuidance'
+            },
+            {
+                TableNumber: 4,
+                TableDefinition: 'Drugs To Be Used With Caution in Older Adults',
+                ShortName: 'Use with Caution',
+                Identifier: 'Caution'
+            },
+            {
+                TableNumber: 5,
+                TableDefinition: 'Potentially Clinically Important Drug-Drug Interactions That Should Be Avoided in Older Adults',
+                ShortName: 'Drug Interactions',
+                Identifier: 'DrugInteractions'
+            },
+            {
+                TableNumber: 6,
+                TableDefinition: 'Medications That Should Be Avoided or Have Their Dosage Reduced With Varying Levels of Kidney Function in Older Adults',
+                ShortName: 'Renal Interactions',
+                Identifier: 'Clearance'
+            },
+            {
+                TableNumber: 7,
+                TableDefinition: 'Drugs With Strong Anticholinergic Properties',
+                ShortName: 'Anticholinergics',
+                Identifier: 'Anticholinergics'
+            },
         ];
         this.columnDefinitions = [
             {
                 description: 'General Info',
-                active: true,
                 filters: [null],
-                name: 'GeneralInfo',
+                id: 8,
                 columnOptions: [
-                    'SearchTerm',
-                    'ShortTableName',
-                    'Item',
-                    'Inclusion',
-                    'Exclusion',
-                    'Recommendation',
-                    'DiseaseState',
-                    'DrugInteraction',
-                ],
-                selectedColumns: [
-                    'SearchTerm',
-                    'Item',
-                    'ShortTableName',
-                    'Recommendation',
+                    { col: Cols.SearchTerm, selected: true },
+                    { col: Cols.Item, selected: true },
+                    { col: Cols.Excl, selected: true },
+                    { col: Cols.Incl, selected: true },
+                    { col: Cols.Recommendation, selected: true },
+                    { col: Cols.DiseaseState, selected: true },
+                    { col: Cols.DrugInter, selected: false },
+                    { col: Cols.ShortName, selected: true },
                 ]
             },
             {
                 description: 'Disease-Specific',
-                active: true,
-                filters: ['DiseaseState'],
-                name: 'DiseaseGuidance',
+                filters: [Cols.DiseaseState],
+                id: 3,
                 columnOptions: [
-                    'SearchTerm',
-                    'Item',
-                    'Inclusion',
-                    'Exclusion',
-                    'Recommendation',
-                ],
-                selectedColumns: ['DiseaseState', 'SearchTerm', 'Item', 'Recommendation']
+                    { col: Cols.SearchTerm, selected: true },
+                    { col: Cols.Item, selected: true },
+                    { col: Cols.Excl, selected: true },
+                    { col: Cols.Incl, selected: true },
+                    { col: Cols.Recommendation, selected: false },
+                    { col: Cols.DiseaseState, selected: true },
+                ]
             },
             {
-                description: 'Clearance Ranges',
-                name: 'Clearance',
-                active: true,
-                filters: ['MaximumClearance', 'MinimumClearance'],
+                description: 'Renal Interactions',
+                id: 6,
+                filters: [Cols.MaxCl, Cols.MinCl],
                 columnOptions: [
-                    'SearchTerm',
-                    'Item',
-                    "MinimumClearance",
-                    "MaximumClearance",
-                    'Inclusion',
-                    'Exclusion',
-                    'Recommendation',
-                ],
-                selectedColumns: [
-                    'SearchTerm',
-                    'Item',
-                    "MinimumClearance",
-                    "MaximumClearance",
-                    'Recommendation',
+                    { col: Cols.SearchTerm, selected: true },
+                    { col: Cols.Item, selected: true },
+                    { col: Cols.MinCl, selected: true },
+                    { col: Cols.MaxCl, selected: true },
+                    { col: Cols.Incl, selected: false },
+                    { col: Cols.Excl, selected: false },
+                    { col: Cols.Recommendation, selected: true },
                 ]
             },
             {
                 description: 'Drug Interactions',
-                active: true,
-                filters: ['DrugInteraction'],
-                name: 'DrugInteraction',
+                filters: [Cols.DrugInter],
+                id: 5,
                 columnOptions: [
-                    'SearchTerm',
-                    'Item',
-                    "DrugInteraction",
-                    'Inclusion',
-                    'Exclusion',
-                    'Rationale',
-                    'Recommendation',
-                ],
-                selectedColumns: [
-                    "SearchTerm",
-                    "Item",
-                    "DrugInteraction",
-                    "Inclusion",
-                    "Exclusion",
-                    "Recommendation",
+                    { col: Cols.SearchTerm, selected: true },
+                    { col: Cols.Item, selected: true },
+                    { col: Cols.DrugInter, selected: true },
+                    { col: Cols.Incl, selected: true },
+                    { col: Cols.Excl, selected: true },
+                    { col: Cols.Recommendation, selected: true },
+                    { col: Cols.Rationale, selected: false },
                 ]
             },
         ];
         // Observable string sources
         this.tableList = new rxjs_1.Subject();
         this.optionsList = new rxjs_1.Subject();
-        this.name = 'ParametersService';
         // Observable string streams
         this.recieveTables$ = this.optionsList.asObservable();
         this.recieveOptions$ = this.tableList.asObservable();
     }
-    ParametersService.prototype.sendTables = function (tables) {
+    ColumnService.prototype.sendTables = function (tables) {
         this.optionsList.next(tables);
     };
-    ParametersService.prototype.sendOptions = function (options) {
+    ColumnService.prototype.sendOptions = function (options) {
         this.tableList.next(options);
     };
-    ParametersService.prototype.mapData = function (data, filter) {
+    ColumnService.prototype.mapData = function (data, filter) {
         var output = [];
         if (filter[0] != null || filter[1] != null) {
             data.forEach(function (element) {
@@ -144,19 +167,8 @@ var ParametersService = /** @class */ (function () {
         }
         return output;
     };
-    ParametersService.prototype.filterActiveTables = function (tables) {
-        var output = [];
-        for (var _i = 0, _a = Object.entries(tables); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], value = _b[1];
-            var len = value.length;
-            if (len > 0) {
-                output.push(key);
-            }
-        }
-        return output;
-    };
     // Service message commands
-    ParametersService.prototype.lookupColumns = function (columns) {
+    ColumnService.prototype.lookupColumns = function (columns) {
         var output = [];
         var _loop_1 = function (col) {
             output.push(this_1.allColumns.filter(function (name) {
@@ -170,11 +182,6 @@ var ParametersService = /** @class */ (function () {
         }
         return output;
     };
-    ParametersService = __decorate([
-        core_1.Injectable({
-            providedIn: 'root'
-        })
-    ], ParametersService);
-    return ParametersService;
+    return ColumnService;
 }());
-exports.ParametersService = ParametersService;
+exports.ColumnService = ColumnService;

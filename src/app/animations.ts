@@ -123,12 +123,13 @@ export const slidingContentAnimation = trigger('slidingContent', [
   transition('open => closed', animate('200ms ease-in')),
   transition('closed => open', animate('200ms ease-out')),
 ]);
-export const slidingSidenavAnimation = trigger('slidingSidenav', [
+
+export const mobileSlidingSidenavAnimation = trigger('mobileSlidingSidenav', [
   transition(':enter', [
     style({
-      transform: 'translateX(-285px)',
+      transform: 'translateX(calc(-100vw))',
     }),
-    animate('400ms ease', style({ transform: 'translate(0px)' })),
+    animate('400ms ease', style({ transform: 'translateX(0px)' })),
   ]),
   transition(':leave', [
     style({
@@ -137,7 +138,7 @@ export const slidingSidenavAnimation = trigger('slidingSidenav', [
     animate(
       '200ms ease',
       style({
-        transform: 'translateX(-285px)',
+        transform: 'translateX(calc(-100vw))',
       })
     ),
   ]),

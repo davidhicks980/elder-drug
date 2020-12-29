@@ -1,52 +1,31 @@
 @import "../../colors";
+$content-buffer: 10px;
 .show {
   display: "";
 }
-
-.main-content-box {
-  overflow: auto;
-  margin-top: 13px;
-  min-width: inherit;
-
-  margin-bottom: 210px;
-  height: 100%;
-  padding: 8px;
+#content {
+  width: 100%;
 }
 
-#expansionPanel {
-  overflow: hidden;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-}
-
-div.table-spacer {
-  padding-bottom: 0.3em;
+.table-viewport {
+  &.desktop-height {
+    height: calc(100vh - #{$header-shrunken-buffer});
+  }
+  overflow-y: auto;
 }
 
 #modifyPanel {
-  width: 210px;
+  width: 100%;
 }
 
 div.content-container {
-  overflow: auto;
+  overflow: hidden;
 }
 
-div.sidenav-open {
-  &.content {
-    width: calc(100vw - 285px);
-  }
-}
-div.sidenav-closed {
-  &.content {
-    width: calc(101vw);
-  }
-  &.tables {
-    width: calc(100vw - 215px);
-  }
-}
-
+/*
 @media screen and (max-width: 599.9px) {
   div.sidenav-closed.tables {
     width: 100%;
   }
 }
+*/

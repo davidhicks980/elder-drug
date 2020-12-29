@@ -1,15 +1,3 @@
-<div
-  fxShow.xs="true"
-  fxHide.gt-xs="true"
-  class="side-arrow"
-  fxLayoutAlign="end center"
-  (click)="state.toggleSidenav()"
-  matRipple
-  *ngIf="this.layout.sidenavOpen"
->
-  <mat-icon svgIcon="chevron_right"> </mat-icon>
-</div>
-
 <div class="viewport-grid">
   <section class="header">
     <header
@@ -25,17 +13,36 @@
     fxLayout="row"
   >
     <aside
-      @slidingSidenav
+      @mobileSlidingSidenav
       [class]="sidenavOpen ? 'sidenav-open' : ''"
       *ngIf="sidenavOpen"
     >
       <div fxLayoutAlign="center center" class="subtitle topbar-shadow">
         A Tool for Beers Criteria
+        <span *ngIf="mobileWidth && sidenavOpen" class="arrow-right-fab"
+          ><button
+            mat-icon-button
+            color="accent"
+            aria-label="Example icon button with a bookmark icon"
+            (click)="state.toggleSidenav()"
+          >
+            <mat-icon svgIcon="arrow-right"></mat-icon></button
+        ></span>
       </div>
 
       <app-side-navigation #sideNav></app-side-navigation>
     </aside>
-    <main [@sidenavExpand]="sidenavOpen ? 'open' : 'closed'">
+    <main
+      [@sidenavExpand]="
+        mobileWidth
+          ? sidenavOpen
+            ? 'mobileOpen'
+            : 'mobileClose'
+          : sidenavOpen
+          ? 'open'
+          : 'close'
+      "
+    >
       <nav class="topnav shadow">
         <button
           class="nav-button"
@@ -47,42 +54,9 @@
           ></mat-icon>
         </button>
       </nav>
-      <div style="margin-top: 40px">
+      <div *ngIf="!sidenavOpen || !mobileWidth" style="margin-top: 40px">
         <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
       </div>
     </main>
   </section>
 </div>
-
-<!--<mat-sidenav-container
-  keyup.enter="search(submission)"
-  class="material-container"
-  (backdropClick)="state.sidenavOpen = false"
->
-  <mat-sidenav
-    [class]="
-      this.layout.mobileWidth
-        ? 'material-fullscreen-sidenav'
-        : 'material-sidenav'
-    "
-    [class.mat-elevation-z8]="true"
-    [opened]="this.layout.sidenavOpen"
-    mode="side"
-    (keydown.escape)="state.sidenavOpen = false"
-    (keydown.enter)="state.sidenavOpen = false"
-    cdkScrollable
-  >
-    <app-side-navigation></app-side-navigation>
-  </mat-sidenav>
-  <mat-sidenav-content
-    ><app-toolbar
-      class="toolbar"
-      *ngIf="webSocketService.loaded"
-      [loaded]="webSocketService.loaded"
-    >
-    </app-toolbar>
-
-    <app-content></app-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
--->

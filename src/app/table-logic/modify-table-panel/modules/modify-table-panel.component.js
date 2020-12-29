@@ -8,67 +8,67 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ModifyTablePanelComponent = void 0;
 var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/internal/Subject");
 var ModifyTablePanelComponent = /** @class */ (function () {
-    function ModifyTablePanelComponent(parameterService, state) {
+    function ModifyTablePanelComponent(tableService, state, fb, columnService) {
         var _this = this;
-        this.parameterService = parameterService;
+        this.tableService = tableService;
         this.state = state;
-        this.tableStore = new Map();
+        this.fb = fb;
+        this.columnService = columnService;
         this.activeTables = []; // Subject<string[]> = new Subject();
-        this.tablesChanged = new Subject_1.Subject();
         this.layout = this.state.layoutStatus;
-        this.pageLoaded = new Subject_1.Subject();
-        this._initialTables = [];
-        this.state.windowWidth$.subscribe(function (layoutStatus) {
-            _this.layout = layoutStatus;
+        this.tableOptions = this.fb.group({
+            optionControls: this.fb.array([])
         });
-        this.options = this.parameterService.columnDefinitions.map(function (col) { return col.name; });
-        this.tablesChanged.subscribe(function (store) {
-            var selectedTables = [];
-            for (var _i = 0, store_1 = store; _i < store_1.length; _i++) {
-                var _a = store_1[_i], key = _a[0], value = _a[1];
-                if (value) {
-                    selectedTables.push(key);
-                }
-            }
-            _this.state.emitSelectedTables(selectedTables);
+        this.checkboxOrder = new Map();
+        state.smallContent$.subscribe(function (i) { return console.log(i); });
+        this.options = columnService.columnDefinitions.map(function (col) {
+            return { id: col.id, description: col.description };
+        });
+        this.tableService.tableStatus$.subscribe(function (tables) {
+            _this.enabledTables = tables;
+        });
+        for (var _i = 0, _a = this.options; _i < _a.length; _i++) {
+            var option = _a[_i];
+            this.enabledTables.includes(option.id)
+                ? this.addTable(false, option.id)
+                : this.addTable(true, option.id);
+        }
+        this.formOptions.valueChanges.subscribe(function (tables) {
+            _this.tableService.emitSelectedTables(_this.find(true, tables).map(function (item) { return _this.checkboxOrder.get(item); }));
         });
     }
-    Object.defineProperty(ModifyTablePanelComponent.prototype, "initialTables", {
+    Object.defineProperty(ModifyTablePanelComponent.prototype, "formOptions", {
         get: function () {
-            return this._initialTables;
+            return this.tableOptions.get('optionControls');
         },
         enumerable: false,
         configurable: true
     });
-    ModifyTablePanelComponent.prototype.updateOptions = function (selections) {
-        this.state.emitSelectedTables(selections);
-    };
-    ModifyTablePanelComponent.prototype.processMobileCheckboxes = function (checked, name) {
-        this.tableStore.set(name, checked);
-        this.tablesChanged.next(this.tableStore);
-    };
-    ModifyTablePanelComponent.prototype.processDesktopCheckboxes = function (names) {
-        for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
-            var name = names_1[_i];
-            this.tableStore.set(name, true);
-        }
-        this.tablesChanged.next(this.tableStore);
+    ModifyTablePanelComponent.prototype.addTable = function (disabled, value) {
+        var i = this.formOptions.length;
+        this.formOptions.insert(i, this.fb.control({ value: !disabled, disabled: disabled }));
+        this.checkboxOrder.set(i, value);
     };
     ModifyTablePanelComponent.prototype.ngAfterViewInit = function () {
-        this._initialTables = this.tablesWithData;
+        this.loaded = true;
+    };
+    ModifyTablePanelComponent.prototype.find = function (needle, haystack) {
+        var results = [];
+        var idx = haystack.indexOf(needle);
+        while (idx != -1) {
+            results.push(idx);
+            idx = haystack.indexOf(needle, idx + 1);
+        }
+        return results;
     };
     __decorate([
         core_1.ViewChild('tableSelectionList')
     ], ModifyTablePanelComponent.prototype, "selectList");
-    __decorate([
-        core_1.Input()
-    ], ModifyTablePanelComponent.prototype, "tablesWithData");
     ModifyTablePanelComponent = __decorate([
         core_1.Component({
             selector: 'modify-table-panel',
-            template: " <div class=\"selection-panel\">\n    <div [fxShow.sm]=\"layout.sidenavOpen\" [fxShow.xs]=\"true\" fxHide>\n      <div style=\"margin-left:2%\">\n        <h3>Show Tables</h3>\n      </div>\n      <section>\n        <ul [class]=\"'toggle-group'\">\n          <li *ngFor=\"let option of options\">\n            <mat-checkbox\n              class=\"toggle-button\"\n              (change)=\"\n                processMobileCheckboxes($event.checked, $event.source.value)\n              \"\n              [value]=\"option\"\n              [checked]=\"initialTables.includes(option)\"\n            >\n              {{ option | caseSplit }}\n            </mat-checkbox>\n          </li>\n        </ul>\n      </section>\n    </div>\n\n    <div\n      class=\"table-modifier-list\"\n      [fxHide.sm]=\"layout.sidenavOpen\"\n      [fxHide.xs]=\"true\"\n      fxShow\n    >\n      <div class=\"panel-header\">\n        <b>Active Tables</b>\n      </div>\n      <mat-selection-list\n        #tableSelectionList\n        (ngModelChange)=\"updateOptions($event)\"\n        [(ngModel)]=\"activeTables\"\n      >\n        <div fxFlex fxFlexAlign=\"center center\">\n          <mat-list-option\n            *ngFor=\"let option of options\"\n            [value]=\"option\"\n            [selected]=\"initialTables.includes(option)\"\n            [disabled]=\"!initialTables.includes(option)\"\n          >\n            <div class=\"list-text\">{{ option | caseSplit }}</div>\n          </mat-list-option>\n        </div>\n      </mat-selection-list>\n    </div>\n  </div>",
+            template: " <form [formGroup]=\"tableOptions\">\n    <div\n      class=\"panel-container\"\n      [class.small-screen]=\"this.state.smallContent$ | async\"\n    >\n      <h3 style=\"margin: 0 0 0 10px\"><b>Show Tables</b></h3>\n\n      <ul\n        [class.small-screen]=\"this.state.smallContent$ | async\"\n        formArrayName=\"optionControls\"\n      >\n        <li *ngFor=\"let option of formOptions.controls; let i = index\">\n          <label\n            [style.direction]=\"\n              (this.state.smallContent$ | async) ? 'rtl' : 'ltr'\n            \"\n            [for]=\"'checkbox_' + i\"\n            class=\"checkbox\"\n          >\n            <span class=\"checkbox-label\">{{ options[i].description }}</span>\n\n            <span class=\"checkbox-input\">\n              <input\n                matRipple\n                [id]=\"'checkbox_' + i\"\n                [formControlName]=\"i\"\n                checked=\"checked\"\n                type=\"checkbox\"\n                name=\"checkbox\"\n              />\n              <span class=\"checkbox-control\">\n                <svg\n                  xmlns=\"http://www.w3.org/2000/svg\"\n                  viewBox=\"0 0 24 24\"\n                  aria-hidden=\"true\"\n                  focusable=\"false\"\n                >\n                  <path\n                    fill=\"none\"\n                    stroke=\"currentColor\"\n                    stroke-width=\"3\"\n                    d=\"M1.73 12.91l6.37 6.37L22.79 4.59\"\n                  />\n                </svg>\n              </span>\n            </span>\n          </label>\n        </li>\n      </ul>\n    </div>\n  </form>",
             styleUrls: ['./modify-table-panel.component.scss']
         })
     ], ModifyTablePanelComponent);

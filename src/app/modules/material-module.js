@@ -35,6 +35,7 @@ var select_1 = require("@angular/material/select");
 var sidenav_1 = require("@angular/material/sidenav");
 var slide_toggle_1 = require("@angular/material/slide-toggle");
 var snack_bar_1 = require("@angular/material/snack-bar");
+var sort_1 = require("@angular/material/sort");
 var table_2 = require("@angular/material/table");
 var tabs_1 = require("@angular/material/tabs");
 var toolbar_1 = require("@angular/material/toolbar");
@@ -98,6 +99,8 @@ var MaterialModule = /** @class */ (function () {
                 // MatTreeModule,
                 scrolling_1.ScrollingModule,
                 portal_1.PortalModule,
+                table_1.CdkTableModule,
+                sort_1.MatSortModule,
             ]
         })
     ], MaterialModule);

@@ -1,4 +1,3 @@
-import { MdcTextFieldModule } from '@angular-mdc/web/textfield';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -8,6 +7,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -32,7 +32,7 @@ import {
 } from './navigation/top-toolbar/toolbar.component';
 import { ContentComponent } from './table-logic/content.component';
 import { ColumnSelectorComponent } from './table-logic/med-table/column-selector/column-selector.component';
-import { MedTableComponent } from './table-logic/med-table/med-table.component';
+import { MedTableComponent } from './table-logic/med-table/table.component';
 import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
 import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
 import { ToStringPipe } from './to-string.pipe';
@@ -58,7 +58,6 @@ import { ToStringPipe } from './to-string.pipe';
     DesignComponent,
   ],
   imports: [
-    MdcTextFieldModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,
@@ -78,6 +77,7 @@ import { ToStringPipe } from './to-string.pipe';
       enabled: environment.production,
     }),
     OverlayModule,
+    MatRippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
