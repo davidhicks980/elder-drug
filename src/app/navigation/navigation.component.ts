@@ -1,8 +1,6 @@
 import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import {
   dropInAnimation,
@@ -14,6 +12,7 @@ import {
 } from '../animations';
 import { FirebaseService } from '../firebase.service';
 import { LayoutStatus, StateService } from '../state.service';
+import { TableService } from '../table.service';
 
 @Component({
   selector: 'app-navigation',
@@ -27,7 +26,18 @@ import { LayoutStatus, StateService } from '../state.service';
     mobileSlidingSidenavAnimation,
     logoSlideAnimation,
     slidingContentAnimation,
-
+    trigger('arrowSlideLeft', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(200px)',
+        }),
+        animate(
+          '300ms ease',
+          style({ opacity: 1, transform: 'translate(0px)' })
+        ),
+      ]),
+    ]),
     trigger('sidenavExpand', [
       state('close', style({ transform: 'translateX(0px)' })),
       state('open', style({ transform: 'translateX(0px)' })),
@@ -98,39 +108,30 @@ export class NavigationComponent {
   layout: LayoutStatus = this.state.layoutStatus;
   public sidenavOpen: boolean = true;
   public mobileWidth: boolean;
+  enabledTables: {
+    TableNumber: number;
+    TableDefinition: string;
+    ShortName: string;
+    Identifier: string;
+  }[];
+
+  ngAfterViewInit() {}
 
   constructor(
     public webSocketService: FirebaseService,
     public state: StateService,
-    public iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private tableService: TableService
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
       this.mobileWidth = this.layout.mobileWidth;
       this.sidenavOpen = this.layout.sidenavOpen;
     });
-    iconRegistry.addSvgIcon(
-      'chevron_right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_right.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'chevron_left',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_left.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'arrow-right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/arrow-right.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'menu',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
-    );
+    this.tableService.tableStatus$.subscribe((active) => {
+      this.enabledTables = active.map(
+        (table) =>
+          tableService.tables.filter((tab) => tab.TableNumber === table)[0]
+      );
+    });
   }
 }

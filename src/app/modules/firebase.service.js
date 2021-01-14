@@ -54,7 +54,6 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var ReplaySubject_1 = require("rxjs/internal/ReplaySubject");
 var beers = require("../assets/beers-entries.json");
-;
 var FirebaseService = /** @class */ (function () {
     function FirebaseService(firestore, tableService) {
         var _this = this;
@@ -63,7 +62,7 @@ var FirebaseService = /** @class */ (function () {
         this.updatedTables = new rxjs_1.Subject();
         this.queriedTables$ = this.updatedTables.asObservable();
         this.entryMap = new Map();
-        this.tablesSource = new ReplaySubject_1.ReplaySubject(20);
+        this.tablesSource = new ReplaySubject_1.ReplaySubject();
         this.groupedTables$ = this.tablesSource.asObservable();
         this.activeTables = new rxjs_1.Subject();
         this.queryMap = new Map();
@@ -168,10 +167,19 @@ var FirebaseService = /** @class */ (function () {
         var tableFields = new Map();
         var _loop_1 = function (def) {
             var displayIndices = def.columnOptions.map(function (item) { return item.id; });
-            var selectIndices = def.columnOptions.filter(function (item) { return item.selected === true; }).map(function (item) { return item.id; });
-            var displayedOptions = columnOptions.filter(function (item) { return displayIndices.includes(item.id); });
-            var selectedOptions = columnOptions.filter(function (item) { return selectIndices.includes(item.id); });
-            tableFields.set(def.id, { displayed: displayedOptions, selected: selectedOptions });
+            var selectIndices = def.columnOptions
+                .filter(function (item) { return item.selected === true; })
+                .map(function (item) { return item.id; });
+            var displayedOptions = columnOptions.filter(function (item) {
+                return displayIndices.includes(item.id);
+            });
+            var selectedOptions = columnOptions.filter(function (item) {
+                return selectIndices.includes(item.id);
+            });
+            tableFields.set(def.id, {
+                displayed: displayedOptions,
+                selected: selectedOptions
+            });
         };
         for (var _i = 0, definitions_1 = definitions; _i < definitions_1.length; _i++) {
             var def = definitions_1[_i];
@@ -263,10 +271,9 @@ var FirebaseService = /** @class */ (function () {
                 if (table) {
                     if (table.length > 0) {
                         //Get the columns that are relevant to the displayed table
-                        var fields = _this.getColFields(_this.columnDefinitions, _this.columnOptions)
-                            .get(category);
+                        var fields = _this.getColFields(_this.columnDefinitions, _this.columnOptions).get(category);
                         var selected = fields.selected, displayed_1 = fields.displayed;
-                        var displayedColumns_1 = Array.from(table.reduce(function (acc, curr) {
+                        var displayedColumns = Array.from(table.reduce(function (acc, curr) {
                             // Iterate through each entry in a specific drug table
                             for (var key in curr) {
                                 var displayedFields = displayed_1.map(function (item) { return item.field; });
@@ -279,19 +286,10 @@ var FirebaseService = /** @class */ (function () {
                             }
                             return acc;
                         }, new Set()));
-                        var refinedTables = table.map(function (entry) {
-                            var refinedTable = {};
-                            for (var prop in entry) {
-                                if (displayedColumns_1
-                                    .includes(prop))
-                                    refinedTable[prop] = entry[prop];
-                            }
-                            return refinedTable;
-                        });
                         tables.push({
                             id: category,
-                            tables: refinedTables,
-                            fields: displayedColumns_1,
+                            tables: table,
+                            fields: displayedColumns,
                             selected: __spreadArrays(selected.map(function (item) { return item.field; }))
                         });
                     }

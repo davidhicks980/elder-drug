@@ -12,12 +12,11 @@ var core_1 = require("@angular/core");
 var animations_2 = require("../animations");
 var firebase_service_1 = require("../firebase.service");
 var NavigationComponent = /** @class */ (function () {
-    function NavigationComponent(webSocketService, state, iconRegistry, sanitizer) {
+    function NavigationComponent(webSocketService, state, tableService) {
         var _this = this;
         this.webSocketService = webSocketService;
         this.state = state;
-        this.iconRegistry = iconRegistry;
-        this.sanitizer = sanitizer;
+        this.tableService = tableService;
         this.tablesLoaded = false;
         this.layout = this.state.layoutStatus;
         this.sidenavOpen = true;
@@ -26,11 +25,13 @@ var NavigationComponent = /** @class */ (function () {
             _this.mobileWidth = _this.layout.mobileWidth;
             _this.sidenavOpen = _this.layout.sidenavOpen;
         });
-        iconRegistry.addSvgIcon('chevron_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg'));
-        iconRegistry.addSvgIcon('chevron_left', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_left.svg'));
-        iconRegistry.addSvgIcon('arrow-right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/arrow-right.svg'));
-        iconRegistry.addSvgIcon('menu', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
+        this.tableService.tableStatus$.subscribe(function (active) {
+            _this.enabledTables = active.map(function (table) {
+                return tableService.tables.filter(function (tab) { return tab.TableNumber === table; })[0];
+            });
+        });
     }
+    NavigationComponent.prototype.ngAfterViewInit = function () { };
     NavigationComponent = __decorate([
         core_1.Component({
             selector: 'app-navigation',
@@ -44,6 +45,15 @@ var NavigationComponent = /** @class */ (function () {
                 animations_2.mobileSlidingSidenavAnimation,
                 animations_2.logoSlideAnimation,
                 animations_2.slidingContentAnimation,
+                animations_1.trigger('arrowSlideLeft', [
+                    animations_1.transition(':enter', [
+                        animations_1.style({
+                            opacity: 0,
+                            transform: 'translateX(200px)'
+                        }),
+                        animations_1.animate('300ms ease', animations_1.style({ opacity: 1, transform: 'translate(0px)' })),
+                    ]),
+                ]),
                 animations_1.trigger('sidenavExpand', [
                     animations_1.state('close', animations_1.style({ transform: 'translateX(0px)' })),
                     animations_1.state('open', animations_1.style({ transform: 'translateX(0px)' })),

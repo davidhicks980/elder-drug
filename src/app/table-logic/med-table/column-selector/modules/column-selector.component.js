@@ -22,7 +22,7 @@ var ColumnSelectorComponent = /** @class */ (function () {
     };
     ColumnSelectorComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this.selectedOptions.subscribe(function (item) { return _this.selectOptions = item; });
+        this.selectedOptions.subscribe(function (item) { return (_this.selectOptions = item); });
         this.loaded.emit(true);
     };
     ColumnSelectorComponent.prototype.ngOnInit = function () {
@@ -47,7 +47,7 @@ var ColumnSelectorComponent = /** @class */ (function () {
     ColumnSelectorComponent = __decorate([
         core_1.Component({
             selector: 'app-column-selector',
-            template: "<mat-form-field color=\"primary\" *ngIf=\"selectOptions\">\n    <mat-label>Change Columns</mat-label>\n    <mat-select\n      #columnSelect\n      class=\"column-select\"\n      multiple\n      [ngModel]=\"selectOptions\"\n      (ngModelChange)=\"emitUpdatedColumns($event)\"\n    >\n     \n      <mat-option\n        *ngFor=\"let column of displayedOptions | async\"\n        [value]=\"column\"\n      >\n        {{ column | caseSplit }}\n      </mat-option>\n    </mat-select>\n  </mat-form-field> ",
+            template: "<mat-form-field color=\"primary\" *ngIf=\"selectOptions\">\n    <mat-label>Change Columns</mat-label>\n    <mat-select\n      #columnSelect\n      class=\"column-select\"\n      multiple\n      [ngModel]=\"selectOptions\"\n      (ngModelChange)=\"emitUpdatedColumns($event)\"\n    >\n      <mat-option\n        *ngFor=\"let column of displayedOptions | async\"\n        [value]=\"column\"\n      >\n        {{ column | caseSplit }}\n      </mat-option>\n    </mat-select>\n  </mat-form-field> ",
             styleUrls: ['./column-selector.component.scss']
         })
     ], ColumnSelectorComponent);

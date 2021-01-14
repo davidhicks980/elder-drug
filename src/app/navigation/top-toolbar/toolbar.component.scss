@@ -1,5 +1,5 @@
 @import "../../../_colors.scss";
-$toolbarActiveColor: $primary;
+$toolbarActiveColor: $primary-1;
 $toolbarInactiveColor: white;
 
 div.dialog {
@@ -9,7 +9,7 @@ div.dialog {
 header {
   width: 100vw;
   height: $header-shrunken-buffer;
-  background: lighten($logogray, 20%);
+  background: $primary-4;
 
   position: fixed;
 }
@@ -17,15 +17,15 @@ header {
 div.logo-title {
   width: 50px;
   .logo {
-    margin-left: 7px;
+    width: 1em;
+    height: 1em;
   }
   & span {
-    font-family: $headerfont;
     &.title {
-      font-size: $headerfont-size;
-      letter-spacing: $headerfont-spacing;
+      font: $logo-text--font;
+
       white-space: nowrap;
-      color: #414042;
+      color: $dark-gray-4;
     }
     &.mobile-sidenav-title {
       font-size: 28pt;
@@ -35,7 +35,7 @@ div.logo-title {
 
 mat-icon.mat-icon-24 {
   font-size: 20pt;
-  color: $accent;
+  color: $secondary-2-1;
   font-family: "Material Icons Round";
 }
 
@@ -43,20 +43,22 @@ div.center-left {
   place-items: center;
 }
 
-div {
+div.buttons {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding-right: 30px;
+  align-items: space-between;
+  padding-right: 15px;
   transform-origin: left;
+  letter-spacing: 1px;
+  gap: 10px;
   & button.toolbar-primary-button {
     background: none;
     border: none;
-    color: $primary;
+    color: $primary-4;
     cursor: pointer;
     font-weight: 600;
     &:hover {
-      color: $accent;
+      color: $primary-3;
     }
   }
 }
@@ -65,4 +67,16 @@ div.flex-toolbar {
   background: white;
   height: $header-shrunken;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.28);
+}
+
+@media screen and (min-width: 450px) and (max-width: 599.99px) {
+  div.buttons {
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  div.buttons {
+    gap: 0px;
+  }
 }

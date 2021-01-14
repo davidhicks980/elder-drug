@@ -2,9 +2,6 @@
 
 //prettier-ignore
 
-@import "~@swimlane/ngx-datatable/index.css";
-@import "~@swimlane/ngx-datatable/themes/material.scss";
-@import "~@swimlane/ngx-datatable/assets/icons.css";
 ::-webkit-scrollbar {
   width: 0.5em;
 }
@@ -41,10 +38,6 @@ mat-pseudo-checkbox.mat-pseudo-checkbox {
   .mat-pseudo-checkbox-indeterminate,
   .mat-accent .mat-pseudo-checkbox-checked,
   .mat-accent .mat-pseudo-checkbox-indeterminate {
-    background: $gray !important;
+    background: $dark-gray-5 !important;
   }
-}
-
-.mat-expansion-panel:not([class*="mat-elevation-z"]).soft-shadow {
-  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
 }

@@ -2,13 +2,13 @@
   <app-enter-drug-form #searchForm></app-enter-drug-form>
   <div class="button-container">
     <button
-      class="search-button"
-      type="button"
+      type="submit"
       (click)="searchForm.search()"
       (keydown.enter)="searchForm.search()"
-      type="submit"
+      class="button submit hh-flex h-center-content v-center-items"
     >
-      <mat-icon svgIcon="search"></mat-icon> Search
+      <mat-icon svgIcon="search"></mat-icon>
+      <span style="margin-left: 5px" class="search-text-shadow"> Search</span>
     </button>
   </div>
 </div>

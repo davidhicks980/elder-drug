@@ -1,5 +1,5 @@
 @import "../../colors";
 .background {
   filter: grayscale(20%) opacity(70%)
-    drop-shadow(0 0 0 transparentize($primary, 0.1%)) brightness(115%);
+    drop-shadow(0 0 0 transparentize($primary-2, 0.1%)) brightness(115%);
 }

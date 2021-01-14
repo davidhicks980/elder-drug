@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.AppModule = void 0;
+var accordion_1 = require("@angular/cdk/accordion");
 var layout_1 = require("@angular/cdk/layout");
 var overlay_1 = require("@angular/cdk/overlay");
 var scrolling_1 = require("@angular/cdk/scrolling");
@@ -20,6 +21,7 @@ var core_2 = require("@angular/material/core");
 var form_field_1 = require("@angular/material/form-field");
 var input_1 = require("@angular/material/input");
 var select_1 = require("@angular/material/select");
+var tabs_1 = require("@angular/material/tabs");
 var animations_1 = require("@angular/platform-browser/animations");
 var service_worker_1 = require("@angular/service-worker");
 var table_1 = require("primeng/table");
@@ -27,6 +29,7 @@ var environment_1 = require("../environments/environment");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var case_split_pipe_1 = require("./case-split.pipe");
+var expansion_panel_component_1 = require("./expansion-panel/expansion-panel.component");
 var logo_component_1 = require("./logo/small-logo/logo-component");
 var material_module_1 = require("./material-module");
 var enter_drug_form_component_1 = require("./navigation/enter-drug-form/enter-drug-form.component");
@@ -62,6 +65,7 @@ var AppModule = /** @class */ (function () {
                 toolbar_component_1.DisclaimerComponent,
                 toolbar_component_1.AboutComponent,
                 toolbar_component_1.DesignComponent,
+                expansion_panel_component_1.ExpansionPanelComponent,
             ],
             imports: [
                 animations_1.BrowserAnimationsModule,
@@ -84,9 +88,12 @@ var AppModule = /** @class */ (function () {
                 }),
                 overlay_1.OverlayModule,
                 core_2.MatRippleModule,
+                accordion_1.CdkAccordionModule,
+                tabs_1.MatTabsModule,
             ],
             providers: [],
-            bootstrap: [app_component_1.AppComponent]
+            bootstrap: [app_component_1.AppComponent],
+            schemas: [core_1.NO_ERRORS_SCHEMA]
         })
     ], AppModule);
     return AppModule;

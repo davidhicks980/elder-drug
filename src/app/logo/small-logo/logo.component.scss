@@ -1,44 +1,23 @@
 @import "../../../colors.scss";
 
 .header-bowl {
-  width: 1em;
-
   position: relative;
-  font-size: 35pt;
 }
 
 .title-bowl {
-  width: 100%;
   position: relative;
-  padding-bottom: 0.4em;
-  fill: $primary;
-  height: 100%;
+  fill: $primary-1;
 }
 
-.bowl {
-  fill: lighten($color: $gray, $amount: 70%);
+.center-logo {
 }
-.interior {
-  fill: lighten($primary, 40%);
-}
-.stem {
-  fill: lighten($color: $gray, $amount: 80%);
-}
-.shadow {
-  fill: lighten($color: #111d4a, $amount: 55%);
-}
-.snake {
-  fill: lighten($accent, 5%);
-}
-.eyes {
-  fill: whitesmoke;
-}
+
 ////////////
 .bowl-alt {
   fill: #dbdbdb;
 }
 .interior-alt {
-  fill: $darkgray;
+  fill: $dark-gray-4;
 }
 .stem-alt {
   fill: #dfdfdf;
@@ -47,7 +26,7 @@
   fill: #a7a9aa;
 }
 .snake-alt {
-  fill: $gray;
+  fill: $dark-gray-4;
 }
 .eyes-alt {
   fill: #ffffff;

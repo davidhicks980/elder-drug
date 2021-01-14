@@ -15,14 +15,12 @@ var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var animations_1 = require("../../animations");
 var EnterDrugFormComponent = /** @class */ (function () {
-    function EnterDrugFormComponent(state, fire, fb, dialog, iconRegistry, sanitizer) {
+    function EnterDrugFormComponent(state, fire, fb, dialog) {
         var _this = this;
         this.state = state;
         this.fire = fire;
         this.fb = fb;
         this.dialog = dialog;
-        this.iconRegistry = iconRegistry;
-        this.sanitizer = sanitizer;
         this.drugsGroup = this.fb.group({
             drugs: this.fb.array([
                 new forms_1.FormControl('', [
@@ -45,8 +43,6 @@ var EnterDrugFormComponent = /** @class */ (function () {
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
         });
-        this.iconRegistry.addSvgIcon('add--outline', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add-circle-outline.svg'));
-        this.iconRegistry.addSvgIcon('delete', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-trash.svg'));
     }
     EnterDrugFormComponent.prototype.boldInputText = function (option, active) {
         var index = option.search(active);

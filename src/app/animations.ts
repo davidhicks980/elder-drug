@@ -57,34 +57,6 @@ export const dropInAnimation = trigger('dropIn', [
   ]),
 ]);
 
-export const expandButtonAnimation = trigger('expandButton', [
-  state('default', style({ transform: 'rotate(0deg)' })),
-  state('rotated', style({ transform: 'rotate(90deg)' })),
-  transition('rotated => default', animate('400ms ease-out')),
-  transition('default => rotated', animate('400ms ease-in')),
-]);
-
-export const translateRationaleContent = trigger('translateRationale', [
-  transition(':leave', [
-    style({ transform: 'translateY(0)' }),
-    animate(
-      '200ms ease-out',
-      style({
-        transform: 'translateY(-200px)',
-      })
-    ),
-  ]),
-  transition(':enter', [
-    style({ transform: 'translateY(-200px)' }),
-    animate(
-      '200ms ease',
-      style({
-        transform: 'translateY(0)',
-      })
-    ),
-  ]),
-]);
-
 export const slideDownAnimation = trigger('slideDown', [
   // fade in when created. this could also be written as transition('void => *')
   transition(':enter', [

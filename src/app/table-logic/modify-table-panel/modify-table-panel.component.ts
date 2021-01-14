@@ -14,13 +14,23 @@ import { TableService } from '../../table.service';
       class="panel-container"
       [class.small-screen]="this.state.smallContent$ | async"
     >
-      <h3 style="margin: 0 0 0 10px"><b>Show Tables</b></h3>
+      <span
+        style="font: 400 16pt 'IBM Plex Sans', sans-serif; margin: 0 0 0 10px"
+      >
+        Show Tables
+      </span>
 
       <ul
         [class.small-screen]="this.state.smallContent$ | async"
         formArrayName="optionControls"
       >
-        <li *ngFor="let option of formOptions.controls; let i = index">
+        <li
+          matRipple
+          matRippleColor="#00a9924a"
+          *ngFor="let option of formOptions.controls; let i = index"
+          [class.selected]="formOptions.at(i).value"
+          [class.disabled]="formOptions.at(i).disabled"
+        >
           <label
             [style.direction]="
               (this.state.smallContent$ | async) ? 'rtl' : 'ltr'
@@ -32,7 +42,6 @@ import { TableService } from '../../table.service';
 
             <span class="checkbox-input">
               <input
-                matRipple
                 [id]="'checkbox_' + i"
                 [formControlName]="i"
                 checked="checked"

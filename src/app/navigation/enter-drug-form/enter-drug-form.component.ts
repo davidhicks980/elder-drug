@@ -2,10 +2,8 @@ import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-import { DomSanitizer } from '@angular/platform-browser';
 import { interval, Observable } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { StateService } from 'src/app/state.service';
@@ -103,9 +101,7 @@ export class EnterDrugFormComponent {
     public state: StateService,
     public fire: FirebaseService,
     private fb: FormBuilder,
-    public dialog: MatDialog,
-    public iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    public dialog: MatDialog
   ) {
     /* const index = option.search(active);
     const subString = option.substring(index, index + 50);
@@ -119,18 +115,6 @@ export class EnterDrugFormComponent {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
     });
-    this.iconRegistry.addSvgIcon(
-      'add--outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/ion-add-circle-outline.svg'
-      )
-    );
-    this.iconRegistry.addSvgIcon(
-      'delete',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/ion-trash.svg'
-      )
-    );
   }
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });

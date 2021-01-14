@@ -1,7 +1,8 @@
-$outline-color: $primary;
+@import "../../../colors";
+$outline-color: $secondary-2-3;
 $check-color: white;
-$fill-color: $primary;
-$text-color: $logogray;
+$fill-color: $secondary-2-1;
+$text-color: $dark-gray-4;
 $disabled-color: #959495;
 $checkbox-size: 1rem;
 $text-size: 0.9rem;
@@ -11,7 +12,12 @@ $text-size: 0.9rem;
   box-sizing: border-box;
 }
 
+li.disabled {
+  pointer-events: none;
+}
 .checkbox {
+  padding: 12px 16px 12px 16px;
+
   display: grid;
   grid-template-columns: 80% 20%;
   grid-gap: 0.5em;
@@ -19,9 +25,13 @@ $text-size: 0.9rem;
   color: $text-color;
   align-items: center;
   justify-content: space-between;
+
   & .small-screen {
     grid-column: 2;
     grid-row: 1;
+  }
+  &:focus-within .checkbox-label {
+    color: $primary-5;
   }
   & .checkbox-label {
     font-size: $text-size;
@@ -56,7 +66,7 @@ $text-size: 0.9rem;
     }
     &:hover {
       cursor: pointer;
-      background: $lightprimary;
+      background: $complement-1;
     }
     &:disabled {
       cursor: not-allowed;

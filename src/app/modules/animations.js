@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.mobileSlidingSidenavAnimation = exports.slidingContentAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.translateRationaleContent = exports.expandButtonAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = exports.toolbarItemsFade = void 0;
+exports.logoSlideAnimation = exports.mobileSidenavAnimation = exports.contentAnimation = exports.tableVisibleAnimation = exports.mobileSlidingSidenavAnimation = exports.slidingContentAnimation = exports.inputAnimation = exports.toolbarButtonAnimation = exports.slideDownAnimation = exports.dropInAnimation = exports.slideInLeftFast = exports.slideInLeft = exports.fadeInAnimation = exports.toolbarItemsFade = void 0;
 var animations_1 = require("@angular/animations");
 exports.toolbarItemsFade = animations_1.trigger('toolbarItemsFade', [
     animations_1.transition(':enter', [
@@ -39,26 +39,6 @@ exports.dropInAnimation = animations_1.trigger('dropIn', [
             })),
             animations_1.animate('600ms ease-in', animations_1.style({ boxShadow: '*', transform: 'translateX(0)' })),
         ]),
-    ]),
-]);
-exports.expandButtonAnimation = animations_1.trigger('expandButton', [
-    animations_1.state('default', animations_1.style({ transform: 'rotate(0deg)' })),
-    animations_1.state('rotated', animations_1.style({ transform: 'rotate(90deg)' })),
-    animations_1.transition('rotated => default', animations_1.animate('400ms ease-out')),
-    animations_1.transition('default => rotated', animations_1.animate('400ms ease-in')),
-]);
-exports.translateRationaleContent = animations_1.trigger('translateRationale', [
-    animations_1.transition(':leave', [
-        animations_1.style({ transform: 'translateY(0)' }),
-        animations_1.animate('200ms ease-out', animations_1.style({
-            transform: 'translateY(-200px)'
-        })),
-    ]),
-    animations_1.transition(':enter', [
-        animations_1.style({ transform: 'translateY(-200px)' }),
-        animations_1.animate('200ms ease', animations_1.style({
-            transform: 'translateY(0)'
-        })),
     ]),
 ]);
 exports.slideDownAnimation = animations_1.trigger('slideDown', [

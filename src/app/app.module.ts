@@ -1,8 +1,9 @@
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -11,6 +12,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TableModule } from 'primeng/table';
@@ -19,6 +21,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
+import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { LogoComponent } from './logo/small-logo/logo-component';
 import { MaterialModule } from './material-module';
 import { EmptyInputComponent, EnterDrugFormComponent } from './navigation/enter-drug-form/enter-drug-form.component';
@@ -36,6 +39,7 @@ import { MedTableComponent } from './table-logic/med-table/table.component';
 import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
 import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
 import { ToStringPipe } from './to-string.pipe';
+import { TabComponent } from './tab/tab.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,8 @@ import { ToStringPipe } from './to-string.pipe';
     DisclaimerComponent,
     AboutComponent,
     DesignComponent,
+    ExpansionPanelComponent,
+    TabComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -78,8 +84,11 @@ import { ToStringPipe } from './to-string.pipe';
     }),
     OverlayModule,
     MatRippleModule,
+    CdkAccordionModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA], // add this line
 })
 export class AppModule {}

@@ -1,13 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DomSanitizer } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 import { ColumnService } from 'src/app/columns.service';
 
-import { expandButtonAnimation, slideDownAnimation, translateRationaleContent } from '../../animations';
+import { slideDownAnimation } from '../../animations';
 import { FirebaseService } from '../../firebase.service';
 import { StateService } from '../../state.service';
 import { TableService } from '../../table.service';
@@ -18,8 +16,12 @@ import { TableService } from '../../table.service';
   styleUrls: ['./med-table.component.scss'],
 
   animations: [
-    expandButtonAnimation,
-    translateRationaleContent,
+    trigger('expandButton', [
+      state('default', style({ transform: 'rotate(0deg)' })),
+      state('rotated', style({ transform: 'rotate(90deg)' })),
+      transition('rotated => default', animate('400ms ease-out')),
+      transition('default => rotated', animate('400ms ease-in')),
+    ]),
     slideDownAnimation,
     trigger('rotateChevron', [
       state('collapsed', style({ transform: 'rotate(0deg)' })),
@@ -29,6 +31,20 @@ import { TableService } from '../../table.service';
         animate('150ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       ),
     ]),
+    trigger('translateRationale', [
+      state('expanded', style({ transform: 'translateY(0)' })),
+      state('closed', style({ transform: 'translateY(-200px)' })),
+      transition(
+        'closed<=>expanded',
+        animate('500ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+
+      transition(
+        'expanded<=>closed',
+        animate('500ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
@@ -54,42 +70,35 @@ export class MedTableComponent implements AfterViewInit, OnInit {
   public loaded: boolean = false;
   public selectorInitiated: boolean = false;
   expandedElement: any;
-  public rationale: { expanded: boolean }[] = [];
-  sidenavActive: boolean;
-  smallScreen: boolean;
   fields: string[];
   cols: {}[];
-  dataSource: MatTableDataSource<[]>;
+  dataSource: MatTableDataSource<[]> = new MatTableDataSource();
   enabledTables: number[];
-  allData: any;
-  tableData: any;
-  log(e: Event) {
-    console.log(e);
-  }
-  expandRationale(index: number) {
-    this.rationale[index].expanded = !this.rationale[index].expanded;
-  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+  moveSearchTerms(arr: string[], item: string) {
+    var index = arr.indexOf(item);
+    arr.splice(index, 1);
+    arr.unshift(item);
   }
   ngOnInit() {
     const table = this.firebase.groupedTables$.pipe(
       filter((item) => item.id === this.tableName)
     );
+
     table.subscribe((params) => {
-      params.selected.unshift('expand');
       this.fields = params.selected;
-      this.dataSource = new MatTableDataSource(params.tables);
+      this.dataSource.data = params.tables;
       this.expandedFields = params.fields;
+      this.moveSearchTerms(this.fields, 'SearchTerm');
     });
 
     this.loaded = true;
   }
   constructor(
     public parameterService: ColumnService,
-    public iconRegistry: MatIconRegistry,
-    public sanitizer: DomSanitizer,
     public firebase: FirebaseService,
     public columnService: ColumnService,
     public tableService: TableService,
@@ -100,52 +109,5 @@ export class MedTableComponent implements AfterViewInit, OnInit {
     this.tableService.tableStatus$.subscribe((active) => {
       this.enabledTables = active;
     });
-
-    iconRegistry.addSvgIcon(
-      'error',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'unfold_less',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/unfold_less.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'remove_circle_outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/remove_circle_outline.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'add_circle_outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/add_circle_outline.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'unfold_more',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/unfold_more.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'expand_less',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/expand_less.svg'
-      )
-    );
-    iconRegistry.addSvgIcon(
-      'chevron_right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_right.svg'
-      )
-    );
-  }
-
-  private setExpandedVariables(rows: any[]) {
-    for (let {} of rows) {
-      this.rationale.push({ expanded: true });
-    }
   }
 }

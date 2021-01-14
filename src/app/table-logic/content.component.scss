@@ -11,6 +11,9 @@ $content-buffer: 10px;
   &.desktop-height {
     height: calc(100vh - #{$header-shrunken-buffer});
   }
+  &.mobile-height {
+    height: calc(100vh - #{$header-shrunken-buffer});
+  }
   overflow-y: auto;
 }
 

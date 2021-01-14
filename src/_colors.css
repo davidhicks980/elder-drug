@@ -1,0 +1,60 @@
+/* Color Theme Swatches in Hex */
+/* Color Theme Swatches in Hex */
+/* Color Theme Swatches in Hex */
+.hh-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.hh-grid .hh-span-12 {
+  grid-column: 1 / span 12;
+}
+.hh-grid .hh-span-11 {
+  grid-column: auto/span 11;
+}
+.hh-grid .hh-span-10 {
+  grid-column: auto/span 10;
+}
+.hh-grid .hh-span-8 {
+  grid-column: auto/span 8;
+}
+.hh-grid .hh-span-6 {
+  grid-column: auto/span 6;
+}
+.hh-grid .hh-span-4 {
+  grid-column: auto/span 4;
+}
+.hh-grid .hh-span-2 {
+  grid-column: auto/span 2;
+}
+.hh-grid .hh-span-1 {
+  grid-column: auto/span 1;
+}
+.hh-grid.grid-term,
+.hh-grid .grid-term {
+  color: gray;
+}
+.hh-grid.grid-title,
+.hh-grid .grid-title {
+  font-weight: 500;
+  margin: 0 0 0 0;
+  color: gray;
+}
+.hh-grid.grid-header,
+.hh-grid .grid-header {
+  font-weight: 500;
+  margin: 0 0 0 0;
+  color: gray;
+}
+.hh-grid.grid-spacing,
+.hh-grid .grid-spacing {
+  padding: 10px;
+  gap: 15px;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./assets/TitilliumWeb-SemiBold.ttf) format("ttf");
+}

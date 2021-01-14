@@ -15,16 +15,26 @@ var TableService = /** @class */ (function () {
         this.tableStatus$ = this.tableStatusSource.asObservable();
         this._tables = [
             {
+                TableNumber: 1,
+                TableDefinition: 'General Information for Each Table',
+                ShortName: 'General Info',
+                Identifier: 'Info',
+                TableIconName: 'general-health',
+                Description: 'A collection of all queried drugs.'
+            },
+            {
                 TableNumber: 2,
                 TableDefinition: 'Potentially Inappropriate Medication Use in Older Adults ',
                 ShortName: 'Potentially Innappropriate',
-                Identifier: 'PotenInappropriate'
+                Identifier: 'Innappropriate'
             },
             {
                 TableNumber: 3,
                 TableDefinition: 'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
-                ShortName: 'Disease-Specific',
-                Identifier: 'DiseaseGuidance'
+                ShortName: 'Disease Specific',
+                Identifier: 'DiseaseGuidance',
+                TableIconName: 'heart-ekg',
+                Description: 'Drugs affecting those with specific diseases.'
             },
             {
                 TableNumber: 4,
@@ -36,13 +46,17 @@ var TableService = /** @class */ (function () {
                 TableNumber: 5,
                 TableDefinition: 'Potentially Clinically Important Drug-Drug Interactions That Should Be Avoided in Older Adults',
                 ShortName: 'Drug Interactions',
-                Identifier: 'DrugInteractions'
+                Identifier: 'DrugInteractions',
+                TableIconName: 'capsule',
+                Description: 'Concerning drug interactions in those 65+'
             },
             {
                 TableNumber: 6,
                 TableDefinition: 'Medications That Should Be Avoided or Have Their Dosage Reduced With Varying Levels of Kidney Function in Older Adults',
                 ShortName: 'Renal Interactions',
-                Identifier: 'Clearance'
+                Identifier: 'Clearance',
+                TableIconName: 'kidneys',
+                Description: 'Toxic drugs in reduced kidney function'
             },
             {
                 TableNumber: 7,

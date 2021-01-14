@@ -12,11 +12,11 @@ interface Column {
   header: string;
 }
 export interface TableParameters {
-        id: number;
+  id: number;
   tables: {}[];
-        fields: string[];
-        selected: string[];
-};
+  fields: string[];
+  selected: string[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,9 @@ export class FirebaseService {
   updatedTables = new Subject<any>();
   queriedTables$ = this.updatedTables.asObservable();
   entryMap: Map<string, number[]> = new Map();
-  public tablesSource: ReplaySubject<TableParameters> = new ReplaySubject<TableParameters>(20);
+  public tablesSource: Subject<TableParameters> = new ReplaySubject<
+    TableParameters
+  >();
   public groupedTables$: Observable<any> = this.tablesSource.asObservable();
   private activeTables: Subject<number[]> = new Subject<number[]>();
   private queryMap: Map<number, string[]> = new Map();
@@ -40,7 +42,9 @@ export class FirebaseService {
   filterDropdown = new Subject<string[][]>();
   filteredItems$ = this.filterDropdown.asObservable();
   /** Emits table columns that contain any data */
-  private filteredFieldsSource: ReplaySubject<TableParameters> = new ReplaySubject();
+  private filteredFieldsSource: ReplaySubject<
+    TableParameters
+  > = new ReplaySubject();
 
   /** Observable for columns containing data */
   filteredFields$ = this.filteredFieldsSource.asObservable();
@@ -120,16 +124,30 @@ export class FirebaseService {
     { id: 15, field: 'ShortTableName', header: 'Table' },
     { id: 16, field: 'SearchTerm', header: 'Search Term' },
   ];
- 
-  private getColFields (definitions:columnDefinition[], columnOptions:Column[]): Map<number, { displayed: Column[], selected: Column[]; }>
-  {
-    let tableFields = new Map() as Map<number, { displayed: Column[], selected: Column[]; }>
-    for ( let def of definitions ) {
-      let displayIndices = def.columnOptions.map( item => item.id )
-      let selectIndices = def.columnOptions.filter(item=>item.selected===true).map(item=>item.id)
-      const displayedOptions = columnOptions.filter( item => displayIndices.includes( item.id ) );
-      const selectedOptions = columnOptions.filter( item => selectIndices.includes( item.id ) );
-      tableFields.set( def.id, { displayed: displayedOptions, selected: selectedOptions } )
+
+  private getColFields(
+    definitions: columnDefinition[],
+    columnOptions: Column[]
+  ): Map<number, { displayed: Column[]; selected: Column[] }> {
+    let tableFields = new Map() as Map<
+      number,
+      { displayed: Column[]; selected: Column[] }
+    >;
+    for (let def of definitions) {
+      let displayIndices = def.columnOptions.map((item) => item.id);
+      let selectIndices = def.columnOptions
+        .filter((item) => item.selected === true)
+        .map((item) => item.id);
+      const displayedOptions = columnOptions.filter((item) =>
+        displayIndices.includes(item.id)
+      );
+      const selectedOptions = columnOptions.filter((item) =>
+        selectIndices.includes(item.id)
+      );
+      tableFields.set(def.id, {
+        displayed: displayedOptions,
+        selected: selectedOptions,
+      });
     }
     return tableFields;
   }
@@ -173,9 +191,8 @@ export class FirebaseService {
   }
   getTableNamesContainingData(tables: Table[]): number[] {
     let out = new Set() as Set<number>;
-    tables.forEach( ( table ) =>
-    {
-          out.add(1);
+    tables.forEach((table) => {
+      out.add(1);
 
       if (
         [
@@ -205,7 +222,6 @@ export class FirebaseService {
       definitions: columnDefinition[],
       columns: Column[]
     ): TableParameters[] => {
-      
       let tables: TableParameters[] = [];
 
       for (let category of categories) {
@@ -213,53 +229,36 @@ export class FirebaseService {
         let generalInfo = category === Category.General;
         const table = generalInfo
           ? mappedTerms
-          : mappedTerms.filter(
-              (item: Columns) => item.Category == category
-          );
+          : mappedTerms.filter((item: Columns) => item.Category == category);
         //Check to see if tables exist and contain items
         if (table) {
-          if ( table.length > 0 ) {
+          if (table.length > 0) {
             //Get the columns that are relevant to the displayed table
-             const fields = this.getColFields(
-               this.columnDefinitions,
-               this.columnOptions
-             )
-               .get(category)
+            const fields = this.getColFields(
+              this.columnDefinitions,
+              this.columnOptions
+            ).get(category);
             const { selected, displayed } = fields;
-            const displayedColumns = Array.from(table.reduce(
-              (acc: Set<string>, curr: Table) => {
+            const displayedColumns = Array.from(
+              table.reduce((acc: Set<string>, curr: Table) => {
                 // Iterate through each entry in a specific drug table
-                for ( let key in curr ) {
-                  const displayedFields = displayed.map(item=>item.field)
-                  if (
-                    key==='SearchTerm'
-                  ) {
+                for (let key in curr) {
+                  const displayedFields = displayed.map((item) => item.field);
+                  if (key === 'SearchTerm') {
                     acc.add(key);
                   } else if (curr[key] && displayedFields.includes(key)) {
                     acc.add(key);
                   }
                 }
                 return acc;
-              },
-              new Set()
-            ) as Set<string>) as string[];
+              }, new Set()) as Set<string>
+            ) as string[];
 
-            const refinedTables = table.map((entry) => {
-              let refinedTable = {};
-              for (const prop in entry) {
-                if (
-                  displayedColumns
-                    .includes(prop)
-                )
-                  refinedTable[prop] = entry[prop];
-              }
-              return refinedTable
-            } );
             tables.push({
               id: category,
-              tables: refinedTables,
+              tables: table,
               fields: displayedColumns,
-              selected: [...selected.map((item) => item.field)] ,
+              selected: [...selected.map((item) => item.field)],
             });
           }
         }
@@ -274,7 +273,7 @@ export class FirebaseService {
       this.columnDefinitions,
       this.columnOptions
     );
-    for ( const table of tables ) {
+    for (const table of tables) {
       this.filteredFieldsSource.next(table);
       this.tablesSource.next(table);
     }
@@ -282,7 +281,7 @@ export class FirebaseService {
 
   mapQueryTerms(tables: {}[]) {
     for (const table of tables) {
-      table[ 'SearchTerm' ] = this.queryMap.get( table[ 'EntryID' ] ).join( ' | ' );
+      table['SearchTerm'] = this.queryMap.get(table['EntryID']).join(' | ');
     }
 
     return tables;
@@ -339,9 +338,8 @@ export class FirebaseService {
   }
 }
 
-export enum Category
-{
-  General=1,
+export enum Category {
+  General = 1,
   PotentiallyInnappropriate,
   DiseaseGuidance,
   Caution,
@@ -395,7 +393,7 @@ export type ColumnInfo = {
   header: string;
 };
 export enum Cols {
-  EntryID=1,
+  EntryID = 1,
   DiseaseState,
   Category,
   TableDefinition,

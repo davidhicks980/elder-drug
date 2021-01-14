@@ -1,0 +1,68 @@
+@use 'sass:map';
+
+$orientations: "baseline", "center", "end", "flex-end", "flex-start", "start",
+  "space-around", "space-between", "space-evenly", "stretch", "right";
+
+$nest-level: "self", "content", "items";
+$arrangements: (
+  "align": "v",
+  "justify": "h",
+  "place": "place",
+);
+.hh-flex {
+  display: flex;
+  @each $arrangement, $pseudonym in $arrangements {
+    @each $level in $nest-level {
+      @each $orientation in $orientations {
+        &.#{$pseudonym}-#{$orientation}-#{$level} {
+          #{$arrangement}-#{$level}: #{$orientation};
+        }
+      }
+    }
+  }
+}
+.hh-grid {
+  display: grid;
+  &.hh-12-column {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 1fr;
+  }
+
+  @for $_ from 1 through 12 {
+    .hh-span-#{$_} {
+      grid-column: auto / span $_;
+    }
+  }
+
+  @each $arrangement, $pseudonym in $arrangements {
+    @each $level in $nest-level {
+      @each $orientation in $orientations {
+        &.#{$pseudonym}-#{$orientation}-#{$level} {
+          #{$arrangement}-#{$level}: #{$orientation};
+        }
+      }
+    }
+  }
+
+  &.grid-term,
+  .grid-term {
+    color: gray;
+  }
+  &.grid-title,
+  .grid-title {
+    font-weight: 500;
+    margin: 0 0 0 0;
+    color: gray;
+  }
+  &.grid-header,
+  .grid-header {
+    font-weight: 500;
+    margin: 0 0 0 0;
+    color: gray;
+  }
+  &.grid-spacing,
+  .grid-spacing {
+    padding: 10px;
+    gap: 15px;
+  }
+}

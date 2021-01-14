@@ -9,16 +9,13 @@ exports.__esModule = true;
 exports.SideNavigationComponent = void 0;
 var core_1 = require("@angular/core");
 var SideNavigationComponent = /** @class */ (function () {
-    function SideNavigationComponent(state, iconRegistry, sanitizer) {
+    function SideNavigationComponent(state) {
         var _this = this;
         this.state = state;
-        this.iconRegistry = iconRegistry;
-        this.sanitizer = sanitizer;
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
             _this.sidenavOpen = _this.layout.sidenavOpen;
         });
-        iconRegistry.addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg'));
     }
     SideNavigationComponent = __decorate([
         core_1.Component({

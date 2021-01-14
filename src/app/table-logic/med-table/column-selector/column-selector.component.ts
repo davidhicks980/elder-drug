@@ -17,7 +17,6 @@ import { FirebaseService, TableParameters } from '../../../firebase.service';
       [ngModel]="selectOptions"
       (ngModelChange)="emitUpdatedColumns($event)"
     >
-     
       <mat-option
         *ngFor="let column of displayedOptions | async"
         [value]="column"
@@ -33,7 +32,7 @@ export class ColumnSelectorComponent implements AfterViewInit {
   @Input() tableName: number;
   @Output() columnUpdates: EventEmitter<string[]> = new EventEmitter();
   @Output() loaded = new EventEmitter();
-  displayedOptions: Observable<string[]>
+  displayedOptions: Observable<string[]>;
   selectOptions: string[];
   selectedOptions: Observable<string[]>;
 
@@ -41,18 +40,17 @@ export class ColumnSelectorComponent implements AfterViewInit {
     this.columnUpdates.emit(cols);
   }
   ngAfterViewInit() {
-    this.selectedOptions.subscribe(item=>this.selectOptions = item)
+    this.selectedOptions.subscribe((item) => (this.selectOptions = item));
     this.loaded.emit(true);
   }
-  ngOnInit ()
-  {
-    const options = this.firebase.filteredFields$.pipe( filter( ( item: TableParameters ) => item.id === this.tableName ) )
-    this.displayedOptions = options.pipe( pluck('fields') );
-    this.selectedOptions = options.pipe(
-      pluck('selected')
+  ngOnInit() {
+    const options = this.firebase.filteredFields$.pipe(
+      filter((item: TableParameters) => item.id === this.tableName)
     );
-   /* this.displayedOptions = this.firebase.filteredFields$.pipe( filter( item => item.id === this.tableName ), map( val => val.fields.entries() ), toArray() ).subscribe(item=>console.log(item))*/
-}
+    this.displayedOptions = options.pipe(pluck('fields'));
+    this.selectedOptions = options.pipe(pluck('selected'));
+    /* this.displayedOptions = this.firebase.filteredFields$.pipe( filter( item => item.id === this.tableName ), map( val => val.fields.entries() ), toArray() ).subscribe(item=>console.log(item))*/
+  }
   constructor(
     private columnService: ColumnService,
     public firebase: FirebaseService

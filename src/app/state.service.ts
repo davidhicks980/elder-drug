@@ -60,13 +60,13 @@ export class StateService {
 
   constructor(_ruler: ViewportRuler) {
     try {
-      _ruler.change(16).subscribe((): void => {
+      _ruler.change(8).subscribe((): void => {
         let layoutType = 0;
-        if (_ruler.getViewportSize().width < 599.99) {
+        if (_ruler.getViewportSize().width < 600) {
           this.mobileWidth = true;
           this.width = ScreenStatus.xSmall;
           layoutType = 1 * (Number(this.sidenavOpen) + 1);
-        } else if (_ruler.getViewportSize().width < 959.99) {
+        } else if (_ruler.getViewportSize().width < 960) {
           this.width = ScreenStatus.small;
           this.mobileWidth = false;
           layoutType = 2 * (Number(this.sidenavOpen) + 1);

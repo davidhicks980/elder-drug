@@ -13,7 +13,7 @@ export class ColumnService {
     { id: 2, field: 'DiseaseState', header: 'Disease State' },
     { id: 3, field: 'Category', header: 'Category Number' },
     { id: 4, field: 'TableDefinition', header: 'Table Definition' },
-    { id: 5, field: 'Item', header: 'Item' },
+    { id: 5, field: 'MatchedBeersEntry', header: 'Item' },
     { id: 6, field: 'MinimumClearance', header: 'Min Clearance' },
     { id: 7, field: 'MaximumClearance', header: 'Max Clearance' },
     { id: 8, field: 'DrugInteraction', header: 'Drug Interaction' },
@@ -26,7 +26,7 @@ export class ColumnService {
     { id: 15, field: 'ShortTableName', header: 'Table' },
     { id: 16, field: 'SearchTerm', header: 'Search Term' },
   ];
- 
+
   public columnDefinitions: columnDefinition[] = [
     {
       description: 'General Info',
@@ -156,7 +156,7 @@ export type ColumnInfo = {
   header: string;
 };
 export enum Cols {
-  EntryID=1,
+  EntryID = 1,
   DiseaseState,
   Category,
   TableDefinition,

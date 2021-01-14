@@ -21,12 +21,15 @@
         A Tool for Beers Criteria
         <span *ngIf="mobileWidth && sidenavOpen" class="arrow-right-fab"
           ><button
-            mat-icon-button
             color="accent"
-            aria-label="Example icon button with a bookmark icon"
+            @arrowSlideLeft
+            mat-fab
             (click)="state.toggleSidenav()"
           >
-            <mat-icon svgIcon="arrow-right"></mat-icon></button
+            <mat-icon
+              class="arrow-to-content"
+              svgIcon="arrow-right"
+            ></mat-icon></button
         ></span>
       </div>
 
@@ -45,6 +48,7 @@
     >
       <nav class="topnav shadow">
         <button
+          *ngIf="!sidenavOpen || !mobileWidth"
           class="nav-button"
           mat-icon-button
           (click)="this.state.toggleSidenav()"
@@ -53,9 +57,13 @@
             [svgIcon]="this.layout.sidenavOpen ? 'chevron_left' : 'menu'"
           ></mat-icon>
         </button>
+
+        <span *ngFor="let table of enabledTables">
+          <button class="tab-button active">{{ table.TableShortName }}</button>
+        </span>
       </nav>
       <div *ngIf="!sidenavOpen || !mobileWidth" style="margin-top: 40px">
-        <app-content (tablesLoaded)="tablesLoaded = true"></app-content>
+        <app-table [tableName]="table.TableNumber"> </app-table>
       </div>
     </main>
   </section>

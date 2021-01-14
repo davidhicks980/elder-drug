@@ -33,14 +33,14 @@ var StateService = /** @class */ (function () {
         // Observable string streams
         this.name = 'StateService';
         try {
-            _ruler.change(16).subscribe(function () {
+            _ruler.change(8).subscribe(function () {
                 var layoutType = 0;
-                if (_ruler.getViewportSize().width < 599.99) {
+                if (_ruler.getViewportSize().width < 600) {
                     _this.mobileWidth = true;
                     _this.width = ScreenStatus.xSmall;
                     layoutType = 1 * (Number(_this.sidenavOpen) + 1);
                 }
-                else if (_ruler.getViewportSize().width < 959.99) {
+                else if (_ruler.getViewportSize().width < 960) {
                     _this.width = ScreenStatus.small;
                     _this.mobileWidth = false;
                     layoutType = 2 * (Number(_this.sidenavOpen) + 1);
