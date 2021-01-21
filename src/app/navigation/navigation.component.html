@@ -19,7 +19,7 @@
     >
       <div fxLayoutAlign="center center" class="subtitle topbar-shadow">
         A Tool for Beers Criteria
-        <span *ngIf="mobileWidth && sidenavOpen" class="arrow-right-fab"
+        <span *ngIf="mobileWidth && sidenavOpen" class="arrow_right-fab"
           ><button
             color="accent"
             @arrowSlideLeft
@@ -28,7 +28,7 @@
           >
             <mat-icon
               class="arrow-to-content"
-              svgIcon="arrow-right"
+              svgIcon="arrow_right"
             ></mat-icon></button
         ></span>
       </div>
@@ -58,12 +58,22 @@
           ></mat-icon>
         </button>
 
-        <span *ngFor="let table of enabledTables">
-          <button class="tab-button active">{{ table.TableShortName }}</button>
+        <span *ngFor="let table of enabledTables | async">
+          <button
+            (click)="handleTabClick(table.TableNumber)"
+            class="tab-button"
+            [class.active]="table.TableNumber === this.selectedTable"
+          >
+            {{ table.ShortName }}
+          </button>
         </span>
       </nav>
       <div *ngIf="!sidenavOpen || !mobileWidth" style="margin-top: 40px">
-        <app-table [tableName]="table.TableNumber"> </app-table>
+        <app-table class="table-buffer" *ngIf="tableLoaded">
+          <span table-description>
+            {{ this.tableDescription }}
+          </span>
+        </app-table>
       </div>
     </main>
   </section>

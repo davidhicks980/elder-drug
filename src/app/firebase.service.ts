@@ -1,22 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 import * as beers from '../assets/beers-entries.json';
+import { Category, ColumnField } from './columns.service';
 import { TableService } from './table.service';
-
-interface Column {
-  id: number;
-  field: string;
-  header: string;
-}
-export interface TableParameters {
-  id: number;
-  tables: {}[];
-  fields: string[];
-  selected: string[];
-}
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +17,8 @@ export class FirebaseService {
   updatedTables = new Subject<any>();
   queriedTables$ = this.updatedTables.asObservable();
   entryMap: Map<string, number[]> = new Map();
-  public tablesSource: Subject<TableParameters> = new ReplaySubject<
-    TableParameters
-  >();
-  public groupedTables$: Observable<any> = this.tablesSource.asObservable();
-  private activeTables: Subject<number[]> = new Subject<number[]>();
+  public tableSource: BehaviorSubject<Table[]> 
+  private activeTables: Subject<Category[]> = new Subject<number[]>();
   private queryMap: Map<number, string[]> = new Map();
   dropdownItems: Map<string, string[]> = new Map();
   dropdownParameters: any;
@@ -43,89 +29,16 @@ export class FirebaseService {
   filteredItems$ = this.filterDropdown.asObservable();
   /** Emits table columns that contain any data */
   private filteredFieldsSource: ReplaySubject<
-    TableParameters
-  > = new ReplaySubject();
+    ColumnField[]
+  > = new ReplaySubject(1);
 
   /** Observable for columns containing data */
   filteredFields$ = this.filteredFieldsSource.asObservable();
-  public columnDefinitions: columnDefinition[] = [
-    {
-      description: 'General Info',
-      filters: [null],
-      id: 1,
-      columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.Excl, selected: false },
-        { id: Cols.Incl, selected: false },
-        { id: Cols.Recommendation, selected: true },
-        { id: Cols.DiseaseState, selected: true },
-        { id: Cols.DrugInter, selected: false },
-        { id: Cols.ShortName, selected: false },
-      ],
-    },
-    {
-      description: 'Disease-Specific',
-      filters: [Cols.DiseaseState],
-      id: 3,
-      columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.Excl, selected: true },
-        { id: Cols.Incl, selected: true },
-        { id: Cols.Recommendation, selected: false },
-        { id: Cols.DiseaseState, selected: true },
-      ],
-    },
-    {
-      description: 'Renal Interactions',
-      id: 6,
-      filters: [Cols.MaxCl, Cols.MinCl],
-      columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.MinCl, selected: true },
-        { id: Cols.MaxCl, selected: true },
-        { id: Cols.Incl, selected: false },
-        { id: Cols.Excl, selected: false },
-        { id: Cols.Recommendation, selected: true },
-      ],
-    },
-    {
-      description: 'Drug Interactions',
-      filters: [Cols.DrugInter],
-      id: 5,
-      columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.DrugInter, selected: true },
-        { id: Cols.Incl, selected: true },
-        { id: Cols.Excl, selected: true },
-        { id: Cols.Recommendation, selected: true },
-        { id: Cols.Rationale, selected: false },
-      ],
-    },
-  ];
-  private columnOptions: Column[] = [
-    { id: 1, field: 'EntryID', header: 'Entry Number' },
-    { id: 2, field: 'DiseaseState', header: 'Disease State' },
-    { id: 3, field: 'Category', header: 'Category Number' },
-    { id: 4, field: 'TableDefinition', header: 'Table Definition' },
-    { id: 5, field: 'Item', header: 'Item' },
-    { id: 6, field: 'MinimumClearance', header: 'Min Clearance' },
-    { id: 7, field: 'MaximumClearance', header: 'Max Clearance' },
-    { id: 8, field: 'DrugInteraction', header: 'Drug Interaction' },
-    { id: 9, field: 'Inclusion', header: 'Includes' },
-    { id: 10, field: 'Exclusion', header: 'Excludes' },
-    { id: 11, field: 'Rationale', header: 'Rationale' },
-    { id: 12, field: 'Recommendation', header: 'Recommendation' },
-    { id: 13, field: 'RecommendationLineTwo', header: 'LineTwo' },
-    { id: 14, field: 'ItemType', header: 'Type' },
-    { id: 15, field: 'ShortTableName', header: 'Table' },
-    { id: 16, field: 'SearchTerm', header: 'Search Term' },
-  ];
 
-  private getColFields(
+  tableData = new Map();
+  private _activeTable: number;
+
+  /* private getColFields(
     definitions: columnDefinition[],
     columnOptions: Column[]
   ): Map<number, { displayed: Column[]; selected: Column[] }> {
@@ -139,10 +52,10 @@ export class FirebaseService {
         .filter((item) => item.selected === true)
         .map((item) => item.id);
       const displayedOptions = columnOptions.filter((item) =>
-        displayIndices.includes(item.id)
+        displayIndices.includes(item.field)
       );
-      const selectedOptions = columnOptions.filter((item) =>
-        selectIndices.includes(item.id)
+      const selectedOptions = columnOptions.filter((item: ColumnDefinition) =>
+        selectIndices.includes(item.field)
       );
       tableFields.set(def.id, {
         displayed: displayedOptions,
@@ -150,7 +63,7 @@ export class FirebaseService {
       });
     }
     return tableFields;
-  }
+  }*/
   private queryBeers(drugs: number[]) {
     const compiledArray = [];
     for (const drug of drugs) {
@@ -206,84 +119,49 @@ export class FirebaseService {
     return [...out];
   }
   emitTables(tableList: any[]) {
-    const categories = [
-      Category.DiseaseGuidance,
-      Category.RenalEffect,
-      Category.DrugInteractions,
-      Category.General,
-    ];
     const mappedTerms = this.getUniqueListBy(
       this.mapQueryTerms(tableList),
       'EntryID'
     ) as Table[];
-    let createTableObjects = (
-      mappedTerms: Table[],
-      categories: number[],
-      definitions: columnDefinition[],
-      columns: Column[]
-    ): TableParameters[] => {
-      let tables: TableParameters[] = [];
+    let columnsWithData = [] as ColumnField[];
+    let dataMappedToColumns = [];
+    let tablesWithData = [] as Category[];
+    let i = 0;
+    for (let item in mappedTerms[0]) {
+      dataMappedToColumns[item] = mappedTerms.map((table) => table[item]);
 
-      for (let category of categories) {
-        //If the table category is general, use all tables
-        let generalInfo = category === Category.General;
-        const table = generalInfo
-          ? mappedTerms
-          : mappedTerms.filter((item: Columns) => item.Category == category);
-        //Check to see if tables exist and contain items
-        if (table) {
-          if (table.length > 0) {
-            //Get the columns that are relevant to the displayed table
-            const fields = this.getColFields(
-              this.columnDefinitions,
-              this.columnOptions
-            ).get(category);
-            const { selected, displayed } = fields;
-            const displayedColumns = Array.from(
-              table.reduce((acc: Set<string>, curr: Table) => {
-                // Iterate through each entry in a specific drug table
-                for (let key in curr) {
-                  const displayedFields = displayed.map((item) => item.field);
-                  if (key === 'SearchTerm') {
-                    acc.add(key);
-                  } else if (curr[key] && displayedFields.includes(key)) {
-                    acc.add(key);
-                  }
-                }
-                return acc;
-              }, new Set()) as Set<string>
-            ) as string[];
-
-            tables.push({
-              id: category,
-              tables: table,
-              fields: displayedColumns,
-              selected: [...selected.map((item) => item.field)],
-            });
-          }
+      if (dataMappedToColumns[item].length > 0) {
+        columnsWithData.push(item);
+        switch (item) {
+          case ColumnField.DiseaseState:
+            {
+              tablesWithData.push(Category.DiseaseGuidance);
+            }
+            break;
+          case ColumnField.DrugInteraction:
+            {
+              tablesWithData.push(Category.DrugInteractions);
+            }
+            break;
+          case ColumnField.MinimumClearance || ColumnField.MaximumClearance:
+            {
+              tablesWithData.push(Category.RenalEffect);
+            }
+            break;
         }
       }
-      return tables;
-    };
-
-    this.activeTables.next(this.getTableNamesContainingData(mappedTerms));
-    const tables = createTableObjects(
-      mappedTerms,
-      categories,
-      this.columnDefinitions,
-      this.columnOptions
-    );
-    for (const table of tables) {
-      this.filteredFieldsSource.next(table);
-      this.tablesSource.next(table);
     }
+    this.tableService.emitSelectedTables(tablesWithData);
+    this.filteredFieldsSource.next( columnsWithData );
+     !this.tableSource?
+     this.tableSource = new BehaviorSubject(mappedTerms):this.tableSource.next(mappedTerms);
+    this.tableData.set(Date.now(), mappedTerms);
   }
 
   mapQueryTerms(tables: {}[]) {
     for (const table of tables) {
       table['SearchTerm'] = this.queryMap.get(table['EntryID']).join(' | ');
     }
-
     return tables;
   }
 
@@ -338,15 +216,6 @@ export class FirebaseService {
   }
 }
 
-export enum Category {
-  General = 1,
-  PotentiallyInnappropriate,
-  DiseaseGuidance,
-  Caution,
-  DrugInteractions,
-  RenalEffect,
-  Anticholinergics,
-}
 export interface Drug {
   name: string;
   rxnormId: number;
@@ -376,13 +245,6 @@ export interface BeersEntry {
   ShortName?: string;
 }
 
-export interface columnDefinition {
-  description: string;
-  id: number;
-  filters: Cols[];
-  columnOptions: { id: Cols; selected: boolean }[];
-}
-
 export interface columnTemplate {
   name: string;
   value: string;
@@ -392,24 +254,6 @@ export type ColumnInfo = {
   field: string;
   header: string;
 };
-export enum Cols {
-  EntryID = 1,
-  DiseaseState,
-  Category,
-  TableDefinition,
-  Item,
-  MinCl,
-  MaxCl,
-  DrugInter,
-  Incl,
-  Excl,
-  Rationale,
-  Recommendation,
-  RecommendationLineTwo,
-  ItemType,
-  ShortName,
-  SearchTerm,
-}
 
 export interface Columns {
   EntryID: number;
@@ -447,3 +291,59 @@ export interface Table {
   ShortTableName: string;
   SearchTerm: string;
 }
+/*let createTableObjects = (
+      mappedTerms: Table[],
+      categories: number[],
+      definitions: columnDefinition[],
+      columns: Column[]
+    ): TableParameters[] => {
+      let tables: TableParameters[] = [];
+
+      for (let category of categories) {
+        //If the table category is general, use all tables
+        let generalInfo = category === Category.General;
+        const table = generalInfo
+          ? mappedTerms
+          : mappedTerms.filter((item: Columns) => item.Category == category);
+        //Check to see if tables exist and contain items
+        if (table) {
+          if (table.length > 0) {
+            //Get the columns that are relevant to the displayed table
+            const fields = this.getColFields(definitions, columns).get(
+              category
+            );
+            const { selected, displayed } = fields;
+            const displayedColumns = Array.from(
+              table.reduce((acc: Set<string>, curr: Table) => {
+                // Iterate through each entry in a specific drug table
+                for (let key in curr) {
+                  const displayedFields = displayed.map((item) => item.field);
+                  if (key === 'SearchTerm') {
+                    acc.add(key);
+                  } else if (curr[key] && displayedFields.includes(key)) {
+                    acc.add(key);
+                  }
+                }
+                return acc;
+              }, new Set()) as Set<string>
+            ) as string[];
+
+            tables.push({
+              id: category,
+              tables: table,
+              fields: displayedColumns,
+              selected: [...selected.map((item) => item.field)],
+            });
+          }
+        }
+      }
+      return tables;
+    };
+
+    this.activeTables.next(this.getTableNamesContainingData(mappedTerms));
+    const tables = createTableObjects(
+      mappedTerms,
+      categories,
+      this.columnDefinitions,
+      this.columnOptions
+    );*/

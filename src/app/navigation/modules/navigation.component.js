@@ -9,29 +9,35 @@ exports.__esModule = true;
 exports.NavigationComponent = void 0;
 var animations_1 = require("@angular/animations");
 var core_1 = require("@angular/core");
+var rxjs_1 = require("rxjs");
 var animations_2 = require("../animations");
 var firebase_service_1 = require("../firebase.service");
 var NavigationComponent = /** @class */ (function () {
-    function NavigationComponent(webSocketService, state, tableService) {
+    function NavigationComponent(webSocketService, state, tableService, columnService) {
         var _this = this;
         this.webSocketService = webSocketService;
         this.state = state;
         this.tableService = tableService;
-        this.tablesLoaded = false;
+        this.columnService = columnService;
         this.layout = this.state.layoutStatus;
         this.sidenavOpen = true;
+        this.enabledTables = new rxjs_1.Subject();
+        this.tables = [];
+        this.tableLoaded = false;
+        this.tables = this.tableService.tables;
         this.state.windowWidth$.subscribe(function (layoutStatus) {
             _this.layout = layoutStatus;
             _this.mobileWidth = _this.layout.mobileWidth;
             _this.sidenavOpen = _this.layout.sidenavOpen;
         });
-        this.tableService.tableStatus$.subscribe(function (active) {
-            _this.enabledTables = active.map(function (table) {
-                return tableService.tables.filter(function (tab) { return tab.TableNumber === table; })[0];
-            });
-        });
+        this.enabledTables = this.tableService.tableStatus$;
     }
-    NavigationComponent.prototype.ngAfterViewInit = function () { };
+    NavigationComponent.prototype.handleTabClick = function (e) {
+        var _this = this;
+        this.selectedTable = e;
+        this.tableLoaded = true;
+        setTimeout(function () { return _this.columnService.requestTable(e); }, 10);
+    };
     NavigationComponent = __decorate([
         core_1.Component({
             selector: 'app-navigation',

@@ -1,6 +1,7 @@
 import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable, Subject } from 'rxjs';
 
 import {
   dropInAnimation,
@@ -10,9 +11,10 @@ import {
   slidingContentAnimation,
   tableVisibleAnimation,
 } from '../animations';
+import { Category, ColumnService } from '../columns.service';
 import { FirebaseService } from '../firebase.service';
 import { LayoutStatus, StateService } from '../state.service';
-import { TableService } from '../table.service';
+import { Table, TableService } from '../table.service';
 
 @Component({
   selector: 'app-navigation',
@@ -104,34 +106,34 @@ import { TableService } from '../table.service';
 })
 export class NavigationComponent {
   public sidenav!: MatSidenav;
-  public tablesLoaded: boolean = false;
   layout: LayoutStatus = this.state.layoutStatus;
   public sidenavOpen: boolean = true;
   public mobileWidth: boolean;
-  enabledTables: {
-    TableNumber: number;
-    TableDefinition: string;
-    ShortName: string;
-    Identifier: string;
-  }[];
+  enabledTables: Observable<Table[]> = new Subject();
 
-  ngAfterViewInit() {}
-
+  tables: Table[] = [];
+  tableNavStream: any;
+  selectedTable: any;
+  tableDescription: string;
+  tableLoaded: boolean = false;
+  handleTabClick(e: Category) {
+    this.selectedTable = e;
+    this.tableLoaded = true;
+    setTimeout(() => this.columnService.requestTable(e), 10);
+    
+  }
   constructor(
     public webSocketService: FirebaseService,
     public state: StateService,
-    private tableService: TableService
+    private tableService: TableService,
+    private columnService: ColumnService
   ) {
+    this.tables = this.tableService.tables as Table[];
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
       this.mobileWidth = this.layout.mobileWidth;
       this.sidenavOpen = this.layout.sidenavOpen;
     });
-    this.tableService.tableStatus$.subscribe((active) => {
-      this.enabledTables = active.map(
-        (table) =>
-          tableService.tables.filter((tab) => tab.TableNumber === table)[0]
-      );
-    });
+    this.enabledTables = this.tableService.tableStatus$;
   }
 }

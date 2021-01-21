@@ -9,6 +9,7 @@ exports.__esModule = true;
 exports.AppModule = void 0;
 var accordion_1 = require("@angular/cdk/accordion");
 var layout_1 = require("@angular/cdk/layout");
+var observers_1 = require("@angular/cdk/observers");
 var overlay_1 = require("@angular/cdk/overlay");
 var scrolling_1 = require("@angular/cdk/scrolling");
 var http_1 = require("@angular/common/http");
@@ -21,7 +22,6 @@ var core_2 = require("@angular/material/core");
 var form_field_1 = require("@angular/material/form-field");
 var input_1 = require("@angular/material/input");
 var select_1 = require("@angular/material/select");
-var tabs_1 = require("@angular/material/tabs");
 var animations_1 = require("@angular/platform-browser/animations");
 var service_worker_1 = require("@angular/service-worker");
 var table_1 = require("primeng/table");
@@ -88,8 +88,8 @@ var AppModule = /** @class */ (function () {
                 }),
                 overlay_1.OverlayModule,
                 core_2.MatRippleModule,
+                observers_1.ObserversModule,
                 accordion_1.CdkAccordionModule,
-                tabs_1.MatTabsModule,
             ],
             providers: [],
             bootstrap: [app_component_1.AppComponent],

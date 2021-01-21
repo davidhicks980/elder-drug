@@ -25,7 +25,11 @@
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-"editor.formatOnSave": true,
 "editor.formatOnType": true,
-"diffEditor.codeLens": true
+"diffEditor.codeLens": true,
+"editor.formatOnSave": true,
+"angular.experimental-ivy": true,
+"prettier.printWidth": 120,
+"prettier.trailingComma": "all",
+"json.maxItemsComputed": 3000
 }

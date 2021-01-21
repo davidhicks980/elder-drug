@@ -1,5 +1,4 @@
 @import "../../../_colors.scss";
-@import "./table.rationale.component.scss";
 .flex-container {
   display: flex;
   flex-direction: column;
@@ -16,12 +15,15 @@
 }
 table {
   border-radius: 5px;
-  position: relative;
+  position: absolute;
   border-spacing: 0;
   border: 1px solid $gray-1;
   border-collapse: separate;
   width: 98%;
+  max-width: 98%;
   margin: 1%;
+  background: white;
+  max-width: 1300px;
   & .cdk-column-expandedDetail {
     overflow: hidden;
   }
@@ -159,4 +161,23 @@ mat-chip-list mat-chip.mat-standard-chip {
   color: white;
   font-weight: 400;
   cursor: pointer;
+}
+
+.chevron-button--container {
+  display: inline-grid;
+  margin: 0 20px 0 0;
+  height: 1.15em;
+}
+.chevron-button--desktop {
+  position: absolute;
+}
+
+.expansion-card {
+  border-radius: 3px;
+  /* border: 1px solid blue; */
+  background-color: rgb(255 255 255);
+  box-shadow: 0 2px 1px 0 lightgrey;
+  color: $primary-5;
+  padding: 20px;
+  margin: 5px;
 }

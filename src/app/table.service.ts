@@ -5,19 +5,27 @@ import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
   providedIn: 'root',
 })
 export class TableService {
-  private tableStatusSource = new ReplaySubject<number[]>(3);
+  private tableStatusSource = new ReplaySubject<Table[]>(3);
   tableStatus$ = this.tableStatusSource.asObservable();
+  private pageSource = new ReplaySubject<number>(1);
+  pageSource$ = this.pageSource.asObservable();
+
   emitSelectedTables(selections: number[]) {
-    this.tableStatusSource.next(selections);
+    this.tableStatusSource.next(
+      this._tables.filter((table) => selections.includes(table.TableNumber))
+    );
   }
-  get tables() {
+  emitCurrentPage(page: number) {
+    this.pageSource.next(page);
+  }
+  get tables(): Table[] {
     return this._tables;
   }
   private readonly _tables = [
     {
       TableNumber: 1,
       TableDefinition: 'General Information for Each Table',
-      ShortName: 'General Info',
+      ShortName: 'General',
       Identifier: 'Info',
       TableIconName: 'general-health',
       Description: 'A collection of all queried drugs.',
@@ -26,8 +34,8 @@ export class TableService {
       TableNumber: 2,
       TableDefinition:
         'Potentially Inappropriate Medication Use in Older Adults ',
-      ShortName: 'Potentially Innappropriate',
-      Identifier: 'Innappropriate',
+      ShortName: 'Potentially Inappropriate',
+      Identifier: 'Inappropriate',
     },
     {
       TableNumber: 3,
@@ -68,6 +76,15 @@ export class TableService {
       ShortName: 'Anticholinergics',
       Identifier: 'Anticholinergics',
     },
-  ];
+  ] as Table[];
   constructor() {}
+}
+
+export interface Table {
+  TableNumber: number;
+  TableDefinition: string;
+  ShortName: string;
+  Identifier: string;
+  TableIconName?: string;
+  Description?: string;
 }

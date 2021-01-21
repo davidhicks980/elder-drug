@@ -5,145 +5,114 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ColumnService {
+  fields: ColumnField[];
   constructor() {}
   static receiveTables$: any;
 
   public columnOptions = [
-    { id: 1, field: 'EntryID', header: 'Entry Number' },
-    { id: 2, field: 'DiseaseState', header: 'Disease State' },
-    { id: 3, field: 'Category', header: 'Category Number' },
-    { id: 4, field: 'TableDefinition', header: 'Table Definition' },
-    { id: 5, field: 'MatchedBeersEntry', header: 'Item' },
-    { id: 6, field: 'MinimumClearance', header: 'Min Clearance' },
-    { id: 7, field: 'MaximumClearance', header: 'Max Clearance' },
-    { id: 8, field: 'DrugInteraction', header: 'Drug Interaction' },
-    { id: 9, field: 'Inclusion', header: 'Includes' },
-    { id: 10, field: 'Exclusion', header: 'Excludes' },
-    { id: 11, field: 'Rationale', header: 'Rationale' },
-    { id: 12, field: 'Recommendation', header: 'Recommendation' },
-    { id: 13, field: 'RecommendationLineTwo', header: 'LineTwo' },
-    { id: 14, field: 'ItemType', header: 'Type' },
-    { id: 15, field: 'ShortTableName', header: 'Table' },
-    { id: 16, field: 'SearchTerm', header: 'Search Term' },
+    { field: 'EntryID', header: 'Entry Number' },
+    { field: 'DiseaseState', header: 'Disease State' },
+    { field: 'Category', header: 'Category Number' },
+    { field: 'TableDefinition', header: 'Table Definition' },
+    { field: 'MatchedBeersEntry', header: 'Item' },
+    { field: 'MinimumClearance', header: 'Min Clearance' },
+    { field: 'MaximumClearance', header: 'Max Clearance' },
+    { field: 'DrugInteraction', header: 'Drug Interaction' },
+    { field: 'Inclusion', header: 'Includes' },
+    { field: 'Exclusion', header: 'Excludes' },
+    { field: 'Rationale', header: 'Rationale' },
+    { field: 'Recommendation', header: 'Recommendation' },
+    { field: 'RecommendationLineTwo', header: 'LineTwo' },
+    { field: 'ItemType', header: 'Type' },
+    { field: 'ShortTableName', header: 'Table' },
+    { field: 'SearchTerm', header: 'Search Term' },
   ];
 
-  public columnDefinitions: columnDefinition[] = [
+  public columnDefinitions: TableDefinition[] = [
     {
       description: 'General Info',
       filters: [null],
-      id: 1,
+      id: Category.General,
       columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.Excl, selected: true },
-        { id: Cols.Incl, selected: true },
-        { id: Cols.Recommendation, selected: true },
-        { id: Cols.DiseaseState, selected: true },
-        { id: Cols.DrugInter, selected: false },
-        { id: Cols.ShortName, selected: true },
+        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.Item, selected: true },
+        { id: ColumnField.Exclusion, selected: true },
+        { id: ColumnField.Inclusion, selected: true },
+        { id: ColumnField.Recommendation, selected: true },
+        { id: ColumnField.DiseaseState, selected: true },
+        { id: ColumnField.DrugInteraction, selected: false },
+        { id: ColumnField.ShortName, selected: true },
       ],
     },
     {
       description: 'Disease-Specific',
-      filters: [Cols.DiseaseState],
-      id: 3,
+      filters: [ColumnField.DiseaseState],
+      id: Category.DiseaseGuidance,
       columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.Excl, selected: true },
-        { id: Cols.Incl, selected: true },
-        { id: Cols.Recommendation, selected: false },
-        { id: Cols.DiseaseState, selected: true },
+        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.Item, selected: true },
+        { id: ColumnField.Exclusion, selected: true },
+        { id: ColumnField.Inclusion, selected: true },
+        { id: ColumnField.Recommendation, selected: false },
+        { id: ColumnField.DiseaseState, selected: true },
       ],
     },
     {
       description: 'Renal Interactions',
-      id: 6,
-      filters: [Cols.MaxCl, Cols.MinCl],
+      id: Category.RenalEffect,
+      filters: [ColumnField.MaximumClearance, ColumnField.MinimumClearance],
       columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.MinCl, selected: true },
-        { id: Cols.MaxCl, selected: true },
-        { id: Cols.Incl, selected: false },
-        { id: Cols.Excl, selected: false },
-        { id: Cols.Recommendation, selected: true },
+        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.Item, selected: true },
+        { id: ColumnField.MinimumClearance, selected: true },
+        { id: ColumnField.MaximumClearance, selected: true },
+        { id: ColumnField.Inclusion, selected: false },
+        { id: ColumnField.Exclusion, selected: false },
+        { id: ColumnField.Recommendation, selected: true },
       ],
     },
     {
       description: 'Drug Interactions',
-      filters: [Cols.DrugInter],
-      id: 5,
+      filters: [ColumnField.DrugInteraction],
+      id: Category.DrugInteractions,
       columnOptions: [
-        { id: Cols.SearchTerm, selected: true },
-        { id: Cols.Item, selected: true },
-        { id: Cols.DrugInter, selected: true },
-        { id: Cols.Incl, selected: true },
-        { id: Cols.Excl, selected: true },
-        { id: Cols.Recommendation, selected: true },
-        { id: Cols.Rationale, selected: false },
+        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.Item, selected: true },
+        { id: ColumnField.DrugInteraction, selected: true },
+        { id: ColumnField.Inclusion, selected: true },
+        { id: ColumnField.Exclusion, selected: true },
+        { id: ColumnField.Recommendation, selected: true },
+        { id: ColumnField.Rationale, selected: false },
       ],
     },
   ];
   // Observable string sources
-  private tableList = new Subject<object>();
+  private tableColumns = new Subject<DisplayedColumns>();
   private optionsList = new Subject<object>();
 
   // Observable string streams
-  recieveTables$ = this.optionsList.asObservable();
-  recieveOptions$ = this.tableList.asObservable();
-  sendTables(tables: object) {
-    this.optionsList.next(tables);
-  }
-  sendOptions(options: object) {
-    this.tableList.next(options);
-  }
-  mapData(data: any[], filter?: string[]) {
-    let output = [];
-    if (filter[0] != null || filter[1] != null) {
-      data.forEach((element) => {
-        if (
-          element[String(filter[0])] != null ||
-          element[String(filter[1])] != null
-        ) {
-          output.push(element);
-        }
-      });
-    } else if (data.length == 0) {
-      output = null;
-    } else {
-      output = data;
-    }
-    return output;
-  }
-
-  // Service message commands
-  getColumnsForSelect(columnOptions: number[]): string[] {
-    return this.columnOptions.reduce((acc: string[], curr: ColumnInfo) => {
-      if (columnOptions.includes(curr.id)) acc.push(curr.header);
-      return acc;
-    }, []);
-  }
-
-  lookupColumns(columns: { selected: boolean; id: number }[], getAll: boolean) {
-    const output: { field: string; header: string }[] = [];
-    for (const col of columns) {
-      if (col.selected && !getAll)
-        output.push(
-          this.columnOptions.filter((name) => {
-            return name.id === col.id;
-          })[0]
-        );
-    }
-
-    return output;
+  recieveTableColumns$ = this.tableColumns.asObservable();
+  requestTable(table: Category) {
+    let options = this.columnDefinitions.filter(
+      (columns) => columns.id === table
+    )[0].columnOptions;
+    let selectedFields = options
+      .filter((item) => item.selected)
+      .map((item) => item.id);
+    let allFields = options.map((item) => item.id);
+    this.tableColumns.next({ selected: selectedFields, all: allFields });
   }
 }
-export interface columnDefinition {
+
+export interface DisplayedColumns {
+  selected: ColumnField[];
+  all: ColumnField[];
+}
+export interface TableDefinition {
   description: string;
   id: number;
-  filters: Cols[];
-  columnOptions: { id: Cols; selected: boolean }[];
+  filters: ColumnField[];
+  columnOptions: { id: ColumnField; selected: boolean }[];
 }
 
 export interface columnTemplate {
@@ -151,24 +120,33 @@ export interface columnTemplate {
   value: string;
 }
 export type ColumnInfo = {
-  id: number;
-  field: string;
+  field: ColumnField;
   header: string;
 };
-export enum Cols {
-  EntryID = 1,
-  DiseaseState,
-  Category,
-  TableDefinition,
-  Item,
-  MinCl,
-  MaxCl,
-  DrugInter,
-  Incl,
-  Excl,
-  Rationale,
-  Recommendation,
-  RecommendationLineTwo,
-  ShortName,
-  SearchTerm,
+export enum ColumnField {
+  EntryID = 'EntryID',
+  DiseaseState = 'DiseaseState',
+  Category = 'Category',
+  TableDefinition = 'TableDefinition',
+  Item = 'Item',
+  MinimumClearance = 'MinimumClearance',
+  MaximumClearance = 'MaximumClearance',
+  DrugInteraction = 'DrugInteraction',
+  Inclusion = 'Inclusion',
+  Exclusion = 'Exclusion',
+  Rationale = 'Rationale',
+  Recommendation = 'Recommendation',
+  RecommendationLineTwo = 'RecommendationLineTwo',
+  ShortName = 'ShortName',
+  SearchTerm = 'SearchTerm',
+}
+
+export enum Category {
+  General = 1,
+  PotentiallyInnappropriate,
+  DiseaseGuidance,
+  Caution,
+  DrugInteractions,
+  RenalEffect,
+  Anticholinergics,
 }

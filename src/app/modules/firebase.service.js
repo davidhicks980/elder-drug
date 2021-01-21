@@ -49,11 +49,12 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 exports.__esModule = true;
-exports.Cols = exports.Category = exports.FirebaseService = void 0;
+exports.FirebaseService = void 0;
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var ReplaySubject_1 = require("rxjs/internal/ReplaySubject");
 var beers = require("../assets/beers-entries.json");
+var columns_service_1 = require("./columns.service");
 var FirebaseService = /** @class */ (function () {
     function FirebaseService(firestore, tableService) {
         var _this = this;
@@ -62,8 +63,6 @@ var FirebaseService = /** @class */ (function () {
         this.updatedTables = new rxjs_1.Subject();
         this.queriedTables$ = this.updatedTables.asObservable();
         this.entryMap = new Map();
-        this.tablesSource = new ReplaySubject_1.ReplaySubject();
-        this.groupedTables$ = this.tablesSource.asObservable();
         this.activeTables = new rxjs_1.Subject();
         this.queryMap = new Map();
         this.dropdownItems = new Map();
@@ -72,85 +71,10 @@ var FirebaseService = /** @class */ (function () {
         this.filterDropdown = new rxjs_1.Subject();
         this.filteredItems$ = this.filterDropdown.asObservable();
         /** Emits table columns that contain any data */
-        this.filteredFieldsSource = new ReplaySubject_1.ReplaySubject();
+        this.filteredFieldsSource = new ReplaySubject_1.ReplaySubject(1);
         /** Observable for columns containing data */
         this.filteredFields$ = this.filteredFieldsSource.asObservable();
-        this.columnDefinitions = [
-            {
-                description: 'General Info',
-                filters: [null],
-                id: 1,
-                columnOptions: [
-                    { id: Cols.SearchTerm, selected: true },
-                    { id: Cols.Item, selected: true },
-                    { id: Cols.Excl, selected: false },
-                    { id: Cols.Incl, selected: false },
-                    { id: Cols.Recommendation, selected: true },
-                    { id: Cols.DiseaseState, selected: true },
-                    { id: Cols.DrugInter, selected: false },
-                    { id: Cols.ShortName, selected: false },
-                ]
-            },
-            {
-                description: 'Disease-Specific',
-                filters: [Cols.DiseaseState],
-                id: 3,
-                columnOptions: [
-                    { id: Cols.SearchTerm, selected: true },
-                    { id: Cols.Item, selected: true },
-                    { id: Cols.Excl, selected: true },
-                    { id: Cols.Incl, selected: true },
-                    { id: Cols.Recommendation, selected: false },
-                    { id: Cols.DiseaseState, selected: true },
-                ]
-            },
-            {
-                description: 'Renal Interactions',
-                id: 6,
-                filters: [Cols.MaxCl, Cols.MinCl],
-                columnOptions: [
-                    { id: Cols.SearchTerm, selected: true },
-                    { id: Cols.Item, selected: true },
-                    { id: Cols.MinCl, selected: true },
-                    { id: Cols.MaxCl, selected: true },
-                    { id: Cols.Incl, selected: false },
-                    { id: Cols.Excl, selected: false },
-                    { id: Cols.Recommendation, selected: true },
-                ]
-            },
-            {
-                description: 'Drug Interactions',
-                filters: [Cols.DrugInter],
-                id: 5,
-                columnOptions: [
-                    { id: Cols.SearchTerm, selected: true },
-                    { id: Cols.Item, selected: true },
-                    { id: Cols.DrugInter, selected: true },
-                    { id: Cols.Incl, selected: true },
-                    { id: Cols.Excl, selected: true },
-                    { id: Cols.Recommendation, selected: true },
-                    { id: Cols.Rationale, selected: false },
-                ]
-            },
-        ];
-        this.columnOptions = [
-            { id: 1, field: 'EntryID', header: 'Entry Number' },
-            { id: 2, field: 'DiseaseState', header: 'Disease State' },
-            { id: 3, field: 'Category', header: 'Category Number' },
-            { id: 4, field: 'TableDefinition', header: 'Table Definition' },
-            { id: 5, field: 'Item', header: 'Item' },
-            { id: 6, field: 'MinimumClearance', header: 'Min Clearance' },
-            { id: 7, field: 'MaximumClearance', header: 'Max Clearance' },
-            { id: 8, field: 'DrugInteraction', header: 'Drug Interaction' },
-            { id: 9, field: 'Inclusion', header: 'Includes' },
-            { id: 10, field: 'Exclusion', header: 'Excludes' },
-            { id: 11, field: 'Rationale', header: 'Rationale' },
-            { id: 12, field: 'Recommendation', header: 'Recommendation' },
-            { id: 13, field: 'RecommendationLineTwo', header: 'LineTwo' },
-            { id: 14, field: 'ItemType', header: 'Type' },
-            { id: 15, field: 'ShortTableName', header: 'Table' },
-            { id: 16, field: 'SearchTerm', header: 'Search Term' },
-        ];
+        this.tableData = new Map();
         this.getUniqueListBy = function (arr, key) {
             return __spreadArrays(new Map(arr.map(function (item) { return [item[key], item]; })).values());
         };
@@ -163,30 +87,32 @@ var FirebaseService = /** @class */ (function () {
             return tableService.emitSelectedTables(tables);
         });
     }
-    FirebaseService.prototype.getColFields = function (definitions, columnOptions) {
-        var tableFields = new Map();
-        var _loop_1 = function (def) {
-            var displayIndices = def.columnOptions.map(function (item) { return item.id; });
-            var selectIndices = def.columnOptions
-                .filter(function (item) { return item.selected === true; })
-                .map(function (item) { return item.id; });
-            var displayedOptions = columnOptions.filter(function (item) {
-                return displayIndices.includes(item.id);
-            });
-            var selectedOptions = columnOptions.filter(function (item) {
-                return selectIndices.includes(item.id);
-            });
-            tableFields.set(def.id, {
-                displayed: displayedOptions,
-                selected: selectedOptions
-            });
-        };
-        for (var _i = 0, definitions_1 = definitions; _i < definitions_1.length; _i++) {
-            var def = definitions_1[_i];
-            _loop_1(def);
-        }
-        return tableFields;
-    };
+    /* private getColFields(
+      definitions: columnDefinition[],
+      columnOptions: Column[]
+    ): Map<number, { displayed: Column[]; selected: Column[] }> {
+      let tableFields = new Map() as Map<
+        number,
+        { displayed: Column[]; selected: Column[] }
+      >;
+      for (let def of definitions) {
+        let displayIndices = def.columnOptions.map((item) => item.id);
+        let selectIndices = def.columnOptions
+          .filter((item) => item.selected === true)
+          .map((item) => item.id);
+        const displayedOptions = columnOptions.filter((item) =>
+          displayIndices.includes(item.field)
+        );
+        const selectedOptions = columnOptions.filter((item: ColumnDefinition) =>
+          selectIndices.includes(item.field)
+        );
+        tableFields.set(def.id, {
+          displayed: displayedOptions,
+          selected: selectedOptions,
+        });
+      }
+      return tableFields;
+    }*/
     FirebaseService.prototype.queryBeers = function (drugs) {
         var compiledArray = [];
         for (var _i = 0, drugs_1 = drugs; _i < drugs_1.length; _i++) {
@@ -242,76 +168,55 @@ var FirebaseService = /** @class */ (function () {
         tables.forEach(function (table) {
             out.add(1);
             if ([
-                Category.DiseaseGuidance,
-                Category.DrugInteractions,
-                Category.RenalEffect,
+                columns_service_1.Category.DiseaseGuidance,
+                columns_service_1.Category.DrugInteractions,
+                columns_service_1.Category.RenalEffect,
             ].includes(table.Category))
                 out.add(table.Category);
         });
         return __spreadArrays(out);
     };
     FirebaseService.prototype.emitTables = function (tableList) {
-        var _this = this;
-        var categories = [
-            Category.DiseaseGuidance,
-            Category.RenalEffect,
-            Category.DrugInteractions,
-            Category.General,
-        ];
         var mappedTerms = this.getUniqueListBy(this.mapQueryTerms(tableList), 'EntryID');
-        var createTableObjects = function (mappedTerms, categories, definitions, columns) {
-            var tables = [];
-            var _loop_2 = function (category) {
-                //If the table category is general, use all tables
-                var generalInfo = category === Category.General;
-                var table = generalInfo
-                    ? mappedTerms
-                    : mappedTerms.filter(function (item) { return item.Category == category; });
-                //Check to see if tables exist and contain items
-                if (table) {
-                    if (table.length > 0) {
-                        //Get the columns that are relevant to the displayed table
-                        var fields = _this.getColFields(_this.columnDefinitions, _this.columnOptions).get(category);
-                        var selected = fields.selected, displayed_1 = fields.displayed;
-                        var displayedColumns = Array.from(table.reduce(function (acc, curr) {
-                            // Iterate through each entry in a specific drug table
-                            for (var key in curr) {
-                                var displayedFields = displayed_1.map(function (item) { return item.field; });
-                                if (key === 'SearchTerm') {
-                                    acc.add(key);
-                                }
-                                else if (curr[key] && displayedFields.includes(key)) {
-                                    acc.add(key);
-                                }
-                            }
-                            return acc;
-                        }, new Set()));
-                        tables.push({
-                            id: category,
-                            tables: table,
-                            fields: displayedColumns,
-                            selected: __spreadArrays(selected.map(function (item) { return item.field; }))
-                        });
-                    }
+        var columnsWithData = [];
+        var dataMappedToColumns = [];
+        var tablesWithData = [];
+        var i = 0;
+        var _loop_1 = function (item) {
+            dataMappedToColumns[item] = mappedTerms.map(function (table) { return table[item]; });
+            if (dataMappedToColumns[item].length > 0) {
+                columnsWithData.push(item);
+                switch (item) {
+                    case columns_service_1.ColumnField.DiseaseState:
+                        {
+                            tablesWithData.push(columns_service_1.Category.DiseaseGuidance);
+                        }
+                        break;
+                    case columns_service_1.ColumnField.DrugInteraction:
+                        {
+                            tablesWithData.push(columns_service_1.Category.DrugInteractions);
+                        }
+                        break;
+                    case columns_service_1.ColumnField.MinimumClearance || columns_service_1.ColumnField.MaximumClearance:
+                        {
+                            tablesWithData.push(columns_service_1.Category.RenalEffect);
+                        }
+                        break;
                 }
-            };
-            for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
-                var category = categories_1[_i];
-                _loop_2(category);
             }
-            return tables;
         };
-        this.activeTables.next(this.getTableNamesContainingData(mappedTerms));
-        var tables = createTableObjects(mappedTerms, categories, this.columnDefinitions, this.columnOptions);
-        for (var _i = 0, tables_1 = tables; _i < tables_1.length; _i++) {
-            var table = tables_1[_i];
-            this.filteredFieldsSource.next(table);
-            this.tablesSource.next(table);
+        for (var item in mappedTerms[0]) {
+            _loop_1(item);
         }
+        this.tableService.emitSelectedTables(tablesWithData);
+        this.filteredFieldsSource.next(columnsWithData);
+        !this.tableSource ?
+            this.tableSource = new rxjs_1.BehaviorSubject(mappedTerms) : this.tableSource.next(mappedTerms);
+        this.tableData.set(Date.now(), mappedTerms);
     };
     FirebaseService.prototype.mapQueryTerms = function (tables) {
-        for (var _i = 0, tables_2 = tables; _i < tables_2.length; _i++) {
-            var table = tables_2[_i];
+        for (var _i = 0, tables_1 = tables; _i < tables_1.length; _i++) {
+            var table = tables_1[_i];
             table['SearchTerm'] = this.queryMap.get(table['EntryID']).join(' | ');
         }
         return tables;
@@ -350,32 +255,59 @@ var FirebaseService = /** @class */ (function () {
     return FirebaseService;
 }());
 exports.FirebaseService = FirebaseService;
-var Category;
-(function (Category) {
-    Category[Category["General"] = 1] = "General";
-    Category[Category["PotentiallyInnappropriate"] = 2] = "PotentiallyInnappropriate";
-    Category[Category["DiseaseGuidance"] = 3] = "DiseaseGuidance";
-    Category[Category["Caution"] = 4] = "Caution";
-    Category[Category["DrugInteractions"] = 5] = "DrugInteractions";
-    Category[Category["RenalEffect"] = 6] = "RenalEffect";
-    Category[Category["Anticholinergics"] = 7] = "Anticholinergics";
-})(Category = exports.Category || (exports.Category = {}));
-var Cols;
-(function (Cols) {
-    Cols[Cols["EntryID"] = 1] = "EntryID";
-    Cols[Cols["DiseaseState"] = 2] = "DiseaseState";
-    Cols[Cols["Category"] = 3] = "Category";
-    Cols[Cols["TableDefinition"] = 4] = "TableDefinition";
-    Cols[Cols["Item"] = 5] = "Item";
-    Cols[Cols["MinCl"] = 6] = "MinCl";
-    Cols[Cols["MaxCl"] = 7] = "MaxCl";
-    Cols[Cols["DrugInter"] = 8] = "DrugInter";
-    Cols[Cols["Incl"] = 9] = "Incl";
-    Cols[Cols["Excl"] = 10] = "Excl";
-    Cols[Cols["Rationale"] = 11] = "Rationale";
-    Cols[Cols["Recommendation"] = 12] = "Recommendation";
-    Cols[Cols["RecommendationLineTwo"] = 13] = "RecommendationLineTwo";
-    Cols[Cols["ItemType"] = 14] = "ItemType";
-    Cols[Cols["ShortName"] = 15] = "ShortName";
-    Cols[Cols["SearchTerm"] = 16] = "SearchTerm";
-})(Cols = exports.Cols || (exports.Cols = {}));
+/*let createTableObjects = (
+      mappedTerms: Table[],
+      categories: number[],
+      definitions: columnDefinition[],
+      columns: Column[]
+    ): TableParameters[] => {
+      let tables: TableParameters[] = [];
+
+      for (let category of categories) {
+        //If the table category is general, use all tables
+        let generalInfo = category === Category.General;
+        const table = generalInfo
+          ? mappedTerms
+          : mappedTerms.filter((item: Columns) => item.Category == category);
+        //Check to see if tables exist and contain items
+        if (table) {
+          if (table.length > 0) {
+            //Get the columns that are relevant to the displayed table
+            const fields = this.getColFields(definitions, columns).get(
+              category
+            );
+            const { selected, displayed } = fields;
+            const displayedColumns = Array.from(
+              table.reduce((acc: Set<string>, curr: Table) => {
+                // Iterate through each entry in a specific drug table
+                for (let key in curr) {
+                  const displayedFields = displayed.map((item) => item.field);
+                  if (key === 'SearchTerm') {
+                    acc.add(key);
+                  } else if (curr[key] && displayedFields.includes(key)) {
+                    acc.add(key);
+                  }
+                }
+                return acc;
+              }, new Set()) as Set<string>
+            ) as string[];
+
+            tables.push({
+              id: category,
+              tables: table,
+              fields: displayedColumns,
+              selected: [...selected.map((item) => item.field)],
+            });
+          }
+        }
+      }
+      return tables;
+    };
+
+    this.activeTables.next(this.getTableNamesContainingData(mappedTerms));
+    const tables = createTableObjects(
+      mappedTerms,
+      categories,
+      this.columnDefinitions,
+      this.columnOptions
+    );*/

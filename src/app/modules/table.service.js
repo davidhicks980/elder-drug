@@ -13,11 +13,13 @@ var TableService = /** @class */ (function () {
     function TableService() {
         this.tableStatusSource = new ReplaySubject_1.ReplaySubject(3);
         this.tableStatus$ = this.tableStatusSource.asObservable();
+        this.pageSource = new ReplaySubject_1.ReplaySubject(1);
+        this.pageSource$ = this.pageSource.asObservable();
         this._tables = [
             {
                 TableNumber: 1,
                 TableDefinition: 'General Information for Each Table',
-                ShortName: 'General Info',
+                ShortName: 'General',
                 Identifier: 'Info',
                 TableIconName: 'general-health',
                 Description: 'A collection of all queried drugs.'
@@ -25,8 +27,8 @@ var TableService = /** @class */ (function () {
             {
                 TableNumber: 2,
                 TableDefinition: 'Potentially Inappropriate Medication Use in Older Adults ',
-                ShortName: 'Potentially Innappropriate',
-                Identifier: 'Innappropriate'
+                ShortName: 'Potentially Inappropriate',
+                Identifier: 'Inappropriate'
             },
             {
                 TableNumber: 3,
@@ -67,7 +69,10 @@ var TableService = /** @class */ (function () {
         ];
     }
     TableService.prototype.emitSelectedTables = function (selections) {
-        this.tableStatusSource.next(selections);
+        this.tableStatusSource.next(this._tables.filter(function (table) { return selections.includes(table.TableNumber); }));
+    };
+    TableService.prototype.emitCurrentPage = function (page) {
+        this.pageSource.next(page);
     };
     Object.defineProperty(TableService.prototype, "tables", {
         get: function () {

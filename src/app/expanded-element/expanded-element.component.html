@@ -1,0 +1,86 @@
+<div *ngIf="expansionData" class="expand-panel">
+  <div>
+    <div class="hh-grid grid-spacing">
+      <div class="hh-span-12 grid-term"></div>
+      <div class="hh-span-12">
+        <h2 class="grid-title">{{ expansionData.Item }}</h2>
+      </div>
+      <div class="hh-span-12">
+        <mat-chip-list>
+          <mat-chip class="mat-standard-chip">
+            {{ expansionData.ItemType | titlecase }}</mat-chip
+          >
+        </mat-chip-list>
+      </div>
+      <div *ngIf="expansionData.Inclusion" class="hh-span-6 expansion-card">
+        <div fxLayoutAlign="start start" fxLayout="row" fxLayoutGap="0.5em">
+          <mat-icon
+            svgIcon="unfold_less"
+            inline="true"
+            class="mat-icon-24 info"
+          ></mat-icon
+          ><span class="expanded-grid-text"
+            ><h3 class="grid-header">Guidance Includes</h3>
+            {{ expansionData.Inclusion }}</span
+          >
+        </div>
+      </div>
+      <div
+        *ngIf="expansionData.Exclusion"
+        fxLayoutAlign="start start"
+        class="hh-span-6 expansion-card"
+      >
+        <div fxLayout="row" fxLayoutGap="0.5em">
+          <mat-icon
+            svgIcon="unfold_more"
+            inline="true"
+            class="mat-icon-24 info"
+          ></mat-icon
+          ><span class="expanded-grid-text"
+            ><h3 class="grid-header">Guidance Excludes</h3>
+            {{ expansionData.Exclusion }}</span
+          >
+        </div>
+      </div>
+      <div *ngIf="expansionData.DiseaseState" class="hh-span-6 expansion-card">
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
+          <mat-icon
+            svgIcon="error"
+            aria-label="caution using drug in disease state "
+            inline="true"
+            class="mat-icon-24 error"
+          ></mat-icon>
+          <span class="expanded-grid-text"
+            ><h3 class="grid-header">Caution In</h3>
+            {{ expansionData.DiseaseState | caseSplit }}</span
+          >
+        </div>
+      </div>
+      <div
+        *ngIf="expansionData.MaximumClearance || expansionData.MinimumClearance"
+        class="hh-span-6 expansion-card"
+      >
+        <b>{{ expansionData.Recommendation }}</b> with clearance
+        <i><b>below</b></i>
+        {{ expansionData.MaximumClearance }} and
+        <i><b>above</b></i>
+        {{ expansionData.MinimumClearance }}
+      </div>
+      <div *ngIf="expansionData.Rationale" class="hh-span-12">
+        <ng-container>
+          <section
+            class="rationale-background hh-grid hh-12-column expansion-card v-center-items"
+          >
+            <div class="hh-span-2">
+              <mat-icon class="scale" svgIcon="scale"></mat-icon>
+            </div>
+            <div class="hh-span-10">
+              <h3 id="feedbackTitle">Rationale</h3>
+              <p id="feedback">{{ expansionData.Rationale }}</p>
+            </div>
+          </section>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

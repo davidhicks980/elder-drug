@@ -16,7 +16,6 @@
     "esModuleInterop": true,
     "strict": false,
     "allowJs": true
-  
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

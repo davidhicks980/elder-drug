@@ -1,70 +1,89 @@
-<app-column-selector
+<!--<app-column-selector
   *ngIf="tableName"
   (columnUpdates)="fields = $event"
   [tableName]="tableName"
   (loaded)="selectorInitiated = true"
-></app-column-selector>
+></app-column-selector>-->
+<ng-content select="[table-description]"></ng-content>
+
 <div class="table-container">
   <table
-    *ngIf="loaded"
     cdk-table
     multiTemplateDataRows
     [dataSource]="dataSource"
     class="table"
     matSort
     [fixedLayout]="true"
-    [class.isMobile]="true"
   >
-    <ng-container *ngFor="let field of fields" cdkColumnDef="{{ field }}">
-      <!--<ng-container *ngSwitchCase="'expand'">
-          <th
-            cdk-header-cell
-            class="header-cell"
-            mat-sort-header
-            *cdkHeaderCellDef
-            style="width: 3.5em"
-          ></th>
-          <td cdk-cell class="table-cell" *cdkCellDef="let row">
-            <button mat-icon-button>
-              <mat-icon
-                [@rotateChevron]="
-                  row == expandedElement ? 'expanded' : 'collapsed'
-                "
-                class="chevron-button--rotate"
-                style="will-change: transform"
-                *ngIf="field === 'expand'"
-                svgIcon="chevron_right"
-              ></mat-icon>
-            </button>
-          </td>
-        </ng-container>-->
-      <ng-container>
-        <th
-          cdk-header-cell
-          class="header-cell"
-          mat-sort-header
-          *cdkHeaderCellDef
-          style="width: calc(100%)"
-        >
-          <div style="display: grid">
-            <div style="min-width: 0">
-              <div class="cell header-cell--text">
-                {{ field | caseSplit }}
-              </div>
+    <tr cdk-header-row class="header-row" *cdkHeaderRowDef="fields"></tr>
+
+    <tr
+      cdk-row
+      *cdkRowDef="let row; columns: fields; when: isShown"
+      class="desktop"
+    ></tr>
+
+    <!--<tr
+      cdk-row
+      *cdkRowDef="let row; columns: ['mobileColumns']"
+      class="mobile">
+  </tr> -->
+
+    <ng-container
+      *ngFor="let field of ; trackBy: trackByFn"
+      cdkColumnDef="{{ field }}"
+    >
+      <th cdk-header-cell class="header-cell" mat-sort-header *cdkHeaderCellDef>
+        <div style="display: grid">
+          <div style="min-width: 0">
+            <div class="cell header-cell--text">
+              {{ field | caseSplit }}
             </div>
           </div>
-        </th>
-        <td cdk-cell class="table-cell" *cdkCellDef="let row">
-          <span class="cell data-cell--text">{{ row[field] }}</span>
-        </td>
-      </ng-container>
+        </div>
+      </th>
+      <td cdk-cell #cell class="table-cell" *cdkCellDef="let row">
+        <span class="chevron-button--container" *ngIf="field === fields[0]">
+          <mat-icon
+            [@rotateChevron]="row == selectedRow ? 'expanded' : 'collapsed'"
+            class="chevron-button--desktop"
+            style="will-change: transform"
+            svgIcon="chevron_right"
+          ></mat-icon
+        ></span>
+        <span class="cell data-cell--text">{{ row[field] }}</span>
+      </td>
     </ng-container>
-    <ng-container cdkColumnDef="mobileColumns">
+    <ng-template *ngIf="selectedRow">
+      <ng-container cdkColumnDef="expandedDetail">
+        <div *cdkCellDef="let row">
+          <app-expanded-element
+            *ngIf="row === selectedRow"
+            [expansionData]="row"
+          ></app-expanded-element>
+        </div>
+      </ng-container>
+
+      <tr cdk-row *cdkRowDef="let row; columns: ['expandedDetail']"></tr>
+    </ng-template>
+
+    <ng-container cdkColumnDef="groupHeader">
+      <td cdk-cell *cdkCellDef="let groupBy">
+        <strong>Starts with {{ groupBy.groupBy }}</strong>
+      </td>
+    </ng-container>
+
+    <tr
+      cdk-row
+      *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup"
+      (click)="toggleGroup('SearchTerm', row)"
+    ></tr>
+    <!-- <ng-container cdkColumnDef="mobileColumns">
       <td
         class="mobile-cell hh-grid"
         cdk-cell
         *cdkCellDef="let row"
-        [attr.colspan]="fields.length"
+        [attr.colspan]="columnSpan"
       >
         <button class="mobile-cell--expansion-button hh-span-1" mat-icon-button>
           <mat-icon
@@ -88,176 +107,6 @@
           </ng-container>
         </div>
       </td>
-    </ng-container>
-    <ng-container cdkColumnDef="expandedDetail">
-      <td cdk-cell *cdkCellDef="let row" [attr.colspan]="fields.length">
-        <div
-          *ngIf="row == expandedElement"
-          class="expand-panel"
-          [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
-        >
-          <div @slideDown>
-            <div class="hh-grid grid-spacing">
-              <div class="hh-span-12 grid-term">
-                <b>Term: </b>{{ row["SearchTerm"] }}
-              </div>
-              <div class="hh-span-12">
-                <h2 class="grid-title">{{ row["Item"] }}</h2>
-              </div>
-              <div class="hh-span-12">
-                <mat-chip-list>
-                  <mat-chip class="mat-standard-chip">
-                    {{ row["ItemType"] | titlecase }}</mat-chip
-                  >
-                </mat-chip-list>
-              </div>
-              <div *ngIf="row['Inclusion']" class="hh-span-6">
-                <div
-                  fxLayoutAlign="start start"
-                  fxLayout="row"
-                  fxLayoutGap="0.5em"
-                >
-                  <mat-icon
-                    svgIcon="unfold_less"
-                    inline="true"
-                    class="mat-icon-24 info"
-                  ></mat-icon
-                  ><span class="expanded-grid-text"
-                    ><h3 class="grid-header">Guidance Includes</h3>
-                    {{ row["Inclusion"] }}</span
-                  >
-                </div>
-              </div>
-              <div
-                *ngIf="row['Exclusion']"
-                fxLayoutAlign="start start"
-                class="hh-span-6"
-              >
-                <div fxLayout="row" fxLayoutGap="0.5em">
-                  <mat-icon
-                    svgIcon="unfold_more"
-                    inline="true"
-                    class="mat-icon-24 info"
-                  ></mat-icon
-                  ><span class="expanded-grid-text"
-                    ><h3 class="grid-header">Guidance Excludes</h3>
-                    {{ row["Exclusion"] }}</span
-                  >
-                </div>
-              </div>
-              <div *ngIf="row['DiseaseState']" class="hh-span-6">
-                <div
-                  fxLayout="row"
-                  fxLayoutAlign="start start"
-                  fxLayoutGap="5px"
-                >
-                  <mat-icon
-                    svgIcon="error"
-                    aria-label="caution using drug in disease state "
-                    inline="true"
-                    class="mat-icon-24 error"
-                  ></mat-icon>
-                  <span class="expanded-grid-text"
-                    ><h3 class="grid-header">Caution In</h3>
-                    {{ row["DiseaseState"] | caseSplit }}</span
-                  >
-                </div>
-              </div>
-              <div
-                *ngIf="row['MaximumClearance'] || row['MinimumClearance']"
-                class="hh-span-6"
-              >
-                <b>{{ row["Recommendation"] }}</b> with clearance
-                <i><b>below</b></i>
-                {{ row["MaximumClearance"] }} and
-                <i><b>above</b></i>
-                {{ row["MinimumClearance"] }}
-              </div>
-              <div *ngIf="row['Rationale']" class="hh-span-12">
-                <ng-container>
-                  <div class="rationale">
-                    <div
-                      fxLayout="column"
-                      fxLayoutAlign="start space-between"
-                      class="rationale-panel"
-                    >
-                      <label
-                        fxLayout="row"
-                        fxLayoutAlign="space-between center"
-                        class="rationale-header"
-                        [class.collapse]="!rationaleSwitch.checked"
-                        (click)="
-                          rationaleSwitch.checked = !rationaleSwitch.checked
-                        "
-                        matRipple
-                        matRippleColor="rgb(255,255,255,0.3)"
-                        [matRippleUnbounded]="true"
-                      >
-                        <span class="rationale-title">Rationale</span>
-                        <span
-                          style="
-                            height: 100%;
-                            display: grid;
-                            place-items: center;
-                          "
-                        >
-                          <mat-icon
-                            class="rationale-icon"
-                            #icon
-                            [@expandButton]="
-                              rationaleSwitch.checked ? 'default' : 'rotated'
-                            "
-                            [inline]="true"
-                            [svgIcon]="
-                              rationaleSwitch.checked
-                                ? 'remove_circle_outline'
-                                : 'add_circle_outline'
-                            "
-                          ></mat-icon>
-                          <input
-                            #rationaleSwitch
-                            type="checkbox"
-                            fxHide
-                            value="true" /></span
-                      ></label>
-
-                      <div
-                        fxLayout="row"
-                        fxLayoutAlign="space-between center"
-                        [@translateRationale]="
-                          rationaleSwitch.checked ? 'expanded' : 'closed'
-                        "
-                        [class]="
-                          !rationaleSwitch.checked
-                            ? 'small-rationale-content'
-                            : 'rationale-content'
-                        "
-                      >
-                        <p>{{ row["Rationale"] }}</p>
-                      </div>
-                    </div>
-                  </div></ng-container
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr cdk-header-row class="header-row" *cdkHeaderRowDef="fields"></tr>
-    <tr
-      cdk-row
-      *cdkRowDef="let row; columns: fields"
-      class="desktop"
-      (click)="expandedElement = expandedElement === row ? null : row"
-    ></tr>
-    <tr
-      cdk-row
-      *cdkRowDef="let row; columns: ['mobileColumns']"
-      class="mobile"
-      (click)="expandedElement = expandedElement === row ? null : row"
-    ></tr>
-    <tr cdk-row *cdkRowDef="let row; columns: ['expandedDetail']"></tr>
+    </ng-container>-->
   </table>
 </div>

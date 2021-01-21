@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { FirebaseService } from './firebase.service';
 import { StateService } from './state.service';
 
 @Component({
@@ -13,8 +14,10 @@ export class AppComponent implements OnInit {
   constructor(
     private state: StateService,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private firebase: FirebaseService
   ) {
+    this.firebase = firebase;
     iconRegistry.addSvgIcon(
       'search',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')
@@ -79,9 +82,9 @@ export class AppComponent implements OnInit {
       )
     );
     iconRegistry.addSvgIcon(
-      'arrow-right',
+      'arrow_right',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/arrow-right.svg'
+        'assets/icons/arrow_right.svg'
       )
     );
     iconRegistry.addSvgIcon(
@@ -120,6 +123,13 @@ export class AppComponent implements OnInit {
         'assets/icons/elder_drug_logo.svg'
       )
     );
+    iconRegistry
+      .addSvgIcon(
+        'scale',
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+          'assets/icons/scale.svg'
+        )
+      )
   }
   title = 'ElderDrug';
 }
