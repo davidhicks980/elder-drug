@@ -22,13 +22,14 @@ var core_2 = require("@angular/material/core");
 var form_field_1 = require("@angular/material/form-field");
 var input_1 = require("@angular/material/input");
 var select_1 = require("@angular/material/select");
+var platform_browser_1 = require("@angular/platform-browser");
 var animations_1 = require("@angular/platform-browser/animations");
 var service_worker_1 = require("@angular/service-worker");
-var table_1 = require("primeng/table");
 var environment_1 = require("../environments/environment");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var case_split_pipe_1 = require("./case-split.pipe");
+var expanded_element_component_1 = require("./expanded-element/expanded-element.component");
 var expansion_panel_component_1 = require("./expansion-panel/expansion-panel.component");
 var logo_component_1 = require("./logo/small-logo/logo-component");
 var material_module_1 = require("./material-module");
@@ -36,11 +37,9 @@ var enter_drug_form_component_1 = require("./navigation/enter-drug-form/enter-dr
 var navigation_component_1 = require("./navigation/navigation.component");
 var side_navigation_component_1 = require("./navigation/side-navigation/side-navigation.component");
 var toolbar_component_1 = require("./navigation/top-toolbar/toolbar.component");
+var rotate_icon_directive_1 = require("./rotate-icon.directive");
 var content_component_1 = require("./table-logic/content.component");
-var column_selector_component_1 = require("./table-logic/med-table/column-selector/column-selector.component");
 var table_component_1 = require("./table-logic/med-table/table.component");
-var toggle_options_component_1 = require("./table-logic/med-table/toggle-options/toggle-options.component");
-var modify_table_panel_component_1 = require("./table-logic/modify-table-panel/modify-table-panel.component");
 var to_string_pipe_1 = require("./to-string.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -57,17 +56,17 @@ var AppModule = /** @class */ (function () {
                 content_component_1.ContentComponent,
                 logo_component_1.LogoComponent,
                 enter_drug_form_component_1.EnterDrugFormComponent,
-                column_selector_component_1.ColumnSelectorComponent,
-                toggle_options_component_1.ToggleOptionsComponent,
                 side_navigation_component_1.SideNavigationComponent,
-                modify_table_panel_component_1.ModifyTablePanelComponent,
                 to_string_pipe_1.ToStringPipe,
                 toolbar_component_1.DisclaimerComponent,
                 toolbar_component_1.AboutComponent,
                 toolbar_component_1.DesignComponent,
                 expansion_panel_component_1.ExpansionPanelComponent,
+                expanded_element_component_1.ExpandedElementComponent,
+                rotate_icon_directive_1.RotateDirective,
             ],
             imports: [
+                platform_browser_1.BrowserModule,
                 animations_1.BrowserAnimationsModule,
                 app_routing_module_1.AppRoutingModule,
                 layout_1.LayoutModule,
@@ -77,7 +76,6 @@ var AppModule = /** @class */ (function () {
                 flex_layout_1.FlexLayoutModule,
                 form_field_1.MatFormFieldModule,
                 input_1.MatInputModule,
-                table_1.TableModule,
                 select_1.MatSelectModule,
                 http_1.HttpClientModule,
                 fire_1.AngularFireModule.initializeApp(environment_1.environment.firebaseConfig),

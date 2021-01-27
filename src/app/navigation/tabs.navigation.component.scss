@@ -1,0 +1,47 @@
+@import "../../colors";
+
+.tab-button {
+  width: 150px;
+  appearance: none;
+  background-color: $primary-1;
+  color: $light-gray-1;
+  border: none;
+  margin: 2px 1px 0 1px;
+  height: 38px;
+  font-family: "Roboto", sans-serif;
+  // box-shadow: inset 0 2px 3px 0px rgba(0, 0, 0, 0.281);
+  font-weight: 500;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+
+  &.active {
+    background-color: $light-gray-2;
+    color: $dark-gray-2;
+    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: background-color 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+    box-shadow: none;
+    box-shadow: inset 0px 2px 0 0 #3f51b5;
+  }
+  &:hover {
+    background-color: $secondary-2-2;
+    transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+    color: $light-gray-4;
+    &.active {
+      color: $dark-gray-2;
+    }
+  }
+  &:active {
+    background-color: $secondary-2-1;
+    color: white;
+    transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    &.active {
+      color: $dark-gray-4;
+      background-color: $light-gray-2;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}

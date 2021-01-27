@@ -52,7 +52,6 @@ exports.__esModule = true;
 exports.FirebaseService = void 0;
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
-var ReplaySubject_1 = require("rxjs/internal/ReplaySubject");
 var beers = require("../assets/beers-entries.json");
 var columns_service_1 = require("./columns.service");
 var FirebaseService = /** @class */ (function () {
@@ -71,7 +70,7 @@ var FirebaseService = /** @class */ (function () {
         this.filterDropdown = new rxjs_1.Subject();
         this.filteredItems$ = this.filterDropdown.asObservable();
         /** Emits table columns that contain any data */
-        this.filteredFieldsSource = new ReplaySubject_1.ReplaySubject(1);
+        this.filteredFieldsSource = new rxjs_1.ReplaySubject(1);
         /** Observable for columns containing data */
         this.filteredFields$ = this.filteredFieldsSource.asObservable();
         this.tableData = new Map();
@@ -182,7 +181,8 @@ var FirebaseService = /** @class */ (function () {
         var dataMappedToColumns = [];
         var tablesWithData = [];
         var i = 0;
-        var _loop_1 = function (item) {
+        var item;
+        for (item in mappedTerms[0]) {
             dataMappedToColumns[item] = mappedTerms.map(function (table) { return table[item]; });
             if (dataMappedToColumns[item].length > 0) {
                 columnsWithData.push(item);
@@ -204,14 +204,12 @@ var FirebaseService = /** @class */ (function () {
                         break;
                 }
             }
-        };
-        for (var item in mappedTerms[0]) {
-            _loop_1(item);
         }
         this.tableService.emitSelectedTables(tablesWithData);
         this.filteredFieldsSource.next(columnsWithData);
-        !this.tableSource ?
-            this.tableSource = new rxjs_1.BehaviorSubject(mappedTerms) : this.tableSource.next(mappedTerms);
+        !this.tableSource
+            ? (this.tableSource = new rxjs_1.BehaviorSubject(mappedTerms))
+            : this.tableSource.next(mappedTerms);
         this.tableData.set(Date.now(), mappedTerms);
     };
     FirebaseService.prototype.mapQueryTerms = function (tables) {

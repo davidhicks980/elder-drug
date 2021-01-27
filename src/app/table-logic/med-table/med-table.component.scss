@@ -14,10 +14,8 @@
   min-width: 0;
 }
 table {
-  border-radius: 5px;
-  position: absolute;
+  border-radius: 3px;
   border-spacing: 0;
-  border: 1px solid $gray-1;
   border-collapse: separate;
   width: 98%;
   max-width: 98%;
@@ -58,15 +56,25 @@ table {
     }
   }
   & th {
-    height: 35px;
+    height: 40px;
     text-align: left;
     color: white;
     background: $primary-3;
     font-family: "IBM Plex Sans", sans-serif;
     text-align: left;
     border-bottom: 1px solid $light-gray-3;
+    box-shadow: inset 0px 1px 0px 0 #ffffff54;
+
+    background-image: linear-gradient(
+      to bottom,
+      $primary-2,
+      darken($primary-2, 2%)
+    );
     &:first-of-type {
       border-top-left-radius: 3px;
+      & .header-cell--text {
+        margin-left: 40px;
+      }
     }
     &:last-of-type {
       border-top-right-radius: 3px;
@@ -169,7 +177,11 @@ mat-chip-list mat-chip.mat-standard-chip {
   height: 1.15em;
 }
 .chevron-button--desktop {
-  position: absolute;
+  transform: rotate(-0deg);
+  transition: transform 0.5s;
+  &.subheader {
+    height: 30px;
+  }
 }
 
 .expansion-card {
@@ -180,4 +192,18 @@ mat-chip-list mat-chip.mat-standard-chip {
   color: $primary-5;
   padding: 20px;
   margin: 5px;
+}
+table th.table-cell.expand-group-header.header {
+  height: 30px;
+  column-span: all;
+  font-weight: 300;
+  color: black;
+}
+
+button.absolute-position {
+  position: absolute;
+}
+.subheader {
+  font-weight: 500;
+  margin-left: 40px;
 }

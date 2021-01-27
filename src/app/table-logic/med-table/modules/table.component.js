@@ -26,7 +26,6 @@ var table_1 = require("@angular/cdk/table");
 var core_1 = require("@angular/core");
 var sort_1 = require("@angular/material/sort");
 var rxjs_1 = require("rxjs");
-var from_1 = require("rxjs/internal/observable/from");
 var operators_1 = require("rxjs/operators");
 var animations_2 = require("../../animations");
 var MedTableComponent = /** @class */ (function () {
@@ -38,43 +37,36 @@ var MedTableComponent = /** @class */ (function () {
         this.stateService = stateService;
         this.changeDetect = changeDetect;
         this.selectorInitiated = false;
-        this.currentGrouping = new rxjs_1.BehaviorSubject({
-            term: 'SearchTerm',
-            shown: ['ibuprofen']
-        });
-        this.selectedRow = false;
-        this.groups = [];
         this.fields = [];
+        this.groupProperty = 'SearchTerm';
+        this.selectedRow = false;
+        this.groups = new Set();
+        this.animations = true;
+        this._expandedRows = new Set();
         this.firebase = firebase;
         this.tableService = tableService;
         this.columnService = columnService;
-        this.columnService.recieveTableColumns$.pipe(operators_1.tap(function () { return (_this.fieldIndices = []); }));
-        this.dataSource = new BeersTableDataSource(rxjs_1.combineLatest([this.firebase.tableSource, this.currentGrouping]).pipe(operators_1.switchMap(function (_a) {
-            var data = _a[0], groupingCriteria = _a[1];
-            return from_1.from(data).pipe(operators_1.groupBy(function (data) { return data[groupingCriteria.term]; }), operators_1.mergeMap(function (group) { return group.pipe(operators_1.toArray()); }), operators_1.map(function (items) {
-                var term = items[0][groupingCriteria.term];
-                var shown = groupingCriteria.shown.includes(term);
-                items.forEach(function (item, i) {
-                    Object.assign(item, {
-                        tableID: item.EntryID + "-" + item.SearchTerm,
-                        isGroup: false
-                    });
-                });
-                items.unshift({
-                    groupBy: items[0][groupingCriteria.term],
-                    showTables: shown,
-                    isGroup: true
-                });
-                return items;
-            }), operators_1.reduce(function (acc, curr) {
-                acc.push.apply(acc, curr);
-                return acc;
-            }, []));
-        })));
+        this.columnService.recieveTableColumns$
+            .pipe(operators_1.map(function (data) { return data.selected; }))
+            .subscribe(function (item) {
+            _this.fields = item.filter(function (item) { return item != _this.groupProperty; });
+            _this.columnSpan = _this.fields.length;
+            _this.changeDetect.markForCheck();
+        });
+        this.dataSource = new BeersTableDataSource(this.firebase.tableSource, this.groupProperty);
     }
+    Object.defineProperty(MedTableComponent.prototype, "expandedRows", {
+        set: function (rows) {
+            this._expandedRows.add(rows);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MedTableComponent.prototype.rowIsExpanded = function (term) {
+        return this._expandedRows.has(term) ? true : false;
+    };
     MedTableComponent.prototype.trackByFn = function (e, g) {
-        console.log(g);
-        return g;
+        return e + "-" + g;
     };
     MedTableComponent.prototype.expandRow = function (row) {
         if (!this.selectedRow)
@@ -83,20 +75,13 @@ var MedTableComponent = /** @class */ (function () {
             this.selectedRow = false;
     };
     MedTableComponent.prototype.shouldDisplay = function (term) {
-        return this.groups.includes(term);
+        return this.groups.has(term);
     };
-    MedTableComponent.prototype.toggleGroup = function (term, row) {
-        this.groups.includes(row.groupBy)
-            ? this.groups.splice(this.groups.indexOf(row.groupBy), 1)
-            : this.groups.push(row.groupBy);
-        this.dataSource.group = this.groups;
+    MedTableComponent.prototype.toggleGroup = function (term) {
+        this.groups.has(term) ? this.groups["delete"](term) : this.groups.add(term);
+        this.dataSource.groups = this.groups;
     };
-    MedTableComponent.prototype.moveSearchTerms = function (arr, item) {
-        var index = arr.indexOf(item);
-        arr.splice(index, 1);
-        arr.unshift(item);
-    };
-    MedTableComponent.prototype.ngAfterViewInit = function () {
+    MedTableComponent.prototype.initializeSort = function () {
         this.dataSource.sort = this.sort;
     };
     MedTableComponent.prototype.isGroup = function (index, item) {
@@ -116,20 +101,14 @@ var MedTableComponent = /** @class */ (function () {
             selector: 'app-table',
             templateUrl: './table.component.html',
             styleUrls: ['./med-table.component.scss'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             animations: [
                 animations_1.trigger('expandButton', [
-                    animations_1.state('default', animations_1.style({ transform: 'rotate(0deg)' })),
+                    animations_1.state('default', animations_1.style({ transform: '*' })),
                     animations_1.state('rotated', animations_1.style({ transform: 'rotate(90deg)' })),
                     animations_1.transition('rotated => default', animations_1.animate('400ms ease-out')),
                     animations_1.transition('default => rotated', animations_1.animate('400ms ease-in')),
                 ]),
                 animations_2.slideDownAnimation,
-                animations_1.trigger('rotateChevron', [
-                    animations_1.state('collapsed', animations_1.style({ transform: 'rotate(0deg)' })),
-                    animations_1.state('expanded', animations_1.style({ transform: 'rotate(-90deg)' })),
-                    animations_1.transition('expanded <=> collapsed', animations_1.animate('150ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-                ]),
                 animations_1.trigger('translateRationale', [
                     animations_1.state('expanded', animations_1.style({ transform: 'translateY(0)' })),
                     animations_1.state('closed', animations_1.style({ transform: 'translateY(-200px)' })),
@@ -141,7 +120,8 @@ var MedTableComponent = /** @class */ (function () {
                     animations_1.state('expanded', animations_1.style({ height: '*' })),
                     animations_1.transition('expanded <=> collapsed', animations_1.animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
                 ]),
-            ]
+            ],
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         })
     ], MedTableComponent);
     return MedTableComponent;
@@ -162,7 +142,7 @@ var MAX_SAFE_INTEGER = 9007199254740991;
 /** Shared base class with MDC-based implementation. */
 var BeersTableDataSource = /** @class */ (function (_super) {
     __extends(BeersTableDataSource, _super);
-    function BeersTableDataSource(dataStream) {
+    function BeersTableDataSource(dataStream, groupTerm) {
         var _this = _super.call(this) || this;
         /** Stream emitting render data to the table (depends on ordered data changes). */
         _this._renderData = new rxjs_1.BehaviorSubject([]);
@@ -181,8 +161,8 @@ var BeersTableDataSource = /** @class */ (function (_super) {
          * For example, a 'selectAll()' function would likely want to select the set of filtered data
          * shown to the user rather than all the data.
          */
-        _this._group = new rxjs_1.BehaviorSubject([]);
-        _this._groupTerm = 'SearchTerm';
+        _this._group = new rxjs_1.BehaviorSubject(new Set());
+        _this._dataLoaded = false;
         /**
          * Data accessor function that is used for accessing data properties for sorting through
          * the default sortData function.
@@ -283,18 +263,35 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             var transformedFilter = filter.trim().toLowerCase();
             return dataStr.indexOf(transformedFilter) != -1;
         };
+        _this._groupTerm = new rxjs_1.BehaviorSubject(groupTerm);
         _this._data = _this.convertObservableToBehaviorSubject(dataStream);
         _this._updateChangeSubscription();
         return _this;
     }
-    Object.defineProperty(BeersTableDataSource.prototype, "groupTerm", {
-        set: function (term) {
-            this._groupTerm = term;
+    Object.defineProperty(BeersTableDataSource.prototype, "dataLoaded", {
+        get: function () {
+            return this._dataLoaded;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BeersTableDataSource.prototype, "group", {
+    Object.defineProperty(BeersTableDataSource.prototype, "groupTerm", {
+        get: function () {
+            if (this._groupTerm.value) {
+                return this._groupTerm.value;
+            }
+        },
+        set: function (term) {
+            if (term && typeof term === 'string' && term.length > 0)
+                this._groupTerm.next(term);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BeersTableDataSource.prototype, "groups", {
+        get: function () {
+            return this._group.value;
+        },
         set: function (group) {
             this._group.next(group);
         },
@@ -377,6 +374,45 @@ var BeersTableDataSource = /** @class */ (function (_super) {
         });
         return subject;
     };
+    BeersTableDataSource.prototype._groupingPredicate = function (data) {
+        var _this = this;
+        console.log(data);
+        this._storeDataHeaders(data);
+        var dataWithHeaderRows = [];
+        var header, expanded, headerRow, rows;
+        for (var _i = 0, _a = this.headers; _i < _a.length; _i++) {
+            header = _a[_i];
+            expanded = this.groups.has(header);
+            headerRow = {
+                isGroup: true,
+                expanded: expanded,
+                term: header
+            };
+            if (expanded) {
+                dataWithHeaderRows = dataWithHeaderRows.concat([headerRow], data.reduce(function (rows, item) {
+                    if (item[_this.groupTerm] === header)
+                        rows.push(item);
+                    return rows;
+                }, []));
+            }
+            else {
+                dataWithHeaderRows.push(headerRow);
+            }
+        }
+        return dataWithHeaderRows;
+    };
+    Object.defineProperty(BeersTableDataSource.prototype, "headers", {
+        get: function () {
+            return this._headers;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    BeersTableDataSource.prototype._storeDataHeaders = function (data) {
+        var _this = this;
+        this._headers = Array.from(new Set(data.map(function (items) { return items[_this.groupTerm]; })));
+        return this._headers;
+    };
     /**
      * Subscribe to changes that should trigger an update to the table's rendered rows. When the
      * changes occur, process the current state of the filter, sort, and pagination along with
@@ -395,6 +431,7 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             ? rxjs_1.merge(this._sort.sortChange, this._sort.initialized)
             : rxjs_1.of(null);
         var dataStream = this._data;
+        var groupingParameters = rxjs_1.combineLatest([this._group, this._groupTerm]);
         // Watch for base data or filter changes to provide a filtered set of data.
         var filteredData = rxjs_1.combineLatest([dataStream, this._filter]).pipe(operators_1.map(function (_a) {
             var data = _a[0];
@@ -406,20 +443,15 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             var data = _a[0];
             return _this._orderData(data);
         }));
-        var groupedData = rxjs_1.combineLatest([orderedData, this._group]).pipe(operators_1.switchMap(function (_a) {
-            var items = _a[0], group = _a[1];
-            return from_1.from(items).pipe(operators_1.reduce(function (acc, curr) {
-                if (group.includes(curr[_this._groupTerm]))
-                    acc.push(curr);
-                if (curr.isGroup)
-                    acc.push(curr);
-                return acc;
-            }, []));
-        }), operators_1.tap(function (data) { return console.log(data); }));
+        var groupedData = rxjs_1.combineLatest([orderedData, groupingParameters]).pipe(operators_1.map(function (_a) {
+            var data = _a[0];
+            return _this._groupingPredicate(data);
+        }));
         // Watched for paged data changes and send the result to the table to render.
         (_a = this._renderChangesSubscription) === null || _a === void 0 ? void 0 : _a.unsubscribe();
         this._renderChangesSubscription = groupedData.subscribe(function (data) {
-            return _this._renderData.next(data);
+            _this._renderData.next(data);
+            _this._dataLoaded = true;
         });
     };
     /**

@@ -25,14 +25,11 @@
             "aot": true,
             "assets": [
               "src/assets",
-              "src/manifest.webmanifest",
-              {
-                "glob": "**/*.js",
-                "input": "node_modules/@webcomponents/webcomponentsjs",
-                "output": "webcomponents/"
-              }
+              "src/manifest.webmanifest"
             ],
-            "styles": ["./src/styles.scss", "./src/primeflex.min.css"],
+            "styles": [
+              "./src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -45,11 +42,11 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
               "vendorChunk": true,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -65,7 +62,11 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             }
-          }
+          },
+          "allowedCommonJsDependencies": [
+            "@firebase",
+            "@angular/fire"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -76,7 +77,10 @@
             "production": {
               "browserTarget": "search-angular:build:production"
             }
-          }
+          },
+          "exclude": [
+            "/node_modules/**"
+          ]
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -92,28 +96,26 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
-
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "search-angular:serve"

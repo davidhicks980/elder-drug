@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 import * as beers from '../assets/beers-entries.json';
 import { Category, ColumnField } from './columns.service';
@@ -17,7 +16,7 @@ export class FirebaseService {
   updatedTables = new Subject<any>();
   queriedTables$ = this.updatedTables.asObservable();
   entryMap: Map<string, number[]> = new Map();
-  public tableSource: BehaviorSubject<Table[]> 
+  public tableSource: BehaviorSubject<Table[]>;
   private activeTables: Subject<Category[]> = new Subject<number[]>();
   private queryMap: Map<number, string[]> = new Map();
   dropdownItems: Map<string, string[]> = new Map();
@@ -123,11 +122,12 @@ export class FirebaseService {
       this.mapQueryTerms(tableList),
       'EntryID'
     ) as Table[];
-    let columnsWithData = [] as ColumnField[];
+    let columnsWithData = [] as any[];
     let dataMappedToColumns = [];
     let tablesWithData = [] as Category[];
     let i = 0;
-    for (let item in mappedTerms[0]) {
+    let item: string;
+    for (item in mappedTerms[0]) {
       dataMappedToColumns[item] = mappedTerms.map((table) => table[item]);
 
       if (dataMappedToColumns[item].length > 0) {
@@ -152,9 +152,10 @@ export class FirebaseService {
       }
     }
     this.tableService.emitSelectedTables(tablesWithData);
-    this.filteredFieldsSource.next( columnsWithData );
-     !this.tableSource?
-     this.tableSource = new BehaviorSubject(mappedTerms):this.tableSource.next(mappedTerms);
+    this.filteredFieldsSource.next(columnsWithData);
+    !this.tableSource
+      ? (this.tableSource = new BehaviorSubject(mappedTerms))
+      : this.tableSource.next(mappedTerms);
     this.tableData.set(Date.now(), mappedTerms);
   }
 

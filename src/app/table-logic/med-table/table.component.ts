@@ -1,15 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of as observableOf, Subject, Subscription } from 'rxjs';
-import { from } from 'rxjs/internal/observable/from';
-import { filter, groupBy, map, mergeMap, reduce, switchMap, tap, toArray } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { slideDownAnimation } from '../../animations';
-import { ColumnField, ColumnService } from '../../columns.service';
+import { ColumnService } from '../../columns.service';
 import { FirebaseService, Table } from '../../firebase.service';
 import { StateService } from '../../state.service';
 import { TableService } from '../../table.service';
@@ -18,23 +17,15 @@ import { TableService } from '../../table.service';
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./med-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('expandButton', [
-      state('default', style({ transform: 'rotate(0deg)' })),
+      state('default', style({ transform: '*' })),
       state('rotated', style({ transform: 'rotate(90deg)' })),
       transition('rotated => default', animate('400ms ease-out')),
       transition('default => rotated', animate('400ms ease-in')),
     ]),
     slideDownAnimation,
-    trigger('rotateChevron', [
-      state('collapsed', style({ transform: 'rotate(0deg)' })),
-      state('expanded', style({ transform: 'rotate(-90deg)' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('150ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
+
     trigger('translateRationale', [
       state('expanded', style({ transform: 'translateY(0)' })),
       state('closed', style({ transform: 'translateY(-200px)' })),
@@ -58,51 +49,48 @@ import { TableService } from '../../table.service';
       ),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MedTableComponent implements AfterViewInit {
+export class MedTableComponent {
   @ViewChild(MatSort) sort: MatSort;
   public selectorInitiated: boolean = false;
-  fields: ColumnField[];
+  fields: string[] = [];
   cols: {}[];
   pageChangeObserver: any;
   page: any;
   viewLoaded: boolean;
   columnSpan: number;
   dataSource: BeersTableDataSource<Table, Paginator>;
-  currentGrouping = new BehaviorSubject({
-    term: 'SearchTerm',
-    shown: ['ibuprofen'],
-  });
+  groupProperty = 'SearchTerm';
   selectedRow: any = false;
-  groupingTerm: string;
-  groups: any[] = [];
+  groups: Set<string> = new Set();
   fieldIndices: any[];
+  groupingCriteria: { term: string; shown: string[] };
+  animations = true;
+  private _expandedRows = new Set();
 
-  trackByFn(e, g) {
-    console.log(g);
-    return g;
+  set expandedRows(rows: string) {
+    this._expandedRows.add(rows);
   }
-  expandRow(row) {
+  rowIsExpanded(term: string) {
+    return this._expandedRows.has(term) ? true : false;
+  }
+  trackByFn(e: any, g: any) {
+    return `${e}-${g}`;
+  }
+  expandRow(row: any) {
     if (!this.selectedRow) this.selectedRow = row;
     else this.selectedRow = false;
   }
-  shouldDisplay(term) {
-    return this.groups.includes(term);
+  shouldDisplay(term: any) {
+    return this.groups.has(term);
   }
-  toggleGroup(term, row) {
-    this.groups.includes(row.groupBy)
-      ? this.groups.splice(this.groups.indexOf(row.groupBy), 1)
-      : this.groups.push(row.groupBy);
-
-    this.dataSource.group = this.groups;
-  }
-  moveSearchTerms(arr: string[], item: string) {
-    var index = arr.indexOf(item);
-    arr.splice(index, 1);
-    arr.unshift(item);
+  toggleGroup(term: string) {
+    this.groups.has(term) ? this.groups.delete(term) : this.groups.add(term);
+    this.dataSource.groups = this.groups;
   }
 
-  ngAfterViewInit() {
+  initializeSort() {
     this.dataSource.sort = this.sort;
   }
 
@@ -113,56 +101,30 @@ export class MedTableComponent implements AfterViewInit {
     public stateService: StateService,
     public changeDetect: ChangeDetectorRef
   ) {
-    this.fields = [];
     this.firebase = firebase;
     this.tableService = tableService;
     this.columnService = columnService;
-
-    this.columnService.recieveTableColumns$.pipe(
-      tap(() => (this.fieldIndices = []))
-    );
-
+    this.columnService.recieveTableColumns$
+      .pipe(map((data) => data.selected))
+      .subscribe((item) => {
+        this.fields = item.filter((item) => item != this.groupProperty);
+        this.columnSpan = this.fields.length;
+        this.changeDetect.markForCheck();
+      });
     this.dataSource = new BeersTableDataSource(
-      combineLatest([this.firebase.tableSource, this.currentGrouping]).pipe(
-        switchMap(([data, groupingCriteria]) => {
-          return from(data).pipe(
-            groupBy((data: Table) => data[groupingCriteria.term]),
-            mergeMap((group) => group.pipe(toArray())),
-            map((items: any[]) => {
-              let term = items[0][groupingCriteria.term];
-              let shown = groupingCriteria.shown.includes(term);
-              items.forEach((item: Table, i: number) => {
-                Object.assign(item, {
-                  tableID: `${item.EntryID}-${item.SearchTerm}`,
-                  isGroup: false,
-                });
-              });
-              items.unshift({
-                groupBy: items[0][groupingCriteria.term],
-                showTables: shown,
-                isGroup: true,
-              });
-              return items;
-            }),
-
-            reduce((acc, curr) => {
-              acc.push(...curr);
-              return acc;
-            }, [])
-          );
-        })
-      )
+      this.firebase.tableSource,
+      this.groupProperty
     );
   }
 
-  isGroup(index, item): boolean {
+  isGroup(index: any, item: { isGroup: boolean }): boolean {
     return item.isGroup;
   }
 
-  isShown(index, item): boolean {
+  isShown(index: any, item: { isGroup: any }): boolean {
     return !item.isGroup;
   }
-  trackingFunct(id, item) {
+  trackingFunct(id: any, item: { tableID: any }) {
     return item.tableID;
   }
 }
@@ -217,14 +179,33 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * For example, a 'selectAll()' function would likely want to select the set of filtered data
    * shown to the user rather than all the data.
    */
-  private _group = new BehaviorSubject([]);
-  private _groupTerm = 'SearchTerm';
-
+  private _group = new BehaviorSubject(new Set()) as BehaviorSubject<
+    Set<string>
+  >;
+  private _groupTerm: BehaviorSubject<string>;
+  private _dataLoaded: boolean = false;
   filteredData: T[];
-  set groupTerm(term: string) {
-    this._groupTerm = term;
+  groupingParameters: any;
+  _dataHeaders: boolean;
+  private _headers: any[];
+  get dataLoaded() {
+    return this._dataLoaded;
   }
-  set group(group: string[]) {
+  get groupTerm(): string {
+    if (this._groupTerm.value) {
+      return this._groupTerm.value;
+    }
+  }
+  set groupTerm(term: string) {
+    if (term && typeof term === 'string' && term.length > 0)
+      this._groupTerm.next(term);
+  }
+
+  get groups(): Set<string> {
+    return this._group.value;
+  }
+
+  set groups(group: Set<string>) {
     this._group.next(group);
   }
   /** Array of data that should be rendered by the table, where each object represents one row. */
@@ -400,7 +381,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   convertObservableToBehaviorSubject<T>(
     observable: Observable<T>
   ): BehaviorSubject<T> {
-    let observed;
+    let observed: T;
     observable.toPromise().then((item) => {
       observed = item;
     });
@@ -420,12 +401,51 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
 
     return subject;
   }
-  constructor(dataStream: Observable<T[]>) {
+  constructor(dataStream: Observable<T[]>, groupTerm: string) {
     super();
+    this._groupTerm = new BehaviorSubject(groupTerm);
+
     this._data = this.convertObservableToBehaviorSubject(dataStream);
+
     this._updateChangeSubscription();
   }
 
+  _groupingPredicate(data: T[]) {
+    console.log(data);
+    this._storeDataHeaders(data);
+    let dataWithHeaderRows = [] as any[];
+    let header, expanded, headerRow, rows;
+    for (header of this.headers) {
+      expanded = this.groups.has(header);
+      headerRow = {
+        isGroup: true,
+        expanded: expanded,
+        term: header,
+      };
+      if (expanded) {
+        dataWithHeaderRows = dataWithHeaderRows.concat(
+          [headerRow],
+          data.reduce((rows, item) => {
+            if (item[this.groupTerm] === header) rows.push(item);
+            return rows;
+          }, [])
+        );
+      } else {
+        dataWithHeaderRows.push(headerRow);
+      }
+    }
+
+    return dataWithHeaderRows;
+  }
+  get headers() {
+    return this._headers;
+  }
+  private _storeDataHeaders(data: T[]) {
+    this._headers = Array.from(
+      new Set(data.map((items) => items[this.groupTerm]))
+    );
+    return this._headers;
+  }
   /**
    * Subscribe to changes that should trigger an update to the table's rendered rows. When the
    * changes occur, process the current state of the filter, sort, and pagination along with
@@ -445,6 +465,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
         ) as Observable<Sort | void>)
       : observableOf(null);
     const dataStream = this._data;
+    const groupingParameters = combineLatest([this._group, this._groupTerm]);
     // Watch for base data or filter changes to provide a filtered set of data.
     const filteredData = combineLatest([dataStream, this._filter]).pipe(
       map(([data]) => this._filterData(data))
@@ -456,23 +477,15 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
       map(([data]) => this._orderData(data))
     );
 
-    const groupedData = combineLatest([orderedData, this._group]).pipe(
-      switchMap(([items, group]) => {
-        return from(items).pipe(
-          reduce((acc, curr) => {
-            if (group.includes(curr[this._groupTerm])) acc.push(curr);
-            if (curr.isGroup) acc.push(curr);
-            return acc;
-          }, [])
-        );
-      }),
-      tap((data) => console.log(data))
+    const groupedData = combineLatest([orderedData, groupingParameters]).pipe(
+      map(([data]) => this._groupingPredicate(data))
     );
     // Watched for paged data changes and send the result to the table to render.
     this._renderChangesSubscription?.unsubscribe();
-    this._renderChangesSubscription = groupedData.subscribe((data) =>
-      this._renderData.next(data)
-    );
+    this._renderChangesSubscription = groupedData.subscribe((data) => {
+      this._renderData.next(data as any);
+      this._dataLoaded = true;
+    });
   }
 
   /**

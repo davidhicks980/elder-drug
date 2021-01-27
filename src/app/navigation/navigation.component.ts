@@ -110,7 +110,9 @@ export class NavigationComponent {
   public sidenavOpen: boolean = true;
   public mobileWidth: boolean;
   enabledTables: Observable<Table[]> = new Subject();
-
+  gradient(e) {
+    console.log(e);
+  }
   tables: Table[] = [];
   tableNavStream: any;
   selectedTable: any;
@@ -120,7 +122,6 @@ export class NavigationComponent {
     this.selectedTable = e;
     this.tableLoaded = true;
     setTimeout(() => this.columnService.requestTable(e), 10);
-    
   }
   constructor(
     public webSocketService: FirebaseService,

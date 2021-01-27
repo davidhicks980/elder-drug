@@ -10,7 +10,6 @@ exports.ContentComponent = void 0;
 var animations_1 = require("@angular/animations");
 var scrolling_1 = require("@angular/cdk/scrolling");
 var core_1 = require("@angular/core");
-var resize_observer_1 = require("@juggle/resize-observer");
 var ReplaySubject_1 = require("rxjs/internal/ReplaySubject");
 var ContentComponent = /** @class */ (function () {
     function ContentComponent(firestore, state, tableService) {
@@ -25,7 +24,7 @@ var ContentComponent = /** @class */ (function () {
         this.state = state;
         this.tableService.tableStatus$.subscribe(function (active) {
             _this.enabledTables = active.map(function (table) {
-                return tableService.tables.filter(function (tab) { return tab.TableNumber === table; })[0];
+                return tableService.tables.filter(function (tab) { return tab.TableNumber === table.TableNumber; })[0];
             });
             if (!_this.loaded) {
                 _this.loaded = true;
@@ -33,22 +32,21 @@ var ContentComponent = /** @class */ (function () {
         });
     }
     ContentComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
         var check;
         var width;
-        this.observer = new resize_observer_1.ResizeObserver(function (entries, observer) {
-            if (_this.content) {
-                check = _this.mobileContent;
-                width = entries[0].borderBoxSize[0].inlineSize;
-                _this.expansionPanelWidth = width - 220;
-                _this.contentWidth = width - 20 + 'px';
-                _this.mobileContent = width < 600;
-                if (_this.mobileContent != check) {
-                    _this.state.emitContentWidthStatus(_this.mobileContent);
-                }
+        /*  this.observer = new ResizeObserver((entries, observer) => {
+          if (this.content) {
+            check = this.mobileContent;
+            width = entries[0].borderBoxSize[0].inlineSize;
+            this.expansionPanelWidth = width - 220;
+            this.contentWidth = width - 20 + 'px';
+            this.mobileContent = width < 600;
+            if (this.mobileContent != check) {
+              this.state.emitContentWidthStatus(this.mobileContent);
             }
+          }
         });
-        this.observer.observe(this.content.nativeElement);
+        this.observer.observe(this.content.nativeElement);*/
     };
     __decorate([
         core_1.ViewChild('content')

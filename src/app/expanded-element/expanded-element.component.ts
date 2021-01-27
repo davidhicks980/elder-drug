@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Table } from '../firebase.service';
 
@@ -8,7 +8,7 @@ import { Table } from '../firebase.service';
   styleUrls: ['./expanded-element.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExpandedElementComponent implements OnInit {
+export class ExpandedElementComponent {
   @Input() expansionData: Table;
   constructor() {}
   ngAfterViewInit() {

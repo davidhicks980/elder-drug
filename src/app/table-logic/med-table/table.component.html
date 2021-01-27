@@ -6,14 +6,16 @@
 ></app-column-selector>-->
 <ng-content select="[table-description]"></ng-content>
 
-<div class="table-container">
+<div class="table-container" *ngIf="dataSource.dataLoaded">
   <table
     cdk-table
     multiTemplateDataRows
     [dataSource]="dataSource"
-    class="table"
+    class="table soft-shadow-5"
     matSort
     [fixedLayout]="true"
+    CreationSpy
+    (SpyInit)="this.initializeSort()"
   >
     <tr cdk-header-row class="header-row" *cdkHeaderRowDef="fields"></tr>
 
@@ -21,6 +23,7 @@
       cdk-row
       *cdkRowDef="let row; columns: fields; when: isShown"
       class="desktop"
+      (SpyInit)="expandedRows = row[groupProperty]"
     ></tr>
 
     <!--<tr
@@ -30,29 +33,38 @@
   </tr> -->
 
     <ng-container
-      *ngFor="let field of ; trackBy: trackByFn"
+      *ngFor="let field of fields; trackBy: trackByFn"
       cdkColumnDef="{{ field }}"
     >
-      <th cdk-header-cell class="header-cell" mat-sort-header *cdkHeaderCellDef>
-        <div style="display: grid">
-          <div style="min-width: 0">
-            <div class="cell header-cell--text">
-              {{ field | caseSplit }}
+      <ng-container>
+        <th
+          cdk-header-cell
+          class="header-cell"
+          mat-sort-header
+          *cdkHeaderCellDef
+        >
+          <div style="display: grid">
+            <div style="min-width: 0">
+              <div class="cell header-cell--text">
+                {{ field | caseSplit }}
+              </div>
             </div>
           </div>
-        </div>
-      </th>
-      <td cdk-cell #cell class="table-cell" *cdkCellDef="let row">
-        <span class="chevron-button--container" *ngIf="field === fields[0]">
-          <mat-icon
-            [@rotateChevron]="row == selectedRow ? 'expanded' : 'collapsed'"
-            class="chevron-button--desktop"
-            style="will-change: transform"
-            svgIcon="chevron_right"
-          ></mat-icon
-        ></span>
-        <span class="cell data-cell--text">{{ row[field] }}</span>
-      </td>
+        </th></ng-container
+      >
+      <ng-container>
+        <td cdk-cell #cell class="table-cell" *cdkCellDef="let row">
+          <span *ngIf="field === fields[0]">
+            <button
+              class="button"
+              class="chevron-button--desktop"
+              mat-icon-button
+            >
+              <mat-icon svgIcon="chevron_right"></mat-icon></button
+          ></span>
+          <span class="cell data-cell--text">{{ row[field] }}</span>
+        </td></ng-container
+      >
     </ng-container>
     <ng-template *ngIf="selectedRow">
       <ng-container cdkColumnDef="expandedDetail">
@@ -68,15 +80,34 @@
     </ng-template>
 
     <ng-container cdkColumnDef="groupHeader">
-      <td cdk-cell *cdkCellDef="let groupBy">
-        <strong>Starts with {{ groupBy.groupBy }}</strong>
-      </td>
+      <thead>
+        <th
+          class="table-cell header expand-group-header"
+          [attr.colspan]="columnSpan"
+          cdk-cell
+          *cdkCellDef="let row"
+        >
+          <span class="hh-flex v-center-items"
+            ><button
+              class="absolute-position"
+              mat-icon-button
+              rotateIcon
+              [rotate]="row.expanded"
+            >
+              <mat-icon svgIcon="chevron_right"></mat-icon>
+            </button>
+            <span class="subheader">
+              {{ groupProperty | caseSplit }}: {{ row.term | titlecase }}</span
+            >
+          </span>
+        </th>
+      </thead>
     </ng-container>
 
     <tr
       cdk-row
       *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup"
-      (click)="toggleGroup('SearchTerm', row)"
+      (click)="toggleGroup(row.term)"
     ></tr>
     <!-- <ng-container cdkColumnDef="mobileColumns">
       <td

@@ -1,13 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ResizeObserver } from '@juggle/resize-observer';
 import { Observable } from 'rxjs/internal/Observable';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 import { FirebaseService } from '../firebase.service';
 import { LayoutStatus, StateService } from '../state.service';
-import { TableService } from '../table.service';
+import { Table, TableService } from '../table.service';
 
 @Component({
   selector: 'app-content',
@@ -86,7 +85,6 @@ export class ContentComponent implements AfterViewInit {
   observedSmallContent: Observable<boolean> = this.smallContent.asObservable();
   observeWidthCheck: boolean;
   smallestContent: boolean;
-  observer: ResizeObserver;
   mobileContent: boolean = true;
   expansionPanelWidth: number;
   contentWidth: string;
@@ -100,7 +98,7 @@ export class ContentComponent implements AfterViewInit {
   ngAfterViewInit() {
     let check;
     let width;
-    this.observer = new ResizeObserver((entries, observer) => {
+    /*  this.observer = new ResizeObserver((entries, observer) => {
       if (this.content) {
         check = this.mobileContent;
         width = entries[0].borderBoxSize[0].inlineSize;
@@ -112,7 +110,7 @@ export class ContentComponent implements AfterViewInit {
         }
       }
     });
-    this.observer.observe(this.content.nativeElement);
+    this.observer.observe(this.content.nativeElement);*/
   }
   constructor(
     public firestore: FirebaseService,
@@ -124,7 +122,9 @@ export class ContentComponent implements AfterViewInit {
     this.tableService.tableStatus$.subscribe((active) => {
       this.enabledTables = active.map(
         (table) =>
-          tableService.tables.filter((tab) => tab.TableNumber === table)[0]
+          tableService.tables.filter(
+            (tab: Table) => tab.TableNumber === table.TableNumber
+          )[0]
       );
 
       if (!this.loaded) {

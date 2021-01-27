@@ -1,3 +1,5 @@
+@import "./tabs.navigation.component";
+
 @import "../../_colors.scss";
 
 $content-height--full-header: calc(100vh - #{$header-full});
@@ -142,9 +144,7 @@ main {
   position: fixed;
   display: flex;
   left: 0px;
-  &:hover {
-    color: lighten($complement-1, 35%);
-  }
+
   &.nav-button {
     margin: 0 10px 0 10px;
   }
@@ -155,36 +155,6 @@ main {
   right: 10px;
   top: 40vh;
   padding: 0px;
-}
-
-.tab-button {
-  width: 150px;
-  appearance: none;
-  background: $primary-2;
-  color: white;
-  border: none;
-  height: 40px;
-  z-index: -1;
-  font-family: "IBM Plex Sans", sans-serif;
-  // box-shadow: inset 0 2px 3px 0px rgba(0, 0, 0, 0.281);
-  font-weight: 500;
-  box-sizing: border-box;
-  cursor: pointer;
-  &.active {
-    background: linear-gradient(white, $light-gray-2);
-    color: $dark-gray-4;
-    border-top: 2px solid $secondary-2-1;
-  }
-  &:hover {
-    background-color: $secondary-2-2;
-  }
-  &:active {
-    background-color: $secondary-2-1;
-    color: white;
-  }
-  &:focus {
-    outline: none;
-  }
 }
 
 .table-buffer {

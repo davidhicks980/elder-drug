@@ -32,6 +32,9 @@ var NavigationComponent = /** @class */ (function () {
         });
         this.enabledTables = this.tableService.tableStatus$;
     }
+    NavigationComponent.prototype.gradient = function (e) {
+        console.log(e);
+    };
     NavigationComponent.prototype.handleTabClick = function (e) {
         var _this = this;
         this.selectedTable = e;

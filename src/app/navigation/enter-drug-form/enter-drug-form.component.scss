@@ -12,7 +12,7 @@ $input-icon--color: $input-text--color;
 
 $input-stroke: $light-gray-4;
 $input-focus--outline: getHighlightColor($primary-1);
-$input-focus--stroke: $dark-gray-1;
+$input-focus--stroke: $primary-1;
 button {
   & .icon-button {
     transform-origin: center;
