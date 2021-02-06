@@ -1,0 +1,242 @@
+@import "colors";
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+.table-container {
+  width: auto;
+  background: white;
+  padding: 5px;
+}
+.mat-sort-header-content {
+  text-align: center;
+  /* display: flex; */
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+table {
+  border-radius: 3px;
+  border-spacing: 0;
+  border-collapse: separate;
+  width: 98%;
+  max-width: 98%;
+  margin: 1%;
+  background: white;
+  max-width: 1300px;
+  overflow: hidden;
+  border: 1px solid $light-gray-3;
+  & .cdk-column-expandedDetail {
+    overflow: hidden;
+  }
+  & tr.desktop,
+  tr.mobile {
+    overflow: hidden;
+    &:hover {
+      background-color: $light-gray-1;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+    }
+    &:last-of-type {
+      td.table-cell {
+        border-bottom: none !important;
+      }
+    }
+  }
+  & td {
+    background: transparent;
+    &.mobile-cell {
+      border-bottom: 1px dotted $light-gray-3;
+      padding: 10px;
+      cursor: pointer;
+    }
+    &.table-cell {
+      height: 40px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-bottom: 1px solid $light-gray-3;
+      cursor: pointer;
+    }
+  }
+  & th {
+    height: 40px;
+    text-align: left;
+    color: white;
+    font-family: "IBM Plex Sans", sans-serif;
+    text-align: left;
+    border-bottom: 1px solid $light-gray-3;
+    box-shadow: inset 0px 1px 0px 0 #ffffff54;
+    background-color: #eceef2;
+    color: $dark-gray-2;
+    &.expand-group-header {
+      background-color: white;
+      cursor: pointer;
+    }
+    &:first-of-type {
+      border-top-left-radius: 3px;
+      & .header-cell--text {
+        margin-left: 40px;
+      }
+    }
+    &:last-of-type {
+      border-top-right-radius: 3px;
+    }
+  }
+}
+.cell {
+  &.header-cell--text {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+  }
+  &.data-cell--text {
+    margin-left: 10px;
+  }
+}
+.mobile-cell--expansion-button {
+  color: black;
+}
+.mobile-label {
+  display: none;
+}
+.mobile {
+  display: none;
+}
+.desktop {
+  display: table-row;
+}
+
+@media (max-width: 600px) {
+  .mobile {
+    display: table-row;
+  }
+  .desktop {
+    display: none;
+  }
+  th {
+    display: none;
+  }
+  table {
+    width: auto;
+  }
+}
+h2 {
+  padding-bottom: 1px;
+  margin-bottom: 0.5em;
+  line-height: 1em;
+}
+
+mat-chip-list mat-chip.mat-standard-chip {
+  min-height: 1.7em;
+  border-radius: 4px;
+  background-color: $primary-3;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.expand-panel {
+  background-color: $light-gray-1;
+  border-bottom: 1px solid $light-gray-3;
+}
+
+//Rationale header
+
+mat-icon.mat-icon-24 {
+  height: 40px;
+  width: 45px;
+  min-width: 45px;
+  margin-top: 5px;
+  &.info {
+    color: blue;
+  }
+  &.error {
+    color: red;
+  }
+  &.warning {
+    color: orange;
+  }
+}
+
+span.show-when-small {
+  display: none;
+}
+
+mat-chip-list mat-chip.mat-standard-chip {
+  min-height: 1.7em;
+  border-radius: 4px;
+  background-color: $primary-3;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.chevron-button--container {
+  display: inline-grid;
+  margin: 0 20px 0 0;
+  height: 1.15em;
+}
+.chevron-button--desktop {
+  transform: rotate(-0deg);
+  transition: transform 0.5s;
+  &.subheader {
+    height: 30px;
+    text-transform: uppercase;
+  }
+}
+
+.expansion-card {
+  border-radius: 3px;
+  /* border: 1px solid blue; */
+  background-color: rgb(255 255 255);
+  // box-shadow: 0 2px 1px 0 lightgrey;
+  color: $primary-5;
+  padding: 20px;
+  margin: 5px;
+}
+table th.table-cell.expand-group-header.header {
+  height: 30px;
+  column-span: all;
+  font-weight: 300;
+  color: black;
+}
+
+button.absolute-position {
+  position: absolute;
+}
+.subheader {
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.chevron {
+  &.special-row {
+    height: 30px;
+    line-height: 30px;
+  }
+  &.rotated {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+@keyframes rollback {
+  0% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

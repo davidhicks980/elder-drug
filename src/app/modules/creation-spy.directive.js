@@ -20,7 +20,7 @@ var CreationSpyDirective = /** @class */ (function () {
         this.spyInit.emit(false);
     };
     __decorate([
-        core_1.Output('SpyInit')
+        core_1.Output('spyInit')
     ], CreationSpyDirective.prototype, "spyInit");
     CreationSpyDirective = __decorate([
         core_1.Directive({ selector: '[CreationSpy]' })

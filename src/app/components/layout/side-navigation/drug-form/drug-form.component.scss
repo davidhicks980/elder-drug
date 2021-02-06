@@ -1,0 +1,159 @@
+@use 'sass:color';
+
+@import "colors";
+
+$input-background: $light-gray-1;
+$input-focus--background: getHighlightColor($light-gray-3);
+
+$input-label--transformation-after: translate(0.2em, -1.7em) scale(0.88);
+$input-label--transformation-before: translate(0.6em, 0.725em) scale(1);
+
+$input-text--color: $dark-gray-1;
+$input-text--focus-color: $primary-1;
+$input-icon--color: $input-text--color;
+
+$input-stroke: $light-gray-4;
+$input-focus--outline: getHighlightColor($primary-1);
+$input-focus--stroke: $primary-1;
+button {
+  & .icon-button {
+    transform-origin: center;
+    display: flex;
+    &.add-icon {
+      fill: none;
+      transform: scale(0.65);
+
+      stroke: $input-text--color;
+      &:hover {
+        stroke: $input-text--focus-color;
+      }
+    }
+    &.remove {
+      transform: scale(0.6);
+
+      fill: $input-text--color;
+      &:hover {
+        fill: red;
+      }
+    }
+  }
+}
+
+.disable-text-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+section.drug-inputs {
+  overflow: visible;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  padding-top: 1.25em;
+  & mat-form-field.form-array-width {
+    width: 100%;
+  }
+}
+
+@media (max-width: 599.99px) {
+  section.drug-inputs {
+    & mat-form-field.form-array-width {
+      width: 70%;
+      margin-left: 15%;
+      margin-right: 15%;
+    }
+  }
+}
+
+.drug-input {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background: none;
+  padding-left: 0.6em;
+  font-size: 12pt;
+  outline: none;
+  height: 2.5em;
+  &:not(:placeholder-shown) + .drug-input-label {
+    transform: $input-label--transformation-after;
+  }
+  &::placeholder {
+    color: rgba(0, 0, 0, 0);
+  }
+}
+
+.drug-input-container {
+  display: flex;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  width: 90%;
+  border: 1px solid $input-stroke;
+  padding: 1px;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  background-color: $input-background;
+  &:focus-within {
+    //box-shadow: 0 0 0 3px $input-focus--outline;
+    border: 1px solid $input-focus--stroke;
+    background-color: $input-focus--background;
+    padding: 0px;
+    color: $input-text--color;
+    transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    & .drug-input-label {
+      transition: all 0.3s cubic-bezier(0.44, 0.02, 0.39, 0.99);
+      transform: $input-label--transformation-after;
+      color: $input-text--focus-color;
+      font-weight: 500;
+    }
+
+    & .drug-input:not(:placeholder-shown) + .drug-input-label {
+      transform: $input-label--transformation-after;
+      color: $input-text--focus-color;
+    }
+    .add-icon {
+      stroke: $input-text--focus-color;
+    }
+  }
+
+  &:hover {
+    border: 1px solid darken($input-stroke, 5%);
+    padding: 1px;
+    &:focus-within {
+      border: 1px solid $input-focus--stroke;
+      padding: 0px;
+    }
+  }
+  & .drug-input-label {
+    transform: $input-label--transformation-before;
+
+    width: fit-content;
+    pointer-events: none;
+    transform-origin: left;
+    position: absolute;
+    color: $input-text--color;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  & .error {
+    color: darkred;
+    pointer-events: none;
+  }
+}
+
+@keyframes UnfocusInputLabel {
+  100% {
+    transform: $input-label--transformation-before;
+    color: $input-text--focus-color;
+  }
+  0% {
+    transform: $input-label--transformation-after;
+    color: $input-text--color;
+  }
+}

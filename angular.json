@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "elder",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -23,14 +23,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
-            "styles": [
-              "./src/styles.scss"
-            ],
-            "scripts": []
+            "assets": ["src/assets", "src/manifest.webmanifest"],
+            "scripts": [],
+            "styles": ["src/styles/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -43,10 +41,10 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": false,
-              "vendorChunk": true,
-              "buildOptimizer": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -63,10 +61,7 @@
               "ngswConfigPath": "ngsw-config.json"
             }
           },
-          "allowedCommonJsDependencies": [
-            "@firebase",
-            "@angular/fire"
-          ]
+          "allowedCommonJsDependencies": ["@firebase", "@angular/fire"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -78,9 +73,7 @@
               "browserTarget": "search-angular:build:production"
             }
           },
-          "exclude": [
-            "/node_modules/**"
-          ]
+          "exclude": ["/node_modules/**"]
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -95,25 +88,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/assets", "src/manifest.webmanifest"],
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
-          }
-        },
+
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {

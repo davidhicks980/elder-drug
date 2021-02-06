@@ -1,0 +1,72 @@
+<form [formGroup]="drugsGroup">
+  <section
+    cdkScrollable
+    aria-label="You can look up drugs on Beers Criteria using this form"
+    class="drug-inputs"
+  >
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center space-around"
+      formArrayName="drugs"
+    >
+      <div *ngFor="let drug of drugs.controls; let i = index">
+        <div
+          #origin="matAutocompleteOrigin"
+          matAutocompleteOrigin
+          class="drug-input-container"
+        >
+          <input
+            type="text"
+            [formControlName]="i"
+            [matAutocomplete]="auto"
+            [matAutocompleteConnectedTo]="origin"
+            (keydown.Enter)="search(); trigger.closePanel()"
+            (focus)="activeInputIndex = i"
+            class="drug-input"
+            #trigger="matAutocompleteTrigger"
+            aria-label="Enter your drug name here. For example, zolpidem"
+            placeholder=" "
+          />
+          <label class="drug-input-label label">
+            Enter Drug (e.g. zolpidem)
+          </label>
+          <span class="background"></span>
+          <button
+            mat-icon-button
+            (keydown.enter)="addInput()"
+            (keydown.up)="addInput()"
+            (click)="addInput(); trigger.closePanel(); stopPropagation()"
+            *ngIf="i === 0"
+          >
+            <mat-icon
+              class="add-icon icon-button"
+              inline="true"
+              svgIcon="add--outline"
+            ></mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="removeInputAt(i); trigger.closePanel(); stopPropagation()"
+            (keydown.enter)="removeInputAt(i)"
+            *ngIf="i > 0"
+          >
+            <mat-icon
+              class="remove icon-button"
+              inline="true"
+              svgIcon="delete"
+            ></mat-icon>
+          </button>
+        </div>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option
+            [value]="option[0] + option[1]"
+            *ngFor="let option of dropdownItems | async"
+          >
+            <b>{{ option[0] }}</b
+            >{{ option[1] }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </section>
+</form>

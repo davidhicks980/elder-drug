@@ -1,4 +1,11 @@
-import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  sequence,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 export const toolbarItemsFade = trigger('toolbarItemsFade', [
   transition(':enter', [
@@ -61,9 +68,13 @@ export const slideDownAnimation = trigger('slideDown', [
   // fade in when created. this could also be written as transition('void => *')
   transition(':enter', [
     style({
-      transform: 'translateY(-200px)',
+      transform: 'translateY(-20px)',
+      opacity: 0,
     }),
-    animate('200ms ease', style({ transform: 'translateY(0px)' })),
+    animate(
+      '300ms ease-out',
+      style({ transform: 'translateY(0px)', opacity: 1 })
+    ),
   ]),
 ]);
 

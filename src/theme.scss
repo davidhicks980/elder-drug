@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+ //prettier-ignore:
 
-//prettier-ignore
-
-::-webkit-scrollbar {
+:-webkit-scrollbar {
   width: 0.5em;
 }
 
@@ -41,4 +40,3 @@ mat-pseudo-checkbox.mat-pseudo-checkbox {
     background: $dark-gray-5 !important;
   }
 }
-

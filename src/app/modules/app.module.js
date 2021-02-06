@@ -29,17 +29,20 @@ var environment_1 = require("../environments/environment");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var case_split_pipe_1 = require("./case-split.pipe");
-var expanded_element_component_1 = require("./expanded-element/expanded-element.component");
-var expansion_panel_component_1 = require("./expansion-panel/expansion-panel.component");
-var logo_component_1 = require("./logo/small-logo/logo-component");
+var dropdown_component_1 = require("./components/layout/dropdown/dropdown.component");
+var layout_component_1 = require("./components/layout/layout.component");
+var drug_form_component_1 = require("./components/layout/side-navigation/drug-form/drug-form.component");
+var sidebar_component_1 = require("./components/layout/side-navigation/sidebar.component");
+var tab_component_1 = require("./components/layout/tab/tab.component");
+var toolbar_component_1 = require("./components/layout/top-toolbar/toolbar.component");
+var table_component_1 = require("./components/table/table.component");
+var expanded_element_component_1 = require("./components/unused/expanded-element/expanded-element.component");
+var expansion_panel_component_1 = require("./components/unused/expansion-panel/expansion-panel.component");
+var logo_component_1 = require("./components/unused/logo/small-logo/logo-component");
+var creation_spy_directive_1 = require("./directives/creation-spy.directive");
+var rotate_icon_directive_1 = require("./directives/rotate-icon.directive");
+var tracking_gradient_directive_1 = require("./directives/tracking-gradient.directive");
 var material_module_1 = require("./material-module");
-var enter_drug_form_component_1 = require("./navigation/enter-drug-form/enter-drug-form.component");
-var navigation_component_1 = require("./navigation/navigation.component");
-var side_navigation_component_1 = require("./navigation/side-navigation/side-navigation.component");
-var toolbar_component_1 = require("./navigation/top-toolbar/toolbar.component");
-var rotate_icon_directive_1 = require("./rotate-icon.directive");
-var content_component_1 = require("./table-logic/content.component");
-var table_component_1 = require("./table-logic/med-table/table.component");
 var to_string_pipe_1 = require("./to-string.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -48,15 +51,13 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                navigation_component_1.NavigationComponent,
+                layout_component_1.LayoutComponent,
                 toolbar_component_1.ToolbarComponent,
-                enter_drug_form_component_1.EmptyInputComponent,
                 case_split_pipe_1.caseSplitPipe,
-                table_component_1.MedTableComponent,
-                content_component_1.ContentComponent,
+                table_component_1.TableComponent,
                 logo_component_1.LogoComponent,
-                enter_drug_form_component_1.EnterDrugFormComponent,
-                side_navigation_component_1.SideNavigationComponent,
+                drug_form_component_1.DrugFormComponent,
+                sidebar_component_1.SidebarComponent,
                 to_string_pipe_1.ToStringPipe,
                 toolbar_component_1.DisclaimerComponent,
                 toolbar_component_1.AboutComponent,
@@ -64,11 +65,15 @@ var AppModule = /** @class */ (function () {
                 expansion_panel_component_1.ExpansionPanelComponent,
                 expanded_element_component_1.ExpandedElementComponent,
                 rotate_icon_directive_1.RotateDirective,
+                tracking_gradient_directive_1.TrackingGradientDirective,
+                creation_spy_directive_1.CreationSpyDirective,
+                dropdown_component_1.DropdownComponent,
+                tab_component_1.TabComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
                 animations_1.BrowserAnimationsModule,
-                app_routing_module_1.AppRoutingModule,
+                app_routing_module_1.ElderRoutingModule,
                 layout_1.LayoutModule,
                 material_module_1.MaterialModule,
                 forms_1.FormsModule,

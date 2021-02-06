@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { FirebaseService } from './firebase.service';
-import { StateService } from './state.service';
+import { FirebaseService } from './services/firebase.service';
+import { StateService } from './services/state.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-component',
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
@@ -74,6 +74,12 @@ export class AppComponent implements OnInit {
         'assets/icons/chevron_right.svg'
       )
     );
+    iconRegistry.addSvgIcon(
+      'overflow_menu_vertical',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/overflow_menu_vertical.svg'
+      )
+    );
 
     iconRegistry.addSvgIcon(
       'chevron_left',
@@ -123,13 +129,20 @@ export class AppComponent implements OnInit {
         'assets/icons/elder_drug_logo.svg'
       )
     );
-    iconRegistry
-      .addSvgIcon(
-        'scale',
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          'assets/icons/scale.svg'
-        )
+    iconRegistry.addSvgIcon(
+      'scale',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'tab_left',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_left.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'tab_right',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/tab_right.svg'
       )
+    );
   }
   title = 'ElderDrug';
 }

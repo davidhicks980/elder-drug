@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+
   firebaseConfig: {
     apiKey: 'AIzaSyDNgPNYRgq-pgh0ISC0kBDORL6Y_SfRxpU',
     authDomain: 'elder-drug.firebaseapp.com',

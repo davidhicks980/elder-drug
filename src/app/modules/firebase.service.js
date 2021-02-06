@@ -54,6 +54,7 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var beers = require("../assets/beers-entries.json");
 var columns_service_1 = require("./columns.service");
+/* eslint-disable @typescript-eslint/member-ordering */
 var FirebaseService = /** @class */ (function () {
     function FirebaseService(firestore, tableService) {
         var _this = this;
@@ -170,8 +171,9 @@ var FirebaseService = /** @class */ (function () {
                 columns_service_1.Category.DiseaseGuidance,
                 columns_service_1.Category.DrugInteractions,
                 columns_service_1.Category.RenalEffect,
-            ].includes(table.Category))
+            ].includes(table.Category)) {
                 out.add(table.Category);
+            }
         });
         return __spreadArrays(out);
     };
@@ -213,6 +215,7 @@ var FirebaseService = /** @class */ (function () {
         this.tableData.set(Date.now(), mappedTerms);
     };
     FirebaseService.prototype.mapQueryTerms = function (tables) {
+        console.log(tables);
         for (var _i = 0, tables_1 = tables; _i < tables_1.length; _i++) {
             var table = tables_1[_i];
             table['SearchTerm'] = this.queryMap.get(table['EntryID']).join(' | ');

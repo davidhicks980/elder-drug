@@ -1,0 +1,69 @@
+<div class="viewport-grid">
+  <section class="header">
+    <header
+      [ngClass.xs]="sidenavOpen ? 'large' : 'small'"
+      ngClass.gt-xs="small"
+    >
+      <elder-toolbar></elder-toolbar>
+    </header>
+  </section>
+  <section
+    ngClass.gt-xs="content"
+    ngClass.xs="content small-screen"
+    fxLayout="row"
+  >
+    <aside
+      @mobileSlidingSidenav
+      [class]="sidenavOpen ? 'sidenav-open' : ''"
+      *ngIf="sidenavOpen"
+    >
+      <div fxLayoutAlign="center center" class="subtitle topbar-shadow">
+        A Tool for Beers Criteria
+        <span *ngIf="mobileWidth && sidenavOpen" class="arrow_right-fab"
+          ><button
+            color="accent"
+            @arrowSlideLeft
+            mat-fab
+            (click)="state.toggleSidenav()"
+          >
+            <mat-icon
+              class="arrow-to-content"
+              svgIcon="arrow_right"
+            ></mat-icon></button
+        ></span>
+      </div>
+
+      <elder-sidebar #sideNav></elder-sidebar>
+    </aside>
+    <main
+      [@sidenavExpand]="
+        mobileWidth
+          ? sidenavOpen
+            ? 'mobileOpen'
+            : 'mobileClose'
+          : sidenavOpen
+          ? 'open'
+          : 'close'
+      "
+    >
+      <nav class="topnav shadow">
+        <button
+          *ngIf="!sidenavOpen || !mobileWidth"
+          class="nav-button"
+          mat-icon-button
+          (click)="this.state.toggleSidenav()"
+        >
+          <mat-icon
+            [svgIcon]="this.layout.sidenavOpen ? 'chevron_left' : 'menu'"
+          ></mat-icon>
+        </button>
+
+        <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
+        <elder-dropdown *ngIf="!showTabs"></elder-dropdown>
+      </nav>
+      <div *ngIf="loaded" style="margin-top: 40px">
+        <elder-table class="table-buffer"> </elder-table>
+      </div>
+    </main>
+  </section>
+</div>

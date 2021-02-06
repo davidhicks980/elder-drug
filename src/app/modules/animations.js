@@ -45,9 +45,10 @@ exports.slideDownAnimation = animations_1.trigger('slideDown', [
     // fade in when created. this could also be written as transition('void => *')
     animations_1.transition(':enter', [
         animations_1.style({
-            transform: 'translateY(-200px)'
+            transform: 'translateY(-20px)',
+            opacity: 0
         }),
-        animations_1.animate('200ms ease', animations_1.style({ transform: 'translateY(0px)' })),
+        animations_1.animate('300ms ease-out', animations_1.style({ transform: 'translateY(0px)', opacity: 1 })),
     ]),
 ]);
 exports.toolbarButtonAnimation = animations_1.trigger('toolbarMargin', [

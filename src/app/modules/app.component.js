@@ -26,6 +26,7 @@ var AppComponent = /** @class */ (function () {
         iconRegistry.addSvgIcon('unfold_more', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/unfold_more.svg'));
         iconRegistry.addSvgIcon('expand_less', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/expand_less.svg'));
         iconRegistry.addSvgIcon('chevron_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg'));
+        iconRegistry.addSvgIcon('overflow_menu_vertical', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/overflow_menu_vertical.svg'));
         iconRegistry.addSvgIcon('chevron_left', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_left.svg'));
         iconRegistry.addSvgIcon('arrow_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/arrow_right.svg'));
         iconRegistry.addSvgIcon('menu', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
@@ -35,13 +36,14 @@ var AppComponent = /** @class */ (function () {
         iconRegistry.addSvgIcon('capsule', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/capsule.svg'));
         iconRegistry.addSvgIcon('general-health', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/general-health.svg'));
         iconRegistry.addSvgIcon('elder_drug_logo', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/elder_drug_logo.svg'));
-        iconRegistry
-            .addSvgIcon('scale', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg'));
+        iconRegistry.addSvgIcon('scale', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg'));
+        iconRegistry.addSvgIcon('tab_left', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_left.svg'));
+        iconRegistry.addSvgIcon('tab_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_right.svg'));
     }
     AppComponent.prototype.ngOnInit = function () { };
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'app-root',
+            selector: 'app-component',
             templateUrl: './app.component.html'
         })
     ], AppComponent);

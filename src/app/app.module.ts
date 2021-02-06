@@ -18,41 +18,40 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
+import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
-import { ExpandedElementComponent } from './expanded-element/expanded-element.component';
-import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
-import { LogoComponent } from './logo/small-logo/logo-component';
-import { MaterialModule } from './material-module';
-import { EmptyInputComponent, EnterDrugFormComponent } from './navigation/enter-drug-form/enter-drug-form.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
+import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
+import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
+import { TabComponent } from './components/layout/tab/tab.component';
 import {
   AboutComponent,
   DesignComponent,
   DisclaimerComponent,
   ToolbarComponent,
-} from './navigation/top-toolbar/toolbar.component';
-import { RotateDirective } from './rotate-icon.directive';
-import { ContentComponent } from './table-logic/content.component';
-import { MedTableComponent } from './table-logic/med-table/table.component';
+} from './components/layout/top-toolbar/toolbar.component';
+import { TableComponent } from './components/table/table.component';
+import { ExpandedElementComponent } from './components/unused/expanded-element/expanded-element.component';
+import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
+import { LogoComponent } from './components/unused/logo/small-logo/logo-component';
+import { CreationSpyDirective } from './directives/creation-spy.directive';
+import { RotateDirective } from './directives/rotate-icon.directive';
+import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
+import { MaterialModule } from './material-module';
 import { ToStringPipe } from './to-string.pipe';
-import { TrackingGradientDirective } from './tracking-gradient.directive';
-import { CreationSpyDirective } from './creation-spy.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
+    LayoutComponent,
     ToolbarComponent,
-    EmptyInputComponent,
     caseSplitPipe,
-    MedTableComponent,
-    ContentComponent,
+    TableComponent,
     LogoComponent,
-    EnterDrugFormComponent,
-    SideNavigationComponent,
+    DrugFormComponent,
+    SidebarComponent,
     ToStringPipe,
     DisclaimerComponent,
     AboutComponent,
@@ -62,11 +61,13 @@ import { CreationSpyDirective } from './creation-spy.directive';
     RotateDirective,
     TrackingGradientDirective,
     CreationSpyDirective,
+    DropdownComponent,
+    TabComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    ElderRoutingModule,
     LayoutModule,
     MaterialModule,
     FormsModule,
