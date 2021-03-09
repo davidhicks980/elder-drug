@@ -1,53 +1,148 @@
 <form [formGroup]="drugsGroup">
+  <div>Search thousands of drugs on Beers criteria</div>
   <section
     cdkScrollable
     aria-label="You can look up drugs on Beers Criteria using this form"
     class="drug-inputs"
   >
-    <div
-      fxLayout="column"
-      fxLayoutAlign="center space-around"
-      formArrayName="drugs"
-    >
-      <div *ngFor="let drug of drugs.controls; let i = index">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <label
+        class="drug-input--container drug-input--label form-field--title"
+        [class.flatbottom]="autocompleteElement.isOpen"
+        (click)="MainInput.focus()"
+        [class.lifted]="input.dirty"
+      >
+        ADD DRUGS
         <div
           #origin="matAutocompleteOrigin"
           matAutocompleteOrigin
-          class="drug-input-container"
+          class="search-container"
         >
           <input
             type="text"
-            [formControlName]="i"
+            formControlName="drugInput"
+            (keydown.Enter)="trigger.closePanel()"
+            (input)="filterAutocomplete(MainInput.value)"
+            class="drug-input"
+            aria-label="Enter your drug name here. For example, 'zolpidem'"
+            #MainInput
             [matAutocomplete]="auto"
             [matAutocompleteConnectedTo]="origin"
-            (keydown.Enter)="search(); trigger.closePanel()"
-            (focus)="activeInputIndex = i"
-            class="drug-input"
             #trigger="matAutocompleteTrigger"
-            aria-label="Enter your drug name here. For example, zolpidem"
-            placeholder=" "
+            placeholder="Zolpidem"
           />
-          <label class="drug-input-label label">
-            Enter Drug (e.g. zolpidem)
-          </label>
-          <span class="background"></span>
+
           <button
+            [disabled]="input.valid"
             mat-icon-button
-            (keydown.enter)="addInput()"
-            (keydown.up)="addInput()"
-            (click)="addInput(); trigger.closePanel(); stopPropagation()"
-            *ngIf="i === 0"
+            class="add-button"
+            [matTooltip]="
+              'Add ' + MainInput.value + (input.valid ? ' ()' : ' ')
+            "
+            matTooltipPosition="right"
+            matTooltipShowDelay="200"
+            matTooltipHideDelay="200"
+            matTooltipClass="tooltip arrow-tip"
+            (click)="addInput(); trigger.closePanel(); (stopPropagation)"
           >
             <mat-icon
-              class="add-icon icon-button"
+              class="add-icon"
               inline="true"
               svgIcon="add--outline"
             ></mat-icon>
           </button>
-          <button
+        </div>
+      </label>
+
+      <div class="chip-list--container">
+        <mat-list
+          formArrayName="drugList"
+          #chipList
+          aria-label="Drug selection"
+        >
+          <div mat-subheader class="form-field--title">SEARCH TERMS</div>
+
+          <mat-list-item
+            *ngFor="let drugName of drugList.controls; index as i"
+            class="mat-standard-chip gray"
+            [selectable]="selectable"
+            [removable]="removable"
+            matTooltip="Edit {{ drugName.value }}"
+            matTooltipPosition="below"
+            matTooltipShowDelay="200"
+            matTooltipHideDelay="200"
+            #chipTooltip="matTooltip"
+            matTooltipClass="tooltip"
+            tabIndex="-1"
+          >
+            <mat-icon
+              mat-list-icon
+              matTooltip="Remove {{ drugName.value }}"
+              matTooltipPosition="below"
+              matTooltipShowDelay="200"
+              matTooltipClass="tooltip"
+              (mouseover)="chipTooltip.disabled = true"
+              (mouseleave)="chipTooltip.disabled = false; chipTooltip.show()"
+              svgIcon="cancel"
+              tabIndex="0"
+              class="remove-icon"
+              (click)="
+                removeOptionAt(i); trigger.closePanel(); (stopPropagation)
+              "
+              (keydown.enter)="removeOptionAt(i)"
+              *ngIf="removable"
+            ></mat-icon>
+            <span
+              #origin="matAutocompleteOrigin"
+              matAutocompleteOrigin
+              class="editable-input"
+              ><input
+                style="grid-column: 1"
+                [formControlName]="i"
+                [matAutocomplete]="auto"
+                #trigger="matAutocompleteTrigger"
+                [matAutocompleteConnectedTo]="origin"
+                #ListInput
+                (keydown.enter)="(ListInput.blur)"
+                (input)="filterAutocomplete(ListInput.value)"
+              />
+            </span>
+
+            <mat-divider *ngIf="i != drugListLength - 1"></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <mat-autocomplete
+          #autocompleteElement
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+        >
+          <mat-option
+            #options
+            [value]="option[0] + option[1]"
+            *ngFor="let option of autocompleteObserver | async"
+            (keydown.enter)="chooseOption(options.value)"
+          >
+            <span fxLayout="row" fxLayoutAlign="space-between">
+              <span>
+                <span style="font-weight: 500">{{ option[0] }}</span
+                >{{ option[1] }}</span
+              ><button
+                mat-icon-button
+                svgIcon="add--outline"
+                (click)="chooseOption(options.value)"
+              ></button
+            ></span>
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </section>
+</form>
+
+<!--<button
             mat-icon-button
-            (click)="removeInputAt(i); trigger.closePanel(); stopPropagation()"
-            (keydown.enter)="removeInputAt(i)"
+            (click)="removeOptionAt(i); trigger.closePanel(); stopPropagation()"
+            (keydown.enter)="removeOptionAt(i)"
             *ngIf="i > 0"
           >
             <mat-icon
@@ -55,18 +150,4 @@
               inline="true"
               svgIcon="delete"
             ></mat-icon>
-          </button>
-        </div>
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option
-            [value]="option[0] + option[1]"
-            *ngFor="let option of dropdownItems | async"
-          >
-            <b>{{ option[0] }}</b
-            >{{ option[1] }}
-          </mat-option>
-        </mat-autocomplete>
-      </div>
-    </div>
-  </section>
-</form>
+          </button>-->

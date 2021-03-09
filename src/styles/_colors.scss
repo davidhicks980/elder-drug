@@ -37,8 +37,13 @@ $soft-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
 $realistic-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
   0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07);
 
-@for $_ from 1 through 12 {
-  .soft-shadow-#{$_} {
-    box-shadow: 0 #{$_}px #{2 * $_}px rgba(0, 0, 0, 0.061);
-  }
+.soft-shadow-1 {
+  box-shadow: 0 1px 2px rgb(87 107 138 / 12%);
+}
+.soft-shadow-2 {
+  box-shadow: 0 1px 2px rgb(87 107 138 / 12%), 0 2px 4px rgb(82 92 126 / 24%);
+}
+.soft-shadow-3 {
+  box-shadow: 0 1px 2px rgb(87 107 138 / 12%), 0 2px 4px rgb(82 92 126 / 24%),
+    0 4px 8px rgb(70 70 105 / 36%);
 }

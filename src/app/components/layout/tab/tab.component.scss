@@ -8,9 +8,6 @@
   $string: "%23" + $string;
   @return $string;
 }
-@function getTab($color) {
-  @return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 37.48'%3E%3Cdefs%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath fill='#{encodecolor($color)}' d='M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E";
-}
 
 .button-row-style {
   display: inline-grid;
@@ -18,50 +15,59 @@
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  place-items: end;
+  height: 100%;
 }
 .nav-header {
   margin: 0 0 0 10px;
 }
 
 ul {
-  vertical-align: text-top;
 }
-.tab-button-li {
-  z-index: 0;
-}
-.tab-button {
-  color: $light-gray-1;
-  cursor: pointer;
-  background-image: url(getTab($primary-2));
 
-  font: $subtitle-text--font;
-  width: 190px;
+.shadow {
+  width: 100%;
+  height: 100%;
+
+  z-index: 200;
+}
+.tab-svg {
+  cursor: pointer;
+  font: "Roboto Condensed", sans-serif;
+  display: block;
+  position: relative;
+  z-index: 0;
+  bottom: 0;
   height: 37.5px;
-  background-repeat: round;
-  display: grid;
-  place-content: center;
-  margin-top: 2.5px;
+  background-image: linear-gradient(transparent 99.5%, white);
+  overflow: hidden;
+  .tab-svg--text {
+    fill: black;
+  }
   &.collapse {
     margin-left: -14px;
   }
-  &.active {
-    color: $dark-gray-2;
-    background-image: url(getTab($light-gray-2));
+  &.active .tab-svg--path {
+    fill: $light-gray-2;
     box-shadow: none;
-    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    transition: background-color 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+      fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    & + .tab-svg--text {
+      fill: $dark-gray-2;
+    }
   }
-  &.inactive {
-    background-image: inset 0px -4px 6px 0px #03235b;
+  &.inactive .tab-svg--path {
+    fill: $primary-1;
+    & ~ .tab-svg--text {
+      fill: $light-gray-2;
+    }
   }
   &:hover {
-    background-image: url(getTab($primary-1));
-    color: white;
+    fill: white;
     transition: all 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     &.active {
-      background-image: url(getTab($light-gray-3));
-
       color: $dark-gray-2;
       box-shadow: none;
     }
@@ -70,4 +76,9 @@ ul {
   &:focus {
     outline: none;
   }
+}
+
+.tabs {
+  height: 40px;
+  counter-reset: tab;
 }

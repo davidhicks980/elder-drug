@@ -1,35 +1,15 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-} from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { slideDownAnimation } from '../../animations';
 import { ColumnService } from '../../services/columns.service';
-import { FirebaseService, Table } from '../../services/firebase.service';
+import { DataService, Table } from '../../services/data.service';
 import { StateService } from '../../services/state.service';
 import { TableService } from '../../services/table.service';
 
@@ -84,21 +64,19 @@ export class TableComponent implements AfterViewInit {
   page: any;
   viewLoaded: boolean;
   dataSource: BeersTableDataSource<Table, Paginator>;
-  groupProperty = 'SearchTerm';
+  groupProperty = 'SearchTerms';
   selectedRow: any = false;
   groups: Set<string> = new Set();
   groupingCriteria: { term: string; shown: string[] };
   animations = true;
   private _expandedRows = new Set();
-  rotate = false;
-  private _fields: string[];
+  private _fields: string[] = ['Items'];
+  loaded: boolean;
 
   set expandedRows(rows: string) {
     this._expandedRows.add(rows);
   }
-  rowIsExpanded(term: string) {
-    return this._expandedRows.has(term) ? true : false;
-  }
+
   trackByFn(e: any, g: any) {
     return `${e}-${g}`;
   }
@@ -115,24 +93,21 @@ export class TableComponent implements AfterViewInit {
   get columnSpan() {
     return this._fields.length;
   }
-  get fields(): string[] {
-    return this._fields;
-  }
-  shouldDisplay(term: any) {
-    return this.groups.has(term);
-  }
+
   toggleGroup(term: string) {
     this.groups.has(term) ? this.groups.delete(term) : this.groups.add(term);
-    this.dataSource.groups = this.groups;
+    this.dataSource.expandedGroups = this.groups;
+    this.changeDetect.markForCheck();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.changeDetect.markForCheck();
   }
 
   constructor(
     public columnService: ColumnService,
-    public firebase: FirebaseService,
+    public firebase: DataService,
     public tableService: TableService,
     public stateService: StateService,
     public changeDetect: ChangeDetectorRef
@@ -140,16 +115,12 @@ export class TableComponent implements AfterViewInit {
     this.firebase = firebase;
     this.tableService = tableService;
     this.columnService = columnService;
-
     this.dataSource = new BeersTableDataSource(
       this.firebase.tableSource,
       this.groupProperty
     );
     this.dataSource.rawHeaderStream = this.columnService.recieveTableColumns$.pipe(
       map((data) => data.selected)
-    );
-    this.dataSource.displayedHeaders.subscribe(
-      (items) => (this._fields = items)
     );
   }
 
@@ -225,15 +196,12 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
 
   groupingParameters: any;
   _dataHeaders: boolean;
-  private _headers: any[];
   private _displayedHeaders: BehaviorSubject<string[]> = new BehaviorSubject(
     []
   );
-  private _rawHeaders = new BehaviorSubject(new Set()) as BehaviorSubject<
-    Set<string>
-  >;
+
   get displayedHeaders(): Observable<string[]> {
-    return of(this._displayedHeaders.value);
+    return this._displayedHeaders.asObservable();
   }
   /** Ingests a stream of any columns that are marked to be shown and that contain data
    * @property {headers} headers - A stream of headers from your table source.
@@ -246,8 +214,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
           this._groupTerm
             ? items.filter((item) => item != this.groupTerm)
             : items
-        ),
-        tap(console.log)
+        )
       )
       .subscribe((items: string[]) => this._displayedHeaders.next(items));
   }
@@ -265,11 +232,11 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     }
   }
 
-  get groups(): Set<string> {
+  get expandedGroups(): Set<string> {
     return this._group.value;
   }
 
-  set groups(group: Set<string>) {
+  set expandedGroups(group: Set<string>) {
     this._group.next(group);
   }
   /** Array of data that should be rendered by the table, where each object represents one row. */
@@ -299,7 +266,6 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     return this._sort;
   }
   set sort(sort: MatSort | null) {
-    console.log(sort);
     this._sort = sort;
     this._updateChangeSubscription();
   }
@@ -477,34 +443,36 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   }
 
   _groupingPredicate(data: T[]) {
-    let dataWithHeaderRows = [] as any[];
-    let header;
-    let expanded;
-    let headerRow;
-    let rows;
-    for (header of this._displayedHeaders.value) {
-      expanded = this.groups.has(header);
+    let groupedData = [] as any[];
+    const groupHeaders = this._extractGroupHeaders(data).flat();
+
+    let expanded = false;
+    let headerRow = {};
+
+    for (let header of groupHeaders) {
+      expanded = this.expandedGroups.has(header);
       headerRow = {
         isGroup: true,
         expanded,
         term: header,
       };
+      console.log(data);
       if (expanded) {
-        dataWithHeaderRows = dataWithHeaderRows.concat(
+        groupedData = groupedData.concat(
           [headerRow],
           data.reduce((rows, item) => {
-            if (item[this.groupTerm] === header) {
+            if (item[this.groupTerm].includes(header)) {
               rows.push(item);
             }
             return rows;
           }, [])
         );
       } else {
-        dataWithHeaderRows.push(headerRow);
+        groupedData.push(headerRow);
       }
     }
-
-    return dataWithHeaderRows;
+    console.log(groupedData);
+    return groupedData;
   }
 
   /**
@@ -550,6 +518,11 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     });
   }
 
+  private _extractGroupHeaders(data: T[]) {
+    return Array.from(
+      new Set(data.map((items) => items[this.groupTerm]).flat())
+    );
+  }
   private _mapReduceEmptyColumns = map(([items, headers]) => {
     return Array.from(
       items.reduce((acc: Set<string>, curr) => {
@@ -602,6 +575,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     if (!this._renderChangesSubscription) {
       this._updateChangeSubscription();
     }
+    console.log(this._renderData.value);
     return this._renderData;
   }
 

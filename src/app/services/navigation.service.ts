@@ -77,7 +77,6 @@ export class NavigationService {
         );
       }),
       map(([hiddenCount, items]) => {
-        console.log(hiddenCount);
         return {
           hidden: items.slice(-(hiddenCount as number) - 1, -1),
           shown: items.slice(0, items.length - (hiddenCount as number)),

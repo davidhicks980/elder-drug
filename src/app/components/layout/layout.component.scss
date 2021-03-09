@@ -30,7 +30,7 @@ section.content {
     width: 100vw;
   }
   & aside.sidenav-open {
-    width: 270px;
+    width: 260px;
     box-sizing: border-box;
     transition: opacity 500ms;
     position: absolute;
@@ -58,7 +58,7 @@ section.content {
       content: "";
       box-shadow: 0 1px 2px rgba(87, 107, 138, 0.12),
         0 2px 4px rgba(82, 92, 126, 0.24), 0 4px 8px rgba(70, 70, 105, 0.36);
-      width: 270px;
+      width: 260px;
       position: absolute;
       height: 100%;
       opacity: 0.5;
@@ -71,7 +71,7 @@ section.content {
       }
     }
     & + main {
-      margin-left: 270px;
+      margin-left: 260px;
     }
   }
   &.small-screen {
@@ -109,7 +109,7 @@ section.header {
 
 .content {
   background-color: $light-gray-2;
-  overflow-y: auto;
+
   &.large {
     height: calc(100vh - #{$header-full});
   }
@@ -133,6 +133,8 @@ section.header {
 main {
   grid-template-rows: 40px auto;
   width: 100%;
+  overflow: hidden;
+  height: 100%;
 }
 .topnav {
   height: 40px;

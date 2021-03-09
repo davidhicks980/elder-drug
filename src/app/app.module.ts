@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
 import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { ChipsComponent } from './components/layout/side-navigation/drug-form/chips/chips.component';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
 import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
 import { TabComponent } from './components/layout/tab/tab.component';
@@ -63,6 +64,7 @@ import { ToStringPipe } from './to-string.pipe';
     CreationSpyDirective,
     DropdownComponent,
     TabComponent,
+    ChipsComponent,
   ],
   imports: [
     BrowserModule,

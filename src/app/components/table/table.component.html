@@ -1,12 +1,12 @@
 <!--<elder-column-selector
   *ngIf="tableName"
-  (columnUpdates)="fields = $event"
+  (columnUpdates)="(dataSource.displayedHeaders | async) = $event"
   [tableName]="tableName"
   (loaded)="selectorInitiated = true"
 ></elder-column-selector>-->
 <ng-content select="[table-description]"></ng-content>
 
-<div class="table-container" *ngIf="dataSource.dataLoaded && fields">
+<div class="table-container soft-shadow-2">
   <div>
     Search Columns
 
@@ -20,15 +20,26 @@
     matSort
     [fixedLayout]="true"
   >
-    <tr cdk-header-row class="header-row" *cdkHeaderRowDef="fields"></tr>
+    <tr
+      cdk-header-row
+      class="header-row"
+      *cdkHeaderRowDef="dataSource.displayedHeaders | async"
+    ></tr>
 
     <tr
       cdk-row
-      *cdkRowDef="let row; columns: fields; when: isShown"
+      *cdkRowDef="
+        let row;
+        columns: dataSource.displayedHeaders | async;
+        when: isShown
+      "
       class="desktop"
-      (SpyInit)="expandedRows = row[groupProperty]"
     ></tr>
-
+    <tr
+      cdk-row
+      *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup"
+      (click)="toggleGroup(row.term)"
+    ></tr>
     <!--<tr
       cdk-row
       *cdkRowDef="let row; columns: ['mobileColumns']"
@@ -36,7 +47,10 @@
   </tr> -->
 
     <ng-container
-      *ngFor="let field of fields; trackBy: trackByFn"
+      *ngFor="
+        let field of dataSource.displayedHeaders | async;
+        trackBy: trackByFn
+      "
       cdkColumnDef="{{ field }}"
     >
       <ng-container>
@@ -45,6 +59,7 @@
           class="header-cell"
           mat-sort-header
           *cdkHeaderCellDef
+          matTooltip="Sort by {{ field }}"
         >
           <div style="display: grid">
             <div style="min-width: 0">
@@ -57,7 +72,7 @@
       >
       <ng-container>
         <td cdk-cell #cell class="table-cell" *cdkCellDef="let row">
-          <span *ngIf="field === fields[0]">
+          <span *ngIf="field === (dataSource.displayedHeaders | async)[0]">
             <button
               class="button"
               class="chevron-button--desktop"
@@ -85,10 +100,11 @@
     <ng-container cdkColumnDef="groupHeader">
       <thead>
         <th
-          class="table-cell header expand-group-header"
-          [attr.colspan]="columnSpan"
+          class="table-cell header group-toggle"
+          [attr.colspan]="(dataSource.displayedHeaders | async).length"
           cdk-cell
           *cdkCellDef="let row"
+          [class.open]="row.expanded"
         >
           <span class="hh-flex v-center-items">
             <mat-icon
@@ -106,11 +122,6 @@
       </thead>
     </ng-container>
 
-    <tr
-      cdk-row
-      *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup"
-      (click)="toggleGroup(row.term)"
-    ></tr>
     <!-- <ng-container cdkColumnDef="mobileColumns">
       <td
         class="mobile-cell hh-grid"
@@ -129,7 +140,7 @@
         <div class="hh-grid grid-spacing hh-span-11">
           <ng-container
             class="mobile-field--title"
-            *ngFor="let field of fields"
+            *ngFor="let field of (dataSource.displayedHeaders | async)"
           >
             <span class="mobile-field--title hh-span-4"
               ><b>{{ field | caseSplit }}</b></span

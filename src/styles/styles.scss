@@ -108,3 +108,48 @@ th .mat-sort-header-pointer-left {
   transform-origin: right;
   left: 1.5px !important;
 }
+
+.mat-sort-header-arrow {
+  color: currentColor !important;
+}
+
+.mat-tooltip.tooltip {
+  font-size: 9pt;
+  padding: 5px 10px 5px 10px;
+}
+
+.mat-chip.mat-standard-chip.gray {
+  background-color: $light-gray-3;
+}
+
+.mat-tooltip.arrow-tip {
+  // to make possible place arrow pseudo element outside tooltip with absolute positioning
+  overflow: visible;
+  position: relative;
+  &.right {
+    border-left: 6px solid red;
+    margin-left: 5px;
+    &::before {
+      position: absolute;
+      content: "";
+      display: inline-block;
+      background-color: red;
+      clip-path: polygon(50% 0, 0 50%, 50% 100%);
+      left: -12px;
+      width: 15px;
+      height: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.mat-option.mat-active {
+  color: black;
+  background-color: tint($light-gray-2, 20%);
+}
+.mat-option:hover {
+  color: black;
+
+  background-color: tint($light-gray-2, 70%) !important;
+}

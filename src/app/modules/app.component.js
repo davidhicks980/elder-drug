@@ -17,7 +17,7 @@ var AppComponent = /** @class */ (function () {
         this.title = 'ElderDrug';
         this.firebase = firebase;
         iconRegistry.addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg'));
-        this.iconRegistry.addSvgIcon('add--outline', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add-circle-outline.svg'));
+        this.iconRegistry.addSvgIcon('add--outline', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add.svg'));
         this.iconRegistry.addSvgIcon('delete', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-trash.svg'));
         iconRegistry.addSvgIcon('error', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg'));
         iconRegistry.addSvgIcon('unfold_less', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/unfold_less.svg'));
@@ -39,6 +39,7 @@ var AppComponent = /** @class */ (function () {
         iconRegistry.addSvgIcon('scale', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg'));
         iconRegistry.addSvgIcon('tab_left', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_left.svg'));
         iconRegistry.addSvgIcon('tab_right', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_right.svg'));
+        iconRegistry.addSvgIcon('cancel', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cancel.svg'));
     }
     AppComponent.prototype.ngOnInit = function () { };
     AppComponent = __decorate([

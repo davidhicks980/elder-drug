@@ -3,8 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LayoutStatus, ScreenStatus, StateService } from 'src/app/services/state.service';
 
 import { toolbarItemsFade } from '../../../animations';
-import { FirebaseService } from '../../../services/firebase.service';
-
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'elder-toolbar',
@@ -21,7 +20,7 @@ export class ToolbarComponent {
   sidenavOpenMobileWidth: boolean;
   smallGridLayout: any;
   constructor(
-    public fire: FirebaseService,
+    public fire: DataService,
     public state: StateService,
     public dialog: MatDialog
   ) {

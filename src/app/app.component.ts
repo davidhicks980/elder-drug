@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { FirebaseService } from './services/firebase.service';
-import { StateService } from './services/state.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-component',
@@ -12,10 +11,9 @@ import { StateService } from './services/state.service';
 export class AppComponent implements OnInit {
   ngOnInit(): void {}
   constructor(
-    private state: StateService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private firebase: FirebaseService
+    private firebase: DataService
   ) {
     this.firebase = firebase;
     iconRegistry.addSvgIcon(
@@ -24,9 +22,7 @@ export class AppComponent implements OnInit {
     );
     this.iconRegistry.addSvgIcon(
       'add--outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/ion-add-circle-outline.svg'
-      )
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add.svg')
     );
     this.iconRegistry.addSvgIcon(
       'delete',
@@ -142,6 +138,10 @@ export class AppComponent implements OnInit {
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/tab_right.svg'
       )
+    );
+    iconRegistry.addSvgIcon(
+      'cancel',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cancel.svg')
     );
   }
   title = 'ElderDrug';

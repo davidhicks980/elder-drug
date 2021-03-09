@@ -11,7 +11,7 @@ import {
   tableVisibleAnimation,
 } from '../../animations';
 import { ColumnService } from '../../services/columns.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { DataService } from '../../services/data.service';
 import { NavigationService } from '../../services/navigation.service';
 import { LayoutStatus, StateService } from '../../services/state.service';
 import { Table } from '../../services/table.service';
@@ -20,7 +20,7 @@ import { Table } from '../../services/table.service';
   selector: 'elder-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  providers: [FirebaseService],
+  providers: [DataService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     slideInLeft,
@@ -70,7 +70,7 @@ import { Table } from '../../services/table.service';
         group([
           animate(
             '200ms ease',
-            keyframes([style({ transform: 'translateX(-270px)', offset: 1 })])
+            keyframes([style({ transform: 'translateX(-260px)', offset: 1 })])
           ),
         ])
       ),
@@ -80,14 +80,14 @@ import { Table } from '../../services/table.service';
         animate(
           '400ms ease',
           keyframes([
-            style({ transform: 'translateX(-270px)', offset: 0 }),
+            style({ transform: 'translateX(-260px)', offset: 0 }),
             style({ transform: 'translateX(0px)', offset: 1 }),
           ])
         )
       ),
       transition(':enter', [
         style({
-          transform: 'translateX(-270px)',
+          transform: 'translateX(-260px)',
         }),
         animate('400ms ease', style({ transform: 'translate(0px)' })),
       ]),
@@ -98,7 +98,7 @@ import { Table } from '../../services/table.service';
         animate(
           '200ms ease',
           style({
-            transform: 'translateX(-270px)',
+            transform: 'translateX(-260px)',
           })
         ),
       ]),
@@ -120,7 +120,7 @@ export class LayoutComponent {
   tableDescription: string;
   loaded = false;
   constructor(
-    public webSocketService: FirebaseService,
+    public webSocketService: DataService,
     public state: StateService,
     private columnService: ColumnService,
     public nav: NavigationService

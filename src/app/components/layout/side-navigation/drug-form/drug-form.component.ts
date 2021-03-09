@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-import { interval, Observable } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { LayoutStatus, StateService } from 'src/app/services/state.service';
 
 import { inputAnimation } from '../../../../animations';
-import { FirebaseService } from '../../../../services/firebase.service';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
   selector: 'elder-drug-form',
@@ -18,7 +18,7 @@ import { FirebaseService } from '../../../../services/firebase.service';
   animations: [inputAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DrugFormComponent {
+export class DrugFormComponent implements OnDestroy {
   @ViewChildren(MatAutocompleteTrigger) trigger: QueryList<
     MatAutocompleteTrigger
   >;
@@ -26,99 +26,107 @@ export class DrugFormComponent {
   // @ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('drawer') public sidenav: MatSidenav;
   drugsGroup: FormGroup = this.fb.group({
-    drugs: this.fb.array([
-      new FormControl('', [
-        Validators.pattern('[a-zA-Z0-9 -]*'),
-        Validators.minLength(2),
-        Validators.maxLength(70),
-      ]),
+    drugInput: new FormControl('', [
+      //prettier-ignore
+      Validators.pattern('([\w\s\,-.])+'),
+      Validators.minLength(2),
+      Validators.maxLength(70),
     ]),
+    drugList: new FormArray([]),
   });
   sidenavActive: boolean;
   i: number;
-  activeInput = 0;
-  dropdownItemsSearch: any;
-  dropdownArray: {};
-  dropdownItems: Observable<string[][]>;
-  filteredOptions: Observable<string[]>;
   entryValue: string;
   sideOpen: boolean;
   layout: LayoutStatus;
-  private _activeInputIndex: number;
-  boldInputText(option: string, active: string) {
-    const index = option.search(active);
-    const subString = option.substring(index, index + 50);
-    return '<p>' + subString.replace(active, active.bold()) + '</p>';
-  }
+  lastValue: any;
+  focusIndex: number = 0;
+  private autocompleteListener = new Subject() as Subject<string[][]>;
+  autocompleteObserver = this.autocompleteListener.asObservable().pipe(
+    debounceTime(25),
+    map((val) => (val.length < 1 ? [['Not found']] : val))
+  );
 
-  get drugs(): FormArray {
-    return this.drugsGroup.get('drugs') as FormArray;
+  get drugList(): FormArray {
+    return this.drugsGroup.get('drugList') as FormArray;
+  }
+  get input(): FormControl {
+    return this.drugsGroup.get('drugInput') as FormControl;
   }
   get inputLength(): number {
-    return this.drugs.length;
+    return this.input.value.length;
+  }
+  get sortedList() {
+    return this.drugList.value.slice().sort((a, b) => a.length - b.length);
+  }
+  get drugListLength(): number {
+    return this.drugList.length;
   }
   search() {
-    const out = [];
-    let index = 0;
-    this.drugs.value.filter((drug) => {
-      this.fire.entryMap.has(drug.toLowerCase())
-        ? out.push(drug)
-        : this.drugs.controls[index].setErrors({
-            notDrug: true,
-          });
-      index++;
-    });
-    if (out.length > 0) {
-      this.fire.searchDrugs(out);
-      this.state.toggleSidenav();
-    } else {
-      this.openDialog();
-    }
+    this.drugList.value.length > 0
+      ? (this.database.searchDrugs(), this.state.toggleSidenav())
+      : this.openDialog();
   }
-  stopPropagation() {
-    event.stopPropagation();
-  }
-  set activeInputIndex(index: number) {
-    this._activeInputIndex = index;
+  stopPropagation(e) {
+    e.stopPropagation();
   }
 
+  checkForDrug(drug: string) {
+    return this.database.hasDrug(drug);
+  }
+  chooseOption(optionValue: string) {
+    if (this.database.hasDrug(optionValue)) {
+      this.input.setValue(optionValue);
+      this.addInput();
+    }
+  }
   addInput() {
-    if (this.drugs.length < 8) {
-      this.drugs.push(
-        this.fb.control('', [
-          Validators.pattern('[a-zA-Z0-9 -]*'),
-          Validators.minLength(2),
-          Validators.maxLength(70),
-        ])
-      );
+    if (
+      this.drugList.value.length < 8 &&
+      this.database.hasDrug(this.input.value)
+    ) {
+      this.drugList.push(new FormControl(this.input.value));
+      setTimeout(() => this.input.setValue(''), 30);
+    } else {
     }
   }
-  removeInputAt(index: number) {
-    this.drugs.removeAt(index);
+
+  removeOptionAt(index: number) {
+    return this.drugList.removeAt(index);
   }
 
+  filterAutocomplete(input: string) {
+    if (input && input.length > 1) {
+      this.autocompleteListener.next(
+        this.database
+          .filterValues(input)
+          .map((item: string) => [input, item.slice(input.length)])
+      );
+    } else if (input && input.length > 0)
+      this.autocompleteListener.next([['Enter two letters']]);
+  }
+  ngOnDestroy() {
+    this.autocompleteListener.unsubscribe();
+  }
   constructor(
     public state: StateService,
-    public fire: FirebaseService,
+    public database: DataService,
     private fb: FormBuilder,
     public dialog: MatDialog
   ) {
-    /* const index = option.search(active);
-    const subString = option.substring(index, index + 50);
-    return '<p>' + subString.replace(active, active.bold()) + '</p>';*/
-    this.drugs.valueChanges
-      .pipe(debounce(() => interval(50)))
-      .subscribe((res) => {
-        fire.filterValues(res[this._activeInputIndex]);
-      });
-    this.dropdownItems = fire.filteredItems$;
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
-      this.layout = layoutStatus;
-    });
+    this.drugList.controls = database.lastSearch.map(
+      (val) => new FormControl(val)
+    );
+    this.drugList.valueChanges.subscribe(database.changeDrugs());
   }
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });
   }
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
 }
 
 @Component({

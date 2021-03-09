@@ -30,7 +30,6 @@ var operators_1 = require("rxjs/operators");
 var animations_2 = require("../../animations");
 var TableComponent = /** @class */ (function () {
     function TableComponent(columnService, firebase, tableService, stateService, changeDetect) {
-        var _this = this;
         this.columnService = columnService;
         this.firebase = firebase;
         this.tableService = tableService;
@@ -42,13 +41,12 @@ var TableComponent = /** @class */ (function () {
         this.groups = new Set();
         this.animations = true;
         this._expandedRows = new Set();
-        this.rotate = false;
+        this._fields = ['Items'];
         this.firebase = firebase;
         this.tableService = tableService;
         this.columnService = columnService;
         this.dataSource = new BeersTableDataSource(this.firebase.tableSource, this.groupProperty);
         this.dataSource.rawHeaderStream = this.columnService.recieveTableColumns$.pipe(operators_1.map(function (data) { return data.selected; }));
-        this.dataSource.displayedHeaders.subscribe(function (items) { return (_this._fields = items); });
     }
     Object.defineProperty(TableComponent.prototype, "expandedRows", {
         set: function (rows) {
@@ -57,9 +55,6 @@ var TableComponent = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    TableComponent.prototype.rowIsExpanded = function (term) {
-        return this._expandedRows.has(term) ? true : false;
-    };
     TableComponent.prototype.trackByFn = function (e, g) {
         return e + "-" + g;
     };
@@ -81,22 +76,14 @@ var TableComponent = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(TableComponent.prototype, "fields", {
-        get: function () {
-            return this._fields;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    TableComponent.prototype.shouldDisplay = function (term) {
-        return this.groups.has(term);
-    };
     TableComponent.prototype.toggleGroup = function (term) {
         this.groups.has(term) ? this.groups["delete"](term) : this.groups.add(term);
-        this.dataSource.groups = this.groups;
+        this.dataSource.expandedGroups = this.groups;
+        this.changeDetect.markForCheck();
     };
     TableComponent.prototype.ngAfterViewInit = function () {
         this.dataSource.sort = this.sort;
+        this.changeDetect.markForCheck();
     };
     TableComponent.prototype.isGroup = function (index, item) {
         return item.isGroup;
@@ -179,7 +166,6 @@ var BeersTableDataSource = /** @class */ (function (_super) {
         _this._group = new rxjs_1.BehaviorSubject(new Set());
         _this._dataLoaded = false;
         _this._displayedHeaders = new rxjs_1.BehaviorSubject([]);
-        _this._rawHeaders = new rxjs_1.BehaviorSubject(new Set());
         /**
          * Data accessor function that is used for accessing data properties for sorting through
          * the default sortData function.
@@ -301,7 +287,7 @@ var BeersTableDataSource = /** @class */ (function (_super) {
     }
     Object.defineProperty(BeersTableDataSource.prototype, "displayedHeaders", {
         get: function () {
-            return rxjs_1.of(this._displayedHeaders.value);
+            return this._displayedHeaders.asObservable();
         },
         enumerable: false,
         configurable: true
@@ -317,7 +303,7 @@ var BeersTableDataSource = /** @class */ (function (_super) {
                 return _this._groupTerm
                     ? items.filter(function (item) { return item != _this.groupTerm; })
                     : items;
-            }), operators_1.tap(console.log))
+            }))
                 .subscribe(function (items) { return _this._displayedHeaders.next(items); });
         },
         enumerable: false,
@@ -344,7 +330,7 @@ var BeersTableDataSource = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BeersTableDataSource.prototype, "groups", {
+    Object.defineProperty(BeersTableDataSource.prototype, "expandedGroups", {
         get: function () {
             return this._group.value;
         },
@@ -388,7 +374,6 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             return this._sort;
         },
         set: function (sort) {
-            console.log(sort);
             this._sort = sort;
             this._updateChangeSubscription();
         },
@@ -434,13 +419,12 @@ var BeersTableDataSource = /** @class */ (function (_super) {
     BeersTableDataSource.prototype._groupingPredicate = function (data) {
         var _this = this;
         var dataWithHeaderRows = [];
-        var header;
+        var groupHeaders = this._extractGroupHeaders(data);
         var expanded;
         var headerRow;
         var rows;
-        for (var _i = 0, _a = this._displayedHeaders.value; _i < _a.length; _i++) {
-            header = _a[_i];
-            expanded = this.groups.has(header);
+        var _loop_1 = function (header) {
+            expanded = this_1.expandedGroups.has(header);
             headerRow = {
                 isGroup: true,
                 expanded: expanded,
@@ -457,6 +441,11 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             else {
                 dataWithHeaderRows.push(headerRow);
             }
+        };
+        var this_1 = this;
+        for (var _i = 0, groupHeaders_1 = groupHeaders; _i < groupHeaders_1.length; _i++) {
+            var header = groupHeaders_1[_i];
+            _loop_1(header);
         }
         return dataWithHeaderRows;
     };
@@ -501,6 +490,10 @@ var BeersTableDataSource = /** @class */ (function (_super) {
             _this._dataLoaded = true;
         });
     };
+    BeersTableDataSource.prototype._extractGroupHeaders = function (data) {
+        var _this = this;
+        return Array.from(new Set(data.map(function (items) { return items[_this.groupTerm]; })));
+    };
     /**
      * Returns a filtered data array where each filter object contains the filter string within
      * the result of the filterTermAccessor function. If no filter is set, returns the data array
@@ -538,6 +531,7 @@ var BeersTableDataSource = /** @class */ (function (_super) {
         if (!this._renderChangesSubscription) {
             this._updateChangeSubscription();
         }
+        console.log(this._renderData.value);
         return this._renderData;
     };
     /**

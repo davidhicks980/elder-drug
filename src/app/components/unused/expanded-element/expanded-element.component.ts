@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Table } from '../../../services/firebase.service';
+import { Table } from '../../../services/data.service';
 
 @Component({
   selector: 'elder-expanded-element',

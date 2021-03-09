@@ -197,13 +197,17 @@ var FirebaseService = /** @class */ (function () {
         }
         return tables;
     };
+    FirebaseService.prototype.isPresent = function (entry) {
+        if (entry)
+            return this.dropdownItems.get(entry[0].toLowerCase()).includes(entry);
+    };
     FirebaseService.prototype.filterValues = function (entry) {
         if (entry) {
             var first = entry[0].toLowerCase();
             this.filterDropdown.next(this.dropdownItems
                 .get(first)
                 .filter(function (val) { return val.startsWith(entry.toLowerCase()); })
-                .slice(0, 10)
+                .slice(0, 15)
                 .map(function (item) { return [entry, item.substr(entry.length, Infinity)]; }));
         }
     };

@@ -31,6 +31,7 @@ var app_component_1 = require("./app.component");
 var case_split_pipe_1 = require("./case-split.pipe");
 var dropdown_component_1 = require("./components/layout/dropdown/dropdown.component");
 var layout_component_1 = require("./components/layout/layout.component");
+var chips_component_1 = require("./components/layout/side-navigation/drug-form/chips/chips.component");
 var drug_form_component_1 = require("./components/layout/side-navigation/drug-form/drug-form.component");
 var sidebar_component_1 = require("./components/layout/side-navigation/sidebar.component");
 var tab_component_1 = require("./components/layout/tab/tab.component");
@@ -69,6 +70,7 @@ var AppModule = /** @class */ (function () {
                 creation_spy_directive_1.CreationSpyDirective,
                 dropdown_component_1.DropdownComponent,
                 tab_component_1.TabComponent,
+                chips_component_1.ChipsComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,

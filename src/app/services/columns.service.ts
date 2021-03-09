@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class ColumnService {
   fields: ColumnField[];
   constructor() {}
+
   static receiveTables$: any;
 
   public columnOptions = [
@@ -89,6 +90,7 @@ export class ColumnService {
   // Observable string sources
   private tableColumns = new Subject<DisplayedColumns>();
   private optionsList = new Subject<object>();
+  tables = new Set(this.columnDefinitions.map((def) => def.filters).flat());
 
   // Observable string streams
   recieveTableColumns$ = this.tableColumns.asObservable();
@@ -101,6 +103,16 @@ export class ColumnService {
       .map((item) => item.id);
     const allFields = options.map((item) => item.id);
     this.tableColumns.next({ selected: selectedFields, all: allFields });
+  }
+
+  tableExists(table): boolean {
+    console.log(table);
+    return this.tables.has(table);
+  }
+  retrieveTable(item) {
+    return this.columnDefinitions
+      .filter((def) => def.filters.includes(item))
+      .map((def) => def.id)[0];
   }
 }
 

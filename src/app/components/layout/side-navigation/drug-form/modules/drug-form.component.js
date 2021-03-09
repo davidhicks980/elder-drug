@@ -11,7 +11,6 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var autocomplete_1 = require("@angular/material/autocomplete");
 var input_1 = require("@angular/material/input");
-var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var animations_1 = require("../../../../animations");
 var DrugFormComponent = /** @class */ (function () {
@@ -22,22 +21,23 @@ var DrugFormComponent = /** @class */ (function () {
         this.fb = fb;
         this.dialog = dialog;
         this.drugsGroup = this.fb.group({
-            drugs: this.fb.array([
-                new forms_1.FormControl('', [
-                    forms_1.Validators.pattern('[a-zA-Z0-9 -]*'),
-                    forms_1.Validators.minLength(2),
-                    forms_1.Validators.maxLength(70),
-                ]),
-            ])
+            drugs: new forms_1.FormControl('', [
+                forms_1.Validators.pattern('[a-zA-Z0-9 -]*'),
+                forms_1.Validators.minLength(2),
+                forms_1.Validators.maxLength(70),
+            ]),
+            chips: new forms_1.FormControl([])
         });
         this.activeInput = 0;
+        this.visible = true;
+        this.selectable = true;
+        this.removable = true;
+        this.addOnBlur = true;
         /* const index = option.search(active);
         const subString = option.substring(index, index + 50);
         return '<p>' + subString.replace(active, active.bold()) + '</p>';*/
-        this.drugs.valueChanges
-            .pipe(operators_1.debounce(function () { return rxjs_1.interval(50); }))
-            .subscribe(function (res) {
-            fire.filterValues(res[_this._activeInputIndex]);
+        this.drugs.valueChanges.pipe(operators_1.debounceTime(30)).subscribe(function (res) {
+            fire.filterValues(res);
         });
         this.dropdownItems = fire.filteredItems$;
         this.state.windowWidth$.subscribe(function (layoutStatus) {
@@ -49,6 +49,13 @@ var DrugFormComponent = /** @class */ (function () {
         var subString = option.substring(index, index + 50);
         return '<p>' + subString.replace(active, active.bold()) + '</p>';
     };
+    Object.defineProperty(DrugFormComponent.prototype, "chips", {
+        get: function () {
+            return this.drugsGroup.get('chips');
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(DrugFormComponent.prototype, "drugs", {
         get: function () {
             return this.drugsGroup.get('drugs');
@@ -58,7 +65,7 @@ var DrugFormComponent = /** @class */ (function () {
     });
     Object.defineProperty(DrugFormComponent.prototype, "inputLength", {
         get: function () {
-            return this.drugs.length;
+            return this.drugs.value.length;
         },
         enumerable: false,
         configurable: true
@@ -70,7 +77,7 @@ var DrugFormComponent = /** @class */ (function () {
         this.drugs.value.filter(function (drug) {
             _this.fire.entryMap.has(drug.toLowerCase())
                 ? out.push(drug)
-                : _this.drugs.controls[index].setErrors({
+                : _this.drugs.setErrors({
                     notDrug: true
                 });
             index++;
@@ -93,17 +100,27 @@ var DrugFormComponent = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    DrugFormComponent.prototype.addInput = function () {
-        if (this.drugs.length < 8) {
-            this.drugs.push(this.fb.control('', [
-                forms_1.Validators.pattern('[a-zA-Z0-9 -]*'),
-                forms_1.Validators.minLength(2),
-                forms_1.Validators.maxLength(70),
-            ]));
+    DrugFormComponent.prototype.checkForDrug = function (drug) {
+        return this.fire.isPresent(drug);
+    };
+    DrugFormComponent.prototype.chooseOption = function (optionValue) {
+        if (this.fire.isPresent(optionValue)) {
+            this.drugs.setValue(optionValue);
+            this.addInput();
         }
     };
-    DrugFormComponent.prototype.removeInputAt = function (index) {
-        this.drugs.removeAt(index);
+    DrugFormComponent.prototype.addInput = function () {
+        var _this = this;
+        if (this.chips.value.length < 8) {
+            this.chips.value.push(this.drugs.value);
+            setTimeout(function () { return _this.drugs.setValue(''); }, 30);
+        }
+    };
+    DrugFormComponent.prototype.editOptionAt = function (index) {
+        this.drugs.setValue(this.removeOptionAt(index));
+    };
+    DrugFormComponent.prototype.removeOptionAt = function (index) {
+        return this.chips.value.splice(index, 1);
     };
     DrugFormComponent.prototype.openDialog = function () {
         this.dialog.open(EmptyInputComponent, { width: '20em' });

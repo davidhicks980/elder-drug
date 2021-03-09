@@ -61,8 +61,10 @@
         <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
         <elder-dropdown *ngIf="!showTabs"></elder-dropdown>
       </nav>
-      <div *ngIf="loaded" style="margin-top: 40px">
-        <elder-table class="table-buffer"> </elder-table>
+      <div style="margin-top: 40px; overflow-y: auto; height: 100%">
+        <elder-table class="table-buffer"
+          ><div table-description>A table for viewing things</div>
+        </elder-table>
       </div>
     </main>
   </section>

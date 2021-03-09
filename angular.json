@@ -73,7 +73,13 @@
               "browserTarget": "search-angular:build:production"
             }
           },
-          "exclude": ["/node_modules/**"]
+          "exclude": [
+            "/node_modules/**",
+            "/dist/**",
+            "/database/**",
+            "/public/**",
+            "/rxnorm-scripts/**"
+          ]
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

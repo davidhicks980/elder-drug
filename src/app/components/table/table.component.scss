@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "colors";
 
 .flex-container {
@@ -8,6 +9,9 @@
   width: auto;
   background: white;
   padding: 5px;
+  border-radius: 3px;
+  margin: 10px;
+  border: none;
 }
 .mat-sort-header-content {
   text-align: center;
@@ -17,7 +21,6 @@
   min-width: 0;
 }
 table {
-  border-radius: 3px;
   border-spacing: 0;
   border-collapse: separate;
   width: 98%;
@@ -27,6 +30,7 @@ table {
   max-width: 1300px;
   overflow: hidden;
   border: 1px solid $light-gray-3;
+  border-radius: 3px;
   & .cdk-column-expandedDetail {
     overflow: hidden;
   }
@@ -62,27 +66,41 @@ table {
     }
   }
   & th {
-    height: 40px;
+    height: 36px;
     text-align: left;
-    color: white;
     font-family: "IBM Plex Sans", sans-serif;
     text-align: left;
-    border-bottom: 1px solid $light-gray-3;
+    border-bottom: 1px solid $light-gray-4;
     box-shadow: inset 0px 1px 0px 0 #ffffff54;
-    background-color: #eceef2;
-    color: $dark-gray-2;
-    &.expand-group-header {
-      background-color: white;
+    background-color: $light-gray-1;
+    color: $gray-2;
+    border-right: 1px solid $light-gray-4;
+    &.header-cell:hover {
+      background-color: tint($primary-1, 90%);
+    }
+    &.group-toggle {
+      height: 30px;
       cursor: pointer;
+      color: $gray-3;
+      border-radius: 0px;
+
+      &.open {
+        background-color: tint($primary-1, 90%);
+        color: $secondary-2-5;
+        transition: background-color 1s;
+      }
+      & td {
+        border-radius: 0px;
+      }
     }
     &:first-of-type {
-      border-top-left-radius: 3px;
+      //   border-top-left-radius: 3px;
       & .header-cell--text {
         margin-left: 40px;
       }
     }
     &:last-of-type {
-      border-top-right-radius: 3px;
+      // border-top-right-radius: 3px;
     }
   }
 }
@@ -92,7 +110,7 @@ table {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-weight: 600;
+    font-weight: 400;
   }
   &.data-cell--text {
     margin-left: 10px;
@@ -211,7 +229,7 @@ button.absolute-position {
 }
 .subheader {
   font-weight: 500;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .chevron {
