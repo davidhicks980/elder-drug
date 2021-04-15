@@ -1,7 +1,12 @@
 <div class="side-panel" fxLayout="column" fxLayoutAlign="space-between center">
-  <elder-drug-form #searchForm></elder-drug-form>
+  <ng-content select="sidebar-description"> </ng-content>
+  <elder-drug-form
+    (invalid)="this.buttonDisabled = $event"
+    #searchForm
+  ></elder-drug-form>
   <div class="button-container">
     <button
+      [disabled]="this.buttonDisabled"
       type="submit"
       (click)="searchForm.search()"
       (keydown.enter)="searchForm.search()"

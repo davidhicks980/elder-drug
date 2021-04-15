@@ -1,12 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatInput } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Subject } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
-import { LayoutStatus, StateService } from 'src/app/services/state.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { StateService } from 'src/app/services/state.service';
 
 import { inputAnimation } from '../../../../animations';
 import { DataService } from '../../../../services/data.service';
@@ -19,12 +30,9 @@ import { DataService } from '../../../../services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrugFormComponent implements OnDestroy {
-  @ViewChildren(MatAutocompleteTrigger) trigger: QueryList<
-    MatAutocompleteTrigger
-  >;
-  @ViewChildren(MatInput) submission: QueryList<MatInput>;
-  // @ViewChildren('searchInputs') submission: ElementRef;
   @ViewChild('drawer') public sidenav: MatSidenav;
+  isDestroyed = new Subject();
+  observeDestruction$ = this.isDestroyed.asObservable();
   drugsGroup: FormGroup = this.fb.group({
     drugInput: new FormControl('', [
       //prettier-ignore
@@ -34,27 +42,21 @@ export class DrugFormComponent implements OnDestroy {
     ]),
     drugList: new FormArray([]),
   });
-  sidenavActive: boolean;
-  i: number;
-  entryValue: string;
-  sideOpen: boolean;
-  layout: LayoutStatus;
-  lastValue: any;
-  focusIndex: number = 0;
   private autocompleteListener = new Subject() as Subject<string[][]>;
   autocompleteObserver = this.autocompleteListener.asObservable().pipe(
     debounceTime(25),
+    takeUntil(this.observeDestruction$),
     map((val) => (val.length < 1 ? [['Not found']] : val))
   );
 
   get drugList(): FormArray {
     return this.drugsGroup.get('drugList') as FormArray;
   }
-  get input(): FormControl {
+  get drugInput(): FormControl {
     return this.drugsGroup.get('drugInput') as FormControl;
   }
   get inputLength(): number {
-    return this.input.value.length;
+    return this.drugInput.value.length;
   }
   get sortedList() {
     return this.drugList.value.slice().sort((a, b) => a.length - b.length);
@@ -76,17 +78,17 @@ export class DrugFormComponent implements OnDestroy {
   }
   chooseOption(optionValue: string) {
     if (this.database.hasDrug(optionValue)) {
-      this.input.setValue(optionValue);
+      this.drugInput.setValue(optionValue);
       this.addInput();
     }
   }
   addInput() {
     if (
       this.drugList.value.length < 8 &&
-      this.database.hasDrug(this.input.value)
+      this.database.hasDrug(this.drugInput.value)
     ) {
-      this.drugList.push(new FormControl(this.input.value));
-      setTimeout(() => this.input.setValue(''), 30);
+      this.drugList.push(new FormControl(this.drugInput.value));
+      setTimeout(() => this.drugInput.setValue(''), 30);
     } else {
     }
   }
@@ -103,10 +105,10 @@ export class DrugFormComponent implements OnDestroy {
           .map((item: string) => [input, item.slice(input.length)])
       );
     } else if (input && input.length > 0)
-      this.autocompleteListener.next([['Enter two letters']]);
+      this.autocompleteListener.next([['Enter a drug']]);
   }
   ngOnDestroy() {
-    this.autocompleteListener.unsubscribe();
+    this.isDestroyed.next(true);
   }
   constructor(
     public state: StateService,
@@ -117,8 +119,19 @@ export class DrugFormComponent implements OnDestroy {
     this.drugList.controls = database.lastSearch.map(
       (val) => new FormControl(val)
     );
-    this.drugList.valueChanges.subscribe(database.changeDrugs());
+    this.drugList.valueChanges
+      .pipe(takeUntil(this.observeDestruction$))
+      .subscribe(database.changeDrugs());
+    this.drugsGroup.statusChanges
+      .pipe(takeUntil(this.observeDestruction$))
+      .subscribe((change) => {
+        this.invalid.emit(this.checkValidity(change));
+      });
   }
+  checkValidity = (change) => {
+    return change === 'INVALID';
+  };
+  @Output('invalid') invalid: EventEmitter<boolean> = new EventEmitter();
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });
   }
@@ -134,8 +147,3 @@ export class DrugFormComponent implements OnDestroy {
   templateUrl: 'empty-input.html',
 })
 export class EmptyInputComponent {}
-
-export interface DrugInput {
-  id: number;
-  control: FormControl;
-}

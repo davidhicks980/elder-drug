@@ -13,6 +13,7 @@ export class SidebarComponent {
   layout: LayoutStatus;
   sidenavOpen: boolean;
 
+  buttonDisabled = false;
   constructor(public state: StateService) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;

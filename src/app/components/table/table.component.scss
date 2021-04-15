@@ -8,10 +8,11 @@
 .table-container {
   width: auto;
   background: white;
-  padding: 5px;
+  padding: 8px;
   border-radius: 3px;
   margin: 10px;
   border: none;
+  max-width: 1400px;
 }
 .mat-sort-header-content {
   text-align: center;
@@ -23,9 +24,8 @@
 table {
   border-spacing: 0;
   border-collapse: separate;
-  width: 98%;
-  max-width: 98%;
-  margin: 1%;
+  width: 100%;
+  max-width: 100%;
   background: white;
   max-width: 1300px;
   overflow: hidden;
@@ -239,6 +239,12 @@ button.absolute-position {
   }
   &.rotated {
     transform: rotate(90deg);
+  }
+}
+div.filter-container {
+  margin-left: 8px;
+  input.filter-input {
+    padding: 0.5em;
   }
 }
 

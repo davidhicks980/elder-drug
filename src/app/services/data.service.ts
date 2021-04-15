@@ -128,7 +128,7 @@ export class DataService {
   }
 
   hasDrug(drugName: string) {
-    return this.drugSet.has(drugName);
+    return this.drugSet.has(drugName.toLowerCase());
   }
 
   constructor(
@@ -236,59 +236,3 @@ export interface Table {
   ShortTableName: string;
   SearchTerms?: string[];
 }
-/*let createTableObjects = (
-      mappedTerms: Table[],
-      categories: number[],
-      definitions: columnDefinition[],
-      columns: Column[]
-    ): TableParameters[] => {
-      let tables: TableParameters[] = [];
-
-      for (let category of categories) {
-        //If the table category is general, use all tables
-        let generalInfo = category === Category.General;
-        const table = generalInfo
-          ? mappedTerms
-          : mappedTerms.filter((item: Columns) => item.Category == category);
-        //Check to see if tables exist and contain items
-        if (table) {
-          if (table.length > 0) {
-            //Get the columns that are relevant to the displayed table
-            const fields = this.getColFields(definitions, columns).get(
-              category
-            );
-            const { selected, displayed } = fields;
-            const displayedColumns = Array.from(
-              table.reduce((acc: Set<string>, curr: Table) => {
-                // Iterate through each entry in a specific drug table
-                for (let key in curr) {
-                  const displayedFields = displayed.map((item) => item.field);
-                  if (key === 'SearchTerm') {
-                    acc.add(key);
-                  } else if (curr[key] && displayedFields.includes(key)) {
-                    acc.add(key);
-                  }
-                }
-                return acc;
-              }, new Set()) as Set<string>
-            ) as string[];
-
-            tables.push({
-              id: category,
-              tables: table,
-              fields: displayedColumns,
-              selected: [...selected.map((item) => item.field)],
-            });
-          }
-        }
-      }
-      return tables;
-    };
-
-    this.activeTables.next(this.getTableNamesContainingData(mappedTerms));
-    const tables = createTableObjects(
-      mappedTerms,
-      categories,
-      this.columnDefinitions,
-      this.columnOptions
-    );*/

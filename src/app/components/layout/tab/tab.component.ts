@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 import { ColumnService } from '../../../services/columns.service';
 import { NavigationService } from '../../../services/navigation.service';
+import { TableService } from '../../../services/table.service';
 
 @Component({
   selector: 'elder-tabs',
@@ -78,15 +79,22 @@ export class TabComponent {
   nav: NavigationService;
   columns: ColumnService;
   @Output() tableSelected = new EventEmitter<boolean>();
-  handleTabClick(table, tabIndex) {
+  tables: TableService;
+  handleTabClick(table: number, tabIndex: number) {
     this.currentTab = tabIndex;
     this.columns.requestTable(table);
     this.tableSelected.emit(true);
+    this.tables.emitTableInformation(table);
   }
   ngAfterViewInit() {
     this.nav.createIntersectionObserver(document.querySelector('.tabs'));
   }
-  constructor(nav: NavigationService, columns: ColumnService) {
+  constructor(
+    nav: NavigationService,
+    columns: ColumnService,
+    tables: TableService
+  ) {
+    this.tables = tables;
     this.nav = nav;
     this.shownTabs = this.nav.showTabs ? this.nav.allTabs : this.nav.shownTabs;
     this.columns = columns;

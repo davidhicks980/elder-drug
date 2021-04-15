@@ -1,4 +1,12 @@
-import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  group,
+  keyframes,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -14,7 +22,7 @@ import { ColumnService } from '../../services/columns.service';
 import { DataService } from '../../services/data.service';
 import { NavigationService } from '../../services/navigation.service';
 import { LayoutStatus, StateService } from '../../services/state.service';
-import { Table } from '../../services/table.service';
+import { Table, TableService } from '../../services/table.service';
 
 @Component({
   selector: 'elder-layout',
@@ -115,15 +123,16 @@ export class LayoutComponent {
     console.log(e);
   }
   tables: Table[] = [];
-  tableNavStream: any;
-  selectedTable: any;
-  tableDescription: string;
+  selectedTable: string;
+  tableDescription: string = '';
   loaded = false;
+  currentPage: number = 0;
   constructor(
     public webSocketService: DataService,
     public state: StateService,
     private columnService: ColumnService,
-    public nav: NavigationService
+    public nav: NavigationService,
+    public tableService: TableService
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
@@ -131,6 +140,7 @@ export class LayoutComponent {
       this.sidenavOpen = this.layout.sidenavOpen;
       this.showTabs = nav.showTabs;
     });
+    tableService.tableDescription$.subscribe((des) => console.log(des));
   }
 }
 /*

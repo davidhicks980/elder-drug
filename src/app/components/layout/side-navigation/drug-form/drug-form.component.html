@@ -1,29 +1,28 @@
 <form [formGroup]="drugsGroup">
-  <div>Search thousands of drugs on Beers criteria</div>
   <section
     cdkScrollable
     aria-label="You can look up drugs on Beers Criteria using this form"
-    class="drug-inputs"
+    class="form-container"
   >
     <div fxLayout="column" fxLayoutAlign="center center">
       <label
-        class="drug-input--container drug-input--label form-field--title"
+        class="form-field form-field__label"
         [class.flatbottom]="autocompleteElement.isOpen"
         (click)="MainInput.focus()"
-        [class.lifted]="input.dirty"
+        [class.lifted]="drugInput.dirty"
       >
         ADD DRUGS
         <div
           #origin="matAutocompleteOrigin"
           matAutocompleteOrigin
-          class="search-container"
+          class="form-field__container"
         >
           <input
             type="text"
             formControlName="drugInput"
             (keydown.Enter)="trigger.closePanel()"
             (input)="filterAutocomplete(MainInput.value)"
-            class="drug-input"
+            class="form-field__container__input"
             aria-label="Enter your drug name here. For example, 'zolpidem'"
             #MainInput
             [matAutocomplete]="auto"
@@ -33,26 +32,35 @@
           />
 
           <button
-            [disabled]="input.valid"
+            [disabled]="drugInput.valid"
             mat-icon-button
             class="add-button"
             [matTooltip]="
-              'Add ' + MainInput.value + (input.valid ? ' ()' : ' ')
+              drugInput.valid
+                ? 'Add ' + MainInput.value
+                : 'Choose a drug from the dropdown'
             "
-            matTooltipPosition="right"
+            matTooltipPosition="above"
             matTooltipShowDelay="200"
             matTooltipHideDelay="200"
-            matTooltipClass="tooltip arrow-tip"
+            matTooltipClass="form-field__tooltip form-field__tooltip--arrow-tip"
             (click)="addInput(); trigger.closePanel(); (stopPropagation)"
           >
             <mat-icon
-              class="add-icon"
+              class="add-button__add-icon"
               inline="true"
               svgIcon="add--outline"
             ></mat-icon>
           </button>
         </div>
       </label>
+      <div class="form-field__errors" id="errors">
+        <span *ngIf="drugInput.errors?.required"> Name is required. </span>
+        <span *ngIf="drugInput.errors?.minlength">
+          Name must be at least 4 characters long.
+        </span>
+        <span *ngIf="drugInput.errors?.maxLength"> Name cannot be Bob. </span>
+      </div>
 
       <div class="chip-list--container">
         <mat-list
@@ -60,7 +68,7 @@
           #chipList
           aria-label="Drug selection"
         >
-          <div mat-subheader class="form-field--title">SEARCH TERMS</div>
+          <div mat-subheader class="chip-list__title">SEARCH TERMS</div>
 
           <mat-list-item
             *ngFor="let drugName of drugList.controls; index as i"

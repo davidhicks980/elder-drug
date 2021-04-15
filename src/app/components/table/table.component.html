@@ -4,13 +4,15 @@
   [tableName]="tableName"
   (loaded)="selectorInitiated = true"
 ></elder-column-selector>-->
-<ng-content select="[table-description]"></ng-content>
 
 <div class="table-container soft-shadow-2">
-  <div>
+  <h2><ng-content select="table-title"></ng-content></h2>
+  <h3><ng-content select="table-description"></ng-content></h3>
+
+  <div class="filter-container">
     Search Columns
 
-    <input (input)="filterData($event)" />
+    <input class="filter-input" (input)="filterData($event)" />
   </div>
   <table
     cdk-table

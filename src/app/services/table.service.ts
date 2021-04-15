@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 @Injectable({
@@ -8,7 +9,11 @@ export class TableService {
   private tableStatusSource = new ReplaySubject<Table[]>(3);
   tableStatus$ = this.tableStatusSource.asObservable();
   private pageSource = new ReplaySubject<number>(1);
-  pageSource$ = this.pageSource.asObservable();
+  page$ = this.pageSource.asObservable();
+  private descriptionSource = new Subject();
+  tableDescription$ = this.descriptionSource.asObservable();
+  private titleSource = new Subject();
+  tableTitle$ = this.titleSource.asObservable();
 
   emitSelectedTables(selections: number[]) {
     this.tableStatusSource.next(
@@ -18,6 +23,16 @@ export class TableService {
 
   emitCurrentPage(page: number) {
     this.pageSource.next(page);
+    console.log(page);
+    this.emitTableInformation(page);
+  }
+  emitTableInformation(page: number) {
+    let information = this.tables.filter(
+      (table) => table.TableNumber === page
+    )[0];
+
+    this.descriptionSource.next(information.Description);
+    this.titleSource.next(information.FullTitle);
   }
   get tables(): Table[] {
     return this._tables;
@@ -25,55 +40,57 @@ export class TableService {
   private readonly _tables = [
     {
       TableNumber: 1,
-      TableDefinition: 'General Information for Each Table',
-      ShortName: 'General',
+      FullTitle: 'General Information for Each Table',
+      ShortName: 'All Results',
       Identifier: 'Info',
       TableIconName: 'general-health',
-      Description: 'A collection of all queried drugs.',
+      Description: 'Information encompassing all categories of Beers Criteria',
     },
     {
       TableNumber: 2,
-      TableDefinition:
-        'Potentially Inappropriate Medication Use in Older Adults ',
-      ShortName: 'Potentially Inappropriate',
+      FullTitle: 'Potentially Inappropriate Medication Use in Older Adults ',
+      ShortName: 'Inappropriate Medications in Older Adults',
       Identifier: 'Inappropriate',
     },
     {
       TableNumber: 3,
-      TableDefinition:
+      FullTitle:
         'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
-      ShortName: 'Disease Specific',
+      ShortName: 'Drugs to Avoid in ',
       Identifier: 'DiseaseGuidance',
       TableIconName: 'heart-ekg',
-      Description: 'Drugs affecting those with specific diseases.',
+      Description:
+        'The Disease Guidance table contains drugs that should be avoided in those with a specific disease.',
     },
     {
       TableNumber: 4,
-      TableDefinition: 'Drugs To Be Used With Caution in Older Adults',
+      FullTitle: 'Drugs To Be Used With Caution in Older Adults',
       ShortName: 'Use with Caution',
       Identifier: 'Caution',
     },
     {
       TableNumber: 5,
-      TableDefinition:
+      FullTitle:
         'Potentially Clinically Important Drug-Drug Interactions That Should Be Avoided in Older Adults',
       ShortName: 'Drug Interactions',
       Identifier: 'DrugInteractions',
       TableIconName: 'capsule',
-      Description: 'Concerning drug interactions in those 65+',
+      Description:
+        'The Drug Interactions table contains concerning drug interactions specific to those over the age of 65. It does not include all drug interactions.',
     },
     {
       TableNumber: 6,
-      TableDefinition:
+      FullTitle:
         'Medications That Should Be Avoided or Have Their Dosage Reduced With Varying Levels of Kidney Function in Older Adults',
       ShortName: 'Renal Interactions',
       Identifier: 'Clearance',
       TableIconName: 'kidneys',
-      Description: 'Toxic drugs in reduced kidney function',
+      Description:
+        'The Renal Interactions table contains drugs that can be toxic in geriatric patients with reduced kidney function.',
     },
     {
       TableNumber: 7,
-      TableDefinition: 'Drugs With Strong Anticholinergic Properties',
+      FullTitle: 'Drugs With Strong Anticholinergic Properties',
       ShortName: 'Anticholinergics',
       Identifier: 'Anticholinergics',
     },
@@ -83,7 +100,7 @@ export class TableService {
 
 export interface Table {
   TableNumber: number;
-  TableDefinition: string;
+  FullTitle: string;
   ShortName: string;
   Identifier: string;
   TableIconName?: string;

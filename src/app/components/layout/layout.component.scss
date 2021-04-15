@@ -22,7 +22,9 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
     height: $content-height--shrunken-header;
   }
 }
-
+.sidebar__description {
+  margin: 5%;
+}
 section.content {
   overflow-x: hidden;
   & main {
@@ -157,6 +159,11 @@ main {
   padding: 0px;
 }
 
-.table-buffer {
-  margin: 50px;
+.elder-table-container {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  margin-top: 40px;
+  overflow-y: auto;
+  height: 100%;
 }

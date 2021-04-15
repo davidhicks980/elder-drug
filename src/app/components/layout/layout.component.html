@@ -33,7 +33,7 @@
         ></span>
       </div>
 
-      <elder-sidebar #sideNav></elder-sidebar>
+      <elder-sidebar #sideNav> </elder-sidebar>
     </aside>
     <main
       [@sidenavExpand]="
@@ -61,9 +61,12 @@
         <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
         <elder-dropdown *ngIf="!showTabs"></elder-dropdown>
       </nav>
-      <div style="margin-top: 40px; overflow-y: auto; height: 100%">
-        <elder-table class="table-buffer"
-          ><div table-description>A table for viewing things</div>
+      <div class="elder-table-container">
+        <elder-table>
+          <table-title> {{ tableService.tableTitle$ }}</table-title>
+          <table-description>{{
+            tableService.tableDescription$ | async
+          }}</table-description>
         </elder-table>
       </div>
     </main>

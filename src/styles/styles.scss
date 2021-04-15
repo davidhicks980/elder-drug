@@ -90,6 +90,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+//overrides
 .mat-sort-header-stem {
   background: none;
   display: none !important;
@@ -152,4 +153,8 @@ th .mat-sort-header-pointer-left {
   color: black;
 
   background-color: tint($light-gray-2, 70%) !important;
+}
+.mat-autocomplete-panel.mat-autocomplete-visible {
+  visibility: visible;
+  overflow: hidden;
 }
