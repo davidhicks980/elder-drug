@@ -29,7 +29,6 @@
     "core-js": "^3.8.3",
     "document-register-element": "^1.14.10",
     "ejs": "^3.1.5",
-    "fuse.js": "^6.4.6",
     "intersection-observer": "^0.12.0",
     "js-polyfills": "^0.1.43",
     "rxjs": "^6.6.3",
@@ -39,12 +38,12 @@
   "devDependencies": {
     "@angular-devkit/architect": "^0.1101.0",
     "@angular-devkit/build-angular": "^0.1101.0",
+    "@angular-devkit/schematics": "^11.2.9",
     "@angular-eslint/builder": "1.1.0",
     "@angular-eslint/eslint-plugin": "1.1.0",
     "@angular-eslint/eslint-plugin-template": "1.1.0",
     "@angular-eslint/schematics": "1.1.0",
     "@angular-eslint/template-parser": "1.1.0",
-    "@angular/cli": "^11.1.2",
     "@angular/compiler-cli": "^11.1.0",
     "@angular/language-service": "^11.2.5",
     "@types/jasmine": "^3.6.3",
@@ -52,7 +51,6 @@
     "@types/node": "^12.19.15",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
-    "@webcomponents/webcomponentsjs": "^2.5.0",
     "codelyzer": "^6.0.1",
     "cross-fetch": "^3.0.6",
     "eslint": "^7.6.0",
@@ -77,6 +75,7 @@
     "prettier": "2.1.1",
     "protractor": "~7.0.0",
     "resize-observer-polyfill": "^1.5.1",
+    "sass": "^1.32.9",
     "ts-node": "~8.3.0",
     "tslint": "^6.1.3"
   }

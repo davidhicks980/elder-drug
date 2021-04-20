@@ -1,7 +1,8 @@
 @use 'sass:color';
-
+@import "~@angular/material/theming";
+@import "bem-mixin";
 @import "palette";
-
+@import "colors";
 :host {
   --input-background: white;
   --input-background--hover: #{$light-gray-1};
@@ -21,21 +22,21 @@
   --input-number-font: "Roboto";
   --input-radius: 3px;
   --input-font--size: 12pt;
-  --autocomplete--height: 2.6em;
+  --autocomplete--height: 2.5em;
 }
-button {
-  &.add-button {
-    stroke: none;
-    fill: var(--input-label--text);
-    pointer-events: all;
-    & .add-icon {
-      transform: scale(0.8);
-      stroke: none;
-      font-size: 12pt;
 
-      &:hover {
-      }
-    }
+.add-button {
+  stroke: none;
+  fill: var(--input-label--text);
+  pointer-events: all;
+  &:disabled {
+    color: $light-gray-4;
+  }
+
+  @include element("add-icon") {
+    transform: scale(0.8);
+    stroke: none;
+    font-size: 12pt;
   }
 }
 
@@ -63,14 +64,11 @@ button {
   }
 }
 
-.chip-container {
-  width: 90%;
-}
 .drug-inputs {
   margin-top: 1em;
 }
 
-.form-field {
+.add-drug-field {
   outline: none;
   border: none;
   border-radius: 4px;
@@ -81,60 +79,73 @@ button {
   grid-template-rows: 36px var(--autocomplete--height);
   grid-template-columns: auto 3em;
   width: 100%;
-
   &:focus-within {
-    background-position: 0vw calc(var(--autocomplete--height) * 0.95);
     transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
-    background-color: var(--input-background--focus);
     box-sizing: border-box;
-    & .form-field__container {
-      box-shadow: 0 0 3px 2px transparentize($primary-1, 0.8%);
+  }
+  @include element("label") {
+    grid-column: 2;
+    padding-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: var(--input-font--size);
+    font-family: var(--input-font);
+  }
+  @include element("add-button") {
+    grid-row: 2;
+    grid-column: 2;
+  }
+  @include element("container") {
+    @include mat-elevation-transition;
+
+    grid-template-columns: auto 2.5em;
+    grid-row: 2;
+    grid-column: 1 / span 2;
+    border: 1px solid var(--input-text);
+    border-radius: 3px;
+    padding: 1px;
+    min-height: 2.5em;
+    display: flex;
+    align-items: center;
+    @include state("is-open") {
+      border-bottom: 2px solid $primary-1;
+      border-right: 1px solid $light-gray-4;
+      border-left: 1px solid $light-gray-4;
+      border-top: 1px solid $light-gray-4;
+      outline-offset: 5px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
-    & .add-button__add-icon {
-      fill: $primary-1;
+    &:hover {
+      @include shadow(2);
+    }
+    @include state("is-invalid") {
+      border-bottom: 2px solid $error-4;
+    }
+    @include state("is-missing") {
+      border-bottom: 2px solid $complement-1;
     }
   }
-}
-
-.form-field__label {
-  grid-column: 2;
-  padding-bottom: 5px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: var(--input-font--size);
-  font-family: var(--input-font);
-}
-
-.form-field__add-button {
-  grid-row: 2;
-  grid-column: 2;
-}
-.form-field__container {
-  grid-template-columns: auto 2.7em;
-  grid-row: 2;
-  grid-column: 1 / span 2;
-  border: 1px solid var(--input-text);
-  border-radius: 3px;
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.132);
-}
-.form-field__container__input {
-  padding: 0px;
-  margin: 0px;
-  background: none;
-  padding-left: 0.6em;
-  font-size: 12pt;
-  outline: none;
-  grid-row: 1;
-  border: none;
-  pointer-events: all;
-  grid-column: 1;
-  width: calc(100% - 55px);
-}
-
-.chip-list--container {
-  width: 100%;
-  padding: 0px;
+  @include element("input") {
+    padding: 0px;
+    margin: 0px;
+    background: none;
+    padding-left: 0.6em;
+    font-size: 12pt;
+    outline: none;
+    grid-row: 1;
+    border: none;
+    pointer-events: all;
+    grid-column: 1;
+    width: calc(100% - 55px);
+    min-height: 40px;
+  }
+  @include element("spinner") {
+    display: inline-block;
+    vertical-align: center;
+    position: relative;
+  }
 }
 
 .panel-border {
@@ -152,47 +163,70 @@ button {
     fill: $complement-1;
   }
 }
-.add-icon {
-  fill: var(--input-icon--color);
-}
-.editable-input {
-  outline: none;
-  background: none;
-  border: none;
 
+.edit-drug-field {
   margin-bottom: 1px;
   display: flex;
-
   flex-direction: row;
-  &:focus-within {
-    border-bottom: 2px solid $primary-1;
-    background: $light-gray-1;
-    input {
-      font-weight: 500;
-      cursor: text;
-      text-decoration: none;
-    }
-  }
-  input {
+
+  @include element("input") {
     outline: none;
     background: none;
     border: none;
     padding: 10px 10px 8px 10px;
     font-family: "Roboto";
     /* height: 100%; */
-    width: 9.55em;
-    cursor: pointer;
+    cursor: text;
     text-decoration: underline;
-
     text-transform: capitalize;
+
+    &:focus {
+      text-decoration: none;
+      border-bottom: 2px solid $primary-1;
+      background-color: $light-gray-1;
+    }
+    @include state("ng-invalid") {
+      color: $error-4;
+      text-decoration: none;
+      &:focus {
+        border-bottom: 2px solid $error-4;
+        color: $error-4;
+        font-weight: 500;
+        background-color: getHighlightColor($error-1);
+      }
+    }
   }
 }
 
-.form-field__errors {
-  color: red;
+.errors {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-top: 10px;
+
+  @include state("is-invalid") {
+    color: $error-4;
+    @include state("is-missing") {
+      color: $complement-1;
+    }
+  }
 }
 
-.mat-list-base .chip-list__title {
-  padding: 0px;
-  color: rgba(0, 0, 0, 0.7);
+.chip {
+  font-size: 0.8em;
+  border-radius: 0.5em;
+  color: white;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  max-height: 1em;
+  vertical-align: middle;
+  padding: 0.35em;
+  left: 0;
+  margin-left: 1em;
+
+  @include modifier("generic") {
+    background-color: $primary-1;
+  }
+  @include modifier("brand") {
+    background-color: $secondary-2-1;
+  }
 }

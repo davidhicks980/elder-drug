@@ -1,18 +1,16 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ObserversModule } from '@angular/cdk/observers';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatRippleModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -23,7 +21,6 @@ import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
 import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { ChipsComponent } from './components/layout/side-navigation/drug-form/chips/chips.component';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
 import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
 import { TabComponent } from './components/layout/tab/tab.component';
@@ -42,6 +39,7 @@ import { RotateDirective } from './directives/rotate-icon.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
 import { MaterialModule } from './material-module';
 import { ToStringPipe } from './to-string.pipe';
+import { ColumnSelectorComponent } from './components/table/column-selector/column-selector.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +62,7 @@ import { ToStringPipe } from './to-string.pipe';
     CreationSpyDirective,
     DropdownComponent,
     TabComponent,
-    ChipsComponent,
+    ColumnSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,9 +73,6 @@ import { ToStringPipe } from './to-string.pipe';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
@@ -86,12 +81,12 @@ import { ToStringPipe } from './to-string.pipe';
       enabled: environment.production,
     }),
     OverlayModule,
-    MatRippleModule,
     ObserversModule,
     CdkAccordionModule,
+    A11yModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [NO_ERRORS_SCHEMA], // add this line
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

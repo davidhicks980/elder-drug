@@ -1,53 +1,45 @@
-/*
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  Input,
+  Output,
+} from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
+import EventEmitter from 'events';
+import { Observable } from 'rxjs';
+import { delayWhen, distinctUntilChanged, takeWhile } from 'rxjs/operators';
+import {
+  ColumnService,
+  DisplayedColumns,
+} from '../../../services/columns.service';
+import { TableService } from '../../../services/table.service';
+
 @Component({
   selector: 'elder-column-selector',
-  template: `<mat-form-field color="primary" *ngIf="selectOptions">
-    <mat-label>Change Columns</mat-label>
-    <mat-select
-      #columnSelect
-      class="column-select"
-      multiple
-      [ngModel]="selectOptions"
-      (ngModelChange)="emitUpdatedColumns($event)"
-    >
-      <mat-option
-        *ngFor="let column of displayedOptions | async"
-        [value]="column"
-      >
-        {{ column | caseSplit }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> `,
+  templateUrl: 'column-selector.component.html',
   styleUrls: ['./column-selector.component.scss'],
 })
-export class ColumnSelectorComponent implements AfterViewInit {
-  @ViewChild('columnSelect') selector: MatSelectChange;
+export class ColumnSelectorComponent {
+  @ViewChild(MatSelect) selector: MatSelect;
   @Input() tableName: number;
-  @Output() columnUpdates: EventEmitter<string[]> = new EventEmitter();
-  @Output() loaded = new EventEmitter();
+  @Output() columnUpdates = new EventEmitter();
   displayedOptions: Observable<string[]>;
-  selectOptions: string[];
-  selectedOptions: Observable<string[]>;
+  selectedOptions = [''];
+  options: Observable<DisplayedColumns[]>;
 
-  emitUpdatedColumns(cols) {
-    this.columnUpdates.emit(cols);
+  watchChanges(change: MatSelectChange) {
+    this.selectedOptions = change.value;
+    this.columnService.updateSelectedColumns(change.value);
   }
-  ngAfterViewInit() {
-    this.selectedOptions.subscribe((item) => (this.selectOptions = item));
-    this.loaded.emit(true);
-  }
-  ngOnInit() {
-    const options = this.firebase.filteredFields$.pipe(
-      filter((item: any) => item.id === this.tableName)
-    );
-    this.displayedOptions = options.pipe(pluck('fields'));
-    this.selectedOptions = options.pipe(pluck('selected'));
+
+  get columnListener(): Observable<DisplayedColumns[]> {
+    if (this.options) return this.options;
   }
   constructor(
     private columnService: ColumnService,
-    public firebase: FirebaseService
+    private tables: TableService
   ) {
-    this.columnService = columnService;
+    this.options = this.columnService.observeColumns$;
   }
 }
-*/

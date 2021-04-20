@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     );
     this.iconRegistry.addSvgIcon(
       'add--outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add.svg')
     );
     this.iconRegistry.addSvgIcon(
       'delete',
@@ -33,6 +33,10 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'error',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'warn',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion_warn.svg')
     );
     iconRegistry.addSvgIcon(
       'unfold_less',

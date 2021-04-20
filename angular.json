@@ -73,6 +73,7 @@
               "browserTarget": "search-angular:build:production"
             }
           },
+          "hmr": true,
           "exclude": [
             "/node_modules/**",
             "/dist/**",

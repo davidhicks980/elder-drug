@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  ValidationErrors,
+} from '@angular/forms';
+import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { catchError, debounceTime, map, tap } from 'rxjs/operators';
 
 import * as beers from '../../assets/beers-entries.json';
+import * as generics from '../../assets/generics-lookup.json';
+
 import { Category, ColumnField, ColumnService } from './columns.service';
 import { TableService } from './table.service';
 
@@ -26,6 +34,7 @@ export class DataService {
   beersMap: Map<number, Table> = (beers as any).default;
   filterDropdown = new Subject<string[][]>();
   filteredItems$ = this.filterDropdown.asObservable();
+  genericsLookup = {};
   /** Emits table columns that contain any data */
   private filteredFieldsSource: ReplaySubject<
     ColumnField[]
@@ -48,16 +57,23 @@ export class DataService {
     return await reference.data();
   }
 
+  hasDrugStream(value: string): Observable<boolean | null> {
+    return of(this.drugSet.has(value.toLowerCase())).pipe(
+      catchError(() => of(null))
+    );
+  }
   get lastSearch() {
     return this.searchHistory.getValue();
   }
-  changeDrugs = () => {
+  storeHistory(drugs: string[]) {
+    this.searchHistory.next(this._validateSearch(drugs));
+  }
+  private _validateSearch(drugs) {
     const regex = /[\w\s\,\_.\+\$]+/;
-    const validateSearch = (drugs: string[]) =>
-      drugs.filter((val) => regex.test(val));
-
-    return (drugs: string[]) => this.searchHistory.next(validateSearch(drugs));
-  };
+    return drugs
+      .filter((val) => regex.test(val))
+      .filter((val) => this.hasDrug(val));
+  }
 
   searchDrugs() {
     const searchMap = new Map() as Map<number, Table>;
@@ -68,7 +84,6 @@ export class DataService {
         this.createSearchMap(drug, searchMap);
       }
       this.processSelectedTables(Array.from(searchMap.values()));
-      console.log(searchMap);
     }
   }
 
@@ -139,6 +154,7 @@ export class DataService {
     this.beersMap = new Map(
       (beers as any).default.map((item) => [item.EntryID, item])
     );
+    this.genericsLookup = (generics as any).default;
 
     this.getFirebaseData(firestore).then((res) => {
       this.drugMap = this.createDrugMap(res);
@@ -159,10 +175,14 @@ export class DataService {
       map = new Map();
     for (i = 0; i < 26; i++) {
       letter = (i + 10).toString(36);
-      map.set(
-        letter,
-        list.filter((name: string) => name.startsWith(letter))
-      );
+      let alphaDrugs = list.filter((name: string) => name.startsWith(letter));
+      const genericList = alphaDrugs
+        .filter((drug) => this.genericsLookup[letter].includes(drug))
+        .map((drug) => drug + '~g');
+      const brandList = alphaDrugs
+        .filter((drug) => !this.genericsLookup[letter].includes(drug))
+        .map((drug) => drug + '~b');
+      map.set(letter, [...genericList, ...brandList]);
     }
     return map;
   }

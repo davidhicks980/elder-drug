@@ -1,15 +1,19 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { fadeInAnimation } from '../../../animations';
 
 import { ColumnService } from '../../../services/columns.service';
 import { NavigationService } from '../../../services/navigation.service';
-import { TableService } from '../../../services/table.service';
+import { Table, TableService } from '../../../services/table.service';
 
 @Component({
   selector: 'elder-tabs',
   template: `
-    <div class="tabs" [style.width]="nav.width">
+    <div class="tabs">
       <ul class="button-row-style">
-        <ng-container *ngFor="let tab of shownTabs | async; index as index">
+        <ng-container
+          *ngFor="let tab of tables.tableStatus$ | async; index as index"
+        >
           <li
             [style.zIndex]="index === currentTab ? 1 : 0"
             class="tab-button-li"
@@ -23,11 +27,12 @@ import { TableService } from '../../../services/table.service';
                 class="tab-svg"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 200 37.5"
+                tracking-gradient
               >
                 <defs>
                   <linearGradient
                     spreadMethod="pad"
-                    id="gradient"
+                    id="linear-base"
                     x1="0%"
                     y1="100%"
                     x2="0%"
@@ -41,7 +46,16 @@ import { TableService } from '../../../services/table.service';
                       offset="40%"
                       style="stop-color:rgba(0, 0, 0, 0.025)"
                     />
+                    <stop offset="97%" style="stop-color:rgba(0, 0, 0, 0)" />
+                    <stop
+                      offset="100%"
+                      style="stop-color:rgba(255, 255, 255, 0.5)"
+                    />
                   </linearGradient>
+                  <radialGradient id="radial-highlight">
+                    <stop offset="30%" stop-color="rgba(255,255,255,0.06)" />
+                    <stop offset="95%" stop-color="rgba(255,255,255,0)" />
+                  </radialGradient>
                 </defs>
 
                 <path
@@ -51,8 +65,17 @@ import { TableService } from '../../../services/table.service';
                 <path
                   *ngIf="index != currentTab"
                   d="M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z"
-                  fill="url(#gradient)"
+                  fill="url(#linear-base)"
                 />
+                <rect
+                  width="50px"
+                  height="100px"
+                  fill="url(#radial-highlight)"
+                  class="tab-gradient"
+                  id="tracking-gradient"
+                  @fadeIn
+                />
+
                 <text
                   x="50%"
                   y="50%"
@@ -69,25 +92,23 @@ import { TableService } from '../../../services/table.service';
       </ul>
     </div>
   `,
+  animations: [fadeInAnimation],
   styleUrls: ['./tab.component.scss'],
 })
 export class TabComponent {
-  shownTabs: any;
-  currentTab: number;
-  loaded: boolean;
-  itemCount = 1;
-  nav: NavigationService;
+  currentTab: number = 0;
+  loaded: boolean = false;
+  track: boolean = false;
+
   columns: ColumnService;
+  mouseOver = 0;
   @Output() tableSelected = new EventEmitter<boolean>();
   tables: TableService;
   handleTabClick(table: number, tabIndex: number) {
     this.currentTab = tabIndex;
-    this.columns.requestTable(table);
+    this.columns.triggerColumnChange(table);
     this.tableSelected.emit(true);
     this.tables.emitTableInformation(table);
-  }
-  ngAfterViewInit() {
-    this.nav.createIntersectionObserver(document.querySelector('.tabs'));
   }
   constructor(
     nav: NavigationService,
@@ -95,9 +116,7 @@ export class TabComponent {
     tables: TableService
   ) {
     this.tables = tables;
-    this.nav = nav;
-    this.shownTabs = this.nav.showTabs ? this.nav.allTabs : this.nav.shownTabs;
     this.columns = columns;
-    this.columns.requestTable(3);
+    this.tables.tableStatus$.subscribe(console.log);
   }
 }

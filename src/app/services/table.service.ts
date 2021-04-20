@@ -9,7 +9,7 @@ export class TableService {
   private tableStatusSource = new ReplaySubject<Table[]>(3);
   tableStatus$ = this.tableStatusSource.asObservable();
   private pageSource = new ReplaySubject<number>(1);
-  page$ = this.pageSource.asObservable();
+  currentPage$ = this.pageSource.asObservable();
   private descriptionSource = new Subject();
   tableDescription$ = this.descriptionSource.asObservable();
   private titleSource = new Subject();
@@ -23,7 +23,6 @@ export class TableService {
 
   emitCurrentPage(page: number) {
     this.pageSource.next(page);
-    console.log(page);
     this.emitTableInformation(page);
   }
   emitTableInformation(page: number) {
@@ -32,7 +31,7 @@ export class TableService {
     )[0];
 
     this.descriptionSource.next(information.Description);
-    this.titleSource.next(information.FullTitle);
+    this.titleSource.next(information.ShortName);
   }
   get tables(): Table[] {
     return this._tables;
@@ -56,7 +55,7 @@ export class TableService {
       TableNumber: 3,
       FullTitle:
         'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
-      ShortName: 'Drugs to Avoid in ',
+      ShortName: 'Disease Interactions',
       Identifier: 'DiseaseGuidance',
       TableIconName: 'heart-ekg',
       Description:

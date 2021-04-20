@@ -84,6 +84,17 @@ $complement-2: rgba(210, 135, 0, 1);
 $complement-3: rgba(175, 113, 0, 1); // Main Complement color */
 $complement-4: rgba(137, 88, 0, 1);
 $complement-5: rgba(90, 58, 0, 1);
+
+$error: #d3231d;
+$error-1: #fce1d1;
+$error-2: #fabca4;
+$error-3: #f18e74;
+$error-4: #e46250;
+$error-5: #d3231d;
+$error-6: #b5151d;
+$error-7: #970e21;
+$error-8: #7a0922;
+$error-9: #650522;
 $dark-blue: #3a3f5e;
 $darkest-blue: #2b2e45;
 
@@ -92,7 +103,7 @@ $dark-dark-gray: #36415d;
 
 $gray-text-tint: #3f4752;
 $color-step: 1, 2, 3, 4, 5;
-
+/*
 $primary-gray: desaturate($primary-1, 50%);
 $dark-gray-1: getDarker($primary-gray, 1);
 $dark-gray-2: getDarker($primary-gray, 2);
@@ -109,5 +120,27 @@ $light-gray-4: getLighter($primary-gray, 4);
 $light-gray-3: getLighter($primary-gray, 3);
 $light-gray-2: getLighter($primary-gray, 2);
 $light-gray-1: getLighter($primary-gray, 1);
+*/
+$light-gray-1: #f2f5f8;
+$light-gray-2: #e5e9f0;
+$light-gray-3: #dadfe5;
+
+$light-gray-4: #d0d4db;
+
+$light-gray-5: #c4c8cf;
+
+$gray-1: #969aa1;
+$gray-2: #74787f;
+
+$gray-3: #51555c;
+
+$gray-4: #3a3e45;
+$gray-5: #292d35;
+
+$dark-gray-1: #20242b;
+$dark-gray-2: #171b22;
+$dark-gray-3: #11151c;
+$dark-gray-4: #0c1017;
+$dark-gray-5: #05090f;
 
 $color: #fafafb;

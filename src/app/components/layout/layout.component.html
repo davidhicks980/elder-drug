@@ -59,14 +59,15 @@
         </button>
 
         <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
-        <elder-dropdown *ngIf="!showTabs"></elder-dropdown>
       </nav>
       <div class="elder-table-container">
-        <elder-table>
-          <table-title> {{ tableService.tableTitle$ }}</table-title>
-          <table-description>{{
+        <elder-table class="elder-table">
+          <elder-table-title>
+            {{ tableService.tableTitle$ | async }}</elder-table-title
+          >
+          <table-table-description>{{
             tableService.tableDescription$ | async
-          }}</table-description>
+          }}</table-table-description>
         </elder-table>
       </div>
     </main>

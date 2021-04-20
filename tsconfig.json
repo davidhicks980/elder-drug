@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "",
     "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": true,
+    "sourceMap": false,
+    "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "module": "es2020",
@@ -15,7 +15,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": false,
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

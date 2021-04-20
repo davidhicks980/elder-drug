@@ -1,21 +1,20 @@
-<mat-form-field color="primary" *ngIf="selectOptions">
+<mat-form-field *ngIf="options" color="primary">
   <mat-label>Change Columns</mat-label>
   <mat-select
-    #columnSelect
+    (selectionChange)="watchChanges($event)"
+    #select
     class="column-select"
     multiple
-    [ngModel]="selectOptions"
-    (ngModelChange)="emitUpdatedColumns($event)"
   >
     <mat-select-trigger>
-      {{ selectOptions[0] | caseSplit }}
-      <span *ngIf="selectOptions.length > 1" class="additional-selection">
-        (+{{ selectOptions.length - 1 }}
-        {{ selectOptions.length === 2 ? "other" : "others" }})
-      </span>
+      <button>howdy</button>
+      <!-- <span *ngIf="selectedOptions.length > 1" class="additional-selection">
+        (+{{ selectedOptions.length - 1 }}
+        {{ selectedOptions.length === 2 ? "other" : "others" }})
+      </span>-->
     </mat-select-trigger>
-    <mat-option *ngFor="let column of displayedOptions" [value]="column">
-      {{ column | caseSplit }}
+    <mat-option *ngFor="let col of columnListener | async" [value]="col.id">
+      {{ col.id | caseSplit }}
     </mat-option>
   </mat-select>
 </mat-form-field>

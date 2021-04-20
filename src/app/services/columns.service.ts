@@ -88,25 +88,25 @@ export class ColumnService {
     },
   ];
   // Observable string sources
-  private tableColumns = new Subject<DisplayedColumns>();
-  private optionsList = new Subject<object>();
+  private columnsSource = new Subject<DisplayedColumns[]>();
+  private activeColumnsSource = new Subject<string[]>();
+
   tables = new Set(this.columnDefinitions.map((def) => def.filters).flat());
 
   // Observable string streams
-  recieveTableColumns$ = this.tableColumns.asObservable();
-  requestTable(table: Category) {
-    const options = this.columnDefinitions.filter(
-      (columns) => columns.id === table
-    )[0].columnOptions;
-    const selectedFields = options
-      .filter((item) => item.selected)
-      .map((item) => item.id);
-    const allFields = options.map((item) => item.id);
-    this.tableColumns.next({ selected: selectedFields, all: allFields });
-  }
+  observeColumns$ = this.columnsSource.asObservable();
+  observeActiveColumns$ = this.activeColumnsSource.asObservable();
 
+  triggerColumnChange(table: Category) {
+    const activeColumns = this.columnDefinitions
+      .filter((column) => column.id === table)
+      .map((column) => column.columnOptions)[0];
+    this.columnsSource.next(activeColumns);
+  }
+  updateSelectedColumns(selected: string[]) {
+    this.activeColumnsSource.next(selected);
+  }
   tableExists(table): boolean {
-    console.log(table);
     return this.tables.has(table);
   }
   retrieveTable(item) {
@@ -117,14 +117,15 @@ export class ColumnService {
 }
 
 export interface DisplayedColumns {
-  selected: ColumnField[];
-  all: ColumnField[];
+  id: ColumnField;
+  selected: boolean;
 }
+
 export interface TableDefinition {
   description: string;
   id: number;
   filters: ColumnField[];
-  columnOptions: { id: ColumnField; selected: boolean }[];
+  columnOptions: DisplayedColumns[];
 }
 
 export interface columnTemplate {

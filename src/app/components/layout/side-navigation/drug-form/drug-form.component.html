@@ -6,60 +6,95 @@
   >
     <div fxLayout="column" fxLayoutAlign="center center">
       <label
-        class="form-field form-field__label"
-        [class.flatbottom]="autocompleteElement.isOpen"
-        (click)="MainInput.focus()"
+        class="add-drug-field add-drug-field__label"
+        [class.flatbottom]="autocomplete.isOpen"
+        (click)="addDrugField?.focus()"
         [class.lifted]="drugInput.dirty"
       >
         ADD DRUGS
         <div
-          #origin="matAutocompleteOrigin"
+          #addDrugOrigin="matAutocompleteOrigin"
           matAutocompleteOrigin
-          class="form-field__container"
+          class="add-drug-field__container"
+          [class.is-missing]="drugInput.errors?.invalidAsync"
+          [class.is-invalid]="drugInput.invalid && drugInput.value.length"
+          [class.mat-elevation-z4]="addDrugTrigger.panelOpen"
+          [class.is-open]="addDrugTrigger.panelOpen"
+          id="add-drug-field"
         >
           <input
             type="text"
             formControlName="drugInput"
-            (keydown.Enter)="trigger.closePanel()"
-            (input)="filterAutocomplete(MainInput.value)"
-            class="form-field__container__input"
+            (keydown.Enter)="addDrugTrigger?.closePanel()"
+            (input)="filterAutocomplete(addDrugField.value)"
+            class="add-drug-field__input"
             aria-label="Enter your drug name here. For example, 'zolpidem'"
-            #MainInput
-            [matAutocomplete]="auto"
-            [matAutocompleteConnectedTo]="origin"
-            #trigger="matAutocompleteTrigger"
+            #addDrugField
+            #addDrugTrigger="matAutocompleteTrigger"
+            [matAutocomplete]="autocompleteRef"
+            [matAutocompleteConnectedTo]="addDrugOrigin"
             placeholder="Zolpidem"
+            aria-describedby="errors"
           />
-
-          <button
-            [disabled]="drugInput.valid"
-            mat-icon-button
-            class="add-button"
-            [matTooltip]="
-              drugInput.valid
-                ? 'Add ' + MainInput.value
-                : 'Choose a drug from the dropdown'
-            "
-            matTooltipPosition="above"
-            matTooltipShowDelay="200"
-            matTooltipHideDelay="200"
-            matTooltipClass="form-field__tooltip form-field__tooltip--arrow-tip"
-            (click)="addInput(); trigger.closePanel(); (stopPropagation)"
+          <div
+            class="add-drug-field__spinner-container"
+            *ngIf="drugInput.pending; else addButton"
           >
-            <mat-icon
-              class="add-button__add-icon"
-              inline="true"
-              svgIcon="add--outline"
-            ></mat-icon>
-          </button>
+            <mat-spinner diameter="25"></mat-spinner>
+          </div>
+
+          <ng-template #addButton>
+            <button
+              [disabled]="!drugInput.valid"
+              mat-icon-button
+              class="add-button"
+              [matTooltip]="
+                drugInput.valid
+                  ? 'Add ' + addDrugField?.value
+                  : 'Choose a drug from the dropdown'
+              "
+              matTooltipPosition="above"
+              matTooltipShowDelay="200"
+              matTooltipHideDelay="200"
+              matTooltipClass="add-drug-field__tooltip add-drug-field__tooltip--arrow-tip"
+              (click)="
+                addInput(); addDrugTrigger.closePanel(); (stopPropagation)
+              "
+            >
+              <mat-icon
+                class="add-button__add-icon"
+                inline="true"
+                svgIcon="add--outline"
+              ></mat-icon></button
+          ></ng-template>
         </div>
       </label>
-      <div class="form-field__errors" id="errors">
-        <span *ngIf="drugInput.errors?.required"> Name is required. </span>
-        <span *ngIf="drugInput.errors?.minlength">
-          Name must be at least 4 characters long.
-        </span>
-        <span *ngIf="drugInput.errors?.maxLength"> Name cannot be Bob. </span>
+      <div
+        *ngIf="drugInput.invalid && !drugInput.hasError('required')"
+        class="add-drug-field__errors errors"
+        id="errors"
+        [class.is-invalid]="drugInput.invalid"
+        [class.is-missing]="drugInput.errors?.invalidAsync"
+      >
+        <div>
+          <mat-icon
+            [svgIcon]="drugInput.errors?.invalidAsync ? 'warn' : 'error'"
+          ></mat-icon>
+        </div>
+        <div>
+          <span role="alert" *ngIf="drugInput.errors?.minlength">
+            Drug names must be at least 3 characters long.
+          </span>
+          <span role="alert" *ngIf="drugInput.errors?.maxLength">
+            Drug names should be fewer than 70 characters.
+          </span>
+          <span role="alert" *ngIf="drugInput.errors?.pattern">
+            Drug names should only contain alphanumeric letters.
+          </span>
+          <span role="alert" *ngIf="drugInput.errors?.invalidAsync"
+            >Only drugs from the dropdown menu have guidance.
+          </span>
+        </div>
       </div>
 
       <div class="chip-list--container">
@@ -72,16 +107,8 @@
 
           <mat-list-item
             *ngFor="let drugName of drugList.controls; index as i"
-            class="mat-standard-chip gray"
-            [selectable]="selectable"
-            [removable]="removable"
-            matTooltip="Edit {{ drugName.value }}"
-            matTooltipPosition="below"
-            matTooltipShowDelay="200"
-            matTooltipHideDelay="200"
-            #chipTooltip="matTooltip"
-            matTooltipClass="tooltip"
             tabIndex="-1"
+            #searchList
           >
             <mat-icon
               mat-list-icon
@@ -89,30 +116,39 @@
               matTooltipPosition="below"
               matTooltipShowDelay="200"
               matTooltipClass="tooltip"
-              (mouseover)="chipTooltip.disabled = true"
-              (mouseleave)="chipTooltip.disabled = false; chipTooltip.show()"
+              (mouseover)="matTooltip.disabled = true"
+              (mouseleave)="matTooltip.disabled = false"
               svgIcon="cancel"
               tabIndex="0"
               class="remove-icon"
               (click)="
-                removeOptionAt(i); trigger.closePanel(); (stopPropagation)
+                removeOptionAt(i);
+                addDrugTrigger.closePanel();
+                (stopPropagation)
               "
               (keydown.enter)="removeOptionAt(i)"
-              *ngIf="removable"
             ></mat-icon>
             <span
-              #origin="matAutocompleteOrigin"
+              #drugEditOrigin="matAutocompleteOrigin"
               matAutocompleteOrigin
-              class="editable-input"
+              class="edit-drug-field"
               ><input
-                style="grid-column: 1"
+                class="edit-drug-field__input"
+                (keydown.enter)="editDrugField.blur()"
+                (change)="log(getControlAt(i))"
+                (input)="filterAutocomplete(editDrugField.value)"
+                #editDrugField
+                #editDrugTrigger="matAutocompleteTrigger"
                 [formControlName]="i"
-                [matAutocomplete]="auto"
-                #trigger="matAutocompleteTrigger"
-                [matAutocompleteConnectedTo]="origin"
-                #ListInput
-                (keydown.enter)="(ListInput.blur)"
-                (input)="filterAutocomplete(ListInput.value)"
+                [matAutocomplete]="autocompleteRef"
+                [matAutocompleteConnectedTo]="drugEditOrigin"
+                matTooltip="Click to edit {{ drugName.value }}"
+                matTooltipPosition="below"
+                matTooltipShowDelay="200"
+                matTooltipHideDelay="200"
+                #matTooltip="matTooltip"
+                matTooltipClass="tooltip"
+                [class.is-missing]="getControlAt(i).errors?.invalidAsync"
               />
             </span>
 
@@ -120,26 +156,30 @@
           </mat-list-item>
         </mat-list>
         <mat-autocomplete
-          #autocompleteElement
+          #autocomplete
           autoActiveFirstOption
-          #auto="matAutocomplete"
+          #autocompleteRef="matAutocomplete"
+          class="drug-form-autocomplete"
+          @fadeAutocomplete
         >
           <mat-option
-            #options
+            #displayOption
             [value]="option[0] + option[1]"
             *ngFor="let option of autocompleteObserver | async"
-            (keydown.enter)="chooseOption(options.value)"
+            (keydown.enter)="chooseOption(displayOption.value)"
           >
-            <span fxLayout="row" fxLayoutAlign="space-between">
-              <span>
-                <span style="font-weight: 500">{{ option[0] }}</span
-                >{{ option[1] }}</span
-              ><button
-                mat-icon-button
-                svgIcon="add--outline"
-                (click)="chooseOption(options.value)"
-              ></button
-            ></span>
+            <span>
+              <span style="font-weight: 500">{{ option[0] }}</span
+              >{{ option[1] }}</span
+            >
+            <span *ngIf="addDrugTrigger.panelOpen">
+              <ng-container [ngSwitch]="option[2]">
+                <span class="chip chip--generic" *ngSwitchCase="'~g'"
+                  >generic</span
+                >
+                <span class="chip chip--brand" *ngSwitchCase="'~b'">brand</span>
+              </ng-container></span
+            >
           </mat-option>
         </mat-autocomplete>
       </div>

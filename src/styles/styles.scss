@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import "../../node_modules/@angular/material/theming";
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -68,10 +68,10 @@ $search-angular-theme: mat-light-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($search-angular-theme);
 @import "colors";
 @import "palette";
 @import "grid";
+@import "bem-mixin";
 html,
 body {
   height: 100%;
@@ -89,7 +89,61 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
+/****** Elad Shechter's RESET *******/
+/*** box sizing border-box for all elements ***/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+button {
+  background-color: transparent;
+  color: inherit;
+  border-width: 0;
+  padding: 0;
+  cursor: pointer;
+}
+figure {
+  margin: 0;
+}
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+ul,
+ol,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+p {
+  margin: 0;
+}
+cite {
+  font-style: normal;
+}
+fieldset {
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+}
 //overrides
 .mat-sort-header-stem {
   background: none;
@@ -117,10 +171,6 @@ th .mat-sort-header-pointer-left {
 .mat-tooltip.tooltip {
   font-size: 9pt;
   padding: 5px 10px 5px 10px;
-}
-
-.mat-chip.mat-standard-chip.gray {
-  background-color: $light-gray-3;
 }
 
 .mat-tooltip.arrow-tip {
@@ -157,4 +207,23 @@ th .mat-sort-header-pointer-left {
 .mat-autocomplete-panel.mat-autocomplete-visible {
   visibility: visible;
   overflow: hidden;
+}
+
+.drug-form-autocomplete {
+  mat-option {
+    border-bottom: 1px solid $light-gray-5;
+    height: 2.5rem;
+    border-right: 1px solid $light-gray-5;
+    border-left: 1px solid $light-gray-5;
+  }
+  mat-option:last-of-type {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+
+.drug-form-autocomplete > .mat-autocomplete-panel {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  @include mat-elevation-transition;
 }

@@ -48,6 +48,7 @@ ul {
   &.collapse {
     margin-left: -14px;
   }
+
   &.active .tab-svg--path {
     fill: $light-gray-2;
     box-shadow: none;
@@ -56,11 +57,17 @@ ul {
     & + .tab-svg--text {
       fill: $dark-gray-2;
     }
+    &:hover {
+      color: $primary-1;
+    }
   }
   &.inactive .tab-svg--path {
     fill: $primary-1;
     & ~ .tab-svg--text {
       fill: $light-gray-2;
+    }
+    &:hover {
+      fill: tint($primary-1, 50%);
     }
   }
   &:hover {

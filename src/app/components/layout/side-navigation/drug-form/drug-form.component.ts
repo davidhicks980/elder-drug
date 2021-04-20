@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,41 +14,60 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
 import { StateService } from 'src/app/services/state.service';
 
 import { inputAnimation } from '../../../../animations';
 import { DataService } from '../../../../services/data.service';
+import { DrugPresenceValidator } from '../../../../services/drug-presence-validator.service';
 
 @Component({
   selector: 'elder-drug-form',
   templateUrl: './drug-form.component.html',
   styleUrls: ['./drug-form.component.scss'],
-  animations: [inputAnimation],
+  animations: [
+    inputAnimation,
+    trigger('fadeAutocomplete', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('100ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('100ms', style({ opacity: 0 }))]),
+    ]),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrugFormComponent implements OnDestroy {
   @ViewChild('drawer') public sidenav: MatSidenav;
+
+  inputValidators = [
+    Validators.pattern('[\\w.\\s-]*'),
+    Validators.required,
+    Validators.minLength(2),
+    Validators.maxLength(70),
+  ];
   isDestroyed = new Subject();
   observeDestruction$ = this.isDestroyed.asObservable();
-  drugsGroup: FormGroup = this.fb.group({
-    drugInput: new FormControl('', [
-      //prettier-ignore
-      Validators.pattern('([\w\s\,-.])+'),
-      Validators.minLength(2),
-      Validators.maxLength(70),
-    ]),
-    drugList: new FormArray([]),
-  });
-  private autocompleteListener = new Subject() as Subject<string[][]>;
-  autocompleteObserver = this.autocompleteListener.asObservable().pipe(
-    debounceTime(25),
-    takeUntil(this.observeDestruction$),
-    map((val) => (val.length < 1 ? [['Not found']] : val))
+  drugsGroup: FormGroup = this.fb.group(
+    {
+      drugInput: new FormControl(
+        '',
+        this.inputValidators,
+        this.drugPresence.createValidator(this.database, 300)
+      ),
+      drugList: new FormArray([]),
+    },
+    { updateOn: 'change' }
   );
+  private autocompleteListener = new Subject() as Subject<string[][]>;
+  autocompleteObserver = this.autocompleteListener
+    .asObservable()
+    .pipe(takeUntil(this.observeDestruction$), debounceTime(120));
+  loading: boolean;
 
   get drugList(): FormArray {
     return this.drugsGroup.get('drugList') as FormArray;
@@ -64,6 +84,7 @@ export class DrugFormComponent implements OnDestroy {
   get drugListLength(): number {
     return this.drugList.length;
   }
+
   search() {
     this.drugList.value.length > 0
       ? (this.database.searchDrugs(), this.state.toggleSidenav())
@@ -87,9 +108,13 @@ export class DrugFormComponent implements OnDestroy {
       this.drugList.value.length < 8 &&
       this.database.hasDrug(this.drugInput.value)
     ) {
-      this.drugList.push(new FormControl(this.drugInput.value));
+      let newControl = new FormControl(
+        this.drugInput.value,
+        this.inputValidators,
+        this.drugPresence.createValidator(this.database, 400)
+      );
+      this.drugList.push(newControl);
       setTimeout(() => this.drugInput.setValue(''), 30);
-    } else {
     }
   }
 
@@ -97,49 +122,59 @@ export class DrugFormComponent implements OnDestroy {
     return this.drugList.removeAt(index);
   }
 
+  getControlAt(index: number) {
+    return this.drugList.controls[index];
+  }
   filterAutocomplete(input: string) {
-    if (input && input.length > 1) {
+    const sliceString = (item: string) => [
+      input,
+      item.slice(input.length, -2),
+      item.slice(-2),
+    ];
+    if (!input || !input.length) {
+      this.autocompleteListener.next([]);
+    } else if (input.length > 1) {
       this.autocompleteListener.next(
-        this.database
-          .filterValues(input)
-          .map((item: string) => [input, item.slice(input.length)])
+        this.database.filterValues(input).map(sliceString)
       );
-    } else if (input && input.length > 0)
-      this.autocompleteListener.next([['Enter a drug']]);
+    }
   }
   ngOnDestroy() {
     this.isDestroyed.next(true);
+  }
+  get autocompleteConnectedInput() {
+    return true;
   }
   constructor(
     public state: StateService,
     public database: DataService,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private drugPresence: DrugPresenceValidator
   ) {
     this.drugList.controls = database.lastSearch.map(
       (val) => new FormControl(val)
     );
-    this.drugList.valueChanges
+    this.drugsGroup.valueChanges
       .pipe(takeUntil(this.observeDestruction$))
-      .subscribe(database.changeDrugs());
+      .subscribe((group) => {
+        database.storeHistory([group.drugInput, ...group.drugList]);
+      });
     this.drugsGroup.statusChanges
       .pipe(takeUntil(this.observeDestruction$))
       .subscribe((change) => {
-        this.invalid.emit(this.checkValidity(change));
+        this.invalid.emit(change === 'INVALID');
+        this.loading = false;
       });
   }
-  checkValidity = (change) => {
-    return change === 'INVALID';
-  };
+  log(x) {
+    console.log(x);
+  }
+
   @Output('invalid') invalid: EventEmitter<boolean> = new EventEmitter();
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });
   }
-
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
 }
 
 @Component({

@@ -1,41 +1,42 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[tracking-gradient]',
 })
 export class TrackingGradientDirective {
-  constructor(private el: ElementRef) {
-    this.element.style.backgroundRepeat = 'no-repeat';
+  width: number = 1;
+  height: number = 1;
+  gradientChild: SVGPathElement;
+  get element() {
+    return this.el.nativeElement as SVGElement;
+  }
+  constructor(private el: ElementRef) {}
+  ngOnInit() {
+    this.gradientChild = this.element.querySelector(
+      '#tracking-gradient'
+    ) as SVGPathElement;
+    const { width, height } = this.gradientChild.getBBox();
+    this.width = width;
+    this.height = height;
   }
 
-  @Input() trackHighlight: string;
-  @Input() trackBackground: string;
-  get element() {
-    return this.el.nativeElement as HTMLButtonElement;
-  }
   @HostListener('mousemove', ['$event'])
   onMouseMove($event: MouseEvent) {
-    this.changeBackgroundPosition(
-      `${Math.floor($event.offsetX)}px ${Math.floor($event.offsetY)}px`
+    let xPos = -1 * (this.width / 2 - $event.offsetX);
+
+    xPos = xPos > 140 ? 140 : xPos;
+    xPos = xPos < 4 ? 4 : xPos;
+
+    this.gradientChild.setAttribute(
+      'transform',
+      `translate(${xPos}, ${-1 * (this.height / 2 - $event.offsetY)})`
     );
   }
-  @HostListener('mouseenter')
+  @HostListener('mouseenter', ['$event'])
   onMouseEnter() {
-    this.renderHighlightBackground();
+    this.gradientChild.style.display = '';
   }
   @HostListener('mouseleave') onMouseLeave() {
-    this.renderDefaultBackground();
-  }
-  renderDefaultBackground() {
-    this.element.style.background = this.trackBackground;
-  }
-  renderHighlightBackground() {
-    this.element.style.background = `radial-gradient(circle at center, ${
-      this.trackBackground + '80% , ' + this.trackHighlight + '90%'
-    })`;
-    this.element.style.backgroundSize = '200%';
-  }
-  changeBackgroundPosition(coordinate) {
-    this.element.style.backgroundPosition = coordinate;
+    this.gradientChild.style.display = 'none';
   }
 }

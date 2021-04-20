@@ -1,14 +1,37 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { BehaviorSubject, combineLatest, merge, Observable, of, Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  merge,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+} from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 import { slideDownAnimation } from '../../animations';
-import { ColumnService } from '../../services/columns.service';
+import {
+  ColumnService,
+  DisplayedColumns,
+} from '../../services/columns.service';
 import { DataService, Table } from '../../services/data.service';
 import { StateService } from '../../services/state.service';
 import { TableService } from '../../services/table.service';
@@ -54,6 +77,7 @@ import { TableService } from '../../services/table.service';
       ),
     ]),
   ],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
@@ -73,6 +97,7 @@ export class TableComponent implements AfterViewInit {
   private _fields: string[] = ['Items'];
   loaded: boolean;
 
+  expandedElement = 0;
   set expandedRows(rows: string) {
     this._expandedRows.add(rows);
   }
@@ -119,9 +144,7 @@ export class TableComponent implements AfterViewInit {
       this.firebase.tableSource,
       this.groupProperty
     );
-    this.dataSource.rawHeaderStream = this.columnService.recieveTableColumns$.pipe(
-      map((data) => data.selected)
-    );
+    this.dataSource.rawHeaderStream = this.columnService.observeActiveColumns$;
   }
 
   isGroup(index: any, item: { isGroup: boolean }): boolean {

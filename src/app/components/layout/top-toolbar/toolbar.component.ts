@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LayoutStatus, ScreenStatus, StateService } from 'src/app/services/state.service';
+import {
+  LayoutStatus,
+  ScreenStatus,
+  StateService,
+} from 'src/app/services/state.service';
 
 import { toolbarItemsFade } from '../../../animations';
 import { DataService } from '../../../services/data.service';
