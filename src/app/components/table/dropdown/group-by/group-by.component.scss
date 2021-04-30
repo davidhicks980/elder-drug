@@ -1,0 +1,104 @@
+@import "palette";
+@import "bem-mixin";
+.column-select {
+  width: 100%;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.group-row {
+  pointer-events: all;
+  @include element("background") {
+    border: 1px solid $gray-1;
+    padding: 5px;
+    border-radius: 3px;
+    background: white;
+    min-height: 350px;
+    min-width: 250px;
+    max-width: 30%;
+    overflow: auto;
+    @include shadow(2);
+  }
+  @include element("primary-header") {
+    font-weight: 300;
+    margin: 0px;
+  }
+  @include element("secondary-header") {
+    font-weight: 400;
+    margin: 0px;
+  }
+}
+
+.drop-zone {
+  border: 1px dashed $gray-5;
+  min-height: 50px;
+  padding: 5px;
+  background: $light-gray-1;
+  transition: all 1s ease;
+}
+.ungrouped-list {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  min-height:50px;
+  min-width:100%;
+  outline: 1px dashed $gray-1;
+  padding: 4px;
+      display: grid;
+    grid-template-columns: calc(50% - 2.5px) calc(50% - 2.5px);
+    gap: 5px;
+}
+
+.list-item {
+  background: white;
+    list-style-position: inside;
+  padding: 3px;
+  border: 1px solid $light-gray-5;
+  border-radius: 5px;
+  filter: drop-shadow(0 0 0.75rem transparent);
+  -webkit-column-break-inside: avoid;
+  @include nativeState("hover") {
+    filter: drop-shadow(1px 2px 4px $light-gray-5);
+    transition: filter 250ms cubic-bezier(0, 0, 0.2, 1) !important;
+  }
+  @include element("header") {
+    font-size: 12px;
+    color: $gray-5;
+  }
+    @include element("pill-layout") {
+        grid-template-columns: 90% 10%;
+    display: grid;
+  }
+  @include element("add-icon") {
+    height: 25px;
+    stroke-width:60;
+    
+  }
+  @include element("sub-header") {
+    font-size: 10px;
+    margin: 0 10px 0 10px;
+    color: $light-gray-5;
+  }
+  
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) !important;
+}
+
+.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) !important;
+}
+
+.top-layer{
+  z-index: 2;
+  position: absolute;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  top:0px;
+  height:100%;
+  width:100%;
+}

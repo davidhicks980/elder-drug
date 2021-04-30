@@ -195,7 +195,7 @@ exports.LayoutComponent = LayoutComponent;
             class="tab-button"
             [class.collapse]="index != 0"
           >
-            <a class="button hh-span-8">{{ tab.ShortName }}</a>
+            <a class="button grid__cell--span-8">{{ tab.ShortName }}</a>
           </li>
         </ng-container>
       </ul>

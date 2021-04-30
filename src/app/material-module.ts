@@ -6,6 +6,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -35,15 +36,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-// import { MatBadgeModule } from '@angular/material/badge';
-// import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-// import { MatStepperModule } from '@angular/material/stepper';
-// import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatPaginatorModule } from '@angular/material/paginator';
-// import { MatProgressBarModule } from '@angular/material/progress-bar';
-// import { MatSliderModule } from '@angular/material/slider';
-// import { MatSortModule } from '@angular/material/sort';
-// import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   exports: [

@@ -12,6 +12,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -19,22 +21,19 @@ import { MatSort, Sort } from '@angular/material/sort';
 import {
   BehaviorSubject,
   combineLatest,
+  from,
   merge,
   Observable,
   of,
   Subject,
   Subscription,
 } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { groupBy, map, switchMap, tap } from 'rxjs/operators';
 
 import { slideDownAnimation } from '../../animations';
-import {
-  ColumnService,
-  DisplayedColumns,
-} from '../../services/columns.service';
+import { ColumnService } from '../../services/columns.service';
 import { DataService, Table } from '../../services/data.service';
-import { StateService } from '../../services/state.service';
-import { TableService } from '../../services/table.service';
+import { ColumnSelectorComponent } from './dropdown/column-selector/column-selector.component';
 
 @Component({
   selector: 'elder-table',
@@ -77,30 +76,21 @@ import { TableService } from '../../services/table.service';
       ),
     ]),
   ],
-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
-  public selectorInitiated = false;
   cols: {}[];
   pageChangeObserver: any;
   page: any;
   viewLoaded: boolean;
   dataSource: BeersTableDataSource<Table, Paginator>;
   groupProperty = 'SearchTerms';
-  selectedRow: any = false;
-  groups: Set<string> = new Set();
   groupingCriteria: { term: string; shown: string[] };
   animations = true;
-  private _expandedRows = new Set();
   private _fields: string[] = ['Items'];
-  loaded: boolean;
-
-  expandedElement = 0;
-  set expandedRows(rows: string) {
-    this._expandedRows.add(rows);
-  }
+  selectedRow: any;
+  groups: Map<string, GroupI> = new Map();
 
   trackByFn(e: any, g: any) {
     return `${e}-${g}`;
@@ -119,10 +109,23 @@ export class TableComponent implements AfterViewInit {
     return this._fields.length;
   }
 
-  toggleGroup(term: string) {
-    this.groups.has(term) ? this.groups.delete(term) : this.groups.add(term);
-    this.dataSource.expandedGroups = this.groups;
-    this.changeDetect.markForCheck();
+  toggleGroup(group: string) {
+    this.groups.has(group)
+      ? this.groups.delete(group)
+      : this.groups.set(group, {
+          level: this.groups.size,
+          expanded: false,
+          name: group,
+        });
+  }
+  addGroup(group: string) {
+    this.dataSource.groupTerms = [];
+  }
+
+  expandGroup(term: string) {
+    if (this.groups.has(term)) {
+      this.groups.get(term).expanded = !this.groups.get(term).expanded;
+    }
   }
 
   ngAfterViewInit() {
@@ -130,31 +133,32 @@ export class TableComponent implements AfterViewInit {
     this.changeDetect.markForCheck();
   }
 
+  get selectComponent() {
+    return this.selector;
+  }
   constructor(
-    public columnService: ColumnService,
-    public firebase: DataService,
-    public tableService: TableService,
-    public stateService: StateService,
-    public changeDetect: ChangeDetectorRef
+    private columnService: ColumnService,
+    private dataService: DataService,
+    private changeDetect: ChangeDetectorRef,
+    private selector: ColumnSelectorComponent
   ) {
-    this.firebase = firebase;
-    this.tableService = tableService;
+    this.selector = selector;
+    this.dataService = dataService;
     this.columnService = columnService;
     this.dataSource = new BeersTableDataSource(
-      this.firebase.tableSource,
-      this.groupProperty
+      this.dataService.tableSource,
+      this.columnService.observeActiveColumns$
     );
-    this.dataSource.rawHeaderStream = this.columnService.observeActiveColumns$;
   }
 
-  isGroup(index: any, item: { isGroup: boolean }): boolean {
+  isGroup(item: { isGroup: boolean }): boolean {
     return item.isGroup;
   }
 
-  isShown(index: any, item: { isGroup: any }): boolean {
+  isShown(item: { isGroup: any }): boolean {
     return !item.isGroup;
   }
-  trackingFunct(id: any, item: { tableID: any }) {
+  trackingFunct(item: { tableID: any }) {
     return item.tableID;
   }
 }
@@ -180,6 +184,14 @@ interface Paginator {
   pageSize: number;
   length: number;
 }
+interface Entries {
+  (value: string | number, rows: Entries[] | []): boolean;
+}
+interface GroupI {
+  level: number;
+  name: string;
+  expanded: boolean;
+}
 
 /** Shared base class with MDC-based implementation. */
 export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
@@ -194,14 +206,11 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   /** Stream that emits when a new filter string is set on the data source. */
   private readonly _filter = new BehaviorSubject<string>('');
 
-  /** Used to react to internal changes of the paginator that are made by the data source itself. */
-  private readonly _internalPageChanges = new Subject<void>();
-
   /**
    * Subscription to the changes that should trigger an update to the table's rendered rows, such
    * as filtering, sorting, pagination, or base data changes.
    */
-  _renderChangesSubscription: Subscription | null = null;
+  private _renderChangesSubscription: Subscription | null = null;
 
   /**
    * The filtered set of data that has been matched by the filter string, or all the data if there
@@ -209,65 +218,108 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * For example, a 'selectAll()' function would likely want to select the set of filtered data
    * shown to the user rather than all the data.
    */
-  private _group = new BehaviorSubject(new Set()) as BehaviorSubject<
-    Set<string>
+  private _group = new BehaviorSubject(new Map()) as BehaviorSubject<
+    Map<string, GroupI>
   >;
-  private _groupTerm: BehaviorSubject<string>;
+  private _groupTerm: BehaviorSubject<GroupI[]>;
   private _dataLoaded = false;
 
   filteredData: T[];
 
   groupingParameters: any;
   _dataHeaders: boolean;
-  private _displayedHeaders: BehaviorSubject<string[]> = new BehaviorSubject(
-    []
+
+  private _rows = new Set() as Set<number>;
+  groupTerm: any;
+  private _displayedColumns: Observable<string[]> = of(['']);
+  private _toggledRows: BehaviorSubject<Set<string>> = new BehaviorSubject(
+    new Set()
   );
 
-  get displayedHeaders(): Observable<string[]> {
-    return this._displayedHeaders.asObservable();
-  }
   /** Ingests a stream of any columns that are marked to be shown and that contain data
    * @property {headers} headers - A stream of headers from your table source.
    */
-  set rawHeaderStream(headers: Observable<string[]>) {
-    combineLatest([this._data, headers])
-      .pipe(
-        this._mapReduceEmptyColumns,
-        map((items) =>
-          this._groupTerm
-            ? items.filter((item) => item != this.groupTerm)
-            : items
-        )
-      )
-      .subscribe((items: string[]) => this._displayedHeaders.next(items));
+  observeColumnChanges(headers: Observable<string[]>) {
+    this._displayedColumns = combineLatest([this._data, headers]).pipe(
+      map((headers) => this._filterEmptyColumns(headers))
+    );
   }
+  /**
+   *
+   * A list of table columns to display
+   * @readonly
+   * @memberof BeersTableDataSource
+   */
+  get displayedColumns() {
+    return this._displayedColumns;
+  }
+  get displayedGroups() {
+    return [...this._group.value.values()];
+  }
+  /* private _filterGroupedColumns = (groupedColumns: Map<string, GroupI>) => (
+    headers: string[]
+  ) => {
+    if (groupedColumns.size === 0) {
+      return headers;
+    } else {
+      let arrGroupedColumns = [...groupedColumns.keys()];
+      return headers.filter((header) => !arrGroupedColumns.includes(header));
+    }
+  };*/
+
   get dataLoaded() {
     return this._dataLoaded;
   }
-  get groupTerm(): string {
+  get groupTerms(): GroupI[] {
     if (this._groupTerm.value) {
       return this._groupTerm.value;
     }
   }
-  set groupTerm(term: string) {
-    if (term && typeof term === 'string' && term.length > 0) {
-      this._groupTerm.next(term);
+  set groupTerms(terms: GroupI[]) {
+    if (terms && Array.isArray(terms) && terms.length > 0) {
+      this._groupTerm.next(terms);
     }
   }
 
-  get expandedGroups(): Set<string> {
-    return this._group.value;
+  get expandedRows(): Set<number> {
+    return this._rows;
   }
 
-  set expandedGroups(group: Set<string>) {
-    this._group.next(group);
-  }
-  /** Array of data that should be rendered by the table, where each object represents one row. */
+  /** Array of objects that should be rendered by the table, where each object represents one row. */
   get data() {
     return this._data.value;
   }
   set data(data: T[]) {
     this._data.next(data);
+  }
+  toggleRow(index: number) {
+    this._rows.has(index) ? this._rows.delete(index) : this._rows.add(index);
+  }
+
+  toggleRowExpansion(index: number, rowData: any) {
+    this._rows;
+  }
+  toggleGroup(group: string) {
+    const newGroup = this._group.value || new Map();
+    newGroup.has(group)
+      ? newGroup.delete(group)
+      : newGroup.set(group, { order: 0, expanded: false, groupName: group });
+    this._group.next(newGroup);
+  }
+  toggleExpansion(row) {
+    let { root, EntryID: entry, index } = row;
+    const key = root + entry + index;
+    const toggledRows = this._toggledRows.value as Set<string>;
+    toggledRows.has(key) ? toggledRows.delete(key) : toggledRows.add(key);
+    this._toggledRows.next(toggledRows);
+  }
+  rowIsExpanded(rowData) {
+    return this._toggledRows?.value?.has(
+      rowData.root + rowData.EntryID + rowData.index
+    );
+  }
+  checkIsGroup(index: number, rowData) {
+    return rowData.isGroup;
   }
 
   /**
@@ -303,7 +355,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * should be displayed. If the paginator receives its properties as template inputs,
    * e.g. `[pageLength]=100` or `[pageIndex]=1`, then be sure that the paginator's view has been
    * initialized before assigning it to this data source.
-   */
+   
   get paginator(): P | null {
     return this._paginator;
   }
@@ -312,7 +364,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     this._updateChangeSubscription();
   }
   private _paginator: P | null;
-
+*/
   /**
    * Data accessor function that is used for accessing data properties for sorting through
    * the default sortData function.
@@ -323,12 +375,11 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * @param data Data object that is being accessed.
    * @param sortHeaderId The name of the column that represents the data.
    */
-  sortingDataAccessor: (data: T, sortHeaderId: string) => string | number = (
+  private _sortingDataAccessor: (
     data: T,
     sortHeaderId: string
-  ): string | number => {
+  ) => string | number = (data: T, sortHeaderId: string): string | number => {
     const value = (data as { [key: string]: any })[sortHeaderId];
-
     if (_isNumberValue(value)) {
       const numberValue = Number(value);
 
@@ -359,11 +410,9 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     if (!active || direction == '') {
       return data;
     }
-
     return data.sort((a, b) => {
-      let valueA = this.sortingDataAccessor(a, active);
-      let valueB = this.sortingDataAccessor(b, active);
-
+      let valueA = this._sortingDataAccessor(a, active);
+      let valueB = this._sortingDataAccessor(b, active);
       // If there are data in the column that can be converted to a number,
       // it must be ensured that the rest of the data
       // is of the same type so as not to order incorrectly.
@@ -456,46 +505,80 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
 
     return subject;
   }
-  constructor(dataStream: Observable<T[]>, groupTerm: string) {
+  constructor(dataStream: Observable<T[]>, columnStream: Observable<string[]>) {
     super();
-    this._groupTerm = new BehaviorSubject(groupTerm);
-
     this._data = this.convertObservableToBehaviorSubject(dataStream);
-
+    this.observeColumnChanges(columnStream);
     this._updateChangeSubscription();
   }
+  private _appendRow(item: any, layer: number, root: string) {
+    let isExpanded = this._toggledRows?.value?.has(root + layer) || false;
+    return {
+      root: root ? root : 'root',
+      ...item,
+      index: layer,
+      isGroup: false,
+      expanded: isExpanded,
+    };
+  }
 
-  _groupingPredicate(data: T[]) {
-    let groupedData = [] as any[];
-    const groupHeaders = this._extractGroupHeaders(data).flat();
+  private _appendSubHeader(item: any, layer: number, root: string) {
+    let isExpanded =
+      this._toggledRows?.value?.has(root + item.entryID + layer) || false;
 
-    let expanded = false;
-    let headerRow = {};
+    return {
+      root: root ? root : 'root',
+      value: item.value,
+      index: layer,
+      isGroup: true,
+      expanded: isExpanded,
+    };
+  }
 
-    for (let header of groupHeaders) {
-      expanded = this.expandedGroups.has(header);
-      headerRow = {
-        isGroup: true,
-        expanded,
-        term: header,
-      };
-      console.log(data);
-      if (expanded) {
-        groupedData = groupedData.concat(
-          [headerRow],
-          data.reduce((rows, item) => {
-            if (item[this.groupTerm].includes(header)) {
-              rows.push(item);
-            }
-            return rows;
-          }, [])
-        );
+  private _flattenNestedNodes(nodes: any[], stack = [], layer = 0) {
+    layer++;
+    let rootVal, hasChild, item;
+    for (item of nodes) {
+      hasChild = item?.rows?.length > 0;
+      rootVal = layer === 1 && hasChild ? item.value : rootVal;
+      if (item && Array.isArray(item.rows) && hasChild) {
+        stack.push(this._appendSubHeader(item, layer, rootVal));
+        this._flattenNestedNodes(item.rows, stack, layer);
       } else {
-        groupedData.push(headerRow);
+        stack.push(this._appendRow(item, layer, rootVal));
       }
     }
-    console.log(groupedData);
-    return groupedData;
+    return stack;
+  }
+  private _groupBy(arr: any[], fields: string[]): any[] {
+    let field = fields[0] as string; // take first field
+    if (!field) return arr; //if field does not exist, return the array
+    let recursedArray = Object.values(
+      arr.reduce((obj, current: Entries) => {
+        //If current object does not exist, set the value to the current field, and provide empty rows at the bottom of the tree
+        if (!obj[current[field]])
+          obj[current[field]] = { value: current[field], rows: [] };
+        //else push the current object into {values: field, rows: [...currobj] }
+        obj[current[field]].rows.push(current);
+        return obj;
+      }, {})
+    );
+
+    // iterate through each child's rows if there are remaining fields
+    if (fields.length) {
+      recursedArray.forEach((obj: any) => {
+        obj.count = obj.rows.length;
+        obj.rows = this._groupBy(obj.rows, fields.slice(1)); //remove the current field from the list of fields
+      });
+    }
+    return recursedArray;
+  }
+  private _groupData(data: T[]) {
+    if (this._group.value.size > 0) {
+      const groups = [...this._group.value.keys()];
+      data = this._groupBy(data, groups);
+    }
+    return this._flattenNestedNodes(data);
   }
 
   /**
@@ -503,7 +586,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * changes occur, process the current state of the filter, sort, and pagination along with
    * the provided base data and send it to the table for rendering.
    */
-  _updateChangeSubscription() {
+  private _updateChangeSubscription() {
     // Sorting and/or pagination should be watched if MatSort and/or MatPaginator are provided.
     // The events should emit whenever the component emits a change or initializes, or if no
     // component is provided, a stream with just a null event should be provided.
@@ -517,8 +600,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
         ) as Observable<Sort | void>)
       : of(null);
     const dataStream = this._data;
-    const groupingParameters = combineLatest([this._group, this._groupTerm]);
-
+    dataStream.pipe(tap(console.log)).subscribe();
     // Watch for base data or filter changes to provide a filtered set of data.
     const filteredData = combineLatest([dataStream, this._filter]).pipe(
       map(([data]) => this._filterData(data))
@@ -526,12 +608,12 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     // Watch for base data or filter changes to provide a filtered set of data.
 
     // Watch for filtered data or sort changes to provide an ordered set of data.
-    const orderedData = combineLatest([filteredData, sortChange]).pipe(
+    const sortedData = combineLatest([filteredData, sortChange]).pipe(
       map(([data]) => this._orderData(data))
     );
 
-    const groupedData = combineLatest([orderedData, groupingParameters]).pipe(
-      map(([data]) => this._groupingPredicate(data))
+    const groupedData = combineLatest([sortedData, this._group]).pipe(
+      map(([data]) => this._groupData(data))
     );
     // Watched for paged data changes and send the result to the table to render.
     this._renderChangesSubscription?.unsubscribe();
@@ -541,30 +623,34 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     });
   }
 
-  private _extractGroupHeaders(data: T[]) {
-    return Array.from(
-      new Set(data.map((items) => items[this.groupTerm]).flat())
-    );
-  }
-  private _mapReduceEmptyColumns = map(([items, headers]) => {
-    return Array.from(
-      items.reduce((acc: Set<string>, curr) => {
-        for (let header of headers) {
-          if (curr[header] || curr[header] === false) {
-            acc.add(header);
-          }
-        }
-        return acc;
-      }, new Set())
-    ) as any[];
-  });
+  /**
+   *
+   *
+   * @param {*} [tableArray, headers]
+   * @returns {*}  {string[]}
+   */
+  private _filterEmptyColumns = ([tableArray, headers]: [
+    T[],
+    string[]
+  ]): string[] => {
+    let exists = {};
+    return tableArray
+      .map((table) =>
+        headers.filter((header) =>
+          table[header] && !exists.hasOwnProperty(header)
+            ? (exists[header] = true)
+            : false
+        )
+      )
+      .flat();
+  };
 
   /**
    * Returns a filtered data array where each filter object contains the filter string within
    * the result of the filterTermAccessor function. If no filter is set, returns the data array
    * as provided.
    */
-  _filterData(data: T[]) {
+  private _filterData(data: T[]) {
     // If there is a filter string, filter out data that does not contain it.
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overridden for customization.
@@ -572,7 +658,6 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
       this.filter == null || this.filter === ''
         ? data
         : data.filter((obj) => this.filterPredicate(obj, this.filter));
-
     return this.filteredData;
   }
 
@@ -581,7 +666,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * data array as provided. Uses the default data accessor for data lookup, unless a
    * sortDataAccessor function is defined.
    */
-  _orderData(data: T[]): T[] {
+  private _orderData(data: T[]): T[] {
     // If there is no active sort or direction, return the data without trying to sort.
     if (!this.sort) {
       return data;
@@ -598,7 +683,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     if (!this._renderChangesSubscription) {
       this._updateChangeSubscription();
     }
-    console.log(this._renderData.value);
+    this._renderData.subscribe(console.log);
     return this._renderData;
   }
 

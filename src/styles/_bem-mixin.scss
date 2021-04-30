@@ -21,9 +21,14 @@
     @content;
   }
 }
+@mixin nativeState($state) {
+  &#{":" + $state} {
+    @content;
+  }
+}
 
-@mixin pseudo($pseudo) {
-  &#{":" + $pseudo} {
+@mixin pseudoElement($pseudo) {
+  &#{"::" + $pseudo} {
     @content;
   }
 }

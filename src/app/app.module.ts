@@ -39,7 +39,12 @@ import { RotateDirective } from './directives/rotate-icon.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
 import { MaterialModule } from './material-module';
 import { ToStringPipe } from './to-string.pipe';
-import { ColumnSelectorComponent } from './components/table/column-selector/column-selector.component';
+import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
+import { PopupComponent } from './components/table/dropdown/popup.component';
+import { ResizeDirective } from './directives/resize.directive';
+import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
+import { JoinPipe } from './pipes/join.pipe';
+import { ListKeyDirective } from './directives/list-key.directive';
 
 @NgModule({
   declarations: [
@@ -63,6 +68,11 @@ import { ColumnSelectorComponent } from './components/table/column-selector/colu
     DropdownComponent,
     TabComponent,
     ColumnSelectorComponent,
+    PopupComponent,
+    ResizeDirective,
+    GroupByComponent,
+    JoinPipe,
+    ListKeyDirective,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +95,7 @@ import { ColumnSelectorComponent } from './components/table/column-selector/colu
     CdkAccordionModule,
     A11yModule,
   ],
-  providers: [],
+  providers: [ColumnSelectorComponent],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

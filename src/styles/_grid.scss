@@ -27,6 +27,10 @@ $arrangements: (
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 1fr;
   }
+  &.hh-grid-spacing {
+    padding: 10px;
+    gap: 15px;
+  }
 
   @for $_ from 1 through 12 {
     .hh-span-#{$_} {

@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import "~@angular/material/theming";
+@import "~@angular/material/select/select-theme";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -34,37 +35,6 @@ $search-angular-theme: mat-light-theme(
 // that you are using.
 @include angular-material-theme($search-angular-theme);
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$search-angular-primary: mat-palette($mat-indigo);
-$search-angular-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$search-angular-warn: mat-palette($mat-red);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$search-angular-theme: mat-light-theme(
-  (
-    color: (
-      primary: $search-angular-primary,
-      accent: $search-angular-accent,
-      warn: $search-angular-warn,
-    ),
-  )
-);
-
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
@@ -72,6 +42,7 @@ $search-angular-theme: mat-light-theme(
 @import "palette";
 @import "grid";
 @import "bem-mixin";
+
 html,
 body {
   height: 100%;
@@ -159,13 +130,37 @@ fieldset {
   top: 5px !important;
 }
 
-th .mat-sort-header-pointer-left {
-  transform-origin: right;
-  left: 1.5px !important;
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+  background: white;
+    list-style-position: inside;
+  padding: 3px;
+  border: 1px solid $light-gray-5;
+  border-radius: 5px;
+  filter: drop-shadow(0 0 0.75rem transparent);
+  -webkit-column-break-inside: avoid;
+}
+.cdk-drag-placeholder {
+ 
+}
+.mat-sort-header-pointer-right,
+.mat-sort-header-pointer-left {
+  border-radius: 3px !important;
 }
 
 .mat-sort-header-arrow {
   color: currentColor !important;
+  width: 11px !important;
+  min-width: 11px !important;
 }
 
 .mat-tooltip.tooltip {

@@ -47,6 +47,3 @@ $realistic-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
   box-shadow: 0 1px 2px rgb(87 107 138 / 12%), 0 2px 4px rgb(82 92 126 / 24%),
     0 4px 8px rgb(70 70 105 / 36%);
 }
-@mixin shadow($depth) {
-  box-shadow: 0 1px * $depth 2px * $depth rgb(87 107 138 / #{12% * $depth});
-}

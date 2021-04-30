@@ -119,9 +119,7 @@ export class LayoutComponent {
   public mobileWidth: boolean;
   enabledTables: Observable<Table[]> = new Subject();
   showTabs: boolean = false;
-  gradient(e) {
-    console.log(e);
-  }
+
   tables: Table[] = [];
   selectedTable: string;
   tableDescription: string = '';
@@ -157,7 +155,7 @@ export class LayoutComponent {
             class="tab-button"
             [class.collapse]="index != 0"
           >
-            <a class="button hh-span-8">{{ tab.ShortName }}</a>
+            <a class="button grid__cell--span-8">{{ tab.ShortName }}</a>
           </li>
         </ng-container>
       </ul>

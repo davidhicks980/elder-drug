@@ -1,7 +1,7 @@
 [
   {
     "id": 120,
-    "url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=N0000000160 &relaSource=DAILYMED&rela=has_moa&rela=has_tc",
+    "url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=N0000000160&relaSource=DAILYMED&rela=has_moa&rela=has_tc",
     "brands": [
       { "rxcui": "1191", "name": "aspirin", "tty": "IN" },
       { "rxcui": "19737", "name": "bromfenac", "tty": "IN" },

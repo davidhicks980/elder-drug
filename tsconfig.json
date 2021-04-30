@@ -24,5 +24,4 @@
     "strictTemplates": true,
     "enableIvy": true
   },
-  "plugins": [{ "name": "@angular/language-service" }]
 }

@@ -23,11 +23,18 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/assets", "src/manifest.webmanifest"],
+            "assets": [
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
             "scripts": [],
-            "styles": ["src/styles/styles.scss"],
+            "styles": [
+              "src/styles/styles.scss"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             }
           },
           "configurations": {
@@ -61,7 +68,10 @@
               "ngswConfigPath": "ngsw-config.json"
             }
           },
-          "allowedCommonJsDependencies": ["@firebase", "@angular/fire"]
+          "allowedCommonJsDependencies": [
+            "@firebase",
+            "@angular/fire"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -95,11 +105,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/assets", "src/manifest.webmanifest"],
+            "assets": [
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
             "scripts": []
           }
         },
-
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -115,6 +127,15 @@
         "deploy": {
           "builder": "@angular/fire:deploy",
           "options": {}
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }

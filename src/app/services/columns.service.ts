@@ -98,10 +98,13 @@ export class ColumnService {
   observeActiveColumns$ = this.activeColumnsSource.asObservable();
 
   triggerColumnChange(table: Category) {
-    const activeColumns = this.columnDefinitions
+    const allColumns = this.columnDefinitions
       .filter((column) => column.id === table)
       .map((column) => column.columnOptions)[0];
-    this.columnsSource.next(activeColumns);
+    this.columnsSource.next(allColumns);
+    this.activeColumnsSource.next(
+      allColumns.filter((col) => col.selected).map((col) => col.id)
+    );
   }
   updateSelectedColumns(selected: string[]) {
     this.activeColumnsSource.next(selected);

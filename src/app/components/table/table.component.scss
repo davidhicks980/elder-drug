@@ -35,6 +35,9 @@
   & .cdk-column-expandedDetail {
     overflow: hidden;
   }
+  @include state("is-mobile") {
+    background: blue;
+  }
 }
 .row,
 .mobile-row,
@@ -89,7 +92,7 @@
   border-bottom: 1px solid $light-gray-4;
   box-shadow: inset 0px 1px 0px 0 #ffffff54;
   background-color: $light-gray-1;
-  color: $gray-2;
+  color: $gray-5;
   flex: 1;
   border-right: 1px solid $light-gray-4;
   &:first-of-type {
@@ -131,7 +134,7 @@
   font-weight: 400;
 }
 .cell {
-  display: grid;
+  display: inline-block;
 }
 .cell__chevron-container {
   width: 36px;
@@ -232,7 +235,7 @@ mat-chip-list mat-chip.mat-standard-chip {
 .chevron-button__chevron,
 .chevron {
   transform: rotate(-0deg);
-  transition: transform 0.5s;
+  transition: transform 0.2s;
   &.--rotated {
     transform: rotate(90deg);
   }
@@ -281,33 +284,24 @@ button.absolute-position {
   }
 }
 
-.filter {
+.table-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  justify-items: stretch;
   margin: 10px 0 10px 0;
+  gap: 10px;
+}
+.filter {
 }
 .filter__label {
-  color: $gray-1;
+}
+.filter__input-wrapper {
+  @include commonInput;
 }
 .filter__input {
-  border: 1px solid #a2b0c7;
-  border-radius: 3px;
-  width: 40ch;
-  flex-direction: row;
-  height: 2.5em;
-  &:hover {
-    background: tint($light-gray-1, 50%);
-  }
-  &:focus-within {
-    background-image: linear-gradient(
-      #f6f7f8 0%,
-      #f6f7f8 96%,
-      #0f4bb1 96%,
-      #0f4bb2 100%
-    );
-    outline: none;
-    outline-offset: none;
-    border: none;
-    padding: 1px;
-    background-position: 0px -100%;
-    background-repeat: no-repeat;
-  }
+  outline: transparent;
+  border: transparent;
+  background: transparent;
 }

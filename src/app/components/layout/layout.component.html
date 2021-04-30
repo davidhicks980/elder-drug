@@ -61,7 +61,7 @@
         <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
       </nav>
       <div class="elder-table-container">
-        <elder-table class="elder-table">
+        <elder-table elderResize [isMobile] class="elder-table">
           <elder-table-title>
             {{ tableService.tableTitle$ | async }}</elder-table-title
           >
