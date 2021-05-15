@@ -166,12 +166,12 @@
   dependencies:
     tslib "^2.1.0"
 
-"@angular/cdk@^11.2.9":
-  version "11.2.9"
-  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-11.2.9.tgz"
-  integrity sha512-3gHobkgCQIJ4kJFkqexaKramI6k4OZ0/Vw5qvabGhpwWtICvrrfZyRejJzhecYKOcw+hiJNoDqP9TVNfkLme9g==
+"@angular/cdk@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-12.0.0.tgz#86064923870a7f1d6094d08dc7951e41d8972aaa"
+  integrity sha512-Ij1wNlufbwH2R3zVwkiJgrI0Oc4+yuveEFWMnckcZ7t6E3drmeS1/YeHSbYlWau+fglWs7LtJWC4dEIpGymvzg==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^2.1.0"
   optionalDependencies:
     parse5 "^5.0.0"
 
@@ -256,12 +256,12 @@
   dependencies:
     tslib "^2.1.0"
 
-"@angular/material@^11.1.1":
-  version "11.2.9"
-  resolved "https://registry.npmjs.org/@angular/material/-/material-11.2.9.tgz"
-  integrity sha512-Pe1aScSX8fMOSs5hfF/V7NCJn9pt/60rFmwYxgtFser4BcJrO0Moz4eqxhNcR0PjiCQgKJpjjPxBept2+o5N5A==
+"@angular/material@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-12.0.0.tgz#07eb6ad3c661ae3ab8e65df803eae47fd149735f"
+  integrity sha512-ToWfr4ge2ZINLBtUQOseGm7mzscLMsrKLWYM0HzfVL9lkm6EtfTlReZV84DEzDf6/htky41t9nY5SBPWs2dtug==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^2.1.0"
 
 "@angular/platform-browser-dynamic@^12.0.0":
   version "12.0.0"
@@ -2066,11 +2066,6 @@
   version "0.0.32"
   resolved "https://registry.npmjs.org/@types/q/-/q-0.0.32.tgz"
   integrity sha1-vShOV8hPEyXacCur/IKlMoGQwMU=
-
-"@types/resize-observer-browser@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.npmjs.org/@types/resize-observer-browser/-/resize-observer-browser-0.1.5.tgz"
-  integrity sha512-8k/67Z95Goa6Lznuykxkfhq9YU3l1Qe6LNZmwde1u7802a3x8v44oq0j91DICclxatTr0rNnhXx7+VTIetSrSQ==
 
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"

@@ -1,5 +1,5 @@
-@import "palette";
-@import "bem-mixin";
+@use "palette";
+@use "bem-mixin";
 .column-select {
   width: 100%;
 }

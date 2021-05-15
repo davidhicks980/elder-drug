@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +33,7 @@ import { ListContentComponent } from './components/table/dropdown/group-by/butto
 import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
 import { PopupComponent } from './components/table/dropdown/popup.component';
 import { FilterComponent } from './components/table/filter/filter.component';
+import { TableCardComponent } from './components/table/table-card/table-card.component';
 import { TableComponent } from './components/table/table.component';
 import { ExpandedElementComponent } from './components/unused/expanded-element/expanded-element.component';
 import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
@@ -51,7 +51,6 @@ import { LetDirective } from './directives/with.directive';
 import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './to-string.pipe';
-import { TableCardComponent } from './components/table/table-card/table-card.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +96,7 @@ import { TableCardComponent } from './components/table/table-card/table-card.com
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
+
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

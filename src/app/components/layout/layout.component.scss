@@ -1,4 +1,4 @@
-@import "colors";
+@use "colors";
 
 $content-height--full-header: calc(100vh - #{$header-full});
 

@@ -1,8 +1,9 @@
 @use 'sass:color';
-@import "~@angular/material/theming";
-@import "bem-mixin";
-@import "palette";
-@import "colors";
+@use '~@angular/material' as mat;
+@use "~@angular/material/theming";
+@use "bem-mixin";
+@use "palette";
+@use "colors";
 :host {
   --input-background: white;
   --input-background--hover: #{$light-gray-1};
@@ -97,7 +98,7 @@
     grid-column: 2;
   }
   @include element("container") {
-    @include mat-elevation-transition;
+    @include mat.elevation-transition;
 
     grid-template-columns: auto 2.5em;
     grid-row: 2;

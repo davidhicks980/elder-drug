@@ -1,4 +1,4 @@
-@import "colors";
+@use "colors";
 
 @function encodecolor($string) {
   @if type-of($string) == "color" {

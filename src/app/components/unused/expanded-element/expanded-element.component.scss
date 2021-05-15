@@ -1,6 +1,6 @@
-@import "colors";
-@import "palette";
-@import "bem-mixin";
+@use "colors";
+@use "palette";
+@use "bem-mixin";
 :root {
   --pk-primary: $primary-1;
   --border-color: $gray-1;

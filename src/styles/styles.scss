@@ -1,26 +1,30 @@
+@use '~@angular/material' as mat;
+@use "_palette" as *;
+@use "_bem-mixin" as *;
+
+@use "_colors" as *;
+@use "_grid" as *;
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import "~@angular/material/theming";
-@import "~@angular/material/select/select-theme";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$search-angular-primary: mat-palette($mat-indigo);
-$search-angular-accent: mat-palette($mat-pink, A200, A100, A400);
+$search-angular-primary: mat.define-palette(mat.$indigo-palette);
+$search-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$search-angular-warn: mat-palette($mat-red);
+$search-angular-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$search-angular-theme: mat-light-theme(
+$search-angular-theme: mat.define-light-theme(
   (
     color: (
       primary: $search-angular-primary,
@@ -33,15 +37,11 @@ $search-angular-theme: mat-light-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($search-angular-theme);
+@include mat.all-component-themes($search-angular-theme);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@import "colors";
-@import "palette";
-@import "grid";
-@import "bem-mixin";
 
 html,
 body {
@@ -146,9 +146,9 @@ fieldset {
   padding: 3px;
   border-radius: 5px;
   -webkit-column-break-inside: avoid;
-  box-shadow: 0px 3px 3px 1px transparentize($gray-5, 0.9);
-  border: 1px solid $secondary-2-1;
-  background: tint($secondary-2-1, 80%);
+  //box-shadow: 0px 3px 3px 1px transparentize($gray-5, 0.9);
+  // border: 1px solid $secondary-2-1;
+  // background: tint($secondary-2-1, 80%);
 }
 .cdk-drag-placeholder {
 }
@@ -229,5 +229,5 @@ fieldset {
 .drug-form-autocomplete > .mat-autocomplete-panel {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  @include mat-elevation-transition;
+  @include mat.elevation-transition;
 }
