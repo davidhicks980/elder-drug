@@ -1,15 +1,8 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  Renderer2,
-} from '@angular/core';
-import ResizeObserver from 'resize-observer-polyfill';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { ResizeService } from '../services/resize.service';
+
 @Directive({
   selector: '[mobileListener]',
 })
@@ -28,7 +21,7 @@ export class ResizeDirective implements OnDestroy {
     private resize: ResizeService
   ) {
     this.subscription = this.resize
-      .observe(this.element.nativeElement, this.triggerWidth)
+      .observeElement(this.element.nativeElement, this.triggerWidth)
       .subscribe(this.toggleClass(this.renderer, this.element.nativeElement));
   }
   toggleClass(renderer: Renderer2, element) {

@@ -7,6 +7,7 @@ import { DataService } from './services/data.service';
 @Component({
   selector: 'app-component',
   templateUrl: './app.component.html',
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {}
@@ -21,8 +22,12 @@ export class AppComponent implements OnInit {
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')
     );
     this.iconRegistry.addSvgIcon(
-      'add--outline',
+      'add',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'add_ibm',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_ibm.svg')
     );
     this.iconRegistry.addSvgIcon(
       'delete',
@@ -48,6 +53,12 @@ export class AppComponent implements OnInit {
       'remove_circle_outline',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/remove_circle_outline.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'remove',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/ion-remove.svg'
       )
     );
     iconRegistry.addSvgIcon(
@@ -146,6 +157,38 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'cancel',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cancel.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'remove_sharp',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/remove.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'expand_more',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/expand_more.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'x',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'x_filled',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/x_filled_circle.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'x_outlined',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/x_outlined_circle.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'draggable',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/draggable.svg'
+      )
     );
   }
   title = 'ElderDrug';

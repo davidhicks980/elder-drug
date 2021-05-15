@@ -20,6 +20,7 @@ div.logo-title {
     height: 3em;
     margin: 0 0.7em 0.5em 0.7em;
     width: 2.5em;
+    position: absolute;
   }
   & span {
     &.title {
@@ -27,6 +28,7 @@ div.logo-title {
       font-size: 26pt;
       white-space: nowrap;
       color: darken($dark-gray-3, 10%);
+      margin-left: 3rem;
     }
     &.mobile-sidenav-title {
       font-size: 28pt;

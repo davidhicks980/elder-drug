@@ -24,7 +24,7 @@ const dbport = process.env.MYSQL_SERVICE_PORT;
 const dbuser = process.env.MYSQL_USER;
 const dbpwd = process.env.MYSQL_PASSWORD;
 const dbname = process.env.MYSQL_DATABASE;
-const conn = mysql.createConnection({   
+const conn = mysql.createConnection({
     host:     dbhost,
     user:     dbuser,
     password: dbpwd,
@@ -65,7 +65,7 @@ io.on("connection", function (socket) {
     const stringlist = JSON.stringify(queryArray);
     const querylist = stringlist.replace(/\",\"/g, " OR ");
     const sql = `SELECT DISTINCT
-    all_guidance.*, di.DrugExamples as SearchTerm
+    all_guidance.*, di.DrugExamples as SearchTerms
   FROM
     dropdown_index_a di
   RIGHT JOIN all_guidance ON

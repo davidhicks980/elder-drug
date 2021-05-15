@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  AbstractControl,
-  AsyncValidator,
-  ValidationErrors,
-} from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { timer } from 'rxjs/internal/observable/timer';
+import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
+import { Observable, timer } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
+
 import { DataService } from './data.service';
 
 @Injectable({

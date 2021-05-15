@@ -1,25 +1,11 @@
-import { trigger, transition, style, animate } from '@angular/animations';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnDestroy,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
-import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
-import { StateService } from 'src/app/services/state.service';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { ResizeService } from 'src/app/services/resize.service';
 
 import { inputAnimation } from '../../../../animations';
 import { DataService } from '../../../../services/data.service';
@@ -85,9 +71,10 @@ export class DrugFormComponent implements OnDestroy {
     return this.drugList.length;
   }
 
-  search() {
-    this.drugList.value.length > 0
-      ? (this.database.searchDrugs(), this.state.toggleSidenav())
+  search(alternative: string[]) {
+    let search = alternative || this.drugList.value;
+    search.length > 0
+      ? (this.database.searchDrugs(search), this.state.toggleSidenav())
       : this.openDialog();
   }
   stopPropagation(e) {
@@ -146,7 +133,7 @@ export class DrugFormComponent implements OnDestroy {
     return true;
   }
   constructor(
-    public state: StateService,
+    public state: ResizeService,
     public database: DataService,
     private fb: FormBuilder,
     public dialog: MatDialog,

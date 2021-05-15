@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Table } from '../../../services/data.service';
+import { BeersField } from '../../../services/data.service';
 
 @Component({
   selector: 'elder-expanded-element',
@@ -9,9 +9,7 @@ import { Table } from '../../../services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpandedElementComponent {
-  @Input() expansionData: Table;
+  @Input() expansionData: BeersField;
   constructor() {}
-  ngAfterViewInit() {
-    console.log(this.expansionData);
-  }
+  ngAfterViewInit() {}
 }

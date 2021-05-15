@@ -8,12 +8,22 @@
     <button
       [disabled]="this.buttonDisabled"
       type="submit"
-      (click)="searchForm.search()"
-      (keydown.enter)="searchForm.search()"
+      (click)="searchForm.search(undefined)"
+      (keydown.enter)="searchForm.search(undefined)"
       class="button submit hh-flex h-center-content v-center-items"
     >
       <mat-icon svgIcon="search"></mat-icon>
       <span style="margin-left: 5px" class="search-text-shadow">Search</span>
+    </button>
+    <button
+      [disabled]="this.buttonDisabled"
+      type="submit"
+      (click)="searchForm.search(['loperamide'])"
+      (keydown.enter)="searchForm.search(['loperamide'])"
+      class="button submit hh-flex h-center-content v-center-items"
+    >
+      <mat-icon svgIcon="search"></mat-icon>
+      <span style="margin-left: 5px" class="search-text-shadow">Test</span>
     </button>
   </div>
 </div>

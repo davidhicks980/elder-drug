@@ -1,20 +1,20 @@
-<div *ngIf="expansionData" class="expand-panel">
+<div *ngIf="expansionData as d" class="expand-panel">
   <div class="hh-grid hh-grid-spacing">
     <div class="hh-span-12 expansion-panel__search-term">
-      <h3>{{ expansionData.SearchTerms }}</h3>
+      <h3>{{ d.SearchTerms }}</h3>
     </div>
     <div class="hh-span-12">
-      <h2 class="expand-panel__title">{{ expansionData.Item }}</h2>
+      <h2 class="expand-panel__title">{{ d.Item }}</h2>
     </div>
     <div class="hh-span-12">
       <mat-chip-list>
         <mat-chip class="expand-panel__chip">
-          {{ expansionData.ItemType | titlecase }}</mat-chip
+          {{ d.ItemType | titlecase }}</mat-chip
         >
       </mat-chip-list>
     </div>
     <div
-      *ngIf="expansionData.Inclusion"
+      *ngIf="d.Inclusion"
       class="hh-span-6 hh-flex place-start-items expand-panel__card card"
       fxLayoutGap="0.5em"
     >
@@ -25,11 +25,11 @@
       ></mat-icon
       ><span class="card__text"
         ><h4 class="card__header">Guidance Includes</h4>
-        {{ expansionData.Inclusion }}</span
+        {{ d.Inclusion }}</span
       >
     </div>
     <div
-      *ngIf="expansionData.Exclusion"
+      *ngIf="d.Exclusion"
       class="hh-span-6 hh-flex place-start-items expand-panel__card card"
       fxLayoutGap="0.5em"
     >
@@ -40,11 +40,11 @@
       ></mat-icon
       ><span class="card__text"
         ><h4 class="card__header">Guidance Does Not Include</h4>
-        {{ expansionData.Exclusion }}</span
+        {{ d.Exclusion }}</span
       >
     </div>
     <div
-      *ngIf="expansionData.DiseaseState"
+      *ngIf="d.DiseaseState"
       class="hh-span-6 hh-flex place-start-items expand-panel__card"
       fxLayoutGap="5px"
     >
@@ -56,21 +56,21 @@
       ></mat-icon>
       <span class="card__header"
         ><h4>Caution In</h4>
-        {{ expansionData.DiseaseState | caseSplit }}</span
+        {{ d.DiseaseState | caseSplit }}</span
       >
     </div>
     <div
-      *ngIf="expansionData.MaximumClearance || expansionData.MinimumClearance"
+      *ngIf="d.MaximumClearance || d.MinimumClearance"
       class="hh-span-6 expansion-panel__card card"
     >
-      <b>{{ expansionData.Recommendation }}</b> with clearance
+      <b>{{ d.Recommendation }}</b> with clearance
       <i><b>below</b></i>
-      {{ expansionData.MaximumClearance }} and
+      {{ d.MaximumClearance }} and
       <i><b>above</b></i>
-      {{ expansionData.MinimumClearance }}
+      {{ d.MinimumClearance }}
     </div>
     <div
-      *ngIf="expansionData.Rationale"
+      *ngIf="d.Rationale"
       class="rationale__card hh-span-12 hh-grid hh-12-column v-center-items"
     >
       <div class="hh-span-2">
@@ -78,7 +78,7 @@
       </div>
       <div class="hh-span-10">
         <h4 class="rationale__title">Rationale</h4>
-        <p class="rationale__text">{{ expansionData.Rationale }}</p>
+        <p class="rationale__text">{{ d.Rationale }}</p>
       </div>
     </div>
   </div>

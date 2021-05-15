@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {
-  AbstractControl,
-  AsyncValidatorFn,
-  ValidationErrors,
-} from '@angular/forms';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { catchError, debounceTime, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import * as beers from '../../assets/beers-entries.json';
 import * as generics from '../../assets/generics-lookup.json';
-
 import { Category, ColumnField, ColumnService } from './columns.service';
 import { TableService } from './table.service';
 
@@ -25,13 +19,13 @@ export class DataService {
   updatedTables = new Subject<any>();
   queriedTables$ = this.updatedTables.asObservable();
   entryMap: Map<string, number[]> = new Map();
-  public tableSource: BehaviorSubject<Table[]> = new BehaviorSubject([]);
+  public tableSource: BehaviorSubject<BeersField[]> = new BehaviorSubject([]);
   private activeTables: Subject<Category[]> = new Subject<number[]>();
   private drugIndex: Map<string, string[]> = new Map();
   private searchHistory: BehaviorSubject<string[]> = new BehaviorSubject([]);
   dropdownParameters: any;
   loaded: any;
-  beersMap: Map<number, Table> = (beers as any).default;
+  beersMap: Map<number, BeersField> = (beers as any).default;
   filterDropdown = new Subject<string[][]>();
   filteredItems$ = this.filterDropdown.asObservable();
   genericsLookup = {};
@@ -75,33 +69,35 @@ export class DataService {
       .filter((val) => this.hasDrug(val));
   }
 
-  searchDrugs() {
-    const searchMap = new Map() as Map<number, Table>;
-    const drugs = this.searchHistory.value;
+  searchDrugs(terms?: any[]) {
+    console.log(terms);
+    let drugs = terms || this.searchHistory.value;
+    let hashMap = {};
     let drug = '';
     if (Array.isArray(drugs) && drugs.length > 0) {
       for (drug of drugs) {
-        this.createSearchMap(drug, searchMap);
+        hashMap = this.createSearchMap(drug, hashMap);
       }
-      this.processSelectedTables(Array.from(searchMap.values()));
+      let resultsArray = [...Object.values(hashMap)] as BeersField[];
+      this.processSelectedTables(resultsArray);
     }
   }
 
-  private createSearchMap(drug: string, searchMap: Map<number, Table>) {
-    this.drugMap.get(drug).reduce((acc, curr) => {
-      acc.has(curr)
-        ? acc.get(curr).SearchTerms.push(drug)
-        : acc.set(
-            curr,
-            Object.assign(this.beersMap.get(curr), {
-              SearchTerms: [drug],
-            })
-          );
-      return searchMap;
-    }, searchMap);
+  createSearchMap(drug: string, hash: { [key: number]: any }) {
+    let drugIndices = this.drugMap.get(drug);
+    for (let index of drugIndices) {
+      hash[index] =
+        index in hash
+          ? (hash[index].SearchTerms = hash[index].SearchTerms + ' , ' + drug)
+          : Object.assign(this.beersMap.get(index), {
+              SearchTerms: drug,
+            });
+    }
+
+    return hash;
   }
 
-  processSelectedTables(tableData: Table[]) {
+  processSelectedTables(tableData: BeersField[]) {
     const activeFields = [] as any[],
       activeTables = [] as Category[];
     let item;
@@ -128,7 +124,7 @@ export class DataService {
     this.filteredFieldsSource.next(activeColumns);
   }
 
-  private emitTableData(tableList: Table[]) {
+  private emitTableData(tableList: BeersField[]) {
     this.tableSource.next(tableList);
   }
 
@@ -238,7 +234,7 @@ export type ColumnInfo = {
   header: string;
 };
 
-export interface Table {
+export interface BeersField {
   EntryID: number;
   DiseaseState: string;
   Category: number;

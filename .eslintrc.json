@@ -12,7 +12,7 @@
  * critical because our .ts files require a different parser and different rules to our
  * .html (and our inline Component) templates.
  */
- {
+{
   "root": true,
   // Additional projects are linted separately
   "ignorePatterns": ["projects/**/*"],
@@ -44,7 +44,7 @@
          * However, for maximum compatibility with how the Angular CLI has traditionally
          * done things using TSLint, this code formatting related add-on config is provided.
          */
-       // "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        // "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
 
         /**
          * -----------------------------------------------------
@@ -78,11 +78,11 @@
          */
         "@angular-eslint/directive-selector": [
           "error",
-          { "type": "attribute", "prefix": "app", "style": "camelCase" }
+          { "type": "attribute", "prefix": "elder", "style": "camelCase" }
         ],
         "@angular-eslint/component-selector": [
           "error",
-          { "type": "element", "prefix": "app", "style": "kebab-case" }
+          { "type": "element", "prefix": "elder", "style": "kebab-case" }
         ]
       }
     },

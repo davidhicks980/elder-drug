@@ -1,13 +1,10 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
-import { Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
-import {
-  ColumnService,
-  DisplayedColumns,
-} from '../../../../services/columns.service';
-import { PopupService } from '../../../../services/popup.service';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
+import { ColumnService, DisplayedColumns } from '../../../../services/columns.service';
 
 @Component({
   selector: 'elder-column-selector',
@@ -47,7 +44,7 @@ export class ColumnSelectorComponent {
       .subscribe((val) => this.columnChange.emit(val));
   }
 
-  constructor(private columnService: ColumnService, public overlay: Overlay, private popup: PopupService) {
+  constructor(private columnService: ColumnService, public overlay: Overlay) {
     this.columnService.updateSelectedColumns(['']);
 
     this.options = this.columnService.observeColumns$;

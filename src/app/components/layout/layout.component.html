@@ -60,15 +60,46 @@
 
         <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
       </nav>
-      <div class="elder-table-container">
-        <elder-table elderResize [isMobile] class="elder-table">
+      <div class="layout__table-container">
+        <elder-table-card>
           <elder-table-title>
             {{ tableService.tableTitle$ | async }}</elder-table-title
-          >
-          <table-table-description>{{
+          ><elder-table-description>{{
             tableService.tableDescription$ | async
-          }}</table-table-description>
-        </elder-table>
+          }}</elder-table-description>
+
+          <div class="table-field">
+            <elder-popup
+              [selectedOptions]="columns.columnChangeObserver | async"
+              #columnPopup
+            >
+              <popup-content>
+                <elder-column-selector #columns></elder-column-selector
+              ></popup-content>
+            </elder-popup>
+          </div>
+          <div class="table-field">
+            <elder-popup
+              [selectedOptions]="groups.groupChangeObserver | async"
+              #groupPopup
+            >
+              <popup-content
+                ><elder-group-by #groups></elder-group-by
+              ></popup-content>
+            </elder-popup>
+          </div>
+
+          <elder-table
+            elderTableView
+            elderResize
+            [isMobile]
+            class="elder-table"
+          >
+            <div class="table-field filter">
+              <elder-filter><p label>Filter columns</p></elder-filter>
+            </div>
+          </elder-table>
+        </elder-table-card>
       </div>
     </main>
   </section>

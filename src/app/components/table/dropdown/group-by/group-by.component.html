@@ -1,0 +1,168 @@
+<div
+  *elderLet="groupedColumns | async as groupArr"
+  cdkDropListGroup
+  #droplistGroup
+  class="group-row group-row__background"
+>
+  <ng-container *elderLet="ungroupedColumns | async as ungroupArr">
+    <h3 class="group-row__primary-header">Row Groups</h3>
+    <section>
+      <h4 class="group-row__secondary-header">Groups</h4>
+      <ol
+        cdkDropList
+        [cdkDropListData]="groupArr"
+        [cdkDropListConnectedTo]="[ungrouped]"
+        (cdkDropListDropped)="drop($event)"
+        #grouped="cdkDropList"
+        #groupedList
+        class="list list--grouped"
+        role="listbox"
+        tabindex="0"
+        id="grouped-droplist"
+        [style.pointerEvents]="canClick.get(grouped.id) ? 'all' : 'none'"
+        attr.data-grid-rows="{{ groupArr.length }}"
+        data-grid-columns="2"
+      >
+        <li
+          [tabindex]="i === tabbableGroupedItem ? 0 : -1"
+          (focus)="tabbableGroupedItem = i"
+          cdkDrag
+          id="{{ option }}"
+          role="option"
+          *ngFor="let option of groupArr; index as i"
+          class="list-item grouped draggable"
+          cdkDragBoundary=".group-row"
+          attr.data-grid-row="{{ i + 1 }}"
+          data-grid-column="1"
+          role="option"
+          #groupedListItem
+          (keydown)="handleGrouplistKeydown($event, groupedList, i)"
+          (keydown.escape)="groupedList.focus()"
+          (cdkDragEnded)="canClick.set(grouped.id, true)"
+          (cdkDragStarted)="blockPopupClose(grouped.id)"
+        >
+          <elder-list-content>
+            <div listPrefix>
+              <span
+                @fadeInPill
+                class="list-content list-content__button--remove"
+              >
+                <mat-icon
+                  inline="true"
+                  [svgIcon]="
+                    groupedListItem.classList.contains('is-moveable')
+                      ? 'unfold_more'
+                      : 'draggable'
+                  "
+                ></mat-icon>
+              </span>
+            </div>
+            <div class="list-content__label" listContent>{{ option }}</div>
+            <div class="list-content__button-group" listSuffix>
+              <button
+                matRipple
+                [matRippleCentered]="true"
+                [matRippleRadius]="12"
+                [tabindex]="i === tabbableGroupedItem ? 0 : -1"
+                (focus)="tabbableGroupedItem = i"
+                matTooltip="Remove grouping by {{ option }}"
+                attr.data-grid-row="{{ i + 1 }}"
+                data-grid-column="2"
+                @fadeInPill
+                tabindex="0"
+                #removeButton
+                (click)="
+                  ungroupItem(i); focusNextItem(groupedListItem, ungroupedList)
+                "
+                (keydown)="navigateListGrid($event, groupedList, removeButton)"
+                class="list-content list-content__button--remove"
+              >
+                <mat-icon inline="true" svgIcon="x"></mat-icon>
+              </button>
+            </div>
+          </elder-list-content>
+        </li>
+      </ol>
+    </section>
+    <mat-divider></mat-divider>
+    <section>
+      <h4 class="group-row__secondary-header">Fields</h4>
+
+      <ul
+        cdkDropList
+        [cdkDropListData]="ungroupArr"
+        [cdkDropListConnectedTo]="[grouped]"
+        (cdkDropListDropped)="drop($event)"
+        #ungrouped="cdkDropList"
+        #ungroupedList
+        role="listbox"
+        class="list list--ungrouped"
+        id="ungrouped-droplist"
+        [style.pointerEvents]="canClick.get(ungrouped.id) ? 'all' : 'none'"
+        attr.data-grid-rows="{{ ungroupArr.length }}"
+        data-grid-columns="1"
+      >
+        <li
+          *ngFor="let item of ungroupArr; index as i"
+          [tabindex]="i === tabbableUngroupedItem ? 0 : -1"
+          (focus)="tabbableUngroupedItem = i"
+          cdkFocusInitial
+          cdkDrag
+          #ungroupedListItem
+          role="option"
+          class="list-item ungrouped"
+          cdkDragBoundary=".group-row"
+          attr.data-grid-row="{{ i + 1 }}"
+          data-grid-column="1"
+          tabindex="0"
+          (cdkDragStarted)="blockPopupClose(ungrouped.id)"
+          (cdkDragEnded)="canClick.set(ungrouped.id, true)"
+          (keydown)="navigateListGrid($event, ungroupedList, ungroupedListItem)"
+          (keydown.enter)="
+            groupItem(i); focusNextItem(ungroupedListItem, groupedList)
+          "
+        >
+          <elder-list-content>
+            <div listPrefix>
+              <span
+                @fadeInPill
+                class="list-content list-content__button--remove"
+              >
+                <mat-icon inline="true" svgIcon="draggable"></mat-icon>
+              </span>
+            </div>
+            <div class="list-content__label" listContent>{{ item }}</div>
+            <div class="list-content__button-group" listSuffix>
+              <button
+                matRipple
+                [matRippleCentered]="true"
+                [matRippleRadius]="12"
+                [tabindex]="i === tabbableUngroupedItem ? 0 : -1"
+                (focus)="tabbableUngroupedItem = i"
+                matTooltip="Group by {{ item }}"
+                @fadeInPill
+                #addButton
+                (mouseup)="groupItem(i)"
+                class="list-content list-content__button--add"
+              >
+                <mat-icon inline="true" svgIcon="add_ibm"></mat-icon>
+              </button>
+            </div>
+          </elder-list-content>
+        </li>
+      </ul>
+    </section>
+    <mat-divider></mat-divider
+  ></ng-container>
+
+  <section class="footer">
+    <button
+      class="footer__button"
+      (click)="closePanel()"
+      #closeButton
+      mat-button
+    >
+      Close
+    </button>
+  </section>
+</div>

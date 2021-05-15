@@ -26,6 +26,7 @@
     "@angular/router": "^11.2.10",
     "@angular/service-worker": "^11.2.10",
     "angular-svg-icon": "^11.0.0",
+    "array-flat-polyfill": "^1.0.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.8.3",
     "document-register-element": "^1.14.10",
@@ -47,14 +48,12 @@
     "@angular-eslint/template-parser": "1.1.0",
     "@angular/cli": "^11.2.9",
     "@angular/compiler-cli": "^11.2.10",
-    "@angular/language-service": "^11.2.5",
     "@types/jasmine": "^3.6.3",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.19.15",
     "@types/resize-observer-browser": "^0.1.5",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
-    "codelyzer": "^6.0.1",
     "cross-fetch": "^3.0.6",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
@@ -64,7 +63,6 @@
     "firebase": "^7.24.0",
     "firebase-admin": "^9.4.2",
     "firebase-tools": "^9.10.0",
-    "fuzzy": "^0.1.3",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.3.0",
     "jasmine-core": "~3.6.0",
@@ -80,6 +78,6 @@
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.32.9",
     "ts-node": "~8.3.0",
-    "tslint": "^6.1.3"
+    "typescript": "^4.0.0-dev.20200803"
   }
 }

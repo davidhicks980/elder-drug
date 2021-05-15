@@ -83,7 +83,7 @@ function iterateDataValues(i, prevHeaders) {
 }
 
 //'[[headVal, headVal], [headVal, headVal]]'
-let out = headerGroups[i].map((headers) => iterateDataValues(i, headers));
+//let out = headerGroups[i].map((headers) => iterateDataValues(i, headers));
 
 /*
 let output = grouped[0].map((header1) =>
@@ -107,3 +107,26 @@ function getGrouped(data, headers) {
     Array.from(new Set(data.map((val) => val[header])))
   );
 }
+
+let list = {
+  value: [33, 2, 1, 5, 6, 2, 1, 5, 7, 8, 8, 8, 9, 5, 4, 33, 1, 5, 6, 7],
+};
+/*function moveItemInList(fromIndex, toIndex) {
+  let array = [5, 10, 55, 20, 30];
+  array.splice(toIndex, 0, list.value[fromIndex]);
+  console.log(array);
+}
+
+moveItemInList(19, 1);
+*/
+/*
+const getPosition = ({ rootIndex = 0, layer = 0 }, index = 0) => {
+  layer++;
+  return { rootIndex, layer, index };
+};
+
+let parent = { layer: 5 };
+
+let position = getPosition(parent, 2);
+console.log(parent, position);
+*/

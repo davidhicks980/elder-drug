@@ -10,50 +10,14 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { nextTick } from 'process';
 import { Subject } from 'rxjs';
-import { filter, skipWhile, takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+
 import { PopupActions, PopupService } from '../../../services/popup.service';
 
 @Component({
   selector: 'elder-popup',
-  template: `
-    <label for="popup-trigger">{{ label }}</label>
-    <div class="popup-wrapper">
-      <button
-        matTooltip="{{ selectedOptions | join | caseSplit }}"
-        #trigger
-        (click)="attach()"
-        class="popup-trigger"
-        role="listbox"
-        name="popup-trigger"
-      >
-        <span *ngIf="selectedOptions" class="popup-trigger__label">
-          {{ selectedOptions[0] + ', ' + selectedOptions[1] || '' }}
-          <span *ngIf="selectedOptions.length > 1" class="additional-selection">
-            (+{{ selectedOptions.length - 1 }}
-            {{ selectedOptions.length === 2 ? 'other' : 'others' }})
-          </span>
-        </span>
-        <svg
-          class="popup-trigger__arrow"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          [class.is-rotated]="component?.hasAttached()"
-        >
-          <path d="M0 0h24v24H0V0z" fill="none" />
-          <path d="M7 10l5 5 5-5H7z" />
-        </svg>
-      </button>
-    </div>
-
-    <div #anchor></div>
-    <ng-template id="anchor" #templatePortalContent>
-      <ng-content selector="popup-content"></ng-content>
-    </ng-template>
-  `,
+  templateUrl: `popup.component.html`,
   styleUrls: [`popup.component.scss`],
 })
 export class PopupComponent implements AfterViewInit, OnDestroy {
@@ -84,21 +48,20 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     this.component.detach();
     this.component.dispose();
   }
-  ngAfterViewInit() {
-    this.initPopup();
-    this.component.attach(this.portal);
+  listenForPointerEvents() {
     const trigger = this.trigger.nativeElement as HTMLElement;
+
     this.component
       .outsidePointerEvents()
       .pipe(
         filter(
           (e) => !trigger.contains(e.target as Element) && this.allowClicks
         ),
-        takeUntil(this.destroyedObserver),
+        takeUntil(this.destroyedObserver)
       )
-      .subscribe((e) => {
-        this.component.detach()});
-
+      .subscribe(() => this.component.detach());
+  }
+  listenForPortalActions() {
     this.popupService.popupAction$.subscribe((action) => {
       switch (action) {
         case PopupActions.preventClose:
@@ -114,17 +77,21 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
           throw Error('action not implemented');
           break;
         case PopupActions.open:
-          this.component.attach(this.portal)
+          this.attachPopup();
           break;
         case PopupActions.allowOpen:
           break;
         case PopupActions.destroy:
           throw Error('action not implemented');
-          break;
         default:
-          return ;
+          return;
       }
     });
+  }
+  ngAfterViewInit() {
+    this.initPopup();
+    this.listenForPointerEvents();
+    this.listenForPortalActions();
   }
 
   initPopup() {
@@ -132,10 +99,16 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     this.component = this.createOverlay(this.anchor);
     this.observeKeydown(this.component);
   }
-  attach() {
+  attachPopup() {
+    return this.component.hasAttached()
+      ? null
+      : this.component.attach(this.portal);
+  }
+  togglePopup() {
     this.component.hasAttached()
       ? this.component.detach()
       : this.component.attach(this.portal);
+    this.component.hostElement.onclose;
   }
   observeKeydown(component: OverlayRef) {
     component
@@ -155,7 +128,6 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
         }
       });
   }
- 
 
   private createOverlay(anchor: any) {
     return this.overlay.create({

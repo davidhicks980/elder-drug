@@ -1,0 +1,8 @@
+<label class="filter__label"
+  ><ng-content select="[label]"></ng-content>
+  <input
+    class="filter__input"
+    [keyGrid]="{ col: gridColumn, row: gridRow }"
+    (input)="filter($event)"
+  />
+</label>

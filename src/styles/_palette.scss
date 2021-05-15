@@ -103,24 +103,7 @@ $dark-dark-gray: #36415d;
 
 $gray-text-tint: #3f4752;
 $color-step: 1, 2, 3, 4, 5;
-/*
-$primary-gray: desaturate($primary-1, 50%);
-$dark-gray-1: getDarker($primary-gray, 1);
-$dark-gray-2: getDarker($primary-gray, 2);
-$dark-gray-3: getDarker($primary-gray, 3);
-$dark-gray-4: getDarker($primary-gray, 4);
-$dark-gray-5: getDarker($primary-gray, 5);
-$gray-1: desaturate($primary-1, 50%);
-$gray-2: desaturate($primary-1, 60%);
-$gray-3: desaturate($primary-1, 70%);
-$gray-4: desaturate($primary-1, 80%);
-$gray-5: desaturate($primary-1, 90%);
-$light-gray-5: getLighter($primary-gray, 5);
-$light-gray-4: getLighter($primary-gray, 4);
-$light-gray-3: getLighter($primary-gray, 3);
-$light-gray-2: getLighter($primary-gray, 2);
-$light-gray-1: getLighter($primary-gray, 1);
-*/
+
 $light-gray-1: #f2f5f8;
 $light-gray-2: #e5e9f0;
 $light-gray-3: #dadfe5;
@@ -162,28 +145,33 @@ $color: #fafafb;
     width: 100%;
     height: 100%;
     opacity: 0;
-    border-radius: 3px;
+    border-radius: inherit;
     transition: opacity 0.3s ease-in-out;
     pointer-events: none;
+    margin: 0px;
     @include shadow($depth);
   }
 }
 
+@mixin thick-outline {
+  outline: 2px dotted currentColor;
+  outline-offset: 1px;
+}
+
 @mixin commonInput {
+  font-size: Max(16px, 1em);
   border: 1px solid $gray-1;
   border-radius: 3px;
-  background-color: transparent;
-  outline: none;
-
-  padding: 0.5em;
-  font-weight: 600;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   color: $gray-5;
-  transition: background-color box-shadow 0.5s ease-in;
+  transition: background-color 0.5s ease-in;
   position: relative;
-  min-height: 2.5em;
-  max-height: 2.5em;
-  z-index: 1;
-  @include hoverable-shadow(5);
+  padding: 0.5em 0.35em;
+  min-width: 30ch;
+  @include hoverable-shadow(2);
   &:active {
     transition: background-color 0.2s ease-in;
     &:after {
@@ -193,6 +181,8 @@ $color: #fafafb;
   &:focus {
     background-color: $light-gray-1;
     transition: background-color 0.2s ease-in;
+    @include hoverable-shadow(3);
+
     &:after {
       opacity: 0.4;
     }

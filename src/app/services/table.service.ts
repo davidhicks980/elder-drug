@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +13,12 @@ export class TableService {
   tableDescription$ = this.descriptionSource.asObservable();
   private titleSource = new Subject();
   tableTitle$ = this.titleSource.asObservable();
+  private tableFilterSource = new Subject();
+  tableFilter$ = this.tableFilterSource.asObservable();
+
+  emitTableFilter(filter: { column: string; term: string }) {
+    this.tableFilterSource.next(filter);
+  }
 
   emitSelectedTables(selections: number[]) {
     this.tableStatusSource.next(

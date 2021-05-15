@@ -7,6 +7,12 @@
   }
 }
 
+@mixin sibling($sibling) {
+  & .#{$sibling} {
+    @content;
+  }
+}
+
 /// Block Modifier
 /// @access public
 /// @param {String} $modifier - Modifier's name
@@ -23,6 +29,11 @@
 }
 @mixin nativeState($state) {
   &#{":" + $state} {
+    @content;
+  }
+}
+@mixin position($position) {
+  &#{":" + $position} {
     @content;
   }
 }

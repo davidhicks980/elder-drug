@@ -1,0 +1,17 @@
+@import "palette";
+@import "bem-mixin";
+
+.filter__label {
+}
+.filter__input-wrapper {
+  @include commonInput;
+}
+.filter__input {
+  width: 90%;
+  margin: 5%;
+}
+
+:host {
+  left: 0em;
+  width: 100%;
+}

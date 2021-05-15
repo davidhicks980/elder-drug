@@ -12,77 +12,114 @@
 .group-row {
   pointer-events: all;
   @include element("background") {
-    border: 1px solid $gray-1;
+    border: 1px solid $light-gray-3;
     padding: 5px;
     border-radius: 3px;
+    margin-top: 2px;
     background: white;
-    min-height: 350px;
     min-width: 250px;
-    max-width: 30%;
     overflow: auto;
+    min-height: 250px;
     @include shadow(2);
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    @media screen and (max-width: 600px) {
+      width: 80vw;
+      margin: 0 10vw;
+    }
   }
+
   @include element("primary-header") {
     font-weight: 300;
-    margin: 0px;
+
+    margin: 0.5em 0;
   }
   @include element("secondary-header") {
     font-weight: 400;
-    margin: 0px;
+    //    margin: 0px;
   }
 }
 
-.drop-zone {
-  border: 1px dashed $gray-5;
-  min-height: 50px;
-  padding: 5px;
-  background: $light-gray-1;
-  transition: all 1s ease;
+::-webkit-scrollbar {
+  width: 15px;
 }
-.ungrouped-list {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-  min-height:50px;
-  min-width:100%;
-  outline: 1px dashed $gray-1;
-  padding: 4px;
-      display: grid;
-    grid-template-columns: calc(50% - 2.5px) calc(50% - 2.5px);
-    gap: 5px;
+::-webkit-scrollbar {
+  background: rgb(255 255 255 / 0.3);
+  background-clip: content-box !important;
+  border: 4px solid transparent;
+  border-radius: 10px;
+}
+*:hover::-webkit-scrollbar-thumb {
+  background: #d6d6d6;
 }
 
+.list {
+  min-width: 100%;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  @include modifier("grouped") {
+    outline: 1px dashed $gray-1;
+    background: $light-gray-1;
+    transition: transform background-color outline 0.2s ease;
+
+    overflow: auto;
+    min-height: 50px;
+    max-height: 30vh;
+    flex-shrink: 1;
+    flex-basis: 100%;
+  }
+  @include modifier("ungrouped") {
+    outline: 1px dashed $gray-1;
+    background-color: $light-gray-1;
+    min-height: 50px;
+    max-height: 30vh;
+    overflow: auto;
+    transition: transform background-color outline 0.2s ease;
+    flex-shrink: 2;
+    flex-basis: 100%;
+  }
+}
+
+.draggable {
+  cursor: move;
+}
 .list-item {
   background: white;
-    list-style-position: inside;
-  padding: 3px;
+  list-style-position: inside;
+  padding: 0.6em 0.4em;
   border: 1px solid $light-gray-5;
   border-radius: 5px;
   filter: drop-shadow(0 0 0.75rem transparent);
   -webkit-column-break-inside: avoid;
+
   @include nativeState("hover") {
-    filter: drop-shadow(1px 2px 4px $light-gray-5);
+    filter: drop-shadow(0px 1.6px 0.7px $light-gray-3);
     transition: filter 250ms cubic-bezier(0, 0, 0.2, 1) !important;
   }
-  @include element("header") {
-    font-size: 12px;
-    color: $gray-5;
+  @include nativeState("focus") {
+    border: 1px solid $secondary-2-1;
+    background: tint($secondary-2-1, 80%);
+    outline: none;
+    @include state("is-moveable") {
+      text-decoration: underline;
+      filter: drop-shadow(0px 2px 2px $light-gray-3);
+      transition: filter 250ms cubic-bezier(0, 0, 0.2, 1) !important;
+    }
   }
-    @include element("pill-layout") {
-        grid-template-columns: 90% 10%;
-    display: grid;
+
+  @include element("pill-layout") {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
   }
-  @include element("add-icon") {
-    height: 25px;
-    stroke-width:60;
-    
-  }
-  @include element("sub-header") {
-    font-size: 10px;
-    margin: 0 10px 0 10px;
-    color: $light-gray-5;
-  }
-  
 }
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) !important;
@@ -92,13 +129,54 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) !important;
 }
 
-.top-layer{
-  z-index: 2;
-  position: absolute;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  top:0px;
-  height:100%;
-  width:100%;
+.list-content {
+  @include element("button-group") {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    @include element("button") {
+      height: 24px;
+      width: 24px;
+      @include nativeState("disabled") {
+        color: lightgray;
+      }
+    }
+  }
+
+  @include element("label") {
+    font-weight: 400;
+    flex: 1;
+    font-size: 1rem;
+  }
+  @include element("button") {
+    @include modifier("remove") {
+      height: 24px;
+      width: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1ch;
+    }
+    @include modifier("add") {
+      height: 26px;
+      width: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1ch;
+    }
+  }
+}
+
+.footer {
+  margin: 8px 0;
+  align-self: bottom;
+  background: $light-gray-1;
+  @include element("button") {
+    width: 100%;
+  }
 }

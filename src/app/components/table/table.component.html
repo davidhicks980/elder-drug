@@ -1,173 +1,136 @@
-<!--<elder-column-selector
-  *ngIf="tableName"
-  (columnUpdates)="(dataSource.displayedHeaders | async) = $event"
-  [tableName]="tableName"
-  (loaded)="selectorInitiated = true"
-></elder-column-selector>-->
-
-<div class="root soft-shadow-2" mobileListener>
-  <h2><ng-content select="elder-table-title"></ng-content></h2>
-
-  <h3><ng-content select="elder-table-description"></ng-content></h3>
-  <mat-divider></mat-divider>
-  <section class="table-fields">
-    <div class="filter">
-      <label class="filter__label"
-        >Filter entries
-        <div class="filter__input-wrapper">
-          <input class="filter__input" (input)="filterData($event)" />
-        </div>
-      </label>
-    </div>
-    <elder-popup
-      [selectedOptions]="columns.columnChangeObserver | async"
-      #columnPopup
-    >
-      <popup-content>
-        <elder-column-selector #columns></elder-column-selector
-      ></popup-content>
-    </elder-popup>
-    <elder-popup
-      [selectedOptions]="groups.groupChangeObserver | async"
-      #groupPopup
-    >
-      <popup-content
-        ><elder-group-by  #groups></elder-group-by
-      ></popup-content>
-    </elder-popup>
-  </section>
-
+<div
+  *elderLet="model.displayedColumns$ | async as fields"
+  #elderTable
+  id="elderTable"
+  (keydown)="handleGridNavigation($event)"
+>
   <cdk-table
     multiTemplateDataRows
-    [dataSource]="dataSource"
+    [dataSource]="model"
     class="drug-table"
+    #table
     matSort
     [fixedLayout]="true"
+    [trackBy]="trackRowBy"
     mobileListener
-    *ngIf="dataSource.displayedColumns | async as fields"
+    *ngIf="fields"
   >
+    <!--Table headers-->
     <cdk-header-row
       class="header-row"
-      *cdkHeaderRowDef="fields; sticky: true"
+      *cdkHeaderRowDef="fields; sticky: true; index as i"
       mobileListener
     ></cdk-header-row>
+    <!--Table cells-->
     <cdk-row
-      *cdkRowDef="let row; columns: fields"
+      *cdkRowDef="let row; columns: fields; when: rowIsEntry"
       class="row"
-      (click)="dataSource.toggleExpansion(row)"
+      (click)="model.expand(row)"
+      (keydown.enter)="model.expand(row)"
+      (keydown.space)="model.expand(row)"
     ></cdk-row>
-    <cdk-row *cdkRowDef="let row; columns: ['expandedDetail']"></cdk-row>
+    <!--Expansion Cells-->
     <cdk-row
-      *cdkRowDef="
-        let row;
-        columns: ['groupHeader'];
-        when: dataSource.checkIsGroup
-      "
-      (click)="dataSource.toggleExpansion(row)"
+      *cdkRowDef="let row; columns: ['expandedDetail']; when: rowIsEntry"
+    ></cdk-row>
+
+    <!--Group rows-->
+    <cdk-row
+      *cdkRowDef="let row; columns: ['groupHeader']; when: rowIsGroup"
+      (click)="model.expand(row)"
+      (keydown.enter)="model.expand(row)"
+      (keydown.space)="model.expand(row)"
     ></cdk-row>
 
     <ng-container
-      *ngFor="let field of fields; trackBy: trackByFn"
+      *ngFor="let field of fields; index as colI; trackBy: trackByFn"
       cdkColumnDef="{{ field }}"
     >
-      <ng-container>
+      <!--Header Row-->
+      <ng-container *cdkHeaderCellDef>
         <cdk-header-cell
-          class="header-cell"
-          mat-sort-header
-          *cdkHeaderCellDef
+          class="header-row__header-cell"
+          mat-sort-header="header{{ colI }}"
+          attr.tabIndex="{{ colI === 0 ? '0' : '-1' }}"
           matTooltip="Sort by {{ field }}"
+          #headerCell
+          [filterColumn]="colI"
+          [keyGrid]="{ row: 0, col: colI }"
         >
-          <div style="min-width: 0">
-            <div class="header-cell__content">
-              {{ field | caseSplit }}
-            </div>
+          <div class="header-cell__content">
+            {{ field | caseSplit | titlecase }}
           </div>
         </cdk-header-cell>
       </ng-container>
-      <ng-container>
-        <cdk-cell #cell class="cell" *cdkCellDef="let row">
+      <ng-container *cdkCellDef="let row; index as rowI">
+        <cdk-cell
+          #cell
+          class="cell"
+          [cellPadding]="row._position.layer"
+          *ngIf="parentIsExpanded(row)"
+          [keyGrid]="{ row: getRowIndex(row), col: colI }"
+          tabindex="-1"
+        >
           <!--If the cell is first, add an expansion button to it-->
           <span class="cell__chevron-container">
             <button
               *ngIf="field === fields[0]"
               class="chevron-button"
               mat-icon-button
+              tabindex="-1"
             >
               <mat-icon
-                [class.--rotated]="dataSource.rowIsExpanded(row)"
+                [class.--rotated]=""
                 class="chevron-button__chevron"
                 svgIcon="chevron_right"
               ></mat-icon></button
           ></span>
           <span role="columnheader" class="cell__mobile-header"
-            ><b>{{ field }}</b></span
+            ><b>{{ field | caseSplit | titlecase }}</b></span
           >
-          <span class="cell__content">{{ row[field] }}</span>
+          <span class="cell__content">{{
+            row[field] | caseSplit | titlecase
+          }}</span>
         </cdk-cell></ng-container
       >
     </ng-container>
     <ng-container cdkColumnDef="expandedDetail">
-      <div *cdkCellDef="let row">
-        <elder-expanded-element
-          *ngIf="dataSource.rowIsExpanded(row)"
-          [expansionData]="row"
-        ></elder-expanded-element>
+      <div *cdkCellDef="let row; index as i">
+        <cdk-cell
+          [keyGrid]="{ row: getRowIndex(row, 1), col: 0 }"
+          tabindex="-1"
+          *ngIf="model.checkIsExpanded(row)"
+        >
+          <elder-expanded-element
+            [expansionData]="row"
+          ></elder-expanded-element>
+        </cdk-cell>
       </div>
     </ng-container>
 
     <ng-container cdkColumnDef="groupHeader">
-      <cdk-header-cell
-        *cdkCellDef="let row"
-        class="expand-row__cell"
-        [class.--open]="dataSource.rowIsExpanded(row)"
-      >
-        <span class="l-flex v-center-items">
-          <mat-icon
-            class="chevron"
-            svgIcon="chevron_right"
-            rotateIcon
-            [class.--rotated]="dataSource.rowIsExpanded(row)"
-          ></mat-icon>
-
-          <span class="expand-row__cell__content">
-            {{ groupProperty | caseSplit }}: {{ row.term | titlecase }}</span
-          >
-        </span>
-      </cdk-header-cell>
-    </ng-container>
-
-    <!-- <ng-container cdkColumnDef="mobileColumns">
-      <td
-        class="mobile-row l-grid"
-        cdk-cell
-        *cdkCellDef="let row"
-        [attr.colspan]="columnSpan"
-      >
-        <button
-          class="mobile-row__expand-button grid__cell--span-1"
-          mat-icon-button
+      <ng-container *cdkCellDef="let row; index as i">
+        <cdk-cell
+          [keyGrid]="{ row: getRowIndex(row), col: 0 }"
+          *ngIf="parentIsExpanded(row)"
+          class="group-header-cell"
+          [class.--open]="true"
+          [cellPadding]="row._position.layer"
+          tabindex="-1"
         >
           <mat-icon
-            [@rotateChevron]="row == expandedElement ? 'expanded' : 'collapsed'"
-            class="mobile-row__expand-button__chevron"
-            style="will-change: transform"
+            class="chevron icon"
             svgIcon="chevron_right"
+            rotateIcon
+            [class.--rotated]="true"
+            tableIndex="-1"
           ></mat-icon>
-        </button>
-        <div class="l-grid grid-spacing grid__cell--span-11">
-          <ng-container
-            class="mobile-cell"
-            *ngFor="let field of dataSource.displayedHeaders | async"
-          >
-            <span class="mobile-cell__title grid__cell--span-4"
-              ><b>{{ field | caseSplit }}</b></span
-            >
-            <span class="mobile-cell__content grid__cell--span-8">{{
-              row[field]
-            }}</span>
-          </ng-container>
-        </div>
-      </td>
-    </ng-container>-->
+
+          <span class="group-header-cell group-header-cell__content">
+            {{ row.groupHeader | caseSplit | titlecase }}
+          </span>
+        </cdk-cell></ng-container
+      >
+    </ng-container>
   </cdk-table>
 </div>

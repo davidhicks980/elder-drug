@@ -3,27 +3,6 @@
 @import "palette";
 @import "bem-mixin";
 
-.flex-container {
-  display: flex;
-  flex-direction: column;
-}
-.root {
-  width: auto;
-  background: white;
-  padding: 8px;
-  border-radius: 3px;
-  margin: 10px;
-  border: none;
-  max-width: 1400px;
-  display: grid;
-}
-.mat-sort-header-content {
-  text-align: center;
-  /* display: flex; */
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-}
 .drug-table {
   border-spacing: 0;
   border-collapse: separate;
@@ -32,9 +11,7 @@
   overflow: hidden;
   border: 1px solid #a2b0c7;
   border-radius: 3px;
-  & .cdk-column-expandedDetail {
-    overflow: hidden;
-  }
+
   @include state("is-mobile") {
     background: blue;
   }
@@ -47,6 +24,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
   line-height: 36px;
+
   &:hover {
     background-color: $light-gray-1;
     border-top-right-radius: 4px;
@@ -57,7 +35,17 @@
       border-bottom: none !important;
     }
   }
+  @media screen and (max-width: 600px) {
+    grid-template-rows: repeat(auto-fit, minmax(25px, 1fr));
+    line-height: 36px;
+    grid-template-columns: none;
+    background-color: white;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    margin: 5px;
+  }
 }
+
 .cell {
   background: transparent;
   text-align: left;
@@ -84,26 +72,56 @@
   display: none;
 }
 
-.header-cell {
+.header-row {
+  grid-template-rows: 50% 50%;
+  font-weight: 500;
+  display: grid;
+  @include element("header-cell") {
+    line-height: 3rem;
+    text-align: left;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+
+    border: 1px solid $light-gray-4;
+    border-width: 1px 0px 1px 1px;
+    box-shadow: inset 0px 1px 0px 0 #ffffff54;
+    background-color: white;
+    color: $gray-5;
+    flex: 1;
+
+    @include position("first-of-type") {
+      border-right: none;
+      @include modifier("--left-margin") {
+        margin-left: 40px;
+      }
+    }
+    @include nativeState("hover") {
+      filter: brightness(0.98);
+    }
+  }
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.group-header-cell {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
   line-height: 2rem;
-  text-align: left;
-  font-family: "IBM Plex Sans", sans-serif;
-  text-align: left;
   border-bottom: 1px solid $light-gray-4;
   box-shadow: inset 0px 1px 0px 0 #ffffff54;
   background-color: $light-gray-1;
   color: $gray-5;
   flex: 1;
   border-right: 1px solid $light-gray-4;
-  &:first-of-type {
-    //   border-top-left-radius: 3px;
-    & .header-cell--left-margin {
+
+  @include nativeState("first-of-type") {
+    @include element("content") {
       margin-left: 40px;
     }
   }
-}
-.header-cell:hover {
-  background-color: tint($primary-1, 90%);
 }
 .expand-row__cell {
   height: 2rem;
@@ -159,18 +177,10 @@
     display: inline-block;
   }
 
-  .header-cell {
-    display: none;
-  }
   .drug-table {
     width: auto;
   }
 
-  .row {
-    grid-template-rows: repeat(auto-fit, minmax(25px, 1fr));
-    line-height: 36px;
-    grid-template-columns: none;
-  }
   .cell {
     display: grid;
     grid-template-columns: 35px 15ch auto;
@@ -287,21 +297,15 @@ button.absolute-position {
 .table-fields {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: stretch;
   width: 100%;
-  justify-items: stretch;
   margin: 10px 0 10px 0;
   gap: 10px;
-}
-.filter {
-}
-.filter__label {
-}
-.filter__input-wrapper {
-  @include commonInput;
-}
-.filter__input {
-  outline: transparent;
-  border: transparent;
-  background: transparent;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include element("table-field") {
+    flex: 1 1 150px; /*  Stretching: */
+    flex: 0 1 150px; /*  No stretching: */
+    margin: 5px;
+  }
 }

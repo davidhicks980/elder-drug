@@ -11,6 +11,12 @@ $arrangements: (
 );
 .hh-flex {
   display: flex;
+  &--row {
+    flex-direction: row;
+  }
+  &--column {
+    flex-direction: column;
+  }
   @each $arrangement, $pseudonym in $arrangements {
     @each $level in $nest-level {
       @each $orientation in $orientations {

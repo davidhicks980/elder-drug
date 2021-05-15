@@ -137,13 +137,14 @@ main {
   width: 100%;
   overflow: hidden;
   height: 100%;
+  display: grid;
 }
 .topnav {
   height: 40px;
   max-height: 40px;
   color: white;
   box-sizing: content-box;
-  position: fixed;
+  position: relative;
   display: flex;
   left: 0px;
 
@@ -159,11 +160,10 @@ main {
   padding: 0px;
 }
 
-.elder-table-container {
+.layout__table-container {
   display: flex;
   flex-direction: column;
   place-items: center;
-  margin-top: 40px;
   overflow-y: auto;
   height: 100%;
 }

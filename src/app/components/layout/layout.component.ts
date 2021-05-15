@@ -1,12 +1,4 @@
-import {
-  animate,
-  group,
-  keyframes,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -21,7 +13,7 @@ import {
 import { ColumnService } from '../../services/columns.service';
 import { DataService } from '../../services/data.service';
 import { NavigationService } from '../../services/navigation.service';
-import { LayoutStatus, StateService } from '../../services/state.service';
+import { LayoutStatus, ResizeService } from '../../services/resize.service';
 import { Table, TableService } from '../../services/table.service';
 
 @Component({
@@ -127,7 +119,7 @@ export class LayoutComponent {
   currentPage: number = 0;
   constructor(
     public webSocketService: DataService,
-    public state: StateService,
+    public state: ResizeService,
     private columnService: ColumnService,
     public nav: NavigationService,
     public tableService: TableService

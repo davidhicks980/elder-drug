@@ -1,44 +1,35 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
+  QueryList,
   Renderer2,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import {
-  BehaviorSubject,
-  combineLatest,
-  from,
-  merge,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-} from 'rxjs';
-import { groupBy, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { slideDownAnimation } from '../../animations';
+import { ARROW_KEYS } from '../../constants/keys.constants';
+import { FilterDirective } from '../../directives/filter.directive';
+import { KeyGridDirective } from '../../directives/keygrid.directive';
 import { ColumnService } from '../../services/columns.service';
-import { DataService, Table } from '../../services/data.service';
-import { ColumnSelectorComponent } from './dropdown/column-selector/column-selector.component';
+import { BeersEntry, DataService } from '../../services/data.service';
+import { GroupByService } from '../../services/group-by.service';
+import { TableService } from '../../services/table.service';
 
 @Component({
   selector: 'elder-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+
   animations: [
     slideDownAnimation,
 
@@ -80,86 +71,163 @@ import { ColumnSelectorComponent } from './dropdown/column-selector/column-selec
 })
 export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
-  cols: {}[];
-  pageChangeObserver: any;
-  page: any;
-  viewLoaded: boolean;
-  dataSource: BeersTableDataSource<Table, Paginator>;
-  groupProperty = 'SearchTerms';
-  groupingCriteria: { term: string; shown: string[] };
-  animations = true;
-  private _fields: string[] = ['Items'];
+  @ViewChildren('headerCell', { read: ElementRef })
+  sortableHeaders: QueryList<ElementRef>;
+  @ViewChildren(FilterDirective)
+  headers: QueryList<FilterDirective>;
+  //HTMLSectionElement
+  @ViewChild('elderTable') container: ElementRef;
+  @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
+  model: BeersTableDataSource<ExpandingRow, Paginator>;
   selectedRow: any;
-  groups: Map<string, GroupI> = new Map();
+  _rowLength: number;
+  _columnLength: number;
+  gridCells: KeyGridDirective[];
+  FIRST_ROW = 2;
+  filterCells: Set<KeyGridDirective> = new Set();
+
+  constructor(
+    private columnService: ColumnService,
+    private dataService: DataService,
+    private table: TableService,
+    private groupService: GroupByService,
+    private renderer: Renderer2
+  ) {
+    this.dataService = dataService;
+    this.columnService = columnService;
+    this.model = new BeersTableDataSource(
+      this.dataService.tableSource as any,
+      this.columnService.observeActiveColumns$
+    );
+    this.groupService.groupChanges.subscribe((newGroups) => {
+      this.model.updateGroups(newGroups.map((group) => group.trim()));
+    });
+    this.table.tableFilter$.subscribe(({ column, term }) =>
+      this.model.filter(column, term)
+    );
+  }
+  ngAfterViewInit() {
+    this.model.sort = this.sort;
+    this.grid.changes.subscribe((newCells: QueryList<KeyGridDirective>) => {
+      this.gridCells = newCells.toArray();
+    });
+  }
 
   trackByFn(e: any, g: any) {
     return `${e}-${g}`;
   }
-  filterData(term) {
-    this.dataSource.filter = term.target.value;
+  getRowIndex(row: ExpandingRow, add = 0) {
+    return row._position.index + this.FIRST_ROW + add;
   }
-  expandRow(row: any) {
-    if (!this.selectedRow) {
-      this.selectedRow = row;
-    } else {
-      this.selectedRow = false;
+  trackRowBy(_index, item: ExpandingRow) {
+    return item._position.hash;
+  }
+  rowIsEntry(_index, row: ExpandingRow) {
+    return !row._position.isGroup;
+  }
+  parentIsExpanded(row: ExpandingRow) {
+    return this.model.checkIsParentExpanded(row);
+  }
+  rowIsGroup(_index, row: ExpandingRow) {
+    return row._position.isGroup;
+  }
+  updateFilterCells(cell: KeyGridDirective) {
+    this.filterCells.add(cell);
+  }
+  handleGridNavigation(event: KeyboardEvent) {
+    if (ARROW_KEYS.includes(event.key)) {
+      this._handleArrowKeys(event);
     }
   }
-  get columnSpan() {
-    return this._fields.length;
-  }
-
-  toggleGroup(group: string) {
-    this.groups.has(group)
-      ? this.groups.delete(group)
-      : this.groups.set(group, {
-          level: this.groups.size,
-          expanded: false,
-          name: group,
-        });
-  }
-  addGroup(group: string) {
-    this.dataSource.groupTerms = [];
-  }
-
-  expandGroup(term: string) {
-    if (this.groups.has(term)) {
-      this.groups.get(term).expanded = !this.groups.get(term).expanded;
+  _handleArrowKeys(event: KeyboardEvent) {
+    const cells = this._getKeyGridCells();
+    const currentElem = event.target as HTMLElement,
+      row = Number(currentElem.getAttribute('row')),
+      col = Number(currentElem.getAttribute('column')),
+      { r, c } = this._getPositionFns(row, col),
+      colCount = c.count(cells, row),
+      rowCount = r.count(cells);
+    let toRow = 0,
+      toCol = 0,
+      colAbove = 0,
+      colBelow = 0;
+    switch (event.key) {
+      case 'Right': // IE/Edge specific value
+      case 'ArrowRight':
+        toRow = c.isLast(colCount) ? r.next(rowCount) : row;
+        toCol = c.next(colCount);
+        break;
+      case 'Down': // IE/Edge specific value
+      case 'ArrowDown':
+        toRow = r.next(rowCount);
+        /**/ colBelow = c.count(cells, toRow);
+        toCol = colBelow < col ? colBelow : col;
+        break;
+      case 'Left': // IE/Edge specific value
+      case 'ArrowLeft':
+        toRow = c.isFirst() ? r.prev(rowCount) : row;
+        toCol = c.prev(c.count(cells, r.prev(rowCount)));
+        break;
+      case 'Up': // IE/Edge specific value
+      case 'ArrowUp':
+        toRow = r.prev(rowCount);
+        /**/ colAbove = c.count(cells, toRow);
+        toCol = colAbove < col ? colAbove : col;
+        break;
+      default:
+        return; // Quit if this doesn't handle the key event.
     }
+    const predicate = (item) => item.column == toCol && item.row == toRow;
+    const nextElem = cells.filter(predicate)[0].element;
+    this.renderer.setAttribute(nextElem, 'tabindex', '0');
+    this.renderer.setAttribute(currentElem, 'tabindex', '-1');
+    nextElem.focus();
+    return true;
+  }
+  private _getKeyGridCells(): KeyGridDirective[] {
+    let filters = [];
+    try {
+      filters = this.headers.map(
+        (header) => header?.filterRef?.instance?.grid
+      ) as KeyGridDirective[];
+    } catch (err) {
+      throw new Error(err);
+    }
+    const cells =
+      Array.isArray(filters) && filters.length > 0
+        ? [...this.gridCells, ...filters]
+        : this.gridCells;
+    return cells;
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.changeDetect.markForCheck();
-  }
+  private _getPositionFns(row: number, col: number) {
+    ///////////////////////////////////////////////
 
-  get selectComponent() {
-    return this.selector;
-  }
-  constructor(
-    private columnService: ColumnService,
-    private dataService: DataService,
-    private changeDetect: ChangeDetectorRef,
-    private selector: ColumnSelectorComponent
-  ) {
-    this.selector = selector;
-    this.dataService = dataService;
-    this.columnService = columnService;
-    this.dataSource = new BeersTableDataSource(
-      this.dataService.tableSource,
-      this.columnService.observeActiveColumns$
-    );
-  }
+    const r = {
+      prev: (rowCount: number) => (row === 0 ? rowCount : row - 1),
+      next: (rowCount: number): number => (row === rowCount ? 0 : row + 1),
+      isLast: (rowCount: number): boolean => row === rowCount,
+      isFirst: () => row === 0,
+      count: (cells: KeyGridDirective[]) =>
+        cells.sort(
+          (a: KeyGridDirective, b: KeyGridDirective) => b.row - a.row
+        )[0].row,
+    };
+    const c = {
+      prev: (columnsInPreviousRow: number) =>
+        col === 0 ? columnsInPreviousRow : col - 1,
+      next: (columnsInRow: number) => (col === columnsInRow ? 0 : col + 1),
+      isLast: (columnsInRow: number) => col === columnsInRow,
+      isFirst: () => col === 0,
+      count: (cells: KeyGridDirective[], rowIndex: number) =>
+        cells.reduce(
+          (count, item: KeyGridDirective) =>
+            item.row === rowIndex && item.column > count ? item.column : count,
+          -1
+        ),
+    };
 
-  isGroup(item: { isGroup: boolean }): boolean {
-    return item.isGroup;
-  }
-
-  isShown(item: { isGroup: any }): boolean {
-    return !item.isGroup;
-  }
-  trackingFunct(item: { tableID: any }) {
-    return item.tableID;
+    return { r, c };
   }
 }
 
@@ -185,18 +253,46 @@ interface Paginator {
   length: number;
 }
 interface Entries {
-  (value: string | number, rows: Entries[] | []): boolean;
+  [key: string]: string;
 }
-interface GroupI {
-  level: number;
-  name: string;
-  expanded: boolean;
+interface RowExpansionMixin {
+  layer: number;
+  root: number;
+  index: number;
+  ////////////////
+  id: string;
+  parentId: string;
+  ///////////////
+  isGroup: boolean;
+  hasParent: boolean;
+  ///////////////
+  hash?: string;
+  expanded?: boolean;
 }
 
+interface RowGroupMixin {
+  field: number;
+  name: string;
+  rows: Entries[];
+  _position: RowExpansionMixin;
+}
+type ExpandingEntry = Entries & { _position: RowExpansionMixin };
+export type ExpandingGroup = RowGroupMixin;
+type ExpandingRow = ExpandingGroup & ExpandingEntry;
+
+const FIRST_NODE = {
+  index: 0,
+  rootIndex: 0,
+  layer: 0,
+  id: '',
+  parentId: '',
+};
+
 /** Shared base class with MDC-based implementation. */
-export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
-  T
-> {
+export class BeersTableDataSource<
+  T,
+  P extends Paginator
+> extends DataSource<T> {
   /** Stream that emits when a new data array is set on the data source. */
   private readonly _data: BehaviorSubject<T[]>;
 
@@ -204,7 +300,9 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   private readonly _renderData = new BehaviorSubject<T[]>([]);
 
   /** Stream that emits when a new filter string is set on the data source. */
-  private readonly _filter = new BehaviorSubject<string>('');
+  private readonly _filter = new BehaviorSubject<Map<string, string>>(
+    new Map()
+  );
 
   /**
    * Subscription to the changes that should trigger an update to the table's rendered rows, such
@@ -218,30 +316,26 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * For example, a 'selectAll()' function would likely want to select the set of filtered data
    * shown to the user rather than all the data.
    */
-  private _group = new BehaviorSubject(new Map()) as BehaviorSubject<
-    Map<string, GroupI>
-  >;
-  private _groupTerm: BehaviorSubject<GroupI[]>;
+  private _groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
+
   private _dataLoaded = false;
 
-  filteredData: T[];
-
-  groupingParameters: any;
-  _dataHeaders: boolean;
-
   private _rows = new Set() as Set<number>;
-  groupTerm: any;
-  private _displayedColumns: Observable<string[]> = of(['']);
-  private _toggledRows: BehaviorSubject<Set<string>> = new BehaviorSubject(
-    new Set()
-  );
+  private _displayedColumn$: Observable<string[]> = of(['']);
+  private _displayedColumns: string[] = [];
+
+  expanded = new Set();
+  //Whether to ONLY group expanded rows in the data pipeline. This could be helpful when
+  _renderOnExpansion: boolean = false;
+  expansionChange = new BehaviorSubject(new Set());
 
   /** Ingests a stream of any columns that are marked to be shown and that contain data
    * @property {headers} headers - A stream of headers from your table source.
    */
   observeColumnChanges(headers: Observable<string[]>) {
-    this._displayedColumns = combineLatest([this._data, headers]).pipe(
-      map((headers) => this._filterEmptyColumns(headers))
+    this._displayedColumn$ = combineLatest([this._data, headers]).pipe(
+      map((headers) => this._filterEmptyColumns(headers)),
+      tap((headers) => (this._displayedColumns = headers))
     );
   }
   /**
@@ -250,11 +344,17 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * @readonly
    * @memberof BeersTableDataSource
    */
+  get displayedColumns$() {
+    return this._displayedColumn$;
+  }
   get displayedColumns() {
     return this._displayedColumns;
   }
+  get rowUpdates() {
+    return this._renderData.asObservable();
+  }
   get displayedGroups() {
-    return [...this._group.value.values()];
+    return [...this._groupChange.value.values()];
   }
   /* private _filterGroupedColumns = (groupedColumns: Map<string, GroupI>) => (
     headers: string[]
@@ -267,22 +367,16 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     }
   };*/
 
+  hashRow(rows: ExpandingRow[]) {
+    let encode = (row) => encodeURI(JSON.stringify(row));
+
+    for (let row of rows) {
+      row._position['hash'] = encode(row);
+    }
+    return rows;
+  }
   get dataLoaded() {
     return this._dataLoaded;
-  }
-  get groupTerms(): GroupI[] {
-    if (this._groupTerm.value) {
-      return this._groupTerm.value;
-    }
-  }
-  set groupTerms(terms: GroupI[]) {
-    if (terms && Array.isArray(terms) && terms.length > 0) {
-      this._groupTerm.next(terms);
-    }
-  }
-
-  get expandedRows(): Set<number> {
-    return this._rows;
   }
 
   /** Array of objects that should be rendered by the table, where each object represents one row. */
@@ -292,45 +386,46 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   set data(data: T[]) {
     this._data.next(data);
   }
-  toggleRow(index: number) {
-    this._rows.has(index) ? this._rows.delete(index) : this._rows.add(index);
+
+  updateGroups(groups: string[]) {
+    this._groupChange.next(groups);
   }
 
-  toggleRowExpansion(index: number, rowData: any) {
-    this._rows;
+  checkIsGroup(_, rowData) {
+    return rowData._position.isGroup;
   }
-  toggleGroup(group: string) {
-    const newGroup = this._group.value || new Map();
-    newGroup.has(group)
-      ? newGroup.delete(group)
-      : newGroup.set(group, { order: 0, expanded: false, groupName: group });
-    this._group.next(newGroup);
+  checkIsRow(_, rowData) {
+    return !rowData._position.isGroup;
   }
-  toggleExpansion(row) {
-    let { root, EntryID: entry, index } = row;
-    const key = root + entry + index;
-    const toggledRows = this._toggledRows.value as Set<string>;
-    toggledRows.has(key) ? toggledRows.delete(key) : toggledRows.add(key);
-    this._toggledRows.next(toggledRows);
+  checkIsExpanded(row) {
+    return this.expansionChange.value.has(row._position.id);
   }
-  rowIsExpanded(rowData) {
-    return this._toggledRows?.value?.has(
-      rowData.root + rowData.EntryID + rowData.index
-    );
-  }
-  checkIsGroup(index: number, rowData) {
-    return rowData.isGroup;
-  }
+  checkIsParentExpanded = (row) =>
+    !this.rowHasParent(row) ||
+    this.expansionChange.value.has(row._position.parentId);
 
+  rowHasParent = (row) => row._position.hasParent;
+
+  expand(row: ExpandingRow) {
+    console.log(row._position);
+    const id = row._position.id;
+    const expanded = this.expansionChange.value;
+    expanded.has(id) ? expanded.delete(id) : expanded.add(id);
+    this.expansionChange.next(expanded);
+  }
   /**
    * Filter term that should be used to filter out objects from the data array. To override how
    * data objects match to this filter string, provide a custom function for filterPredicate.
    */
-  get filter(): string {
+  get filters(): Map<string, string> {
     return this._filter.value;
   }
-  set filter(filter: string) {
-    this._filter.next(filter);
+  filter(column: string, term: string) {
+    if (typeof column === 'string' && typeof term === 'string') {
+      const filters = this._filter.value;
+      term.length < 1 ? filters.delete(column) : filters.set(column, term);
+      this._filter.next(filters);
+    }
   }
 
   /**
@@ -355,7 +450,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * should be displayed. If the paginator receives its properties as template inputs,
    * e.g. `[pageLength]=100` or `[pageIndex]=1`, then be sure that the paginator's view has been
    * initialized before assigning it to this data source.
-   
+
   get paginator(): P | null {
     return this._paginator;
   }
@@ -457,34 +552,20 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
    * trimmed and the match is case-insensitive. May be overridden for a custom implementation of
    * filter matching.
    * @param data Data object used to check against the filter.
-   * @param filter Filter string that has been set on the data source.
+   * @param filter Filter entry structured as [key: columnName, value: filterText] that has been set on the data source.
    * @returns Whether the filter matches against the data
    */
-  filterPredicate: (data: T, filter: string) => boolean = (
+  filterPredicate: (data: T, filter: [string, string][]) => boolean = (
     data: T,
-    filter: string
+    filter: [string, string][]
   ): boolean => {
-    // Transform the data into a lowercase string of all property values.
-    const dataStr = Object.keys(data)
-      .reduce((currentTerm: string, key: string) => {
-        // Use an obscure Unicode character to delimit the words in the concatenated string.
-        // This avoids matches where the values of two columns combined will match the user's query
-        // (e.g. `Flute` and `Stop` will match `Test`). The character is intended to be something
-        // that has a very low chance of being typed in by somebody in a text field. This one in
-        // particular is "White up-pointing triangle with dot" from
-        // https://en.wikipedia.org/wiki/List_of_Unicode_characters
-        return currentTerm + (data as { [key: string]: any })[key] + '◬';
-      }, '')
-      .toLowerCase();
-    // Transform the filter by converting it to lowercase and removing whitespace.
-    const transformedFilter = filter.trim().toLowerCase();
-
-    return dataStr.indexOf(transformedFilter) != -1;
+    return filter.every(
+      ([key, value]) =>
+        (data[key] as string).trim().toLowerCase().indexOf(value) != -1
+    );
   };
 
-  convertObservableToBehaviorSubject<T>(
-    observable: Observable<T>
-  ): BehaviorSubject<T> {
+  toBehaviorSubject<T>(observable: Observable<T>): BehaviorSubject<T> {
     let observed: T;
     observable.toPromise().then((item) => {
       observed = item;
@@ -507,77 +588,154 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
   }
   constructor(dataStream: Observable<T[]>, columnStream: Observable<string[]>) {
     super();
-    this._data = this.convertObservableToBehaviorSubject(dataStream);
+    this._data = this.toBehaviorSubject(dataStream);
     this.observeColumnChanges(columnStream);
     this._updateChangeSubscription();
   }
-  private _appendRow(item: any, layer: number, root: string) {
-    let isExpanded = this._toggledRows?.value?.has(root + layer) || false;
-    return {
-      root: root ? root : 'root',
+  private _createRow(item: BeersEntry) {
+    const row = {
       ...item,
-      index: layer,
-      isGroup: false,
-      expanded: isExpanded,
     };
+    return row;
   }
 
-  private _appendSubHeader(item: any, layer: number, root: string) {
-    let isExpanded =
-      this._toggledRows?.value?.has(root + item.entryID + layer) || false;
-
-    return {
-      root: root ? root : 'root',
-      value: item.value,
-      index: layer,
-      isGroup: true,
-      expanded: isExpanded,
+  private _createGroup({ groupHeader, field, _position }) {
+    const group = {
+      groupHeader,
+      field,
+      _position,
     };
-  }
 
-  private _flattenNestedNodes(nodes: any[], stack = [], layer = 0) {
-    layer++;
-    let rootVal, hasChild, item;
-    for (item of nodes) {
-      hasChild = item?.rows?.length > 0;
-      rootVal = layer === 1 && hasChild ? item.value : rootVal;
-      if (item && Array.isArray(item.rows) && hasChild) {
-        stack.push(this._appendSubHeader(item, layer, rootVal));
-        this._flattenNestedNodes(item.rows, stack, layer);
-      } else {
-        stack.push(this._appendRow(item, layer, rootVal));
-      }
-    }
+    return group;
+  }
+  _createRowId(rootIndex: number, layer: number, index: number) {
+    return `${rootIndex}${layer}${index}`;
+  }
+  private _flattenNestedNodes(nodes: any[], stack = []) {
+    nodes.forEach((item) => {
+      const hasChildren = Array.isArray(item?.rows);
+      //If this is the first layer, set the root to the index of the first item of the tree
+      //If the item exists, has children and has an array of rows, recurse again until no children are present.
+      if (hasChildren) {
+        const group = this._createGroup(item);
+        stack.push(group);
+        this._flattenNestedNodes(item.rows, stack);
+      } else if (typeof item === 'object') {
+        const row = this._createRow(item);
+        stack.push(row);
+      } else
+        throw new TypeError(
+          '[BeersTableDataSource._flattenNestedNodes]: One or more nodes are not the correct type'
+        );
+    });
+
     return stack;
   }
-  private _groupBy(arr: any[], fields: string[]): any[] {
-    let field = fields[0] as string; // take first field
-    if (!field) return arr; //if field does not exist, return the array
-    let recursedArray = Object.values(
-      arr.reduce((obj, current: Entries) => {
-        //If current object does not exist, set the value to the current field, and provide empty rows at the bottom of the tree
-        if (!obj[current[field]])
-          obj[current[field]] = { value: current[field], rows: [] };
-        //else push the current object into {values: field, rows: [...currobj] }
-        obj[current[field]].rows.push(current);
-        return obj;
-      }, {})
-    );
 
-    // iterate through each child's rows if there are remaining fields
+  private _groupBy(
+    entries: T[],
+    fields: string[],
+    root = 0,
+    layer = 0,
+    parentIndex = -1,
+    parentId = ''
+  ): any[] {
+    let field = fields[0] as string; // take the next field
+    if (!field) return entries; //if field does not exist, return the array
+    /////////////////////////////
+    ////////////////////////////
+    const groupedEntries = entries.reduce(
+      (levelGroups, levelEntry: T, groupIndex) => {
+        //If you are on the first layer, set the rootIndex equal to the index of the top node
+        //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
+        let grouping = levelEntry[field];
+        //Make the group name a string if it is an array
+        if (Array.isArray(grouping)) {
+          grouping = grouping.join('_');
+        }
+        if (!grouping) grouping = ' [[No data]]';
+        //If current group does not exist, set the value to the current field, and provide empty rows at the bottom of the tree
+        root = parentIndex === -1 ? groupIndex : root;
+        let groupId = this._createRowId(root, layer, groupIndex);
+        const groupPosition = {
+          root,
+          layer,
+          index: groupIndex,
+          isGroup: true,
+          hasParent: layer > 0,
+          expanded: false,
+          id: groupId,
+          parentId,
+        } as RowExpansionMixin;
+        //If a group has not been created in this layer, create an entry
+        if (!levelGroups[grouping])
+          levelGroups[grouping] = {
+            rows: [],
+            groupHeader: grouping,
+            field,
+            _position: groupPosition,
+          };
+
+        //If this is the last layer (there are no more fields to group), add a position to all row entries
+        if (fields.length <= 1) {
+          let index = levelGroups[grouping].rows.length;
+          let parentId = levelGroups[grouping]._position.id;
+
+          let id = this._createRowId(root, layer + 1, index);
+          levelEntry['_position'] = {
+            root,
+            layer: layer + 1,
+            index,
+            isGroup: false,
+            expanded: false,
+            hasParent: true,
+            id,
+            parentId,
+          } as RowExpansionMixin;
+        }
+        levelGroups[grouping].rows.push(levelEntry);
+        return levelGroups;
+      },
+      {}
+    );
+    let groupedValues = Object.values(groupedEntries);
+
     if (fields.length) {
-      recursedArray.forEach((obj: any) => {
-        obj.count = obj.rows.length;
-        obj.rows = this._groupBy(obj.rows, fields.slice(1)); //remove the current field from the list of fields
+      layer++;
+      groupedValues.forEach((group: any) => {
+        let { index: _index, id: _id } = group._position;
+        group.rows = this._groupBy(
+          group.rows,
+          fields.slice(1),
+          root,
+          layer,
+          _index,
+          _id
+        );
       });
     }
-    return recursedArray;
+    return groupedValues;
   }
+
   private _groupData(data: T[]) {
-    if (this._group.value.size > 0) {
-      const groups = [...this._group.value.keys()];
-      data = this._groupBy(data, groups);
+    let groups = this._groupChange.value;
+    if (Array.isArray(groups) && groups.length > 0) {
+      let nestedNodes = this._groupBy(data, groups);
+      return this._flattenNestedNodes(nestedNodes);
     }
+    data.forEach(
+      (point, index) =>
+        (point['_position'] = {
+          root: 0,
+          id: `00${index}`,
+          parentId: '000',
+          isGroup: false,
+          layer: 0,
+          expanded: false,
+          hasParent: false,
+          index,
+        })
+    );
     return this._flattenNestedNodes(data);
   }
 
@@ -599,32 +757,48 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
           this._sort.initialized
         ) as Observable<Sort | void>)
       : of(null);
-    const dataStream = this._data;
-    dataStream.pipe(tap(console.log)).subscribe();
+
     // Watch for base data or filter changes to provide a filtered set of data.
-    const filteredData = combineLatest([dataStream, this._filter]).pipe(
+    const filteredData = combineLatest([this._data, this._filter]).pipe(
       map(([data]) => this._filterData(data))
     );
-    // Watch for base data or filter changes to provide a filtered set of data.
-
     // Watch for filtered data or sort changes to provide an ordered set of data.
     const sortedData = combineLatest([filteredData, sortChange]).pipe(
       map(([data]) => this._orderData(data))
     );
 
-    const groupedData = combineLatest([sortedData, this._group]).pipe(
+    const groupedData = combineLatest([sortedData, this._groupChange]).pipe(
       map(([data]) => this._groupData(data))
+    );
+
+    const hashedRows = groupedData.pipe(map((rows) => this.hashRow(rows)));
+    const expandedData = combineLatest([hashedRows, this.expansionChange]).pipe(
+      map(([data]) => this._expandData(data))
     );
     // Watched for paged data changes and send the result to the table to render.
     this._renderChangesSubscription?.unsubscribe();
-    this._renderChangesSubscription = groupedData.subscribe((data) => {
+    this._renderChangesSubscription = expandedData.subscribe((data) => {
       this._renderData.next(data as any);
-      this._dataLoaded = true;
     });
+  }
+  private _expandData(data: any[]): any {
+    let expandedRows = this.expansionChange.value;
+    let i = 0;
+    data.forEach((row: ExpandingRow) => {
+      const { isGroup, id, parentId, layer } = row._position;
+      let isFirstLayer = !layer || layer === 0;
+      let isShown = expandedRows.has(parentId) || isFirstLayer;
+      let isExpanded = expandedRows.has(id);
+      if (!isShown && isExpanded) expandedRows.delete(id);
+      row._position.expanded = isShown && isExpanded;
+      row._position.index = i;
+      i = isExpanded && !isGroup ? i + 2 : i + 1;
+    });
+    return data;
   }
 
   /**
-   *
+   * Filters any columns that do not contain data
    *
    * @param {*} [tableArray, headers]
    * @returns {*}  {string[]}
@@ -634,7 +808,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     string[]
   ]): string[] => {
     let exists = {};
-    return tableArray
+    let displayedColumns = tableArray
       .map((table) =>
         headers.filter((header) =>
           table[header] && !exists.hasOwnProperty(header)
@@ -643,6 +817,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
         )
       )
       .flat();
+    return displayedColumns;
   };
 
   /**
@@ -654,11 +829,13 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
     // If there is a filter string, filter out data that does not contain it.
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overridden for customization.
-    this.filteredData =
-      this.filter == null || this.filter === ''
-        ? data
-        : data.filter((obj) => this.filterPredicate(obj, this.filter));
-    return this.filteredData;
+
+    if (this.filters.size === 0) {
+      return data;
+    } else {
+      const filters = Array.from(this.filters.entries());
+      return data.filter((obj) => this.filterPredicate(obj, filters));
+    }
   }
 
   /**
@@ -684,7 +861,7 @@ export class BeersTableDataSource<T, P extends Paginator> extends DataSource<
       this._updateChangeSubscription();
     }
     this._renderData.subscribe(console.log);
-    return this._renderData;
+    return this._renderData.asObservable();
   }
 
   /**

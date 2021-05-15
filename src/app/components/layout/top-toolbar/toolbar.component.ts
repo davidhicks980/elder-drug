@@ -1,19 +1,37 @@
+import { trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  LayoutStatus,
-  ScreenStatus,
-  StateService,
-} from 'src/app/services/state.service';
+import { LayoutStatus, ResizeService, ScreenStatus } from 'src/app/services/resize.service';
 
-import { toolbarItemsFade } from '../../../animations';
+import { flyInTemplate } from '../../../animations';
 import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'elder-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  animations: [toolbarItemsFade],
+  animations: [
+    trigger(
+      'flyIn',
+      flyInTemplate(
+        {
+          startX: '0px',
+          startY: '-20%',
+          endX: '0px',
+          endY: '0px',
+          timing: '500ms ease',
+        },
+        {
+          startX: '0px',
+          startY: '0px',
+          endX: '0px',
+          endY: '-100%',
+          timing: '300ms ease-in',
+        }
+      )
+    ),
+    ,
+  ],
 })
 export class ToolbarComponent {
   public iconName = 'menu';
@@ -25,7 +43,7 @@ export class ToolbarComponent {
   smallGridLayout: any;
   constructor(
     public fire: DataService,
-    public state: StateService,
+    public state: ResizeService,
     public dialog: MatDialog
   ) {
     this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {

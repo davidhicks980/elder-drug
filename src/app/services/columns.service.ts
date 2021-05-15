@@ -26,7 +26,7 @@ export class ColumnService {
     { field: 'RecommendationLineTwo', header: 'LineTwo' },
     { field: 'ItemType', header: 'Type' },
     { field: 'ShortTableName', header: 'Table' },
-    { field: 'SearchTerm', header: 'Search Term' },
+    { field: 'SearchTerms', header: 'Search Term' },
   ];
 
   public columnDefinitions: TableDefinition[] = [
@@ -35,7 +35,7 @@ export class ColumnService {
       filters: [null],
       id: Category.General,
       columnOptions: [
-        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.SearchTerms, selected: true },
         { id: ColumnField.Item, selected: true },
         { id: ColumnField.Exclusion, selected: true },
         { id: ColumnField.Inclusion, selected: true },
@@ -50,7 +50,7 @@ export class ColumnService {
       filters: [ColumnField.DiseaseState],
       id: Category.DiseaseGuidance,
       columnOptions: [
-        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.SearchTerms, selected: true },
         { id: ColumnField.Item, selected: true },
         { id: ColumnField.Exclusion, selected: true },
         { id: ColumnField.Inclusion, selected: true },
@@ -63,7 +63,7 @@ export class ColumnService {
       id: Category.RenalEffect,
       filters: [ColumnField.MaximumClearance, ColumnField.MinimumClearance],
       columnOptions: [
-        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.SearchTerms, selected: true },
         { id: ColumnField.Item, selected: true },
         { id: ColumnField.MinimumClearance, selected: true },
         { id: ColumnField.MaximumClearance, selected: true },
@@ -77,7 +77,7 @@ export class ColumnService {
       filters: [ColumnField.DrugInteraction],
       id: Category.DrugInteractions,
       columnOptions: [
-        { id: ColumnField.SearchTerm, selected: true },
+        { id: ColumnField.SearchTerms, selected: true },
         { id: ColumnField.Item, selected: true },
         { id: ColumnField.DrugInteraction, selected: true },
         { id: ColumnField.Inclusion, selected: true },
@@ -154,7 +154,7 @@ export enum ColumnField {
   Recommendation = 'Recommendation',
   RecommendationLineTwo = 'RecommendationLineTwo',
   ShortName = 'ShortName',
-  SearchTerm = 'SearchTerm',
+  SearchTerms = 'SearchTerms',
 }
 
 export enum Category {

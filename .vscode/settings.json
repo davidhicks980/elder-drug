@@ -27,7 +27,6 @@
 "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
 "editor.formatOnType": true,
 "diffEditor.codeLens": true,
-"prettier.printWidth": 120,
 "prettier.trailingComma": "all",
 "json.maxItemsComputed": 3000,
 "svg.preview.background": "transparent",
@@ -35,5 +34,11 @@
 "angular.log": "terse",
 "angular.experimental-ivy": true,
 "tsimporter.preferRelative": true,
-"typescript.updateImportsOnFileMove.enabled": "always"
+"typescript.updateImportsOnFileMove.enabled": "always",
+"editor.formatOnSave": true,
+"editor.tokenColorCustomizations": {
+  "comments": "",
+  "textMateRules": []
+},
+"explorer.enableDragAndDrop": false
 }

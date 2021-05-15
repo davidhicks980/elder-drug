@@ -1,7 +1,6 @@
 import { ViewportRuler } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { ReplaySubject, Subject } from 'rxjs';
 
 export enum ScreenStatus {
   xSmall = 1,
@@ -18,21 +17,15 @@ export type LayoutStatus = {
 @Injectable({
   providedIn: 'root',
 })
-export class StateService {
+export class ResizeService {
   public sidenavOpen = true;
-  public windowWidthSource = new ReplaySubject<LayoutStatus>();
+  private windowWidthSource = new ReplaySubject<LayoutStatus>();
   public windowWidth$ = this.windowWidthSource.asObservable();
-  private smallContentSource = new ReplaySubject<boolean>();
-  public smallContent$ = this.smallContentSource.asObservable();
+
   public width: ScreenStatus = ScreenStatus.large;
 
-  sidenavStatus$ = this.windowWidthSource.asObservable();
-
-  public activeTables: string[] = [];
-  matcher: any;
-  mediaMatcher: any;
   mobileWidth = false;
-  layoutType: number;
+  private _cachedLayoutType: number;
   get layoutStatus() {
     return {
       sidenavOpen: this.sidenavOpen,
@@ -40,14 +33,9 @@ export class StateService {
       mobileWidth: this.mobileWidth,
     };
   }
-  emitContentWidthStatus(contentIsSmall: boolean) {
-    this.smallContentSource.next(contentIsSmall);
-  }
+
   public requestPropertySource = new Subject<any>();
   public sendPropertySource = new Subject<any>();
-  // Observable string streams
-
-  name = 'StateService';
 
   toggleSidenav() {
     this.sidenavOpen = !this.sidenavOpen;
@@ -60,7 +48,7 @@ export class StateService {
 
   constructor(_ruler: ViewportRuler) {
     try {
-      _ruler.change(8).subscribe((): void => {
+      _ruler.change(12).subscribe((): void => {
         let layoutType = 0;
         if (_ruler.getViewportSize().width < 600) {
           this.mobileWidth = true;
@@ -76,8 +64,8 @@ export class StateService {
           layoutType = 3 * (Number(this.sidenavOpen) + 1);
         }
 
-        if (this.layoutType !== layoutType) {
-          this.layoutType = layoutType;
+        if (this._cachedLayoutType !== layoutType) {
+          this._cachedLayoutType = layoutType;
 
           this.windowWidthSource.next({
             sidenavOpen: this.sidenavOpen,

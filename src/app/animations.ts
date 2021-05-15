@@ -1,13 +1,82 @@
 import {
   animate,
+  animation,
+  AnimationReferenceMetadata,
   sequence,
   state,
   style,
   transition,
   trigger,
+  useAnimation,
 } from '@angular/animations';
 
-export const toolbarItemsFade = trigger('toolbarItemsFade', [
+/** @params startOpacity, time, endOpacity */
+export const customFadeIn = animation([
+  style({
+    opacity: '{{ startOpacity }}',
+  }),
+  animate('{{ time }}', style({ opacity: '{{endOpacity}}' })),
+]);
+export const customFlyIn = animation([
+  style({
+    transform: 'translate({{startX}}, {{startY}})',
+  }),
+  animate(
+    '{{ timing }}',
+    style({ transform: 'translate({{endX}}, {{endY}})' })
+  ),
+]);
+
+export const enterLeaveTemplate = (
+  enterAnimation: AnimationReferenceMetadata,
+  leaveAnimation: AnimationReferenceMetadata
+) => [
+  transition(':enter', enterAnimation),
+  transition(':leave', leaveAnimation),
+];
+
+export const fadeInTemplate = (enterTiming, leaveTiming) =>
+  enterLeaveTemplate(
+    useAnimation(customFadeIn, {
+      params: {
+        startOpacity: 0,
+        endOpacity: 1,
+        time: enterTiming,
+      },
+    }),
+    useAnimation(customFadeIn, {
+      params: {
+        startOpacity: 1,
+        endOpacity: 0,
+        time: leaveTiming,
+      },
+    })
+  );
+export const flyInTemplate = (
+  enterPos: {
+    startX: string;
+    startY: string;
+    endX: string;
+    endY: string;
+    timing: string;
+  },
+  exitPos: {
+    startX: string;
+    startY: string;
+    endX: string;
+    endY: string;
+    timing: string;
+  }
+) =>
+  enterLeaveTemplate(
+    useAnimation(customFlyIn, {
+      params: enterPos,
+    }),
+    useAnimation(customFlyIn, {
+      params: exitPos,
+    })
+  );
+trigger('toolbarItemsFade', [
   transition(':enter', [
     style({ opacity: 0 }),
 

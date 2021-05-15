@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
-import { LayoutStatus, ScreenStatus, StateService } from '../../../../services/state.service';
+import { LayoutStatus, ResizeService, ScreenStatus } from '../../../../services/resize.service';
 
 @Component({
   selector: 'elder-logo',
@@ -45,8 +45,8 @@ export class LogoComponent {
     }
   }
 
-  constructor(public state: StateService) {
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
+  constructor(public resizer: ResizeService) {
+    this.resizer.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
       this.layout = layoutStatus;
     });
   }
