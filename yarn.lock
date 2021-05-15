@@ -166,13 +166,6 @@
   dependencies:
     tslib "^2.1.0"
 
-"@angular/cdk-experimental@^11.2.9":
-  version "11.2.9"
-  resolved "https://registry.npmjs.org/@angular/cdk-experimental/-/cdk-experimental-11.2.9.tgz"
-  integrity sha512-r/bhCbMiCbP0046+uEqcQf0TwdmEoI4Bggfw+MeofHB8/qG5mTtUG5zXripAA9d0Qyc6ODDgqHaU5/GTcWyVNQ==
-  dependencies:
-    tslib "^2.0.0"
-
 "@angular/cdk@^11.2.9":
   version "11.2.9"
   resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-11.2.9.tgz"
