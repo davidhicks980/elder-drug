@@ -18,7 +18,7 @@ import 'array-flat-polyfill';
 import 'classlist.js';
 import 'document-register-element';
 import 'web-animations-js';
-import 'zone.js/dist/zone';
+import 'zone.js';
 
 
 /***************************************************************************************************
