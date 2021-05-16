@@ -1,5 +1,5 @@
-@use "colors";
-
+@use "palette" as *;
+@use 'colors' as *;
 @function encodecolor($string) {
   @if type-of($string) == "color" {
     $hex: str-slice(ie-hex-str($string), 4);

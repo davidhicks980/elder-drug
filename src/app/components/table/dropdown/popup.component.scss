@@ -1,5 +1,5 @@
-@use "palette";
-@use "bem-mixin";
+@use "palette" as *;
+@use "bem-mixin" as *;
 
 .popup-trigger {
   display: flex;

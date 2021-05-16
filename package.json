@@ -9,6 +9,18 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^12.0.0",
@@ -17,6 +29,7 @@
     "@angular/compiler": "^12.0.0",
     "@angular/core": "^12.0.0",
     "@angular/fire": "^6.1.4",
+    "@angular/flex-layout": "^11.0.0-beta.33",
     "@angular/forms": "^12.0.0",
     "@angular/material": "^12.0.0",
     "@angular/platform-browser": "^12.0.0",
@@ -25,6 +38,7 @@
     "@angular/service-worker": "^12.0.0",
     "angular-svg-icon": "^11.0.0",
     "array-flat-polyfill": "^1.0.1",
+    "carbon-components": "^10.35.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.8.3",
     "document-register-element": "^1.14.10",
@@ -70,6 +84,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.4",
     "open": "^7.3.1",
+    "postcss": "^7.0.35",
     "prettier": "2.2.1",
     "protractor": "~7.0.0",
     "resize-observer-polyfill": "^1.5.1",

@@ -1,4 +1,5 @@
-@use "colors";
+@use "_palette" as *;
+@use "_colors" as *;
 
 .chevron {
   appearance: none;

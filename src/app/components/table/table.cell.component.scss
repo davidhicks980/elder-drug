@@ -1,0 +1,35 @@
+@use 'bem-mixin' as bem;
+@use 'palette' as pal;
+
+.cell {
+  @include bem.modifier("header") {
+    line-height: 3rem;
+    text-align: left;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+
+    border: 1px solid pal.$light-gray-4;
+    border-width: 0px 0px 1px 1px;
+    box-shadow: inset 0px 1px 0px 0 #ffffff54;
+    background-color: white;
+    color: pal.$gray-5;
+    flex: 1;
+    @include bem.position("first-of-type") {
+      border-left: none;
+      @include bem.modifier("left-margin") {
+        margin-left: 40px;
+      }
+    }
+    @include bem.element("content") {
+      margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 400;
+    }
+  }
+
+  @include bem.nativeState("hover") {
+    filter: grayscale(0.5);
+  }
+}

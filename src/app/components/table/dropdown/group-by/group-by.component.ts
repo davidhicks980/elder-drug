@@ -14,7 +14,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil, tap } from 'rxjs/operators';
 
 import { fadeInTemplate } from '../../../../animations';
 import { VERTICAL_ARROW_KEYS } from '../../../../constants/keys.constants';
@@ -265,10 +265,12 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     ]);
   }
   ungroupItem(index: number) {
+    const arr = this.groupedColumns.value;
     this.ungroupedColumns.next([
       ...this.ungroupedColumns.value,
-      this.groupedColumns.value.splice(index, 1)[0],
+      arr.splice(index, 1)[0],
     ]);
+    this.groupedColumns.next(arr);
   }
   /**
    *
@@ -327,7 +329,7 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
 
   watchChanges() {
     this.changes
-      .pipe(takeUntil(this.destroyed))
+      .pipe(takeUntil(this.destroyed), tap(console.log))
       .subscribe((groups) => this.groupService.changeGroups(groups));
   }
 

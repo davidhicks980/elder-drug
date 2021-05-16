@@ -43,3 +43,9 @@
     @content;
   }
 }
+
+@mixin mobileWidth {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}

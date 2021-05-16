@@ -1,4 +1,6 @@
-@use "colors";
+@use "palette" as *;
+@use "colors" as *;
+@use "grid" as *;
 
 :host {
   --pk-text--color: rgb(245, 245, 245);

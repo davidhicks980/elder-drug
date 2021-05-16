@@ -1,4 +1,6 @@
-@use "colors";
+@use "palette" as *;
+@use "grid" as *;
+@use "colors" as *;
 $toolbarActiveColor: $primary-1;
 $toolbarInactiveColor: white;
 

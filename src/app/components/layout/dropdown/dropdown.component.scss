@@ -1,4 +1,6 @@
-@use "colors";
+@use "palette" as *;
+
+@use "colors" as *;
 
 :host {
   --dropdown-surface: rgb(35, 35, 35);

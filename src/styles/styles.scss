@@ -1,17 +1,19 @@
 @use '~@angular/material' as mat;
-@use "_palette" as *;
-@use "_bem-mixin" as *;
-
-@use "_colors" as *;
-@use "_grid" as *;
+@use "colors" as *;
+@use "palette" as *;
+@use "grid" as *;
+@use "bem-mixin" as *;
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 // Plus imports for other components in your app.
 
+$noto-typography: mat.define-typography-config(
+  $font-family: "Noto Sans JP",
+);
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.core();
+@include mat.core($noto-typography);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -49,7 +51,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Noto Sans", "Helvetica Neue", sans-serif;
 }
 
 html,
@@ -146,9 +148,9 @@ fieldset {
   padding: 3px;
   border-radius: 5px;
   -webkit-column-break-inside: avoid;
-  //box-shadow: 0px 3px 3px 1px transparentize($gray-5, 0.9);
-  // border: 1px solid $secondary-2-1;
-  // background: tint($secondary-2-1, 80%);
+  box-shadow: 0px 3px 3px 1px transparentize($gray-5, 0.9);
+  border: 1px solid $secondary-2-1;
+  background: tint($secondary-2-1, 80%);
 }
 .cdk-drag-placeholder {
 }

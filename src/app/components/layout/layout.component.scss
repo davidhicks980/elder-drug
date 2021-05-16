@@ -1,4 +1,5 @@
-@use "colors";
+@use "palette" as *;
+@use "colors" as *;
 
 $content-height--full-header: calc(100vh - #{$header-full});
 
@@ -166,9 +167,4 @@ main {
   place-items: center;
   overflow-y: auto;
   height: 100%;
-}
-
-.elder-table {
-  display: block;
-  width: 100%;
 }

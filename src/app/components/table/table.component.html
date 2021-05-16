@@ -2,6 +2,7 @@
   *elderLet="model.displayedColumns$ | async as fields"
   #elderTable
   id="elderTable"
+  class="drug-table--wrapper"
   (keydown)="handleGridNavigation($event)"
 >
   <cdk-table
@@ -13,29 +14,30 @@
     [fixedLayout]="true"
     [trackBy]="trackRowBy"
     mobileListener
-    *ngIf="fields"
   >
     <!--Table headers-->
     <cdk-header-row
-      class="header-row"
+      class="row row--header row--filter"
       *cdkHeaderRowDef="fields; sticky: true; index as i"
       mobileListener
     ></cdk-header-row>
     <!--Table cells-->
     <cdk-row
       *cdkRowDef="let row; columns: fields; when: rowIsEntry"
-      class="row"
+      class="row row--content"
       (click)="model.expand(row)"
       (keydown.enter)="model.expand(row)"
       (keydown.space)="model.expand(row)"
     ></cdk-row>
     <!--Expansion Cells-->
     <cdk-row
+      class="row row--expand"
       *cdkRowDef="let row; columns: ['expandedDetail']; when: rowIsEntry"
     ></cdk-row>
 
     <!--Group rows-->
     <cdk-row
+      class="row row--group"
       *cdkRowDef="let row; columns: ['groupHeader']; when: rowIsGroup"
       (click)="model.expand(row)"
       (keydown.enter)="model.expand(row)"
@@ -49,15 +51,15 @@
       <!--Header Row-->
       <ng-container *cdkHeaderCellDef>
         <cdk-header-cell
-          class="header-row__header-cell"
-          mat-sort-header="header{{ colI }}"
+          class="cell--header"
+          mat-sort-header
           attr.tabIndex="{{ colI === 0 ? '0' : '-1' }}"
           matTooltip="Sort by {{ field }}"
           #headerCell
           [filterColumn]="colI"
           [keyGrid]="{ row: 0, col: colI }"
         >
-          <div class="header-cell__content">
+          <div class="cell--header__content">
             {{ field | caseSplit | titlecase }}
           </div>
         </cdk-header-cell>

@@ -28,7 +28,11 @@ import { TableService } from '../../services/table.service';
 @Component({
   selector: 'elder-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: [
+    './table.component.scss',
+    './table.row.component.scss',
+    './table.cell.component.scss',
+  ],
 
   animations: [
     slideDownAnimation,
@@ -44,26 +48,6 @@ import { TableService } from '../../services/table.service';
       transition(
         'expanded<=>closed',
         animate('500ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-
-    /** Animation that moves the sort indicator. */
-    trigger('indicator', [
-      state('active-asc, asc', style({ transform: 'translateY(-6px)' })),
-      // 10px is the height of the sort indicator, minus the width of the pointers
-      state('active-desc, desc', style({ transform: 'translateY(4px)' })),
-      transition(
-        'active-asc <=> active-desc',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       ),
     ]),
   ],
@@ -90,7 +74,7 @@ export class TableComponent implements AfterViewInit {
     private columnService: ColumnService,
     private dataService: DataService,
     private table: TableService,
-    private groupService: GroupByService,
+    private groupServ: GroupByService,
     private renderer: Renderer2
   ) {
     this.dataService = dataService;
@@ -99,15 +83,19 @@ export class TableComponent implements AfterViewInit {
       this.dataService.tableSource as any,
       this.columnService.observeActiveColumns$
     );
-    this.groupService.groupChanges.subscribe((newGroups) => {
-      this.model.updateGroups(newGroups.map((group) => group.trim()));
-    });
+    const groupChanges = this.groupServ.groupChanges.pipe(
+      map((groups) => groups.map((group) => group.trim()))
+    );
+    groupChanges.subscribe((groups) => this.model.updateGroups(groups));
+
     this.table.tableFilter$.subscribe(({ column, term }) =>
       this.model.filter(column, term)
     );
   }
   ngAfterViewInit() {
-    this.model.sort = this.sort;
+    this.sort.initialized.subscribe(() => {
+      this.model.sort = this.sort;
+    });
     this.grid.changes.subscribe((newCells: QueryList<KeyGridDirective>) => {
       this.gridCells = newCells.toArray();
     });
@@ -320,7 +308,6 @@ export class BeersTableDataSource<
 
   private _dataLoaded = false;
 
-  private _rows = new Set() as Set<number>;
   private _displayedColumn$: Observable<string[]> = of(['']);
   private _displayedColumns: string[] = [];
 
@@ -407,7 +394,6 @@ export class BeersTableDataSource<
   rowHasParent = (row) => row._position.hasParent;
 
   expand(row: ExpandingRow) {
-    console.log(row._position);
     const id = row._position.id;
     const expanded = this.expansionChange.value;
     expanded.has(id) ? expanded.delete(id) : expanded.add(id);
@@ -505,6 +491,7 @@ export class BeersTableDataSource<
     if (!active || direction == '') {
       return data;
     }
+
     return data.sort((a, b) => {
       let valueA = this._sortingDataAccessor(a, active);
       let valueB = this._sortingDataAccessor(b, active);
@@ -719,7 +706,10 @@ export class BeersTableDataSource<
 
   private _groupData(data: T[]) {
     let groups = this._groupChange.value;
+
     if (Array.isArray(groups) && groups.length > 0) {
+      console.log('group change');
+
       let nestedNodes = this._groupBy(data, groups);
       return this._flattenNestedNodes(nestedNodes);
     }

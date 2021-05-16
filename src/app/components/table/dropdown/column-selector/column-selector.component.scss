@@ -1,4 +1,5 @@
-@use "palette";
+@use "palette" as *;
+@use "colors" as *;
 
 .column-select {
   width: 100%;

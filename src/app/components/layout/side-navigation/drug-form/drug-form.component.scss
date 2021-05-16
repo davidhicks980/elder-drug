@@ -1,9 +1,8 @@
-@use 'sass:color';
 @use '~@angular/material' as mat;
-@use "~@angular/material/theming";
-@use "bem-mixin";
-@use "palette";
-@use "colors";
+@use 'sass:color' as *;
+@use "palette" as *;
+@use "bem-mixin" as *;
+@use "colors" as *;
 :host {
   --input-background: white;
   --input-background--hover: #{$light-gray-1};
@@ -35,7 +34,6 @@
   }
 
   @include element("add-icon") {
-    transform: scale(0.8);
     stroke: none;
     font-size: 12pt;
   }
