@@ -22,7 +22,7 @@
     transition: transform 0.2s ease-in;
     position: relative;
 
-    @include state("is-rotated") {
+    @include state("rotated") {
       transform: rotate(180deg);
     }
   }

@@ -171,7 +171,6 @@ $color: #fafafb;
   transition: background-color 0.5s ease-in;
   position: relative;
   padding: 0.5em 0.35em;
-  min-width: 30ch;
   @include hoverable-shadow(2);
   &:active {
     transition: background-color 0.2s ease-in;

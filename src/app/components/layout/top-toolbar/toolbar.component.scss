@@ -1,6 +1,7 @@
 @use "palette" as *;
 @use "grid" as *;
 @use "colors" as *;
+@use 'bem-mixin' as bem;
 $toolbarActiveColor: $primary-1;
 $toolbarInactiveColor: white;
 
@@ -16,28 +17,6 @@ header {
   position: fixed;
 }
 
-div.logo-title {
-  width: 60px;
-  .logo {
-    height: 3em;
-    margin: 0 0.7em 0.5em 0.7em;
-    width: 2.5em;
-    position: absolute;
-  }
-  & span {
-    &.title {
-      font: $logo-text--font;
-      font-size: 26pt;
-      white-space: nowrap;
-      color: darken($dark-gray-3, 10%);
-      margin-left: 3rem;
-    }
-    &.mobile-sidenav-title {
-      font-size: 28pt;
-    }
-  }
-}
-
 mat-icon.mat-icon-24 {
   font-size: 20pt;
   color: $secondary-2-1;
@@ -48,30 +27,41 @@ div.center-left {
   place-items: center;
 }
 
-div.buttons {
+.button-wrapper {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: row;
   flex-direction: row;
-  align-items: space-between;
-  padding-right: 15px;
+  font-size: large;
+  -webkit-transform-origin: left;
   transform-origin: left;
   letter-spacing: 1px;
+  align-items: center;
   gap: 10px;
-  & button.toolbar-primary-button {
-    background: none;
-    border: none;
-    color: $primary-4;
+  @include bem.element("button") {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    color: $gray-4;
     cursor: pointer;
-    font-weight: 600;
-    &:hover {
+    position: relative;
+    @include hoverable-shadow(2);
+
+    @include bem.nativeState("hover") {
       color: $primary-3;
     }
   }
 }
 
-div.flex-toolbar {
+.toolbar {
   background: white;
   height: $header-shrunken;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.28);
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 1%;
 }
 
 @media screen and (min-width: 450px) and (max-width: 599.99px) {

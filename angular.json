@@ -22,18 +22,11 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
+            "assets": ["src/assets", "src/manifest.webmanifest"],
             "scripts": [],
-            "styles": [
-              "src/styles/styles.scss"
-            ],
+            "styles": ["src/styles/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
+              "includePaths": ["src/styles"]
             },
             "vendorChunk": true,
             "extractLicenses": false,
@@ -56,6 +49,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "extractCss": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -72,10 +66,7 @@
               "ngswConfigPath": "ngsw-config.json"
             }
           },
-          "allowedCommonJsDependencies": [
-            "@firebase",
-            "@angular/fire"
-          ]
+          "allowedCommonJsDependencies": ["@firebase", "@angular/fire"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -87,7 +78,6 @@
               "browserTarget": "search-angular:build:production"
             }
           },
-          "hmr": true,
           "exclude": [
             "/node_modules/**",
             "/dist/**",
@@ -109,10 +99,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
+            "assets": ["src/assets", "src/manifest.webmanifest"],
             "scripts": []
           }
         },
@@ -135,10 +122,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

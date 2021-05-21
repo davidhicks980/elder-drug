@@ -1,8 +1,8 @@
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { Injectable } from '@angular/core';
+import { AfterViewInit, Injectable } from '@angular/core';
 import ResizeObserver from 'resize-observer-polyfill';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { auditTime, map } from 'rxjs/operators';
 
 export enum ScreenStatus {
   xSmall = 1,
@@ -18,7 +18,7 @@ export type LayoutStatus = {
 @Injectable({
   providedIn: 'root',
 })
-export class ResizeService {
+export class ResizeService implements AfterViewInit {
   resizeObserver: ResizeObserver;
   elementMap = new WeakMap() as WeakMap<
     Element,
@@ -26,18 +26,26 @@ export class ResizeService {
   >;
   private _resizedElementSource = new BehaviorSubject(new WeakMap());
   public resizedElement$ = this._resizedElementSource.asObservable();
-
-  private windowWidthSource = new ReplaySubject<LayoutStatus>();
-  public windowWidth$ = this.windowWidthSource.asObservable();
+  private _isMobile$!: Observable<boolean>;
+  private _sidenavSource = new BehaviorSubject<boolean>(true);
   public _isSidenavOpen = true;
-  private _isWidthMobile = false;
   public _width: ScreenStatus = ScreenStatus.large;
-  private _cachedLayoutType: number;
-
+  private _initialWidth: number;
+  private _searchStatusSource = new BehaviorSubject(false);
+  _isSearching$ = this._searchStatusSource.asObservable();
   destroy() {
     this.resizeObserver.disconnect();
   }
+  get mobileObserver() {
+    return this._isMobile$;
+  }
+  get sidenavObserver() {
+    return this._sidenavSource.asObservable() as Observable<boolean>;
+  }
 
+  get initialWidth() {
+    return this._initialWidth;
+  }
   observeElement(element: Element, width: number): Observable<boolean> {
     this.resizeObserver.observe(element);
     this.elementMap.set(element, { width: width, mobile: false });
@@ -53,54 +61,26 @@ export class ResizeService {
     return this.resizedElement$.pipe(map(mapToMobile));
   }
 
-  get layoutStatus() {
-    return {
-      sidenavOpen: this._isSidenavOpen,
-      screenWidth: this._width,
-      mobileWidth: this._isWidthMobile,
-    };
-  }
-
   toggleSidenav() {
     this._isSidenavOpen = !this._isSidenavOpen;
-    this.windowWidthSource.next({
-      sidenavOpen: this._isSidenavOpen,
-      mobileWidth: this._isWidthMobile,
-      screenWidth: this._width,
-    });
+    this._sidenavSource.next(this._isSidenavOpen);
+  }
+  ngAfterViewInit() {
+    this._initialWidth = window.innerWidth;
+    this._sidenavSource.next(true);
+  }
+  emitSearchStatus(searchStatus) {
+    this._searchStatusSource.next(searchStatus);
   }
 
   constructor(_ruler: ViewportRuler) {
-    try {
-      _ruler.change(12).subscribe((): void => {
-        let layoutType = 0;
-        if (_ruler.getViewportSize().width < 600) {
-          this._isWidthMobile = true;
-          this._width = ScreenStatus.xSmall;
-          layoutType = 1 * (Number(this._isSidenavOpen) + 1);
-        } else if (_ruler.getViewportSize().width < 960) {
-          this._width = ScreenStatus.small;
-          this._isWidthMobile = false;
-          layoutType = 2 * (Number(this._isSidenavOpen) + 1);
-        } else {
-          this._width = ScreenStatus.large;
-          this._isWidthMobile = false;
-          layoutType = 3 * (Number(this._isSidenavOpen) + 1);
-        }
+    const widthPredicate = (val: Event) =>
+      (val.target as Window).innerWidth < 600;
+    this._isMobile$ = fromEvent(window, 'resize', { passive: true }).pipe(
+      auditTime(16),
+      map(widthPredicate)
+    );
 
-        if (this._cachedLayoutType !== layoutType) {
-          this._cachedLayoutType = layoutType;
-
-          this.windowWidthSource.next({
-            sidenavOpen: this._isSidenavOpen,
-            screenWidth: this._width,
-            mobileWidth: this._isWidthMobile,
-          });
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
     this.resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
         this.elementMap.get(entry.target).mobile =

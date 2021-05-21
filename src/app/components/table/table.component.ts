@@ -1,16 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subject, Subscription } from 'rxjs';
@@ -21,7 +12,7 @@ import { ARROW_KEYS } from '../../constants/keys.constants';
 import { FilterDirective } from '../../directives/filter.directive';
 import { KeyGridDirective } from '../../directives/keygrid.directive';
 import { ColumnService } from '../../services/columns.service';
-import { BeersEntry, DataService } from '../../services/data.service';
+import { BeersEntry, BeersField, DataService } from '../../services/data.service';
 import { GroupByService } from '../../services/group-by.service';
 import { TableService } from '../../services/table.service';
 
@@ -51,7 +42,6 @@ import { TableService } from '../../services/table.service';
       ),
     ]),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -62,7 +52,7 @@ export class TableComponent implements AfterViewInit {
   //HTMLSectionElement
   @ViewChild('elderTable') container: ElementRef;
   @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
-  model: BeersTableDataSource<ExpandingRow, Paginator>;
+  model: BeersTableDataSource<ExpandingEntry, Paginator>;
   selectedRow: any;
   _rowLength: number;
   _columnLength: number;
@@ -101,23 +91,25 @@ export class TableComponent implements AfterViewInit {
     });
   }
 
-  trackByFn(e: any, g: any) {
-    return `${e}-${g}`;
-  }
-  getRowIndex(row: ExpandingRow, add = 0) {
+  getRowIndex(row: ExpandingEntry, add = 0) {
     return row._position.index + this.FIRST_ROW + add;
   }
-  trackRowBy(_index, item: ExpandingRow) {
-    return item._position.hash;
+  trackRowBy(_index, item: ExpandingEntry) {
+    return (
+      item._position.hash +
+      item._position.expanded +
+      item._position.parentExpanded
+    );
   }
-  rowIsEntry(_index, row: ExpandingRow) {
-    return !row._position.isGroup;
+  rowIsEntry(_index, row: ExpandingEntry) {
+    return row._position.isGroup === false;
   }
-  parentIsExpanded(row: ExpandingRow) {
+
+  parentIsExpanded(row: ExpandingEntry) {
     return this.model.checkIsParentExpanded(row);
   }
-  rowIsGroup(_index, row: ExpandingRow) {
-    return row._position.isGroup;
+  rowIsGroup(_index, row: ExpandingEntry) {
+    return row._position.isGroup === true;
   }
   updateFilterCells(cell: KeyGridDirective) {
     this.filterCells.add(cell);
@@ -129,16 +121,16 @@ export class TableComponent implements AfterViewInit {
   }
   _handleArrowKeys(event: KeyboardEvent) {
     const cells = this._getKeyGridCells();
-    const currentElem = event.target as HTMLElement,
-      row = Number(currentElem.getAttribute('row')),
-      col = Number(currentElem.getAttribute('column')),
-      { r, c } = this._getPositionFns(row, col),
-      colCount = c.count(cells, row),
-      rowCount = r.count(cells);
-    let toRow = 0,
-      toCol = 0,
-      colAbove = 0,
-      colBelow = 0;
+    const currentElem = event.target as HTMLElement;
+    const row = Number(currentElem.getAttribute('row'));
+    const col = Number(currentElem.getAttribute('column'));
+    const { r, c } = this._getPositionFns(row, col);
+    const colCount = c.count(cells, row);
+    const rowCount = r.count(cells);
+    let toRow = 0;
+    let toCol = 0;
+    let colAbove = 0;
+    let colBelow = 0;
     switch (event.key) {
       case 'Right': // IE/Edge specific value
       case 'ArrowRight':
@@ -172,6 +164,8 @@ export class TableComponent implements AfterViewInit {
     nextElem.focus();
     return true;
   }
+  getExpansionHeader = (row: RowGroupMixin) => row.groupHeader;
+
   private _getKeyGridCells(): KeyGridDirective[] {
     let filters = [];
     try {
@@ -243,7 +237,8 @@ interface Paginator {
 interface Entries {
   [key: string]: string;
 }
-interface RowExpansionMixin {
+export interface RowExpansionMixin {
+  parentExpanded: boolean;
   layer: number;
   root: number;
   index: number;
@@ -258,15 +253,18 @@ interface RowExpansionMixin {
   expanded?: boolean;
 }
 
-interface RowGroupMixin {
-  field: number;
-  name: string;
+export interface RowGroupMixin {
+  field: string;
+  groupHeader: string;
   rows: Entries[];
   _position: RowExpansionMixin;
 }
-type ExpandingEntry = Entries & { _position: RowExpansionMixin };
+export interface RowGroupMixin {
+  _position: RowExpansionMixin;
+}
+
+export type ExpandingEntry = BeersField & { _position: RowExpansionMixin };
 export type ExpandingGroup = RowGroupMixin;
-type ExpandingRow = ExpandingGroup & ExpandingEntry;
 
 const FIRST_NODE = {
   index: 0,
@@ -354,7 +352,7 @@ export class BeersTableDataSource<
     }
   };*/
 
-  hashRow(rows: ExpandingRow[]) {
+  hashRow(rows: ExpandingEntry[]) {
     let encode = (row) => encodeURI(JSON.stringify(row));
 
     for (let row of rows) {
@@ -393,7 +391,7 @@ export class BeersTableDataSource<
 
   rowHasParent = (row) => row._position.hasParent;
 
-  expand(row: ExpandingRow) {
+  expand(row: ExpandingEntry, $event) {
     const id = row._position.id;
     const expanded = this.expansionChange.value;
     expanded.has(id) ? expanded.delete(id) : expanded.add(id);
@@ -651,7 +649,7 @@ export class BeersTableDataSource<
           isGroup: true,
           hasParent: layer > 0,
           expanded: false,
-          id: groupId,
+          id: groupId + parentId[2],
           parentId,
         } as RowExpansionMixin;
         //If a group has not been created in this layer, create an entry
@@ -676,7 +674,7 @@ export class BeersTableDataSource<
             isGroup: false,
             expanded: false,
             hasParent: true,
-            id,
+            id: id + parentId[2],
             parentId,
           } as RowExpansionMixin;
         }
@@ -708,8 +706,6 @@ export class BeersTableDataSource<
     let groups = this._groupChange.value;
 
     if (Array.isArray(groups) && groups.length > 0) {
-      console.log('group change');
-
       let nestedNodes = this._groupBy(data, groups);
       return this._flattenNestedNodes(nestedNodes);
     }
@@ -774,17 +770,18 @@ export class BeersTableDataSource<
   private _expandData(data: any[]): any {
     let expandedRows = this.expansionChange.value;
     let i = 0;
-    data.forEach((row: ExpandingRow) => {
+    data.forEach((row: ExpandingEntry) => {
       const { isGroup, id, parentId, layer } = row._position;
       let isFirstLayer = !layer || layer === 0;
       let isShown = expandedRows.has(parentId) || isFirstLayer;
       let isExpanded = expandedRows.has(id);
       if (!isShown && isExpanded) expandedRows.delete(id);
       row._position.expanded = isShown && isExpanded;
+      row._position.parentExpanded = isShown;
       row._position.index = i;
       i = isExpanded && !isGroup ? i + 2 : i + 1;
     });
-    return data;
+    return data.filter((data) => data._position.parentExpanded);
   }
 
   /**

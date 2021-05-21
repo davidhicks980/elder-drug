@@ -1,0 +1,20 @@
+@use "bem-mixin" as *;
+@use 'palette' as *;
+.chip {
+  font-size: 0.8em;
+  border-radius: 0.5em;
+  color: white;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  max-height: 1em;
+  vertical-align: middle;
+  padding: 0.35em;
+  left: 0;
+  margin-left: 1em;
+
+  @include modifier("generic") {
+    background-color: $primary-1;
+  }
+  @include modifier("brand") {
+    background-color: $secondary-2-1;
+  }
+}

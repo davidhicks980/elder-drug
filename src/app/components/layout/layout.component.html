@@ -1,106 +1,101 @@
-<div class="viewport-grid">
-  <section class="header">
-    <header>
-      <elder-toolbar></elder-toolbar>
-    </header>
-  </section>
-  <section
-    ngClass.gt-xs="content"
-    ngClass.xs="content small-screen"
-    fxLayout="row"
+<ng-container *elderLet="isSidenavOpen | async as showAside">
+  <ng-container *elderLet="isMobile | async as mobile">
+    <div
+      *elderLet="mobile && showAside as showMobileAside"
+      class="layout"
+      [class.is-sidenav-shown]="showAside"
+    >
+      <section
+        *ngIf="!showMobileAside"
+        [class.is-mobile]="mobile"
+        [class.is-sidenav-shown]="showAside"
+        class="layout__wrapper--header"
+      >
+        <header class="header">
+          <elder-toolbar></elder-toolbar>
+        </header>
+      </section>
+      <section *ngIf="showAside" class="layout__wrapper--aside">
+        <!--@mobileSlidingSidenav-->
+        <aside class="aside">
+          <elder-sidebar #showAside> </elder-sidebar>
+        </aside>
+      </section>
+      <section
+        class="layout__wrapper--main"
+        [class.is-full]="!showAside"
+        *ngIf="!showMobileAside"
+      >
+        <!--[@sidenavExpand]="
+          mobile
+            ? showAside
+              ? 'mobileOpen'
+              : 'mobileClose'
+            : showAside
+            ? 'open'
+            : 'close'
+        "-->
+        <main class="main">
+          <nav class="topnav shadow">
+            <button
+              *ngIf="!showAside || !mobile"
+              class="nav-button"
+              mat-icon-button
+              (click)="size.toggleSidenav()"
+            >
+              <mat-icon
+                [svgIcon]="showAside ? 'chevron_left' : 'menu'"
+              ></mat-icon>
+            </button>
+
+            <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
+          </nav>
+          <div class="layout__table-container">
+            <elder-table-card>
+              <elder-table-title>
+                {{ tableService.tableTitle$ | async }}</elder-table-title
+              ><elder-table-description>{{
+                tableService.tableDescription$ | async
+              }}</elder-table-description>
+
+              <div class="table-field">
+                <elder-popup
+                  [selectedOptions]="columns.columnChangeObserver | async"
+                  #columnPopup
+                >
+                  <popup-content>
+                    <elder-column-selector #columns></elder-column-selector
+                  ></popup-content>
+                </elder-popup>
+              </div>
+              <div class="table-field">
+                <elder-popup
+                  [selectedOptions]="groups.groupChangeObserver | async"
+                  #groupPopup
+                >
+                  <popup-content
+                    ><elder-group-by #groups></elder-group-by
+                  ></popup-content>
+                </elder-popup>
+              </div>
+              <div class="table-field">
+                <button mat-button>Add filters</button>
+              </div>
+
+              <elder-table
+                elderTableView
+                elderResize
+                [isMobile]
+                class="elder-table"
+              >
+                <div class="table-field filter">
+                  <elder-filter><p label>Filter columns</p></elder-filter>
+                </div>
+              </elder-table>
+            </elder-table-card>
+          </div>
+        </main>
+      </section>
+    </div></ng-container
   >
-    <aside
-      @mobileSlidingSidenav
-      [class]="sidenavOpen ? 'sidenav-open' : ''"
-      *ngIf="sidenavOpen"
-    >
-      <div fxLayoutAlign="center center" class="subtitle topbar-shadow">
-        A Tool for Beers Criteria
-        <span *ngIf="mobileWidth && sidenavOpen" class="arrow_right-fab"
-          ><button
-            color="accent"
-            @arrowSlideLeft
-            mat-fab
-            (click)="state.toggleSidenav()"
-          >
-            <mat-icon
-              class="arrow-to-content"
-              svgIcon="arrow_right"
-            ></mat-icon></button
-        ></span>
-      </div>
-
-      <elder-sidebar #sideNav> </elder-sidebar>
-    </aside>
-    <main
-      [@sidenavExpand]="
-        mobileWidth
-          ? sidenavOpen
-            ? 'mobileOpen'
-            : 'mobileClose'
-          : sidenavOpen
-          ? 'open'
-          : 'close'
-      "
-    >
-      <nav class="topnav shadow">
-        <button
-          *ngIf="!sidenavOpen || !mobileWidth"
-          class="nav-button"
-          mat-icon-button
-          (click)="this.state.toggleSidenav()"
-        >
-          <mat-icon
-            [svgIcon]="this.layout.sidenavOpen ? 'chevron_left' : 'menu'"
-          ></mat-icon>
-        </button>
-
-        <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
-      </nav>
-      <div class="layout__table-container">
-        <elder-table-card>
-          <elder-table-title>
-            {{ tableService.tableTitle$ | async }}</elder-table-title
-          ><elder-table-description>{{
-            tableService.tableDescription$ | async
-          }}</elder-table-description>
-
-          <div class="table-field">
-            <elder-popup
-              [selectedOptions]="columns.columnChangeObserver | async"
-              #columnPopup
-            >
-              <popup-content>
-                <elder-column-selector #columns></elder-column-selector
-              ></popup-content>
-            </elder-popup>
-          </div>
-          <div class="table-field">
-            <elder-popup
-              [selectedOptions]="groups.groupChangeObserver | async"
-              #groupPopup
-            >
-              <popup-content
-                ><elder-group-by #groups></elder-group-by
-              ></popup-content>
-            </elder-popup>
-          </div>
-          <div class="table-field">
-            <button mat-button>Add filters</button>
-          </div>
-
-          <elder-table
-            elderTableView
-            elderResize
-            [isMobile]
-            class="elder-table"
-          >
-            <div class="table-field filter">
-              <elder-filter><p label>Filter columns</p></elder-filter>
-            </div>
-          </elder-table>
-        </elder-table-card>
-      </div>
-    </main>
-  </section>
-</div>
+</ng-container>

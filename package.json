@@ -45,7 +45,7 @@
     "ejs": "^3.1.5",
     "intersection-observer": "^0.12.0",
     "js-polyfills": "^0.1.43",
-    "rxjs": "^6.6.3",
+    "rxjs": "^7.0.1",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.11.4"
   },
@@ -76,6 +76,7 @@
     "firebase-tools": "^9.10.0",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.3.0",
+    "intermock": "^0.2.5",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.2",

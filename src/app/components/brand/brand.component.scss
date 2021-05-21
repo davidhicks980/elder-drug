@@ -1,0 +1,23 @@
+@use 'palette' as pal;
+@use 'colors' as col;
+
+.brand__wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.brand__logo {
+}
+
+.brand__title {
+  font-family: "Overpass";
+  color: #414042;
+  font-weight: 700;
+  letter-spacing: -0.15rem;
+}
+h1 {
+  margin: 0px;
+}

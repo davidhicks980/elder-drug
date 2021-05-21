@@ -11,22 +11,73 @@ export class ColumnService {
   static receiveTables$: any;
 
   public columnOptions = [
-    { field: 'EntryID', header: 'Entry Number' },
-    { field: 'DiseaseState', header: 'Disease State' },
-    { field: 'Category', header: 'Category Number' },
-    { field: 'TableDefinition', header: 'Table Definition' },
-    { field: 'MatchedBeersEntry', header: 'Item' },
-    { field: 'MinimumClearance', header: 'Min Clearance' },
-    { field: 'MaximumClearance', header: 'Max Clearance' },
-    { field: 'DrugInteraction', header: 'Drug Interaction' },
-    { field: 'Inclusion', header: 'Includes' },
-    { field: 'Exclusion', header: 'Excludes' },
-    { field: 'Rationale', header: 'Rationale' },
-    { field: 'Recommendation', header: 'Recommendation' },
-    { field: 'RecommendationLineTwo', header: 'LineTwo' },
-    { field: 'ItemType', header: 'Type' },
-    { field: 'ShortTableName', header: 'Table' },
-    { field: 'SearchTerms', header: 'Search Term' },
+    {
+      field: ColumnField.EntryID,
+      description: 'Entry',
+      header: 'Entry Number',
+    },
+    {
+      field: ColumnField.DiseaseState,
+      description: 'Caution in',
+      header: 'Disease State',
+    },
+    {
+      field: ColumnField.Category,
+      description: 'Category',
+      header: 'Category Number',
+    },
+    {
+      field: ColumnField.TableDefinition,
+      description: 'TableDefinition',
+      header: 'Table Definition',
+    },
+    { field: ColumnField.Item, description: 'Item', header: 'Item' },
+    {
+      field: ColumnField.MinimumClearance,
+      description: 'Avoid in clearance below',
+      header: 'Min Clearance',
+    },
+    {
+      field: ColumnField.MaximumClearance,
+      description: 'Avoid in clearance above',
+      header: 'Max Clearance',
+    },
+    {
+      field: ColumnField.DrugInteraction,
+      description: 'Interacts with',
+      header: 'Drug Interaction',
+    },
+    {
+      field: ColumnField.Inclusion,
+      description: 'Applies to',
+      header: 'Includes',
+    },
+    {
+      field: ColumnField.Exclusion,
+      description: 'Does not apply to',
+      header: 'Excludes',
+    },
+    {
+      field: ColumnField.Rationale,
+      description: 'Rationale',
+      header: 'Rationale',
+    },
+    {
+      field: ColumnField.Recommendation,
+      description: 'Recommendation',
+      header: 'Recommendation',
+    },
+
+    {
+      field: ColumnField.ShortName,
+      description: 'Table Name #',
+      header: 'Table',
+    },
+    {
+      field: ColumnField.SearchTerms,
+      description: 'Searches',
+      header: 'Search Term',
+    },
   ];
 
   public columnDefinitions: TableDefinition[] = [
@@ -91,12 +142,22 @@ export class ColumnService {
   private columnsSource = new Subject<DisplayedColumns[]>();
   private activeColumnsSource = new Subject<string[]>();
 
+  private _descriptionMap = new Map(
+    this.columnOptions.map((col) => [col.field, col.description])
+  );
   tables = new Set(this.columnDefinitions.map((def) => def.filters).flat());
 
   // Observable string streams
   observeColumns$ = this.columnsSource.asObservable();
   observeActiveColumns$ = this.activeColumnsSource.asObservable();
 
+  lookupDescription(column: ColumnField) {
+    try {
+      this._descriptionMap.get(column);
+    } catch (err) {
+      return column;
+    }
+  }
   triggerColumnChange(table: Category) {
     const allColumns = this.columnDefinitions
       .filter((column) => column.id === table)

@@ -70,7 +70,6 @@ export class DataService {
   }
 
   searchDrugs(terms?: any[]) {
-    console.log(terms);
     let drugs = terms || this.searchHistory.value;
     let hashMap = {};
     let drug = '';

@@ -1,10 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
 import { ResizeService } from 'src/app/services/resize.service';
 
 import { inputAnimation } from '../../../../animations';
@@ -14,7 +13,13 @@ import { DrugPresenceValidator } from '../../../../services/drug-presence-valida
 @Component({
   selector: 'elder-drug-form',
   templateUrl: './drug-form.component.html',
-  styleUrls: ['./drug-form.component.scss'],
+  styleUrls: [
+    './drug-form.component.scss',
+    './terms.drug-form.component.scss',
+    './icons.drug-form.component.scss',
+    './autocomplete.drug-form.scss',
+    './submit.drug-form.component.scss',
+  ],
   animations: [
     inputAnimation,
     trigger('fadeAutocomplete', [
@@ -27,9 +32,58 @@ import { DrugPresenceValidator } from '../../../../services/drug-presence-valida
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DrugFormComponent implements OnDestroy {
-  @ViewChild('drawer') public sidenav: MatSidenav;
+export class DrugFormComponent implements OnDestroy, AfterViewInit {
+  _focusSource = new BehaviorSubject(false);
+  isFocused$ = this._focusSource.asObservable();
+  hasContent$: Observable<boolean>;
+  statusChange$: Observable<boolean>;
+  isPending$: Observable<boolean>;
+  pinSearch: Observable<boolean>;
+  panelOpen = new BehaviorSubject(false);
+  @Output() isSearching = new EventEmitter(false);
+  ngOnDestroy() {
+    this.isDestroyed.next(true);
+  }
+  ngAfterViewInit() {
+    this.hasContent$ = merge(
+      this.drugInput.valueChanges.pipe(
+        map((val) => this.drugInput.value.length > 0)
+      ),
+      of(false)
+    ) as Observable<boolean>;
 
+    this.hasContent$.subscribe((test) => console.log(test, 'test'));
+    this.pinSearch = combineLatest([this._focusSource, this.hasContent$]).pipe(
+      filter(([focus, content]) => focus === content),
+      distinctUntilChanged(),
+      map(([focus, change]) => focus.valueOf()),
+      tap((status) => this.isSearching.emit(status))
+    );
+  }
+  setFocusStatus($event) {
+    this._focusSource.next($event != null);
+  }
+  constructor(
+    public size: ResizeService,
+    public database: DataService,
+    private form: FormBuilder,
+    public dialog: MatDialog,
+    private drugPresence: DrugPresenceValidator
+  ) {
+    this.isMobile$ = size.mobileObserver;
+    this.drugList.controls = database.lastSearch.map(
+      (val) => new FormControl(val)
+    );
+    this.drugsGroup.valueChanges
+      .pipe(takeUntil(this.observeDestruction$))
+      .subscribe((group: FormGroup) => {
+        database.storeHistory([group['drugInput'], ...group['drugList']]);
+      });
+    this.isPending$ = this.drugInput.statusChanges.pipe(
+      distinctUntilChanged(),
+      map((val) => val === 'PENDING')
+    );
+  }
   inputValidators = [
     Validators.pattern('[\\w.\\s-]*'),
     Validators.required,
@@ -38,7 +92,7 @@ export class DrugFormComponent implements OnDestroy {
   ];
   isDestroyed = new Subject();
   observeDestruction$ = this.isDestroyed.asObservable();
-  drugsGroup: FormGroup = this.fb.group(
+  drugsGroup: FormGroup = this.form.group(
     {
       drugInput: new FormControl(
         '',
@@ -52,8 +106,9 @@ export class DrugFormComponent implements OnDestroy {
   private autocompleteListener = new Subject() as Subject<string[][]>;
   autocompleteObserver = this.autocompleteListener
     .asObservable()
-    .pipe(takeUntil(this.observeDestruction$), debounceTime(120));
+    .pipe(takeUntil(this.observeDestruction$), debounceTime(16));
   loading: boolean;
+  isMobile$: Observable<boolean>;
 
   get drugList(): FormArray {
     return this.drugsGroup.get('drugList') as FormArray;
@@ -64,9 +119,7 @@ export class DrugFormComponent implements OnDestroy {
   get inputLength(): number {
     return this.drugInput.value.length;
   }
-  get sortedList() {
-    return this.drugList.value.slice().sort((a, b) => a.length - b.length);
-  }
+
   get drugListLength(): number {
     return this.drugList.length;
   }
@@ -74,16 +127,13 @@ export class DrugFormComponent implements OnDestroy {
   search(alternative: string[]) {
     let search = alternative || this.drugList.value;
     search.length > 0
-      ? (this.database.searchDrugs(search), this.state.toggleSidenav())
+      ? (this.database.searchDrugs(search), this.size.toggleSidenav())
       : this.openDialog();
   }
   stopPropagation(e) {
     e.stopPropagation();
   }
 
-  checkForDrug(drug: string) {
-    return this.database.hasDrug(drug);
-  }
   chooseOption(optionValue: string) {
     if (this.database.hasDrug(optionValue)) {
       this.drugInput.setValue(optionValue);
@@ -126,39 +176,7 @@ export class DrugFormComponent implements OnDestroy {
       );
     }
   }
-  ngOnDestroy() {
-    this.isDestroyed.next(true);
-  }
-  get autocompleteConnectedInput() {
-    return true;
-  }
-  constructor(
-    public state: ResizeService,
-    public database: DataService,
-    private fb: FormBuilder,
-    public dialog: MatDialog,
-    private drugPresence: DrugPresenceValidator
-  ) {
-    this.drugList.controls = database.lastSearch.map(
-      (val) => new FormControl(val)
-    );
-    this.drugsGroup.valueChanges
-      .pipe(takeUntil(this.observeDestruction$))
-      .subscribe((group) => {
-        database.storeHistory([group.drugInput, ...group.drugList]);
-      });
-    this.drugsGroup.statusChanges
-      .pipe(takeUntil(this.observeDestruction$))
-      .subscribe((change) => {
-        this.invalid.emit(change === 'INVALID');
-        this.loading = false;
-      });
-  }
-  log(x) {
-    console.log(x);
-  }
 
-  @Output('invalid') invalid: EventEmitter<boolean> = new EventEmitter();
   openDialog() {
     this.dialog.open(EmptyInputComponent, { width: '20em' });
   }

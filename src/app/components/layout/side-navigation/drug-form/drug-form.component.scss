@@ -3,40 +3,22 @@
 @use "palette" as *;
 @use "bem-mixin" as *;
 @use "colors" as *;
+@use '~@angular/cdk';
+
+@include cdk.a11y-visually-hidden();
+
 :host {
-  --input-background: white;
-  --input-background--hover: #{$light-gray-1};
-  --input-background--focus: #{white};
   --input-stroke: #{$gray-1};
   --input-label--text: #{$gray-2};
-  --input-label--text-unfocused: #{$gray-3};
-  --input-label--text-focused: #{$dark-gray-1};
+
   --input-text: #{tint($gray-1, 20%)};
-  --input-label--transformation-after: translateY(-2.5em) scale(0.8);
-  --input-label--transformation-before: translateY(0em) scale(1);
-  --input-text--focus-color: $primary-3;
-  --input-focus--shadow: #{$gray-1};
+
   --input-focus--stroke: #{$primary-1};
-  --input-icon--color: #83858a;
-  --input-font: "Roboto";
-  --input-number-font: "Roboto";
-  --input-radius: 3px;
+
   --input-font--size: 12pt;
   --autocomplete--height: 2.5em;
-}
-
-.add-button {
-  stroke: none;
-  fill: var(--input-label--text);
-  pointer-events: all;
-  &:disabled {
-    color: $light-gray-4;
-  }
-
-  @include element("add-icon") {
-    stroke: none;
-    font-size: 12pt;
-  }
+  --autocomplete--mobile-height: 3.5em;
+  --border-color: #{$light-gray-4};
 }
 
 .disable-text-selection {
@@ -55,11 +37,12 @@
   padding-top: 1.25em;
   margin-left: 5%;
   margin-right: 5%;
-}
-
-@media (max-width: 599.99px) {
-  .form-container {
+  @include mobileWidth {
     margin: 0 15% 0 15%;
+    @include state("widened") {
+      margin: 0;
+      padding: 0;
+    }
   }
 }
 
@@ -67,62 +50,73 @@
   margin-top: 1em;
 }
 
-.add-drug-field {
+.search-field {
   outline: none;
   border: none;
-  border-radius: 4px;
   box-sizing: border-box;
-  display: grid;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   pointer-events: none;
-  grid-template-rows: 36px var(--autocomplete--height);
-  grid-template-columns: auto 3em;
   width: 100%;
+  @include mobileWidth {
+    grid-template-rows: var(--autocomplete-mobile-height);
+
+    @include nativeState("focus-within") {
+    }
+  }
   &:focus-within {
     transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
     box-sizing: border-box;
   }
+
   @include element("label") {
-    grid-column: 2;
     padding-bottom: 5px;
     font-size: 14px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.7);
     font-size: var(--input-font--size);
     font-family: var(--input-font);
+    width: 100%;
   }
-  @include element("add-button") {
-    grid-row: 2;
-    grid-column: 2;
-  }
-  @include element("container") {
-    @include mat.elevation-transition;
 
-    grid-template-columns: auto 2.5em;
-    grid-row: 2;
-    grid-column: 1 / span 2;
-    border: 1px solid var(--input-text);
-    border-radius: 3px;
-    padding: 1px;
+  @include element("input-container") {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
     min-height: 2.5em;
     display: flex;
     align-items: center;
-    @include state("is-open") {
+    @include mat.elevation-transition;
+
+    @include mobileWidth {
+      grid-row: 1;
+      border-radius: 2rem;
+      padding: 0 0.7rem;
+      @include multipleStates("open", "pinned") {
+        border-radius: 0px;
+        min-height: 3.5rem;
+      }
+    }
+    @include state("open") {
       border-bottom: 2px solid $primary-1;
-      border-right: 1px solid $light-gray-4;
-      border-left: 1px solid $light-gray-4;
-      border-top: 1px solid $light-gray-4;
+      border-right: 1px solid var(--border-color);
+      border-left: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-color);
       outline-offset: 5px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
-    &:hover {
+
+    @include multipleNativeStates("hover", "focus-within") {
+      --border-color: #{$light-gray-2};
       @include shadow(2);
     }
-    @include state("is-invalid") {
+
+    @include state("invalid") {
       border-bottom: 2px solid $error-4;
     }
-    @include state("is-missing") {
+    @include state("missing") {
       border-bottom: 2px solid $complement-1;
     }
   }
@@ -138,7 +132,11 @@
     pointer-events: all;
     grid-column: 1;
     width: calc(100% - 55px);
-    min-height: 40px;
+    min-height: 2.5rem;
+    @include mobileWidth {
+      width: 100%;
+      min-height: 3rem;
+    }
   }
   @include element("spinner") {
     display: inline-block;
@@ -150,52 +148,6 @@
 .panel-border {
   border: 1px solid black;
 }
-.flatbottom {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.remove-icon {
-  fill: shade($light-gray-5, 20%);
-  cursor: pointer;
-  &:hover {
-    fill: $complement-1;
-  }
-}
-
-.edit-drug-field {
-  margin-bottom: 1px;
-  display: flex;
-  flex-direction: row;
-
-  @include element("input") {
-    outline: none;
-    background: none;
-    border: none;
-    padding: 10px 10px 8px 10px;
-    font-family: "Roboto";
-    /* height: 100%; */
-    cursor: text;
-    text-decoration: underline;
-    text-transform: capitalize;
-
-    &:focus {
-      text-decoration: none;
-      border-bottom: 2px solid $primary-1;
-      background-color: $light-gray-1;
-    }
-    @include state("ng-invalid") {
-      color: $error-4;
-      text-decoration: none;
-      &:focus {
-        border-bottom: 2px solid $error-4;
-        color: $error-4;
-        font-weight: 500;
-        background-color: getHighlightColor($error-1);
-      }
-    }
-  }
-}
 
 .errors {
   display: flex;
@@ -203,29 +155,10 @@
   gap: 5px;
   margin-top: 10px;
 
-  @include state("is-invalid") {
+  @include state("invalid") {
     color: $error-4;
-    @include state("is-missing") {
+    @include state("missing") {
       color: $complement-1;
     }
-  }
-}
-
-.chip {
-  font-size: 0.8em;
-  border-radius: 0.5em;
-  color: white;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  max-height: 1em;
-  vertical-align: middle;
-  padding: 0.35em;
-  left: 0;
-  margin-left: 1em;
-
-  @include modifier("generic") {
-    background-color: $primary-1;
-  }
-  @include modifier("brand") {
-    background-color: $secondary-2-1;
   }
 }

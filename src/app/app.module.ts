@@ -33,15 +33,17 @@ import { ColumnSelectorComponent } from './components/table/dropdown/column-sele
 import { ListContentComponent } from './components/table/dropdown/group-by/button/list-content.component';
 import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
 import { PopupComponent } from './components/table/dropdown/popup.component';
+import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
+import { ExpandedRowCardComponent } from './components/table/expanded-element/expanded-row-card/expanded-row-card.component';
 import { FilterComponent } from './components/table/filter/filter.component';
+import { GroupRowComponent } from './components/table/group-row/group-row.component';
 import { TableCardComponent } from './components/table/table-card/table-card.component';
 import { TableComponent } from './components/table/table.component';
-import { ExpandedElementComponent } from './components/unused/expanded-element/expanded-element.component';
 import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
-import { LogoComponent } from './components/unused/logo/small-logo/logo-component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { CellPaddingDirective } from './directives/cell-padding.directive';
 import { CreationSpyDirective } from './directives/creation-spy.directive';
+import { ExpandableRowDirective } from './directives/expandable-row.directive';
 import { FilterDirective } from './directives/filter.directive';
 import { KeyGridDirective } from './directives/keygrid.directive';
 import { ListKeyDirective } from './directives/list-key.directive';
@@ -52,6 +54,8 @@ import { LetDirective } from './directives/with.directive';
 import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './to-string.pipe';
+import { BrandComponent } from './components/brand/brand.component';
+import { VerticalComponent } from './components/brand/vertical/vertical.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,6 @@ import { ToStringPipe } from './to-string.pipe';
     ToolbarComponent,
     caseSplitPipe,
     TableComponent,
-    LogoComponent,
     DrugFormComponent,
     SidebarComponent,
     ToStringPipe,
@@ -88,6 +91,11 @@ import { ToStringPipe } from './to-string.pipe';
     FilterComponent,
     FilterDirective,
     TableCardComponent,
+    ExpandableRowDirective,
+    GroupRowComponent,
+    ExpandedRowCardComponent,
+    BrandComponent,
+    VerticalComponent,
   ],
   imports: [
     BrowserModule,

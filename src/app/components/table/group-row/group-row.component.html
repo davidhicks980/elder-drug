@@ -1,0 +1,19 @@
+<div
+  [keyGrid]="{ row: 0, col: 0 }"
+  class="group-header-cell"
+  [class.--open]="true"
+  tabindex="-1"
+  [cellPadding]="level"
+>
+  <mat-icon
+    class="chevron icon"
+    svgIcon="chevron_right"
+    rotateIcon
+    [class.--rotated]="true"
+    tableIndex="-1"
+  ></mat-icon>
+
+  <span class="group-header-cell group-header-cell__content">
+    {{ field }}: {{ groupHeader }}
+  </span>
+</div>

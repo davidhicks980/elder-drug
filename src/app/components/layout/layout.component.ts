@@ -1,6 +1,6 @@
 import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { merge, Observable, of, Subject } from 'rxjs';
 
 import {
   dropInAnimation,
@@ -10,10 +10,9 @@ import {
   slidingContentAnimation,
   tableVisibleAnimation,
 } from '../../animations';
-import { ColumnService } from '../../services/columns.service';
 import { DataService } from '../../services/data.service';
 import { NavigationService } from '../../services/navigation.service';
-import { LayoutStatus, ResizeService } from '../../services/resize.service';
+import { ResizeService } from '../../services/resize.service';
 import { Table, TableService } from '../../services/table.service';
 
 @Component({
@@ -29,18 +28,7 @@ import { Table, TableService } from '../../services/table.service';
     mobileSlidingSidenavAnimation,
     logoSlideAnimation,
     slidingContentAnimation,
-    trigger('arrowSlideLeft', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-          transform: 'translateX(200px)',
-        }),
-        animate(
-          '300ms ease',
-          style({ opacity: 1, transform: 'translate(0px)' })
-        ),
-      ]),
-    ]),
+
     trigger('sidenavExpand', [
       state('close', style({ transform: 'translateX(0px)' })),
       state('open', style({ transform: 'translateX(0px)' })),
@@ -51,7 +39,7 @@ import { Table, TableService } from '../../services/table.service';
         group([
           animate(
             '200ms ease',
-            keyframes([style({ transform: 'translateX(-500px)', offset: 1 })])
+            keyframes([style({ transform: 'translateX(-100%)', offset: 1 })])
           ),
         ])
       ),
@@ -60,7 +48,7 @@ import { Table, TableService } from '../../services/table.service';
         animate(
           '400ms ease',
           keyframes([
-            style({ transform: 'translateX(-500px)', offset: 0 }),
+            style({ transform: 'translateX(-100%)', offset: 0 }),
             style({ transform: 'translateX(0px)', offset: 1 }),
           ])
         )
@@ -106,31 +94,31 @@ import { Table, TableService } from '../../services/table.service';
   ],
 })
 export class LayoutComponent {
-  layout: LayoutStatus = this.state.layoutStatus;
-  public sidenavOpen = true;
-  public mobileWidth: boolean;
   enabledTables: Observable<Table[]> = new Subject();
-  showTabs: boolean = false;
 
   tables: Table[] = [];
   selectedTable: string;
   tableDescription: string = '';
   loaded = false;
   currentPage: number = 0;
+  isMobile!: Observable<boolean>;
+  isSidenavOpen!: Observable<boolean>;
+  initialMobile: any;
+  ngAfterViewInit() {
+    this.isMobile.subscribe(console.log);
+  }
   constructor(
     public webSocketService: DataService,
-    public state: ResizeService,
-    private columnService: ColumnService,
+    public size: ResizeService,
     public nav: NavigationService,
     public tableService: TableService
   ) {
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
-      this.layout = layoutStatus;
-      this.mobileWidth = this.layout.mobileWidth;
-      this.sidenavOpen = this.layout.sidenavOpen;
-      this.showTabs = nav.showTabs;
-    });
-    tableService.tableDescription$.subscribe((des) => console.log(des));
+    this.isSidenavOpen = this.size.sidenavObserver;
+    this.initialMobile = of(window.innerWidth < 600);
+    this.isMobile = merge(
+      this.size.mobileObserver,
+      this.initialMobile
+    ) as Observable<boolean>;
   }
 }
 /*

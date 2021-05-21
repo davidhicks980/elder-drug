@@ -1,7 +1,6 @@
 import { trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LayoutStatus, ResizeService, ScreenStatus } from 'src/app/services/resize.service';
 
 import { flyInTemplate } from '../../../animations';
 import { DataService } from '../../../services/data.service';
@@ -35,21 +34,7 @@ import { DataService } from '../../../services/data.service';
 })
 export class ToolbarComponent {
   public iconName = 'menu';
-  @Input() loaded = false;
-  screenSize: ScreenStatus;
-  shrinkHeader: boolean;
-  layout: LayoutStatus;
-  sidenavOpenMobileWidth: boolean;
-  smallGridLayout: any;
-  constructor(
-    public fire: DataService,
-    public state: ResizeService,
-    public dialog: MatDialog
-  ) {
-    this.state.windowWidth$.subscribe((layoutStatus: LayoutStatus): void => {
-      this.layout = layoutStatus;
-    });
-  }
+  constructor(public fire: DataService, public dialog: MatDialog) {}
 
   openDisclaimerDialog() {
     this.dialog.open(DisclaimerComponent, { width: '700px' });

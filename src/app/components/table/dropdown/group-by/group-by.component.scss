@@ -107,7 +107,7 @@
     border: 1px solid $secondary-2-1;
     background: tint($secondary-2-1, 80%);
     outline: none;
-    @include state("is-moveable") {
+    @include state("moveable") {
       text-decoration: underline;
       filter: drop-shadow(0px 2px 2px $light-gray-3);
       transition: filter 250ms cubic-bezier(0, 0, 0.2, 1) !important;

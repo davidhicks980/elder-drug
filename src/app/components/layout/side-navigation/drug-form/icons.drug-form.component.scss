@@ -1,0 +1,23 @@
+@use "palette" as pal;
+@use 'bem-mixin' as bem;
+.icon-button {
+  stroke: none;
+  fill: pal.$gray-2;
+  pointer-events: all;
+  &:disabled {
+    color: pal.$light-gray-4;
+  }
+
+  @include bem.element("icon") {
+    stroke: none;
+    font-size: 0.5rem;
+  }
+}
+
+.remove-icon {
+  fill: shade(pal.$light-gray-5, 20%);
+  cursor: pointer;
+  &:hover {
+    fill: pal.$complement-1;
+  }
+}

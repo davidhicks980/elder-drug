@@ -3,6 +3,7 @@
 @use "palette" as *;
 @use "grid" as *;
 @use "bem-mixin" as *;
+@import "autocomplete-options.drug-form.component";
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 // Plus imports for other components in your app.
@@ -102,7 +103,6 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
   font-size: inherit;
   font-weight: inherit;
 }
@@ -152,8 +152,7 @@ fieldset {
   border: 1px solid $secondary-2-1;
   background: tint($secondary-2-1, 80%);
 }
-.cdk-drag-placeholder {
-}
+
 .mat-sort-header-pointer-right,
 .mat-sort-header-pointer-left {
   border-radius: 3px !important;

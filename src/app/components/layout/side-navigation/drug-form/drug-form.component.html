@@ -1,33 +1,71 @@
-<form [formGroup]="drugsGroup">
-  <section
-    cdkScrollable
-    aria-label="You can look up drugs on Beers Criteria using this form"
-    class="form-container"
-  >
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <label
-        class="add-drug-field add-drug-field__label"
-        [class.flatbottom]="autocomplete.isOpen"
-        (click)="addDrugField?.focus()"
-        [class.lifted]="drugInput.dirty"
+<ng-container
+  *elderLet="{
+    focused: isFocused$ | async,
+    mobile: isMobile$ | async,
+    pinSearch: pinSearch | async,
+    panelOpen: panelOpen | async
+  } as state"
+  ><form [formGroup]="drugsGroup">
+    <section
+      cdkScrollable
+      aria-label="You can look up drugs on Beers Criteria using this form"
+      class="form-container"
+      [class.is-widened]="state.pinSearch"
+    >
+      <div
+        cdkMonitorSubtreeFocus
+        (cdkFocusChange)="setFocusStatus($event)"
+        class="search-field"
       >
-        ADD DRUGS
+        <label
+          class="search-field__label"
+          [class.lifted]="drugInput.dirty"
+          [class.cdk-visually-hidden]="state.mobile"
+          for="search"
+          *ngIf="!pinSearch"
+        >
+          ADD DRUGS
+        </label>
+
         <div
           #addDrugOrigin="matAutocompleteOrigin"
           matAutocompleteOrigin
-          class="add-drug-field__container"
+          class="search-field__input-container"
           [class.is-missing]="drugInput.errors?.invalidAsync"
           [class.is-invalid]="drugInput.invalid && drugInput.value.length"
-          [class.mat-elevation-z4]="addDrugTrigger.panelOpen"
-          [class.is-open]="addDrugTrigger.panelOpen"
-          id="add-drug-field"
+          [class.is-pinned]="state.pinSearch"
+          [class.is-open]="state.panelOpen"
+          [class.is-focused]="state.focused"
+          id="searchFieldInputContainer"
+          name="search"
         >
+          <button
+            [disabled]="!drugInput.valid"
+            mat-icon-button
+            class="add-button"
+            [matTooltip]="
+              drugInput.valid
+                ? 'Add ' + addDrugField?.value
+                : 'Choose a drug from the dropdown'
+            "
+            matTooltipPosition="above"
+            matTooltipShowDelay="200"
+            matTooltipHideDelay="200"
+            matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
+            (click)="addInput(); addDrugTrigger.closePanel(); (stopPropagation)"
+          >
+            <mat-icon
+              class="icon-button__icon"
+              inline="true"
+              svgIcon="search"
+            ></mat-icon>
+          </button>
           <input
             type="text"
             formControlName="drugInput"
             (keydown.Enter)="addDrugTrigger?.closePanel()"
             (input)="filterAutocomplete(addDrugField.value)"
-            class="add-drug-field__input"
+            class="search-field__input"
             aria-label="Enter your drug name here. For example, 'zolpidem'"
             #addDrugField
             #addDrugTrigger="matAutocompleteTrigger"
@@ -37,8 +75,8 @@
             aria-describedby="errors"
           />
           <div
-            class="add-drug-field__spinner-container"
-            *ngIf="drugInput.pending; else addButton"
+            class="search-field__spinner-container"
+            *ngIf="isPending$ | async; else addButton"
           >
             <mat-spinner diameter="25"></mat-spinner>
           </div>
@@ -56,44 +94,44 @@
               matTooltipPosition="above"
               matTooltipShowDelay="200"
               matTooltipHideDelay="200"
-              matTooltipClass="add-drug-field__tooltip add-drug-field__tooltip--arrow-tip"
+              matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
               (click)="
                 addInput(); addDrugTrigger.closePanel(); (stopPropagation)
               "
             >
               <mat-icon
-                class="add-button__add-icon"
+                class="icon-button__icon"
                 inline="true"
                 svgIcon="add"
               ></mat-icon></button
           ></ng-template>
         </div>
-      </label>
-      <div
-        *ngIf="drugInput.invalid && !drugInput.hasError('required')"
-        class="add-drug-field__errors errors"
-        id="errors"
-        [class.is-invalid]="drugInput.invalid"
-        [class.is-missing]="drugInput.errors?.invalidAsync"
-      >
-        <div>
-          <mat-icon
-            [svgIcon]="drugInput.errors?.invalidAsync ? 'warn' : 'error'"
-          ></mat-icon>
-        </div>
-        <div>
-          <span role="alert" *ngIf="drugInput.errors?.minlength">
-            Drug names must be at least 3 characters long.
-          </span>
-          <span role="alert" *ngIf="drugInput.errors?.maxLength">
-            Drug names should be fewer than 70 characters.
-          </span>
-          <span role="alert" *ngIf="drugInput.errors?.pattern">
-            Drug names should only contain alphanumeric letters.
-          </span>
-          <span role="alert" *ngIf="drugInput.errors?.invalidAsync"
-            >Only drugs from the dropdown menu have guidance.
-          </span>
+        <div
+          *ngIf="drugInput.invalid && !drugInput.hasError('required')"
+          class="search-field__errors errors"
+          id="errors"
+          [class.is-invalid]="drugInput.invalid"
+          [class.is-missing]="drugInput.errors?.invalidAsync"
+        >
+          <div>
+            <mat-icon
+              [svgIcon]="drugInput.errors?.invalidAsync ? 'warn' : 'error'"
+            ></mat-icon>
+          </div>
+          <div>
+            <span role="alert" *ngIf="drugInput.errors?.minlength">
+              Drug names must be at least 3 characters long.
+            </span>
+            <span role="alert" *ngIf="drugInput.errors?.maxLength">
+              Drug names should be fewer than 70 characters.
+            </span>
+            <span role="alert" *ngIf="drugInput.errors?.pattern">
+              Drug names should only contain alphanumeric letters.
+            </span>
+            <span role="alert" *ngIf="drugInput.errors?.invalidAsync"
+              >Only drugs from the dropdown menu have guidance.
+            </span>
+          </div>
         </div>
       </div>
 
@@ -135,7 +173,6 @@
               ><input
                 class="edit-drug-field__input"
                 (keydown.enter)="editDrugField.blur()"
-                (change)="log(getControlAt(i))"
                 (input)="filterAutocomplete(editDrugField.value)"
                 #editDrugField
                 #editDrugTrigger="matAutocompleteTrigger"
@@ -159,8 +196,10 @@
           #autocomplete
           autoActiveFirstOption
           #autocompleteRef="matAutocomplete"
-          class="drug-form-autocomplete"
+          class="drug-form-autocomplete autocomplete--mobile-search"
           @fadeAutocomplete
+          (opened)="panelOpen.next(true)"
+          (closed)="panelOpen.next(false)"
         >
           <mat-option
             #displayOption
@@ -183,11 +222,36 @@
           </mat-option>
         </mat-autocomplete>
       </div>
-    </div>
-  </section>
-</form>
-
-<!--<button
+    </section>
+    <section class="submit">
+      <div class="submit__container">
+        <button
+          type="submit"
+          (click)="search(undefined)"
+          (keydown.enter)="search(undefined)"
+          class="submit__button"
+        >
+          <mat-icon class="submit__button__icon" svgIcon="search"></mat-icon>
+          <span style="margin-left: 5px" class="submit__button__text"
+            >Search</span
+          >
+        </button>
+        <button
+          type="submit"
+          (click)="search(undefined)"
+          (keydown.enter)="search(undefined)"
+          class="submit__button"
+        >
+          <mat-icon class="submit__button__icon" svgIcon="search"></mat-icon>
+          <span style="margin-left: 5px" class="submit__button__text"
+            >Edit Search</span
+          >
+        </button>
+      </div>
+    </section>
+  </form>
+  <ng-container>
+    <!--<button
             mat-icon-button
             (click)="removeOptionAt(i); trigger.closePanel(); stopPropagation()"
             (keydown.enter)="removeOptionAt(i)"
@@ -199,3 +263,5 @@
               svgIcon="delete"
             ></mat-icon>
           </button>-->
+  </ng-container></ng-container
+>

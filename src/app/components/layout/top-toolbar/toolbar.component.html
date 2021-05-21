@@ -1,27 +1,16 @@
 <header @flyIn>
-  <div class="flex-toolbar" fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayoutAlign="space-between center" class="logo-title">
-      <img
-        class="logo"
-        src="../../../assets/icons/elder_drug_logo_2.4.svg"
-        alt="The elderdrug logo, a bowl of Hygeia"
-      />
-
-      <span class="title logo-text--font">Elder Drug</span>
-    </div>
-
-    <div class="buttons">
-      <button class="toolbar-primary-button" (click)="openDesignDialog()">
+  <div class="toolbar">
+    <elder-brand></elder-brand>
+    <div class="button-wrapper">
+      <button class="button-wrapper__button" (click)="openDesignDialog()">
         Design
       </button>
-      <span>/</span>
 
-      <button class="toolbar-primary-button" (click)="openAboutDialog()">
+      <button class="button-wrapper__button" (click)="openAboutDialog()">
         About
       </button>
-      <span>/</span>
 
-      <button class="toolbar-primary-button" (click)="openDisclaimerDialog()">
+      <button class="button-wrapper__button" (click)="openDisclaimerDialog()">
         Disclaimer
       </button>
     </div>
