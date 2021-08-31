@@ -13,13 +13,14 @@
  *
  * Learn more in https://angular.io/guide/browser-support
  */
+/*
 import './formdata.js';
 import 'array-flat-polyfill';
 import 'classlist.js';
 import 'document-register-element';
 import 'web-animations-js';
 import 'zone.js';
-
+*/
 
 /***************************************************************************************************
  * BROWSER POLYFILLS

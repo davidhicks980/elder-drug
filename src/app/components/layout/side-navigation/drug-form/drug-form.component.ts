@@ -61,7 +61,7 @@ export class DrugFormComponent
       drugInput: new FormControl(
         '',
         SEARCH_VALIDATORS,
-        this.drugPresence.createValidator(this.database, 300)
+        this.drugPresence.delayedValidator(this.database, 300)
       ),
       drugList: new FormArray([]),
     },
@@ -236,7 +236,7 @@ export class DrugFormComponent
       let newControl = new FormControl(
         this.drugInput.value,
         SEARCH_VALIDATORS,
-        this.drugPresence.createValidator(this.database, 400)
+        this.drugPresence.delayedValidator(this.database, 400)
       );
       this.drugList.push(newControl);
       setTimeout(() => this.drugInput.setValue(''), 30);

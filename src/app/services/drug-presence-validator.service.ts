@@ -10,7 +10,7 @@ import { DataService } from './data.service';
 })
 export class DrugPresenceValidator implements AsyncValidator {
   constructor() {}
-  createValidator(drugLookup: DataService, delay: number) {
+  delayedValidator(drugLookup: DataService, delay: number) {
     return function (
       ctrl: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
