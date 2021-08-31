@@ -1,0 +1,194 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:string";
+
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}//
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+@function getHighlightColor($color) {
+  @return color.scale($color, $alpha: -70%);
+}
+@function getBrightHighlightColor($color) {
+  @return color.scale($color, $alpha: -90%);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}//
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+@function scaleColor($color, $step) {
+  @return color.scale(
+    $color,
+    saturation(-#{$step * 10}),
+    brightness(#{$step * 10})
+  );
+}
+@function getLighter($color, $step) {
+  @if $step>0 and $step< 6 {
+    $maxsat: (color.saturation($color) * 0.5) / 20;
+    $maxbright: (color.lightness($color)) / 12;
+    $sat: color.saturation($color) * 0.5 - $step * $maxsat;
+    $bright: (100 - color.lightness($color)) - $step * $maxbright;
+    $newcolor: desaturate(lighten($color, $bright), $sat);
+    @return $newcolor;
+  }
+}
+@function getDarker($color, $step) {
+  @if $step>0 and $step< 6 {
+    $multi: 0.5 * color.saturation($color) / color.lightness($color);
+    $sat: (color.saturation($color));
+    $dark: 100 - color.lightness($color);
+
+    $sat-unit: (100 - $sat) / 8;
+    $dark-unit: (100 - $dark) / 5.5;
+
+    $newcolor: saturate(
+      darken($color, $dark-unit * $step),
+      $sat-unit * $multi * $step
+    );
+    @return $newcolor;
+  }
+}
+// Main Primary color */
+$primary-1: rgba(15, 75, 177, 1);
+$primary-2: rgba(9, 58, 139, 1);
+$primary-3: rgba(6, 47, 116, 1);
+$primary-4: rgba(3, 35, 91, 1);
+$primary-5: rgba(1, 23, 60, 1);
+
+// Main Secondary color (1) */
+$secondary-1: rgba(50, 20, 184, 1);
+$secondary-2: rgba(37, 13, 145, 1);
+$secondary-3: rgba(28, 8, 121, 1);
+$secondary-4: rgba(21, 4, 94, 1);
+$secondary-5: rgba(12, 1, 62, 1);
+
+// Main Secondary color (2) */
+$secondary-2-1: rgba(0, 169, 146, 1);
+$secondary-2-2: rgba(0, 132, 114, 1);
+$secondary-2-3: rgba(0, 110, 95, 1);
+$secondary-2-4: rgba(0, 86, 74, 1);
+$secondary-2-5: rgba(0, 56, 49, 1);
+
+$complement-1: rgba(255, 164, 0, 1);
+$complement-2: rgba(210, 135, 0, 1);
+$complement-3: rgba(175, 113, 0, 1); // Main Complement color */
+$complement-4: rgba(137, 88, 0, 1);
+$complement-5: rgba(90, 58, 0, 1);
+
+$error: #d3231d;
+$error-1: #fce1d1;
+$error-2: #fabca4;
+$error-3: #f18e74;
+$error-4: #e46250;
+$error-5: #d3231d;
+$error-6: #b5151d;
+$error-7: #970e21;
+$error-8: #7a0922;
+$error-9: #650522;
+$dark-blue: #3a3f5e;
+$darkest-blue: #2b2e45;
+
+$light-dark-gray: #4d5875;
+$dark-dark-gray: #36415d;
+
+$gray-text-tint: #3f4752;
+$color-step: 1, 2, 3, 4, 5;
+
+$light-gray-1: #f9f9fa;
+$light-gray-2: #eceeef;
+$light-gray-3: #dee1e3;
+
+$light-gray-4: #cfd3d7;
+
+$light-gray-5: #bfc5c9;
+
+$gray-1: #adb4b9;
+$gray-2: #98a1a8;
+
+$gray-3: #7f8b93;
+
+$gray-4: #606e79;
+$gray-5: #374047;
+
+$dark-gray-1: #20242b;
+$dark-gray-2: #171b22;
+$dark-gray-3: #11151c;
+$dark-gray-4: #0c1017;
+$dark-gray-5: #05090f;
+
+$color: #fafafb;
+
+@mixin shadow($depth) {
+  box-shadow: 0 1px * $depth 2px * $depth rgb(87 107 138 / #{12% * $depth});
+}
+
+@mixin hoverable-shadow($depth) {
+  &:hover::after {
+    opacity: 0.8;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin: 0px;
+    @include shadow($depth);
+  }
+}
+
+@mixin thick-outline {
+  outline: 2px dotted currentColor;
+  outline-offset: 1px;
+}
+
+@mixin commonInput {
+  font-size: Max(16px, 1em);
+  border: 1px solid $gray-1;
+  border-radius: 3px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $gray-5;
+  transition: background-color 0.5s ease-in;
+  position: relative;
+  padding: 0.5em 0.35em;
+  @include hoverable-shadow(2);
+  &:active {
+    transition: background-color 0.2s ease-in;
+    &:after {
+      opacity: 1;
+    }
+  }
+  &:focus {
+    background-color: $light-gray-1;
+    transition: background-color 0.2s ease-in;
+    @include hoverable-shadow(3);
+
+    &:after {
+      opacity: 0.4;
+    }
+  }
+  &:hover {
+    background-color: $light-gray-1;
+    transition: background-color 0.5s ease-in;
+  }
+}

@@ -1,0 +1,103 @@
+@use "palette" as *;
+@use "colors" as *;
+@use 'bem-mixin' as bem;
+$content-height--full-header: calc(100vh - #{$header-full});
+
+$content-height--shrunken-header: calc(100vh - #{$header-shrunken});
+
+.icon-button {
+  display: none;
+  &--nav-arrow {
+    position: absolute;
+    right: 10px;
+    top: 40vh;
+    padding: 0px;
+    height: 4rem;
+    width: 4rem;
+    color: $secondary-2-1;
+    background-color: transparentize($secondary-2-1, 0.9);
+    &__icon {
+      height: inherit;
+      width: inherit;
+    }
+  }
+  @include bem.mobileWidth {
+    display: visible;
+  }
+}
+
+.disable-text-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.header {
+  color: $gray;
+  border-bottom: 1px solid $light-gray-5;
+  height: 100%;
+  width: 100%;
+}
+
+.main {
+  background-color: $light-gray-2;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.overlay-container {
+  position: absolute;
+  margin-left: 50vw;
+  margin-top: 15vh;
+}
+
+.layout {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: $header-shrunken auto;
+  grid-template-columns: 1fr;
+
+  &.is-sidenav-shown {
+    grid-template-columns: 260px auto;
+    @include bem.mobileWidth {
+      grid-template-columns: 100vw;
+      grid-template-rows: 100vh;
+    }
+  }
+  &__main-wrapper {
+    grid-column: 2;
+    grid-row: 2;
+
+    //When mobile or sidenav is not shown
+    &.is-full {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+  &__header-wrapper {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+  &__sidebar-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+    @include bem.mobileWidth {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+}

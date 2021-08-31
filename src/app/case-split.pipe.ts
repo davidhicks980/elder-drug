@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class caseSplitPipe implements PipeTransform {
   transform(str: string) {
-    if (str && str.length > 0 && str != undefined) {
+    if (str) {
       const newstr = str.replace(/([A-Z])/g, ' $1').trim();
       return newstr;
     }

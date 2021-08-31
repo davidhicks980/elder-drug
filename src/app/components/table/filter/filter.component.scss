@@ -1,0 +1,32 @@
+@use "palette" as *;
+@use "bem-mixin" as bem;
+
+.filter__label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 90%;
+}
+
+.filter__input {
+  width: 90%;
+  margin: 5%;
+  border: 1px solid $light-gray-5;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: 0.2rem 0 0.2rem 0.2em;
+}
+
+.filter__icon {
+  color: $gray-1;
+}
+:host {
+  width: 100%;
+  background-color: $light-gray-1;
+  border-left: 1px dotted $gray-1;
+  border-bottom: 1px dotted $gray-1;
+  @include bem.position("first-of-type") {
+    border-left: none;
+  }
+}

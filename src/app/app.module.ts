@@ -1,85 +1,134 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ObserversModule } from '@angular/cdk/observers';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatRippleModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { TableModule } from 'primeng/table';
+import { initializeApp } from 'firebase/app';
 
 import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
+import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
-import { LogoComponent } from './logo/small-logo/logo-component';
-import { MaterialModule } from './material-module';
-import { EmptyInputComponent, EnterDrugFormComponent } from './navigation/enter-drug-form/enter-drug-form.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
+import { BrandComponent } from './components/brand/brand.component';
+import { VerticalComponent } from './components/brand/vertical/vertical.component';
+import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
+import {
+  SearchButtonsComponent,
+} from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
+import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
+import { TabComponent } from './components/layout/tab/tab.component';
 import {
   AboutComponent,
   DesignComponent,
   DisclaimerComponent,
   ToolbarComponent,
-} from './navigation/top-toolbar/toolbar.component';
-import { ContentComponent } from './table-logic/content.component';
-import { ColumnSelectorComponent } from './table-logic/med-table/column-selector/column-selector.component';
-import { MedTableComponent } from './table-logic/med-table/table.component';
-import { ToggleOptionsComponent } from './table-logic/med-table/toggle-options/toggle-options.component';
-import { ModifyTablePanelComponent } from './table-logic/modify-table-panel/modify-table-panel.component';
+} from './components/layout/top-toolbar/toolbar.component';
+import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
+import { ListContentComponent } from './components/table/dropdown/group-by/button/list-content.component';
+import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
+import { PopupComponent } from './components/table/dropdown/popup.component';
+import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
+import { ExpandedRowCardComponent } from './components/table/expanded-element/expanded-row-card/expanded-row-card.component';
+import { FilterComponent } from './components/table/filter/filter.component';
+import { GroupRowComponent } from './components/table/group-row/group-row.component';
+import { TableCardComponent } from './components/table/table-card/table-card.component';
+import { TableComponent } from './components/table/table.component';
+import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
+import { CellPaddingDirective } from './directives/cell-padding.directive';
+import { CreationSpyDirective } from './directives/creation-spy.directive';
+import { ExpandableRowDirective } from './directives/expandable-row.directive';
+import { FilterDirective } from './directives/filter.directive';
+import { KeyGridDirective } from './directives/keygrid.directive';
+import { ListKeyDirective } from './directives/list-key.directive';
+import { ResizeDirective } from './directives/resize.directive';
+import { RotateDirective } from './directives/rotate-icon.directive';
+import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
+import { LetDirective } from './directives/with.directive';
+import { MaterialModule } from './material-module';
+import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './to-string.pipe';
 
+export const firebase = provideFirebaseApp(() =>
+  initializeApp(environment.firebaseConfig)
+);
+export const firestore = provideFirestore(() => getFirestore());
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
+    LayoutComponent,
     ToolbarComponent,
-    EmptyInputComponent,
     caseSplitPipe,
-    MedTableComponent,
-    ContentComponent,
-    LogoComponent,
-    EnterDrugFormComponent,
-    ColumnSelectorComponent,
-    ToggleOptionsComponent,
-    SideNavigationComponent,
-    ModifyTablePanelComponent,
+    TableComponent,
+    DrugFormComponent,
+    SidebarComponent,
     ToStringPipe,
     DisclaimerComponent,
     AboutComponent,
     DesignComponent,
+    ExpansionPanelComponent,
+    ExpandedElementComponent,
+    RotateDirective,
+    TrackingGradientDirective,
+    CreationSpyDirective,
+    DropdownComponent,
+    TabComponent,
+    ColumnSelectorComponent,
+    PopupComponent,
+    ResizeDirective,
+    GroupByComponent,
+    JoinPipe,
+    ListKeyDirective,
+    ListContentComponent,
+    AutoFocusDirective,
+    LetDirective,
+    CellPaddingDirective,
+    KeyGridDirective,
+    FilterComponent,
+    FilterDirective,
+    TableCardComponent,
+    ExpandableRowDirective,
+    GroupRowComponent,
+    ExpandedRowCardComponent,
+    BrandComponent,
+    VerticalComponent,
+    SearchButtonsComponent,
   ],
   imports: [
+    firebase,
+    firestore,
+    BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    ElderRoutingModule,
     LayoutModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    TableModule,
-    MatSelectModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
     ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
     OverlayModule,
-    MatRippleModule,
+    ObserversModule,
+    CdkAccordionModule,
+    A11yModule,
+    FlexLayoutModule,
   ],
-  providers: [],
+  providers: [ColumnSelectorComponent],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

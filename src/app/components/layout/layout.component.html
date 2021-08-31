@@ -1,0 +1,85 @@
+<ng-container *elderLet="sidebarOpen$ | async as sidebarOpen$">
+  <ng-container *elderLet="mobile$ | async as mobile$">
+    <div
+      *elderLet="mobile$ && sidebarOpen$ as showMobileSidebar$"
+      class="layout"
+      [class.is-sidenav-shown]="sidebarOpen$"
+    >
+      <div
+        *ngIf="!showMobileSidebar$"
+        [class.is-mobile]="mobile$"
+        class="layout__header-wrapper"
+      >
+        <header class="header">
+          <elder-toolbar></elder-toolbar>
+        </header>
+      </div>
+      <div *ngIf="sidebarOpen$" class="layout__sidebar-wrapper" @sidenavExpand>
+        <elder-sidebar>
+          <span legend>Search Beers Criteria</span>
+        </elder-sidebar>
+      </div>
+      <div
+        class="layout__main-wrapper"
+        [class.is-full]="!sidebarOpen$"
+        *ngIf="!showMobileSidebar$"
+      >
+        <main class="main">
+          <nav class="main__menu-bar">
+            <button
+              *ngIf="!sidebarOpen$ || !mobile$"
+              class="nav-button"
+              mat-icon-button
+              (click)="size.toggleSidenav()"
+            >
+              <mat-icon
+                [svgIcon]="sidebarOpen$ ? 'chevron_left' : 'menu'"
+              ></mat-icon>
+            </button>
+
+            <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
+          </nav>
+          <div class="main__tables">
+            <elder-table-card>
+              <elder-table-title>
+                {{ tableService.tableTitle$ | async }}</elder-table-title
+              ><elder-table-description>{{
+                tableService.tableDescription$ | async
+              }}</elder-table-description>
+
+              <div class="table-field">
+                <elder-popup
+                  [selectedOptions]="columns.columnChangeObserver | async"
+                  #columnPopup
+                >
+                  <popup-content>
+                    <elder-column-selector #columns></elder-column-selector
+                  ></popup-content>
+                </elder-popup>
+              </div>
+              <div class="table-field">
+                <elder-popup
+                  [selectedOptions]="groups.groupChangeObserver | async"
+                  #groupPopup
+                >
+                  <popup-content
+                    ><elder-group-by #groups></elder-group-by
+                  ></popup-content>
+                </elder-popup>
+              </div>
+              <div class="table-field">
+                <button mat-button>Add filters</button>
+              </div>
+
+              <elder-table elderTableView elderResize class="elder-table">
+                <div class="table-field filter">
+                  <elder-filter><p label>Filter columns</p></elder-filter>
+                </div>
+              </elder-table>
+            </elder-table-card>
+          </div>
+        </main>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

@@ -2,17 +2,17 @@
   "beers_table_lookup": [
     {
       "TableNumber": 2,
-      "TableDefinition": "Potentially Inappropriate Medication Use in Older Adults ",
+      "TableDefinition": "Any medications to be used with caution in older adults",
       "ShortName": "Potentially Innappropriate"
     },
     {
       "TableNumber": 3,
-      "TableDefinition": "Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome",
+      "TableDefinition": "Medications that should be avoided in older adults with a concomitant disease ",
       "ShortName": "Disease-Specific Guidance"
     },
     {
       "TableNumber": 4,
-      "TableDefinition": "Drugs To Be Used With Caution in Older Adults",
+      "TableDefinition": "Drugs to be used with caution in older adults",
       "ShortName": "Use with Caution"
     },
     {

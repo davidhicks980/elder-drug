@@ -1,0 +1,35 @@
+@use 'palette' as pal;
+@use 'colors' as col;
+.brand__wrapper {
+  position: relative;
+  display: flex;
+  align-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  &__row {
+    width: 16em;
+  }
+}
+
+.brand__title {
+  font-family: "Overpass";
+  color: pal.$gray-5;
+  font-weight: 700;
+  letter-spacing: -0.15rem;
+  &__row {
+    top: 10px;
+    position: absolute;
+    left: 40px;
+    white-space: nowrap;
+  }
+}
+.brand__subtitle {
+  font-family: "Noto Sans JP";
+  font-weight: 500;
+  color: pal.$gray-4;
+  margin: 0px;
+  line-height: 0px;
+}
+h1 {
+  margin: 0px;
+}

@@ -1,0 +1,29 @@
+@use "palette" as *;
+@use "bem-mixin" as *;
+
+.popup-trigger {
+  display: flex;
+  align-items: center;
+  outline: none;
+  text-align: left;
+  justify-content: space-between;
+  @include commonInput;
+
+  @include element("placeholder") {
+    min-width: 10ch;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Roboto";
+  }
+  @include element("arrow") {
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-in;
+    position: relative;
+
+    @include state("rotated") {
+      transform: rotate(180deg);
+    }
+  }
+}

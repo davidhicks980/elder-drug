@@ -1,0 +1,114 @@
+@use "palette" as *;
+@use 'colors' as *;
+@function encodecolor($string) {
+  @if type-of($string) == "color" {
+    $hex: str-slice(ie-hex-str($string), 4);
+    $string: unquote("#{$hex}");
+  }
+  $string: "%23" + $string;
+  @return $string;
+}
+
+.button-row-style {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  place-items: end;
+  height: 100%;
+}
+.nav-header {
+  margin: 0 0 0 10px;
+}
+
+.shadow {
+  width: 100%;
+  height: 100%;
+
+  z-index: 200;
+}
+.tab-svg {
+  cursor: pointer;
+  font: "Roboto Condensed", sans-serif;
+  display: block;
+  position: relative;
+  z-index: 0;
+  bottom: 0;
+  height: 37.5px;
+  background-image: linear-gradient(transparent 99.5%, white);
+  overflow: hidden;
+  .tab-svg--text {
+    fill: black;
+  }
+  &.collapse {
+    margin-left: -14px;
+  }
+
+  &.active .tab-svg--path {
+    fill: $light-gray-2;
+    box-shadow: none;
+    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+      fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    & + .tab-svg--text {
+      fill: $dark-gray-2;
+    }
+    &:hover {
+      color: $primary-1;
+    }
+  }
+  &.inactive .tab-svg--path {
+    fill: $primary-1;
+    & ~ .tab-svg--text {
+      fill: $light-gray-2;
+    }
+    &:hover {
+      fill: tint($primary-1, 50%);
+    }
+  }
+  &:hover {
+    fill: white;
+    transition: all 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &.active {
+      color: $dark-gray-2;
+      box-shadow: none;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tabs {
+  height: 40px;
+  counter-reset: tab;
+}
+.unstyled-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  -webkit-writing-mode: inherit !important;
+  text-rendering: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  text-transform: inherit;
+  text-indent: inherit;
+  text-shadow: inherit;
+  display: inherit;
+  text-align: inherit;
+  align-items: inherit;
+  cursor: inherit;
+  background-color: inherit;
+  box-sizing: inherit;
+  margin: inherit;
+  font: inherit;
+  padding: inherit;
+  border-width: inherit;
+  border-style: inherit;
+  border-color: inherit;
+  border-image: initial;
+}

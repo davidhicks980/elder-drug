@@ -1,0 +1,17 @@
+@use 'bem-mixin' as bem;
+
+.table-card {
+  width: auto;
+  background-color: white;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 10px;
+  border: none;
+  max-width: 1400px;
+  display: block;
+  @include bem.mobileWidth {
+    background-color: transparent;
+    margin: 0;
+    width: 100%;
+  }
+}
