@@ -1,3 +1,6 @@
+import 'web-animations-js';
+import 'zone.js';
+
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -14,14 +17,13 @@
  * Learn more in https://angular.io/guide/browser-support
  */
 /*
+/*
+
 import './formdata.js';
 import 'array-flat-polyfill';
-import 'classlist.js';
-import 'document-register-element';
-import 'web-animations-js';
-import 'zone.js';
-*/
 
+import 'document-register-element';
+import 'web-animations-js';*/
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */

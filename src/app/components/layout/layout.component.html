@@ -1,56 +1,45 @@
-<ng-container *elderLet="isSidenavOpen | async as showAside">
-  <ng-container *elderLet="isMobile | async as mobile">
+<ng-container *elderLet="sidebarOpen$ | async as sidebarOpen$">
+  <ng-container *elderLet="mobile$ | async as mobile$">
     <div
-      *elderLet="mobile && showAside as showMobileAside"
+      *elderLet="mobile$ && sidebarOpen$ as showMobileSidebar$"
       class="layout"
-      [class.is-sidenav-shown]="showAside"
+      [class.is-sidenav-shown]="sidebarOpen$"
     >
-      <section
-        *ngIf="!showMobileAside"
-        [class.is-mobile]="mobile"
-        [class.is-sidenav-shown]="showAside"
-        class="layout__wrapper--header"
+      <div
+        *ngIf="!showMobileSidebar$"
+        [class.is-mobile]="mobile$"
+        class="layout__header-wrapper"
       >
         <header class="header">
           <elder-toolbar></elder-toolbar>
         </header>
-      </section>
-      <section *ngIf="showAside" class="layout__wrapper--aside">
-        <!--@mobileSlidingSidenav-->
-        <aside class="aside">
-          <elder-sidebar #showAside> </elder-sidebar>
-        </aside>
-      </section>
-      <section
-        class="layout__wrapper--main"
-        [class.is-full]="!showAside"
-        *ngIf="!showMobileAside"
+      </div>
+      <div *ngIf="sidebarOpen$" class="layout__sidebar-wrapper" @sidenavExpand>
+        <elder-sidebar>
+          <span legend>Search Beers Criteria</span>
+        </elder-sidebar>
+      </div>
+      <div
+        class="layout__main-wrapper"
+        [class.is-full]="!sidebarOpen$"
+        *ngIf="!showMobileSidebar$"
       >
-        <!--[@sidenavExpand]="
-          mobile
-            ? showAside
-              ? 'mobileOpen'
-              : 'mobileClose'
-            : showAside
-            ? 'open'
-            : 'close'
-        "-->
         <main class="main">
-          <nav class="topnav shadow">
+          <nav class="main__menu-bar">
             <button
-              *ngIf="!showAside || !mobile"
+              *ngIf="!sidebarOpen$ || !mobile$"
               class="nav-button"
               mat-icon-button
               (click)="size.toggleSidenav()"
             >
               <mat-icon
-                [svgIcon]="showAside ? 'chevron_left' : 'menu'"
+                [svgIcon]="sidebarOpen$ ? 'chevron_left' : 'menu'"
               ></mat-icon>
             </button>
 
             <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
           </nav>
-          <div class="layout__table-container">
+          <div class="main__tables">
             <elder-table-card>
               <elder-table-title>
                 {{ tableService.tableTitle$ | async }}</elder-table-title
@@ -82,12 +71,7 @@
                 <button mat-button>Add filters</button>
               </div>
 
-              <elder-table
-                elderTableView
-                elderResize
-                [isMobile]
-                class="elder-table"
-              >
+              <elder-table elderTableView elderResize class="elder-table">
                 <div class="table-field filter">
                   <elder-filter><p label>Filter columns</p></elder-filter>
                 </div>
@@ -95,7 +79,7 @@
             </elder-table-card>
           </div>
         </main>
-      </section>
-    </div></ng-container
-  >
+      </div>
+    </div>
+  </ng-container>
 </ng-container>

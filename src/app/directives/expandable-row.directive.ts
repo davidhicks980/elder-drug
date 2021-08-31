@@ -12,28 +12,27 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ExpandedElementComponent } from '../components/table/expanded-element/expanded-element.component';
+import { ExpandingEntry } from '../components/table/ExpandingEntry';
 import { GroupRowComponent } from '../components/table/group-row/group-row.component';
-import { ExpandingEntry } from '../components/table/table.component';
 
 type Ref<T> = ComponentRef<T>;
 @Directive({
   selector: '[detail]',
 })
 export class ExpandableRowDirective implements AfterViewInit {
-  private _dataSource: BehaviorSubject<
-    Partial<ExpandingEntry>
-  > = new BehaviorSubject({
-    _position: {
-      parentExpanded: false,
-      layer: 0,
-      root: 0,
-      index: 0,
-      id: '000',
-      parentId: '000',
-      isGroup: false,
-      hasParent: false,
-    },
-  });
+  private _dataSource: BehaviorSubject<Partial<ExpandingEntry>> =
+    new BehaviorSubject({
+      _position: {
+        parentExpanded: false,
+        layer: 0,
+        root: 0,
+        index: 0,
+        id: '000',
+        parentId: '000',
+        isGroup: false,
+        hasParent: false,
+      },
+    });
   factory: ComponentFactory<unknown>;
   expansionSource = new BehaviorSubject(false);
   expansion$ = this.expansionSource

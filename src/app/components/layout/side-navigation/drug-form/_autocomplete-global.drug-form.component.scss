@@ -1,4 +1,3 @@
-@use 'bem-mixin' as bem;
 @use 'palette' as pal;
 @use '~@angular/material' as mat;
 .autocomplete--mobile-search {
@@ -20,10 +19,10 @@
       color: pal.$gray-1;
     }
 
-    @include bem.state("full") {
-      height: 3.5rem;
+    &.is-full {
+      height: 3.25rem;
     }
-    @include bem.state("edit") {
+    &.is-editing {
       height: 1.5rem;
     }
   }
@@ -32,14 +31,10 @@
     border-bottom-right-radius: 4px;
   }
   &.mat-autocomplete-panel {
-    max-height: none;
-  }
-  @include mat.elevation-transition;
-
-  @include bem.state("edit") {
-  }
-  @include bem.state("mobile") {
-    @include bem.state("edit") {
+    max-height: 400px;
+    @include mobileWidth {
+      max-height: 30vh;
     }
   }
+  @include mat.elevation-transition;
 }

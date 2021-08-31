@@ -8,7 +8,7 @@ enum orientation {
 @Component({
   selector: 'elder-brand',
   templateUrl: './brand.component.html',
-  styleUrls: ['./brand.component.scss'],
+  styleUrls: ['./brand.component.scss', './_logo.brand.component.scss'],
 })
 export class BrandComponent {
   @Input() orientation: orientation | 'column' | 'row' = orientation.ROW;

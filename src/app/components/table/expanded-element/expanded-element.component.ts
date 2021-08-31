@@ -2,7 +2,7 @@ import { trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
 import { fadeInTemplate, flyInTemplate } from '../../../animations';
-import { ExpandingEntry } from '../../table/table.component';
+import { ExpandingEntry } from '../../table/ExpandingEntry';
 
 @Component({
   selector: 'elder-expanded-element',

@@ -6,13 +6,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { initializeApp } from 'firebase/app';
 
 import { environment } from '../environments/environment';
 import { ElderRoutingModule } from './app-routing.module';
@@ -60,6 +61,10 @@ import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './to-string.pipe';
 
+export const firebase = provideFirebaseApp(() =>
+  initializeApp(environment.firebaseConfig)
+);
+export const firestore = provideFirestore(() => getFirestore());
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +107,8 @@ import { ToStringPipe } from './to-string.pipe';
     SearchButtonsComponent,
   ],
   imports: [
+    firebase,
+    firestore,
     BrowserModule,
     BrowserAnimationsModule,
     ElderRoutingModule,
@@ -109,10 +116,7 @@ import { ToStringPipe } from './to-string.pipe';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
     ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

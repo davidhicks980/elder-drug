@@ -10,12 +10,12 @@
 :host {
   --input-stroke: #{$gray-1};
   --input-label--text: #{$gray-2};
-
   --input-text: #{tint($gray-1, 20%)};
-
   --input-focus--stroke: #{$primary-1};
-
   --input-font--size: 12pt;
+  --input--height: 2rem;
+  --input--height--mobile: 2.75rem;
+
   --autocomplete--height: 2.5em;
   --autocomplete--mobile-height: 3.5em;
   --border-color: #{$light-gray-4};
@@ -38,8 +38,8 @@
   margin-left: 5%;
   margin-right: 5%;
   @include mobileWidth {
-    margin: 0 15% 0 15%;
-    @include state("widened") {
+    margin: 0 10% 0 10%;
+    &.is-widened {
       margin: 0;
       padding: 0;
     }
@@ -56,19 +56,16 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  pointer-events: none;
   width: 100%;
   @include mobileWidth {
     grid-template-rows: var(--autocomplete-mobile-height);
-    @include nativeState("focus-within") {
-    }
   }
   &:focus-within {
     transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
     box-sizing: border-box;
   }
 
-  @include element("label") {
+  &__label {
     padding-bottom: 5px;
     font-size: 14px;
     font-weight: 500;
@@ -78,7 +75,7 @@
     width: 100%;
   }
 
-  @include element("input-container") {
+  &__input-container {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     min-height: 2.5em;
@@ -92,12 +89,12 @@
       grid-row: 1;
       border-radius: 2rem;
       padding: 0 0.7rem;
-      @include multipleStates("pinned") {
+      &.is-pinned {
         border-radius: 0px;
         min-height: 3.5rem;
       }
     }
-    @include state("open") {
+    &.is-open {
       border-bottom: 2px solid $primary-1;
       border-right: 1px solid var(--border-color);
       border-left: 1px solid var(--border-color);
@@ -109,20 +106,20 @@
       border-bottom-right-radius: 0;
     }
 
-    @include multipleNativeStates("hover", "focus-within") {
+    &:hover:focus-within {
       --border-color: #{$light-gray-2};
       @include shadow(2);
     }
 
-    @include state("invalid") {
+    &.is-invalid {
       border-bottom: 2px solid $error-4;
     }
-    @include state("missing") {
+    &.is-missing {
       border-bottom: 2px solid $complement-1;
     }
   }
-  @include element("input") {
-    appearance: none;
+  &__input {
+    all: none;
     padding: 0px;
     margin: 0px;
     padding-left: 0.6em;
@@ -133,13 +130,13 @@
     pointer-events: all;
     grid-column: 1;
     width: calc(100% - 35px);
-    min-height: 2.5rem;
+    min-height: var(--input--height);
     @include mobileWidth {
       width: 100%;
-      min-height: 3rem;
+      min-height: var(--input--height--mobile);
     }
   }
-  @include element("spinner") {
+  &__spinner {
     display: inline-block;
     vertical-align: center;
     position: relative;
@@ -156,9 +153,9 @@
   gap: 5px;
   margin-top: 10px;
 
-  @include state("invalid") {
+  &.is-invalid {
     color: $error-4;
-    @include state("missing") {
+    &.is-missing {
       color: $complement-1;
     }
   }

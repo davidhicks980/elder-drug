@@ -1,21 +1,23 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
-  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ContentChild,
+  ElementRef,
   EventEmitter,
   OnDestroy,
   Output,
+  TemplateRef,
   ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { matFormFieldAnimations } from '@angular/material/form-field';
-import { BehaviorSubject, combineLatest, MonoTypeOperatorFunction, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, pluck, take, takeUntil, tap } from 'rxjs/operators';
 import { ResizeService } from 'src/app/services/resize.service';
 
@@ -31,7 +33,7 @@ import { SearchButtonsComponent } from './search-buttons/search-buttons.componen
   templateUrl: './drug-form.component.html',
   styleUrls: [
     './drug-form.component.scss',
-    './terms.drug-form.component.scss',
+    './edit-list.drug-form.component.scss',
     './icons.drug-form.component.scss',
     './autocomplete.drug-form.scss',
   ],
@@ -48,11 +50,12 @@ import { SearchButtonsComponent } from './search-buttons/search-buttons.componen
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DrugFormComponent
-  implements OnDestroy, AfterViewInit, AfterContentInit {
+export class DrugFormComponent implements OnDestroy, AfterViewInit {
   @Output('searching') searchEmitter = new EventEmitter();
   @ViewChild(MatAutocomplete) trigger: MatAutocomplete;
   @ContentChild(SearchButtonsComponent) buttons: SearchButtonsComponent;
+  @ViewChild('buttonTemplate') buttonTemplate: TemplateRef<unknown>;
+
   activeControl: number = -10;
   _destroyedSource = new Subject();
   destroyed$ = this._destroyedSource.asObservable().pipe(take(1));
@@ -69,9 +72,9 @@ export class DrugFormComponent
   );
   _focusSource = new BehaviorSubject({ focused: false, control: -1 });
   focusState$ = this._focusSource.asObservable();
-  _isFocused$ = this.focusState$.pipe(map((c) => c.focused));
+  formControlFocused$ = this.focusState$.pipe(map((c) => c.focused));
   searchStarted$: Observable<boolean>;
-  _isMobile$: Observable<boolean>;
+  mobile$: Observable<boolean>;
   _inputLengthSource = new BehaviorSubject(0);
   _isSearchEmpty$: Observable<boolean>;
   _typeaheadState: TypeaheadState = {
@@ -81,12 +84,12 @@ export class DrugFormComponent
     data: [],
     edit: false,
   };
+  _typeaheadSource: BehaviorSubject<TypeaheadState>;
+  typeaheadState$: Observable<TypeaheadState>;
   searchComponentPortal: ComponentPortal<SearchButtonsComponent>;
   inputStream = new BehaviorSubject('');
+  buttonPortal: TemplatePortal<unknown>;
 
-  updateAutocompleteStatus() {
-    console.log('update');
-  }
   ngOnDestroy() {
     this._destroyedSource.next(true);
   }
@@ -95,83 +98,73 @@ export class DrugFormComponent
       pluck('length'),
       map((len) => len === 0)
     );
-    const searchObservers = [this._isFocused$, this._isSearchEmpty$];
-    const emitSearch = tap((status) =>
-      this.searchEmitter.emit(status)
-    ) as MonoTypeOperatorFunction<boolean>;
-    this.searchStarted$ = this._watchForSearch(searchObservers).pipe(
-      emitSearch
+    const searchObservers = [this.formControlFocused$, this._isSearchEmpty$];
+    this.searchStarted$ = this.searchInProgress$(searchObservers).pipe(
+      tap((status) => this.searchEmitter.emit(status))
     );
-    this._watchPanelState(this._isFocused$, this.typeaheadState$);
+    this.buttonPortal = new TemplatePortal(
+      this.buttonTemplate,
+      this.viewContainerRef
+    );
+    this.mobile$ = this.size.mobileObserver;
   }
 
-  _watchPanelState(
-    focused: Observable<boolean>,
-    state: Observable<TypeaheadState>
-  ) {
-    const hasData = state.pipe(map(({ data }) => data.length > 0));
-
-    hasData.pipe(distinctUntilChanged());
-  }
   constructor(
-    public size: ResizeService,
+    private size: ResizeService,
     public database: DataService,
     private form: FormBuilder,
     public dialog: MatDialog,
     private drugPresence: DrugPresenceValidator,
+    private viewContainerRef: ViewContainerRef,
+    private ref: ElementRef
   ) {
     this._typeaheadSource = new BehaviorSubject(this._typeaheadState);
     this.typeaheadState$ = this._typeaheadSource.asObservable();
     this.searchEmitter.emit(false);
-    this._isMobile$ = size.mobileObserver;
     this.drugList.controls = database.lastSearch.map((v) => new FormControl(v));
     this._handleFormValueChanges(database, this.drugsGroup).subscribe(() => {});
-
     this._watchForInputState(this.drugInput, 'PENDING').subscribe((pending) =>
       this._updateTypeahead({ pending })
     );
   }
 
-  ngAfterContentInit() {
-    this.buttons.search.subscribe(console.log);
-  }
-  private _watchForSearch([focused, empty]: Observable<boolean>[]) {
+  searchInProgress$([focused, empty]: Observable<boolean>[]) {
     return combineLatest([focused, empty]).pipe(
       filter(([focus, empty]) => focus === !empty),
       distinctUntilChanged(),
-      map(([focus, _change]) => focus.valueOf())
+      map(([focus, _]) => focus.valueOf())
     );
   }
 
   private _handleFormValueChanges(database, group: FormGroup) {
-    const updateHistory = ({ drugList, drugInput }) =>
-      Array.isArray(drugList) ?? this.database.storeHistory(drugList);
-
+    const updateHistory = ({ drugList }: { drugList: string[] }) => {
+      if (Array.isArray(drugList)) {
+        this.database.storeHistory(drugList);
+      }
+    };
     return group.valueChanges.pipe(
       tap(updateHistory),
-      map((form) =>
-        this.activeControl > -1
+      map((form: { drugList: string[]; drugInput: string }) => {
+        return this.activeControl > -1
           ? form.drugList[this.activeControl]
-          : form.drugInput
-      ),
+          : form.drugInput;
+      }),
       distinctUntilChanged(),
-      map((input) => this.lookupTypeaheadResults(input, database)),
-      map((data) =>
-        this._updateTypeahead({
+      map((input: string) => this.lookupTypeaheadResults(input, database)),
+      map((data: string[][]) => {
+        return this._updateTypeahead({
           data,
           length: data.length,
           open: data.length > 0,
-        })
-      )
+        });
+      })
     );
   }
   private _watchForInputState(input: FormControl, state: string) {
-    const checkIfPending = (state: string) => state === 'state';
-
     return input.statusChanges.pipe(
       takeUntil(this.destroyed$),
       distinctUntilChanged(),
-      map(checkIfPending)
+      map((inputState: string) => inputState === state)
     );
   }
 
@@ -187,16 +180,15 @@ export class DrugFormComponent
     this.activeControl = activeInput;
     this._focusSource.next({ focused: $event != null, control: activeInput });
   }
-  get focusedControl() {
-    const el = (document.activeElement as HTMLInputElement) || null;
-    if (
-      el?.hasOwnProperty('dataset') &&
-      el.dataset?.hasOwnProperty('control') &&
-      this.activeControl === parseInt(el.dataset.control)
-    ) {
+  get focusedControl(): number | undefined {
+    const control = document.activeElement.getAttribute('data-control');
+    if (control != null && this.activeControl === parseInt(control)) {
       return this._focusSource.value.control;
+    } else {
+      return undefined;
     }
   }
+
   get drugList(): FormArray {
     return this.drugsGroup.get('drugList') as FormArray;
   }
@@ -211,9 +203,11 @@ export class DrugFormComponent
   }
   search() {
     let search = [...this.drugList.value];
-    search.length > 0
-      ? (this.database.searchDrugs(search), this.size.toggleSidenav())
-      : this.openDialog();
+    if (search.length > 0) {
+      this.database.searchDrugs(search), this.size.toggleSidenav();
+    } else {
+      this.openDialog();
+    }
   }
   stopPropagation(e) {
     e.stopPropagation();
@@ -224,15 +218,14 @@ export class DrugFormComponent
       this.drugInput.setValue(option.value);
       if (this.activeControl === -1) {
         this.addTerm();
-        setTimeout(() => this.search(), 30);
       }
     }
   }
   addTerm() {
-    if (
-      this.drugList.value.length < 8 &&
-      this.database.hasDrug(this.drugInput.value)
-    ) {
+    if (this.database.hasDrug(this.drugInput.value)) {
+    } else if (this.drugList.value.length < 20) {
+    } else if (!this.drugList.value.includes(this.drugInput.value)) {
+    } else {
       let newControl = new FormControl(
         this.drugInput.value,
         SEARCH_VALIDATORS,
@@ -255,11 +248,6 @@ export class DrugFormComponent
     this.dialog.open(EmptyInputComponent, { width: '20em' });
   }
 
-  /******************/
-  /*TYPEAHEAD LOGIC */
-  /******************/
-  _typeaheadSource: BehaviorSubject<TypeaheadState>;
-  typeaheadState$: Observable<TypeaheadState>;
   lookupTypeaheadResults(value: string, database: DataService) {
     const sliceString = (item: string) => [
       value,

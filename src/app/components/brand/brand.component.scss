@@ -1,18 +1,14 @@
 @use 'palette' as pal;
 @use 'colors' as col;
-@use 'bem-mixin' as bem;
-
 .brand__wrapper {
   position: relative;
   display: flex;
   align-content: space-around;
   align-items: center;
   flex-wrap: nowrap;
-  @include bem.state("row") {
+  &__row {
     width: 16em;
   }
-}
-.brand__logo {
 }
 
 .brand__title {
@@ -20,7 +16,7 @@
   color: pal.$gray-5;
   font-weight: 700;
   letter-spacing: -0.15rem;
-  @include bem.state("row") {
+  &__row {
     top: 10px;
     position: absolute;
     left: 40px;

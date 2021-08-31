@@ -1,4 +1,4 @@
-import { animate, group, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { merge, Observable, of, Subject } from 'rxjs';
 
@@ -30,52 +30,10 @@ import { Table, TableService } from '../../services/table.service';
     slidingContentAnimation,
 
     trigger('sidenavExpand', [
-      state('close', style({ transform: 'translateX(0px)' })),
-      state('open', style({ transform: 'translateX(0px)' })),
-      state('mobileClose', style({ transform: 'translateX(0px)' })),
-      state('mobileOpen', style({ transform: 'translateX(0px)' })),
-      transition(
-        'mobileOpen => mobileClose',
-        group([
-          animate(
-            '200ms ease',
-            keyframes([style({ transform: 'translateX(-100%)', offset: 1 })])
-          ),
-        ])
-      ),
-      transition(
-        'mobileClose => mobileOpen',
-        animate(
-          '400ms ease',
-          keyframes([
-            style({ transform: 'translateX(-100%)', offset: 0 }),
-            style({ transform: 'translateX(0px)', offset: 1 }),
-          ])
-        )
-      ),
-      transition(
-        'open => close',
-        group([
-          animate(
-            '200ms ease',
-            keyframes([style({ transform: 'translateX(-260px)', offset: 1 })])
-          ),
-        ])
-      ),
 
-      transition(
-        'close => open',
-        animate(
-          '400ms ease',
-          keyframes([
-            style({ transform: 'translateX(-260px)', offset: 0 }),
-            style({ transform: 'translateX(0px)', offset: 1 }),
-          ])
-        )
-      ),
       transition(':enter', [
         style({
-          transform: 'translateX(-260px)',
+          transform: 'translateX(-100%)',
         }),
         animate('400ms ease', style({ transform: 'translate(0px)' })),
       ]),
@@ -86,7 +44,7 @@ import { Table, TableService } from '../../services/table.service';
         animate(
           '200ms ease',
           style({
-            transform: 'translateX(-260px)',
+            transform: 'translateX(-100%)',
           })
         ),
       ]),
@@ -94,30 +52,28 @@ import { Table, TableService } from '../../services/table.service';
   ],
 })
 export class LayoutComponent {
-  enabledTables: Observable<Table[]> = new Subject();
-
   tables: Table[] = [];
-  selectedTable: string;
+  enabledTables: Observable<Table[]> = new Subject();
+  selectedTable: string = '';
   tableDescription: string = '';
-  loaded = false;
+  loaded: boolean = false;
   currentPage: number = 0;
-  isMobile!: Observable<boolean>;
-  isSidenavOpen!: Observable<boolean>;
-  initialMobile: any;
+  mobile$: Observable<boolean>;
+  sidebarOpen$: Observable<boolean>;
+  initiallyMobile$: Observable<boolean>;
   ngAfterViewInit() {
-    this.isMobile.subscribe(console.log);
+    this.mobile$.subscribe(console.log);
   }
   constructor(
-    public webSocketService: DataService,
     public size: ResizeService,
     public nav: NavigationService,
     public tableService: TableService
   ) {
-    this.isSidenavOpen = this.size.sidenavObserver;
-    this.initialMobile = of(window.innerWidth < 600);
-    this.isMobile = merge(
+    this.sidebarOpen$ = this.size.sidenavObserver;
+    this.initiallyMobile$ = of(window.innerWidth < 600);
+    this.mobile$ = merge(
       this.size.mobileObserver,
-      this.initialMobile
+      this.initiallyMobile$
     ) as Observable<boolean>;
   }
 }

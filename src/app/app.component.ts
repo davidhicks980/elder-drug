@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private firebase: DataService
   ) {
-    this.firebase = firebase;
     iconRegistry.addSvgIcon(
       'search',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')

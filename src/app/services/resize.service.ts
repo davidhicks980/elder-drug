@@ -1,6 +1,5 @@
 import { ViewportRuler } from '@angular/cdk/scrolling';
 import { AfterViewInit, Injectable } from '@angular/core';
-import ResizeObserver from 'resize-observer-polyfill';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { auditTime, map } from 'rxjs/operators';
 

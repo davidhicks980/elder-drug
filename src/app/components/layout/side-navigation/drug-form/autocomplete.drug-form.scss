@@ -1,7 +1,7 @@
 @use "bem-mixin" as *;
 @use 'palette' as *;
 
-.autocomplete__options {
+.typeahead__options {
   max-height: 300px;
   overflow: auto;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { doc, docData, DocumentData, Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 
 import * as beers from '../../assets/beers-entries.json';
 import * as generics from '../../assets/generics-lookup.json';
@@ -24,15 +24,14 @@ export class DataService {
   private drugIndex: Map<string, string[]> = new Map();
   private searchHistory: BehaviorSubject<string[]> = new BehaviorSubject([]);
   dropdownParameters: any;
-  loaded: any;
+  loaded: boolean;
   beersMap: Map<number, BeersField> = (beers as any).default;
   filterDropdown = new Subject<string[][]>();
   filteredItems$ = this.filterDropdown.asObservable();
   genericsLookup = {};
   /** Emits table columns that contain any data */
-  private filteredFieldsSource: ReplaySubject<
-    ColumnField[]
-  > = new ReplaySubject(1);
+  private filteredFieldsSource: ReplaySubject<ColumnField[]> =
+    new ReplaySubject(1);
 
   /** Observable for columns containing data */
   filteredFields$ = this.filteredFieldsSource.asObservable();
@@ -42,13 +41,9 @@ export class DataService {
   searches = new Map();
   regex: RegExp;
 
-  private async getFirebaseData(fire: any) {
-    const reference = await fire
-      .collection('dropdown')
-      .doc('dropdownItems')
-      .ref.get();
-
-    return await reference.data();
+  private getFirebaseData(): Observable<DocumentData> {
+    const reference = doc(this.firestore, 'dropdown/dropdownItems');
+    return docData(reference);
   }
 
   hasDrugStream(value: string): Observable<boolean | null> {
@@ -141,8 +136,21 @@ export class DataService {
     return this.drugSet.has(drugName.toLowerCase());
   }
 
+  private initializeData() {
+    this.getFirebaseData()
+      .pipe(take(1))
+      .subscribe((res: DocumentData) => {
+        console.log(res);
+        this.drugMap = this.createDrugMap(res);
+        const keys = Object.keys(res);
+        this.drugSet = new Set(keys);
+        this.drugIndex = this.createDrugIndex(keys);
+        this.loaded = true;
+      });
+  }
+
   constructor(
-    firestore: AngularFirestore,
+    private firestore: Firestore,
     private tableService: TableService,
     private columns: ColumnService
   ) {
@@ -150,17 +158,9 @@ export class DataService {
       (beers as any).default.map((item) => [item.EntryID, item])
     );
     this.genericsLookup = (generics as any).default;
-
-    this.getFirebaseData(firestore).then((res) => {
-      this.drugMap = this.createDrugMap(res);
-      const keys = Object.keys(res);
-      this.drugSet = new Set(keys);
-      this.drugIndex = this.createDrugIndex(keys);
-      this.loaded = true;
-    });
-
+    this.initializeData();
     this.activeTables.subscribe((tables: number[]) =>
-      tableService.emitSelectedTables(tables)
+      this.tableService.emitSelectedTables(tables)
     );
   }
 
@@ -194,36 +194,7 @@ export class DataService {
   }
 }
 
-export interface Drug {
-  name: string;
-  rxnormId: number;
-  EntryID: number;
-  uri: string;
-  brands?: [
-    {
-      name: string;
-      rxcui: number;
-    }
-  ];
-}
-export interface BeersEntry {
-  EntryID?: number;
-  DiseaseState?: string;
-  Category?: number;
-  Item?: string;
-  MinimumClearance?: number;
-  MaximumClearance?: number;
-  Interaction?: string;
-  Inclusion?: string;
-  Exclusion?: string;
-  Rationale?: string;
-  Recommendation?: string;
-  RecommendationLineTwo?: string;
-  ItemType?: string;
-  ShortName?: string;
-}
-
-export interface columnTemplate {
+export interface ColumnTemplate {
   name: string;
   value: string;
 }

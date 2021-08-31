@@ -1,14 +1,13 @@
 @use "palette" as *;
 @use "colors" as *;
 @use 'bem-mixin' as bem;
-@use 'grid' as gr;
 $content-height--full-header: calc(100vh - #{$header-full});
 
 $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
 
 .icon-button {
   display: none;
-  @include bem.modifier("nav-arrow") {
+  &--nav-arrow {
     position: absolute;
     right: 10px;
     top: 40vh;
@@ -17,7 +16,7 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
     width: 4rem;
     color: $secondary-2-1;
     background-color: transparentize($secondary-2-1, 0.9);
-    @include bem.element("icon") {
+    &__icon {
       height: inherit;
       width: inherit;
     }
@@ -42,36 +41,12 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
   height: 100%;
   width: 100%;
 }
-.aside {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  box-sizing: border-box;
 
-  @include bem.element("subtitle") {
-    z-index: 1;
-    color: white;
-    width: 100%;
-    height: 40px;
-    max-height: 40px;
-    font-size: 12pt;
-    background-color: #062f74;
-  }
-  @include bem.element("form") {
-    height: 100%;
-  }
-}
 .main {
   background-color: $light-gray-2;
   overflow-x: hidden;
   height: 100%;
   width: 100%;
-}
-
-.big-logo-container {
-  filter: grayscale(0.5);
-  opacity: 70%;
-  background-size: 20em 10%;
 }
 
 .overlay-container {
@@ -88,47 +63,41 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
   grid-template-rows: $header-shrunken auto;
   grid-template-columns: 1fr;
 
-  @include bem.state("sidenav-shown") {
+  &.is-sidenav-shown {
     grid-template-columns: 260px auto;
     @include bem.mobileWidth {
       grid-template-columns: 100vw;
       grid-template-rows: 100vh;
     }
   }
-  @include bem.element("wrapper") {
-    @include bem.modifier("main") {
-      grid-column: 2;
-      grid-row: 2;
+  &__main-wrapper {
+    grid-column: 2;
+    grid-row: 2;
 
-      //When mobile or sidenav is not shown
-      @include bem.state("full") {
-        grid-column: 1;
-        grid-row: 2;
-      }
-
-      @include bem.state("hidden") {
-        display: none;
-      }
-    }
-    @include bem.modifier("header") {
-      grid-column: 1 / span 2;
-      grid-row: 1;
-
-      @include bem.state("hidden") {
-        display: none;
-      }
-    }
-    @include bem.modifier("aside") {
+    //When mobile or sidenav is not shown
+    &.is-full {
       grid-column: 1;
       grid-row: 2;
-      @include bem.mobileWidth {
-        grid-column: 1;
-        grid-row: 1;
-      }
+    }
 
-      @include bem.state("hidden") {
-        display: none;
-      }
+    &.is-hidden {
+      display: none;
+    }
+  }
+  &__header-wrapper {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+  &__sidebar-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+    @include bem.mobileWidth {
+      grid-column: 1;
+      grid-row: 1;
     }
   }
 }
