@@ -34,12 +34,12 @@
     @include bem.mobileWidth {
       place-content: center;
     }
-    @include bem.state("searching") {
+    &.is-searching {
       place-content: flex-start;
     }
   }
 
-  @include bem.element("form") {
+  &__form {
     max-height: 70vh;
     overflow-y: auto;
     place-self: center;
@@ -50,10 +50,9 @@
       max-height: 55vh;
     }
   }
-  @include bem.element("logo") {
-  }
-  @include bem.element("wrapper") {
-    @include bem.modifier("form") {
+
+  &__wrapper {
+    &--form {
       padding-top: 15%;
       @include bem.mobileWidth {
         overflow-y: auto;
@@ -61,7 +60,7 @@
         padding-top: 0px;
       }
     }
-    @include bem.modifier("logo") {
+    &--logo {
       display: none;
 
       @include bem.mobileWidth {
