@@ -18,9 +18,14 @@ import { environment } from '../environments/environment';
 import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { caseSplitPipe } from './case-split.pipe';
+import { BrandComponent } from './components/brand/brand.component';
+import { VerticalComponent } from './components/brand/vertical/vertical.component';
 import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
+import {
+  SearchButtonsComponent,
+} from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
 import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
 import { TabComponent } from './components/layout/tab/tab.component';
 import {
@@ -54,8 +59,6 @@ import { LetDirective } from './directives/with.directive';
 import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './to-string.pipe';
-import { BrandComponent } from './components/brand/brand.component';
-import { VerticalComponent } from './components/brand/vertical/vertical.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +99,7 @@ import { VerticalComponent } from './components/brand/vertical/vertical.componen
     ExpandedRowCardComponent,
     BrandComponent,
     VerticalComponent,
+    SearchButtonsComponent,
   ],
   imports: [
     BrowserModule,

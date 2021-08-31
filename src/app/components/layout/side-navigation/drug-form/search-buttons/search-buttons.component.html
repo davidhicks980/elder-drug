@@ -1,0 +1,32 @@
+<div class="submit">
+  <button
+    type="submit"
+    (click)="emitSearch($event)"
+    (keydown.enter)="emitSearch($event)"
+    class="submit__button"
+  >
+    <mat-icon class="submit__button__icon" svgIcon="search"></mat-icon>
+    Search
+  </button>
+  <button
+    *ngIf="showEdit"
+    (click)="(emitEdit)"
+    (keydown.enter)="(emitEdit)"
+    class="submit__button"
+  >
+    <mat-icon class="submit__button__icon" svgIcon="pills_subtract"></mat-icon>
+    Edit Drugs
+  </button>
+  <button
+    *ngIf="showAbout"
+    (click)="(emitAbout)"
+    (keydown.enter)="(emitAbout)"
+    class="submit__button"
+  >
+    <mat-icon
+      class="submit__button__icon"
+      svgIcon="prescription_bottle"
+    ></mat-icon>
+    About
+  </button>
+</div>

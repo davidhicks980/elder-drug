@@ -1,58 +1,41 @@
 <ng-container
   *elderLet="{
-    focused: isFocused$ | async,
-    mobile: isMobile$ | async,
-    pinSearch: pinSearch | async,
-    panelOpen: panelOpen | async
+    focused: _isFocused$ | async,
+    focus: focusState$ | async,
+    mobile: _isMobile$ | async,
+    searchStarted: searchStarted$ | async,
+    typeahead: typeaheadState$ | async
   } as state"
-  ><form [formGroup]="drugsGroup">
+>
+  <form [formGroup]="drugsGroup">
     <section
-      cdkScrollable
       aria-label="You can look up drugs on Beers Criteria using this form"
       class="form-container"
-      [class.is-widened]="state.pinSearch"
+      [class.is-widened]="state.searchStarted"
     >
       <div
         cdkMonitorSubtreeFocus
-        (cdkFocusChange)="setFocusStatus($event)"
+        (cdkFocusChange)="setFocusStatus($event, -1)"
         class="search-field"
       >
-        <label
-          class="search-field__label"
-          [class.lifted]="drugInput.dirty"
-          [class.cdk-visually-hidden]="state.mobile"
-          for="search"
-          *ngIf="!pinSearch"
-        >
-          ADD DRUGS
-        </label>
-
         <div
-          #addDrugOrigin="matAutocompleteOrigin"
+          #autoOrigin="matAutocompleteOrigin"
           matAutocompleteOrigin
           class="search-field__input-container"
           [class.is-missing]="drugInput.errors?.invalidAsync"
           [class.is-invalid]="drugInput.invalid && drugInput.value.length"
-          [class.is-pinned]="state.pinSearch"
-          [class.is-open]="state.panelOpen"
+          [class.is-pinned]="state.searchStarted"
+          [class.is-open]="drugInput.value.length"
           [class.is-focused]="state.focused"
-          id="searchFieldInputContainer"
           name="search"
         >
           <button
-            [disabled]="!drugInput.valid"
             mat-icon-button
             class="add-button"
-            [matTooltip]="
-              drugInput.valid
-                ? 'Add ' + addDrugField?.value
-                : 'Choose a drug from the dropdown'
-            "
+            [disabled]="!drugInput.valid"
+            [matTooltip]="getTooltipText('search')"
             matTooltipPosition="above"
-            matTooltipShowDelay="200"
-            matTooltipHideDelay="200"
             matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
-            (click)="addInput(); addDrugTrigger.closePanel(); (stopPropagation)"
           >
             <mat-icon
               class="icon-button__icon"
@@ -63,20 +46,20 @@
           <input
             type="text"
             formControlName="drugInput"
-            (keydown.Enter)="addDrugTrigger?.closePanel()"
-            (input)="filterAutocomplete(addDrugField.value)"
+            attr.data-control="-1"
+            (keydown.Enter)="search(); autoTrigger?.closePanel()"
             class="search-field__input"
-            aria-label="Enter your drug name here. For example, 'zolpidem'"
-            #addDrugField
-            #addDrugTrigger="matAutocompleteTrigger"
-            [matAutocomplete]="autocompleteRef"
-            [matAutocompleteConnectedTo]="addDrugOrigin"
             placeholder="Zolpidem"
+            aria-label="Enter a drug name. For example, 'zolpidem'"
             aria-describedby="errors"
+            #searchInput
+            #autoTrigger="matAutocompleteTrigger"
+            [matAutocomplete]="autoRef"
+            [matAutocompleteConnectedTo]="autoOrigin"
           />
           <div
             class="search-field__spinner-container"
-            *ngIf="isPending$ | async; else addButton"
+            *ngIf="state.typeahead.pending; else addButton"
           >
             <mat-spinner diameter="25"></mat-spinner>
           </div>
@@ -85,24 +68,16 @@
             <button
               [disabled]="!drugInput.valid"
               mat-icon-button
-              class="add-button"
-              [matTooltip]="
-                drugInput.valid
-                  ? 'Add ' + addDrugField?.value
-                  : 'Choose a drug from the dropdown'
-              "
+              class="icon-button"
+              (click)="addTerm(); searchInput.focus(); stopPropagation($event)"
+              [matTooltip]="getTooltipText('add')"
               matTooltipPosition="above"
-              matTooltipShowDelay="200"
-              matTooltipHideDelay="200"
               matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
-              (click)="
-                addInput(); addDrugTrigger.closePanel(); (stopPropagation)
-              "
             >
               <mat-icon
                 class="icon-button__icon"
                 inline="true"
-                svgIcon="add"
+                svgIcon="add_ibm"
               ></mat-icon></button
           ></ng-template>
         </div>
@@ -112,6 +87,7 @@
           id="errors"
           [class.is-invalid]="drugInput.invalid"
           [class.is-missing]="drugInput.errors?.invalidAsync"
+          [@transitionMessages]="'enter'"
         >
           <div>
             <mat-icon
@@ -135,18 +111,26 @@
         </div>
       </div>
 
-      <div class="chip-list--container">
+      <section class="wrapper__edit-list">
         <mat-list
           formArrayName="drugList"
           #chipList
           aria-label="Drug selection"
+          class="edit-list"
         >
-          <div mat-subheader class="chip-list__title">SEARCH TERMS</div>
+          <div
+            *ngIf="drugListLength > 0"
+            mat-subheader
+            class="edit-list__title"
+          >
+            SELECTED DRUGS
+          </div>
 
           <mat-list-item
             *ngFor="let drugName of drugList.controls; index as i"
             tabIndex="-1"
             #searchList
+            class="edit-list__item editable-item"
           >
             <mat-icon
               mat-list-icon
@@ -158,110 +142,73 @@
               (mouseleave)="matTooltip.disabled = false"
               svgIcon="cancel"
               tabIndex="0"
-              class="remove-icon"
+              class="editable-item__icon"
               (click)="
-                removeOptionAt(i);
-                addDrugTrigger.closePanel();
-                (stopPropagation)
+                removeTermAt(i); autoTrigger.closePanel(); (stopPropagation)
               "
-              (keydown.enter)="removeOptionAt(i)"
+              (keydown.enter)="removeTermAt(i)"
             ></mat-icon>
             <span
-              #drugEditOrigin="matAutocompleteOrigin"
+              #editOrigin="matAutocompleteOrigin"
               matAutocompleteOrigin
-              class="edit-drug-field"
+              class="editable-item__field"
+              cdkMonitorSubtreeFocus
+              (cdkFocusChange)="setFocusStatus($event, i)"
               ><input
-                class="edit-drug-field__input"
+                class="editable-item__field__input"
                 (keydown.enter)="editDrugField.blur()"
-                (input)="filterAutocomplete(editDrugField.value)"
                 #editDrugField
                 #editDrugTrigger="matAutocompleteTrigger"
                 [formControlName]="i"
-                [matAutocomplete]="autocompleteRef"
-                [matAutocompleteConnectedTo]="drugEditOrigin"
+                attr.data-control="{{ i }}"
+                [matAutocomplete]="autoRef"
+                [matAutocompleteConnectedTo]="editOrigin"
+                #matTooltip="matTooltip"
                 matTooltip="Click to edit {{ drugName.value }}"
                 matTooltipPosition="below"
-                matTooltipShowDelay="200"
-                matTooltipHideDelay="200"
-                #matTooltip="matTooltip"
                 matTooltipClass="tooltip"
                 [class.is-missing]="getControlAt(i).errors?.invalidAsync"
               />
             </span>
 
-            <mat-divider *ngIf="i != drugListLength - 1"></mat-divider>
+            <mat-divider
+              class="editable-item__divider"
+              *ngIf="i != drugListLength - 1"
+            ></mat-divider>
           </mat-list-item>
         </mat-list>
         <mat-autocomplete
           #autocomplete
+          #autoRef="matAutocomplete"
           autoActiveFirstOption
-          #autocompleteRef="matAutocomplete"
-          class="drug-form-autocomplete autocomplete--mobile-search"
-          @fadeAutocomplete
-          (opened)="panelOpen.next(true)"
-          (closed)="panelOpen.next(false)"
+          class="typeahead"
+          (optionSelected)="chooseTerm($event)"
         >
-          <mat-option
-            #displayOption
-            [value]="option[0] + option[1]"
-            *ngFor="let option of autocompleteObserver | async"
-            (keydown.enter)="chooseOption(displayOption.value)"
-          >
-            <span>
-              <span style="font-weight: 500">{{ option[0] }}</span
-              >{{ option[1] }}</span
+          <div class="autocomplete__options">
+            <mat-option
+              [value]="option[0] + option[1]"
+              *ngFor="let option of state.typeahead.data"
+              [class.is-edit]="false"
+              [class.is-full]="true"
             >
-            <span *ngIf="addDrugTrigger.panelOpen">
+              <mat-icon class="mat-option__icon" svgIcon="search"></mat-icon>
+              <span>
+                <span style="font-weight: 500">{{ option[0] }}</span
+                >{{ option[1] }}</span
+              >
               <ng-container [ngSwitch]="option[2]">
                 <span class="chip chip--generic" *ngSwitchCase="'~g'"
                   >generic</span
                 >
                 <span class="chip chip--brand" *ngSwitchCase="'~b'">brand</span>
-              </ng-container></span
-            >
-          </mat-option>
+              </ng-container>
+            </mat-option>
+          </div>
         </mat-autocomplete>
-      </div>
-    </section>
-    <section class="submit">
-      <div class="submit__container">
-        <button
-          type="submit"
-          (click)="search(undefined)"
-          (keydown.enter)="search(undefined)"
-          class="submit__button"
-        >
-          <mat-icon class="submit__button__icon" svgIcon="search"></mat-icon>
-          <span style="margin-left: 5px" class="submit__button__text"
-            >Search</span
-          >
-        </button>
-        <button
-          type="submit"
-          (click)="search(undefined)"
-          (keydown.enter)="search(undefined)"
-          class="submit__button"
-        >
-          <mat-icon class="submit__button__icon" svgIcon="search"></mat-icon>
-          <span style="margin-left: 5px" class="submit__button__text"
-            >Edit Search</span
-          >
-        </button>
-      </div>
+      </section>
     </section>
   </form>
-  <ng-container>
-    <!--<button
-            mat-icon-button
-            (click)="removeOptionAt(i); trigger.closePanel(); stopPropagation()"
-            (keydown.enter)="removeOptionAt(i)"
-            *ngIf="i > 0"
-          >
-            <mat-icon
-              class="remove icon-button"
-              inline="true"
-              svgIcon="delete"
-            ></mat-icon>
-          </button>-->
-  </ng-container></ng-container
->
+  <section class="wrapper__buttons">
+    <ng-content select="[submit]"></ng-content>
+  </section>
+</ng-container>

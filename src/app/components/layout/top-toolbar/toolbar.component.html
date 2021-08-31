@@ -1,6 +1,10 @@
 <header @flyIn>
   <div class="toolbar">
-    <elder-brand></elder-brand>
+    <elder-brand
+      [fontRem]="2.5"
+      [logoRem]="2.5"
+      orientation="row"
+    ></elder-brand>
     <div class="button-wrapper">
       <button class="button-wrapper__button" (click)="openDesignDialog()">
         Design

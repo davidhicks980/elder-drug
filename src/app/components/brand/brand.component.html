@@ -1,7 +1,8 @@
 <div
   class="brand__wrapper"
-  [style.flexDirection]="direction"
+  [style.flexDirection]="orientation"
   [style.gap]="gapRem + 'rem'"
+  [class.is-row]="orientation === 'row'"
 >
   <svg
     id="Layer_1"
@@ -164,6 +165,11 @@
       </g>
     </g>
   </svg>
-
-  <h1 [style.fontSize]="fontRem + 'rem'" class="brand__title">Elder Drug</h1>
+  <h1
+    [style.fontSize]="fontRem + 'rem'"
+    class="brand__title"
+    [class.is-row]="orientation === 'row'"
+  >
+    Elder Drug
+  </h1>
 </div>

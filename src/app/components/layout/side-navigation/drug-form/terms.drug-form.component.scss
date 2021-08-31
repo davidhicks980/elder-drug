@@ -1,34 +1,50 @@
 @use 'palette' as pal;
 @use 'bem-mixin' as *;
-.edit-drug-field {
-  margin-bottom: 1px;
-  display: flex;
-  flex-direction: row;
 
-  @include element("input") {
-    outline: none;
-    background: none;
-    border: none;
-    padding: 10px 10px 8px 10px;
-    font-family: "Roboto";
-    cursor: text;
-    text-decoration: underline;
-    text-transform: capitalize;
+.wrapper__edit-list {
+}
 
-    &:focus {
+.edit-list {
+}
+.editable-item {
+  @include element("icon") {
+    fill: shade(pal.$light-gray-5, 20%);
+    cursor: pointer;
+    @include nativeState("hover") {
+      fill: pal.$complement-1;
+    }
+    @include nativeState("focus") {
       text-decoration: none;
       border-bottom: 2px solid pal.$primary-1;
       background-color: pal.$light-gray-1;
     }
-    @include state("ng-invalid") {
-      color: pal.$error-4;
-      text-decoration: none;
-      &:focus {
-        border-bottom: 2px solid pal.$error-4;
+  }
+  @include element("field") {
+    margin-bottom: 1px;
+    display: flex;
+    flex-direction: row;
+
+    @include element("input") {
+      outline: none;
+      background: none;
+      border: none;
+      padding: 10px 10px 8px 10px;
+      font-family: "Roboto";
+      cursor: text;
+      text-decoration: underline;
+      text-transform: capitalize;
+      &.ng-invalid {
         color: pal.$error-4;
-        font-weight: 500;
-        background-color: getHighlightColor(pal.$error-1);
+        text-decoration: none;
+        @include nativeState("focus") {
+          border-bottom: 2px solid pal.$error-4;
+          color: pal.$error-4;
+          font-weight: 500;
+          background-color: getHighlightColor(pal.$error-1);
+        }
       }
     }
+  }
+  @include element("divider") {
   }
 }

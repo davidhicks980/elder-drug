@@ -1,5 +1,10 @@
 @use "bem-mixin" as *;
 @use 'palette' as *;
+
+.autocomplete__options {
+  max-height: 300px;
+  overflow: auto;
+}
 .chip {
   font-size: 0.8em;
   border-radius: 0.5em;

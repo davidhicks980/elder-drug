@@ -1,11 +1,23 @@
-<ng-container
-  ><elder-brand
-    *ngIf="!(searchForm.isSearching | async)"
-    [gapRem]="1.3"
-    direction="column"
-  ></elder-brand>
-  <elder-drug-form
-    (isSearching)="shiftSearch($event)"
-    #searchForm
-  ></elder-drug-form>
-</ng-container>
+<div class="sidebar">
+  <div class="sidebar__wrapper--logo">
+    <elder-brand
+      *ngIf="!(searchForm.searchEmitter | async)"
+      [gapRem]="1.3"
+      orientation="column"
+      class="sidebar__brand"
+    ></elder-brand>
+  </div>
+  <div class="sidebar__wrapper--form">
+    <elder-drug-form
+      class="sidebar__form"
+      (searching)="setClass($event)"
+      #searchForm
+    >
+      <elder-search-buttons
+        submit
+        [showEdit]="false"
+        [showAbout]="true"
+      ></elder-search-buttons>
+    </elder-drug-form>
+  </div>
+</div>

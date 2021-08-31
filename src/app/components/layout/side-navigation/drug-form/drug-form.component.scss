@@ -60,7 +60,6 @@
   width: 100%;
   @include mobileWidth {
     grid-template-rows: var(--autocomplete-mobile-height);
-
     @include nativeState("focus-within") {
     }
   }
@@ -85,13 +84,15 @@
     min-height: 2.5em;
     display: flex;
     align-items: center;
+    //accounts for double width of validator bottom border
+    padding-bottom: 1px;
     @include mat.elevation-transition;
 
     @include mobileWidth {
       grid-row: 1;
       border-radius: 2rem;
       padding: 0 0.7rem;
-      @include multipleStates("open", "pinned") {
+      @include multipleStates("pinned") {
         border-radius: 0px;
         min-height: 3.5rem;
       }
@@ -121,9 +122,9 @@
     }
   }
   @include element("input") {
+    appearance: none;
     padding: 0px;
     margin: 0px;
-    background: none;
     padding-left: 0.6em;
     font-size: 12pt;
     outline: none;
@@ -131,7 +132,7 @@
     border: none;
     pointer-events: all;
     grid-column: 1;
-    width: calc(100% - 55px);
+    width: calc(100% - 35px);
     min-height: 2.5rem;
     @include mobileWidth {
       width: 100%;

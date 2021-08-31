@@ -105,6 +105,12 @@ export class AppComponent implements OnInit {
       )
     );
     iconRegistry.addSvgIcon(
+      'pills_subtract',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/edit_note.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
       'menu',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
     );
@@ -112,6 +118,12 @@ export class AppComponent implements OnInit {
       'heart-ekg',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/heart-ekg.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'prescription_bottle',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/prescription_bottle.svg'
       )
     );
     iconRegistry.addSvgIcon(

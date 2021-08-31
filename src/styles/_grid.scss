@@ -31,6 +31,7 @@ $arrangements: (
   flex-direction: $orient;
   gap: $gap;
   display: flex;
+  @content;
 }
 
 @mixin gridCol($start, $end) {

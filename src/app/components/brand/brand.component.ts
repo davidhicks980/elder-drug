@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-enum direction {
+enum orientation {
   ROW,
   COLUMN,
 }
@@ -11,9 +11,10 @@ enum direction {
   styleUrls: ['./brand.component.scss'],
 })
 export class BrandComponent {
-  @Input() direction: direction | 'column' | 'row' = direction.ROW;
+  @Input() orientation: orientation | 'column' | 'row' = orientation.ROW;
   @Input() fontRem: number = 3.5;
   @Input() logoRem: number = 3.5;
   @Input() gapRem: number = 1;
+
   constructor() {}
 }
