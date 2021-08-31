@@ -1,5 +1,6 @@
 @use 'palette' as pal;
 @use '~@angular/material' as mat;
+@use 'bem-mixin' as *;
 .autocomplete--mobile-search {
   .mat-option {
     height: 3.5rem;
