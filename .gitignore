@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/public
+/database
+/rxnorm-scripts
 # Only exists if Bazel was run
 /bazel-out
 
@@ -32,9 +35,7 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-/public
-/database
-/rxnorm-scripts
+
 /.sass-cache
 /connect.lock
 /coverage
