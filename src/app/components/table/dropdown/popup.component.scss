@@ -9,7 +9,7 @@
   justify-content: space-between;
   @include commonInput;
 
-  @include element("placeholder") {
+  &__placeholder {
     min-width: 10ch;
     overflow: hidden;
     white-space: nowrap;
@@ -17,12 +17,12 @@
     text-overflow: ellipsis;
     font-family: "Roboto";
   }
-  @include element("arrow") {
+  &__arrow {
     transform: rotate(0deg);
     transition: transform 0.2s ease-in;
     position: relative;
 
-    @include state("rotated") {
+    &.is-rotated {
       transform: rotate(180deg);
     }
   }

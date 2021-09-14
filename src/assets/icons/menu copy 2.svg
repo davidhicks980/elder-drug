@@ -1,0 +1,9 @@
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+
+    <rect style="fill: green" width="34" height="4" x="6" y="22"/>
+
+    <rect style="fill: red; transform: translate(31px ,-4px) rotate(45deg) scaleX(0.707)" width="34" height="4" x="6" y="12"/>
+    <rect style="fill: blue; transform: translate(-3px,19px) rotate(-45deg) scaleX(0.707)" width="34" height="4" x="6" y="32"/>
+    </svg>

@@ -1,41 +1,34 @@
-import { trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, ContentChild, Inject, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { flyInTemplate } from '../../../animations';
-import { DataService } from '../../../services/data.service';
+import { TemplateContentDirective } from '../../../directives/content-template.directive';
+import { TOOLBAR_TOKENS, ToolbarTokens, toolbarTokens } from './ToolbarTokens';
 
 @Component({
   selector: 'elder-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  animations: [
-    trigger(
-      'flyIn',
-      flyInTemplate(
-        {
-          startX: '0px',
-          startY: '-20%',
-          endX: '0px',
-          endY: '0px',
-          timing: '500ms ease',
-        },
-        {
-          startX: '0px',
-          startY: '0px',
-          endX: '0px',
-          endY: '-100%',
-          timing: '300ms ease-in',
-        }
-      )
-    ),
-    ,
-  ],
+  providers: [{ provide: TOOLBAR_TOKENS, useValue: toolbarTokens }],
 })
 export class ToolbarComponent {
-  public iconName = 'menu';
-  constructor(public fire: DataService, public dialog: MatDialog) {}
+  @ContentChild(TemplateContentDirective)
+  toggleContent: TemplateContentDirective;
 
+  public iconName = 'menu';
+  @Input() scrolled;
+  constructor(
+    public dialog: MatDialog,
+    @Inject(TOOLBAR_TOKENS) private toolbarTokens: ToolbarTokens
+  ) {}
+  get toggleSlot() {
+    if (
+      this.toolbarTokens.TOGGLE_TEMPLATE === this.toggleContent.templateContent
+    ) {
+      return this.toggleContent.templateRef;
+    } else {
+      return null;
+    }
+  }
   openDisclaimerDialog() {
     this.dialog.open(DisclaimerComponent, { width: '700px' });
   }

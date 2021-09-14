@@ -10,7 +10,7 @@
   max-height: 150px;
   @include gr.flexbox(row, 0px);
   flex-wrap: wrap;
-  @include nativeState("hover") {
+  &:hover {
     border: 1px solid #e5e5e5;
   }
   @include hoverable-shadow(3);
@@ -23,7 +23,7 @@
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 
-  @include element("header") {
+  &__header {
     font: 500 16px/20px Noto Sans JP;
     margin: 12px 16px 12px;
   }
@@ -36,7 +36,7 @@
   width: 70%;
   height: fit-content;
   overflow: auto;
-  @include element("content") {
+  &__content {
     margin: 6% 0%;
   }
 }
@@ -44,13 +44,13 @@
   height: 100%;
   max-height: 100px;
   width: 100%;
-  @include state("info") {
+  &.is-info {
     color: $primary-1;
   }
-  @include state("error") {
+  &.is-error {
     color: $error-1;
   }
-  @include state("warning") {
+  &.is-warning {
     color: $complement-1;
   }
 }

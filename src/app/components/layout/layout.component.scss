@@ -1,30 +1,10 @@
 @use "palette" as *;
 @use "colors" as *;
 @use 'bem-mixin' as bem;
+@use 'sass:color';
 $content-height--full-header: calc(100vh - #{$header-full});
 
 $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
-
-.icon-button {
-  display: none;
-  &--nav-arrow {
-    position: absolute;
-    right: 10px;
-    top: 40vh;
-    padding: 0px;
-    height: 4rem;
-    width: 4rem;
-    color: $secondary-2-1;
-    background-color: transparentize($secondary-2-1, 0.9);
-    &__icon {
-      height: inherit;
-      width: inherit;
-    }
-  }
-  @include bem.mobileWidth {
-    display: visible;
-  }
-}
 
 .disable-text-selection {
   -webkit-touch-callout: none;
@@ -40,13 +20,49 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
   border-bottom: 1px solid $light-gray-5;
   height: 100%;
   width: 100%;
+  &__tabs {
+    margin-left: 2.5rem;
+    &.is-shifted {
+      margin-left: calc(260px + 2.5rem);
+    }
+    &.is-animating {
+      margin-left: calc(260px + 2.5rem);
+    }
+    @include bem.mobileWidth {
+      margin-left: 0px;
+    }
+  }
 }
 
 .main {
-  background-color: $light-gray-2;
-  overflow-x: hidden;
-  height: 100%;
-  width: 100%;
+  &__content {
+    grid-area: content;
+    background-color: $light-gray-2;
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+    .is-animating & {
+      width: 100vw;
+    }
+  }
+  &__sidebar {
+    grid-area: side;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    @include bem.mobileWidth {
+      top: 0px;
+      position: absolute;
+      z-index: 10;
+      height: 100%;
+    }
+
+    &__toggle {
+      position: absolute;
+      top: -33px;
+      right: -33px;
+    }
+  }
 }
 
 .overlay-container {
@@ -56,48 +72,85 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
 }
 
 .layout {
-  width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: $header-shrunken auto;
-  grid-template-columns: 1fr;
 
-  &.is-sidenav-shown {
-    grid-template-columns: 260px auto;
+  &.hide-overflow {
+    overflow: hidden;
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 0px 1fr;
+    grid-template-rows: calc(100vh - 100px);
+    grid-template-areas: "side content";
+    &.is-animating {
+      grid-template-areas: "side content content";
+      grid-template-columns: 260px 260px 1fr;
+    }
+    &.is-toggled {
+      grid-template-columns: 260px 1fr;
+
+      @include bem.mobileWidth {
+        display: block;
+      }
+    }
     @include bem.mobileWidth {
-      grid-template-columns: 100vw;
-      grid-template-rows: 100vh;
+      display: block;
     }
   }
-  &__main-wrapper {
-    grid-column: 2;
-    grid-row: 2;
-
-    //When mobile or sidenav is not shown
-    &.is-full {
-      grid-column: 1;
-      grid-row: 2;
-    }
+  &__header {
+    position: sticky;
+    top: -60px;
+    height: 100px;
 
     &.is-hidden {
       display: none;
     }
   }
-  &__header-wrapper {
-    grid-column: 1 / span 2;
-    grid-row: 1;
+}
 
-    &.is-hidden {
-      display: none;
-    }
+.toolbar__toggle,
+elder-animated-x {
+  color: $gray-4;
+
+  &:hover {
+    color: $primary-4;
   }
-  &__sidebar-wrapper {
-    grid-column: 1;
-    grid-row: 2;
-    @include bem.mobileWidth {
-      grid-column: 1;
-      grid-row: 1;
-    }
+  &--link {
+    @extend .toolbar__toggle;
+  }
+}
+elder-menu-toggle elder-animated-x {
+  @include bem.mobileWidth {
+    width: var(--icon-toggle--height, 2rem);
+    height: var(--icon-toggle--width, 2rem);
+  }
+}
+.main__sidebar__toggle elder-menu-toggle {
+  * {
+    color: #fff;
+  }
+  --icon-button--background: #{color.adjust(#fff, $alpha: -0.6)};
+  --icon-button--outline: #{color.adjust(#fff, $alpha: -0.3)};
+  --icon-button--active: #{color.adjust(#fff, $alpha: -0.3)};
+  --icon-toggle--height: 1.5rem;
+  --icon-toggle--width: 1.5rem;
+}
+
+.legend {
+  z-index: 1;
+  color: white;
+  height: 40px;
+  max-height: 40px;
+  font-size: 12pt;
+  background-color: #062f74;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  font-weight: 400;
+  grid-area: legend;
+  @include bem.mobileWidth {
+    display: none;
   }
 }

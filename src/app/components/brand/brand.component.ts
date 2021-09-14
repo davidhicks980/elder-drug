@@ -14,7 +14,6 @@ export class BrandComponent {
   @Input() orientation: orientation | 'column' | 'row' = orientation.ROW;
   @Input() fontRem: number = 3.5;
   @Input() logoRem: number = 3.5;
-  @Input() gapRem: number = 1;
-
+  @Input() showTitle: boolean = true;
   constructor() {}
 }

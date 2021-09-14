@@ -16,10 +16,10 @@
   left: 0;
   margin-left: 1em;
 
-  @include modifier("generic") {
+  &--generic {
     background-color: $primary-1;
   }
-  @include modifier("brand") {
+  &--brand {
     background-color: $secondary-2-1;
   }
 }

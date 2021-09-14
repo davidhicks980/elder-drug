@@ -1,5 +1,6 @@
 @use 'palette' as pal;
 @use 'colors' as col;
+@use 'bem-mixin' as *;
 .brand__wrapper {
   position: relative;
   display: flex;
@@ -11,11 +12,17 @@
   }
 }
 
+.brand__logo {
+  margin-bottom: 0.2rem;
+}
 .brand__title {
   font-family: "Overpass";
   color: pal.$gray-5;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.15rem;
+  display: inline;
+
+  margin-top: 0.7rem;
   &__row {
     top: 10px;
     position: absolute;
@@ -30,6 +37,10 @@
   margin: 0px;
   line-height: 0px;
 }
+.title-container {
+  padding-top: 0.7rem;
+}
 h1 {
   margin: 0px;
+  font-size: 2.3rem;
 }

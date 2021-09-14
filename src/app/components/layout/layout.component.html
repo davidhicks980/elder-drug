@@ -1,85 +1,154 @@
-<ng-container *elderLet="sidebarOpen$ | async as sidebarOpen$">
-  <ng-container *elderLet="mobile$ | async as mobile$">
+<ng-container
+  *elderLet="{
+    sidebarOpen: sidebarOpen$ | async,
+    mobile: mobile$ | async,
+    animating: animating$ | async,
+    scrollDir: scrollDirection$ | async
+  } as state"
+>
+  {{ state.animating | json }}
+  <div
+    class="layout"
+    [class.hide-overflow]="state.animating.sidebar || state.sidebarOpen"
+  >
     <div
-      *elderLet="mobile$ && sidebarOpen$ as showMobileSidebar$"
-      class="layout"
-      [class.is-sidenav-shown]="sidebarOpen$"
+      *ngIf="!state.sidebarOpen || !state.mobile || state.animating.sidebar"
+      [class.is-mobile]="state.mobile"
+      class="layout__header"
     >
-      <div
-        *ngIf="!showMobileSidebar$"
-        [class.is-mobile]="mobile$"
-        class="layout__header-wrapper"
-      >
-        <header class="header">
-          <elder-toolbar></elder-toolbar>
-        </header>
-      </div>
-      <div *ngIf="sidebarOpen$" class="layout__sidebar-wrapper" @sidenavExpand>
-        <elder-sidebar>
-          <span legend>Search Beers Criteria</span>
-        </elder-sidebar>
-      </div>
-      <div
-        class="layout__main-wrapper"
-        [class.is-full]="!sidebarOpen$"
-        *ngIf="!showMobileSidebar$"
-      >
-        <main class="main">
-          <nav class="main__menu-bar">
-            <button
-              *ngIf="!sidebarOpen$ || !mobile$"
-              class="nav-button"
-              mat-icon-button
-              (click)="size.toggleSidenav()"
-            >
-              <mat-icon
-                [svgIcon]="sidebarOpen$ ? 'chevron_left' : 'menu'"
-              ></mat-icon>
-            </button>
-
-            <elder-tabs (tableSelected)="loaded = $event"> </elder-tabs>
-          </nav>
-          <div class="main__tables">
-            <elder-table-card>
-              <elder-table-title>
-                {{ tableService.tableTitle$ | async }}</elder-table-title
-              ><elder-table-description>{{
-                tableService.tableDescription$ | async
-              }}</elder-table-description>
-
-              <div class="table-field">
-                <elder-popup
-                  [selectedOptions]="columns.columnChangeObserver | async"
-                  #columnPopup
-                >
-                  <popup-content>
-                    <elder-column-selector #columns></elder-column-selector
-                  ></popup-content>
-                </elder-popup>
-              </div>
-              <div class="table-field">
-                <elder-popup
-                  [selectedOptions]="groups.groupChangeObserver | async"
-                  #groupPopup
-                >
-                  <popup-content
-                    ><elder-group-by #groups></elder-group-by
-                  ></popup-content>
-                </elder-popup>
-              </div>
-              <div class="table-field">
-                <button mat-button>Add filters</button>
-              </div>
-
-              <elder-table elderTableView elderResize class="elder-table">
-                <div class="table-field filter">
-                  <elder-filter><p label>Filter columns</p></elder-filter>
-                </div>
-              </elder-table>
-            </elder-table-card>
-          </div>
-        </main>
-      </div>
+      <elder-toolbar [scrolled]="state.scrollDir" class="header">
+        <ng-template
+          *ngIf="state.mobile"
+          [templateContent]="tokens.toolbar.toggle"
+        >
+          <elder-menu-toggle
+            [toggled]="state.sidebarOpen"
+            (toggle)="toggleSidenav()"
+          >
+            <elder-animated-x></elder-animated-x>
+          </elder-menu-toggle>
+        </ng-template>
+        <nav
+          elder-toolbar-tabs
+          class="header__tabs"
+          [class.is-shifted]="state.sidebarOpen"
+          [@FullSidebarShift]="getContentAnimationState(state)"
+          [class.is-animating]="state.animating.sidebar"
+        >
+          <elder-tabs
+            [rounded]="state.scrollDir"
+            (tableSelected)="loaded = $event"
+          >
+          </elder-tabs>
+        </nav>
+        <elder-brand
+          elder-toolbar-brand
+          [logoRem]="3"
+          [showTitle]="!state.mobile"
+          [fontRem]="2.6"
+          orientation="row"
+        ></elder-brand>
+        <button class="toolbar__toggle" link mat-icon-button>
+          <mat-icon svgIcon="github"></mat-icon>
+        </button>
+      </elder-toolbar>
     </div>
-  </ng-container>
+    <main
+      [class.is-toggled]="state.sidebarOpen"
+      class="layout__main"
+      [class.is-animating]="state.animating.sidebar"
+      [@FullSidebarShift]="getContentAnimationState(state)"
+      (@FullSidebarShift.start)="changeAnimationState($event, 'sidebar')"
+      (@FullSidebarShift.done)="changeAnimationState($event, 'sidebar')"
+      @MobileSidebarShift
+      *ngIf="state.sidebarOpen || !state.mobile"
+    >
+      <section class="main__sidebar">
+        <div
+          (click)="changeToggleState(state.sidebarOpen)"
+          class="main__sidebar__toggle"
+          *ngIf="!state.mobile"
+        >
+          <elder-menu-toggle
+            toggle
+            [toggled]="state.sidebarOpen"
+            (toggle)="toggleSidenav()"
+          >
+            <elder-animated-x></elder-animated-x>
+          </elder-menu-toggle>
+        </div>
+
+        <elder-sidebar
+          *ngIf="state.sidebarOpen || state.animating.sidebar"
+          #sidebar
+        >
+          <ng-template
+            *ngIf="state.mobile"
+            [templateContent]="tokens.sidebar.toggle"
+          >
+            <elder-menu-toggle
+              toggle
+              [toggled]="state.sidebarOpen"
+              (toggle)="toggleSidenav()"
+            >
+              <elder-animated-x></elder-animated-x>
+            </elder-menu-toggle>
+          </ng-template>
+
+          <ng-template
+            *ngIf="state.mobile"
+            [templateContent]="tokens.sidebar.brand"
+          >
+            <elder-brand brand orientation="column"></elder-brand>
+          </ng-template>
+
+          <elder-sidebar-legend> Search Beers Criteria </elder-sidebar-legend>
+        </elder-sidebar>
+      </section>
+      <section
+        @MobileContentShift
+        #mainWrapper
+        class="main__content"
+        *ngIf="!state.sidebarOpen || !state.mobile"
+      >
+        <elder-table-card>
+          <elder-table-title>
+            {{ tableService.tableTitle$ | async }}
+          </elder-table-title>
+          <elder-table-description>
+            {{ tableService.tableDescription$ | async }}
+          </elder-table-description>
+
+          <div class="table-field">
+            <elder-popup
+              [selectedOptions]="columns.columnChangeObserver | async"
+              #columnPopup
+            >
+              <span label>Toggle Fields</span>
+              <popup-content>
+                <elder-column-selector #columns></elder-column-selector>
+              </popup-content>
+            </elder-popup>
+          </div>
+          <div class="table-field">
+            <elder-popup
+              [selectedOptions]="groups.groupChangeObserver | async"
+              #groupPopup
+            >
+              <span label>Group By Field</span>
+              <popup-content>
+                <elder-group-by #groups></elder-group-by>
+              </popup-content>
+            </elder-popup>
+          </div>
+
+          <elder-table elderTableView elderResize class="elder-table">
+            <div class="table-field filter">
+              <elder-filter><p label>Filter columns</p></elder-filter>
+            </div>
+          </elder-table>
+        </elder-table-card>
+      </section>
+    </main>
+  </div>
 </ng-container>

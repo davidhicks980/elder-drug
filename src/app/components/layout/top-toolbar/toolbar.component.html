@@ -1,11 +1,13 @@
-<header @flyIn>
+<header>
   <div class="toolbar">
-    <elder-brand
-      [fontRem]="2.5"
-      [logoRem]="2.5"
-      orientation="row"
-    ></elder-brand>
-    <div class="button-wrapper">
+    <ng-container
+      *ngIf="toggleContent"
+      [ngTemplateOutlet]="toggleSlot"
+    ></ng-container>
+    <ng-content select="[elder-toolbar-brand]"></ng-content>
+    <ng-content select="[elder-toolbar-link]"></ng-content>
+
+    <!--<div class="button-wrapper">
       <button class="button-wrapper__button" (click)="openDesignDialog()">
         Design
       </button>
@@ -16,7 +18,9 @@
 
       <button class="button-wrapper__button" (click)="openDisclaimerDialog()">
         Disclaimer
-      </button>
-    </div>
+      </button>    </div>
+    -->
   </div>
+
+  <ng-content select="[elder-toolbar-tabs]"></ng-content>
 </header>

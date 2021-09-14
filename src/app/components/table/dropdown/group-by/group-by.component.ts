@@ -14,9 +14,9 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { map, take, takeUntil, tap } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 
-import { fadeInTemplate } from '../../../../animations';
+import { fadeInTemplate } from '../../../../animations/templates';
 import { VERTICAL_ARROW_KEYS } from '../../../../constants/keys.constants';
 import { ColumnService } from '../../../../services/columns.service';
 import { GroupByService } from '../../../../services/group-by.service';
@@ -329,7 +329,7 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
 
   watchChanges() {
     this.changes
-      .pipe(takeUntil(this.destroyed), tap(console.log))
+      .pipe(takeUntil(this.destroyed))
       .subscribe((groups) => this.groupService.changeGroups(groups));
   }
 

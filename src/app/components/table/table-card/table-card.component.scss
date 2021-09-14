@@ -15,3 +15,11 @@
     width: 100%;
   }
 }
+
+.table-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  justify-items: left;
+  padding: 1rem 0rem;
+  gap: 1rem;
+}

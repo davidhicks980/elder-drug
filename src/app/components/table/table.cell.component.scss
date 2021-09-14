@@ -2,10 +2,10 @@
 @use 'palette' as pal;
 
 .cell {
-  @include bem.modifier("header") {
+  &--header {
     line-height: 3rem;
     text-align: left;
-    font-family: "Roboto", sans-serif;
+    font-family: var(--body-font), sans-serif;
     font-weight: 500;
 
     border: 1px solid pal.$light-gray-4;
@@ -14,13 +14,13 @@
     background-color: white;
     color: pal.$gray-5;
     flex: 1;
-    @include bem.position("first-of-type") {
+    &:first-of-type {
       border-left: none;
-      @include bem.modifier("left-margin") {
+      &--left-margin {
         margin-left: 40px;
       }
     }
-    @include bem.element("content") {
+    &__content {
       margin-left: 10px;
       white-space: nowrap;
       overflow: hidden;
@@ -29,7 +29,7 @@
     }
   }
 
-  @include bem.nativeState("hover") {
+  &:hover {
     filter: grayscale(0.5);
   }
 }

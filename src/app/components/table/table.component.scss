@@ -4,11 +4,11 @@
 @use "bem-mixin" as *;
 
 .drug-table {
-  @include modifier("wrapper") {
+  &--wrapper {
     border: 1px solid $light-gray-5;
     border-radius: 4px;
   }
-  @include state("mobile") {
+  &.is-mobile {
     background: blue;
   }
 }
@@ -20,7 +20,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   border-bottom: 1px solid $light-gray-3;
-
   cursor: pointer;
   flex: 1;
   display: flex;
@@ -40,8 +39,8 @@
   flex: 1;
   border-right: 1px solid $light-gray-4;
 
-  @include nativeState("first-of-type") {
-    @include element("content") {
+  &:first-of-type {
+    &__content {
       margin-left: 40px;
     }
   }
@@ -51,7 +50,7 @@
   cursor: pointer;
   color: $gray-3;
   line-height: 30px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: var(--body-font), sans-serif;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,7 +59,7 @@
   display: flex;
   align-items: center;
 
-  &.--open {
+  &--open {
     background-color: tint($primary-1, 90%);
     color: $secondary-2-5;
     transition: background-color 1s;
@@ -77,7 +76,7 @@
 .cell__mobile-header {
   display: none;
   font-weight: 500;
-  font-family: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+  font-family: var(--body-font), Arial, Helvetica, sans-serif;
 }
 .cell__content {
   margin-left: 10px;
@@ -216,10 +215,9 @@ button.absolute-position {
   align-items: stretch;
   width: 100%;
   margin: 10px 0 10px 0;
-  gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-  @include element("table-field") {
+  &__table-field {
     flex: 1 1 150px; /*  Stretching: */
     flex: 0 1 150px; /*  No stretching: */
     margin: 5px;

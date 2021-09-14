@@ -1,4 +1,6 @@
-<label for="popup-trigger">{{ label }}</label>
+<label for="popup-trigger">
+  <ng-content select="[label]"></ng-content>
+</label>
 <div class="popup-wrapper">
   <button
     matTooltip="{{ selectedOptions | join | caseSplit }}"

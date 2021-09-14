@@ -26,7 +26,7 @@
   background-color: $light-gray-1;
   border-left: 1px dotted $gray-1;
   border-bottom: 1px dotted $gray-1;
-  @include bem.position("first-of-type") {
+  &:first-of-type {
     border-left: none;
   }
 }

@@ -19,6 +19,7 @@
   --autocomplete--height: 2.5em;
   --autocomplete--mobile-height: 3.5em;
   --border-color: #{$light-gray-4};
+  display: block;
 }
 
 .disable-text-selection {
@@ -148,10 +149,22 @@
 }
 
 .errors {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  margin-top: 10px;
+  display: inline-block;
+  height: 30px;
+  margin-top: 4px;
+  overflow: auto;
+  > * {
+    padding: 5px;
+  }
+  &__icon {
+    vertical-align: middle;
+    display: inline-block;
+    height: 35px;
+    margin-left: 0.9rem;
+  }
+  &__text {
+    vertical-align: middle;
+  }
 
   &.is-invalid {
     color: $error-4;
@@ -159,4 +172,9 @@
       color: $complement-1;
     }
   }
+}
+
+.section--padded {
+  width: 100%;
+  padding: 2rem 0px 1rem;
 }

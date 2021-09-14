@@ -201,6 +201,12 @@ export class AppComponent implements OnInit {
         'assets/icons/draggable.svg'
       )
     );
+    iconRegistry.addSvgIcon(
+      'github',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/logo-github.svg'
+      )
+    );
   }
   title = 'ElderDrug';
 }

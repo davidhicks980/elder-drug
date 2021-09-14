@@ -1,4 +1,4 @@
-import { BeersField } from '../../services/data.service';
+import { BeersField } from '../../services/BeersField';
 import { RowExpansionMixin } from './RowExpansionMixin';
 import { RowGroup } from './RowGroup';
 

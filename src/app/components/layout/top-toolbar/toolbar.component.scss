@@ -10,11 +10,10 @@ div.dialog {
 }
 
 header {
-  width: 100vw;
+  width: 100%;
   height: $header-shrunken-buffer;
   background-image: linear-gradient(to right, $primary-4, $primary-3);
-
-  position: fixed;
+  transition: transform 300ms ease-in;
 }
 
 mat-icon.mat-icon-24 {
@@ -37,8 +36,7 @@ div.center-left {
   transform-origin: left;
   letter-spacing: 1px;
   align-items: center;
-  gap: 10px;
-  @include bem.element("button") {
+  &__button {
     background: white;
     padding: 10px;
     border-radius: 5px;
@@ -47,7 +45,7 @@ div.center-left {
     position: relative;
     @include hoverable-shadow(2);
 
-    @include bem.nativeState("hover") {
+    &:hover {
       color: $primary-3;
     }
   }
@@ -61,7 +59,7 @@ div.center-left {
   display: -webkit-flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 1%;
+  padding: 0px 1rem;
 }
 
 @media screen and (min-width: 450px) and (max-width: 599.99px) {

@@ -34,7 +34,7 @@
   &.mat-autocomplete-panel {
     max-height: 400px;
     @include mobileWidth {
-      max-height: 30vh;
+      max-height: 100%;
     }
   }
   @include mat.elevation-transition;

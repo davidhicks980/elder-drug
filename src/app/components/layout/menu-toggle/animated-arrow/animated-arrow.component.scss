@@ -1,0 +1,33 @@
+.arrow__icon {
+  --translateX: 0px;
+  --translateY: 0px;
+  --rotate: 0deg;
+  --scale: 1;
+  --negative: 1;
+  fill: currentColor;
+  .bottom,
+  .top {
+    transition: transform 0.3s ease-in;
+    transform: translate(
+        calc(var(--negative) * var(--translateX)),
+        calc(var(--negative) * var(--translateY))
+      )
+      rotate(calc(var(--negative) * var(--rotate))) scaleX(var(--scale));
+    transform-origin: center center;
+    @at-root.toggled {
+      --scale: 0.707;
+      --translateX: 5%;
+      .bottom {
+        --translateY: -1%;
+        --rotate: -45deg;
+      }
+      .top {
+        --translateY: 1%;
+        --rotate: 45deg;
+      }
+    }
+  }
+  @at-root.right-arrow {
+    --negative: -1;
+  }
+}

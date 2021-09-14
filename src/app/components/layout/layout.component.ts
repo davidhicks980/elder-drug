@@ -1,57 +1,53 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { merge, Observable, of, Subject } from 'rxjs';
-
+import { AnimationEvent } from '@angular/animations';
+import { TemplatePortal } from '@angular/cdk/portal';
 import {
-  dropInAnimation,
-  logoSlideAnimation,
-  mobileSlidingSidenavAnimation,
-  slideInLeft,
-  slidingContentAnimation,
-  tableVisibleAnimation,
-} from '../../animations';
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { DataService } from '../../services/data.service';
 import { NavigationService } from '../../services/navigation.service';
 import { ResizeService } from '../../services/resize.service';
 import { Table, TableService } from '../../services/table.service';
+import { layoutAnimations } from './layout.animations';
+import { scrollDirectionCb } from './scroll-direction.function';
+import { SIDEBAR_TOKEN, SidebarTokens, sidebarTokens } from './side-navigation/SidebarTokens';
+import { TOOLBAR_TOKENS, ToolbarTokens, toolbarTokens } from './top-toolbar/ToolbarTokens';
 
+export enum ScrollDirection {
+  UP,
+  DOWN,
+}
 @Component({
   selector: 'elder-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  providers: [DataService],
+  providers: [
+    DataService,
+    { provide: SIDEBAR_TOKEN, useValue: sidebarTokens },
+    { provide: TOOLBAR_TOKENS, useValue: toolbarTokens },
+  ],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    slideInLeft,
-    dropInAnimation,
-    tableVisibleAnimation,
-    mobileSlidingSidenavAnimation,
-    logoSlideAnimation,
-    slidingContentAnimation,
-
-    trigger('sidenavExpand', [
-
-      transition(':enter', [
-        style({
-          transform: 'translateX(-100%)',
-        }),
-        animate('400ms ease', style({ transform: 'translate(0px)' })),
-      ]),
-      transition(':leave', [
-        style({
-          transform: 'translateX(0px)',
-        }),
-        animate(
-          '200ms ease',
-          style({
-            transform: 'translateX(-100%)',
-          })
-        ),
-      ]),
-    ]),
+    layoutAnimations.enterLeaveShift('MobileSidebarShift', '-700px'),
+    layoutAnimations.enterLeaveShift('MobileContentShift', '700px'),
+    layoutAnimations.statefulSidebarShift('FullSidebarShift', 260),
+    layoutAnimations.statefulSidebarShift('TabsSidebarShift', 260),
   ],
 })
 export class LayoutComponent {
+  @ViewChild('toggleTemplate') toggleTemplate: TemplateRef<HTMLElement>;
+  @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
+  @ViewChild('mainWrapper')
+  main: ElementRef<HTMLElement>;
   tables: Table[] = [];
   enabledTables: Observable<Table[]> = new Subject();
   selectedTable: string = '';
@@ -60,20 +56,88 @@ export class LayoutComponent {
   currentPage: number = 0;
   mobile$: Observable<boolean>;
   sidebarOpen$: Observable<boolean>;
-  initiallyMobile$: Observable<boolean>;
-  ngAfterViewInit() {
-    this.mobile$.subscribe(console.log);
+  togglePortalContent!: TemplatePortal;
+  scrollSource: Subject<ScrollDirection> = new Subject();
+  scrollDirection$ = this.scrollSource
+    .asObservable()
+    .pipe(map((direction) => direction === ScrollDirection.DOWN));
+  animationSource = new BehaviorSubject({
+    toggle: false,
+    sidebar: false,
+    content: false,
+    tabs: false,
+  });
+  animating$ = this.animationSource.asObservable();
+
+  toggleSidenav() {
+    this.size.toggleSidenav();
   }
+  getTogglePortal(condition: boolean) {
+    if (condition) {
+      return this.togglePortalContent;
+    }
+  }
+  getContentAnimationState({ mobile, sidebarOpen }) {
+    if (!mobile) {
+      return sidebarOpen ? 'open' : 'close';
+    }
+  }
+  changeToggleState(toggle: boolean) {
+    requestAnimationFrame(() => {
+      this.animationSource.next({
+        toggle,
+        sidebar: this.animationSource.value.sidebar,
+        content: this.animationSource.value.content,
+        tabs: this.animationSource.value.tabs,
+      });
+    });
+  }
+  changeAnimationState({ phaseName }: AnimationEvent, id: string) {
+    this.animationSource.next(
+      Object.assign({}, this.animationSource.value, {
+        [id]: phaseName === 'start',
+      })
+    );
+  }
+
+  ngAfterViewInit() {
+    this.togglePortalContent = new TemplatePortal(
+      this.toggleTemplate,
+      this.containerRef
+    );
+
+    let options = { root: null, threshold: null },
+      main = this.main.nativeElement;
+    options.root = document;
+    options.threshold = [0.4, 0.5, 0.6, 0.7, 0.8, 0.99];
+    const observer = new IntersectionObserver(
+      scrollDirectionCb(this.scrollSource),
+      options
+    );
+    observer.observe(main);
+  }
+  get tokens() {
+    return {
+      sidebar: {
+        brand: this._sidebarTokens.BRAND_TEMPLATE,
+        toggle: this._sidebarTokens.TOGGLE_TEMPLATE,
+      },
+      toolbar: { toggle: this._toolbarTokens.TOGGLE_TEMPLATE },
+    };
+  }
+
   constructor(
     public size: ResizeService,
     public nav: NavigationService,
-    public tableService: TableService
+    public tableService: TableService,
+    private containerRef: ViewContainerRef,
+    @Inject(SIDEBAR_TOKEN) private _sidebarTokens: SidebarTokens,
+    @Inject(TOOLBAR_TOKENS) private _toolbarTokens: ToolbarTokens
   ) {
     this.sidebarOpen$ = this.size.sidenavObserver;
-    this.initiallyMobile$ = of(window.innerWidth < 600);
     this.mobile$ = merge(
       this.size.mobileObserver,
-      this.initiallyMobile$
+      of(window.innerWidth < 600)
     ) as Observable<boolean>;
   }
 }

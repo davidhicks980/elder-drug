@@ -1,83 +1,17 @@
 @use "sass:string";
-/// Block Element
-/// @access public
-/// @param {String} $element - Element's name
-@mixin element($element) {
-  &__#{$element} {
-    @content;
-  }
-}
+@use "@davidhicks/sass-mixins/responsive" as *;
 
-@mixin sibling($sibling) {
-  & .#{$sibling} {
-    @content;
-  }
-}
-
-/// Block Modifier
-/// @access public
-/// @param {String} $modifier - Modifier's name
-@mixin modifier($modifier) {
-  &--#{$modifier} {
-    @content;
-  }
-}
-
-@mixin state($state) {
-  &#{".is-" + $state} {
-    @content;
-  }
-}
-
-@function _getMultiStateString($prefix, $sep, $states) {
-  $out: "";
-  $appendage: if($prefix == ":", "", "is-");
-
-  @each $state in $states {
-    $out: $prefix + $appendage + $state + $sep + $out;
-  }
-  @debug $out;
-  @return $out;
-}
-@mixin multipleStates($states...) {
-  &#{_getMultiStateString('.',',',$states)} {
-    @content;
-  }
-}
-@mixin comboStates($states...) {
-  &#{_getMultiStateString('.','',$states)} {
-    @content;
-  }
-}
-@mixin nativeState($state) {
-  &#{":" + $state} {
-    @content;
-  }
-}
-@mixin multipleNativeStates($states...) {
-  &#{_getMultiStateString(':',',&', $states)} {
-    @content;
-  }
-}
-@mixin comboNativeStates($states...) {
-  &#{_getMultiStateString(':','',$states)} {
-    @content;
-  }
-}
-@mixin position($position) {
-  &#{":" + $position} {
-    @content;
-  }
-}
-
-@mixin pseudoElement($pseudo) {
-  &#{"::" + $pseudo} {
-    @content;
-  }
-}
+$bp: (
+  "zero": 0,
+  "xsmall": 400px,
+  "small": 600px,
+  "medium": 900px,
+  "large": 1200px,
+  "xlarge": 1800px,
+);
 
 @mixin mobileWidth {
-  @media screen and (max-width: 599.99px) {
+  @include media-size("zero", "small") {
     @content;
   }
 }

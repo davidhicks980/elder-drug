@@ -66,10 +66,10 @@ $arrangements: (
 .grid {
   @include grid(12, false, 0.4rem);
   @for $_ from 1 through 12 {
-    @include element("#{$_}-col") {
+    &__#{$_}-col {
       @include gridRow(auto, $_);
     }
-    @include element("#{$_}-row") {
+    &__#{$_}-row {
       @include gridCol(auto, $_);
     }
   }

@@ -1,81 +1,5 @@
-import {
-  animate,
-  animation,
-  AnimationReferenceMetadata,
-  sequence,
-  state,
-  style,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
+import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 
-/** @params startOpacity, time, endOpacity */
-export const customFadeIn = animation([
-  style({
-    opacity: '{{ startOpacity }}',
-  }),
-  animate('{{ time }}', style({ opacity: '{{endOpacity}}' })),
-]);
-export const customFlyIn = animation([
-  style({
-    transform: 'translate({{startX}}, {{startY}})',
-  }),
-  animate(
-    '{{ timing }}',
-    style({ transform: 'translate({{endX}}, {{endY}})' })
-  ),
-]);
-
-export const enterLeaveTemplate = (
-  enterAnimation: AnimationReferenceMetadata,
-  leaveAnimation: AnimationReferenceMetadata
-) => [
-  transition(':enter', enterAnimation),
-  transition(':leave', leaveAnimation),
-];
-
-export const fadeInTemplate = (enterTiming, leaveTiming) =>
-  enterLeaveTemplate(
-    useAnimation(customFadeIn, {
-      params: {
-        startOpacity: 0,
-        endOpacity: 1,
-        time: enterTiming,
-      },
-    }),
-    useAnimation(customFadeIn, {
-      params: {
-        startOpacity: 1,
-        endOpacity: 0,
-        time: leaveTiming,
-      },
-    })
-  );
-export const flyInTemplate = (
-  enterPos: {
-    startX: string;
-    startY: string;
-    endX: string;
-    endY: string;
-    timing: string;
-  },
-  exitPos: {
-    startX: string;
-    startY: string;
-    endX: string;
-    endY: string;
-    timing: string;
-  }
-) =>
-  enterLeaveTemplate(
-    useAnimation(customFlyIn, {
-      params: enterPos,
-    }),
-    useAnimation(customFlyIn, {
-      params: exitPos,
-    })
-  );
 trigger('toolbarItemsFade', [
   transition(':enter', [
     style({ opacity: 0 }),
@@ -152,21 +76,6 @@ export const toolbarButtonAnimation = trigger('toolbarMargin', [
   state('slideIn', style({ transform: 'translateX(0px)' })),
   state('slideOut', style({ transform: 'translateX(0px)' })),
   transition('slideIn <=> slideOut', animate('240ms ease')),
-]);
-
-export const inputAnimation = trigger('inputSlideIn', [
-  transition(':enter', [
-    style({
-      transform: 'translateX(-300px)',
-    }),
-    animate('400ms ease'),
-  ]),
-  transition(':leave', [
-    style({
-      transform: 'translateX(0px)',
-    }),
-    animate('200ms ease'),
-  ]),
 ]);
 
 export const slidingContentAnimation = trigger('slidingContent', [

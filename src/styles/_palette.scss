@@ -133,6 +133,27 @@ $color: #fafafb;
   box-shadow: 0 1px * $depth 2px * $depth rgb(87 107 138 / #{12% * $depth});
 }
 
+@mixin hoverable-focus($depth) {
+  &:focus::after {
+    opacity: 0.8;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin: 0px;
+    @include shadow($depth);
+  }
+}
+
 @mixin hoverable-shadow($depth) {
   &:hover::after {
     opacity: 0.8;

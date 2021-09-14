@@ -23,6 +23,9 @@ import { BrandComponent } from './components/brand/brand.component';
 import { VerticalComponent } from './components/brand/vertical/vertical.component';
 import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { AnimatedArrowComponent } from './components/layout/menu-toggle/animated-arrow/animated-arrow.component';
+import { AnimatedXComponent } from './components/layout/menu-toggle/animated-x/animated-x.component';
+import { MenuToggleComponent } from './components/layout/menu-toggle/menu-toggle.component';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
 import {
   SearchButtonsComponent,
@@ -48,6 +51,8 @@ import { TableComponent } from './components/table/table.component';
 import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { CellPaddingDirective } from './directives/cell-padding.directive';
+import { ContentReferenceDirective } from './directives/content-reference.directive';
+import { TemplateContentDirective } from './directives/content-template.directive';
 import { CreationSpyDirective } from './directives/creation-spy.directive';
 import { ExpandableRowDirective } from './directives/expandable-row.directive';
 import { FilterDirective } from './directives/filter.directive';
@@ -105,6 +110,11 @@ export const firestore = provideFirestore(() => getFirestore());
     BrandComponent,
     VerticalComponent,
     SearchButtonsComponent,
+    MenuToggleComponent,
+    AnimatedArrowComponent,
+    AnimatedXComponent,
+    TemplateContentDirective,
+    ContentReferenceDirective,
   ],
   imports: [
     firebase,

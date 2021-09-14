@@ -2,15 +2,19 @@
   *elderLet="{
     focused: formControlFocused$ | async,
     mobile: mobile$ | async,
-    searchStarted: searchStarted$ | async,
+    searchInProgress: searchInProgress$ | async,
     typeahead: typeaheadState$ | async
   } as state"
 >
-  <form [formGroup]="drugsGroup">
+  <form
+    #drugform
+    (ngSubmit)="$event.preventDefault(); search($event)"
+    [formGroup]="drugsGroup"
+  >
     <section
       aria-label="You can look up drugs on Beers Criteria using this form"
       class="form-container"
-      [class.is-widened]="state.searchStarted"
+      [class.is-widened]="state.searchInProgress"
     >
       <div
         cdkMonitorSubtreeFocus
@@ -23,7 +27,7 @@
           class="search-field__input-container"
           [class.is-missing]="drugInput.errors?.invalidAsync"
           [class.is-invalid]="drugInput.invalid && drugInput.value.length"
-          [class.is-pinned]="state.searchStarted"
+          [class.is-pinned]="state.searchInProgress"
           [class.is-open]="drugInput.value.length"
           [class.is-focused]="state.focused"
           name="search"
@@ -31,9 +35,10 @@
           <button
             mat-icon-button
             class="add-button"
-            [disabled]="!drugInput.valid"
+            [disabled]="drugList.length === 0"
             [matTooltip]="getTooltipText('search')"
             matTooltipPosition="above"
+            (click)="$event.preventDefault()"
             matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
           >
             <mat-icon
@@ -44,9 +49,10 @@
           </button>
           <input
             type="text"
+            title="Search"
             formControlName="drugInput"
             attr.data-control="-1"
-            (keydown.Enter)="addTerm(); stopPropagation($event)"
+            (keydown.Enter)="searchInput.value.length || search($event)"
             class="search-field__input"
             placeholder="Zolpidem"
             aria-label="Enter a drug name. For example, 'zolpidem'"
@@ -67,8 +73,8 @@
             <button
               mat-icon-button
               class="icon-button"
-              (click)="addTerm(); searchInput.focus(); stopPropagation($event)"
-              [disabled]="!drugInput.valid"
+              (click)="addTerm(); searchInput.focus(); $event.preventDefault()"
+              [disabled]="!drugInput.valid || !drugList.valid"
               [matTooltip]="getTooltipText('add')"
               matTooltipPosition="above"
               matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
@@ -81,19 +87,25 @@
           ></ng-template>
         </div>
         <div
-          *ngIf="drugInput.invalid && !drugInput.hasError('required')"
           class="search-field__errors errors"
           id="errors"
           [class.is-invalid]="drugInput.invalid"
-          [class.is-missing]="drugInput.errors?.invalidAsync"
+          [class.is-missing]="drugInput.errors?.termNotPresent"
           [@transitionMessages]="'enter'"
+          *ngIf="
+            (drugInput.errors || drugList.errors) && drugInput.value.length > 0
+          "
         >
-          <div>
+          <span class="errors__icon">
             <mat-icon
-              [svgIcon]="drugInput.errors?.invalidAsync ? 'warn' : 'error'"
+              [svgIcon]="drugInput.errors?.termNotPresent ? 'warn' : 'error'"
             ></mat-icon>
-          </div>
-          <div>
+          </span>
+          <span class="errors__text">
+            <span role="alert" *ngIf="drugInput.errors?.duplicateTerm">
+              {{ drugInput.errors?.duplicateTerm | titlecase }} has already been
+              entered.
+            </span>
             <span role="alert" *ngIf="drugInput.errors?.minlength">
               Drug names must be at least 3 characters long.
             </span>
@@ -103,19 +115,32 @@
             <span role="alert" *ngIf="drugInput.errors?.pattern">
               Drug names should only contain alphanumeric letters.
             </span>
-            <span role="alert" *ngIf="drugInput.errors?.invalidAsync"
+            <span role="alert" *ngIf="drugInput.errors?.termNotPresent"
               >Only drugs from the dropdown menu have guidance.
             </span>
-          </div>
+          </span>
         </div>
       </div>
 
-      <section class="wrapper__edit-list">
+      <section
+        class="wrapper__edit-list section--constrained-width section--centered"
+        [@shiftEditList]="
+          (drugInput.errors || drugList.errors) && drugInput.value.length > 0
+            ? 'shift'
+            : 'unshift'
+        "
+      >
         <mat-list
           formArrayName="drugList"
           #chipList
           aria-label="Drug selection"
           class="edit__list"
+          [class.not-shifted]="
+            !(
+              (drugInput.errors || drugList.errors) &&
+              drugInput.value.length > 0
+            )
+          "
         >
           <div
             *ngIf="drugListLength > 0"
@@ -125,10 +150,12 @@
             SELECTED DRUGS
           </div>
 
-          <div class="edit__item-wrapper">
+          <div
+            class="edit__item-wrapper"
+            [class.list-shown]="drugList.length > 0"
+          >
             <mat-list-item
               *ngFor="let drugName of drugList.controls; index as i"
-              tabIndex="-1"
               #searchList
               class="edit__list__item edit-item"
               cdkMonitorSubtreeFocus
@@ -146,11 +173,9 @@
                 tabIndex="0"
                 class="edit-item__icon"
                 (click)="
-                  removeTermAt(i);
-                  searchInputAutoTrigger.closePanel();
-                  (stopPropagation)
+                  deleteListControl(i); searchInputAutoTrigger.closePanel()
                 "
-                (keydown.enter)="removeTermAt(i)"
+                (keydown.enter)="deleteListControl(i)"
               ></mat-icon>
               <span
                 #editOrigin="matAutocompleteOrigin"
@@ -159,7 +184,10 @@
                 ><input
                   class="edit-item__field__input"
                   (keydown.enter)="editDrugField.blur()"
-                  [class.is-missing]="getControlAt(i).errors?.invalidAsync"
+                  (blur)="editDrugField.value.length || deleteListControl(i)"
+                  (focusin)="editDrugTooltip.disabled = true"
+                  (focusout)="editDrugTooltip.disabled = false"
+                  [class.is-missing]="getListControl(i).errors?.invalidAsync"
                   [formControlName]="i"
                   [matAutocomplete]="autocomplete"
                   [matAutocompleteConnectedTo]="editOrigin"
@@ -185,6 +213,8 @@
           autoActiveFirstOption
           class="typeahead"
           (optionSelected)="chooseTerm($event)"
+          (opened)="updateActiveTrigger()"
+          (closed)="updateActiveTrigger()"
         >
           <div class="typeahead__options">
             <mat-option
@@ -221,9 +251,4 @@
       </section>
     </section>
   </form>
-  <ng-template *ngIf="portalOutlet.hasAttached() === false" #buttonTemplate>
-    <section class="wrapper__buttons">
-      <ng-content select="[submit]"></ng-content>
-    </section>
-  </ng-template>
 </ng-container>

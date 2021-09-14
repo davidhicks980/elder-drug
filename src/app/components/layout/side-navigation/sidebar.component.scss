@@ -4,21 +4,27 @@
 @use 'bem-mixin' as bem;
 :host {
   height: 100%;
-  display: grid;
-  grid-template-areas: "legend" "form";
-  grid-template-rows: 40px 70vh;
+  display: block;
 
   @include bem.mobileWidth {
-    &::before {
-      content: none;
-    }
-  }
-  @include bem.mobileWidth {
+    display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10vh 22vh 68vh;
     place-content: start center;
     box-shadow: none;
     grid-template-areas: "." "brand" "form";
+    &::before {
+      background-color: white;
+      content: "";
+      height: 100vh;
+      width: 100vw;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      bottom: 0px;
+      position: absolute;
+      overflow: hidden;
+    }
     &.is-searching {
       grid-template-rows: 100vh;
       grid-template-areas: "form";
@@ -29,6 +35,7 @@
   @include shadow(3);
   @include hoverable-shadow(5);
 }
+
 elder-drug-form {
   grid-area: form;
   overflow-y: auto;
@@ -36,6 +43,7 @@ elder-drug-form {
   justify-self: center;
   box-sizing: border-box;
   width: 100%;
+  transform: translateY(-40px);
   @include bem.mobileWidth {
     overflow-y: auto;
     padding-top: 0px;
@@ -55,15 +63,34 @@ elder-drug-form {
   align-items: center;
   margin: 0px;
   font-weight: 400;
+  position: relative;
+  top: 0px;
+  transform: translateY(-40px);
+  width: 100%;
   @include bem.mobileWidth {
     display: none;
   }
 }
 
-elder-brand {
+.toggle__container {
+  z-index: 0;
+  width: fit-content;
+  height: fit-content;
+  padding: 1rem;
+  position: absolute;
+  top: -52px;
+  right: -56px;
+  display: none;
+  @include bem.mobileWidth {
+    display: block;
+    position: static;
+    top: 0px;
+    left: 0px;
+  }
+}
+.brand__container {
   grid-area: brand;
   display: none;
-
   @include bem.mobileWidth {
     display: block;
   }

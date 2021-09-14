@@ -5,9 +5,11 @@ import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } f
 import { map, tap } from 'rxjs/operators';
 
 import { BeersEntry } from '../../interfaces/BeersEntry';
+import { Entries } from './Entries';
 import { ExpandingEntry } from './ExpandingEntry';
 import { Paginator } from './Paginator';
 import { RowExpansionMixin } from './RowExpansionMixin';
+import { RowGroup } from './RowGroup';
 
 /** Shared base class with MDC-based implementation. */
 export const MAX_SAFE_INTEGER = 9007199254740991;
@@ -313,12 +315,6 @@ export class BeersTableDataSource<
     this.observeColumnChanges(columnStream);
     this._updateChangeSubscription();
   }
-  private _createRow(item: BeersEntry) {
-    const row = {
-      ...item,
-    };
-    return row;
-  }
 
   private _createGroup({ groupHeader, field, _position }) {
     const group = {
@@ -332,25 +328,25 @@ export class BeersTableDataSource<
   _createRowId(rootIndex: number, layer: number, index: number) {
     return `${rootIndex}${layer}${index}`;
   }
-  private _flattenNestedNodes(nodes: any[], stack = []) {
-    nodes.forEach((item) => {
+  private _flattenNestedNodes(nodes: (RowGroup | Entries)[]) {
+    return nodes.reduce((flatArray, item) => {
       const hasChildren = Array.isArray(item?.rows);
       //If this is the first layer, set the root to the index of the first item of the tree
       //If the item exists, has children and has an array of rows, recurse again until no children are present.
       if (hasChildren) {
-        const group = this._createGroup(item);
-        stack.push(group);
-        this._flattenNestedNodes(item.rows, stack);
+        item = item as RowGroup;
+        const group = this._createGroup(item),
+          children = this._flattenNestedNodes(item.rows);
+        flatArray.push(group, ...children);
       } else if (typeof item === 'object') {
-        const row = this._createRow(item);
-        stack.push(row);
-      } else
+        flatArray.push(item);
+      } else {
         throw new TypeError(
           '[BeersTableDataSource._flattenNestedNodes]: One or more nodes are not the correct type'
         );
-    });
-
-    return stack;
+      }
+      return flatArray;
+    }, []);
   }
 
   private _groupBy(
@@ -446,9 +442,10 @@ export class BeersTableDataSource<
       let nestedNodes = this._groupBy(data, groups);
       return this._flattenNestedNodes(nestedNodes);
     }
-    data.forEach(
-      (point, index) =>
-        (point['_position'] = {
+    const newData = data.map((entry: BeersEntry, index) => {
+      return {
+        ...entry,
+        _position: {
           root: 0,
           id: `00${index}`,
           parentId: '000',
@@ -457,16 +454,17 @@ export class BeersTableDataSource<
           expanded: false,
           hasParent: false,
           index,
-        })
-    );
-    return this._flattenNestedNodes(data);
+        },
+      } as RowGroup;
+    });
+    return this._flattenNestedNodes(newData);
   }
-
   /**
    * Subscribe to changes that should trigger an update to the table's rendered rows. When the
    * changes occur, process the current state of the filter, sort, and pagination along with
    * the provided base data and send it to the table for rendering.
    */
+
   private _updateChangeSubscription() {
     // Sorting and/or pagination should be watched if MatSort and/or MatPaginator are provided.
     // The events should emit whenever the component emits a change or initializes, or if no
@@ -533,13 +531,13 @@ export class BeersTableDataSource<
   ]): string[] => {
     let exists = {};
     let displayedColumns = tableArray
-      .map((table) =>
-        headers.filter((header) =>
-          table[header] && !exists.hasOwnProperty(header)
+      .map((table) => {
+        return headers.filter((header) => {
+          return table[header] && !exists.hasOwnProperty(header)
             ? (exists[header] = true)
-            : false
-        )
-      )
+            : false;
+        });
+      })
       .flat();
     return displayedColumns;
   };
@@ -583,7 +581,6 @@ export class BeersTableDataSource<
     if (!this._renderChangesSubscription) {
       this._updateChangeSubscription();
     }
-    this._renderData.subscribe(console.log);
     return this._renderData.asObservable();
   }
 

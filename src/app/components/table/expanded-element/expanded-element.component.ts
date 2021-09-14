@@ -1,7 +1,7 @@
 import { trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
-import { fadeInTemplate, flyInTemplate } from '../../../animations';
+import { fadeInTemplate, flyInTemplate } from '../../../animations/templates';
 import { ExpandingEntry } from '../../table/ExpandingEntry';
 
 @Component({
@@ -12,22 +12,22 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
     trigger('fadeIn', fadeInTemplate('1s', '1s')),
     trigger(
       'flyIn',
-      flyInTemplate(
-        {
+      flyInTemplate({
+        enter: {
           startX: '0px',
           startY: '-20%',
           endX: '0px',
           endY: '0px',
-          timing: '200ms ease',
         },
-        {
+        enterTiming: '200 ms ease',
+        leave: {
           startX: '0px',
           startY: '0px',
           endX: '0px',
           endY: '-100%',
-          timing: '200ms ease-in',
-        }
-      )
+        },
+        leaveTiming: '200ms ease-in',
+      })
     ),
   ],
 })

@@ -24,9 +24,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   @ViewChild('templatePortalContent') template: TemplateRef<unknown>;
   @ViewChild('anchor') anchor: ElementRef;
   @ViewChild('trigger') trigger: ElementRef;
-
   @Input() selectedOptions: string[] = [''];
-  @Input() label = 'Select from the options below';
   @Input() ignoreClicks;
   component: OverlayRef | null;
   portal: TemplatePortal<unknown>;
@@ -75,7 +73,6 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
           break;
         case PopupActions.preventOpen:
           throw Error('action not implemented');
-          break;
         case PopupActions.open:
           this.attachPopup();
           break;
@@ -143,7 +140,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
           },
         ]),
       disposeOnNavigation: true,
-      hasBackdrop: false,
+      hasBackdrop: true,
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
   }

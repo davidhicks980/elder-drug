@@ -7,7 +7,6 @@ export class CreationSpyDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     setTimeout(() => this.spyInit.emit(true), 1000);
-    console.log('init');
   }
 
   ngOnDestroy() {

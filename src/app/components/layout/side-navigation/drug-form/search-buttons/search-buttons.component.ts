@@ -11,7 +11,7 @@ export class SearchButtonsComponent {
   @Output() edit: EventEmitter<void> = new EventEmitter();
   @Input() showEdit: boolean = false;
   @Input() showAbout: boolean = true;
-  emitSearch(event) {
+  emitSearch($event: Event) {
     this.search.emit();
   }
   emitEdit() {

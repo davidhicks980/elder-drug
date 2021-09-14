@@ -2,52 +2,46 @@
 @use 'bem-mixin' as *;
 @use 'grid' as *;
 
-.submit {
-  @include flexbox("row", 27px);
-  justify-content: center;
-  padding: 15px 0;
-  @include element("button") {
-    @include flexbox("row", 0.25em) {
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-      flex-wrap: nowrap;
-    }
-    appearance: none;
-    width: 8em;
-    height: 2em;
-    font-size: 1.25em;
-    color: $gray-5;
-    border-radius: 5px;
-    font-weight: 500;
-    background: $light-gray-2;
-    font-family: "Noto Sans JP", sans-serif;
-    position: relative;
-    color: $gray-5;
-    @include nativeState("focus") {
-      outline: none;
-    }
-    @include nativeState("hover") {
-      @include hoverable-shadow(2);
-      border: 1px solid $light-gray-3;
-
-      @include nativeState("active") {
-        filter: brightness(0.8);
-        outline: none;
-      }
-    }
-  }
+:host {
+  grid-template-columns: 50% 50%;
+  display: grid;
+  justify-items: center;
 }
 
-.icon-button {
-  stroke: none;
-  fill: $gray-2;
-  pointer-events: all;
-  &:disabled {
-    color: $light-gray-4;
+.submit__button {
+  appearance: none;
+  width: 10em;
+  height: 2em;
+  font-size: 1.25em;
+  color: $gray-5;
+  border-radius: 5px;
+  font-weight: 500;
+  background: $light-gray-2;
+  font-family: "Noto Sans JP", sans-serif;
+  position: relative;
+  color: $gray-5;
+  border: 1px solid $light-gray-3;
+  margin: 1px;
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 3px;
   }
-  @include element("icon") {
-    stroke: none;
-    font-size: 0.5rem;
+  @include hoverable-shadow(2);
+  &:focus {
+    outline: none;
+    &::before {
+      @include hoverable-focus(3);
+    }
+    border: 1.5px solid $secondary-2-1;
+  }
+  &:hover {
+    transition: border-color 300ms ease-in;
+
+    margin: 1px;
+    &:active {
+      filter: brightness(0.95);
+      border: 1.5px solid $secondary-2-1;
+    }
   }
 }

@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  place-items: end;
+  align-items: flex-end;
   height: 100%;
 }
 .nav-header {
@@ -84,31 +84,4 @@
 .tabs {
   height: 40px;
   counter-reset: tab;
-}
-.unstyled-button {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  -webkit-writing-mode: inherit !important;
-  text-rendering: inherit;
-  color: inherit;
-  letter-spacing: inherit;
-  word-spacing: inherit;
-  text-transform: inherit;
-  text-indent: inherit;
-  text-shadow: inherit;
-  display: inherit;
-  text-align: inherit;
-  align-items: inherit;
-  cursor: inherit;
-  background-color: inherit;
-  box-sizing: inherit;
-  margin: inherit;
-  font: inherit;
-  padding: inherit;
-  border-width: inherit;
-  border-style: inherit;
-  border-color: inherit;
-  border-image: initial;
 }

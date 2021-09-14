@@ -23,25 +23,25 @@
   @include hoverable-shadow(5);
   @include gr.flexbox(row, 10px);
   ////////////////////////////
-  @include nativeState("hover") {
+  &:hover {
     border: 1px solid transparent;
   }
-  @include element("wrapper-left") {
+  &__wrapper-left {
     width: 30%;
   }
-  @include element("wrapper-right") {
+  &__wrapper-right {
     width: 70%;
   }
-  @include element("icon") {
+  &__icon {
     height: 100%;
     width: 100%;
     padding: 0.5rem;
     color: $primary-1;
   }
-  @include element("title") {
+  &__title {
     color: $dark-gray-5;
   }
-  @include element("text") {
+  &__text {
     border-radius: 5px;
   }
 }
@@ -58,20 +58,20 @@
   margin-left: 1rem;
   margin-right: 1rem;
 
-  @include element("subtitle") {
+  &__subtitle {
     color: $gray-4;
     font: 500 16px/8px Noto Sans JP;
   }
 
-  @include element("header") {
+  &__header {
     @include gr.flexbox("row", 1rem);
     align-items: center;
-    @include element("title") {
+    &__title {
       color: $gray-5;
       margin: 0.5rem 0 0.25em 0;
       font-size: 1.75rem;
     }
-    @include element("chip") {
+    &__chip {
       min-height: 1.5rem;
       border-radius: 6px;
       background-color: $primary-3;
@@ -80,11 +80,11 @@
       cursor: pointer;
     }
   }
-  @include element("item-type") {
+  &__item-type {
     margin: 0.25rem 0;
   }
 
-  @include element("text") {
+  &__text {
     font-size: 1rem;
   }
 }

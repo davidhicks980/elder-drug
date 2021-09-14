@@ -4,79 +4,106 @@
       *ngFor="let tab of tables.tableStatus$ | async; index as index"
     >
       <li [style.zIndex]="index === currentTab ? 1 : 0" class="tab-button-li">
-        <button
-          (click)="handleTabClick(tab.TableNumber, index)"
-          tabindex="0"
-          class="unstyled-button"
-        >
-          <a>
-            <svg
-              [class.active]="index === currentTab"
-              [class.inactive]="index != currentTab"
-              [class.collapse]="index != 0"
-              [class.is-focused]="true"
-              class="tab-svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 200 37.5"
-              tracking-gradient
-              #tabSVG
-            >
-              <defs>
-                <linearGradient
-                  spreadMethod="pad"
-                  id="linear-base"
-                  x1="0%"
-                  y1="100%"
-                  x2="0%"
-                  y2="0%"
-                >
-                  <stop offset="0%" style="stop-color: rgba(0, 0, 0, 0.4)" />
-                  <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0.2)" />
-                  <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0.1)" />
-                  <stop offset="20%" style="stop-color: rgba(0, 0, 0, 0.05)" />
-                  <stop offset="40%" style="stop-color: rgba(0, 0, 0, 0.025)" />
-                  <stop offset="97%" style="stop-color: rgba(0, 0, 0, 0)" />
-                  <stop
-                    offset="100%"
-                    style="stop-color: rgba(255, 255, 255, 0.5)"
-                  />
-                </linearGradient>
-                <radialGradient id="radial-highlight">
-                  <stop offset="30%" stop-color="rgba(255,255,255,0.06)" />
-                  <stop offset="95%" stop-color="rgba(255,255,255,0)" />
-                </radialGradient>
-              </defs>
-
-              <path
-                d="M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z"
-                class="tab-svg--path shape"
-              />
-              <path
-                *ngIf="index != currentTab"
-                d="M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z"
-                fill="url(#linear-base)"
-              />
-              <rect
-                width="50px"
-                height="100px"
-                fill="url(#radial-highlight)"
-                class="tab-gradient"
-                id="tracking-gradient"
-                @fadeIn
-              />
-
-              <text
-                x="50%"
-                y="50%"
-                dominant-baseline="middle"
-                text-anchor="middle"
-                class="tab-svg--text"
+        <a (click)="handleTabClick(tab.TableNumber, index)" tabindex="0">
+          <svg
+            [class.active]="index === currentTab"
+            [class.inactive]="index != currentTab"
+            [class.collapse]="index != 0"
+            [class.is-focused]="true"
+            class="tab-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 37.5"
+            tracking-gradient
+            #tabSVG
+          >
+            <defs>
+              <linearGradient
+                spreadMethod="pad"
+                id="linear-base"
+                x1="0%"
+                y1="100%"
+                x2="0%"
+                y2="0%"
               >
-                {{ tab.ShortName }}
-              </text>
-            </svg>
-          </a>
-        </button>
+                <stop offset="0%" style="stop-color: rgba(0, 0, 0, 0.4)" />
+                <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0.2)" />
+                <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0.1)" />
+                <stop offset="20%" style="stop-color: rgba(0, 0, 0, 0.05)" />
+                <stop offset="40%" style="stop-color: rgba(0, 0, 0, 0.025)" />
+                <stop offset="97%" style="stop-color: rgba(0, 0, 0, 0)" />
+                <stop
+                  offset="100%"
+                  style="stop-color: rgba(255, 255, 255, 0.5)"
+                />
+              </linearGradient>
+              <radialGradient id="radial-highlight">
+                <stop offset="30%" stop-color="rgba(255,255,255,0.06)" />
+                <stop offset="95%" stop-color="rgba(255,255,255,0)" />
+              </radialGradient>
+            </defs>
+
+            <style type="text/css">
+              .tab {
+                fill: url(#linear-base);
+
+                clip-path: url(#path);
+              }
+              .tab.rounded {
+                clip-path: url(#path);
+              }
+
+              #clip.rounded {
+                transform: translate(3%, -3%) scale(0.9);
+                transition: transform 500ms ease-out;
+              }
+              #clip {
+                transform-origin: center center;
+                transform: translate(3%, -3%) scale(2);
+                transition: transform 500ms ease-out;
+              }
+            </style>
+
+            <clipPath id="path">
+              <rect
+                id="clip"
+                [class.rounded]="rounded"
+                class="cls-1"
+                width="187.52"
+                height="37.34"
+                rx="7.87"
+              />
+            </clipPath>
+            <path
+              [class.rounded]="rounded"
+              class="tab tab-svg--path"
+              d="M195.5,35.15a10.15,10.15,0,0,1-1.8-5.94V8.62c.1-3.45-2.22-8.29-6.3-8.61-51,0-123.85,0-174.8.1A5.75,5.75,0,0,0,8.1,2.88,11,11,0,0,0,6.3,8.62V29.21a10.15,10.15,0,0,1-1.8,5.94A5.75,5.75,0,0,1,0,37.72H200A5.75,5.75,0,0,1,195.5,35.15Z"
+            />
+            <path
+              *ngIf="index != currentTab"
+              d="M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z"
+              fill="url(#linear-base)"
+            />
+
+            <rect
+              width="50px"
+              height="100px"
+              fill="url(#radial-highlight)"
+              class="tab-gradient"
+              id="tracking-gradient"
+              @fadeIn
+            />
+
+            <text
+              x="50%"
+              y="50%"
+              dominant-baseline="middle"
+              text-anchor="middle"
+              class="tab-svg--text"
+            >
+              {{ tab.ShortName }}
+            </text>
+          </svg>
+        </a>
       </li>
     </ng-container>
   </ul>

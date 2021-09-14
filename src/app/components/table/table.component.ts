@@ -120,17 +120,17 @@ export class TableComponent implements AfterViewInit {
     }
   }
   _handleArrowKeys(event: KeyboardEvent) {
-    const cells = this._getKeyGridCells();
-    const currentElem = event.target as HTMLElement;
-    const row = Number(currentElem.getAttribute('row'));
-    const col = Number(currentElem.getAttribute('column'));
-    const { r, c } = this._getPositionFns(row, col);
-    const colCount = c.count(cells, row);
-    const rowCount = r.count(cells);
-    let toRow = 0;
-    let toCol = 0;
-    let colAbove = 0;
-    let colBelow = 0;
+    const cells = this._getKeyGridCells(),
+      currentElem = event.target as HTMLElement,
+      row = Number(currentElem.getAttribute('row')),
+      col = Number(currentElem.getAttribute('column')),
+      { r, c } = this._getPositionFns(row, col),
+      colCount = c.count(cells, row),
+      rowCount = r.count(cells);
+    let toRow = 0,
+      toCol = 0,
+      colAbove = 0,
+      colBelow = 0;
     switch (event.key) {
       case 'Right': // IE/Edge specific value
       case 'ArrowRight':
@@ -212,16 +212,3 @@ export class TableComponent implements AfterViewInit {
     return { r, c };
   }
 }
-
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Corresponds to `Number.MAX_SAFE_INTEGER`. Moved out into a variable here due to
- * flaky browser support and the value not being defined in Closure's typings.
- */

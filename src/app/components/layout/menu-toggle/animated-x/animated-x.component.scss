@@ -1,0 +1,36 @@
+.menu-icon {
+  height: inherit;
+  width: inherit;
+  transform-origin: center center;
+
+  * {
+    transform-origin: center center;
+  }
+
+  &:hover {
+    will-change: transform;
+  }
+
+  &__top {
+    transform: rotate(0deg) translateY(0%);
+    transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    :host(.is-toggled) & {
+      transform: rotate(45deg) translateY(20.8%);
+    }
+  }
+  &__middle {
+    transform: scaleX(1);
+    transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    :host(.is-toggled) & {
+      transform: scale(0.1);
+    }
+  }
+
+  &__bottom {
+    transform: rotate(0deg) translateY(0%);
+    transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    :host(.is-toggled) & {
+      transform: rotate(-45deg) translateY(-20.8%);
+    }
+  }
+}
