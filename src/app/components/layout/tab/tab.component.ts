@@ -18,22 +18,19 @@ export class TabComponent {
   track: boolean = false;
   columns: ColumnService;
   mouseOver = 0;
-  tables: TableService;
+  tableService: TableService;
   @Input() rounded: boolean = false;
-  @Output() tableSelected = new EventEmitter<boolean>();
+  @Output() activeTable = new EventEmitter<number>();
   handleTabClick(table: number, tabIndex: number) {
     this.currentTab = tabIndex;
-    this.columns.triggerColumnChange(table);
-    // this.tableSelected.emit(true);
-    this.tables.emitTableInformation(table);
+    this.activeTable.emit(tabIndex);
+    this.tableService.emitSelectedTable(table);
+  }
+  get tableOptions$() {
+    return this.tableService.tableOptions$;
   }
   constructor(columns: ColumnService, tables: TableService) {
-    this.tables = tables;
+    this.tableService = tables;
     this.columns = columns;
-    this.tables.tableStatus$.subscribe((tableStatuses) => {
-      let active = tableStatuses[0].TableNumber;
-      this.columns.triggerColumnChange(active);
-      this.tables.emitTableInformation(active);
-    });
   }
 }

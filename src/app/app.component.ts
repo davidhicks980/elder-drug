@@ -17,195 +17,179 @@ export class AppComponent implements OnInit {
     private firebase: DataService
   ) {
     iconRegistry.addSvgIcon(
+      'light',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/icons/filled-lightbulb.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
       'search',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/search.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'add-3',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add-ic.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'filter',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/filter.svg')
     );
     this.iconRegistry.addSvgIcon(
       'add',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-add.svg')
     );
     this.iconRegistry.addSvgIcon(
-      'add_ibm',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_ibm.svg')
+      'add-2',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_ibm.svg')
     );
     this.iconRegistry.addSvgIcon(
       'delete',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/ion-trash.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-trash.svg')
     );
     iconRegistry.addSvgIcon(
       'error',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/error.svg')
     );
     iconRegistry.addSvgIcon(
       'warn',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion_warn.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion_warn.svg')
     );
     iconRegistry.addSvgIcon(
       'unfold_less',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/unfold_less.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/unfold_less.svg')
     );
     iconRegistry.addSvgIcon(
       'remove_circle_outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/remove_circle_outline.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'remove',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/ion-remove.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ion-remove.svg')
     );
     iconRegistry.addSvgIcon(
       'add_circle_outline',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/add_circle_outline.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'unfold_more',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/unfold_more.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/unfold_more.svg')
     );
     iconRegistry.addSvgIcon(
       'expand_less',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/expand_less.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/expand_less.svg')
     );
     iconRegistry.addSvgIcon(
       'chevron_right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_right.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg')
     );
     iconRegistry.addSvgIcon(
       'overflow_menu_vertical',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/overflow_menu_vertical.svg'
       )
     );
 
     iconRegistry.addSvgIcon(
       'chevron_left',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_left.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_left.svg')
     );
     iconRegistry.addSvgIcon(
       'arrow_right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/arrow_right.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/arrow_right.svg')
     );
     iconRegistry.addSvgIcon(
       'pills_subtract',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/edit_note.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/edit_note.svg')
     );
     iconRegistry.addSvgIcon(
       'menu',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg')
     );
     iconRegistry.addSvgIcon(
       'heart-ekg',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/heart-ekg.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/heart-ekg.svg')
     );
     iconRegistry.addSvgIcon(
       'prescription_bottle',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/prescription_bottle.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'chevron_down',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/chevron_down.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_down.svg')
     );
     iconRegistry.addSvgIcon(
       'kidneys',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/kidneys.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/kidneys.svg')
     );
     iconRegistry.addSvgIcon(
       'capsule',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/capsule.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/capsule.svg')
     );
     iconRegistry.addSvgIcon(
       'general-health',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/general-health.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'elder_drug_logo',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/elder_drug_logo.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'scale',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/scale.svg')
     );
     iconRegistry.addSvgIcon(
       'tab_left',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_left.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_left.svg')
     );
     iconRegistry.addSvgIcon(
       'tab_right',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/tab_right.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tab_right.svg')
     );
     iconRegistry.addSvgIcon(
       'cancel',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cancel.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cancel.svg')
     );
     iconRegistry.addSvgIcon(
       'remove_sharp',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/remove.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/remove.svg')
     );
     iconRegistry.addSvgIcon(
       'expand_more',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/expand_more.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/expand_more.svg')
     );
     iconRegistry.addSvgIcon(
       'x',
-      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x.svg')
     );
     iconRegistry.addSvgIcon(
       'x_filled',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/x_filled_circle.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'x_outlined',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
+      sanitizer.bypassSecurityTrustResourceUrl(
         'assets/icons/x_outlined_circle.svg'
       )
     );
     iconRegistry.addSvgIcon(
       'draggable',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/draggable.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/draggable.svg')
     );
     iconRegistry.addSvgIcon(
       'github',
-      this.sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/logo-github.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/logo-github.svg')
     );
   }
   title = 'ElderDrug';

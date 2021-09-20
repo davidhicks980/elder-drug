@@ -7,8 +7,11 @@
   outline: none;
   text-align: left;
   justify-content: space-between;
-  @include commonInput;
-
+  @include common-input;
+  &__label {
+    background: white;
+    font-weight: 500;
+  }
   &__placeholder {
     min-width: 10ch;
     overflow: hidden;
@@ -18,12 +21,6 @@
     font-family: "Roboto";
   }
   &__arrow {
-    transform: rotate(0deg);
-    transition: transform 0.2s ease-in;
     position: relative;
-
-    &.is-rotated {
-      transform: rotate(180deg);
-    }
   }
 }

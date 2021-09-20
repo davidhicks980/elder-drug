@@ -5,6 +5,6 @@ export default function maxArrayLength(max: number): ValidatorFn {
     if (control.value.length <= max) {
       return null;
     }
-    return { termLimit: { value: control.value } };
+    return { termlimit: { value: control.value } };
   };
 }

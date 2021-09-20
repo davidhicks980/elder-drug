@@ -1,0 +1,10 @@
+<ng-container *elderLet="this.message$ | async as message">
+  <div *ngIf="isShown">
+    <span class="icon">
+      <mat-icon [svgIcon]="message.type"></mat-icon>
+    </span>
+    <span class="text">
+      <span>{{ message.message }} </span>
+    </span>
+  </div>
+</ng-container>

@@ -2,59 +2,59 @@
 @use "grid" as gr;
 @use "bem-mixin" as *;
 :host {
+  --expanded-row--header-font: var(--header-font), sans-serif;
+  --expanded-row--body-font: var(--body-font), sans-serif;
   border-radius: 8px;
   color: $primary-5;
   background: white;
+  border: 1px solid $light-gray-4;
+  display: grid;
+  grid-template-columns: 1fr 2em;
+  grid-template-areas: "header icon" "content content";
+  padding: 1rem 1rem;
+  max-width: 450px;
   position: relative;
-  border: 1px solid $light-gray-5;
-  max-height: 150px;
-  @include gr.flexbox(row, 0px);
-  flex-wrap: wrap;
+  gap: 0.35rem;
+  transition: border-color 300ms ease-in;
   &:hover {
-    border: 1px solid #e5e5e5;
+    border-color: tint($primary-1, 20%);
   }
   @include hoverable-shadow(3);
 }
+.content {
+  grid-area: content;
+  margin: 0;
+  font-family: var(--expanded-row--body-font);
+  color: $gray-4;
+}
 
-.header-wrapper {
-  background: $light-gray-1;
-  width: 100%;
-  border-bottom: 1px solid $light-gray-4;
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
+.header {
+  color: $gray-5;
+  grid-area: header;
+  font: 500 1.2rem/1.4rem var(--expanded-row--header-font);
+  padding: 0.3rem 0;
+  margin: 0;
+}
 
-  &__header {
-    font: 500 16px/20px Noto Sans JP;
-    margin: 12px 16px 12px;
-  }
-}
-.wrapper-left {
-  width: 30%;
-  overflow: hidden;
-}
-.wrapper-right {
-  width: 70%;
-  height: fit-content;
-  overflow: auto;
-  &__content {
-    margin: 6% 0%;
-  }
-}
 .icon {
-  height: 100%;
-  max-height: 100px;
-  width: 100%;
+  grid-area: icon;
+  width: 2em;
+  height: 2em;
+  color: $gray-4;
+  transition: color 500ms ease-in;
   &.is-info {
-    color: $primary-1;
+    :host(:hover) & {
+      color: tint($primary-1, 20%);
+    }
   }
   &.is-error {
-    color: $error-1;
+    :host(:hover) &:hover {
+      color: $error-1;
+    }
   }
   &.is-warning {
-    color: $complement-1;
+    :host(:hover) &:hover {
+      color: $complement-1;
+    }
   }
-}
-
-.text {
-  border-radius: 5px;
 }

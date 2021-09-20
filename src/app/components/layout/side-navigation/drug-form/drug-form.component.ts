@@ -17,10 +17,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { matFormFieldAnimations } from '@angular/material/form-field';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { distinct, distinctUntilChanged, filter, map, take, takeUntil, tap } from 'rxjs/operators';
-import { ResizeService } from 'src/app/services/resize.service';
 
-import { TypeaheadState } from '../../../../interfaces/typeahead-state.type';
+import { TypeaheadState } from '../../../../interfaces/TypeaheadState';
 import { DataService } from '../../../../services/data.service';
+import { ResizeService } from '../../../../services/resize.service';
+import { SearchService } from '../../../../services/search.service';
 import { CustomValidators } from '../../../../validators/index.validators';
 import { drugFormAnimations } from './drug-form.animations';
 import { SearchButtonsComponent } from './search-buttons/search-buttons.component';
@@ -42,6 +43,8 @@ import { SearchButtonsComponent } from './search-buttons/search-buttons.componen
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrugFormComponent implements OnDestroy, AfterViewInit {
+  _destroyedSource = new Subject();
+  destroyed$ = this._destroyedSource.asObservable().pipe(take(1));
   @Output('searching') searchEmitter: EventEmitter<boolean> =
     new EventEmitter();
   @ViewChild(MatAutocomplete) typeahead: MatAutocomplete;
@@ -51,8 +54,6 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   @ViewChild('buttonOutlet')
   portalOutlet: CdkPortalOutlet;
   activeControl: number = -1;
-  _destroyedSource = new Subject();
-  destroyed$ = this._destroyedSource.asObservable().pipe(take(1));
   drugsGroup: FormGroup;
   _focusSource = new BehaviorSubject({ focused: false, control: -1 });
   focusState$ = this._focusSource.asObservable();
@@ -65,19 +66,32 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   searchComponentPortal: ComponentPortal<SearchButtonsComponent>;
   inputStream = new BehaviorSubject('');
   buttonPortal: TemplatePortal<unknown>;
+  destroy$ = this._destroyedSource.asObservable();
+
+  errorMessages: Record<string, string> = {
+    duplicate: `Drug has already been entered.`,
+    minlength: `Drug names must be at least 3 characters long.`,
+    maxlength: ` Drug names should be fewer than 70 characters.`,
+    pattern: `Drug names should only contain alphanumeric letters.`,
+  };
+  warningMessages: Record<string, string> = {
+    termabsent: `Only drugs from the dropdown menu have guidance.`,
+  };
 
   ngOnDestroy() {
     this._destroyedSource.next(true);
   }
 
   ngOnInit() {
-    this.drugList.controls = this.database.lastSearch.map(
+    this.drugList.controls = this.searchService.lastSearch.map(
       (v) => new FormControl(v)
     );
     this._watchForInputState(this.drugInput, 'PENDING').subscribe((pending) =>
       this.updateTypeahead({ pending })
     );
-    this._handleFormValueChanges(this.database, this.drugsGroup).subscribe();
+    this._handleFormValueChanges(this.drugsGroup)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
   ngAfterViewInit() {
     const searchObservers = [
@@ -85,12 +99,14 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
       this.typeaheadState$.pipe(map((s) => s.length === 0)),
     ];
     this.searchInProgress$ = this.observeSearchProgress$(searchObservers).pipe(
+      takeUntil(this.destroy$),
       filter((val) => val === true),
       take(1)
     );
-    this.searchInProgress$.subscribe((isSearching) =>
-      this.searchEmitter.emit(isSearching)
-    );
+    takeUntil(this.destroy$),
+      this.searchInProgress$.subscribe((isSearching) =>
+        this.searchEmitter.emit(isSearching)
+      );
 
     this.mobile$ = this.size.mobileObserver;
   }
@@ -98,6 +114,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   constructor(
     private size: ResizeService,
     public database: DataService,
+    private searchService: SearchService,
     private form: FormBuilder,
     public dialog: MatDialog
   ) {
@@ -134,11 +151,11 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     );
   }
 
-  private _handleFormValueChanges(database, group: FormGroup) {
+  private _handleFormValueChanges(group: FormGroup) {
     return group.valueChanges.pipe(
       tap(({ drugList }: { drugList: string[] }) => {
         if (Array.isArray(drugList)) {
-          this.database.storeHistory(drugList);
+          this.searchService.storeHistory(drugList);
         }
       }),
       map((form: { drugList: string[]; drugInput: string }) => {
@@ -146,8 +163,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
           ? form.drugList[this.activeControl]
           : form.drugInput;
       }),
-      distinctUntilChanged(),
-      map((input: string) => this.lookupTypeaheadTerms(input, database)),
+      map((input: string) => this.lookupTypeaheadTerms(input)),
       map((data: string[][]) => {
         return this.updateTypeahead({
           data,
@@ -203,7 +219,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     $event.preventDefault();
     let search = [...this.drugList.value];
     if (search.length > 0) {
-      this.database.searchDrugs(search);
+      this.searchService.searchDrugs(search);
       this.size.toggleSidenav();
     }
   }
@@ -222,16 +238,16 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     input: { sync: ValidatorFn[]; async: AsyncValidatorFn[] };
     array: { sync: ValidatorFn[]; async: AsyncValidatorFn[] };
   } {
-    const getHasDrugFn = function (drugDatabase: DataService) {
+    const getHasDrugFn = function (drugDatabase: SearchService) {
       return function (value: string) {
-        return drugDatabase.hasDrug(value);
+        return drugDatabase.validateDrugExists(value);
       };
     };
     return {
       input: {
         async: [
           CustomValidators.async.termExistsInDatabase(
-            getHasDrugFn(this.database),
+            getHasDrugFn(this.searchService),
             300
           ),
         ],
@@ -265,7 +281,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     return this.drugList.controls[index];
   }
 
-  lookupTypeaheadTerms(value: string, database: DataService) {
+  lookupTypeaheadTerms(value: string) {
     const sliceString = (item: string) => [
       value,
       item.slice(value.length, -2),
@@ -274,7 +290,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     if (!value || value.length <= 1) {
       return [];
     } else if (value.length > 1) {
-      return database.filterValues(value).map(sliceString);
+      return this.searchService.filterTypeahead(value).map(sliceString);
     }
   }
   updateActiveTrigger() {

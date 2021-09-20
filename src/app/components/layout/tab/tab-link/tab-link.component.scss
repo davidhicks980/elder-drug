@@ -1,0 +1,71 @@
+@use 'palette' as *;
+.tab__path {
+  fill: url(#linear-base);
+  clip-path: url(#path);
+}
+.tab__path.is-rounded {
+  clip-path: url(#path);
+}
+
+.tab__clip-path.is-rounded {
+  transform: translate(3%, -3%) scale(0.9);
+  transition: transform 500ms ease-out;
+}
+.tab__clip-path {
+  transform-origin: center center;
+  transform: translate(3%, -3%) scale(2);
+  transition: transform 500ms ease-out;
+}
+
+:host:not([active]) .tab__path {
+  fill: $primary-1;
+  & ~ .tab__text {
+    fill: $light-gray-2;
+  }
+  &:hover {
+    fill: tint($primary-1, 50%);
+  }
+}
+:host([active]) .tab {
+  color: $dark-gray-2;
+  box-shadow: none;
+
+  .tab__path {
+    fill: $light-gray-2;
+    box-shadow: none;
+    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+      fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    & + .tab__text {
+      fill: $dark-gray-2;
+    }
+    &:hover {
+      color: $primary-1;
+    }
+  }
+}
+.tab {
+  cursor: pointer;
+  font: "Roboto Condensed", sans-serif;
+  display: block;
+  position: relative;
+  z-index: 0;
+  bottom: 0;
+  height: 37.5px;
+  background-image: linear-gradient(transparent 99.5%, white);
+  overflow: hidden;
+  &__text {
+    fill: black;
+  }
+  :host([collapse]) & {
+    margin-left: -14px;
+  }
+
+  &:hover {
+    fill: white;
+    transition: all 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

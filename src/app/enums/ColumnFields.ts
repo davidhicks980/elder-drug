@@ -1,0 +1,17 @@
+export enum ColumnField {
+  EntryID = 'EntryID',
+  DiseaseState = 'DiseaseState',
+  Category = 'Category',
+  TableDefinition = 'TableDefinition',
+  Item = 'Item',
+  MinimumClearance = 'MinimumClearance',
+  MaximumClearance = 'MaximumClearance',
+  DrugInteraction = 'DrugInteraction',
+  Inclusion = 'Inclusion',
+  Exclusion = 'Exclusion',
+  Rationale = 'Rationale',
+  Recommendation = 'Recommendation',
+  RecommendationLineTwo = 'RecommendationLineTwo',
+  ShortName = 'ShortName',
+  SearchTerms = 'SearchTerms',
+}

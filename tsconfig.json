@@ -1,7 +1,6 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "baseUrl": "",
     "outDir": "./dist/out-tsc",
     "sourceMap": false,
     "declaration": false,
@@ -13,7 +12,7 @@
     "target": "es2020",
     "lib": ["es2019", "dom"],
     "resolveJsonModule": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "strict": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true
@@ -24,5 +23,6 @@
     "strictTemplates": true,
     "enableIvy": true
   },
+
   "exclude": ["node_modules"]
 }

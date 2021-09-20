@@ -42,18 +42,14 @@ export class ResizeService implements AfterViewInit {
     return this._sidenavSource.asObservable() as Observable<boolean>;
   }
 
-  get initialWidth() {
-    return this._initialWidth;
-  }
   observeElement(element: Element, width: number): Observable<boolean> {
     this.resizeObserver.observe(element);
     this.elementMap.set(element, { width: width, mobile: false });
     const mapToMobile = (() => {
-      let elem = element;
       return (
         elements: WeakMap<Element, { width: number; mobile: boolean }>
       ) => {
-        return elements?.get(elem)?.mobile;
+        return elements?.get(element)?.mobile;
       };
     })();
 

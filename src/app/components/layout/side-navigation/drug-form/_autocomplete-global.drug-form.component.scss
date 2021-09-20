@@ -1,11 +1,6 @@
 @use 'palette' as pal;
 @use '~@angular/material' as mat;
 @use 'bem-mixin' as *;
-.autocomplete--mobile-search {
-  .mat-option {
-    height: 3.5rem;
-  }
-}
 
 .typeahead {
   border-bottom-left-radius: 3px;
@@ -15,22 +10,29 @@
     height: 2.5rem;
     border-right: 1px solid pal.$light-gray-5;
     border-left: 1px solid pal.$light-gray-5;
-
-    .mat-option__icon {
+    padding: 0 0 0 8px;
+    overflow: visible;
+    .option__content {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr 4rem;
+      align-items: center;
+      justify-items: start;
+    }
+    .option__icon {
       color: pal.$gray-1;
     }
 
     &.is-full {
-      height: 3.25rem;
+      height: 2.5rem;
+      @include mobileWidth {
+        height: 3.25rem;
+      }
     }
     &.is-editing {
       height: 1.5rem;
     }
   }
-  mat-option:last-of-type {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
+
   &.mat-autocomplete-panel {
     max-height: 400px;
     @include mobileWidth {

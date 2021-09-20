@@ -14,11 +14,10 @@ export class FilterComponent {
   @Input() gridRow: number = 0;
   @Input() gridColumn: number = 0;
   @Output() filterInstantiated = new EventEmitter();
-  isMobile: any;
   filter({ target }: Event) {
     const term = (target as HTMLInputElement).value;
-    this.tableServ.emitTableFilter({ column: this.column, term });
+    this.tableService.emitTableFilter({ column: this.column, term });
   }
 
-  constructor(private tableServ: TableService) {}
+  constructor(private tableService: TableService) {}
 }

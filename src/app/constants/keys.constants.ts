@@ -4,6 +4,7 @@ export const VERTICAL_ARROW_KEYS = [
   'Down',
   'ArrowDown',
 ] as string[];
+
 export const HORIZONTAL_ARROW_KEYS = [
   'Right',
   'ArrowRight',
@@ -14,3 +15,5 @@ export const ARROW_KEYS = [
   ...VERTICAL_ARROW_KEYS,
   ...HORIZONTAL_ARROW_KEYS,
 ] as string[];
+
+export const ENTER_KEYS = [' ', 'Enter'];

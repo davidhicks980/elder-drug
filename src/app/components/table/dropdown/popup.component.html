@@ -1,29 +1,27 @@
-<label for="popup-trigger">
-  <ng-content select="[label]"></ng-content>
+<label class="popup-trigger__label" for="popup-trigger">
+  <ng-content select="popup-label"></ng-content>
 </label>
 <div class="popup-wrapper">
   <button
-    matTooltip="{{ selectedOptions | join | caseSplit }}"
     #trigger
+    matRipple
+    matRippleColor="var(--primary-1)"
+    [matRippleUnbounded]="false"
     (click)="togglePopup()"
     class="popup-trigger"
     role="listbox"
     name="popup-trigger"
   >
-    <span *ngIf="selectedOptions" class="popup-trigger__placeholder">
-      {{ selectedOptions[0] + ", " + selectedOptions[1] || "" }}
-      <span *ngIf="selectedOptions.length > 1" class="additional-selection">
-        (+{{ selectedOptions.length - 1 }}
-        {{ selectedOptions.length === 2 ? "other" : "others" }})
-      </span>
-    </span>
+    <ng-content select="popup-placeholder"></ng-content>
     <svg
       class="popup-trigger__arrow"
       xmlns="http://www.w3.org/2000/svg"
-      height="24"
       viewBox="0 0 24 24"
+      height="24"
       width="24"
-      [class.is-rotated]="component?.hasAttached()"
+      fill="currentColor"
+      [elderRotate]="component?.hasAttached()"
+      [degrees]="180"
     >
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M7 10l5 5 5-5H7z" />
@@ -33,7 +31,11 @@
 
 <div #anchor></div>
 <ng-template id="anchor" #templatePortalContent>
-  <div cdkTrapFocus cdkTrapFocusAutoCapture>
-    <ng-content selector="popup-content"></ng-content>
+  <div
+    [@transformMenu]="(attached$ | async) ? 'enter' : 'void'"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+  >
+    <ng-container [ngTemplateOutlet]="content.templateRef"></ng-container>
   </div>
 </ng-template>

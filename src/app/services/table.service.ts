@@ -1,112 +1,106 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { ColumnField } from '../enums/ColumnFields';
+import { TABLE_ATTRIBUTES } from '../injectables/table-attributes.injectable';
+import { TABLE_CONFIG } from '../injectables/table-config.injectable';
+import { BeersEntry } from '../interfaces/BeersEntry';
+import { TableAttributes } from '../interfaces/TableAttributes';
+import { TableConfig } from '../interfaces/TableConfig';
+import { BeersField } from './BeersField';
+import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
-  private tableStatusSource = new ReplaySubject<Table[]>(3);
-  tableStatus$ = this.tableStatusSource.asObservable();
-  private pageSource = new ReplaySubject<number>(1);
-  currentPage$ = this.pageSource.asObservable();
-  private descriptionSource = new Subject();
-  tableDescription$ = this.descriptionSource.asObservable();
+  private tableSelectionSource: BehaviorSubject<TableAttributes> =
+    new BehaviorSubject({
+      tableNumber: 1,
+      fullTitle: '',
+      shortName: '',
+      identifier: '',
+      tableIcon: '',
+      description: '',
+    });
+  selection$ = this.tableSelectionSource.asObservable();
+  private descript = new Subject();
+  tableDescription$ = this.descript.asObservable();
   private titleSource = new Subject();
   tableTitle$ = this.titleSource.asObservable();
   private tableFilterSource = new Subject();
   tableFilter$ = this.tableFilterSource.asObservable();
+  private tableLookup: Map<ColumnField, number>;
+  dataSource: BehaviorSubject<BeersField[]> = new BehaviorSubject([]);
+  private _page: number;
+  public get page(): number {
+    return this._page;
+  }
+  public set page(value: number) {
+    if (typeof value === 'number') {
+      this._page = value;
+      this.emitSelectedTable(this._page);
+    } else {
+      throw TypeError('Selected page must be a number');
+    }
+  }
 
   emitTableFilter(filter: { column: string; term: string }) {
     this.tableFilterSource.next(filter);
   }
 
-  emitSelectedTables(selections: number[]) {
-    this.tableStatusSource.next(
-      this._tables.filter((table) => selections.includes(table.TableNumber))
+  emitSelectedTable(page: number) {
+    if (page != this._page) {
+      let info = this.tables.filter((table) => table.tableNumber === page);
+      if (info.length) {
+        this.tableSelectionSource.next(info[0]);
+        this._page = page;
+      } else {
+        throw TypeError('Page does not exist');
+      }
+    } else {
+      throw Error('Page is already selected');
+    }
+  }
+  filterActiveTables(
+    searchResults: Partial<BeersEntry[]>,
+    columns: ColumnField[]
+  ) {
+    return columns
+      .filter((column) => {
+        return (
+          this.tableLookup.has(column) &&
+          searchResults.some((table) => table[column])
+        );
+      })
+      .map((column) => this.tableLookup.get(column));
+  }
+  get tables(): TableAttributes[] {
+    return this.tableList;
+  }
+
+  get tableOptions$(): Observable<TableAttributes[]> {
+    return this.searchService.searchResults$.pipe(
+      map((results) => {
+        let columns = Array.from(Object.keys(results[0])) as ColumnField[];
+        //Concat 1 because 1 is the general table and does not have filter fields
+        return this.filterActiveTables(results, columns)
+          .concat(1)
+          .map((page) => {
+            return this.tables.filter((table) => table.tableNumber === page)[0];
+          });
+      })
     );
   }
-
-  emitCurrentPage(page: number) {
-    this.pageSource.next(page);
-    this.emitTableInformation(page);
+  constructor(
+    @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
+    @Inject(TABLE_ATTRIBUTES) private tableList: TableAttributes[],
+    private searchService: SearchService
+  ) {
+    let columnTableMap = this.tableConfig
+      .map(({ filters, id }) => filters.map((filter) => [filter, id]))
+      .flat(1) as [ColumnField, number][];
+    this.tableLookup = new Map(columnTableMap);
   }
-  emitTableInformation(page: number) {
-    let information = this.tables.filter(
-      (table) => table.TableNumber === page
-    )[0];
-
-    this.descriptionSource.next(information.Description);
-    this.titleSource.next(information.ShortName);
-  }
-  get tables(): Table[] {
-    return this._tables;
-  }
-  private readonly _tables = [
-    {
-      TableNumber: 1,
-      FullTitle: 'General Information for Each Table',
-      ShortName: 'All Results',
-      Identifier: 'Info',
-      TableIconName: 'general-health',
-      Description: 'Information encompassing all categories of Beers Criteria',
-    },
-    {
-      TableNumber: 2,
-      FullTitle: 'Potentially Inappropriate Medication Use in Older Adults ',
-      ShortName: 'Inappropriate Medications in Older Adults',
-      Identifier: 'Inappropriate',
-    },
-    {
-      TableNumber: 3,
-      FullTitle:
-        'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
-      ShortName: 'Disease Interactions',
-      Identifier: 'DiseaseGuidance',
-      TableIconName: 'heart-ekg',
-      Description:
-        'The Disease Guidance table contains drugs that should be avoided in those with a specific disease.',
-    },
-    {
-      TableNumber: 4,
-      FullTitle: 'Drugs To Be Used With Caution in Older Adults',
-      ShortName: 'Use with Caution',
-      Identifier: 'Caution',
-    },
-    {
-      TableNumber: 5,
-      FullTitle:
-        'Potentially Clinically Important Drug-Drug Interactions That Should Be Avoided in Older Adults',
-      ShortName: 'Drug Interactions',
-      Identifier: 'DrugInteractions',
-      TableIconName: 'capsule',
-      Description:
-        'The Drug Interactions table contains concerning drug interactions specific to those over the age of 65. It does not include all drug interactions.',
-    },
-    {
-      TableNumber: 6,
-      FullTitle:
-        'Medications That Should Be Avoided or Have Their Dosage Reduced With Varying Levels of Kidney Function in Older Adults',
-      ShortName: 'Renal Interactions',
-      Identifier: 'Clearance',
-      TableIconName: 'kidneys',
-      Description:
-        'The Renal Interactions table contains drugs that can be toxic in geriatric patients with reduced kidney function.',
-    },
-    {
-      TableNumber: 7,
-      FullTitle: 'Drugs With Strong Anticholinergic Properties',
-      ShortName: 'Anticholinergics',
-      Identifier: 'Anticholinergics',
-    },
-  ] as Table[];
-  constructor() {}
-}
-
-export interface Table {
-  TableNumber: number;
-  FullTitle: string;
-  ShortName: string;
-  Identifier: string;
-  TableIconName?: string;
-  Description?: string;
 }

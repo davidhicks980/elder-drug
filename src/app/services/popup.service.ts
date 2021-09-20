@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export enum PopupActions {
   close,
@@ -10,19 +10,27 @@ export enum PopupActions {
   allowOpen,
   destroy,
 }
-@Injectable({
-  providedIn: 'root',
-})
+export type PlaceholderDetails = {
+  text: string;
+  itemCount: number;
+};
+
+@Injectable()
 export class PopupService {
-  popupActionStream = new Subject();
-  popupAction$ = this.popupActionStream.asObservable();
-  popupKeydownStream = new Subject();
-  popupKeyPresses$ = this.popupKeydownStream.asObservable();
+  actionSource = new BehaviorSubject(PopupActions.allowOpen);
+  actions$ = this.actionSource.asObservable();
+  keyDownSource = new Subject();
+  keyDown$ = this.keyDownSource.asObservable();
+  placeholderSource: Subject<PlaceholderDetails> = new Subject();
+  placeholder$ = this.placeholderSource.asObservable();
   emitKeydown(keypress: KeyboardEvent) {
-    this.popupKeydownStream.next(keypress);
+    this.keyDownSource.next(keypress);
   }
-  triggerPopup(action: PopupActions) {
-    this.popupActionStream.next(action);
+  emitAction(action: PopupActions) {
+    this.actionSource.next(action);
+  }
+  emitPlaceholder(placeholderDetails: PlaceholderDetails) {
+    this.placeholderSource.next(placeholderDetails);
   }
 
   constructor() {}

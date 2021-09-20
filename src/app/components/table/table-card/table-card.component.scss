@@ -1,5 +1,5 @@
 @use 'bem-mixin' as bem;
-
+@use 'palette' as *;
 .table-card {
   width: auto;
   background-color: white;
@@ -22,4 +22,7 @@
   justify-items: left;
   padding: 1rem 0rem;
   gap: 1rem;
+}
+.table-field {
+  border-right: 1px dotted $light-gray-1;
 }

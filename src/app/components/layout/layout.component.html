@@ -3,7 +3,8 @@
     sidebarOpen: sidebarOpen$ | async,
     mobile: mobile$ | async,
     animating: animating$ | async,
-    scrollDir: scrollDirection$ | async
+    scrollDir: scrollDirection$ | async,
+    selectedTable: selectedTable$ | async
   } as state"
 >
   {{ state.animating | json }}
@@ -35,11 +36,7 @@
           [@FullSidebarShift]="getContentAnimationState(state)"
           [class.is-animating]="state.animating.sidebar"
         >
-          <elder-tabs
-            [rounded]="state.scrollDir"
-            (tableSelected)="loaded = $event"
-          >
-          </elder-tabs>
+          <elder-tabs [rounded]="state.scrollDir"> </elder-tabs>
         </nav>
         <elder-brand
           elder-toolbar-brand
@@ -113,36 +110,43 @@
       >
         <elder-table-card>
           <elder-table-title>
-            {{ tableService.tableTitle$ | async }}
+            {{ state.selectedTable.shortName }}
           </elder-table-title>
           <elder-table-description>
-            {{ tableService.tableDescription$ | async }}
+            {{ state.selectedTable.description }}
           </elder-table-description>
 
           <div class="table-field">
-            <elder-popup
-              [selectedOptions]="columns.columnChangeObserver | async"
-              #columnPopup
-            >
-              <span label>Toggle Fields</span>
-              <popup-content>
+            <elder-popup #columnPopup>
+              <popup-label>Show Fields</popup-label>
+              <popup-placeholder></popup-placeholder>
+              <ng-template popup-content>
                 <elder-column-selector #columns></elder-column-selector>
-              </popup-content>
+              </ng-template>
             </elder-popup>
           </div>
           <div class="table-field">
-            <elder-popup
-              [selectedOptions]="groups.groupChangeObserver | async"
-              #groupPopup
-            >
-              <span label>Group By Field</span>
-              <popup-content>
+            <elder-popup #groupPopup>
+              <popup-label>Row Groups</popup-label>
+              <popup-placeholder></popup-placeholder>
+              <ng-template popup-content>
                 <elder-group-by #groups></elder-group-by>
-              </popup-content>
+              </ng-template>
             </elder-popup>
           </div>
+          <div class="table-field">
+            <elder-button #filterButton>
+              {{ filterButton.toggled ? "Remove" : "Add" }} Filters
+              <mat-icon elder-button-icon svgIcon="filter"></mat-icon>
+            </elder-button>
+          </div>
 
-          <elder-table elderTableView elderResize class="elder-table">
+          <elder-table
+            [showFilters]="filterButton.toggled"
+            elderTableView
+            elderResize
+            class="elder-table"
+          >
             <div class="table-field filter">
               <elder-filter><p label>Filter columns</p></elder-filter>
             </div>

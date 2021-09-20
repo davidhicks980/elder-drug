@@ -1,100 +1,99 @@
-<div
-  *elderLet="model.displayedColumns$ | async as fields"
-  #elderTable
-  id="elderTable"
-  class="drug-table--wrapper"
-  (keydown)="handleGridNavigation($event)"
+<ng-container
+  *elderLet="{
+    fields: model.displayedColumns$ | async,
+    mobile: mobile$ | async
+  } as state"
 >
-  <cdk-table
-    [dataSource]="model"
-    class="drug-table"
-    #table
-    matSort
-    recycleRows
-    [fixedLayout]="true"
-    mobileListener
-    [trackBy]="trackRowBy"
+  <div
+    #elderTable
+    id="elderTable"
+    class="drug-table--wrapper"
+    (keydown)="handleGridNavigation($event)"
   >
-    <!--Table headers-->
-    <cdk-header-row
-      class="row row--header row--filter"
-      *cdkHeaderRowDef="fields; sticky: true; index as i"
-      mobileListener
-    ></cdk-header-row>
-
-    <!--Group rows-->
-
-    <cdk-row
-      *cdkRowDef="let row; columns: fields"
-      class="row row--content"
-      (click)="model.expand(row, $event)"
-      (keydown.enter)="model.expand(row, $event)"
-      (keydown.space)="model.expand(row, $event)"
-      [detail]="row | json"
-      [expandDetail]="model.checkIsExpanded(row)"
-    ></cdk-row>
-
-    <ng-container
-      *ngFor="let field of fields; index as colI"
-      cdkColumnDef="{{ field }}"
+    <cdk-table
+      #table
+      matSort
+      class="drug-table"
+      recycleRows
+      [dataSource]="model"
+      [fixedLayout]="true"
+      [class.isMobile]="state.mobile"
     >
-      <ng-container *cdkHeaderCellDef>
-        <cdk-header-cell
-          class="cell--header"
-          mat-sort-header
-          attr.tabIndex="{{ colI === 0 ? '0' : '-1' }}"
-          matTooltip="Sort by {{ field }}"
-          #headerCell
-          [filterColumn]="colI"
-          [keyGrid]="{ row: 0, col: colI }"
-        >
-          <div class="cell--header__content">
-            {{ field | caseSplit | titlecase }}
-          </div>
-        </cdk-header-cell>
-      </ng-container>
-      <ng-container *cdkCellDef="let row">
-        <ng-container *ngIf="!row._position.isGroup; else groupTemplate">
-          <cdk-cell
-            class="cell"
-            [cellPadding]="row._position.layer"
-            [keyGrid]="{ row: getRowIndex(row), col: colI }"
-            tabindex="-1"
-          >
-            <!--If the cell is first, add an expansion button to it-->
-            <span class="cell__chevron-container">
-              <button
-                *ngIf="field === fields[0]"
-                class="chevron-button"
-                mat-icon-button
-                tabindex="-1"
-              >
-                <mat-icon
-                  [class.--rotated]=""
-                  class="chevron-button__chevron"
-                  svgIcon="chevron_right"
-                ></mat-icon></button
-            ></span>
-            <span class="cell__mobile-header"
-              ><b>{{ field | caseSplit | titlecase }}</b></span
-            >
-            <span class="cell__content">{{
-              row[field] | caseSplit | titlecase
-            }}</span>
-          </cdk-cell>
-        </ng-container>
-        <ng-template #groupTemplate>
-          <cdk-cell *ngIf="colI === 0">
-            <elder-group-row
-              [field]="row.field"
-              [header]="row.groupHeader"
-              [level]="row._position.layer"
-            ></elder-group-row>
-          </cdk-cell>
-        </ng-template>
-      </ng-container>
-    </ng-container>
+      <!--Table headers-->
+      <cdk-header-row
+        class="row--header"
+        *cdkHeaderRowDef="state.fields; sticky: true; index as i"
+        [class.isMobile]="state.mobile"
+      ></cdk-header-row>
 
-    <!--Header Row-->
-  </cdk-table>
-</div>
+      <!--Group rows-->
+
+      <cdk-row
+        *cdkRowDef="let row; columns: state.fields"
+        class="row row--content"
+        [detail]="row | json"
+        [expandDetail]="model.checkIsExpanded(row)"
+        (click)="model.expand(row, $event)"
+        (keydown.enter)="model.expand(row, $event)"
+        (keydown.space)="model.expand(row, $event)"
+      ></cdk-row>
+
+      <ng-container
+        *ngFor="let field of state.fields; index as col"
+        cdkColumnDef="{{ field }}"
+      >
+        <ng-container *cdkHeaderCellDef>
+          <cdk-header-cell
+            class="cell--header"
+            mat-sort-header
+            matTooltip="Sort by {{ field }}"
+            [attr.tabIndex]="col === 0 ? '0' : '-1'"
+            [keyGrid]="{ row: 0, col }"
+            [filter]="col"
+            [filterShown]="showFilters"
+            filterStyle="grid-row: 2"
+          >
+            <div class="cell--header__content">
+              {{ field | caseSplit | titlecase }}
+            </div>
+          </cdk-header-cell>
+        </ng-container>
+        <ng-container *cdkCellDef="let row">
+          <ng-container *ngIf="!row._position.isGroup; else groupTemplate">
+            <elder-cell
+              [cellPadding]="row._position.layer"
+              [keyGrid]="{ row: getRowIndex(row), col }"
+            >
+              <elder-cell-toggle *ngIf="field === state.fields[0]">
+                <button mat-icon-button>
+                  <mat-icon
+                    [elderRotate]="model.checkIsExpanded(row)"
+                    [degrees]="90"
+                    svgIcon="chevron_right"
+                  ></mat-icon>
+                </button>
+              </elder-cell-toggle>
+              <elder-cell-title *ngIf="state.mobile">
+                {{ field | caseSplit | titlecase }}
+              </elder-cell-title>
+              <elder-cell-content>
+                {{ row[field] | caseSplit | titlecase }}
+              </elder-cell-content>
+            </elder-cell>
+          </ng-container>
+          <ng-template #groupTemplate>
+            <cdk-cell *ngIf="col === 0">
+              <elder-group-row
+                [field]="row.field"
+                [header]="row.groupHeader"
+                [level]="row._position.layer"
+              ></elder-group-row>
+            </cdk-cell>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+
+      <!--Header Row-->
+    </cdk-table>
+  </div>
+</ng-container>

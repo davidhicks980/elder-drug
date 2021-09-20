@@ -5,18 +5,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GroupByService {
-  tableGroupsChanged = new BehaviorSubject([]) as BehaviorSubject<string[]>;
-  groupChange$ = this.tableGroupsChanged.asObservable();
-  changeGroups(groups) {
-    this.tableGroupsChanged.next(groups);
+  tableGroupSource = new BehaviorSubject([]) as BehaviorSubject<string[]>;
+  emitGroupChange(groups) {
+    this.tableGroupSource.next(groups);
   }
   /**
    * An observable containing the groupings displayed in the drug table.
    * @readonly
    * @memberof GroupByService
    */
-  get groupChanges(): Observable<string[]> {
-    return this.groupChange$;
+  get groups$(): Observable<string[]> {
+    return this.tableGroupSource.asObservable();
   }
   constructor() {}
 }

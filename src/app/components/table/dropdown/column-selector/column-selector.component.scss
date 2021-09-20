@@ -1,6 +1,9 @@
 @use "palette" as *;
 @use "colors" as *;
 
+:host {
+  @include scrollbar;
+}
 .column-select {
   width: 100%;
 }

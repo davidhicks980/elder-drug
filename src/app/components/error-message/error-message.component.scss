@@ -1,0 +1,33 @@
+@use 'bem-mixin' as *;
+@use 'palette' as pal;
+@use '~@davidhicks/sass-mixins/shadow-root' as host;
+:host {
+  display: inline-block;
+  min-height: 30px;
+  margin-top: 4px;
+  overflow: auto;
+  > * {
+    @include mobileWidth {
+      padding: 5px;
+    }
+  }
+  @include host.state(".is-error") {
+    color: pal.$error-4;
+  }
+  @include host.state(".is-warning") {
+    color: pal.$complement-1;
+  }
+}
+
+.icon {
+  display: none;
+  @include mobileWidth {
+    vertical-align: middle;
+    display: inline-block;
+    height: 35px;
+    margin-left: 0.9rem;
+  }
+}
+.text {
+  vertical-align: middle;
+}

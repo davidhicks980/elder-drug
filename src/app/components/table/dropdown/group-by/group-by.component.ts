@@ -13,13 +13,15 @@ import {
   Renderer2,
   ViewChildren,
 } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 
 import { fadeInTemplate } from '../../../../animations/templates';
-import { VERTICAL_ARROW_KEYS } from '../../../../constants/keys.constants';
+import { ARROW_KEYS, ENTER_KEYS, VERTICAL_ARROW_KEYS } from '../../../../constants/keys.constants';
+import { KeyGridDirective } from '../../../../directives/keygrid.directive';
 import { ColumnService } from '../../../../services/columns.service';
 import { GroupByService } from '../../../../services/group-by.service';
+import { KeyGridService } from '../../../../services/key-grid.service';
 import { PopupActions, PopupService } from '../../../../services/popup.service';
 
 type ListElement = HTMLOListElement | HTMLUListElement;
@@ -36,20 +38,24 @@ export const CLASS_MOVEABLE = 'is-moveable';
 })
 export class GroupByComponent implements OnDestroy, AfterViewInit {
   @Output() groupChange: EventEmitter<string[]> = new EventEmitter();
-  @Output() groupChangeObserver = this.groupChange.asObservable();
   @ViewChildren('removeButton') removeButtons: QueryList<ElementRef>;
   @ViewChildren('addButton') addButtons: QueryList<ElementRef>;
+  @ViewChildren(KeyGridDirective)
+  gridElements: QueryList<KeyGridDirective>;
   tabbableGroupedItem: number = 0;
   tabbableUngroupedItem: number = 0;
-
-  block = false;
-  groupedColumns = new BehaviorSubject([]);
-  ungroupedColumns = new BehaviorSubject([]);
-  changes = this.groupedColumns
-    .asObservable()
-    .pipe(map((groups) => groups.map((group) => group.replace(' ', ''))));
+  private groupedColumnSource: BehaviorSubject<string[]> = new BehaviorSubject(
+    []
+  );
+  groupedColumns$ = this.groupedColumnSource.asObservable();
+  private ungroupedColumnSource: BehaviorSubject<string[]> =
+    new BehaviorSubject([]);
+  ungroupedColumns$ = this.ungroupedColumnSource.asObservable();
+  changes = this.groupedColumns$.pipe(
+    map((groups) => groups.map((group) => group.trim()))
+  );
   pastGroups = new Set();
-  public options: Observable<string[]>;
+  options: Observable<string[]>;
   canClick = new Map();
   draggableItem = -1;
   dropList: CdkDropList;
@@ -59,16 +65,15 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     this.destroyed.next(true);
   }
   closePanel() {
-    this.popupService.triggerPopup(PopupActions.close);
+    this.popupService.emitAction(PopupActions.close);
   }
-
-  stopMovingElement(elem) {
+  stopMovingElement(elem: HTMLElement) {
     this.renderer.removeClass(elem, CLASS_MOVEABLE);
   }
-  startMovingElement(elem) {
+  startMovingElement(elem: HTMLElement) {
     this.renderer.addClass(elem, CLASS_MOVEABLE);
   }
-  _canElementMove(elem: HTMLElement) {
+  canElementMove(elem: HTMLElement) {
     return elem.classList.contains(CLASS_MOVEABLE);
   }
   handleGrouplistKeydown(
@@ -76,201 +81,115 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     list: ListElement,
     index: number
   ) {
-    let elem = $event.target as HTMLElement;
-    switch ($event.key) {
-      case 'Enter':
-      case ' ':
-        this._canElementMove(elem)
-          ? this.stopMovingElement(elem)
-          : this.startMovingElement(elem);
-        this._cdr.markForCheck();
-        break;
-      default:
-        if (!VERTICAL_ARROW_KEYS.includes($event.key))
-          this.stopMovingElement(elem);
-
-        if (this._canElementMove(elem))
-          this.handleMoveableItemKeypress($event, index, list, elem);
-        else this.navigateListGrid($event, list, elem);
-        break;
+    let { target, key } = $event;
+    let elem = target as HTMLElement;
+    if (ENTER_KEYS.includes(key)) {
+      if (this.canElementMove(elem)) {
+        this.stopMovingElement(elem);
+      } else {
+        this.startMovingElement(elem);
+      }
+      this.cdr.markForCheck();
+    } else if (VERTICAL_ARROW_KEYS.includes(key)) {
+      if (this.canElementMove(elem)) {
+        this.handleVerticalKeypressOnMoveableItem($event, index, list, elem);
+      } else {
+        this.navigateListGrid($event, list);
+      }
+    } else {
+      this.stopMovingElement(elem);
     }
   }
-  _getRelativeIndices(list: any[], index: number) {
+  getSiblingItemIndices(list: any[], index: number) {
     const lastIndex = list.length - 1,
       isLast = index === lastIndex,
       isFirst = index === 0,
-      nextIndex = isLast ? 0 : index + 1,
-      previousIndex = isFirst ? lastIndex : index - 1;
-    return { nextIndex, previousIndex };
+      next = isLast ? 0 : index + 1,
+      previous = isFirst ? lastIndex : index - 1;
+    return { next, previous };
   }
-  _queryNavGridItem(group: HTMLElement, row: number, col: number) {
-    const selector = `[data-grid-row="${row}"][data-grid-column="${col}"]`;
-    return group.querySelector(selector) as HTMLElement;
-  }
+
   navigateListGrid(
     event: KeyboardEvent,
-    list: HTMLUListElement | HTMLOListElement,
-    elem: HTMLElement
-  ) {
-    // if (this.arrowKeys.includes(event.key)) event.stopPropagation();
-
-    const {
-      row,
-      column,
-      nextRow,
-      nextColumn,
-      prevRow,
-      prevColumn,
-      isFirstColumn,
-      isLastColumn,
-    } = this._getRelativeItemPosition(elem, list);
-
-    switch (event.key) {
-      case 'Right': // IE/Edge specific value
-      case 'ArrowRight':
-        const overflowRow = isLastColumn ? nextRow : row;
-        this._queryNavGridItem(list, overflowRow, nextColumn).focus();
-        break;
-      case 'Down': // IE/Edge specific value
-      case 'ArrowDown':
-        this._queryNavGridItem(list, nextRow, column).focus();
-        break;
-
-      case 'Left': // IE/Edge specific value
-      case 'ArrowLeft':
-        const underflowRow = isFirstColumn ? prevRow : row;
-        this._queryNavGridItem(list, underflowRow, prevColumn).focus();
-
-        break;
-      case 'Up': // IE/Edge specific value
-      case 'ArrowUp':
-        this._queryNavGridItem(list, prevRow, column).focus();
-
-        break;
-
-      case 'Esc': // IE/Edge specific value
-      case 'Escape':
-        list.parentElement.focus();
-        this.popupService.triggerPopup(PopupActions.close);
-        break;
-      default:
-        return; // Quit when this doesn't handle the key event.
-    }
-  }
-  private _getRelativeItemPosition(
-    elem: HTMLElement,
     list: HTMLUListElement | HTMLOListElement
   ) {
-    const row = Number(elem.dataset.gridRow);
-    const column = Number(elem.dataset.gridColumn);
-    const rowLength = Number(list.dataset.gridRows);
-    const columnLength = Number(list.dataset.gridColumns);
-    const prevRow = row === 1 ? rowLength : row - 1;
-    const prevColumn = column === 1 ? columnLength : column - 1;
-    const nextRow = row === rowLength ? 1 : row + 1;
-    const nextColumn = column === columnLength ? 1 : column + 1;
-    const isLastRow = row === rowLength;
-    const isLastColumn = column === columnLength;
-    const isFirstRow = row === 1;
-    const isFirstColumn = column === 1;
-    return {
-      row,
-      column,
-      nextRow,
-      nextColumn,
-      prevRow,
-      prevColumn,
-      isFirstRow,
-      isFirstColumn,
-      isLastRow,
-      isLastColumn,
-    };
+    let { key } = event;
+    if (ARROW_KEYS.includes(key)) {
+      const listElements = this.gridElements.filter((directive) => {
+        return list.contains(directive.element);
+      });
+      this.keyGridService.handleArrowKeys(event, listElements);
+    } else if (key === 'Esc' || key === 'Escape') {
+      list.parentElement.focus();
+      this.popupService.emitAction(PopupActions.close);
+    }
   }
 
-  handleMoveableItemKeypress(
+  handleVerticalKeypressOnMoveableItem(
     $event: KeyboardEvent,
     index: number,
     listElement: HTMLUListElement | HTMLOListElement,
     elem: any
   ) {
     $event.stopPropagation();
-
-    const { nextIndex, previousIndex } = this._getRelativeIndices(
-      Array.from(listElement.children),
-      index
-    );
-    switch ($event.key) {
-      case 'Down': // IE/Edge specific value
-      case 'ArrowDown':
-        this.moveItemInSubjectList(this.groupedColumns, index, nextIndex);
-        this._cdr.markForCheck();
-        this.startMovingElement(elem);
-
-        setTimeout(() => {
-          elem.focus();
-        });
-        break;
-      case 'Up': // IE/Edge specific value
-      case 'ArrowUp':
-        this.moveItemInSubjectList(this.groupedColumns, index, previousIndex);
-        this._cdr.markForCheck();
-        this.startMovingElement(elem);
-        setTimeout(() => {
-          elem.focus();
-        });
-        break;
-      default:
-        this.stopMovingElement(elem);
-
-        return;
+    let { key } = $event;
+    let listChildren = Array.from(listElement.children) as HTMLElement[];
+    const { next, previous } = this.getSiblingItemIndices(listChildren, index);
+    let moveTo = 0;
+    if (key === 'Down' || key === 'ArrowDown') {
+      moveTo = next;
     }
+    if (key === 'Up' || key === 'ArrowUp') {
+      moveTo = previous;
+    }
+    this.moveItemInList(this.groupedColumnSource, index, moveTo);
+    this.cdr.markForCheck();
+    this.startMovingElement(elem);
+    requestAnimationFrame(() => {
+      elem.focus();
+    });
   }
-  transferItemToList(
-    fromSubject: BehaviorSubject<string[]>,
-    toSubject: BehaviorSubject<string[]>,
-    from: number,
-    to: number
+  transferListItem(
+    from: BehaviorSubject<string[]>,
+    to: BehaviorSubject<string[]>,
+    fromIndex: number,
+    toIndex: number
   ) {
-    const fromList = fromSubject.value,
-      item = fromList.splice(from, 1)[0],
-      toList = toSubject.value;
-    toList.splice(to, 0, item);
-    fromSubject.next(fromList);
-    toSubject.next(toList);
+    const fromList = from.value,
+      item = fromList.splice(fromIndex, 1)[0],
+      toList = to.value;
+    toList.splice(toIndex, 0, item);
+    from.next(fromList);
+    to.next(toList);
     return { fromList, toList };
   }
-  moveItemInSubjectList(
-    list: BehaviorSubject<string[]>,
-    from: number,
-    to: number
-  ) {
-    let arr = list.value;
-    if (Object.prototype.toString.call(arr) !== '[object Array]') {
-      throw new Error('Please provide an array of string');
-    }
-    let value = arr.splice(from, 1)[0];
-    arr.splice(to, 0, value);
-    list.next(arr);
+  moveItemInList(list: BehaviorSubject<string[]>, from: number, to: number) {
+    let li = list.value,
+      value = li.splice(from, 1)[0];
+    li.splice(to, 0, value);
+    list.next(li);
     return true;
   }
 
   blockPopupClose(container) {
     this.canClick.set(container, false);
-    this.popupService.triggerPopup(PopupActions.preventClose);
+    this.popupService.emitAction(PopupActions.preventClose);
   }
   groupItem(index: number) {
-    this.groupedColumns.next([
-      ...this.groupedColumns.value,
-      this.ungroupedColumns.value.splice(index, 1)[0],
+    const ungrouped = this.ungroupedColumnSource.value;
+    this.groupedColumnSource.next([
+      ...this.groupedColumnSource.value,
+      ungrouped.splice(index, 1)[0],
     ]);
+    this.ungroupedColumnSource.next(ungrouped);
   }
   ungroupItem(index: number) {
-    const arr = this.groupedColumns.value;
-    this.ungroupedColumns.next([
-      ...this.ungroupedColumns.value,
-      arr.splice(index, 1)[0],
+    const grouped = this.groupedColumnSource.value;
+    this.ungroupedColumnSource.next([
+      ...this.ungroupedColumnSource.value,
+      grouped.splice(index, 1)[0],
     ]);
-    this.groupedColumns.next(arr);
+    this.groupedColumnSource.next(grouped);
   }
   /**
    *
@@ -281,18 +200,16 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
    * @memberof GroupByComponent
    */
   focusNextItem(element: HTMLElement, ...alternatives: HTMLElement[]): any {
-    const next = element.nextElementSibling;
-    const prev = element.previousElementSibling;
+    const next = element.nextElementSibling as HTMLLIElement;
+    const prev = element.previousElementSibling as HTMLLIElement;
     if (next) {
-      (next as HTMLLIElement).focus();
+      next.focus();
     } else if (prev) {
-      (prev as HTMLLIElement).focus();
-    } else if (alternatives.length > 0) {
-      for (let alt of alternatives) {
-        if (alt) {
-          alt.focus();
-          return;
-        }
+      prev.focus();
+    } else if (alternatives?.length > 0) {
+      while (alternatives.length) {
+        alternatives.pop().focus();
+        return;
       }
     } else {
       console.error(
@@ -302,18 +219,14 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    const list = [this.groupedColumns, this.ungroupedColumns];
+    const list = [this.groupedColumnSource, this.ungroupedColumnSource];
     const isItemGrouped = event.container.id === 'grouped-droplist';
     const [current, previous] = isItemGrouped ? list : list.reverse();
 
     if (event.previousContainer === event.container) {
-      this.moveItemInSubjectList(
-        current,
-        event.previousIndex,
-        event.currentIndex
-      );
+      this.moveItemInList(current, event.previousIndex, event.currentIndex);
     } else {
-      this.transferItemToList(
+      this.transferListItem(
         previous,
         current,
         event.previousIndex,
@@ -321,86 +234,69 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
       );
     }
     //Allow the popup to close after the item is transferred;
-    this.popupService.triggerPopup(PopupActions.allowClose);
+    this.popupService.emitAction(PopupActions.allowClose);
   }
   ngAfterViewInit() {
     this.options.pipe(take(1)).subscribe((val) => this.groupChange.emit(val));
   }
 
-  watchChanges() {
-    this.changes
-      .pipe(takeUntil(this.destroyed))
-      .subscribe((groups) => this.groupService.changeGroups(groups));
-  }
-
   constructor(
     private columnService: ColumnService,
     private popupService: PopupService,
-    private _cdr: ChangeDetectorRef,
+    private groupService: GroupByService,
+    private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
-    private groupService: GroupByService
+    private keyGridService: KeyGridService
   ) {
-    this.options = this.columnService.observeActiveColumns$ || of(['']);
-
-    this.options.pipe(takeUntil(this.destroyed)).subscribe((columnNames) => {
-      columnNames = columnNames.map((val) =>
-        val ? val.replace(/([A-Z])/g, ' $1').trim() : ''
-      );
-      this._addNewColumns(columnNames);
-      this.ungroupedColumns.next(this._filterUngroupedItems(columnNames));
-      this.groupedColumns.next(this._filterGroupedItems(columnNames));
-    });
+    this.columnService.columns$
+      .pipe(
+        takeUntil(this.destroyed),
+        map((groups) => groups.map(this.formatGroupNames))
+      )
+      .subscribe((columns) => {
+        this.insertNewColumns(columns);
+      });
     this.canClick.set('grouped-droplist', true).set('ungrouped-droplist', true);
-    this.watchChanges();
+    this.changes
+      .pipe(
+        takeUntil(this.destroyed),
+        map((groups) => groups.map((group) => group.trim()))
+      )
+      .subscribe((groups) => {
+        this.popupService.emitPlaceholder({
+          text: groups[0],
+          itemCount: groups.length,
+        });
+        this.groupService.emitGroupChange(groups);
+      });
+  }
+  formatGroupNames(name: string) {
+    return name?.replace(/([A-Z])/g, ' $1').trim() || '';
   }
 
-  moveItems(list: string, index: number) {
-    switch (list) {
-      case 'ungrouped-droplist':
-        this.groupItem(index);
-        break;
-      case 'grouped-droplist':
-        this.ungroupItem(index);
-        break;
-    }
+  addGroupedColumn(group: string[]) {
+    this.groupedColumnSource.next([
+      ...this.groupedColumnSource.value,
+      ...group,
+    ]);
   }
-
-  addGroupItem(group) {
-    this.groupedColumns.next([...this.groupedColumns.value, group]);
-  }
-  addItem(group) {
-    this.ungroupedColumns.next([...this.ungroupedColumns.value, group]);
+  addUngroupedColumn(group: string[]) {
+    this.ungroupedColumnSource.next([
+      ...this.ungroupedColumnSource.value,
+      ...group,
+    ]);
   }
   emitGroupChange(groups) {
-    this.groupService.changeGroups(groups);
+    this.groupService.emitGroupChange(groups);
   }
-  private _addNewColumns(values: string[]) {
-    const activeColumns = [
-      ...this.groupedColumns.value,
-      ...this.ungroupedColumns.value,
-    ];
-
-    for (const value of values) {
-      if (!activeColumns.includes(value))
-        if (this.pastGroups.has(value)) {
-          this.addGroupItem(value);
-          this.pastGroups.delete(value);
-        } else {
-          this.addItem(value);
-        }
-    }
-  }
-  private _filterUngroupedItems(values: string[]) {
-    return this.ungroupedColumns.value.filter((ungrouped) =>
-      values.includes(ungrouped)
+  private insertNewColumns(columns: string[]) {
+    this.addUngroupedColumn(
+      columns.filter((col) => {
+        return !(
+          this.groupedColumnSource.value.includes(col) &&
+          this.ungroupedColumnSource.value.includes(col)
+        );
+      })
     );
-  }
-  private _filterGroupedItems(values: string[]) {
-    return this.groupedColumns.value.filter((grouped) => {
-      if (!values.includes(grouped)) {
-        this.pastGroups.add(grouped);
-        return false;
-      } else return true;
-    });
   }
 }

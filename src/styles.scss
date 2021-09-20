@@ -7,6 +7,7 @@
 @use "component-overrides" as *;
 @use "bem-mixin" as *;
 @use "variables" as *;
+@use "sass:color";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -18,7 +19,12 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $search-angular-primary: mat.define-palette(mat.$indigo-palette);
-$search-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$search-angular-accent: mat.define-palette(
+  mat.$indigo-palette,
+  A200,
+  A100,
+  A400
+);
 
 // The warn palette is optional (defaults to red).
 $search-angular-warn: mat.define-palette(mat.$red-palette);
@@ -147,6 +153,11 @@ fieldset {
   background: tint($secondary-2-1, 80%);
 }
 
+.mat-sort-header-container {
+  display: grid !important;
+  grid-template-columns: 80% 20% !important;
+}
+
 .mat-sort-header-pointer-right,
 .mat-sort-header-pointer-left {
   border-radius: 3px !important;
@@ -163,7 +174,8 @@ fieldset {
 .mat-sort-header-pointer-right {
   background: currentColor;
   width: 0.4em !important;
-  height: 0.17em !important;
+  height: 0.12em !important;
+
   position: absolute;
   top: 0;
 }
@@ -203,7 +215,9 @@ fieldset {
 
   background-color: tint($light-gray-2, 70%) !important;
 }
-
+.mat-ripple-element {
+  --primary-1: #{color.adjust($primary-1, $alpha: -0.85)};
+}
 html,
 body {
   height: 100%;

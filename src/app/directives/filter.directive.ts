@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ComponentFactory,
   ComponentFactoryResolver,
   ComponentRef,
@@ -14,45 +13,57 @@ import {
 import { FilterComponent } from '../components/table/filter/filter.component';
 
 @Directive({
-  selector: '[filterColumn]',
+  selector: '[filter]',
 })
-export class FilterDirective implements AfterViewInit {
-  @Input() filterColumn: number;
-  filterRef: ComponentRef<FilterComponent>;
-  private _nativeParent: HTMLElement;
-  get filter() {
-    return this.filterRef.instance;
-  }
+export class FilterDirective {
   constructor(
-    private el: ElementRef,
+    private parent: ElementRef,
     private renderer: Renderer2,
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {
-    this._nativeParent = this.el.nativeElement;
+  ) {}
+  private _filterShown: boolean = true;
+  @Input() filter: number;
+  @Input()
+  get filterShown(): boolean {
+    return this._filterShown;
   }
+  set filterShown(value: boolean) {
+    this.updateFilterElement(value);
+    this._filterShown = value;
+  }
+  @Input() filterStyle = '';
+
+  updateFilterElement(showFilter: boolean) {
+    if (showFilter === false) {
+      this.destroyFilter();
+    } else if (!this.filterRef) {
+      this.createComponent(FilterComponent);
+    } else {
+      return;
+    }
+  }
+  filterRef: ComponentRef<FilterComponent>;
+
   createComponent(type: Type<FilterComponent>) {
-    this.container.clear();
-    const factory: ComponentFactory<FilterComponent> = this.resolver.resolveComponentFactory(
-      type
-    );
-
+    const factory: ComponentFactory<FilterComponent> =
+      this.resolver.resolveComponentFactory(type);
     this.filterRef = this.container.createComponent(factory);
-
-    let row = this._nativeParent.getAttribute('row') as string,
-      column = this._nativeParent.getAttribute('column') as string;
-    this.renderer.setStyle(
+    this.renderer.setProperty(
       this.filterRef.location.nativeElement,
-      'grid-row',
-      '2'
+      'style',
+      this.filterStyle
     );
-    this.updateGrid(row, column);
+    this.renderer.addClass(this.parent.nativeElement, 'has-filter-attached');
   }
-  updateGrid(row: string, column: string) {
-    this.filter.gridRow = Number(row) + 1;
-    this.filter.gridColumn = Number(column);
-  }
-  ngAfterViewInit() {
-    this.createComponent(FilterComponent);
+  private destroyFilter() {
+    if (this.filterRef) {
+      this.filterRef.destroy();
+      this.filterRef = undefined;
+    }
+    if (this.container) {
+      this.container.clear();
+    }
+    this.renderer.removeClass(this.parent.nativeElement, 'has-filter-attached');
   }
 }

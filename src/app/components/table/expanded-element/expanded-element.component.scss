@@ -3,14 +3,8 @@
 @use "colors" as *;
 @use "bem-mixin" as *;
 :root {
-  --pk-primary: $primary-1;
-  --border-color: $gray-1;
-
-  --pk-surface: $light-gray-2;
-  --pk-font-family--feedback-title: "IBM Plex Sans", sans-serif;
-  --pk-text--color: $dark-gray-4;
-  --pk-font--content: $dark-gray-4;
-  --pk-text--color: $dark-gray-4;
+  --title--font-family: var(--header--font), sans-serif;
+  --body--font-family: var(--body--font), sans-serif;
 }
 
 .rationale {
@@ -51,35 +45,53 @@
   gap: 1rem;
   display: grid;
 }
+
+.header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    "title chips"
+    "title chips"
+    "subtitle subtitle";
+  width: fit-content;
+  align-items: center;
+  padding-top: 1.5rem;
+  gap: 0.5rem;
+}
+.header__subtitle {
+  grid-area: subtitle;
+  color: $gray-4;
+  font: 500 16px/8px var(--body--font-family);
+}
+.header__title {
+  grid-area: title;
+  color: $gray-5;
+  font-size: 1.75rem;
+  margin: 0;
+  padding: 0;
+}
+.header__chips {
+  grid-area: chips;
+  mat-chip {
+    min-height: 1.5rem;
+    background-color: transparent;
+    color: $primary-2;
+    border: 1px solid $primary-2;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+    &.mat-chip.mat-standard-chip::after {
+      background: $primary-1;
+    }
+  }
+}
 .expanded-row {
   overflow: hidden;
   background-color: $light-gray-1;
   border-bottom: 1px solid $light-gray-3;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  padding: 1rem;
+  border-radius: 0px 0px 3px 3px;
 
-  &__subtitle {
-    color: $gray-4;
-    font: 500 16px/8px Noto Sans JP;
-  }
-
-  &__header {
-    @include gr.flexbox("row", 1rem);
-    align-items: center;
-    &__title {
-      color: $gray-5;
-      margin: 0.5rem 0 0.25em 0;
-      font-size: 1.75rem;
-    }
-    &__chip {
-      min-height: 1.5rem;
-      border-radius: 6px;
-      background-color: $primary-3;
-      color: white;
-      font-weight: 400;
-      cursor: pointer;
-    }
-  }
   &__item-type {
     margin: 0.25rem 0;
   }

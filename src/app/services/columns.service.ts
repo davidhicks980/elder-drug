@@ -1,229 +1,106 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+
+import { TABLE_CONFIG } from '../injectables/table-config.injectable';
+import { TableAttributes } from '../interfaces/TableAttributes';
+import { TableConfig } from '../interfaces/TableConfig';
+import { BeersSearchResult, SearchService } from './search.service';
+import { TableService } from './table.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColumnService {
-  fields: ColumnField[];
-  constructor() {}
-
-  static receiveTables$: any;
-
-  public columnOptions = [
-    {
-      field: ColumnField.EntryID,
-      description: 'Entry',
-      header: 'Entry Number',
-    },
-    {
-      field: ColumnField.DiseaseState,
-      description: 'Caution in',
-      header: 'Disease State',
-    },
-    {
-      field: ColumnField.Category,
-      description: 'Category',
-      header: 'Category Number',
-    },
-    {
-      field: ColumnField.TableDefinition,
-      description: 'TableDefinition',
-      header: 'Table Definition',
-    },
-    { field: ColumnField.Item, description: 'Item', header: 'Item' },
-    {
-      field: ColumnField.MinimumClearance,
-      description: 'Avoid in clearance below',
-      header: 'Min Clearance',
-    },
-    {
-      field: ColumnField.MaximumClearance,
-      description: 'Avoid in clearance above',
-      header: 'Max Clearance',
-    },
-    {
-      field: ColumnField.DrugInteraction,
-      description: 'Interacts with',
-      header: 'Drug Interaction',
-    },
-    {
-      field: ColumnField.Inclusion,
-      description: 'Applies to',
-      header: 'Includes',
-    },
-    {
-      field: ColumnField.Exclusion,
-      description: 'Does not apply to',
-      header: 'Excludes',
-    },
-    {
-      field: ColumnField.Rationale,
-      description: 'Rationale',
-      header: 'Rationale',
-    },
-    {
-      field: ColumnField.Recommendation,
-      description: 'Recommendation',
-      header: 'Recommendation',
-    },
-
-    {
-      field: ColumnField.ShortName,
-      description: 'Table Name #',
-      header: 'Table',
-    },
-    {
-      field: ColumnField.SearchTerms,
-      description: 'Searches',
-      header: 'Search Term',
-    },
-  ];
-
-  public columnDefinitions: TableDefinition[] = [
-    {
-      description: 'General Info',
-      filters: [null],
-      id: Category.General,
-      columnOptions: [
-        { id: ColumnField.SearchTerms, selected: true },
-        { id: ColumnField.Item, selected: true },
-        { id: ColumnField.Exclusion, selected: true },
-        { id: ColumnField.Inclusion, selected: true },
-        { id: ColumnField.Recommendation, selected: true },
-        { id: ColumnField.DiseaseState, selected: true },
-        { id: ColumnField.DrugInteraction, selected: false },
-        { id: ColumnField.ShortName, selected: true },
-      ],
-    },
-    {
-      description: 'Disease-Specific',
-      filters: [ColumnField.DiseaseState],
-      id: Category.DiseaseGuidance,
-      columnOptions: [
-        { id: ColumnField.SearchTerms, selected: true },
-        { id: ColumnField.Item, selected: true },
-        { id: ColumnField.Exclusion, selected: true },
-        { id: ColumnField.Inclusion, selected: true },
-        { id: ColumnField.Recommendation, selected: false },
-        { id: ColumnField.DiseaseState, selected: true },
-      ],
-    },
-    {
-      description: 'Renal Interactions',
-      id: Category.RenalEffect,
-      filters: [ColumnField.MaximumClearance, ColumnField.MinimumClearance],
-      columnOptions: [
-        { id: ColumnField.SearchTerms, selected: true },
-        { id: ColumnField.Item, selected: true },
-        { id: ColumnField.MinimumClearance, selected: true },
-        { id: ColumnField.MaximumClearance, selected: true },
-        { id: ColumnField.Inclusion, selected: false },
-        { id: ColumnField.Exclusion, selected: false },
-        { id: ColumnField.Recommendation, selected: true },
-      ],
-    },
-    {
-      description: 'Drug Interactions',
-      filters: [ColumnField.DrugInteraction],
-      id: Category.DrugInteractions,
-      columnOptions: [
-        { id: ColumnField.SearchTerms, selected: true },
-        { id: ColumnField.Item, selected: true },
-        { id: ColumnField.DrugInteraction, selected: true },
-        { id: ColumnField.Inclusion, selected: true },
-        { id: ColumnField.Exclusion, selected: true },
-        { id: ColumnField.Recommendation, selected: true },
-        { id: ColumnField.Rationale, selected: false },
-      ],
-    },
-  ];
-  // Observable string sources
-  private columnsSource = new Subject<DisplayedColumns[]>();
-  private activeColumnsSource = new Subject<string[]>();
-
-  private _descriptionMap = new Map(
-    this.columnOptions.map((col) => [col.field, col.description])
-  );
-  tables = new Set(this.columnDefinitions.map((def) => def.filters).flat());
-
-  // Observable string streams
-  observeColumns$ = this.columnsSource.asObservable();
-  observeActiveColumns$ = this.activeColumnsSource.asObservable();
-
-  lookupDescription(column: ColumnField) {
-    try {
-      this._descriptionMap.get(column);
-    } catch (err) {
-      return column;
-    }
+  private columnSource = new BehaviorSubject<{
+    selected: string[];
+    columns: string[];
+    keys: { selected: string; columns: string };
+  }>({ keys: { selected: '', columns: '' }, selected: [], columns: [] });
+  keys: {
+    selected: string;
+    columns: string;
+  };
+  columnsWithData: Set<string>;
+  constructor(
+    @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
+    private searchService: SearchService,
+    private tableService: TableService
+  ) {
+    this.tableService.selection$.subscribe((table) => {
+      this.emitTableColumns(table);
+    });
   }
-  triggerColumnChange(table: Category) {
-    const allColumns = this.columnDefinitions
-      .filter((column) => column.id === table)
-      .map((column) => column.columnOptions)[0];
-    this.columnsSource.next(allColumns);
-    this.activeColumnsSource.next(
-      allColumns.filter((col) => col.selected).map((col) => col.id)
+
+  private emitTableColumns(table: TableAttributes) {
+    let selectedColumns = [],
+      columns = [];
+    let { columnOptions } = this.tableConfig.find((column) => {
+      return column.id === table.tableNumber;
+    });
+    //Removes any columns that have no entries containing data. Otherwise, empty columns would create visual clutter with no benefit.
+    this.columnsWithData = this.createDatafulColumnSet(
+      this.searchService.searchResults
+    );
+    for (let { id, selected } of columnOptions) {
+      if (this.columnsWithData.has(id)) {
+        if (selected) {
+          selectedColumns.push(id);
+        }
+        columns.push(id);
+      }
+    }
+    this.emitColumns(selectedColumns, columns);
+  }
+
+  createDatafulColumnSet(data: BeersSearchResult[]): Set<string> {
+    return new Set(data.map((e) => Object.keys(e).filter((k) => e[k])).flat(1));
+  }
+
+  get columns$() {
+    return this.columnSource.asObservable().pipe(
+      distinctUntilChanged(
+        (prev, curr) => prev.keys.columns === curr.keys.columns
+      ),
+      map((source) => source.columns)
     );
   }
-  updateSelectedColumns(selected: string[]) {
-    this.activeColumnsSource.next(selected);
+  get selected$() {
+    return this.columnSource.asObservable().pipe(
+      distinctUntilChanged(
+        (prev, curr) => prev.keys.selected === curr.keys.selected
+      ),
+      map((column) => column.selected)
+    );
   }
-  tableExists(table): boolean {
-    return this.tables.has(table);
+
+  keyColumns(
+    selected: string[],
+    columns: string[]
+  ): { selected: string; columns: string } {
+    return {
+      selected: selected.sort().join(','),
+      columns: columns.sort().join(','),
+    };
   }
-  retrieveTable(item) {
-    return this.columnDefinitions
-      .filter((def) => def.filters.includes(item))
-      .map((def) => def.id)[0];
+  validateColumns(columns: string[]) {
+    return (
+      !Array.isArray(columns) ||
+      !columns.every((column) => typeof column === 'string')
+    );
   }
-}
+  emitColumns(selected?: string[], columns?: string[]) {
+    if (!this.validateColumns(columns)) {
+      columns = this.columnSource.value.columns;
+    }
+    if (!this.validateColumns(selected)) {
+      selected = this.columnSource.value.selected;
+    }
 
-export interface DisplayedColumns {
-  id: ColumnField;
-  selected: boolean;
-}
-
-export interface TableDefinition {
-  description: string;
-  id: number;
-  filters: ColumnField[];
-  columnOptions: DisplayedColumns[];
-}
-
-export interface columnTemplate {
-  name: string;
-  value: string;
-}
-export type ColumnInfo = {
-  field: ColumnField;
-  header: string;
-};
-export enum ColumnField {
-  EntryID = 'EntryID',
-  DiseaseState = 'DiseaseState',
-  Category = 'Category',
-  TableDefinition = 'TableDefinition',
-  Item = 'Item',
-  MinimumClearance = 'MinimumClearance',
-  MaximumClearance = 'MaximumClearance',
-  DrugInteraction = 'DrugInteraction',
-  Inclusion = 'Inclusion',
-  Exclusion = 'Exclusion',
-  Rationale = 'Rationale',
-  Recommendation = 'Recommendation',
-  RecommendationLineTwo = 'RecommendationLineTwo',
-  ShortName = 'ShortName',
-  SearchTerms = 'SearchTerms',
-}
-
-export enum Category {
-  General = 1,
-  PotentiallyInnappropriate,
-  DiseaseGuidance,
-  Caution,
-  DrugInteractions,
-  RenalEffect,
-  Anticholinergics,
+    this.columnSource.next({
+      keys: this.keyColumns(selected, columns),
+      selected,
+      columns,
+    });
+  }
 }

@@ -6,12 +6,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  width: 90%;
+  width: 100%;
+  padding: 5%;
 }
 
 .filter__input {
   width: 90%;
-  margin: 5%;
   border: 1px solid $light-gray-5;
   border-radius: 3px;
   font-size: 1rem;

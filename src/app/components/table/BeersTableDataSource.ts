@@ -69,6 +69,7 @@ export class BeersTableDataSource<
    * @memberof BeersTableDataSource
    */
   get displayedColumns$() {
+    this._displayedColumn$.subscribe(console.log);
     return this._displayedColumn$;
   }
   get displayedColumns() {
@@ -309,10 +310,9 @@ export class BeersTableDataSource<
 
     return subject;
   }
-  constructor(dataStream: Observable<T[]>, columnStream: Observable<string[]>) {
+  constructor(dataStream: Observable<T[]>) {
     super();
     this._data = this.toBehaviorSubject(dataStream);
-    this.observeColumnChanges(columnStream);
     this._updateChangeSubscription();
   }
 

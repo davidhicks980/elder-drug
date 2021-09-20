@@ -82,43 +82,21 @@
               <mat-icon
                 class="icon-button__icon"
                 inline="true"
-                svgIcon="add_ibm"
+                svgIcon="add-2"
               ></mat-icon></button
           ></ng-template>
         </div>
-        <div
-          class="search-field__errors errors"
-          id="errors"
-          [class.is-invalid]="drugInput.invalid"
-          [class.is-missing]="drugInput.errors?.termNotPresent"
-          [@transitionMessages]="'enter'"
-          *ngIf="
-            (drugInput.errors || drugList.errors) && drugInput.value.length > 0
-          "
-        >
-          <span class="errors__icon">
-            <mat-icon
-              [svgIcon]="drugInput.errors?.termNotPresent ? 'warn' : 'error'"
-            ></mat-icon>
-          </span>
-          <span class="errors__text">
-            <span role="alert" *ngIf="drugInput.errors?.duplicateTerm">
-              {{ drugInput.errors?.duplicateTerm | titlecase }} has already been
-              entered.
-            </span>
-            <span role="alert" *ngIf="drugInput.errors?.minlength">
-              Drug names must be at least 3 characters long.
-            </span>
-            <span role="alert" *ngIf="drugInput.errors?.maxLength">
-              Drug names should be fewer than 70 characters.
-            </span>
-            <span role="alert" *ngIf="drugInput.errors?.pattern">
-              Drug names should only contain alphanumeric letters.
-            </span>
-            <span role="alert" *ngIf="drugInput.errors?.termNotPresent"
-              >Only drugs from the dropdown menu have guidance.
-            </span>
-          </span>
+        <div class="search-field__errors" id="errors">
+          <elder-error-message
+            [@transitionMessages]="'enter'"
+            *ngIf="
+              (drugInput.errors || drugList.errors) &&
+              drugInput.value.length > 0
+            "
+            [error-messages]="this.errorMessages"
+            [warning-messages]="this.warningMessages"
+            [errors]="this.drugInput.errors"
+          ></elder-error-message>
         </div>
       </div>
 
@@ -219,24 +197,26 @@
           <div class="typeahead__options">
             <mat-option
               [value]="option[0] + option[1]"
-              *ngFor="let option of state.typeahead.data"
+              *ngFor="let option of state.typeahead.data | slice: 0:10"
               [class.is-editing]="false"
               [class.is-full]="true"
             >
-              <mat-icon class="mat-option__icon" svgIcon="search"></mat-icon>
-              <span>
-                <span style="font-weight: 500">{{ option[0] }}</span
-                >{{ option[1] }}
-              </span>
-              <ng-container
-                *ngIf="searchInputAutoTrigger.panelOpen"
-                [ngSwitch]="option[2]"
-              >
-                <span class="chip chip--generic" *ngSwitchCase="'~g'">
-                  generic
+              <div class="option__content">
+                <mat-icon class="option__icon" svgIcon="search"></mat-icon>
+                <span>
+                  <span style="font-weight: 500">{{ option[0] }}</span
+                  >{{ option[1] }}
                 </span>
-                <span class="chip chip--brand" *ngSwitchCase="'~b'">brand</span>
-              </ng-container>
+                <ng-container
+                  *ngIf="searchInputAutoTrigger.panelOpen"
+                  [ngSwitch]="option[2]"
+                >
+                  <div class="chip chip--generic" *ngSwitchCase="'~g'">
+                    generic
+                  </div>
+                  <div class="chip chip--brand" *ngSwitchCase="'~b'">brand</div>
+                </ng-container>
+              </div>
             </mat-option>
           </div>
           <ng-template

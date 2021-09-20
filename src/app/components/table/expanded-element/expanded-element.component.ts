@@ -19,7 +19,7 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
           endX: '0px',
           endY: '0px',
         },
-        enterTiming: '200 ms ease',
+        enterTiming: '200ms ease',
         leave: {
           startX: '0px',
           startY: '0px',
@@ -32,16 +32,14 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
   ],
 })
 export class ExpandedElementComponent {
-  private _data: ExpandingEntry;
+  private _data: Partial<ExpandingEntry>;
   map: { description: string; value: string }[];
-
   @Input()
-  public get data(): ExpandingEntry {
+  public get data(): Partial<ExpandingEntry> {
     return this._data;
   }
-  public set data(value: ExpandingEntry) {
+  public set data(value: Partial<ExpandingEntry>) {
     this._data = value;
   }
-
   constructor() {}
 }

@@ -2,7 +2,9 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ElementRef,
   Input,
   OnDestroy,
@@ -10,31 +12,37 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { matMenuAnimations } from '@angular/material/menu';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { PopupActions, PopupService } from '../../../services/popup.service';
+import { PopupContentDirective } from './popup-content.directive';
 
 @Component({
   selector: 'elder-popup',
   templateUrl: `popup.component.html`,
   styleUrls: [`popup.component.scss`],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [matMenuAnimations.transformMenu],
+  providers: [PopupService],
 })
 export class PopupComponent implements AfterViewInit, OnDestroy {
   @ViewChild('templatePortalContent') template: TemplateRef<unknown>;
   @ViewChild('anchor') anchor: ElementRef;
   @ViewChild('trigger') trigger: ElementRef;
+  @ContentChild(PopupContentDirective) content: PopupContentDirective;
   @Input() selectedOptions: string[] = [''];
   @Input() ignoreClicks;
   component: OverlayRef | null;
   portal: TemplatePortal<unknown>;
   private destroySubject = new Subject();
   private destroyedObserver = this.destroySubject.asObservable();
-  attached: boolean = false;
-  prevClose: boolean;
   allowClicks: boolean = true;
-  click(e) {
-    console.log(e);
+  attached = new BehaviorSubject(false);
+
+  get attached$() {
+    return this.attached.asObservable();
   }
   constructor(
     private overlay: Overlay,
@@ -48,19 +56,18 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   }
   listenForPointerEvents() {
     const trigger = this.trigger.nativeElement as HTMLElement;
-
     this.component
       .outsidePointerEvents()
       .pipe(
-        filter(
-          (e) => !trigger.contains(e.target as Element) && this.allowClicks
-        ),
+        filter(({ target }) => {
+          return !trigger.contains(target as Element) && this.allowClicks;
+        }),
         takeUntil(this.destroyedObserver)
       )
       .subscribe(() => this.component.detach());
   }
   listenForPortalActions() {
-    this.popupService.popupAction$.subscribe((action) => {
+    this.popupService.actions$.subscribe((action) => {
       switch (action) {
         case PopupActions.preventClose:
           this.allowClicks = false;
@@ -93,19 +100,23 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
 
   initPopup() {
     this.portal = new TemplatePortal(this.template, this.view);
-    this.component = this.createOverlay(this.anchor);
+    this.component = this.createOverlay(this.trigger);
     this.observeKeydown(this.component);
   }
   attachPopup() {
+    this.attached.next(true);
     return this.component.hasAttached()
       ? null
       : this.component.attach(this.portal);
   }
   togglePopup() {
-    this.component.hasAttached()
-      ? this.component.detach()
-      : this.component.attach(this.portal);
-    this.component.hostElement.onclose;
+    if (this.component.hasAttached()) {
+      this.component.detach();
+      this.attached.next(false);
+    } else {
+      this.component.attach(this.portal);
+      this.attached.next(true);
+    }
   }
   observeKeydown(component: OverlayRef) {
     component
@@ -126,21 +137,21 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  private createOverlay(anchor: any) {
+  private createOverlay(anchor: ElementRef<HTMLElement>) {
     return this.overlay.create({
       positionStrategy: this.overlay
         .position()
         .flexibleConnectedTo(anchor)
         .withPositions([
           {
-            originX: 'start',
-            originY: 'bottom',
-            overlayX: 'start',
-            overlayY: 'top',
+            originX: 'center',
+            originY: 'center',
+            overlayX: 'center',
+            overlayY: 'center',
           },
-        ]),
+        ])
+        .withPush(true),
       disposeOnNavigation: true,
-      hasBackdrop: true,
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
   }

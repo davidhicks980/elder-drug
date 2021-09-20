@@ -10,11 +10,9 @@
   border-radius: 0.5em;
   color: white;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
-  max-height: 1em;
-  vertical-align: middle;
-  padding: 0.35em;
-  left: 0;
-  margin-left: 1em;
+  padding: 0.15em 0.5em;
+  max-height: 1.8rem;
+  line-height: 1.3rem;
 
   &--generic {
     background-color: $primary-1;

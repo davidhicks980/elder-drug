@@ -1,0 +1,33 @@
+@use 'palette' as *;
+:host {
+  --elder-button--font: var(--body-font);
+  --elder-button--font-size: var(--body-font);
+  --elder-button--color: #{$primary-1};
+  --elder-button--border-color: #{$primary-1};
+  --elder-button--height: 1.8em;
+  color: var(--elder-button--color, black);
+  font-size: var(--elder-button--font-size, 1rem);
+}
+
+a {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.4em 1em 0.3em 1em;
+  border-radius: 5px;
+  @include common-input-style;
+}
+
+.icon,
+.text {
+  display: inline-block;
+  vertical-align: middle;
+  height: var(--elder-button--height);
+  line-height: var(--elder-button--height);
+}
+
+.text {
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: var(--elder-button--font);
+  padding: 0 5px;
+}

@@ -13,14 +13,14 @@ export const layoutAnimations = {
           endX: '0px',
           endY: '0px',
         },
-        enterTiming: '300ms ease-in-out',
+        enterTiming: '500ms ease-in-out',
         leave: {
           startX: '0px',
           startY: '0px',
           endX: `${amount}`,
           endY: '0px',
         },
-        leaveTiming: '300ms ease-in',
+        leaveTiming: '500ms ease-in',
       })
     ),
 
@@ -39,7 +39,7 @@ export const layoutAnimations = {
             endX: '0px',
             endY: '0px',
           },
-          '300ms cubic-bezier(.51,.01,.12,.77)'
+          '500ms cubic-bezier(.51,.01,.13,.99)'
         ),
       ]),
       transition(`${open} => ${close}`, [
@@ -50,7 +50,7 @@ export const layoutAnimations = {
             endX: `${-1 * amount}px`,
             endY: '0px',
           },
-          '300ms cubic-bezier(.51,.01,.12,.77)'
+          '500ms cubic-bezier(.51,.01,.12,.77)'
         ),
       ]),
     ]);

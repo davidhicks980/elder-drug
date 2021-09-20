@@ -148,32 +148,6 @@
   border: 1px solid black;
 }
 
-.errors {
-  display: inline-block;
-  height: 30px;
-  margin-top: 4px;
-  overflow: auto;
-  > * {
-    padding: 5px;
-  }
-  &__icon {
-    vertical-align: middle;
-    display: inline-block;
-    height: 35px;
-    margin-left: 0.9rem;
-  }
-  &__text {
-    vertical-align: middle;
-  }
-
-  &.is-invalid {
-    color: $error-4;
-    &.is-missing {
-      color: $complement-1;
-    }
-  }
-}
-
 .section--padded {
   width: 100%;
   padding: 2rem 0px 1rem;

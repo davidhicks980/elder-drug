@@ -1,19 +1,15 @@
 <div class="expanded-row" *ngIf="data as d">
   <div @flyIn>
     <div class="grid__12-col">
-      <div class="expanded-row__header">
-        <h1 class="expanded-row__header__title">{{ d.Item }}</h1>
-        <mat-chip-list>
-          <mat-chip class="expanded-row__header__chip">
-            {{ d.ItemType | titlecase }}</mat-chip
-          >
+      <div class="header">
+        <h1 class="header__title">{{ d.Item }}</h1>
+        <mat-chip-list class="header__chips">
+          <mat-chip> {{ d.ItemType | titlecase }}</mat-chip>
         </mat-chip-list>
+        <h2 class="header__subtitle">
+          {{ d.SearchTerms | titlecase }}
+        </h2>
       </div>
-    </div>
-    <div class="grid__12-col">
-      <h2 class="expanded-row__subtitle">
-        {{ d.SearchTerms | join | uppercase }}
-      </h2>
     </div>
     <div class="masonry-grid">
       <div *ngIf="d.Inclusion">
@@ -54,7 +50,7 @@
         <elder-expanded-row-card
           [field]="'Rationale'"
           [entry]="d.Rationale"
-          [icon]="'scale'"
+          [icon]="'light'"
         >
         </elder-expanded-row-card>
       </div>

@@ -8,22 +8,26 @@
     border: 1px solid $light-gray-5;
     border-radius: 4px;
   }
-  &.is-mobile {
-    background: blue;
-  }
 }
-
-.cell {
-  background: transparent;
-  text-align: left;
+.cell--header {
+  height: 2.5em;
+  line-height: 2.5rem;
+  padding-left: 0.5rem;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-bottom: 1px solid $light-gray-3;
-  cursor: pointer;
-  flex: 1;
-  display: flex;
-  align-items: center;
+  border: 1px dotted #adb4b9;
+  border-width: 0 0 1px 1px;
+  font-size: 1rem;
+  &.has-filter-attached {
+    border-bottom: 0;
+  }
+  &:first-of-type {
+    border-left: 0;
+  }
+  &__content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .group-header-cell {
@@ -66,41 +70,6 @@
   }
 }
 
-.cell {
-  display: inline-block;
-}
-.cell__chevron-container {
-  width: 36px;
-}
-
-.cell__mobile-header {
-  display: none;
-  font-weight: 500;
-  font-family: var(--body-font), Arial, Helvetica, sans-serif;
-}
-.cell__content {
-  margin-left: 10px;
-}
-
-@media (max-width: 600px) {
-  .cell__mobile-header {
-    width: 100px;
-    display: inline-block;
-  }
-  .cell__content {
-    max-width: 100%;
-    display: inline-block;
-  }
-
-  .drug-table {
-    width: auto;
-  }
-
-  .cell {
-    display: grid;
-    grid-template-columns: 35px 15ch auto;
-  }
-}
 .h2 {
   padding-bottom: 1px;
   margin-bottom: 0.5em;

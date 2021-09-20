@@ -179,37 +179,71 @@ $color: #fafafb;
   outline: 2px dotted currentColor;
   outline-offset: 1px;
 }
-
-@mixin commonInput {
-  font-size: Max(16px, 1em);
-  border: 1px solid $gray-1;
-  border-radius: 3px;
-  background-color: white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: $gray-5;
-  transition: background-color 0.5s ease-in;
-  position: relative;
-  padding: 0.5em 0.35em;
-  @include hoverable-shadow(2);
+@mixin common-input-style(
+  $color: $gray-5,
+  $inactive-border: $light-gray-3,
+  $active-color: $primary-1,
+  $background: $light-gray-1
+) {
+  border: 1px solid $inactive-border;
+  border-radius: 5px;
+  background-color: $background;
+  color: $color;
+  transition: color 300ms ease-in;
+  font-weight: 400;
   &:active {
-    transition: background-color 0.2s ease-in;
+    border-color: $active-color;
     &:after {
       opacity: 1;
     }
   }
   &:focus {
-    background-color: $light-gray-1;
-    transition: background-color 0.2s ease-in;
-    @include hoverable-shadow(3);
+    border-color: $active-color;
 
     &:after {
       opacity: 0.4;
     }
   }
   &:hover {
-    background-color: $light-gray-1;
-    transition: background-color 0.5s ease-in;
+    border-color: $active-color;
+  }
+}
+
+@mixin common-input(
+  $color: $gray-5,
+  $inactive-border: $light-gray-3,
+  $active-color: $primary-1,
+  $background: $light-gray-1
+) {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: 0.4em 0.75em;
+  font-weight: 400;
+  @include common-input-style(
+    $color: $gray-5,
+    $inactive-border: $light-gray-3,
+    $active-color: $primary-1,
+    $background: $light-gray-1
+  );
+}
+
+@mixin scrollbar {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: transparent;
+    box-shadow: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    color: rgb(226, 226, 226);
+    box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
+    -webkit-box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
   }
 }

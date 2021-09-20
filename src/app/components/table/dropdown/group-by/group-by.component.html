@@ -1,16 +1,16 @@
 <div
-  *elderLet="groupedColumns | async as groupArr"
+  *elderLet="groupedColumns$ | async as groupColumns"
   cdkDropListGroup
   #droplistGroup
   class="group-row group-row__background"
 >
-  <ng-container *elderLet="ungroupedColumns | async as ungroupArr">
+  <ng-container *elderLet="ungroupedColumns$ | async as ungroupColumns">
     <h3 class="group-row__primary-header">Row Groups</h3>
     <section>
       <h4 class="group-row__secondary-header">Groups</h4>
       <ol
         cdkDropList
-        [cdkDropListData]="groupArr"
+        [cdkDropListData]="groupColumns"
         [cdkDropListConnectedTo]="[ungrouped]"
         (cdkDropListDropped)="drop($event)"
         #grouped="cdkDropList"
@@ -20,8 +20,7 @@
         tabindex="0"
         id="grouped-droplist"
         [style.pointerEvents]="canClick.get(grouped.id) ? 'all' : 'none'"
-        attr.data-grid-rows="{{ groupArr.length }}"
-        data-grid-columns="2"
+        [keyGrid]="{ row: groupColumns.length, col: 2 }"
       >
         <li
           [tabindex]="i === tabbableGroupedItem ? 0 : -1"
@@ -29,11 +28,10 @@
           cdkDrag
           id="{{ option }}"
           role="option"
-          *ngFor="let option of groupArr; index as i"
+          *ngFor="let option of groupColumns; index as i"
           class="list-item grouped draggable"
           cdkDragBoundary=".group-row"
-          attr.data-grid-row="{{ i + 1 }}"
-          data-grid-column="1"
+          [keyGrid]="{ row: i + 1, col: 1 }"
           role="option"
           #groupedListItem
           (keydown)="handleGrouplistKeydown($event, groupedList, i)"
@@ -66,15 +64,14 @@
                 [tabindex]="i === tabbableGroupedItem ? 0 : -1"
                 (focus)="tabbableGroupedItem = i"
                 matTooltip="Remove grouping by {{ option }}"
-                attr.data-grid-row="{{ i + 1 }}"
-                data-grid-column="2"
+                [keyGrid]="{ row: i + 1, col: 2 }"
                 @fadeInPill
                 tabindex="0"
                 #removeButton
                 (click)="
                   ungroupItem(i); focusNextItem(groupedListItem, ungroupedList)
                 "
-                (keydown)="navigateListGrid($event, groupedList, removeButton)"
+                (keydown)="navigateListGrid($event, groupedList)"
                 class="list-content list-content__button--remove"
               >
                 <mat-icon inline="true" svgIcon="x"></mat-icon>
@@ -87,10 +84,9 @@
     <mat-divider></mat-divider>
     <section>
       <h4 class="group-row__secondary-header">Fields</h4>
-
       <ul
         cdkDropList
-        [cdkDropListData]="ungroupArr"
+        [cdkDropListData]="ungroupColumns"
         [cdkDropListConnectedTo]="[grouped]"
         (cdkDropListDropped)="drop($event)"
         #ungrouped="cdkDropList"
@@ -99,25 +95,23 @@
         class="list list--ungrouped"
         id="ungrouped-droplist"
         [style.pointerEvents]="canClick.get(ungrouped.id) ? 'all' : 'none'"
-        attr.data-grid-rows="{{ ungroupArr.length }}"
-        data-grid-columns="1"
+        [keyGrid]="{ row: ungroupColumns.length, col: 1 }"
       >
         <li
-          *ngFor="let item of ungroupArr; index as i"
+          *ngFor="let item of ungroupColumns; index as i"
           [tabindex]="i === tabbableUngroupedItem ? 0 : -1"
-          (focus)="tabbableUngroupedItem = i"
           cdkFocusInitial
           cdkDrag
           #ungroupedListItem
           role="option"
           class="list-item ungrouped"
           cdkDragBoundary=".group-row"
-          attr.data-grid-row="{{ i + 1 }}"
-          data-grid-column="1"
+          [keyGrid]="{ row: i + 1, col: 1 }"
           tabindex="0"
+          (focus)="tabbableUngroupedItem = i"
           (cdkDragStarted)="blockPopupClose(ungrouped.id)"
           (cdkDragEnded)="canClick.set(ungrouped.id, true)"
-          (keydown)="navigateListGrid($event, ungroupedList, ungroupedListItem)"
+          (keydown)="navigateListGrid($event, ungroupedList)"
           (keydown.enter)="
             groupItem(i); focusNextItem(ungroupedListItem, groupedList)
           "
@@ -145,7 +139,7 @@
                 (mouseup)="groupItem(i)"
                 class="list-content list-content__button--add"
               >
-                <mat-icon inline="true" svgIcon="add_ibm"></mat-icon>
+                <mat-icon inline="true" svgIcon="add-2"></mat-icon>
               </button>
             </div>
           </elder-list-content>

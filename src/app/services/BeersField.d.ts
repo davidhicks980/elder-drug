@@ -14,5 +14,5 @@ export interface BeersField {
   RecommendationLineTwo: string;
   ItemType: string;
   ShortTableName: string;
-  SearchTerms?: string[];
+  SearchTerms?: string;
 }

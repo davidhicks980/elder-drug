@@ -1,0 +1,10 @@
+<cdk-cell class="cell" tabindex="-1">
+  <!--If the cell is first, add an expansion button to it-->
+  <ng-content class="toggle" select="elder-cell-toggle"> </ng-content>
+  <span class="title">
+    <ng-content select="elder-cell-title"> </ng-content>
+  </span>
+  <span class="content">
+    <ng-content select="elder-cell-content"> </ng-content>
+  </span>
+</cdk-cell>
