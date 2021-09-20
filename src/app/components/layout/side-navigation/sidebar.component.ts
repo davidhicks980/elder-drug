@@ -64,7 +64,6 @@ export class SidebarComponent implements AfterViewInit, AfterContentInit {
     return templateChange$.pipe(
       filter((template) => template.templateContent === contentId),
       map((template) => {
-        console.log(template.templateRef.elementRef.nativeElement);
         return template.templateRef;
       })
     );

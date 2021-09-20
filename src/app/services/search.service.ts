@@ -19,12 +19,12 @@ export class SearchService {
    * @type {Set<string>}
    * @memberof SearchService
    */
-  private drugs: Set<string>;
-  private drugIndex: Map<string, string[]>;
+  private drugs: Set<string> = new Set();
+  private drugIndex: Map<string, string[]> = new Map();
   private historySource: BehaviorSubject<string[]> = new BehaviorSubject([]);
   private searchResultsSource: BehaviorSubject<BeersSearchResult[]> =
     new BehaviorSubject([]);
-  drugMap: Map<string, number[]>;
+  private drugEntryMapping: Map<string, number[]> = new Map();
   get searchResults$() {
     return this.searchResultsSource.asObservable();
   }
@@ -34,11 +34,15 @@ export class SearchService {
   storeHistory(drugs: string[]) {
     this.historySource.next(this.validateAndFormatSearch(drugs));
   }
-  filterTypeahead(entry: string) {
+
+  filterTypeahead(entry: string): string[] {
+    if (!this.drugIndex.size) {
+      return ['loading'];
+    }
     if (entry && typeof entry === 'string') {
       entry = entry.toLowerCase();
       return this.drugIndex
-        .get(entry[0])
+        .get(entry.charAt(0))
         .filter((val) => val.startsWith(entry))
         .slice(0, 10);
     } else {
@@ -82,9 +86,7 @@ export class SearchService {
    * @memberof SearchService
    */
   private getAlphabet(): string[] {
-    return Array(26)
-      .fill('a')
-      .map((_, i) => (i + 10).toString(36));
+    return Array.from({ length: 26 }, (_, i) => (i + 10).toString(36));
   }
   /**
    * Map used to quickly look up drugs based on the first letter of the drug name.
@@ -113,19 +115,24 @@ export class SearchService {
    * @memberof SearchService
    */
   private markDrugBrandOrGeneric(drugList: string[]): string[] {
-    return drugList.map((drug) =>
-      drug + this.genericIndex[drug[0]].includes(drug) ? '~g' : '~b'
-    );
+    let generics = {};
+    Object.keys(this.genericIndex).forEach((letter) => {
+      generics[letter] = this.genericIndex[letter].map((drug) => {
+        return drug?.toLowerCase();
+      });
+    });
+    return drugList.map((drug) => {
+      return drug.concat(generics[drug[0]].includes(drug) ? '~g' : '~b');
+    });
   }
-  get lastSearch() {
+  get history() {
     return this.historySource.getValue();
   }
 
-  searchDrugs(terms?: string | string[]) {
+  searchDrugs(terms?: string | string[]): void {
     //If there are no terms being searched, take the latest term from history.
     //Search history has already been validated and formatted
     let drugs = this.validateAndFormatSearch(terms) || this.historySource.value;
-
     if (drugs?.length) {
       let results: Map<number, BeersSearchResult> = new Map(),
         term = '',
@@ -134,18 +141,18 @@ export class SearchService {
         entry = {};
       while (drugs?.length) {
         term = drugs.pop();
-        indices = this.drugMap.get(term) || [];
+        indices = this.drugEntryMapping.get(term) || [];
         while (indices?.length) {
           index = indices.pop();
           if (!results.has(index)) {
-            entry = this.dataService.beersMap.get(index) || {};
+            entry = this.dataService.drugEntries.get(index) || {};
             results.set(index, { ...entry, SearchTerms: term });
           } else {
-            results.get(index).SearchTerms += `, ${term}`;
+            results.get(index).SearchTerms =
+              results.get(index).SearchTerms + `, ${term}`;
           }
         }
       }
-
       this.searchResultsSource.next(Array.from(results.values()));
     }
   }
@@ -154,7 +161,7 @@ export class SearchService {
     return key.replace(/\+/gi, ' ').toLowerCase();
   }
 
-  private createDrugMap(list: Record<string, number[]>) {
+  private createDrugEntryMapping(list: Record<string, number[]>) {
     return new Map(
       Object.entries(list).map(([k, v]) => [this.formatDrugKey(k), v])
     );
@@ -163,13 +170,13 @@ export class SearchService {
     private dataService: DataService,
     @Inject(GENERIC_DRUGS) private genericIndex: Record<string, string[]>
   ) {
-    this.dataService.drugList$.toPromise().then((drugs) => {
+    this.dataService.drugList$.subscribe((drugs) => {
       this.drugs = new Set(drugs);
       const markedDrugs = this.markDrugBrandOrGeneric(drugs);
       this.drugIndex = this.indexDrugs(markedDrugs);
     });
-    this.dataService.entriesMappedToTables$.toPromise().then((entries) => {
-      this.createDrugMap(entries);
+    this.dataService.entriesMappedToTables$.subscribe((entries) => {
+      this.drugEntryMapping = this.createDrugEntryMapping(entries);
     });
   }
 }

@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
@@ -10,11 +11,10 @@ import { ColumnService } from '../../services/columns.service';
 import { GroupByService } from '../../services/group-by.service';
 import { KeyGridService } from '../../services/key-grid.service';
 import { ResizeService } from '../../services/resize.service';
-import { SearchService } from '../../services/search.service';
+import { BeersSearchResult, SearchService } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
 import { BeersTableDataSource } from './BeersTableDataSource';
 import { ExpandingEntry } from './ExpandingEntry';
-import { Paginator } from './Paginator';
 
 @Component({
   selector: 'elder-table',
@@ -45,13 +45,14 @@ export class TableComponent implements AfterViewInit {
   @ViewChild('elderTable') container: ElementRef;
   @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
   @Input() showFilters: boolean = false;
-  model: BeersTableDataSource<ExpandingEntry, Paginator>;
+  model: BeersTableDataSource<BeersSearchResult>;
   selectedRow: any;
   _rowLength: number;
   _columnLength: number;
   gridCells: KeyGridDirective[];
   FIRST_ROW = 2;
   filterCells: Set<KeyGridDirective> = new Set();
+  dataSource: BehaviorSubject<BeersSearchResult[]>;
 
   get mobile$() {
     return this.resizeService.mobileObserver;
@@ -77,9 +78,14 @@ export class TableComponent implements AfterViewInit {
     private resizeService: ResizeService,
     private keyGridService: KeyGridService
   ) {
-    this.model = new BeersTableDataSource(
-      this.searchService.searchResults$ as any
-    );
+    this.searchService.searchResults$.subscribe((result) => {
+      if (!this.dataSource) {
+        this.dataSource = new BehaviorSubject(result);
+      } else {
+        this.dataSource.next(result);
+      }
+    });
+    this.model = new BeersTableDataSource(this.dataSource);
     this.model.observeColumnChanges(this.columnService.selected$);
     this.groupService.groups$
       .pipe(

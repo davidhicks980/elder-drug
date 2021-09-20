@@ -1,6 +1,5 @@
 <ng-container
   *elderLet="{
-    focused: formControlFocused$ | async,
     mobile: mobile$ | async,
     searchInProgress: searchInProgress$ | async,
     typeahead: typeaheadState$ | async
@@ -29,7 +28,6 @@
           [class.is-invalid]="drugInput.invalid && drugInput.value.length"
           [class.is-pinned]="state.searchInProgress"
           [class.is-open]="drugInput.value.length"
-          [class.is-focused]="state.focused"
           name="search"
         >
           <button
@@ -52,7 +50,6 @@
             title="Search"
             formControlName="drugInput"
             attr.data-control="-1"
-            (keydown.Enter)="searchInput.value.length || search($event)"
             class="search-field__input"
             placeholder="Zolpidem"
             aria-label="Enter a drug name. For example, 'zolpidem'"
@@ -61,6 +58,7 @@
             #searchInputAutoTrigger="matAutocompleteTrigger"
             [matAutocomplete]="autocomplete"
             [matAutocompleteConnectedTo]="autoOrigin"
+            (keydown.Enter)="searchInput.value.length || search($event)"
           />
           <div
             class="search-field__spinner-container"
@@ -145,11 +143,11 @@
                 matTooltipPosition="below"
                 matTooltipShowDelay="200"
                 matTooltipClass="tooltip"
-                (mouseover)="editDrugTooltip.disabled = true"
-                (mouseleave)="editDrugTooltip.disabled = false"
                 svgIcon="cancel"
                 tabIndex="0"
                 class="edit-item__icon"
+                (mouseover)="editDrugTooltip.disabled = true"
+                (mouseleave)="editDrugTooltip.disabled = false"
                 (click)="
                   deleteListControl(i); searchInputAutoTrigger.closePanel()
                 "

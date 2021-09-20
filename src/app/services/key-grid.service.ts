@@ -1,6 +1,6 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
-import { RowGroup } from '../components/table/RowGroup';
+import { FlatRowGroup } from '../components/table/RowGroup';
 import { KeyGridDirective } from '../directives/keygrid.directive';
 
 @Injectable({
@@ -59,7 +59,7 @@ export class KeyGridService {
     nextElem.focus();
     return true;
   }
-  getExpansionHeader = (row: RowGroup) => row.groupHeader;
+  getExpansionHeader = (row: FlatRowGroup<unknown>) => row.groupHeader;
 
   private getPositionFunctions(row: number, col: number) {
     const rowPos = {

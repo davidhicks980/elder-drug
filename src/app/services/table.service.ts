@@ -6,9 +6,9 @@ import { ColumnField } from '../enums/ColumnFields';
 import { TABLE_ATTRIBUTES } from '../injectables/table-attributes.injectable';
 import { TABLE_CONFIG } from '../injectables/table-config.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
+import { BeersField } from '../interfaces/BeersField';
 import { TableAttributes } from '../interfaces/TableAttributes';
 import { TableConfig } from '../interfaces/TableConfig';
-import { BeersField } from './BeersField';
 import { SearchService } from './search.service';
 
 @Injectable({
@@ -83,13 +83,19 @@ export class TableService {
   get tableOptions$(): Observable<TableAttributes[]> {
     return this.searchService.searchResults$.pipe(
       map((results) => {
-        let columns = Array.from(Object.keys(results[0])) as ColumnField[];
-        //Concat 1 because 1 is the general table and does not have filter fields
-        return this.filterActiveTables(results, columns)
-          .concat(1)
-          .map((page) => {
-            return this.tables.filter((table) => table.tableNumber === page)[0];
-          });
+        if (results.length) {
+          let columns = Array.from(Object.keys(results[0])) as ColumnField[];
+          //Concat 1 because 1 is the general table and does not have filter fields
+          return this.filterActiveTables(results, columns)
+            .concat(1)
+            .map((page) => {
+              return this.tables.filter(
+                (table) => table.tableNumber === page
+              )[0];
+            });
+        } else {
+          console.info('no search results');
+        }
       })
     );
   }

@@ -4,25 +4,20 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { BeersEntry } from '../../interfaces/BeersEntry';
-import { Entries } from './Entries';
 import { ExpandingEntry } from './ExpandingEntry';
-import { Paginator } from './Paginator';
 import { RowExpansionMixin } from './RowExpansionMixin';
-import { RowGroup } from './RowGroup';
+import { FlatRowGroup, RowGroup } from './RowGroup';
+import { TableEntry } from './TableEntry';
 
 /** Shared base class with MDC-based implementation. */
 export const MAX_SAFE_INTEGER = 9007199254740991;
 
-export class BeersTableDataSource<
-  T,
-  P extends Paginator
-> extends DataSource<T> {
+export class BeersTableDataSource<T> extends DataSource<T> {
   /** Stream that emits when a new data array is set on the data source. */
   private readonly _data: BehaviorSubject<T[]>;
 
   /** Stream emitting render data to the table (depends on ordered data changes). */
-  private readonly _renderData = new BehaviorSubject<T[]>([]);
+  private readonly renderData = new BehaviorSubject<T[]>([]);
 
   /** Stream that emits when a new filter string is set on the data source. */
   private readonly _filter = new BehaviorSubject<Map<string, string>>(
@@ -41,7 +36,7 @@ export class BeersTableDataSource<
    * For example, a 'selectAll()' function would likely want to select the set of filtered data
    * shown to the user rather than all the data.
    */
-  private _groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  private groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
   private _dataLoaded = false;
 
@@ -69,36 +64,18 @@ export class BeersTableDataSource<
    * @memberof BeersTableDataSource
    */
   get displayedColumns$() {
-    this._displayedColumn$.subscribe(console.log);
     return this._displayedColumn$;
   }
   get displayedColumns() {
     return this._displayedColumns;
   }
   get rowUpdates() {
-    return this._renderData.asObservable();
+    return this.renderData.asObservable();
   }
   get displayedGroups() {
-    return [...this._groupChange.value.values()];
+    return [...this.groupChange.value.values()];
   }
-  /* private _filterGroupedColumns = (groupedColumns: Map<string, GroupI>) => (
-    headers: string[]
-  ) => {
-    if (groupedColumns.size === 0) {
-      return headers;
-    } else {
-      let arrGroupedColumns = [...groupedColumns.keys()];
-      return headers.filter((header) => !arrGroupedColumns.includes(header));
-    }
-  };*/
-  hashRow(rows: ExpandingEntry[]) {
-    let encode = (row) => encodeURI(JSON.stringify(row));
 
-    for (let row of rows) {
-      row._position['hash'] = encode(row);
-    }
-    return rows;
-  }
   get dataLoaded() {
     return this._dataLoaded;
   }
@@ -112,7 +89,7 @@ export class BeersTableDataSource<
   }
 
   updateGroups(groups: string[]) {
-    this._groupChange.next(groups);
+    this.groupChange.next(groups);
   }
 
   checkIsGroup(_, rowData) {
@@ -160,7 +137,7 @@ export class BeersTableDataSource<
   }
   set sort(sort: MatSort | null) {
     this._sort = sort;
-    this._updateChangeSubscription();
+    this.updateChangeSubscription();
   }
   private _sort: MatSort | null;
 
@@ -219,10 +196,10 @@ export class BeersTableDataSource<
    * @param data The array of data that should be sorted.
    * @param sort The connected MatSort that holds the current sort state.
    */
-  sortData: (data: T[], sort: MatSort) => T[] = (
-    data: T[],
+  sortData: (data: TableEntry<T>[], sort: MatSort) => TableEntry<T>[] = (
+    data: TableEntry<T>[],
     sort: MatSort
-  ): T[] => {
+  ): TableEntry<T>[] => {
     const active = sort.active;
     const direction = sort.direction;
     if (!active || direction == '') {
@@ -283,168 +260,148 @@ export class BeersTableDataSource<
     data: T,
     filter: [string, string][]
   ): boolean => {
-    return filter.every(
-      ([key, value]) =>
-        (data[key] as string).trim().toLowerCase().indexOf(value) != -1
-    );
+    return filter.every(([key, value]) => {
+      return (data[key] as string).trim().toLowerCase().indexOf(value) != -1;
+    });
   };
 
-  toBehaviorSubject<T>(observable: Observable<T>): BehaviorSubject<T> {
-    let observed: T;
-    observable.toPromise().then((item) => {
-      observed = item;
-    });
-    const subject = new BehaviorSubject(observed);
-
-    observable.subscribe(
-      (x: T) => {
-        subject.next(x);
-      },
-      (err: any) => {
-        subject.error(err);
-      },
-      () => {
-        subject.complete();
-      }
-    );
-
-    return subject;
-  }
-  constructor(dataStream: Observable<T[]>) {
+  constructor(dataStream: BehaviorSubject<T[]>) {
     super();
-    this._data = this.toBehaviorSubject(dataStream);
-    this._updateChangeSubscription();
+    this._data = dataStream;
+    this.updateChangeSubscription();
   }
 
-  private _createGroup({ groupHeader, field, _position }) {
-    const group = {
+  private createGroup({ groupHeader, field, _position }) {
+    return {
       groupHeader,
       field,
       _position,
     };
-
-    return group;
   }
-  _createRowId(rootIndex: number, layer: number, index: number) {
+  private getPositionId(rootIndex: number, layer: number, index: number) {
     return `${rootIndex}${layer}${index}`;
   }
-  private _flattenNestedNodes(nodes: (RowGroup | Entries)[]) {
+  private flattenNestedNodes(
+    nodes: (RowGroup<T> | TableEntry<T>)[]
+  ): (TableEntry<T> | FlatRowGroup<T>)[] {
     return nodes.reduce((flatArray, item) => {
-      const hasChildren = Array.isArray(item?.rows);
+      const hasChildren = 'rows' in item && Array.isArray(item.rows);
       //If this is the first layer, set the root to the index of the first item of the tree
       //If the item exists, has children and has an array of rows, recurse again until no children are present.
       if (hasChildren) {
-        item = item as RowGroup;
-        const group = this._createGroup(item),
-          children = this._flattenNestedNodes(item.rows);
+        item = item as RowGroup<T>;
+        const group = this.createGroup(item),
+          children = this.flattenNestedNodes(item.rows);
         flatArray.push(group, ...children);
-      } else if (typeof item === 'object') {
-        flatArray.push(item);
       } else {
-        throw new TypeError(
-          '[BeersTableDataSource._flattenNestedNodes]: One or more nodes are not the correct type'
-        );
+        flatArray.push(item);
       }
       return flatArray;
     }, []);
   }
 
-  private _groupBy(
-    entries: T[],
+  private nestGroupsBy(
+    entries: (TableEntry<T> | RowGroup<T>)[],
     fields: string[],
     root = 0,
     layer = 0,
     parentIndex = -1,
     parentId = ''
-  ): any[] {
+  ): (RowGroup<T> | TableEntry<T>)[] {
     let field = fields[0] as string; // take the next field
-    if (!field) return entries; //if field does not exist, return the array
-
-    /////////////////////////////
-    ////////////////////////////
+    if (!field) {
+      return entries;
+    } //if field does not exist, return the array
     const groupedEntries = entries.reduce(
-      (levelGroups, levelEntry: T, groupIndex) => {
-        //If you are on the first layer, set the rootIndex equal to the index of the top node
-        //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
-        let grouping = levelEntry[field];
-        //Make the group name a string if it is an array
-        if (Array.isArray(grouping)) {
-          grouping = grouping.join('_');
-        }
-        if (!grouping) grouping = ' [[No data]]';
-        //If current group does not exist, set the value to the current field, and provide empty rows at the bottom of the tree
+      (groupsOnLevel, levelEntry, groupIndex) => {
+        //If we are at the top level, set the value to the current field, and provide empty rows at the bottom of the tree
         root = parentIndex === -1 ? groupIndex : root;
-        let groupId = this._createRowId(root, layer, groupIndex);
-        const groupPosition = {
+        let groupId = this.getPositionId(root, layer, groupIndex),
+          groupTerm = levelEntry[field],
+          hasParent = layer > 0,
+          id = groupId + parentId[2];
+
+        let groupPosition = {
           root,
           layer,
           index: groupIndex,
-          isGroup: true,
-          hasParent: layer > 0,
-          expanded: false,
-          id: groupId + parentId[2],
+          id,
+          hasParent,
           parentId,
+          isGroup: true,
+          expanded: false,
+          parentExpanded: false,
         } as RowExpansionMixin;
+
+        //If you are on the first layer, set the rootIndex equal to the index of the top node
+        //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
+        if (!groupTerm) {
+          groupTerm = ' [[No data]]';
+        }
+        //Make the group name a string if it is an array
+        if (Array.isArray(groupTerm)) {
+          groupTerm = groupTerm.join('_');
+        }
         //If a group has not been created in this layer, create an entry
-        if (!levelGroups[grouping])
-          levelGroups[grouping] = {
+        if (!groupsOnLevel[groupTerm]) {
+          groupsOnLevel[groupTerm] = {
             rows: [],
-            groupHeader: grouping,
+            groupHeader: groupTerm,
             field,
             _position: groupPosition,
           };
-
+        }
         //If this is the last layer (there are no more fields to group), add a position to all row entries
         if (fields.length <= 1) {
-          let index = levelGroups[grouping].rows.length;
-          let parentId = levelGroups[grouping]._position.id;
-
-          let id = this._createRowId(root, layer + 1, index);
-          levelEntry['_position'] = {
+          let index = groupsOnLevel[groupTerm].rows.length,
+            parentId = groupsOnLevel[groupTerm]._position.id,
+            nodeId = this.getPositionId(root, layer + 1, index);
+          levelEntry._position = {
             root,
             layer: layer + 1,
             index,
             isGroup: false,
-            expanded: false,
             hasParent: true,
-            id: id + parentId[2],
+            id: nodeId + parentId[2],
             parentId,
           } as RowExpansionMixin;
         }
-        levelGroups[grouping].rows.push(levelEntry);
-        return levelGroups;
+        groupsOnLevel[groupTerm].rows.push(levelEntry);
+        return groupsOnLevel;
       },
       {}
-    );
+    ) as { [key: string]: RowGroup<T> };
     let groupedValues = Object.values(groupedEntries);
 
+    //If there are groups remaining, recursively run the groupby function
     if (fields.length) {
       layer++;
-      groupedValues.forEach((group: any) => {
-        let { index: _index, id: _id } = group._position;
-        group.rows = this._groupBy(
+      groupedValues.forEach((group: RowGroup<T>) => {
+        group.rows = this.nestGroupsBy(
           group.rows,
           fields.slice(1),
           root,
           layer,
-          _index,
-          _id
+          group._position.index,
+          group._position.id
         );
       });
     }
     return groupedValues;
   }
 
-  private _groupData(data: T[]) {
-    let groups = this._groupChange.value;
-
+  private groupData(data: TableEntry<T>[]) {
+    let groups = this.groupChange.value;
     if (Array.isArray(groups) && groups.length > 0) {
-      let nestedNodes = this._groupBy(data, groups);
-      return this._flattenNestedNodes(nestedNodes);
+      let nestedNodes = this.nestGroupsBy(data, groups);
+      return this.flattenNestedNodes(nestedNodes);
+    } else {
+      return data;
     }
-    const newData = data.map((entry: BeersEntry, index) => {
-      return {
-        ...entry,
+  }
+  appendPosition(data: T[]): TableEntry<T>[] {
+    return data.map((d, index) => {
+      return Object.assign(d, {
         _position: {
           root: 0,
           id: `00${index}`,
@@ -452,12 +409,12 @@ export class BeersTableDataSource<
           isGroup: false,
           layer: 0,
           expanded: false,
+          parentExpanded: false,
           hasParent: false,
           index,
         },
-      } as RowGroup;
+      });
     });
-    return this._flattenNestedNodes(newData);
   }
   /**
    * Subscribe to changes that should trigger an update to the table's rendered rows. When the
@@ -465,7 +422,7 @@ export class BeersTableDataSource<
    * the provided base data and send it to the table for rendering.
    */
 
-  private _updateChangeSubscription() {
+  private updateChangeSubscription() {
     // Sorting and/or pagination should be watched if MatSort and/or MatPaginator are provided.
     // The events should emit whenever the component emits a change or initializes, or if no
     // component is provided, a stream with just a null event should be provided.
@@ -479,41 +436,48 @@ export class BeersTableDataSource<
         ) as Observable<Sort | void>)
       : of(null);
 
-    // Watch for base data or filter changes to provide a filtered set of data.
-    const filteredData = combineLatest([this._data, this._filter]).pipe(
-      map(([data]) => this._filterData(data))
+    const dataWithPositionalMetadata = this._data.pipe(
+      map((data) => this.appendPosition(data))
     );
+    // Watch for base data or filter changes to provide a filtered set of data.
+    const filteredData = combineLatest([
+      dataWithPositionalMetadata,
+      this._filter,
+    ]).pipe(map(([data]) => this.filterData(data)));
     // Watch for filtered data or sort changes to provide an ordered set of data.
     const sortedData = combineLatest([filteredData, sortChange]).pipe(
-      map(([data]) => this._orderData(data))
+      map(([data]) => this.orderData(data))
     );
-
-    const groupedData = combineLatest([sortedData, this._groupChange]).pipe(
-      map(([data]) => this._groupData(data))
+    const groupedData = combineLatest([sortedData, this.groupChange]).pipe(
+      map(([data]) => this.groupData(data))
     );
-
-    const hashedRows = groupedData.pipe(map((rows) => this.hashRow(rows)));
-    const expandedData = combineLatest([hashedRows, this.expansionChange]).pipe(
-      map(([data]) => this._expandData(data))
-    );
+    const expandedData = combineLatest([
+      groupedData,
+      this.expansionChange,
+    ]).pipe(map(([data]) => this.expandData(data)));
     // Watched for paged data changes and send the result to the table to render.
     this._renderChangesSubscription?.unsubscribe();
     this._renderChangesSubscription = expandedData.subscribe((data) => {
-      this._renderData.next(data as any);
+      this.renderData.next(data as any);
     });
   }
-  private _expandData(data: any[]): any {
+  private expandData(
+    data: (TableEntry<T> | FlatRowGroup<T>)[]
+  ): (TableEntry<T> | FlatRowGroup<T>)[] {
     let expandedRows = this.expansionChange.value;
     let i = 0;
-    data.forEach((row: ExpandingEntry) => {
-      const { isGroup, id, parentId, layer } = row._position;
-      let isFirstLayer = !layer || layer === 0;
-      let isShown = expandedRows.has(parentId) || isFirstLayer;
-      let isExpanded = expandedRows.has(id);
-      if (!isShown && isExpanded) expandedRows.delete(id);
+    data.forEach((row) => {
+      const { isGroup, id, parentId, layer } = row._position,
+        isShown = expandedRows.has(parentId) || !layer,
+        isExpanded = expandedRows.has(id);
+      if (!isShown && isExpanded) {
+        expandedRows.delete(id);
+      }
       row._position.expanded = isShown && isExpanded;
       row._position.parentExpanded = isShown;
       row._position.index = i;
+      //Expanded rows have two cells: the row cell, and the details cell. Hence, if isExpanded is true, move down by two to get to the next
+      //expandable row.
       i = isExpanded && !isGroup ? i + 2 : i + 1;
     });
     return data.filter((data) => data._position.parentExpanded);
@@ -530,7 +494,7 @@ export class BeersTableDataSource<
     string[]
   ]): string[] => {
     let exists = {};
-    let displayedColumns = tableArray
+    return tableArray
       .map((table) => {
         return headers.filter((header) => {
           return table[header] && !exists.hasOwnProperty(header)
@@ -539,7 +503,6 @@ export class BeersTableDataSource<
         });
       })
       .flat();
-    return displayedColumns;
   };
 
   /**
@@ -547,7 +510,7 @@ export class BeersTableDataSource<
    * the result of the filterTermAccessor function. If no filter is set, returns the data array
    * as provided.
    */
-  private _filterData(data: T[]) {
+  private filterData(data: TableEntry<T>[]): TableEntry<T>[] {
     // If there is a filter string, filter out data that does not contain it.
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overridden for customization.
@@ -564,7 +527,7 @@ export class BeersTableDataSource<
    * data array as provided. Uses the default data accessor for data lookup, unless a
    * sortDataAccessor function is defined.
    */
-  private _orderData(data: T[]): T[] {
+  private orderData(data: TableEntry<T>[]): TableEntry<T>[] {
     // If there is no active sort or direction, return the data without trying to sort.
     if (!this.sort) {
       return data;
@@ -579,9 +542,9 @@ export class BeersTableDataSource<
    */
   connect() {
     if (!this._renderChangesSubscription) {
-      this._updateChangeSubscription();
+      this.updateChangeSubscription();
     }
-    return this._renderData.asObservable();
+    return this.renderData.asObservable();
   }
 
   /**

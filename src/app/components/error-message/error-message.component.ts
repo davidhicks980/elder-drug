@@ -34,7 +34,6 @@ export class ErrorMessageComponent {
     return this._errors;
   }
   set errors(value: Record<string, string> | undefined) {
-    console.log(value);
     if (value) {
       this._errors = value;
       this.displayMessage(this._errors);
@@ -78,6 +77,5 @@ export class ErrorMessageComponent {
       type: ErrorType.ERROR,
     });
     this.message$ = this.messageSource.asObservable();
-    this.messageSource.subscribe(console.log);
   }
 }

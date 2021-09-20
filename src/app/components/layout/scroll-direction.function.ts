@@ -11,6 +11,5 @@ export function scrollDirectionCb(subject: Subject<ScrollDirection>) {
         : ScrollDirection.UP;
     subject.next(direction);
     previousY = entries[0].boundingClientRect.y;
-    console.log(entries);
   };
 }

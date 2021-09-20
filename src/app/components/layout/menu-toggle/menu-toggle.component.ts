@@ -39,10 +39,8 @@ export class MenuToggleComponent implements AfterViewInit {
       let { nativeElement } = this.slottedContent;
       if (this._toggled) {
         this.renderer.addClass(nativeElement, 'is-toggled');
-        console.log(nativeElement);
       } else {
         this.renderer.removeClass(nativeElement, 'is-toggled');
-        console.log(nativeElement);
       }
     }
   }

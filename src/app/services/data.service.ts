@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { doc, docData, DocumentData, Firestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { BEERS_ENTRIES } from '../injectables/brand-drugs.injectable';
@@ -10,17 +10,9 @@ import { BeersEntry } from '../interfaces/BeersEntry';
   providedIn: 'root',
 })
 export class DataService {
-  beersMap: Map<number, BeersEntry>;
-  drugIndex: Map<string, string[]> = new Map();
-  drugSet: Set<any>;
-  drugMap: Map<string, number[]>;
-  searches = new Map();
-  regex: RegExp;
-  allDrugs: string[] = [];
-  private _drugTableMapping: DocumentData;
-  dataSource$: Observable<DocumentData>;
-
-  private getFirebaseData(): Observable<DocumentData> {
+  private dataSource: ReplaySubject<DocumentData> = new ReplaySubject(1);
+  private entries: Map<number, BeersEntry>;
+  private getFirebaseData(): Observable<Record<string, number[]>> {
     return docData(doc(this.firestore, 'dropdown/dropdownItems'));
   }
 
@@ -38,20 +30,39 @@ export class DataService {
    * @returns {Record<string, number[]>}  Object containing drug names mapped to table numbers
    */
   get entriesMappedToTables$(): Observable<Record<string, number[]>> {
-    return this.dataSource$;
+    return this.dataSource.asObservable();
   }
-  get drugList$() {
-    return this.dataSource$.pipe(map((drugs) => Object.keys(drugs)));
+  /**
+   * Returns a list of all drug names.
+   *
+   * @readonly
+   * @memberof DataService
+   * @returns {Observable<string[]>} a list of brand and generic drug names corresponding to Beers Criteria entries,
+   */
+  get drugList$(): Observable<string[]> {
+    return this.dataSource
+      .asObservable()
+      .pipe(
+        map((drugs) => Object.keys(drugs).map((drug) => drug.toLowerCase()))
+      );
   }
 
-  createBeersMap() {
+  get drugEntries(): Map<number, BeersEntry> {
+    return this.entries;
+  }
+  private createBeersMap() {
     return new Map(this.beersEntries.map((item) => [item.EntryID, item]));
   }
   constructor(
     private firestore: Firestore,
     @Inject(BEERS_ENTRIES) private beersEntries: BeersEntry[]
   ) {
-    this.dataSource$ = this.getFirebaseData().pipe(take(1));
+    this.getFirebaseData()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.dataSource.next(data);
+      });
+    this.entries = this.createBeersMap();
   }
 }
 
