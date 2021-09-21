@@ -4,6 +4,7 @@
     mobile: mobile$ | async
   } as state"
 >
+  {{ state | json }}
   <div
     #elderTable
     id="elderTable"
@@ -33,9 +34,9 @@
         class="row row--content"
         [detail]="row | json"
         [expandDetail]="model.checkIsExpanded(row)"
-        (click)="model.expand(row, $event)"
-        (keydown.enter)="model.expand(row, $event)"
-        (keydown.space)="model.expand(row, $event)"
+        (click)="model.expand(row)"
+        (keydown.enter)="model.expand(row)"
+        (keydown.space)="model.expand(row)"
       ></cdk-row>
 
       <ng-container

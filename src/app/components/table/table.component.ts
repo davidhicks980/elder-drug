@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, merge, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
@@ -20,7 +20,6 @@ import { ExpandingEntry } from './ExpandingEntry';
   selector: 'elder-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss', './table.row.component.scss'],
-
   animations: [
     trigger('translateRationale', [
       state('expanded', style({ transform: 'translateY(0)' })),
@@ -72,21 +71,23 @@ export class TableComponent implements AfterViewInit {
   }
   constructor(
     private columnService: ColumnService,
-    private searchService: SearchService,
-    private tableService: TableService,
     private groupService: GroupByService,
+    private tableService: TableService,
+    private searchService: SearchService,
     private resizeService: ResizeService,
     private keyGridService: KeyGridService
   ) {
+    this.dataSource = new BehaviorSubject([]);
     this.searchService.searchResults$.subscribe((result) => {
-      if (!this.dataSource) {
-        this.dataSource = new BehaviorSubject(result);
-      } else {
-        this.dataSource.next(result);
-      }
+      this.dataSource.next(result);
     });
     this.model = new BeersTableDataSource(this.dataSource);
-    this.model.observeColumnChanges(this.columnService.selected$);
+    this.model.observeColumnChanges(
+      merge(
+        of(this.columnService.columns.selected),
+        this.columnService.selected$
+      )
+    );
     this.groupService.groups$
       .pipe(
         map((groups) => {
@@ -96,7 +97,7 @@ export class TableComponent implements AfterViewInit {
       .subscribe((groups) => this.model.updateGroups(groups));
 
     this.tableService.tableFilter$.subscribe(({ column, term }) => {
-      return this.model.filter(column, term);
+      this.model.filter(column, term);
     });
   }
   getRowIndex(row: ExpandingEntry, add = 0) {

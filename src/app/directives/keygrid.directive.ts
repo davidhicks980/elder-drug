@@ -7,18 +7,18 @@ import { Directive, ElementRef, HostBinding, Input } from '@angular/core';
 export class KeyGridDirective {
   private _keyGrid: { col: number; row: number } = { col: 0, row: 0 };
 
-  @Input() public get keyGrid(): { col: number; row: number } {
+  @Input() get keyGrid(): { col: number; row: number } {
     return this._keyGrid;
   }
-  public set keyGrid(value: { col: number; row: number }) {
+  set keyGrid(value: { col: number; row: number }) {
     this._keyGrid = value;
   }
   @HostBinding('attr.column')
-  public get column(): number {
+  get column(): number {
     return this._keyGrid.col;
   }
   @HostBinding('attr.row')
-  public get row(): number {
+  get row(): number {
     return this._keyGrid.row;
   }
 

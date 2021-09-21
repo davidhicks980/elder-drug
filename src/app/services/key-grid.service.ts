@@ -1,6 +1,5 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
-import { FlatRowGroup } from '../components/table/RowGroup';
 import { KeyGridDirective } from '../directives/keygrid.directive';
 
 @Injectable({
@@ -46,20 +45,20 @@ export class KeyGridService {
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
         toRow = r.prev(rowCount);
-        /**/ colAbove = c.count(cells, toRow);
+        colAbove = c.count(cells, toRow);
         toCol = colAbove < col ? colAbove : col;
         break;
       default:
         return; // Quit if this doesn't handle the key event.
     }
-    const predicate = (item) => item.column == toCol && item.row == toRow;
-    const nextElem = cells.filter(predicate)[0].element;
+    console.log(toCol, toRow);
+    const predicate = (item) => item.column === toCol && item.row === toRow;
+    const nextElem = cells.filter(predicate)[0]?.element;
     this.renderer.setAttribute(nextElem, 'tabindex', '0');
     this.renderer.setAttribute(currentElem, 'tabindex', '-1');
     nextElem.focus();
     return true;
   }
-  getExpansionHeader = (row: FlatRowGroup<unknown>) => row.groupHeader;
 
   private getPositionFunctions(row: number, col: number) {
     const rowPos = {
@@ -80,8 +79,8 @@ export class KeyGridService {
       isFirst: () => col === 0,
       count: (cells: KeyGridDirective[], rowIndex: number) => {
         return cells.reduce((count, item: KeyGridDirective) => {
-          return item.row === rowIndex && item.column > count
-            ? item.column
+          return item?.row === rowIndex && item?.column > count
+            ? item?.column
             : count;
         }, -1);
       },
@@ -89,7 +88,7 @@ export class KeyGridService {
 
     return { rowPos, columnPos };
   }
-  constructor(private rendererFactory: RendererFactory2) {
-    this.renderer = rendererFactory.createRenderer(null, null);
+  constructor(private renderFactory: RendererFactory2) {
+    this.renderer = this.renderFactory.createRenderer(null, null);
   }
 }

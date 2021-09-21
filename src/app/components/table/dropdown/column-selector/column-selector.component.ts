@@ -21,7 +21,6 @@ import { PopupService } from '../../../../services/popup.service';
       </div></ng-container
     >
   `,
-  viewProviders: [{ provide: PopupService, useClass: PopupService }],
 
   styleUrls: [`column-selector.component.scss`],
 })

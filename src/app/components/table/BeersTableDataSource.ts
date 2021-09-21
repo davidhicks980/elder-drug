@@ -2,7 +2,7 @@ import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { ExpandingEntry } from './ExpandingEntry';
 import { RowExpansionMixin } from './RowExpansionMixin';
@@ -38,12 +38,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    */
   private groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  private _dataLoaded = false;
-
   private _displayedColumn$: Observable<string[]> = of(['']);
   private _displayedColumns: string[] = [];
 
-  expanded = new Set();
   //Whether to ONLY group expanded rows in the data pipeline. This could be helpful when
   _renderOnExpansion: boolean = false;
   expansionChange = new BehaviorSubject(new Set());
@@ -52,10 +49,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @property {headers} headers - A stream of headers from your table source.
    */
   observeColumnChanges(headers: Observable<string[]>) {
-    this._displayedColumn$ = combineLatest([this._data, headers]).pipe(
-      map((headers) => this._filterEmptyColumns(headers)),
-      tap((headers) => (this._displayedColumns = headers))
-    );
+    this._displayedColumn$ = headers;
+    //TODO: remove
+    this.displayedColumns$.subscribe(console.log);
   }
   /**
    *
@@ -75,11 +71,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   get displayedGroups() {
     return [...this.groupChange.value.values()];
   }
-
-  get dataLoaded() {
-    return this._dataLoaded;
-  }
-
   /** Array of objects that should be rendered by the table, where each object represents one row. */
   get data() {
     return this._data.value;
@@ -87,11 +78,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   set data(data: T[]) {
     this._data.next(data);
   }
-
   updateGroups(groups: string[]) {
     this.groupChange.next(groups);
   }
-
   checkIsGroup(_, rowData) {
     return rowData._position.isGroup;
   }
@@ -101,13 +90,16 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   checkIsExpanded(row) {
     return this.expansionChange.value.has(row._position.id);
   }
-  checkIsParentExpanded = (row) =>
-    !this.rowHasParent(row) ||
-    this.expansionChange.value.has(row._position.parentId);
+  checkIsParentExpanded = (row) => {
+    return (
+      !this.rowHasParent(row) ||
+      this.expansionChange.value.has(row._position.parentId)
+    );
+  };
 
   rowHasParent = (row) => row._position.hasParent;
 
-  expand(row: ExpandingEntry, $event) {
+  expand(row: ExpandingEntry) {
     const id = row._position.id;
     const expanded = this.expansionChange.value;
     expanded.has(id) ? expanded.delete(id) : expanded.add(id);

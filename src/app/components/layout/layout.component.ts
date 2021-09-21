@@ -5,12 +5,14 @@ import {
   Component,
   ElementRef,
   Inject,
+  QueryList,
   TemplateRef,
   ViewChild,
+  ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
 import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
 import { ResizeService } from '../../services/resize.service';
@@ -46,8 +48,7 @@ export class LayoutComponent {
   @ViewChild('toggleTemplate') toggleTemplate: TemplateRef<HTMLElement>;
   togglePortalContent!: TemplatePortal;
   @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
-  @ViewChild('mainWrapper') main: ElementRef<HTMLElement>;
-  loaded: boolean = false;
+  @ViewChildren('mainWrapper') main: QueryList<ElementRef<HTMLElement>>;
 
   private scrollDirectionSource: Subject<ScrollDirection> = new Subject();
   scrollDirection$ = this.scrollDirectionSource
@@ -100,15 +101,21 @@ export class LayoutComponent {
       this.containerRef
     );
 
-    let options = { root: null, threshold: null },
-      main = this.main.nativeElement;
+    let options = { root: null, threshold: null };
     options.root = document;
     options.threshold = [0.4, 0.5, 0.6, 0.7, 0.8, 0.99];
     const observer = new IntersectionObserver(
       scrollDirectionCb(this.scrollDirectionSource),
       options
     );
-    observer.observe(main);
+    this.main.changes
+      .pipe(
+        filter(() => !!this.main.first),
+        take(1)
+      )
+      .subscribe(() => {
+        observer.observe(this.main.first.nativeElement);
+      });
   }
   get tokens() {
     return {

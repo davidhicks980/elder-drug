@@ -6,35 +6,53 @@ import { TABLE_CONFIG } from '../injectables/table-config.injectable';
 import { TableAttributes } from '../interfaces/TableAttributes';
 import { TableConfig } from '../interfaces/TableConfig';
 import { BeersSearchResult, SearchService } from './search.service';
-import { TableService } from './table.service';
+
+const COLUMN_PLACEHOLDER = {
+  keys: { selected: '', columns: '' },
+  selected: [],
+  columns: [],
+};
+type KeyedTableColumns = {
+  selected: string[];
+  columns: string[];
+  keys: {
+    selected: string;
+    columns: string;
+  };
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColumnService {
-  private columnSource = new BehaviorSubject<{
-    selected: string[];
-    columns: string[];
-    keys: { selected: string; columns: string };
-  }>({ keys: { selected: '', columns: '' }, selected: [], columns: [] });
-  keys: {
-    selected: string;
-    columns: string;
-  };
-  columnsWithData: Set<string>;
+  private columnSource = new BehaviorSubject<KeyedTableColumns>(
+    COLUMN_PLACEHOLDER
+  );
+
+  private columnsWithData: Set<string>;
+  columns$ = this.columnSource.asObservable().pipe(
+    distinctUntilChanged(
+      (prev, curr) => prev.keys.columns === curr.keys.columns
+    ),
+    map((source) => source.columns)
+  );
+  selected$ = this.columnSource.asObservable().pipe(
+    distinctUntilChanged(
+      (prev, curr) => prev.keys.selected === curr.keys.selected
+    ),
+    map((column) => column.selected)
+  );
+  get columns() {
+    return this.columnSource.value;
+  }
   constructor(
     @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
-    private searchService: SearchService,
-    private tableService: TableService
-  ) {
-    this.tableService.selection$.subscribe((table) => {
-      this.emitTableColumns(table);
-    });
-  }
+    private searchService: SearchService
+  ) {}
 
-  private emitTableColumns(table: TableAttributes) {
-    let selectedColumns = [],
-      columns = [];
+  changeTable(table: TableAttributes) {
+    let selectedColumns: string[] = [],
+      columns: string[] = [];
     let { columnOptions } = this.tableConfig.find((column) => {
       return column.id === table.tableNumber;
     });
@@ -52,29 +70,10 @@ export class ColumnService {
     }
     this.emitColumns(selectedColumns, columns);
   }
-
-  createDatafulColumnSet(data: BeersSearchResult[]): Set<string> {
+  private createDatafulColumnSet(data: BeersSearchResult[]): Set<string> {
     return new Set(data.map((e) => Object.keys(e).filter((k) => e[k])).flat(1));
   }
-
-  get columns$() {
-    return this.columnSource.asObservable().pipe(
-      distinctUntilChanged(
-        (prev, curr) => prev.keys.columns === curr.keys.columns
-      ),
-      map((source) => source.columns)
-    );
-  }
-  get selected$() {
-    return this.columnSource.asObservable().pipe(
-      distinctUntilChanged(
-        (prev, curr) => prev.keys.selected === curr.keys.selected
-      ),
-      map((column) => column.selected)
-    );
-  }
-
-  keyColumns(
+  private keyColumns(
     selected: string[],
     columns: string[]
   ): { selected: string; columns: string } {
@@ -83,10 +82,10 @@ export class ColumnService {
       columns: columns.sort().join(','),
     };
   }
-  validateColumns(columns: string[]) {
+  private validateColumns(columns: string[]) {
     return (
-      !Array.isArray(columns) ||
-      !columns.every((column) => typeof column === 'string')
+      Array.isArray(columns) &&
+      columns.every((column) => typeof column === 'string')
     );
   }
   emitColumns(selected?: string[], columns?: string[]) {

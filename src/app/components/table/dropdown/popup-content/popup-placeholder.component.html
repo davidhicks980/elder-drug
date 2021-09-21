@@ -1,7 +1,7 @@
 <ng-container *elderLet="placeholder$ | async as placeholder"
   ><span
     [matTooltip]="placeholder.text | join | caseSplit"
-    *ngIf="placeholder.text.length as length; else noOptions"
+    *ngIf="placeholder.text?.length as length; else noOptions"
     class="popup-trigger__placeholder"
   >
     {{ placeholder.text | caseSplit }}

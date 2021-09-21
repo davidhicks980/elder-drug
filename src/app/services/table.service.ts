@@ -6,7 +6,6 @@ import { ColumnField } from '../enums/ColumnFields';
 import { TABLE_ATTRIBUTES } from '../injectables/table-attributes.injectable';
 import { TABLE_CONFIG } from '../injectables/table-config.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
-import { BeersField } from '../interfaces/BeersField';
 import { TableAttributes } from '../interfaces/TableAttributes';
 import { TableConfig } from '../interfaces/TableConfig';
 import { SearchService } from './search.service';
@@ -24,20 +23,16 @@ export class TableService {
       tableIcon: '',
       description: '',
     });
-  selection$ = this.tableSelectionSource.asObservable();
-  private descript = new Subject();
-  tableDescription$ = this.descript.asObservable();
-  private titleSource = new Subject();
-  tableTitle$ = this.titleSource.asObservable();
+
   private tableFilterSource = new Subject();
-  tableFilter$ = this.tableFilterSource.asObservable();
   private tableLookup: Map<ColumnField, number>;
-  dataSource: BehaviorSubject<BeersField[]> = new BehaviorSubject([]);
   private _page: number;
-  public get page(): number {
+  selection$ = this.tableSelectionSource.asObservable();
+  tableFilter$ = this.tableFilterSource.asObservable();
+  get page(): number {
     return this._page;
   }
-  public set page(value: number) {
+  set page(value: number) {
     if (typeof value === 'number') {
       this._page = value;
       this.emitSelectedTable(this._page);
@@ -51,16 +46,12 @@ export class TableService {
   }
 
   emitSelectedTable(page: number) {
-    if (page != this._page) {
-      let info = this.tables.filter((table) => table.tableNumber === page);
-      if (info.length) {
-        this.tableSelectionSource.next(info[0]);
-        this._page = page;
-      } else {
-        throw TypeError('Page does not exist');
-      }
+    let info = this.tables.filter((table) => table.tableNumber === page);
+    if (info.length) {
+      this.tableSelectionSource.next(info[0]);
+      this._page = page;
     } else {
-      throw Error('Page is already selected');
+      throw TypeError('Page does not exist');
     }
   }
   filterActiveTables(
@@ -94,7 +85,7 @@ export class TableService {
               )[0];
             });
         } else {
-          console.info('no search results');
+          console.info('No search results');
         }
       })
     );

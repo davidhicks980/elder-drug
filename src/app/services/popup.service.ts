@@ -21,7 +21,10 @@ export class PopupService {
   actions$ = this.actionSource.asObservable();
   keyDownSource = new Subject();
   keyDown$ = this.keyDownSource.asObservable();
-  placeholderSource: Subject<PlaceholderDetails> = new Subject();
+  placeholderSource: BehaviorSubject<PlaceholderDetails> = new BehaviorSubject({
+    text: '',
+    itemCount: 0,
+  });
   placeholder$ = this.placeholderSource.asObservable();
   emitKeydown(keypress: KeyboardEvent) {
     this.keyDownSource.next(keypress);
