@@ -1,7 +1,7 @@
 import { trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
-import { fadeInTemplate, flyInTemplate } from '../../../animations/templates';
+import { enterLeaveFadeTemplate, flyInTemplate } from '../../../animations/templates';
 import { ExpandingEntry } from '../../table/ExpandingEntry';
 
 @Component({
@@ -9,7 +9,7 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
   templateUrl: './expanded-element.component.html',
   styleUrls: ['./expanded-element.component.scss'],
   animations: [
-    trigger('fadeIn', fadeInTemplate('1s', '1s')),
+    trigger('fadeIn', enterLeaveFadeTemplate('1s', '1s')),
     trigger(
       'flyIn',
       flyInTemplate({

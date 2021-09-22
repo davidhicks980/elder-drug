@@ -10,14 +10,7 @@
     class="tab"
   >
     <defs>
-      <linearGradient
-        spreadMethod="pad"
-        id="linear-base"
-        x1="0%"
-        y1="100%"
-        x2="0%"
-        y2="0%"
-      >
+      <linearGradient spreadMethod="pad" id="linear-base" x1="0%" y1="100%" x2="0%" y2="0%">
         <stop offset="0%" style="stop-color: rgba(0, 0, 0, 0.4)" />
         <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0.2)" />
         <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0.1)" />
@@ -79,17 +72,10 @@
       fill="url(#radial-highlight)"
       class="tab-gradient"
       id="tracking-gradient"
-      @fadeIn
     />
 
-    <text
-      x="50%"
-      y="50%"
-      dominant-baseline="middle"
-      text-anchor="middle"
-      class="tab__text"
-    >
-      {{ title }}
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="tab__text">
+      <ng-content></ng-content>
     </text>
   </svg>
 </a>

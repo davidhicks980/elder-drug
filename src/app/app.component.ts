@@ -18,9 +18,7 @@ export class AppComponent implements OnInit {
   ) {
     iconRegistry.addSvgIcon(
       'light',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/filled-lightbulb.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/filled-lightbulb.svg')
     );
     iconRegistry.addSvgIcon(
       'search',
@@ -60,9 +58,7 @@ export class AppComponent implements OnInit {
     );
     iconRegistry.addSvgIcon(
       'remove_circle_outline',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/remove_circle_outline.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/remove_circle_outline.svg')
     );
     iconRegistry.addSvgIcon(
       'remove',
@@ -70,9 +66,7 @@ export class AppComponent implements OnInit {
     );
     iconRegistry.addSvgIcon(
       'add_circle_outline',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/add_circle_outline.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/add_circle_outline.svg')
     );
     iconRegistry.addSvgIcon(
       'unfold_more',
@@ -83,19 +77,17 @@ export class AppComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/expand_less.svg')
     );
     iconRegistry.addSvgIcon(
-      'chevron_right',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_right.svg')
+      'chevron-right',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ibm-chevron--right.svg')
     );
     iconRegistry.addSvgIcon(
       'overflow_menu_vertical',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/overflow_menu_vertical.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/overflow_menu_vertical.svg')
     );
 
     iconRegistry.addSvgIcon(
-      'chevron_left',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/chevron_left.svg')
+      'chevron-left',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ibm-chevron--left.svg')
     );
     iconRegistry.addSvgIcon(
       'arrow_right',
@@ -115,9 +107,7 @@ export class AppComponent implements OnInit {
     );
     iconRegistry.addSvgIcon(
       'prescription_bottle',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/prescription_bottle.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/prescription_bottle.svg')
     );
     iconRegistry.addSvgIcon(
       'chevron_down',
@@ -133,15 +123,11 @@ export class AppComponent implements OnInit {
     );
     iconRegistry.addSvgIcon(
       'general-health',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/general-health.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/general-health.svg')
     );
     iconRegistry.addSvgIcon(
       'elder_drug_logo',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/elder_drug_logo.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/elder_drug_logo.svg')
     );
     iconRegistry.addSvgIcon(
       'scale',
@@ -167,21 +153,14 @@ export class AppComponent implements OnInit {
       'expand_more',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/expand_more.svg')
     );
-    iconRegistry.addSvgIcon(
-      'x',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x.svg')
-    );
+    iconRegistry.addSvgIcon('x', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x.svg'));
     iconRegistry.addSvgIcon(
       'x_filled',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/x_filled_circle.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x_filled_circle.svg')
     );
     iconRegistry.addSvgIcon(
       'x_outlined',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/x_outlined_circle.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x_outlined_circle.svg')
     );
     iconRegistry.addSvgIcon(
       'draggable',

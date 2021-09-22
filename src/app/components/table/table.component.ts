@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { BehaviorSubject, merge, of } from 'rxjs';
@@ -20,21 +19,6 @@ import { ExpandingEntry } from './ExpandingEntry';
   selector: 'elder-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss', './table.row.component.scss'],
-  animations: [
-    trigger('translateRationale', [
-      state('expanded', style({ transform: 'translateY(0)' })),
-      state('closed', style({ transform: 'translateY(-200px)' })),
-      transition(
-        'closed<=>expanded',
-        animate('500ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-
-      transition(
-        'expanded<=>closed',
-        animate('500ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
 })
 export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -83,12 +67,9 @@ export class TableComponent implements AfterViewInit {
     });
     this.model = new BeersTableDataSource(this.dataSource);
     this.model.observeColumnChanges(
-      merge(
-        of(this.columnService.columns.selected),
-        this.columnService.selected$
-      )
+      merge(of(this.columnService.columnInfo.selected), this.columnService.selected$)
     );
-    this.groupService.groups$
+    this.groupService.groupedItems$
       .pipe(
         map((groups) => {
           return groups.map((group) => group.trim());

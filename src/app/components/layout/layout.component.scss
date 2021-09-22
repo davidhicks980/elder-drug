@@ -56,19 +56,12 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
       z-index: 10;
       height: 100%;
     }
-
     &__toggle {
       position: absolute;
       top: -33px;
       right: -33px;
     }
   }
-}
-
-.overlay-container {
-  position: absolute;
-  margin-left: 50vw;
-  margin-top: 15vh;
 }
 
 .layout {
@@ -127,6 +120,7 @@ elder-menu-toggle elder-animated-x {
   }
 }
 .main__sidebar__toggle elder-menu-toggle {
+  pointer-events: all;
   * {
     color: #fff;
   }
@@ -153,4 +147,8 @@ elder-menu-toggle elder-animated-x {
   @include bem.mobileWidth {
     display: none;
   }
+}
+
+.click-through {
+  pointer-events: none;
 }

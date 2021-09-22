@@ -11,7 +11,7 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
@@ -50,7 +50,9 @@ export class LayoutComponent {
   @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
   @ViewChildren('mainWrapper') main: QueryList<ElementRef<HTMLElement>>;
 
-  private scrollDirectionSource: Subject<ScrollDirection> = new Subject();
+  private scrollDirectionSource: BehaviorSubject<ScrollDirection> = new BehaviorSubject(
+    ScrollDirection.DOWN
+  );
   scrollDirection$ = this.scrollDirectionSource
     .asObservable()
     .pipe(map((direction) => direction === ScrollDirection.DOWN));
@@ -96,10 +98,7 @@ export class LayoutComponent {
   }
 
   ngAfterViewInit() {
-    this.togglePortalContent = new TemplatePortal(
-      this.toggleTemplate,
-      this.containerRef
-    );
+    this.togglePortalContent = new TemplatePortal(this.toggleTemplate, this.containerRef);
 
     let options = { root: null, threshold: null };
     options.root = document;
@@ -131,9 +130,10 @@ export class LayoutComponent {
   }
 
   constructor(
-    public size: ResizeService,
     public tableService: TableService,
+    public size: ResizeService,
     private containerRef: ViewContainerRef,
+
     @Inject(SIDEBAR_TOKEN) private sidebarTokens: SidebarTokens,
     @Inject(TOOLBAR_TOKENS) private toolbarTokens: ToolbarTokens
   ) {

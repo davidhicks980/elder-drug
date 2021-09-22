@@ -50,8 +50,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    */
   observeColumnChanges(headers: Observable<string[]>) {
     this._displayedColumn$ = headers;
-    //TODO: remove
-    this.displayedColumns$.subscribe(console.log);
+
   }
   /**
    *

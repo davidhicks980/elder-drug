@@ -1,16 +1,49 @@
-<div class="tabs">
-  <ul class="button-row-style">
-    <ng-container *ngFor="let tab of tableOptions$ | async; index as index">
-      <li [style.zIndex]="index === currentTab ? 1 : 0" class="tab-button-li">
-        <elder-tab-link
-          [active]="index === currentTab"
-          [inactive]="index != currentTab"
-          [collapse]="index != 0"
-          [rounded]="rounded"
-          [title]="tab.shortName"
-          (click)="handleTabClick(tab.tableNumber, index)"
-        ></elder-tab-link>
-      </li>
-    </ng-container>
-  </ul>
+<div class="tab-overflow-container">
+  <button
+    (mousedown)="handleMouseDown($event, 'RIGHT')"
+    (mouseup)="handleMouseUp()"
+    @fadeButtons
+    mat-mini-fab
+    class="left-overflow-button"
+    *ngIf="this.leftOverflow | async"
+  >
+    <mat-icon svgIcon="chevron-left"></mat-icon>
+  </button>
+  <div
+    *elderLet="{
+      tabs: tableService.tableOptions$ | async,
+      currentTab: currentTab$ | async
+    } as state"
+    class="tabs"
+  >
+    <ul #list class="button-row-style hide-scrollbar">
+      <ng-container *ngFor="let tab of state.tabs">
+        <li
+          #item
+          [style.zIndex]="tab.tableNumber === state.currentTable ? 1 : 0"
+          class="tab-button"
+        >
+          <elder-tab-link
+            [active]="tab.tableNumber === state.currentTab"
+            [inactive]="tab.tableNumber != state.currentTab"
+            [collapse]="tab.tableNumber != 0"
+            [rounded]="rounded"
+            (click)="handleTabClick(tab.tableNumber)"
+          >
+            {{ tab.shortName }}
+          </elder-tab-link>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <button
+    (mousedown)="handleMouseDown($event, 'LEFT')"
+    (mouseup)="handleMouseUp()"
+    mat-mini-fab
+    @fadeButtons
+    class="right-overflow-button"
+    *ngIf="this.rightOverflow | async"
+  >
+    <mat-icon svgIcon="chevron-right"></mat-icon>
+  </button>
 </div>

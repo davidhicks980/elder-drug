@@ -25,24 +25,18 @@ type KeyedTableColumns = {
   providedIn: 'root',
 })
 export class ColumnService {
-  private columnSource = new BehaviorSubject<KeyedTableColumns>(
-    COLUMN_PLACEHOLDER
-  );
+  private columnSource = new BehaviorSubject<KeyedTableColumns>(COLUMN_PLACEHOLDER);
 
   private columnsWithData: Set<string>;
   columns$ = this.columnSource.asObservable().pipe(
-    distinctUntilChanged(
-      (prev, curr) => prev.keys.columns === curr.keys.columns
-    ),
+    distinctUntilChanged((prev, curr) => prev.keys.columns === curr.keys.columns),
     map((source) => source.columns)
   );
   selected$ = this.columnSource.asObservable().pipe(
-    distinctUntilChanged(
-      (prev, curr) => prev.keys.selected === curr.keys.selected
-    ),
+    distinctUntilChanged((prev, curr) => prev.keys.selected === curr.keys.selected),
     map((column) => column.selected)
   );
-  get columns() {
+  get columnInfo() {
     return this.columnSource.value;
   }
   constructor(
@@ -57,9 +51,7 @@ export class ColumnService {
       return column.id === table.tableNumber;
     });
     //Removes any columns that have no entries containing data. Otherwise, empty columns would create visual clutter with no benefit.
-    this.columnsWithData = this.createDatafulColumnSet(
-      this.searchService.searchResults
-    );
+    this.columnsWithData = this.createDatafulColumnSet(this.searchService.searchResults);
     for (let { id, selected } of columnOptions) {
       if (this.columnsWithData.has(id)) {
         if (selected) {
@@ -73,20 +65,14 @@ export class ColumnService {
   private createDatafulColumnSet(data: BeersSearchResult[]): Set<string> {
     return new Set(data.map((e) => Object.keys(e).filter((k) => e[k])).flat(1));
   }
-  private keyColumns(
-    selected: string[],
-    columns: string[]
-  ): { selected: string; columns: string } {
+  private keyColumns(selected: string[], columns: string[]): { selected: string; columns: string } {
     return {
       selected: selected.sort().join(','),
       columns: columns.sort().join(','),
     };
   }
   private validateColumns(columns: string[]) {
-    return (
-      Array.isArray(columns) &&
-      columns.every((column) => typeof column === 'string')
-    );
+    return Array.isArray(columns) && columns.every((column) => typeof column === 'string');
   }
   emitColumns(selected?: string[], columns?: string[]) {
     if (!this.validateColumns(columns)) {

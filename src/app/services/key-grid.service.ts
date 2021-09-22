@@ -51,7 +51,6 @@ export class KeyGridService {
       default:
         return; // Quit if this doesn't handle the key event.
     }
-    console.log(toCol, toRow);
     const predicate = (item) => item.column === toCol && item.row === toRow;
     const nextElem = cells.filter(predicate)[0]?.element;
     this.renderer.setAttribute(nextElem, 'tabindex', '0');
@@ -79,9 +78,7 @@ export class KeyGridService {
       isFirst: () => col === 0,
       count: (cells: KeyGridDirective[], rowIndex: number) => {
         return cells.reduce((count, item: KeyGridDirective) => {
-          return item?.row === rowIndex && item?.column > count
-            ? item?.column
-            : count;
+          return item?.row === rowIndex && item?.column > count ? item?.column : count;
         }, -1);
       },
     };

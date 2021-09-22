@@ -1,6 +1,7 @@
 import { trigger } from '@angular/animations';
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -14,8 +15,8 @@ import {
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { fadeInTemplate } from '../../../../animations/templates';
-import { ARROW_KEYS, ENTER_KEYS, VERTICAL_ARROW_KEYS } from '../../../../constants/keys.constants';
+import { enterLeaveFadeTemplate } from '../../../../animations/templates';
+import { ARROW_KEYS, ENTER_KEYS } from '../../../../constants/keys.constants';
 import { KeyGridDirective } from '../../../../directives/keygrid.directive';
 import { GroupByService } from '../../../../services/group-by.service';
 import { KeyGridService } from '../../../../services/key-grid.service';
@@ -28,12 +29,10 @@ export const CLASS_MOVEABLE = 'is-moveable';
   selector: 'elder-group-by',
   templateUrl: './group-by.component.html',
   styleUrls: ['./group-by.component.scss'],
-  animations: [
-    trigger('fadeInPill', fadeInTemplate('300ms ease-out', '300ms ease-out')),
-  ],
+  animations: [trigger('fadeInPill', enterLeaveFadeTemplate('300ms ease-out', '300ms ease-out'))],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupByComponent implements OnDestroy {
+export class GroupByComponent implements OnDestroy, AfterViewInit {
   @Output() groupChange: EventEmitter<string[]> = new EventEmitter();
   @ViewChildren('removeButton') removeButtons: QueryList<ElementRef>;
   @ViewChildren('addButton') addButtons: QueryList<ElementRef>;
@@ -70,11 +69,7 @@ export class GroupByComponent implements OnDestroy {
   canElementMove(elem: HTMLElement) {
     return elem.classList.contains(CLASS_MOVEABLE);
   }
-  handleGrouplistKeydown(
-    $event: KeyboardEvent,
-    list: ListElement,
-    index: number
-  ) {
+  handleGrouplistKeydown($event: KeyboardEvent, list: ListElement, index: number) {
     let { target, key } = $event;
     let elem = target as HTMLElement;
     if (ENTER_KEYS.includes(key)) {
@@ -84,7 +79,7 @@ export class GroupByComponent implements OnDestroy {
         this.startMovingElement(elem);
       }
       this.cdr.markForCheck();
-    } else if (VERTICAL_ARROW_KEYS.includes(key)) {
+    } else if (ARROW_KEYS.includes(key)) {
       if (this.canElementMove(elem)) {
         this.handleVerticalKeypressOnMoveableItem($event, index, list, elem);
       } else {
@@ -103,10 +98,7 @@ export class GroupByComponent implements OnDestroy {
     return { next, previous };
   }
 
-  navigateListGrid(
-    event: KeyboardEvent,
-    list: HTMLUListElement | HTMLOListElement
-  ) {
+  navigateListGrid(event: KeyboardEvent, list: HTMLUListElement | HTMLOListElement) {
     let { key } = event;
     if (ARROW_KEYS.includes(key)) {
       const listElements = this.gridElements.filter((directive) => {
@@ -180,15 +172,9 @@ export class GroupByComponent implements OnDestroy {
     const isItemGrouped = event.container.id === 'grouped-droplist';
     if (event.previousContainer === event.container) {
       if (isItemGrouped) {
-        this.groupService.moveItemsInGroupList(
-          event.previousIndex,
-          event.currentIndex
-        );
+        this.groupService.moveItemsInGroupList(event.previousIndex, event.currentIndex);
       } else {
-        this.groupService.moveItemsInUngroupedList(
-          event.previousIndex,
-          event.currentIndex
-        );
+        this.groupService.moveItemsInUngroupedList(event.previousIndex, event.currentIndex);
       }
     } else {
       this.groupService.transferItemBetweenLists(
@@ -200,7 +186,16 @@ export class GroupByComponent implements OnDestroy {
     //Allow the popup to close after the item is transferred;
     this.popupService.emitAction(PopupActions.allowClose);
   }
+  ngAfterViewInit() {
+    this.updatePlaceholder(this.groupService.groups);
+  }
 
+  private updatePlaceholder(groups: string[]) {
+    this.popupService.emitPlaceholder({
+      text: groups[0],
+      itemCount: groups.length,
+    });
+  }
   constructor(
     private popupService: PopupService,
     public groupService: GroupByService,
@@ -209,14 +204,8 @@ export class GroupByComponent implements OnDestroy {
     private keyGridService: KeyGridService
   ) {
     this.canClick.set('grouped-droplist', true).set('ungrouped-droplist', true);
-    this.groupService.groups$.subscribe((groups) => {
-      this.popupService.emitPlaceholder({
-        text: groups[0],
-        itemCount: groups.length,
-      });
+    this.groupService.groupedItems$.subscribe((groups) => {
+      this.updatePlaceholder(groups);
     });
-  }
-  emitGroupChange(groups) {
-    this.groupService.emitGroupChange(groups);
   }
 }

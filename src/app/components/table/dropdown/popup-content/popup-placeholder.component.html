@@ -1,16 +1,19 @@
-<ng-container *elderLet="placeholder$ | async as placeholder"
+<ng-container
+  *elderLet="{
+    placeholder: placeholder$ | async,
+    length: length$ | async
+  } as state"
   ><span
-    [matTooltip]="placeholder.text | join | caseSplit"
-    *ngIf="placeholder.text?.length as length; else noOptions"
+    [matTooltip]="state.placeholder.text | join | caseSplit"
+    *ngIf="state.length; else noOptions"
     class="popup-trigger__placeholder"
   >
-    {{ placeholder.text | caseSplit }}
-    <span *ngIf="placeholder.itemCount > 1" class="additional-selection">
-      (+{{ placeholder.itemCount - 1 }}
-      {{ placeholder.itemCount === 2 ? "other" : "others" }})
+    {{ state.placeholder | caseSplit }}
+    <span *ngIf="state.length > 1" class="additional-selection">
+      (+{{ state.length - 1 }} {{ state.length === 2 ? "other" : "others" }})
     </span>
   </span>
   <ng-template #noOptions>
-    <span class="popup-trigger__placeholder"> Drug Name </span>
+    <span class="popup-trigger__placeholder"> {{ emptyPlaceholder }} </span>
   </ng-template>
 </ng-container>

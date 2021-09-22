@@ -1,7 +1,7 @@
 <div
   *elderLet="{
     groupColumns: groupService.groupedItems$ | async,
-    ungroupColumns: groupService.ungroupedItems$ | async
+    ungroupedColumns: groupService.ungroupedItems$ | async
   } as state"
   cdkDropListGroup
   #droplistGroup
@@ -24,7 +24,6 @@
       [style.pointerEvents]="canClick.get(grouped.id) ? 'all' : 'none'"
     >
       <li
-        (focus)="tabbableGroupedItem = i"
         cdkDrag
         id="{{ option }}"
         role="option"
@@ -82,7 +81,7 @@
     <h4 class="group-row__secondary-header">Fields</h4>
     <ul
       cdkDropList
-      [cdkDropListData]="state.ungroupColumns"
+      [cdkDropListData]="state.ungroupedColumns"
       [cdkDropListConnectedTo]="[grouped]"
       (cdkDropListDropped)="drop($event)"
       #ungrouped="cdkDropList"
@@ -93,7 +92,7 @@
       [style.pointerEvents]="canClick.get(ungrouped.id) ? 'all' : 'none'"
     >
       <li
-        *ngFor="let item of state.ungroupColumns; index as i"
+        *ngFor="let item of state.ungroupedColumns; index as i"
         cdkFocusInitial
         cdkDrag
         #ungroupedListItem

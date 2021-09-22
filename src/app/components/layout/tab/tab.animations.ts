@@ -1,5 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
+import { enterLeaveFadeTemplate } from '../../../animations/templates';
+
 export const tabAnimations = {
   round: (name: string) =>
     trigger(name, [
@@ -30,4 +32,5 @@ export const tabAnimations = {
         ),
       ]),
     ]),
+  fade: (name: string) => trigger(name, enterLeaveFadeTemplate('400ms ease-in', '400ms ease-in')),
 };

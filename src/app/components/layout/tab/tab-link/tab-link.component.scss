@@ -17,16 +17,17 @@
   transition: transform 500ms ease-out;
 }
 
-:host:not([active]) .tab__path {
+:host(:hover) .tab__path {
+  fill: tint($primary-1, 7%);
+}
+.tab__path {
+  transition: fill 300ms ease-in-out;
   fill: $primary-1;
   & ~ .tab__text {
     fill: $light-gray-2;
   }
-  &:hover {
-    fill: tint($primary-1, 50%);
-  }
 }
-:host([active]) .tab {
+:host(.is-active) .tab {
   color: $dark-gray-2;
   box-shadow: none;
 
@@ -35,12 +36,13 @@
     box-shadow: none;
     transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
       fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    & + .tab__text {
-      fill: $dark-gray-2;
-    }
     &:hover {
       color: $primary-1;
     }
+  }
+  .tab__text {
+    fill: currentColor;
+    font-weight: 500;
   }
 }
 .tab {

@@ -1,22 +1,15 @@
 import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 
 trigger('toolbarItemsFade', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-
-    animate('300ms ease-out', style({ opacity: 1 })),
-  ]),
+  transition(':enter', [style({ opacity: 0 }), animate('300ms ease-out', style({ opacity: 1 }))]),
 ]);
 
-export const fadeInAnimation = trigger('fadeIn', [
+export const fadeAnimation = trigger('fadeIn', [
   // the "in" style determines the "resting" state of the element when it is visible.
 
   // fade in when created. this could also be written as transition('void => *')
-  transition(':enter', [
-    style({ opacity: 0 }),
-
-    animate('10s ease', style({ opacity: 1 })),
-  ]),
+  transition(':enter', [style({ opacity: 0 }), animate('400ms ease', style({ opacity: 1 }))]),
+  transition(':leave', [style({ opacity: 1 }), animate('400ms ease', style({ opacity: 0 }))]),
 ]);
 
 export const slideInLeft = trigger('slideInLeft', [
@@ -28,20 +21,14 @@ export const slideInLeft = trigger('slideInLeft', [
 ]);
 
 export const slideInLeftFast = trigger('slideInLeftFast', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-    animate('250ms ease-out', style({ opacity: '*' })),
-  ]),
+  transition(':enter', [style({ opacity: 0 }), animate('250ms ease-out', style({ opacity: '*' }))]),
 ]);
 
 export const dropInAnimation = trigger('dropIn', [
   transition(':enter', [
     style({ boxShadow: 'none', opacity: 0, transform: 'translateY(-5em)' }),
     sequence([
-      animate(
-        '300ms',
-        style({ boxShadow: '2px 2px 10px 2px #808080', opacity: 0.7 })
-      ),
+      animate('300ms', style({ boxShadow: '2px 2px 10px 2px #808080', opacity: 0.7 })),
       animate(
         '500ms ease',
         style({
@@ -49,10 +36,7 @@ export const dropInAnimation = trigger('dropIn', [
           transform: 'translateX(0)',
         })
       ),
-      animate(
-        '600ms ease-in',
-        style({ boxShadow: '*', transform: 'translateX(0)' })
-      ),
+      animate('600ms ease-in', style({ boxShadow: '*', transform: 'translateX(0)' })),
     ]),
   ]),
 ]);
@@ -64,10 +48,7 @@ export const slideDownAnimation = trigger('slideDown', [
       transform: 'translateY(-20px)',
       opacity: 0,
     }),
-    animate(
-      '300ms ease-out',
-      style({ transform: 'translateY(0px)', opacity: 1 })
-    ),
+    animate('300ms ease-out', style({ transform: 'translateY(0px)', opacity: 1 })),
   ]),
 ]);
 
