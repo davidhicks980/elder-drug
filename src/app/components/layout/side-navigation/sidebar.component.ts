@@ -1,22 +1,8 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  EventEmitter,
-  HostBinding,
-  Inject,
-  Output,
-  QueryList,
-  TemplateRef,
-} from '@angular/core';
-import { from, merge, Observable, of, timer } from 'rxjs';
-import { filter, map, switchMapTo } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, ContentChild, EventEmitter, HostBinding, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
-import { TemplateContentDirective } from '../../../directives/content-template.directive';
-import { SIDEBAR_TOKEN, SidebarTokens, sidebarTokens } from './SidebarTokens';
+import { ResizeService } from '../../../services/resize.service';
+import { SidebarBrandDirective, SidebarToggleDirective } from './sidebar-brand.directive';
 
 @Component({
   selector: 'elder-sidebar',
@@ -24,48 +10,20 @@ import { SIDEBAR_TOKEN, SidebarTokens, sidebarTokens } from './SidebarTokens';
   styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class]': 'sidebar' },
-  providers: [{ provide: SIDEBAR_TOKEN, useValue: sidebarTokens }],
 })
-export class SidebarComponent implements AfterViewInit, AfterContentInit {
+export class SidebarComponent {
   @HostBinding('class.is-searching') searching: boolean = false;
-  @Output('searching') searchEmitter: EventEmitter<boolean> =
-    new EventEmitter();
-  @ContentChildren(TemplateContentDirective)
-  templates: QueryList<TemplateContentDirective>;
+  @Output('searching') searchEmitter: EventEmitter<boolean> = new EventEmitter();
+
+  @ContentChild(SidebarToggleDirective)
+  toggle: SidebarToggleDirective;
+  @ContentChild(SidebarBrandDirective)
+  brand: SidebarBrandDirective;
   isSearching$: Observable<boolean> = of(false);
-  templateRefs = { brand: null, toggle: null };
-  brandTemplate$: Observable<TemplateRef<unknown>>;
-  toggleTemplate$: Observable<TemplateRef<unknown>>;
 
   setSearchingStatus(searching: boolean) {
     this.searching = searching;
   }
-  ngAfterViewInit() {
-    timer(0)
-      .toPromise()
-      .then(() => {
-        this.cdr.markForCheck();
-      });
-  }
-  ngAfterContentInit() {
-    this.brandTemplate$ = this.filterTemplates(this.tokens.BRAND_TEMPLATE);
-    this.toggleTemplate$ = this.filterTemplates(this.tokens.TOGGLE_TEMPLATE);
-  }
-  constructor(
-    @Inject(SIDEBAR_TOKEN) private tokens: SidebarTokens,
-    private cdr: ChangeDetectorRef
-  ) {}
 
-  filterTemplates(contentId: Symbol) {
-    const templateChange$ = merge(
-      from(this.templates.toArray()),
-      this.templates.changes.pipe(switchMapTo(from(this.templates.toArray())))
-    );
-    return templateChange$.pipe(
-      filter((template) => template.templateContent === contentId),
-      map((template) => {
-        return template.templateRef;
-      })
-    );
-  }
+  constructor(public size: ResizeService) {}
 }

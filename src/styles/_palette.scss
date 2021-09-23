@@ -27,11 +27,7 @@
 }
 
 @function scaleColor($color, $step) {
-  @return color.scale(
-    $color,
-    saturation(-#{$step * 10}),
-    brightness(#{$step * 10})
-  );
+  @return color.scale($color, saturation(-#{$step * 10}), brightness(#{$step * 10}));
 }
 @function getLighter($color, $step) {
   @if $step>0 and $step< 6 {
@@ -52,10 +48,7 @@
     $sat-unit: (100 - $sat) / 8;
     $dark-unit: (100 - $dark) / 5.5;
 
-    $newcolor: saturate(
-      darken($color, $dark-unit * $step),
-      $sat-unit * $multi * $step
-    );
+    $newcolor: saturate(darken($color, $dark-unit * $step), $sat-unit * $multi * $step);
     @return $newcolor;
   }
 }
@@ -183,38 +176,30 @@ $color: #fafafb;
   $color: $gray-5,
   $inactive-border: $light-gray-3,
   $active-color: $primary-1,
-  $background: $light-gray-1
+  $background: $light-gray-2
 ) {
   border: 1px solid $inactive-border;
   border-radius: 5px;
-  background-color: $background;
   color: $color;
-  transition: color 300ms ease-in;
   font-weight: 400;
+  background-image: linear-gradient(tint($background, 70%) 70%, tint($background, 50%) 95%);
+  @include hoverable-shadow(2);
+  transition: border-color 200ms ease-out;
   &:active {
+    background-image: linear-gradient(tint($background, 50%), white);
     border-color: $active-color;
     &:after {
       opacity: 1;
     }
   }
   &:focus {
-    border-color: $active-color;
-
     &:after {
       opacity: 0.4;
     }
   }
-  &:hover {
-    border-color: $active-color;
-  }
 }
 
-@mixin common-input(
-  $color: $gray-5,
-  $inactive-border: $light-gray-3,
-  $active-color: $primary-1,
-  $background: $light-gray-1
-) {
+@mixin common-input-layout {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
@@ -222,12 +207,6 @@ $color: #fafafb;
   position: relative;
   padding: 0.4em 0.75em;
   font-weight: 400;
-  @include common-input-style(
-    $color: $gray-5,
-    $inactive-border: $light-gray-3,
-    $active-color: $primary-1,
-    $background: $light-gray-1
-  );
 }
 
 @mixin scrollbar {

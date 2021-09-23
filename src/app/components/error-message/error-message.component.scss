@@ -3,9 +3,12 @@
 @use '~@davidhicks/sass-mixins/shadow-root' as host;
 :host {
   display: inline-block;
-  min-height: 30px;
-  margin-top: 4px;
+  height: 40px;
   overflow: auto;
+  padding: 5px;
+  line-height: 1.1rem;
+  font-size: 0.8rem;
+  overflow: hidden;
   > * {
     @include mobileWidth {
       padding: 5px;

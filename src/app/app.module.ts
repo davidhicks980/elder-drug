@@ -30,6 +30,10 @@ import { DrugFormComponent } from './components/layout/side-navigation/drug-form
 import {
   SearchButtonsComponent,
 } from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
+import {
+  AutocompleteContentComponent,
+} from './components/layout/side-navigation/drug-form/typeahead/autocomplete-content.component';
+import { SidebarBrandDirective, SidebarToggleDirective } from './components/layout/side-navigation/sidebar-brand.directive';
 import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
 import { TabLinkComponent } from './components/layout/tab/tab-link/tab-link.component';
 import { TabComponent } from './components/layout/tab/tab.component';
@@ -78,9 +82,7 @@ import { JoinPipe } from './pipes/join.pipe';
 import { AddComponent } from './svg/add/add.component';
 import { ToStringPipe } from './to-string.pipe';
 
-export const firebase = provideFirebaseApp(() =>
-  initializeApp(environment.firebaseConfig)
-);
+export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
 @NgModule({
   declarations: [
@@ -134,6 +136,9 @@ export const firestore = provideFirestore(() => getFirestore());
     IconButtonDirective,
     PopupContentDirective,
     PopupContentComponent,
+    SidebarBrandDirective,
+    SidebarToggleDirective,
+    AutocompleteContentComponent,
   ],
   imports: [
     firebase,

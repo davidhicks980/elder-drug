@@ -20,9 +20,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   private readonly renderData = new BehaviorSubject<T[]>([]);
 
   /** Stream that emits when a new filter string is set on the data source. */
-  private readonly _filter = new BehaviorSubject<Map<string, string>>(
-    new Map()
-  );
+  private readonly _filter = new BehaviorSubject<Map<string, string>>(new Map());
 
   /**
    * Subscription to the changes that should trigger an update to the table's rendered rows, such
@@ -38,19 +36,17 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    */
   private groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  private _displayedColumn$: Observable<string[]> = of(['']);
-  private _displayedColumns: string[] = [];
+  columnSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  columns$ = this.columnSource.asObservable();
 
-  //Whether to ONLY group expanded rows in the data pipeline. This could be helpful when
   _renderOnExpansion: boolean = false;
   expansionChange = new BehaviorSubject(new Set());
 
   /** Ingests a stream of any columns that are marked to be shown and that contain data
    * @property {headers} headers - A stream of headers from your table source.
    */
-  observeColumnChanges(headers: Observable<string[]>) {
-    this._displayedColumn$ = headers;
-
+  observeColumnChanges(headers: string[]) {
+    this.columnSource.next(headers);
   }
   /**
    *
@@ -58,11 +54,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @readonly
    * @memberof BeersTableDataSource
    */
-  get displayedColumns$() {
-    return this._displayedColumn$;
-  }
+
   get displayedColumns() {
-    return this._displayedColumns;
+    return this.columnSource.getValue();
   }
   get rowUpdates() {
     return this.renderData.asObservable();
@@ -90,10 +84,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     return this.expansionChange.value.has(row._position.id);
   }
   checkIsParentExpanded = (row) => {
-    return (
-      !this.rowHasParent(row) ||
-      this.expansionChange.value.has(row._position.parentId)
-    );
+    return !this.rowHasParent(row) || this.expansionChange.value.has(row._position.parentId);
   };
 
   rowHasParent = (row) => row._position.hasParent;
@@ -161,10 +152,10 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @param data Data object that is being accessed.
    * @param sortHeaderId The name of the column that represents the data.
    */
-  private _sortingDataAccessor: (
+  private _sortingDataAccessor: (data: T, sortHeaderId: string) => string | number = (
     data: T,
     sortHeaderId: string
-  ) => string | number = (data: T, sortHeaderId: string): string | number => {
+  ): string | number => {
     const value = (data as { [key: string]: any })[sortHeaderId];
     if (_isNumberValue(value)) {
       const numberValue = Number(value);
@@ -303,65 +294,62 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     if (!field) {
       return entries;
     } //if field does not exist, return the array
-    const groupedEntries = entries.reduce(
-      (groupsOnLevel, levelEntry, groupIndex) => {
-        //If we are at the top level, set the value to the current field, and provide empty rows at the bottom of the tree
-        root = parentIndex === -1 ? groupIndex : root;
-        let groupId = this.getPositionId(root, layer, groupIndex),
-          groupTerm = levelEntry[field],
-          hasParent = layer > 0,
-          id = groupId + parentId[2];
+    const groupedEntries = entries.reduce((groupsOnLevel, levelEntry, groupIndex) => {
+      //If we are at the top level, set the value to the current field, and provide empty rows at the bottom of the tree
+      root = parentIndex === -1 ? groupIndex : root;
+      let groupId = this.getPositionId(root, layer, groupIndex),
+        groupTerm = levelEntry[field],
+        hasParent = layer > 0,
+        id = groupId + parentId[2];
 
-        let groupPosition = {
+      let groupPosition = {
+        root,
+        layer,
+        index: groupIndex,
+        id,
+        hasParent,
+        parentId,
+        isGroup: true,
+        expanded: false,
+        parentExpanded: false,
+      } as RowExpansionMixin;
+
+      //If you are on the first layer, set the rootIndex equal to the index of the top node
+      //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
+      if (!groupTerm) {
+        groupTerm = ' [[No data]]';
+      }
+      //Make the group name a string if it is an array
+      if (Array.isArray(groupTerm)) {
+        groupTerm = groupTerm.join('_');
+      }
+      //If a group has not been created in this layer, create an entry
+      if (!groupsOnLevel[groupTerm]) {
+        groupsOnLevel[groupTerm] = {
+          rows: [],
+          groupHeader: groupTerm,
+          field,
+          _position: groupPosition,
+        };
+      }
+      //If this is the last layer (there are no more fields to group), add a position to all row entries
+      if (fields.length <= 1) {
+        let index = groupsOnLevel[groupTerm].rows.length,
+          parentId = groupsOnLevel[groupTerm]._position.id,
+          nodeId = this.getPositionId(root, layer + 1, index);
+        levelEntry._position = {
           root,
-          layer,
-          index: groupIndex,
-          id,
-          hasParent,
+          layer: layer + 1,
+          index,
+          isGroup: false,
+          hasParent: true,
+          id: nodeId + parentId[2],
           parentId,
-          isGroup: true,
-          expanded: false,
-          parentExpanded: false,
         } as RowExpansionMixin;
-
-        //If you are on the first layer, set the rootIndex equal to the index of the top node
-        //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
-        if (!groupTerm) {
-          groupTerm = ' [[No data]]';
-        }
-        //Make the group name a string if it is an array
-        if (Array.isArray(groupTerm)) {
-          groupTerm = groupTerm.join('_');
-        }
-        //If a group has not been created in this layer, create an entry
-        if (!groupsOnLevel[groupTerm]) {
-          groupsOnLevel[groupTerm] = {
-            rows: [],
-            groupHeader: groupTerm,
-            field,
-            _position: groupPosition,
-          };
-        }
-        //If this is the last layer (there are no more fields to group), add a position to all row entries
-        if (fields.length <= 1) {
-          let index = groupsOnLevel[groupTerm].rows.length,
-            parentId = groupsOnLevel[groupTerm]._position.id,
-            nodeId = this.getPositionId(root, layer + 1, index);
-          levelEntry._position = {
-            root,
-            layer: layer + 1,
-            index,
-            isGroup: false,
-            hasParent: true,
-            id: nodeId + parentId[2],
-            parentId,
-          } as RowExpansionMixin;
-        }
-        groupsOnLevel[groupTerm].rows.push(levelEntry);
-        return groupsOnLevel;
-      },
-      {}
-    ) as { [key: string]: RowGroup<T> };
+      }
+      groupsOnLevel[groupTerm].rows.push(levelEntry);
+      return groupsOnLevel;
+    }, {}) as { [key: string]: RowGroup<T> };
     let groupedValues = Object.values(groupedEntries);
 
     //If there are groups remaining, recursively run the groupby function
@@ -421,20 +409,14 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     // pipeline can progress to the next step. Note that the value from these streams are not used,
     // they purely act as a signal to progress in the pipeline.
     const sortChange: Observable<Sort | null | void> = this._sort
-      ? (merge(
-          this._sort.sortChange,
-          this._sort.initialized
-        ) as Observable<Sort | void>)
+      ? (merge(this._sort.sortChange, this._sort.initialized) as Observable<Sort | void>)
       : of(null);
 
-    const dataWithPositionalMetadata = this._data.pipe(
-      map((data) => this.appendPosition(data))
-    );
+    const dataWithPositionalMetadata = this._data.pipe(map((data) => this.appendPosition(data)));
     // Watch for base data or filter changes to provide a filtered set of data.
-    const filteredData = combineLatest([
-      dataWithPositionalMetadata,
-      this._filter,
-    ]).pipe(map(([data]) => this.filterData(data)));
+    const filteredData = combineLatest([dataWithPositionalMetadata, this._filter]).pipe(
+      map(([data]) => this.filterData(data))
+    );
     // Watch for filtered data or sort changes to provide an ordered set of data.
     const sortedData = combineLatest([filteredData, sortChange]).pipe(
       map(([data]) => this.orderData(data))
@@ -442,10 +424,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     const groupedData = combineLatest([sortedData, this.groupChange]).pipe(
       map(([data]) => this.groupData(data))
     );
-    const expandedData = combineLatest([
-      groupedData,
-      this.expansionChange,
-    ]).pipe(map(([data]) => this.expandData(data)));
+    const expandedData = combineLatest([groupedData, this.expansionChange]).pipe(
+      map(([data]) => this.expandData(data))
+    );
     // Watched for paged data changes and send the result to the table to render.
     this._renderChangesSubscription?.unsubscribe();
     this._renderChangesSubscription = expandedData.subscribe((data) => {
@@ -480,17 +461,12 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @param {*} [tableArray, headers]
    * @returns {*}  {string[]}
    */
-  private _filterEmptyColumns = ([tableArray, headers]: [
-    T[],
-    string[]
-  ]): string[] => {
+  private _filterEmptyColumns = ([tableArray, headers]: [T[], string[]]): string[] => {
     let exists = {};
     return tableArray
       .map((table) => {
         return headers.filter((header) => {
-          return table[header] && !exists.hasOwnProperty(header)
-            ? (exists[header] = true)
-            : false;
+          return table[header] && !exists.hasOwnProperty(header) ? (exists[header] = true) : false;
         });
       })
       .flat();

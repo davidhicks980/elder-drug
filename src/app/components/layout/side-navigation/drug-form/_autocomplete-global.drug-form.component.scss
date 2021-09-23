@@ -1,29 +1,20 @@
-@use 'palette' as pal;
+@use 'palette' as *;
 @use '~@angular/material' as mat;
 @use 'bem-mixin' as *;
 
 .typeahead {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  mat-option {
-    border-bottom: 1px solid pal.$light-gray-5;
-    height: 2.5rem;
-    border-right: 1px solid pal.$light-gray-5;
-    border-left: 1px solid pal.$light-gray-5;
-    padding: 0 0 0 8px;
-    overflow: visible;
-    .option__content {
-      display: grid;
-      grid-template-columns: 2.5rem 1fr 4rem;
-      align-items: center;
-      justify-items: start;
-    }
-    .option__icon {
-      color: pal.$gray-1;
-    }
 
+  mat-option {
+    height: 2.7rem;
+    padding: 0 0 0 8px;
+    &:last-of-type {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
     &.is-full {
-      height: 2.5rem;
+      height: 2.7rem;
       @include mobileWidth {
         height: 3.25rem;
       }
@@ -34,10 +25,16 @@
   }
 
   &.mat-autocomplete-panel {
-    max-height: 400px;
     @include mobileWidth {
       max-height: 100%;
     }
+    transform: translateY(10px) scale(0.9);
+    opacity: 0.2;
+    transition: transform 200ms ease-out, opacity 100ms ease-out;
+    &.mat-autocomplete-visible {
+      transform: translateY(0px) scale(1);
+      opacity: 1;
+    }
   }
-  @include mat.elevation-transition;
 }
+@include scrollbar;

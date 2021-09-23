@@ -1,18 +1,31 @@
-@use "palette" as pal;
-@use 'bem-mixin' as bem;
-mat-icon.icon-button {
+@use "palette" as *;
+
+button[mat-icon-button] {
   stroke: none;
-  fill: pal.$gray-5;
   pointer-events: all;
+  cursor: pointer;
   &:disabled {
-    color: pal.$gray-1;
+    color: $gray-1;
   }
-  &__icon {
-    stroke: none;
-    height: 2rem;
-    color: pal.$gray-3;
-    &.smaller {
-      height: 1.8rem;
-    }
+}
+%icon {
+  stroke: none;
+  height: 2rem;
+  color: $gray-4;
+}
+mat-icon[data-add-icon] {
+  @extend %icon;
+}
+mat-icon[data-search-icon] {
+  @extend %icon;
+  height: 1.8rem;
+}
+mat-icon[mat-list-icon] {
+  @extend %icon;
+  cursor: pointer;
+  fill: shade($gray-4, 20%);
+  height: 1rem;
+  &:active {
+    fill: $gray-3;
   }
 }

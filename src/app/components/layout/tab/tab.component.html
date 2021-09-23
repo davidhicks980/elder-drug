@@ -1,11 +1,10 @@
 <div class="tab-overflow-container">
   <button
     (mousedown)="handleMouseDown($event, 'RIGHT')"
-    (mouseup)="handleMouseUp()"
     @fadeButtons
     mat-mini-fab
     class="left-overflow-button"
-    *ngIf="this.leftOverflow | async"
+    *ngIf="leftOverflow | async"
   >
     <mat-icon svgIcon="chevron-left"></mat-icon>
   </button>
@@ -17,32 +16,30 @@
     class="tabs"
   >
     <ul #list class="button-row-style hide-scrollbar">
-      <ng-container *ngFor="let tab of state.tabs">
-        <li
-          #item
-          [style.zIndex]="tab.tableNumber === state.currentTable ? 1 : 0"
-          class="tab-button"
+      <li
+        #item
+        *ngFor="let tab of state.tabs"
+        [style.zIndex]="tab.tableNumber === state.currentTable ? 1 : 0"
+        class="tab-button"
+      >
+        <elder-tab-link
+          [active]="tab.tableNumber === state.currentTab"
+          [inactive]="tab.tableNumber != state.currentTab"
+          [collapse]="tab.tableNumber != 0"
+          [rounded]="rounded"
+          (click)="handleTabClick(tab.tableNumber)"
         >
-          <elder-tab-link
-            [active]="tab.tableNumber === state.currentTab"
-            [inactive]="tab.tableNumber != state.currentTab"
-            [collapse]="tab.tableNumber != 0"
-            [rounded]="rounded"
-            (click)="handleTabClick(tab.tableNumber)"
-          >
-            {{ tab.shortName }}
-          </elder-tab-link>
-        </li>
-      </ng-container>
+          {{ tab.shortName }}
+        </elder-tab-link>
+      </li>
     </ul>
   </div>
   <button
     (mousedown)="handleMouseDown($event, 'LEFT')"
-    (mouseup)="handleMouseUp()"
     mat-mini-fab
     @fadeButtons
     class="right-overflow-button"
-    *ngIf="this.rightOverflow | async"
+    *ngIf="rightOverflow | async"
   >
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>

@@ -22,8 +22,7 @@ export class SearchService {
   private drugs: Set<string> = new Set();
   private drugIndex: Map<string, string[]> = new Map();
   private historySource: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  private searchResultsSource: BehaviorSubject<BeersSearchResult[]> =
-    new BehaviorSubject([]);
+  private searchResultsSource: BehaviorSubject<BeersSearchResult[]> = new BehaviorSubject([]);
   private drugEntryMapping: Map<string, number[]> = new Map();
   get searchResults$() {
     return this.searchResultsSource.asObservable();
@@ -67,11 +66,7 @@ export class SearchService {
       return drugs
         .map((drug) => drug.toLowerCase())
         .filter((drug) => {
-          return (
-            typeof drug === 'string' &&
-            /[\w\s\,\_.\+\$]+/.test(drug) &&
-            this.drugs.has(drug)
-          );
+          return typeof drug === 'string' && /[\w\s\,\_.\+\$]+/.test(drug) && this.drugs.has(drug);
         });
     } else {
       console.error('Provided drugs are not formatted correctly');
@@ -148,8 +143,7 @@ export class SearchService {
             entry = this.dataService.drugEntries.get(index) || {};
             results.set(index, { ...entry, SearchTerms: term });
           } else {
-            results.get(index).SearchTerms =
-              results.get(index).SearchTerms + `, ${term}`;
+            results.get(index).SearchTerms = results.get(index).SearchTerms + `, ${term}`;
           }
         }
       }
@@ -162,9 +156,7 @@ export class SearchService {
   }
 
   private createDrugEntryMapping(list: Record<string, number[]>) {
-    return new Map(
-      Object.entries(list).map(([k, v]) => [this.formatDrugKey(k), v])
-    );
+    return new Map(Object.entries(list).map(([k, v]) => [this.formatDrugKey(k), v]));
   }
   constructor(
     private dataService: DataService,
@@ -178,5 +170,6 @@ export class SearchService {
     this.dataService.entriesMappedToTables$.subscribe((entries) => {
       this.drugEntryMapping = this.createDrugEntryMapping(entries);
     });
+    this.historySource.subscribe(console.log);
   }
 }

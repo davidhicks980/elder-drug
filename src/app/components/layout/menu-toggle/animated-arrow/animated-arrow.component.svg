@@ -1,14 +1,14 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  width="48"
-  height="48"
-  viewBox="0 0 48 48"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
   [class.toggled]="toggled"
   [class.right-arrow]="direction"
   class="arrow__icon"
 >
-  <rect width="34" height="4" x="6" y="22" />
+  <rect class="middle" width="17" height="2" x="3" y="11" />
 
-  <rect class="top" width="34" height="4" x="6" y="12" />
-  <rect class="bottom" width="34" height="4" x="6" y="32" />
+  <rect class="top" width="17" height="2" x="3" y="6" />
+  <rect class="bottom" width="17" height="2" x="3" y="16" />
 </svg>

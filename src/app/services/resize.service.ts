@@ -19,13 +19,10 @@ export type LayoutStatus = {
 })
 export class ResizeService implements AfterViewInit {
   resizeObserver: ResizeObserver;
-  elementMap = new WeakMap() as WeakMap<
-    Element,
-    { width: number; mobile: boolean }
-  >;
+  elementMap = new WeakMap() as WeakMap<Element, { width: number; mobile: boolean }>;
   private _resizedElementSource = new BehaviorSubject(new WeakMap());
   public resizedElement$ = this._resizedElementSource.asObservable();
-  private _isMobile$!: Observable<boolean>;
+  public mobile$!: Observable<boolean>;
   private _sidenavSource = new BehaviorSubject<boolean>(true);
   public _isSidenavOpen = true;
   public _width: ScreenStatus = ScreenStatus.large;
@@ -35,9 +32,7 @@ export class ResizeService implements AfterViewInit {
   destroy() {
     this.resizeObserver.disconnect();
   }
-  get mobileObserver() {
-    return this._isMobile$;
-  }
+
   get sidenavObserver() {
     return this._sidenavSource.asObservable() as Observable<boolean>;
   }
@@ -46,9 +41,7 @@ export class ResizeService implements AfterViewInit {
     this.resizeObserver.observe(element);
     this.elementMap.set(element, { width: width, mobile: false });
     const mapToMobile = (() => {
-      return (
-        elements: WeakMap<Element, { width: number; mobile: boolean }>
-      ) => {
+      return (elements: WeakMap<Element, { width: number; mobile: boolean }>) => {
         return elements?.get(element)?.mobile;
       };
     })();
@@ -69,9 +62,8 @@ export class ResizeService implements AfterViewInit {
   }
 
   constructor(_ruler: ViewportRuler) {
-    const widthPredicate = (val: Event) =>
-      (val.target as Window).innerWidth < 600;
-    this._isMobile$ = fromEvent(window, 'resize', { passive: true }).pipe(
+    const widthPredicate = (val: Event) => (val.target as Window).innerWidth < 600;
+    this.mobile$ = fromEvent(window, 'resize', { passive: true }).pipe(
       auditTime(16),
       map(widthPredicate)
     );

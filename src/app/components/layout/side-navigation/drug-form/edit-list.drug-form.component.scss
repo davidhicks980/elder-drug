@@ -1,4 +1,4 @@
-@use 'palette' as pal;
+@use 'palette' as *;
 @use 'bem-mixin' as *;
 
 .is-widened .edit__item-wrapper {
@@ -7,8 +7,9 @@
     overflow: auto;
   }
 }
-
-.edit__item-wrapper {
+.edit-list {
+}
+.edit-items {
   @include mobileWidth {
     max-height: 40vh;
 
@@ -28,52 +29,49 @@
     }
   }
 }
-.edit__list {
-  &.not-shifted {
-    transform: translateY(14px);
-  }
+%edit-text {
+  color: $gray-5;
+  font-weight: 500;
 }
-.edit-item {
-  &__icon {
-    fill: pal.shade(pal.$light-gray-5, 20%);
-    cursor: pointer;
-    &:hover {
-      fill: pal.$complement-1;
-    }
+.edit-title {
+  padding: 0 16px;
+  @extend %edit-text;
+}
+.edit-field {
+  margin-bottom: 1px;
+  display: flex;
+  flex-direction: row;
+}
+.edit-input {
+  @extend %edit-text;
+  outline: none;
+  background: none;
+  border: none;
+  padding: 10px;
+  font-family: "Roboto";
+  cursor: text;
+  text-decoration: underline;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  text-underline-offset: 1px;
+
+  @include mobileWidth {
+    font-size: 0.9rem;
   }
-  &__field {
-    margin-bottom: 1px;
-    display: flex;
-    flex-direction: row;
 
-    &__input {
-      outline: none;
-      background: none;
-      border: none;
-      padding: 10px 10px 8px 10px;
-      font-family: "Roboto";
-      cursor: text;
-      text-decoration: underline;
-      text-transform: capitalize;
-      @include mobileWidth {
-        font-size: 0.9rem;
-      }
-
-      &:focus {
-        text-decoration: none;
-        border-bottom: 2px solid pal.$primary-1;
-        background-color: pal.$light-gray-1;
-      }
-      &.ng-invalid {
-        color: pal.$error-4;
-        text-decoration: none;
-        &:focus {
-          border-bottom: 2px solid pal.$error-4;
-          color: pal.$error-4;
-          font-weight: 500;
-          background-color: pal.getHighlightColor(pal.$error-1);
-        }
-      }
+  &:focus {
+    text-decoration: none;
+    border-bottom: 2px solid $primary-1;
+    background-color: $light-gray-1;
+  }
+  &.ng-invalid {
+    color: $error-4;
+    text-decoration: none;
+    &:focus {
+      border-bottom: 2px solid $error-4;
+      color: $error-4;
+      font-weight: 500;
+      background-color: getHighlightColor($error-1);
     }
   }
 }

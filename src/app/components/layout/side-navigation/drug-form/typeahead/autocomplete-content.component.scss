@@ -1,0 +1,36 @@
+@use "bem-mixin" as *;
+@use 'palette' as *;
+
+.option__content {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 4rem;
+  align-items: center;
+  justify-items: start;
+}
+.option__icon {
+  color: $gray-1;
+}
+.option__text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+%chip-template {
+  font-size: 0.8em;
+  border-radius: 0.5em;
+  color: white;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  padding: 0.15em 0.5em;
+  max-height: 1.8rem;
+  line-height: 1.3rem;
+}
+.chip--generic {
+  @extend %chip-template;
+  background-color: $primary-1;
+}
+.chip--brand {
+  @extend %chip-template;
+  background-color: $secondary-2-1;
+}

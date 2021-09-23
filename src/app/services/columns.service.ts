@@ -26,7 +26,6 @@ type KeyedTableColumns = {
 })
 export class ColumnService {
   private columnSource = new BehaviorSubject<KeyedTableColumns>(COLUMN_PLACEHOLDER);
-
   private columnsWithData: Set<string>;
   columns$ = this.columnSource.asObservable().pipe(
     distinctUntilChanged((prev, curr) => prev.keys.columns === curr.keys.columns),
@@ -42,7 +41,9 @@ export class ColumnService {
   constructor(
     @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
     private searchService: SearchService
-  ) {}
+  ) {
+    this.selected$.subscribe((res) => console.log('columns', res));
+  }
 
   changeTable(table: TableAttributes) {
     let selectedColumns: string[] = [],

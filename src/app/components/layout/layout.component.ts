@@ -138,9 +138,6 @@ export class LayoutComponent {
     @Inject(TOOLBAR_TOKENS) private toolbarTokens: ToolbarTokens
   ) {
     this.sidebarOpen$ = this.size.sidenavObserver;
-    this.mobile$ = merge(
-      this.size.mobileObserver,
-      of(window.innerWidth < 600)
-    ) as Observable<boolean>;
+    this.mobile$ = merge(this.size.mobile$, of(window.innerWidth < 600)) as Observable<boolean>;
   }
 }

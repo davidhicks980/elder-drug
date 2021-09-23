@@ -1,13 +1,16 @@
 @use "palette" as *;
 @use "bem-mixin" as *;
 
+.popup-wrapper {
+  @include common-input-style;
+  @include common-input-layout;
+}
 .popup-trigger {
   display: flex;
   align-items: center;
   outline: none;
   text-align: left;
   justify-content: space-between;
-  @include common-input;
   &__label {
     background: white;
     font-weight: 500;

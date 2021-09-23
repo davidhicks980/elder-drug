@@ -1,6 +1,6 @@
 <ng-container
   *elderLet="{
-    fields: model.displayedColumns$ | async,
+    fields: model.columns$ | async,
     mobile: mobile$ | async
   } as state"
 >
@@ -39,10 +39,7 @@
         (keydown.space)="model.expand(row)"
       ></cdk-row>
 
-      <ng-container
-        *ngFor="let field of state.fields; index as col"
-        cdkColumnDef="{{ field }}"
-      >
+      <ng-container *ngFor="let field of state.fields; index as col" cdkColumnDef="{{ field }}">
         <ng-container *cdkHeaderCellDef>
           <cdk-header-cell
             class="cell--header"
@@ -70,7 +67,7 @@
                   <mat-icon
                     [elderRotate]="model.checkIsExpanded(row)"
                     [degrees]="90"
-                    svgIcon="chevron_right"
+                    svgIcon="chevron-right"
                   ></mat-icon>
                 </button>
               </elder-cell-toggle>

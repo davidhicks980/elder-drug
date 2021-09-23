@@ -80,7 +80,7 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
       grid-template-areas: "side content content";
       grid-template-columns: 260px 260px 1fr;
     }
-    &.is-toggled {
+    &.is-sidebar-open {
       grid-template-columns: 260px 1fr;
 
       @include bem.mobileWidth {
@@ -103,7 +103,7 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
 }
 
 .toolbar__toggle,
-elder-animated-x {
+elder-animated-arrow {
   color: $gray-4;
 
   &:hover {
@@ -113,7 +113,7 @@ elder-animated-x {
     @extend .toolbar__toggle;
   }
 }
-elder-menu-toggle elder-animated-x {
+elder-menu-toggle elder-animated-arrow {
   @include bem.mobileWidth {
     width: var(--icon-toggle--height, 2rem);
     height: var(--icon-toggle--width, 2rem);

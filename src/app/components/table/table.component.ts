@@ -1,6 +1,16 @@
-import { AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { BehaviorSubject, merge, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
@@ -19,6 +29,7 @@ import { ExpandingEntry } from './ExpandingEntry';
   selector: 'elder-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss', './table.row.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +49,7 @@ export class TableComponent implements AfterViewInit {
   dataSource: BehaviorSubject<BeersSearchResult[]>;
 
   get mobile$() {
-    return this.resizeService.mobileObserver;
+    return this.resizeService.mobile$;
   }
   getKeyGridCells(): KeyGridDirective[] {
     let filters = this.headerCells.map(
@@ -59,16 +70,18 @@ export class TableComponent implements AfterViewInit {
     private tableService: TableService,
     private searchService: SearchService,
     private resizeService: ResizeService,
-    private keyGridService: KeyGridService
+    private keyGridService: KeyGridService,
+    private changeDetect: ChangeDetectorRef
   ) {
     this.dataSource = new BehaviorSubject([]);
     this.searchService.searchResults$.subscribe((result) => {
       this.dataSource.next(result);
     });
     this.model = new BeersTableDataSource(this.dataSource);
-    this.model.observeColumnChanges(
-      merge(of(this.columnService.columnInfo.selected), this.columnService.selected$)
-    );
+    this.columnService.selected$.subscribe((selected) => {
+      this.model.observeColumnChanges(selected);
+    });
+    this.model.observeColumnChanges(this.columnService.columnInfo.selected);
     this.groupService.groupedItems$
       .pipe(
         map((groups) => {
@@ -92,5 +105,6 @@ export class TableComponent implements AfterViewInit {
     this.grid.changes.subscribe((newCells: QueryList<KeyGridDirective>) => {
       this.gridCells = newCells.toArray();
     });
+    this.changeDetect.markForCheck();
   }
 }

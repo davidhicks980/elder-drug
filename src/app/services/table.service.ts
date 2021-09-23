@@ -146,5 +146,6 @@ export class TableService {
       .map(({ filters, id }) => filters.map((filter) => [filter, id]))
       .flat(1) as [ColumnField, number][];
     this.tableLookup = new Map(columnTableMap);
+    this.searchService.searchResults$.subscribe(() => this.emitSelectedTable(1));
   }
 }

@@ -28,21 +28,22 @@ import { tabAnimations } from './tab.animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabComponent implements AfterViewInit, OnInit, OnDestroy {
+  @Input() rounded: boolean = false;
+  @Output() activeTable = new EventEmitter<number>();
   @ViewChild('list') list: ElementRef<HTMLUListElement>;
   @ViewChildren('item') items: QueryList<ElementRef<HTMLLIElement>>;
   @HostListener('mouseup')
   handleMouseUp() {
     this.scrollable = false;
   }
+  intersectionObserver!: IntersectionObserver;
   currentTab$: Observable<number>;
   loaded: boolean = false;
   track: boolean = false;
   mouseOver = 0;
   first: HTMLLIElement | false = false;
   last: HTMLLIElement | false = false;
-  @Input() rounded: boolean = false;
-  @Output() activeTable = new EventEmitter<number>();
-  intersectionObserver: IntersectionObserver;
+
   leftOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
   rightOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
   scrollable: boolean = false;
@@ -63,29 +64,29 @@ export class TabComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnDestroy() {
     this.intersectionObserver.disconnect();
   }
-  ngAfterViewInit() {
-    this.intersectionObserver = new IntersectionObserver(
-      (e: IntersectionObserverEntry[]) => {
-        let entry = e[0];
-
-        if (this.first === entry.target) {
-          this.leftOverflow.next(!entry.isIntersecting);
-        }
-        if (this.last === entry.target) {
-          this.rightOverflow.next(!entry.isIntersecting);
-        }
-      },
-      {
-        root: this.list.nativeElement,
-        threshold: [1],
-      }
-    );
-    this.items.changes.subscribe((tabs) => {
-      this.setEdgeTabs();
-    });
-    this.setEdgeTabs();
+  private intersectingTabCallback(e: IntersectionObserverEntry[]) {
+    let entry = e[0];
+    if (this.first === entry.target) {
+      this.leftOverflow.next(!entry.isIntersecting);
+    }
+    if (this.last === entry.target) {
+      this.rightOverflow.next(!entry.isIntersecting);
+    }
   }
-  private setEdgeTabs() {
+  applyIntersectionObserver() {
+    this.intersectionObserver = new IntersectionObserver(this.intersectingTabCallback.bind(this), {
+      root: this.list.nativeElement,
+      threshold: [1],
+    });
+    this.items.changes.subscribe((tabs) => {
+      this.setFlankingTabs();
+    });
+    this.setFlankingTabs();
+  }
+  ngAfterViewInit() {
+    this.applyIntersectionObserver();
+  }
+  private setFlankingTabs() {
     if (this.first) {
       this.intersectionObserver.unobserve(this.first);
     }

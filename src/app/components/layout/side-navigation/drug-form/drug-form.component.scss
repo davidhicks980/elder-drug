@@ -1,10 +1,11 @@
 @use '~@angular/material' as mat;
 @use 'sass:color' as *;
+@use '~@angular/cdk';
 @use "palette" as *;
 @use "bem-mixin" as *;
 @use "colors" as *;
-@use '~@angular/cdk';
 
+@include scrollbar;
 @include cdk.a11y-visually-hidden();
 
 :host {
@@ -13,22 +14,11 @@
   --input-text: #{tint($gray-1, 20%)};
   --input-focus--stroke: #{$primary-1};
   --input-font--size: 12pt;
-  --input--height: 2rem;
+  --input--height: 2.7rem;
   --input--height--mobile: 2.75rem;
-
-  --autocomplete--height: 2.5em;
-  --autocomplete--mobile-height: 3.5em;
-  --border-color: #{$light-gray-4};
+  --border-color: #{$gray-4};
   display: block;
-}
-
-.disable-text-selection {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  height: 100%;
 }
 
 .form-container {
@@ -38,6 +28,7 @@
   padding-top: 1.25em;
   margin-left: 5%;
   margin-right: 5%;
+  height: 100%;
   @include mobileWidth {
     margin: 0 10% 0 10%;
     &.is-widened {
@@ -47,108 +38,132 @@
   }
 }
 
-.drug-inputs {
-  margin-top: 1em;
-}
-
 .search-field {
+  --validation-border-color: transparent;
+  --validation-border-scale: 0;
+  --validation-border-height: 0;
+  @include mat.elevation-transition;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  min-height: 2.5em;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+
+  transition: border-color 200ms ease-in;
+  &::before {
+    content: "";
+    width: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: var(--validation-border-height);
+    background-color: var(--validation-border-color);
+    position: absolute;
+    transform: scaleX(var(--validation-border-scale)) scaleY(var(--validation-border-scale));
+    transition: transform 200ms ease-in;
+    transform-origin: bottom center;
+  }
+
+  &.is-missing,
+  &.is-open,
+  &.is-invalid {
+    --validation-border-scale: 1;
+  }
+  &.is-open:not(.is-missing),
+  &.is-open:not(.is-invalid) {
+    --validation-border-height: 1px;
+  }
+  &.is-missing,
+  &.is-invalid {
+    --validation-border-height: 2px;
+  }
+  &.is-invalid {
+    --validation-border-color: #{$error-4} !important;
+  }
+  &.is-missing {
+    --validation-border-color: #{$complement-4} !important;
+  }
+  &.is-dirty {
+    --validation-border-scale: 1;
+  }
+  @include mobileWidth {
+    grid-row: 1;
+    border-radius: 2rem;
+    padding: 0 0.7rem;
+    &.is-pinned {
+      border-radius: 0px;
+      min-height: 3.5rem;
+      --validation-border-scale: 1;
+    }
+  }
+
+  &.is-open {
+    --validation-border-color: #{$primary-1};
+    border-bottom: 1px solid var(--validation-border-color);
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:hover {
+    --border-color: #{$light-gray-2};
+    @include shadow(2);
+  }
+}
+.search-container {
   outline: none;
   border: none;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
   @include mobileWidth {
     grid-template-rows: var(--autocomplete-mobile-height);
   }
-  &:focus-within {
-    transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
-    box-sizing: border-box;
-  }
-
-  &__label {
-    padding-bottom: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.7);
-    font-size: var(--input-font--size);
-    font-family: var(--input-font);
-    width: 100%;
-  }
-
-  &__input-container {
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    min-height: 2.5em;
-    display: flex;
-    align-items: center;
-    //accounts for double width of validator bottom border
-    padding-bottom: 1px;
-    @include mat.elevation-transition;
-
-    @include mobileWidth {
-      grid-row: 1;
-      border-radius: 2rem;
-      padding: 0 0.7rem;
-      &.is-pinned {
-        border-radius: 0px;
-        min-height: 3.5rem;
-      }
-    }
-    &.is-open {
-      border-bottom: 2px solid $primary-1;
-      border-right: 1px solid var(--border-color);
-      border-left: 1px solid var(--border-color);
-      border-top: 1px solid var(--border-color);
-      outline-offset: 5px;
-      border-top-right-radius: 5px;
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:hover:focus-within {
-      --border-color: #{$light-gray-2};
-      @include shadow(2);
-    }
-
-    &.is-invalid {
-      border-bottom: 2px solid $error-4;
-    }
-    &.is-missing {
-      border-bottom: 2px solid $complement-1;
-    }
-  }
-  &__input {
-    all: none;
-    padding: 0px;
-    margin: 0px;
-    padding-left: 0.6em;
-    font-size: 12pt;
-    outline: none;
-    grid-row: 1;
-    border: none;
-    pointer-events: all;
-    grid-column: 1;
-    width: calc(100% - 35px);
-    min-height: var(--input--height);
-    @include mobileWidth {
-      width: 100%;
-      min-height: var(--input--height--mobile);
-    }
-  }
-  &__spinner {
-    display: inline-block;
-    vertical-align: center;
-    position: relative;
-  }
 }
 
-.panel-border {
-  border: 1px solid black;
-}
-
-.section--padded {
+.search-label {
+  padding-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: var(--input-font--size);
+  font-family: var(--input-font);
   width: 100%;
-  padding: 2rem 0px 1rem;
+}
+.search-input {
+  padding: 0px;
+  margin: 0px;
+  padding-left: 0.6em;
+  font-size: 12.5pt;
+  outline: none;
+  grid-row: 1;
+  border: none;
+  pointer-events: all;
+  grid-column: 1;
+  width: calc(100% - 35px);
+  min-height: var(--input--height);
+
+  &::placeholder {
+    color: $gray-3;
+    font-weight: 500;
+  }
+  @include mobileWidth {
+    width: 100%;
+    min-height: var(--input--height--mobile);
+  }
+}
+
+.search-spinner-container {
+  display: inline-block;
+  vertical-align: center;
+  position: relative;
+  padding-right: 5px;
 }

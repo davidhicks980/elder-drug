@@ -42,7 +42,7 @@
       </elder-toolbar>
     </div>
     <main
-      [class.is-toggled]="state.sidebarOpen"
+      [class.is-sidebar-open]="state.sidebarOpen"
       class="layout__main"
       [class.is-animating]="state.animating.sidebar"
       [@FullSidebarShift]="getContentAnimationState(state)"
@@ -56,22 +56,22 @@
           *ngIf="!state.mobile"
         >
           <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
-            <elder-animated-x></elder-animated-x>
+            <elder-animated-arrow [toggled]="state.sidebarOpen"></elder-animated-arrow>
           </elder-menu-toggle>
         </div>
 
         <elder-sidebar *ngIf="state.sidebarOpen || state.animating.sidebar" #sidebar>
-          <ng-template *ngIf="state.mobile" [templateContent]="tokens.sidebar.toggle">
+          <ng-template sidebar-toggle>
             <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
-              <elder-animated-x></elder-animated-x>
+              <elder-animated-arrow [toggled]="state.sidebarOpen"></elder-animated-arrow>
             </elder-menu-toggle>
           </ng-template>
 
-          <ng-template *ngIf="state.mobile" [templateContent]="tokens.sidebar.brand">
+          <ng-template sidebar-brand>
             <elder-brand brand orientation="column"></elder-brand>
           </ng-template>
 
-          <elder-sidebar-legend> Search Beers Criteria </elder-sidebar-legend>
+          <elder-sidebar-legend *ngIf="!state.mobile"> Search Beers Criteria </elder-sidebar-legend>
         </elder-sidebar>
       </section>
       <section #mainWrapper class="main__content" *ngIf="!state.sidebarOpen || !state.mobile">

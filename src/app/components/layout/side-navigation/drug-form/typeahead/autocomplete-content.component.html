@@ -1,0 +1,13 @@
+<div class="option__content">
+  <mat-icon class="option__icon" svgIcon="search"></mat-icon>
+  <span class="option__text">
+    <span style="font-weight: 500">
+      <ng-content select="matched-content"></ng-content>
+    </span>
+    <ng-content select="inferred-content"></ng-content>
+  </span>
+  <ng-container *ngIf="showChips" [ngSwitch]="type">
+    <div class="chip--generic" *ngSwitchCase="'~g'">generic</div>
+    <div class="chip--brand" *ngSwitchCase="'~b'">brand</div>
+  </ng-container>
+</div>

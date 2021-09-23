@@ -9,39 +9,6 @@
 }
 
 .submit__button {
-  appearance: none;
-  width: 10em;
-  height: 2em;
-  font-size: 1.25em;
-  color: $gray-5;
-  border-radius: 5px;
-  font-weight: 500;
-  background: $light-gray-2;
-  font-family: "Noto Sans JP", sans-serif;
-  position: relative;
-  color: $gray-5;
-  border: 1px solid $light-gray-3;
-  margin: 1px;
-  > * {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 3px;
-  }
-  @include hoverable-shadow(2);
-  &:focus {
-    outline: none;
-    &::before {
-      @include hoverable-focus(3);
-    }
-    border: 1.5px solid $secondary-2-1;
-  }
-  &:hover {
-    transition: border-color 300ms ease-in;
-
-    margin: 1px;
-    &:active {
-      filter: brightness(0.95);
-      border: 1.5px solid $secondary-2-1;
-    }
-  }
+  @include common-input-style;
+  @include common-input-layout;
 }
