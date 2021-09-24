@@ -7,7 +7,6 @@
     selectedTable: selectedTable$ | async
   } as state"
 >
-  {{ state.animating | json }}
   <div class="layout" [class.hide-overflow]="state.animating.sidebar || state.sidebarOpen">
     <div
       *ngIf="!state.sidebarOpen || !state.mobile || state.animating.sidebar"
@@ -15,11 +14,15 @@
       class="layout__header"
     >
       <elder-toolbar [scrolled]="state.scrollDir" class="header">
-        <ng-template *ngIf="state.mobile" [templateContent]="tokens.toolbar.toggle">
-          <elder-menu-toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
-            <elder-animated-x></elder-animated-x>
-          </elder-menu-toggle>
-        </ng-template>
+        <elder-menu-toggle
+          elder-toolbar-toggle
+          *ngIf="state.mobile"
+          [toggled]="state.sidebarOpen && !state.animating.sidebar"
+          (toggle)="toggleSidenav()"
+        >
+          <elder-animated-arrow class="is-toggled" toggle-icon></elder-animated-arrow>
+        </elder-menu-toggle>
+
         <nav
           elder-toolbar-tabs
           class="header__tabs"
@@ -56,14 +59,14 @@
           *ngIf="!state.mobile"
         >
           <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
-            <elder-animated-arrow [toggled]="state.sidebarOpen"></elder-animated-arrow>
+            <elder-animated-arrow toggle-icon></elder-animated-arrow>
           </elder-menu-toggle>
         </div>
 
         <elder-sidebar *ngIf="state.sidebarOpen || state.animating.sidebar" #sidebar>
           <ng-template sidebar-toggle>
             <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
-              <elder-animated-arrow [toggled]="state.sidebarOpen"></elder-animated-arrow>
+              <elder-animated-arrow toggle-icon></elder-animated-arrow>
             </elder-menu-toggle>
           </ng-template>
 

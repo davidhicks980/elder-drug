@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'autocomplete-content',
@@ -8,5 +8,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class AutocompleteContentComponent {
   @Input() type: '~g' | '~b' = '~g';
-  @Input() showChips = false;
+  @Input() hideChips: boolean = false;
+  @HostBinding('class.chips-hidden')
+  get chipsHidden() {
+    return this.hideChips;
+  }
 }

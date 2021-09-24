@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'elder-animated-arrow',
@@ -7,7 +7,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimatedArrowComponent {
-  @Input() direction: 'LEFT' | 'RIGHT' = 'RIGHT';
-  @Input() toggled: boolean = false;
+  @Input() direction: 'LEFT' | 'RIGHT' = 'LEFT';
+  @HostBinding('class.left-arrow') getDirection() {
+    return this.direction === 'LEFT';
+  }
   constructor() {}
 }

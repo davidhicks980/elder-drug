@@ -2,18 +2,13 @@
 @use 'palette' as pal;
 @use '~@davidhicks/sass-mixins/shadow-root' as host;
 :host {
-  display: inline-block;
-  height: 40px;
-  overflow: auto;
-  padding: 5px;
-  line-height: 1.1rem;
-  font-size: 0.8rem;
+  height: 38px;
   overflow: hidden;
-  > * {
-    @include mobileWidth {
-      padding: 5px;
-    }
+  @include mobileWidth {
+    height: 60px;
+    padding: 0.5em 0;
   }
+
   @include host.state(".is-error") {
     color: pal.$error-4;
   }
@@ -21,16 +16,25 @@
     color: pal.$complement-1;
   }
 }
+.error-container {
+  display: flex;
+  align-items: center;
+}
 
 .icon {
   display: none;
   @include mobileWidth {
-    vertical-align: middle;
-    display: inline-block;
-    height: 35px;
+    display: block;
     margin-left: 0.9rem;
   }
 }
 .text {
-  vertical-align: middle;
+  padding-top: 0.6em;
+  line-height: 1.3em;
+  font-size: calc(0.75 * 16px);
+  padding-left: 0.5em;
+  @include mobileWidth {
+    font-size: 1rem;
+    padding: 0 0.5em 0 0.5em;
+  }
 }

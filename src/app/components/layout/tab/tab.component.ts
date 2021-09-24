@@ -7,16 +7,16 @@ import {
   HostListener,
   Input,
   OnDestroy,
-  OnInit,
   Output,
   QueryList,
   Renderer2,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { BehaviorSubject, interval, Observable } from 'rxjs';
+import { BehaviorSubject, interval, merge, Observable, Subject } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 
+import { destroy } from '../../../services/destroy';
 import { TableService } from '../../../services/table.service';
 import { tabAnimations } from './tab.animations';
 
@@ -27,7 +27,7 @@ import { tabAnimations } from './tab.animations';
   animations: [tabAnimations.fade('fadeButtons'), tabAnimations.round('roundTab')],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabComponent implements AfterViewInit, OnInit, OnDestroy {
+export class TabComponent implements AfterViewInit, OnDestroy {
   @Input() rounded: boolean = false;
   @Output() activeTable = new EventEmitter<number>();
   @ViewChild('list') list: ElementRef<HTMLUListElement>;
@@ -43,20 +43,21 @@ export class TabComponent implements AfterViewInit, OnInit, OnDestroy {
   mouseOver = 0;
   first: HTMLLIElement | false = false;
   last: HTMLLIElement | false = false;
-
   leftOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
   rightOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
   scrollable: boolean = false;
+  destroy$ = new Subject();
   handleTabClick(table: number) {
+    this.activeTable.emit(table);
     this.tableService.emitSelectedTable(table);
   }
   handleMouseDown($event: MouseEvent, direction: 'RIGHT' | 'LEFT') {
-    let right = direction === 'RIGHT';
+    let left = direction === 'LEFT';
     this.scrollable = true;
     interval(10)
       .pipe(takeWhile(() => this.scrollable === true))
       .subscribe(() => {
-        this.list.nativeElement.scrollBy(right ? -5 : 5, 0);
+        this.list.nativeElement.scrollBy(left ? -5 : 5, 0);
       });
     $event.preventDefault();
   }
@@ -103,8 +104,10 @@ export class TabComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {}
   constructor(public tableService: TableService, private r: Renderer2) {
-    this.currentTab$ = this.tableService.selection$.pipe(map((table) => table.tableNumber));
+    this.currentTab$ = merge(
+      this.activeTable.asObservable(),
+      this.tableService.selection$.pipe(map((table) => table.tableNumber))
+    ).pipe(destroy(this));
   }
 }

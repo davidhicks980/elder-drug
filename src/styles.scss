@@ -19,12 +19,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $search-angular-primary: mat.define-palette(mat.$indigo-palette);
-$search-angular-accent: mat.define-palette(
-  mat.$indigo-palette,
-  A200,
-  A100,
-  A400
-);
+$search-angular-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $search-angular-warn: mat.define-palette(mat.$red-palette);
@@ -206,18 +201,6 @@ fieldset {
   }
 }
 
-.mat-option.mat-active {
-  color: black;
-  background-color: tint($light-gray-2, 20%);
-}
-.mat-option:hover {
-  color: black;
-
-  background-color: tint($light-gray-2, 70%) !important;
-}
-.mat-ripple-element {
-  --primary-1: #{color.adjust($primary-1, $alpha: -0.85)};
-}
 html,
 body {
   height: 100%;

@@ -1,4 +1,7 @@
 @use 'palette' as *;
+.tab-link {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
 .tab__path {
   fill: url(#linear-base);
   clip-path: url(#path);
@@ -21,7 +24,7 @@
   fill: tint($primary-1, 7%);
 }
 .tab__path {
-  transition: fill 300ms ease-in-out;
+  transition: fill 200ms ease-in-out;
   fill: $primary-1;
   & ~ .tab__text {
     fill: $light-gray-2;
@@ -34,8 +37,8 @@
   .tab__path {
     fill: $light-gray-2;
     box-shadow: none;
-    transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
-      fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: opacity 200ms cubic-bezier(0.075, 0.82, 0.165, 1),
+      fill 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
     &:hover {
       color: $primary-1;
     }

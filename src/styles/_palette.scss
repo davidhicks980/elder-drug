@@ -78,6 +78,33 @@ $complement-2: rgba(210, 135, 0, 1);
 $complement-3: rgba(175, 113, 0, 1); // Main Complement color */
 $complement-4: rgba(137, 88, 0, 1);
 $complement-5: rgba(90, 58, 0, 1);
+:root {
+  // Main Primary color */
+  --primary-1: rgba(15, 75, 177, 1);
+  --primary-2: rgba(9, 58, 139, 1);
+  --primary-3: rgba(6, 47, 116, 1);
+  --primary-4: rgba(3, 35, 91, 1);
+  --primary-5: rgba(1, 23, 60, 1);
+  // Main Secondary color (1) */
+  --secondary-1: rgba(50, 20, 184, 1);
+  --secondary-2: rgba(37, 13, 145, 1);
+  --secondary-3: rgba(28, 8, 121, 1);
+  --secondary-4: rgba(21, 4, 94, 1);
+  --secondary-5: rgba(12, 1, 62, 1);
+
+  // Main Secondary color (2) */
+  --secondary-2-1: rgba(0, 169, 146, 1);
+  --secondary-2-2: rgba(0, 132, 114, 1);
+  --secondary-2-3: rgba(0, 110, 95, 1);
+  --secondary-2-4: rgba(0, 86, 74, 1);
+  --secondary-2-5: rgba(0, 56, 49, 1);
+
+  --complement-2: rgba(210, 135, 0, 1);
+  --complement-1: rgba(255, 164, 0, 1);
+  --complement-3: rgba(175, 113, 0, 1); // Main Complement color */
+  --complement-4: rgba(137, 88, 0, 1);
+  --complement-5: rgba(90, 58, 0, 1);
+}
 
 $error: #d3231d;
 $error-1: #fce1d1;
@@ -123,7 +150,15 @@ $dark-gray-5: #05090f;
 $color: #fafafb;
 
 @mixin shadow($depth) {
-  box-shadow: 0 1px * $depth 2px * $depth rgb(87 107 138 / #{12% * $depth});
+  $full: "";
+  $comma: ",";
+  @for $d from 1 through $depth {
+    @if $d == $depth {
+      $comma: "";
+    }
+    $full: $full + "#{0 1px * $d 2px * $d rgb(87 107 138 / #{7% * $d})} #{$comma}";
+  }
+  box-shadow: #{$full};
 }
 
 @mixin hoverable-focus($depth) {
@@ -221,8 +256,8 @@ $color: #fafafb;
 
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    color: rgb(226, 226, 226);
-    box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
-    -webkit-box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
+    color: $light-gray-4;
+    box-shadow: inset 0 0 0 10px $light-gray-4;
+    -webkit-box-shadow: inset 0 0 0 10px $light-gray-4;
   }
 }

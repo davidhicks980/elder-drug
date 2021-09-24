@@ -81,6 +81,7 @@ import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { AddComponent } from './svg/add/add.component';
 import { ToStringPipe } from './to-string.pipe';
+import { ToggleIconDirective } from './components/layout/menu-toggle/toggle-icon.directive';
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -139,6 +140,7 @@ export const firestore = provideFirestore(() => getFirestore());
     SidebarBrandDirective,
     SidebarToggleDirective,
     AutocompleteContentComponent,
+    ToggleIconDirective,
   ],
   imports: [
     firebase,

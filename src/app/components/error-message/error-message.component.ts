@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { matFormFieldAnimations } from '@angular/material/form-field';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export enum ErrorType {
@@ -17,34 +18,34 @@ type ErrorState = {
   templateUrl: './error-message.component.html',
   styleUrls: ['./error-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [matFormFieldAnimations.transitionMessages],
 })
 export class ErrorMessageComponent {
-  private _errors: Record<string, string>;
+  private nullError = { type: ErrorType.NONE, message: '', name: 'nullError' };
+  private errors_: Record<string, string>;
+  private messageSource: BehaviorSubject<ErrorState>;
   @HostBinding('class.is-warning') get isWarning() {
     return this.messageSource.value.type === ErrorType.WARNING;
   }
   @HostBinding('class.is-error') get isError() {
     return this.messageSource.value.type === ErrorType.ERROR;
   }
-  @Input('show-icon') showIcon: boolean = false;
-  @Input('error-messages') errorMessages: Record<string, string> = {};
-  @Input('warning-messages') warningMessages: Record<string, string> = {};
+  @Input() showIcon: boolean = false;
+  @Input() errorMessages: Record<string, string> = {};
+  @Input() warningMessages: Record<string, string> = {};
   @Input()
   get errors(): Record<string, string> {
-    return this._errors;
+    return this.errors_;
   }
   set errors(value: Record<string, string> | undefined) {
     if (value) {
-      this._errors = value;
-      this.displayMessage(this._errors);
+      this.errors_ = value;
+      this.displayMessage(this.errors_);
     } else {
-      this.displayMessage(this._nullError);
+      this.displayMessage(this.nullError);
     }
   }
-  private _nullError = { type: ErrorType.NONE, message: '', name: 'nullError' };
-  messageSource: BehaviorSubject<ErrorState>;
   message$: Observable<ErrorState>;
-  noErrors: boolean;
 
   get isShown() {
     return this.messageSource.value.type != ErrorType.NONE;
@@ -53,9 +54,9 @@ export class ErrorMessageComponent {
     this.messageSource.complete();
   }
   displayMessage(errors: Record<string, string>) {
-    const errorArr = Array.from(Object.entries(errors));
-    if (errorArr?.length) {
-      const [name] = errorArr[0];
+    const errorList = Array.from(Object.entries(errors));
+    if (errorList?.length) {
+      const [name] = errorList[0];
       let type = ErrorType.ERROR,
         message = '';
       if (this.errorMessages[name]) {

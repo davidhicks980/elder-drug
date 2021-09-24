@@ -1,77 +1,125 @@
 @use 'palette' as *;
 @use 'bem-mixin' as *;
-
-.is-widened .edit__item-wrapper {
-  @include mobileWidth {
-    max-height: 70vh;
-    overflow: auto;
-  }
-}
-.edit-list {
-}
-.edit-items {
-  @include mobileWidth {
-    max-height: 40vh;
-
-    overflow: auto;
-
-    &.list-shown::before {
-      content: "";
-      height: 20px;
-      width: 97%;
-      right: 0px;
-      left: 0px;
-      bottom: 0px;
-      position: absolute;
-      background-image: linear-gradient(0deg, #ffffff 0%, transparent 100%);
-      z-index: 19;
-      pointer-events: none;
-    }
-  }
-}
+@use 'sass:color';
 %edit-text {
   color: $gray-5;
   font-weight: 500;
 }
-.edit-title {
-  padding: 0 16px;
-  @extend %edit-text;
+.edit-section {
+  @include mobileWidth {
+    display: flex;
+    justify-content: center;
+  }
 }
+.edit-list {
+  @include mobileWidth {
+    width: 90%;
+  }
+}
+
+.edit-item {
+  color: $gray-4;
+  display: list-item;
+  padding: 0.5em 2px;
+
+  @include mobileWidth {
+    color: $secondary-2-2;
+    border-bottom: 0;
+  }
+}
+.edit-item-content {
+  display: flex;
+  flex-direction: row;
+  max-width: inherit;
+  align-items: center;
+  background-color: var(--validation-background);
+  border-bottom: 2px solid var(--validation-color, transparent);
+  border-radius: 5px;
+  transition: background-color 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  --validation-border-scale: 0.2;
+  --validation-border-height: 0;
+  --validation-color: $gray-4;
+  overflow: hidden;
+  border: 0px;
+  &::before {
+    content: "";
+    width: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: var(--validation-border-height);
+    background-color: var(--validation-color);
+    transform: scaleY(var(--validation-border-scale));
+    position: absolute;
+    transition: transform 300ms linear;
+    transform-origin: bottom center;
+    border-radius: 5px;
+  }
+  @include mobileWidth {
+    --validation-background: #{color.scale($secondary-2-1, $alpha: -90%, $saturation: 50%)};
+    --validation-color: #{$secondary-2-3};
+    border: 0;
+    padding: 0.2em 0.1em;
+  }
+  &.has-attached {
+    border-radius: 5px 5px 0 0;
+  }
+  &:hover {
+    --validation-color: #{$secondary-2-2};
+    --validation-background: #{color.scale($secondary-2-1, $alpha: -90%, $saturation: 50%)};
+    @include mobileWidth {
+      --validation-color: #{$secondary-2-2};
+    }
+  }
+
+  &:focus-within {
+    --validation-background: #{color.scale($light-gray-2, $alpha: -40%)};
+    --validation-border-height: 1px;
+    --validation-border-scale: 1;
+    --validation-color: #{$gray-4};
+    @include mobileWidth {
+      --validation-border-height: 2px;
+      --validation-color: #{$gray-4};
+    }
+  }
+  &.is-invalid,
+  &:focus-within.is-invalid {
+    --validation-color: #{$error-4};
+    --validation-background: #{getHighlightColor($error-1)};
+  }
+  &.is-missing,
+  &:focus-within.is-missing {
+    --validation-color: #{$complement-1};
+    --validation-background: #{getHighlightColor($complement-1)};
+  }
+}
+
+.edit-list-button {
+  transform: scale(0.8);
+  transform-origin: center center;
+  color: var(--validation-color, #{$gray-3});
+}
+
 .edit-field {
-  margin-bottom: 1px;
   display: flex;
   flex-direction: row;
 }
 .edit-input {
+  all: unset;
   @extend %edit-text;
-  outline: none;
-  background: none;
-  border: none;
-  padding: 10px;
-  font-family: "Roboto";
-  cursor: text;
-  text-decoration: underline;
+  color: var(--validation-color);
+  font-weight: 400;
   text-transform: capitalize;
   box-sizing: border-box;
-  text-underline-offset: 1px;
+  cursor: text;
+  min-width: 0;
+  font-family: var(--body-font), sans-serif;
+  font-size: 0.9rem;
 
   @include mobileWidth {
-    font-size: 0.9rem;
-  }
-
-  &:focus {
-    text-decoration: none;
-    border-bottom: 2px solid $primary-1;
-    background-color: $light-gray-1;
-  }
-  &.ng-invalid {
-    color: $error-4;
-    text-decoration: none;
-    &:focus {
-      border-bottom: 2px solid $error-4;
-      color: $error-4;
-      font-weight: 500;
-      background-color: getHighlightColor($error-1);
-    }
+    font-size: 1rem;
+    width: 90%;
+    padding: 0.5em 0;
   }
 }

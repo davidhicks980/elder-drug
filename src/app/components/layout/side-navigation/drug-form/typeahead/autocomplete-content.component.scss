@@ -6,6 +6,9 @@
   grid-template-columns: 2.5rem 1fr 4rem;
   align-items: center;
   justify-items: start;
+  :host(.chips-hidden) & {
+    grid-template-columns: 2rem 1fr;
+  }
 }
 .option__icon {
   color: $gray-1;

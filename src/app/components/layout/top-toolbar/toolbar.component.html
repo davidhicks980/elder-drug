@@ -1,9 +1,6 @@
 <header>
   <div class="toolbar">
-    <ng-container
-      *ngIf="toggleContent"
-      [ngTemplateOutlet]="toggleSlot"
-    ></ng-container>
+    <ng-content select="[elder-toolbar-toggle]"></ng-content>
     <ng-content select="[elder-toolbar-brand]"></ng-content>
     <ng-content select="[elder-toolbar-link]"></ng-content>
 

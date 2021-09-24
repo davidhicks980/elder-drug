@@ -10,8 +10,9 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { timer } from 'rxjs';
 
-import { ToggleIcon } from './ToggleAnimation';
+import { ToggleIconDirective } from './toggle-icon.directive';
 
 @Component({
   selector: 'elder-menu-toggle',
@@ -19,7 +20,7 @@ import { ToggleIcon } from './ToggleAnimation';
   styleUrls: ['./menu-toggle.component.scss'],
 })
 export class MenuToggleComponent implements AfterViewInit {
-  @ContentChild(ToggleIcon, { read: ElementRef })
+  @ContentChild(ToggleIconDirective, { read: ElementRef })
   slottedContent: ElementRef;
   @Output()
   toggle: EventEmitter<boolean> = new EventEmitter();
@@ -29,18 +30,22 @@ export class MenuToggleComponent implements AfterViewInit {
     return this._toggled;
   }
   public set toggled(value: boolean) {
-    if (this._toggled != value) {
-      this._toggled = value;
-      this.toggleIconClass();
-    }
+    this._toggled = value;
+    this.toggleIconClass();
   }
   toggleIconClass() {
     if (this.slottedContent) {
       let { nativeElement } = this.slottedContent;
       if (this._toggled) {
-        this.renderer.addClass(nativeElement, 'is-toggled');
+        requestAnimationFrame(() => {
+          this.renderer.addClass(nativeElement, 'is-toggled');
+        });
       } else {
-        this.renderer.removeClass(nativeElement, 'is-toggled');
+        timer(100)
+          .toPromise()
+          .then(() => {
+            this.renderer.removeClass(nativeElement, 'is-toggled');
+          });
       }
     }
   }

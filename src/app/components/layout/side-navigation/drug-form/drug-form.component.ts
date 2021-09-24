@@ -1,4 +1,4 @@
-import { trigger } from '@angular/animations';
+import { CdkPortal, ComponentPortal } from '@angular/cdk/portal';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -7,20 +7,34 @@ import {
   OnDestroy,
   Output,
   QueryList,
+  TemplateRef,
+  ViewChild,
   ViewChildren,
+  ViewContainerRef,
 } from '@angular/core';
-import { AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AsyncValidatorFn,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { matFormFieldAnimations } from '@angular/material/form-field';
-import { BehaviorSubject, combineLatest, Observable, pipe, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, take, takeUntil } from 'rxjs/operators';
 
 import { TypeaheadState } from '../../../../interfaces/TypeaheadState';
 import { DataService } from '../../../../services/data.service';
+import { destroy } from '../../../../services/destroy';
 import { ResizeService } from '../../../../services/resize.service';
 import { SearchService } from '../../../../services/search.service';
 import { CustomValidators } from '../../../../validators/index.validators';
+import { ErrorMessageComponent } from '../../../error-message/error-message.component';
 import { drugFormAnimations } from './drug-form.animations';
 
 const TYPEAHEAD_INITIAL_STATE = {
@@ -30,9 +44,6 @@ const TYPEAHEAD_INITIAL_STATE = {
   data: [],
   edit: false,
 };
-function destroy(self: unknown & { destroy$: Observable<boolean> }) {
-  return pipe(takeUntil(self.destroy$));
-}
 type DrugFormControls = {
   drugList: string[];
   drugInput: string;
@@ -54,12 +65,13 @@ type DrugFormControls = {
 })
 export class DrugFormComponent implements OnDestroy, AfterViewInit {
   @Output('searching') searchEmitter: EventEmitter<boolean> = new EventEmitter();
+  @ViewChildren('errors') errorTemplates: QueryList<TemplateRef<unknown>>;
   @ViewChildren(MatAutocompleteTrigger)
   typeaheadTriggers: QueryList<MatAutocompleteTrigger>;
-
+  @ViewChild(CdkPortal, { read: TemplateRef })
+  errors: TemplateRef<ErrorMessageComponent>;
   private destroySource = new Subject() as Subject<boolean>;
   destroy$ = this.destroySource.asObservable().pipe(take(1));
-  drugsGroup: FormGroup;
   private focusSource = new BehaviorSubject({ focused: false, control: -1 });
   formControlFocused$ = this.focusSource.asObservable().pipe(
     takeUntil(this.destroy$),
@@ -70,9 +82,9 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   private typeaheadSource: BehaviorSubject<TypeaheadState> = new BehaviorSubject(
     TYPEAHEAD_INITIAL_STATE
   );
-
   typeaheadState$: Observable<TypeaheadState> = this.typeaheadSource.asObservable();
-
+  private pinSearchSource = new BehaviorSubject(false);
+  pinSearch$ = this.pinSearchSource.asObservable();
   errorMessages: Record<string, string> = {
     duplicate: `Drug has already been entered.`,
     minlength: `Drug names must be at least 3 characters long.`,
@@ -82,11 +94,13 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   warningMessages: Record<string, string> = {
     termabsent: `Only drugs from the dropdown menu have guidance.`,
   };
-
+  errorPortal: ComponentPortal<ErrorMessageComponent>;
+  drugTermAbsent: Observable<ValidationErrors>;
+  currentOptions: Set<string> = new Set();
+  drugsGroup: FormGroup;
   ngOnDestroy() {
     this.destroySource.next(true);
   }
-
   ngOnInit() {
     this.drugList.controls = this.searchService.history.map((v) => new FormControl(v));
   }
@@ -95,19 +109,22 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
       this.formControlFocused$,
       this.typeaheadState$.pipe(map((s) => s.length === 0)),
     ];
-    this.searchInProgress$ = this.createSearchProgressObserver(searchObservers).pipe(
-      filter((val) => val === true),
-      take(1)
+    this.createSearchProgressObserver(searchObservers).subscribe((result) =>
+      this.pinSearchSource.next(result)
     );
-    this.searchInProgress$.subscribe((isSearching) => this.searchEmitter.emit(isSearching));
+    this.pinSearch$.subscribe((pinned) => this.searchEmitter.emit(pinned));
   }
 
+  unpinSearch() {
+    this.pinSearchSource.next(false);
+  }
   constructor(
-    private size: ResizeService,
+    public size: ResizeService,
     public database: DataService,
     private searchService: SearchService,
     private form: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public viewRef: ViewContainerRef
   ) {
     this.searchEmitter.emit(false);
     const { input, array } = this.getTermValidators(),
@@ -120,7 +137,6 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
       return this.drugList.value ?? [];
     };
     this.drugInput.addValidators(CustomValidators.sync.uniqueTerms(getCurrentQueries.bind(this)));
-
     this.watchHistory().subscribe((queries: string[]) => this.searchService.storeHistory(queries));
     this.watchTypeaheadInput().subscribe((queryResult) => this.updateTypeahead(queryResult));
     this.watchInputState('PENDING').subscribe((pending) => this.updateTypeahead({ pending }));
@@ -128,46 +144,46 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
 
   createSearchProgressObserver([inputFocused, inputEmpty]: Observable<boolean>[]) {
     return combineLatest([inputFocused, inputEmpty]).pipe(
-      debounceTime(50),
+      debounceTime(100),
       destroy(this),
-      filter(([focus, empty]) => (focus && !empty) || (empty && !focus)),
+      filter(([focus, empty]) => {
+        return (focus && !empty) || (empty && !focus);
+      }),
       map(([focus, _]) => focus),
       distinctUntilChanged()
     );
   }
   private watchHistory(): Observable<unknown> {
-    return this.drugList.valueChanges.pipe(debounceTime(50), destroy(this));
+    return this.drugList.valueChanges.pipe(debounceTime(100), destroy(this));
   }
 
   private watchTypeaheadInput() {
     return this.drugsGroup.valueChanges.pipe(
-      debounceTime(50),
+      debounceTime(10),
       destroy(this),
       map(({ drugList, drugInput }: DrugFormControls) => {
-        let input = this.activeControl > -1 ? drugList[this.activeControl] : drugInput;
-        let data = this.lookupTypeaheadTerms(input);
-        return {
-          data,
-          length: data.length,
-          open: length > 0,
-        };
-      })
+        const input = this.activeControl > -1 ? drugList[this.activeControl] : drugInput;
+        return this.lookupTypeaheadTerms(input);
+      }),
+      filter((data) => Array.isArray(data)),
+      map((data: string[][]) => ({
+        data,
+        length: data.length,
+        open: length > 0,
+      }))
     );
   }
   private watchInputState(state: string): Observable<boolean> {
     return this.drugInput.statusChanges.pipe(
-      debounceTime(50),
+      debounceTime(10),
       destroy(this),
-      distinctUntilChanged(),
-      map((inputState: string) => inputState === state)
+      map((inputState: string) => inputState === state),
+      distinctUntilChanged()
     );
   }
 
   getTooltipText(tooltip: string) {
-    switch (tooltip) {
-      case 'add':
-        return this.drugInput.valid ? 'Add drug to search' : 'Choose a drug from the dropdown';
-    }
+    return this.drugInput.valid ? 'Add drug to search' : 'Choose a drug from the dropdown';
   }
   setFocusStatus($event, activeInput: number) {
     this.focusSource.next({ focused: $event != null, control: activeInput });
@@ -194,6 +210,9 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   get drugListIsEmpty(): boolean {
     return this.drugList.value.length === 0;
   }
+  getDrugInputErrors() {
+    this.drugInput.invalid;
+  }
 
   search($event: Event) {
     $event.preventDefault();
@@ -205,12 +224,12 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   }
 
   chooseTerm({ option }: MatAutocompleteSelectedEvent) {
-    this.drugInput.setValue(option.value);
     if (
       this.activeControl === -1 &&
       this.drugList.errors === null &&
       this.drugInput.errors === null
     ) {
+      this.drugInput.setValue(option.value);
       this.addTerm();
     }
   }
@@ -257,20 +276,31 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     return this.drugList.controls[index];
   }
 
-  lookupTypeaheadTerms(value: string) {
-    const sliceString = (item: string) => [value, item.slice(value.length, -2), item.slice(-2)];
-    if (!value || value.length <= 1) {
+  lookupTypeaheadTerms(value: string): string[][] | false {
+    const sliceTypeAndMatchingText = (item: string) => [
+      value,
+      item.slice(value.length, -2),
+      item.slice(-2),
+    ];
+    if (value?.length <= 1) {
       return [];
-    } else if (value.length > 1) {
-      return this.searchService.filterTypeahead(value).map(sliceString);
+    } else {
+      let results = this.searchService.filterTypeahead(value).slice(0, 10);
+      if (
+        results.length != this.currentOptions.size ||
+        results.some((value) => !this.currentOptions.has(value))
+      ) {
+        this.currentOptions.clear();
+        results.forEach((v) => this.currentOptions.add(value));
+        return results.map(sliceTypeAndMatchingText);
+      } else {
+        return false;
+      }
     }
   }
-  updateActiveTrigger() {
-    this.updateTypeahead({
-      trigger: this.typeaheadTriggers.filter((t) => t.panelOpen)[0] || null,
-    });
-  }
+
   updateTypeahead(state: Partial<TypeaheadState>) {
     this.typeaheadSource.next(Object.assign(this.typeaheadSource.value, state));
+    console.log(state);
   }
 }

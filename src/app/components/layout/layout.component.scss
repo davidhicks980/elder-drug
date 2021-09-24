@@ -114,6 +114,8 @@ elder-animated-arrow {
   }
 }
 elder-menu-toggle elder-animated-arrow {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+
   @include bem.mobileWidth {
     width: var(--icon-toggle--height, 2rem);
     height: var(--icon-toggle--width, 2rem);
@@ -121,6 +123,8 @@ elder-menu-toggle elder-animated-arrow {
 }
 .main__sidebar__toggle elder-menu-toggle {
   pointer-events: all;
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+
   * {
     color: #fff;
   }

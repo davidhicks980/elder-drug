@@ -1,6 +1,6 @@
 <ng-container
   *elderLet="{
-    searchInProgress: searchInProgress$ | async,
+    pinSearch: pinSearch$ | async,
     typeahead: typeaheadState$ | async
   } as state"
 >
@@ -8,26 +8,26 @@
     <section
       aria-label="Add and search multiple drugs on beers criteria"
       class="form-container"
-      [class.is-widened]="state.searchInProgress"
+      [class.is-widened]="state.pinSearch"
     >
       <div
         class="search-container"
         cdkMonitorSubtreeFocus
         (cdkFocusChange)="setFocusStatus($event, -1)"
       >
-        <label style="margin: 5px" for="searchinput">Add drugs to search</label>
         <div
           class="search-field"
           #autoOrigin="matAutocompleteOrigin"
           matAutocompleteOrigin
-          [class.is-missing]="drugInput.errors?.invalidAsync"
+          [class.is-missing]="drugInput.errors?.termabsent"
           [class.is-invalid]="drugInput.invalid && drugInput.value.length"
-          [class.is-pinned]="state.searchInProgress"
+          [class.is-pinned]="state.pinSearch"
           [class.is-dirty]="!drugInputIsEmpty"
           [class.is-open]="searchInputAutoTrigger.panelOpen"
         >
           <button
             mat-icon-button
+            *ngIf="!state.pinSearch; else toggle"
             (click)="$event.preventDefault()"
             [disabled]="drugInputIsEmpty"
             [matTooltip]="getTooltipText('search')"
@@ -40,6 +40,11 @@
               svgIcon="search"
             ></mat-icon>
           </button>
+          <ng-template #toggle>
+            <elder-menu-toggle (toggle)="unpinSearch()" [toggled]="true">
+              <elder-animated-arrow toggle-icon></elder-animated-arrow> </elder-menu-toggle
+          ></ng-template>
+
           <input
             class="search-input"
             type="text"
@@ -53,7 +58,7 @@
             #searchInputAutoTrigger="matAutocompleteTrigger"
             [matAutocomplete]="autocomplete"
             [matAutocompleteConnectedTo]="autoOrigin"
-            (keydown.Enter)="searchInput.value.length || search($event)"
+            (keydown.enter)="searchInput.value.length || search($event)"
           />
           <div class="search-spinner-container" *ngIf="state.typeahead.pending; else addButton">
             <mat-spinner diameter="25"></mat-spinner>
@@ -73,87 +78,104 @@
           ></ng-template>
         </div>
         <elder-error-message
-          [@transitionMessages]="'enter'"
-          [error-messages]="this.errorMessages"
-          [warning-messages]="this.warningMessages"
+          [errorMessages]="this.errorMessages"
+          [warningMessages]="this.warningMessages"
           [errors]="this.drugInput.errors"
         ></elder-error-message>
       </div>
 
       <section
-        class="wrapper__edit-list section--constrained-width section--centered"
+        class="edit-section"
         [@shiftEditList]="
-          (drugInput.errors || drugList.errors) && !drugInputIsEmpty ? 'shift' : 'unshift'
+          (drugInput.errors || drugList.errors) && !drugInputIsEmpty && !state.pinSearch
+            ? 'shift'
+            : 'unshift'
         "
       >
-        <mat-list
-          formArrayName="drugList"
-          #chipList
-          aria-label="Drug selection"
+        <ul
           class="edit-list"
+          #chipList
+          formArrayName="drugList"
+          aria-label="Drug selection"
           [class.not-shifted]="!((drugInput.errors || drugList.errors) && !drugInputIsEmpty)"
+          *ngIf="!drugListIsEmpty"
         >
-          <div *ngIf="!drugListIsEmpty" mat-subheader class="edit-title">SELECTED DRUGS</div>
+          <h2 class="edit-title">Selected Drugs</h2>
 
-          <div class="edit-items" [class.list-shown]="!drugListIsEmpty">
-            <mat-list-item
-              *ngFor="let drugName of drugList.controls; index as index"
-              class="edit-item"
-              cdkMonitorSubtreeFocus
-              (cdkFocusChange)="setFocusStatus($event, index)"
+          <li
+            *ngFor="let drugName of drugList.controls; index as index"
+            class="edit-item"
+            cdkMonitorSubtreeFocus
+            (cdkFocusChange)="setFocusStatus($event, index)"
+          >
+            <div
+              class="edit-item-content"
+              #editOrigin="matAutocompleteOrigin"
+              matAutocompleteOrigin
+              [class.is-missing]="getListControl(index).errors?.invalidAsync"
+              [class.is-invalid]="getListControl(index)?.errors"
+              [class.has-attached]="editDrugAutoTrigger.panelOpen"
             >
-              <mat-icon
-                mat-list-icon
+              <button
+                mat-icon-button
+                class="edit-list-button"
+                (click)="deleteListControl(index); searchInputAutoTrigger.closePanel()"
                 matTooltip="Remove {{ drugName.value }}"
                 matTooltipPosition="below"
                 matTooltipClass="tooltip"
-                svgIcon="x"
-                tabIndex="0"
+                matTooltipShowDelay="1000"
                 (mouseover)="editDrugTooltip.disabled = true"
                 (mouseleave)="editDrugTooltip.disabled = false"
-                (click)="deleteListControl(index); searchInputAutoTrigger.closePanel()"
-                (keydown.enter)="deleteListControl(index)"
-              ></mat-icon>
-              <span #editOrigin="matAutocompleteOrigin" matAutocompleteOrigin class="edit-field"
-                ><input
-                  class="edit-input"
-                  (keydown.enter)="editDrugField.blur()"
-                  (blur)="editDrugField.value.length || deleteListControl(index)"
-                  (focusin)="editDrugTooltip.disabled = true"
-                  (focusout)="editDrugTooltip.disabled = false"
-                  [class.is-missing]="getListControl(index).errors?.invalidAsync"
-                  [formControlName]="index"
-                  [matAutocomplete]="autocomplete"
-                  [matAutocompleteConnectedTo]="editOrigin"
-                  #editDrugField
-                  #editDrugAutoTrigger="matAutocompleteTrigger"
-                  #editDrugTooltip="matTooltip"
-                  matTooltip="Edit {{ drugName.value }}"
-                  matTooltipPosition="below"
-                  matTooltipClass="tooltip"
-                />
-              </span>
-            </mat-list-item>
-          </div>
-        </mat-list>
+              >
+                <mat-icon svgIcon="x-delete" class="edit-icon"></mat-icon>
+              </button>
+              <input
+                class="edit-input"
+                #editDrugField
+                #editDrugAutoTrigger="matAutocompleteTrigger"
+                #editDrugTooltip="matTooltip"
+                (keydown.enter)="$event.preventDefault(); editDrugField.blur()"
+                (blur)="editDrugField.value.length || deleteListControl(index)"
+                (focusin)="editDrugTooltip.disabled = true"
+                (focusout)="editDrugTooltip.disabled = false"
+                [formControlName]="index"
+                [matAutocomplete]="autocomplete"
+                [matAutocompleteConnectedTo]="editOrigin"
+                matTooltip="Edit {{ drugName.value }}"
+                matTooltipPosition="below"
+                matTooltipClass="tooltip"
+                matTooltipShowDelay="1000"
+              />
+              <button
+                class="edit-list-button"
+                (click)="editDrugField.focus(); $event.preventDefault()"
+                mat-icon-button
+              >
+                <mat-icon svgIcon="edit"></mat-icon>
+              </button>
+            </div>
+            <elder-error-message
+              *ngIf="getListControl(index)?.errors"
+              [errorMessages]="this.errorMessages"
+              [warningMessages]="this.warningMessages"
+              [errors]="getListControl(index)?.errors"
+            ></elder-error-message>
+          </li>
+        </ul>
         <mat-autocomplete
           class="typeahead"
           #autocomplete
           autoActiveFirstOption
           (optionSelected)="chooseTerm($event)"
-          (opened)="updateActiveTrigger()"
-          (closed)="updateActiveTrigger()"
         >
           <div class="typeahead__options">
             <mat-option
               [value]="option[0] + option[1]"
               *ngFor="let option of state.typeahead.data | slice: 0:10"
-              [class.is-editing]="false"
-              [class.is-full]="true"
               [title]="option[0] + option[1]"
             >
               <autocomplete-content
-                [showChips]="searchInputAutoTrigger.panelOpen"
+                [hideChips]="!searchInputAutoTrigger.panelOpen"
                 [type]="option[2]"
               >
                 <matched-content>{{ option[0] }}</matched-content>

@@ -6,7 +6,7 @@
     </span>
     <ng-content select="inferred-content"></ng-content>
   </span>
-  <ng-container *ngIf="showChips" [ngSwitch]="type">
+  <ng-container *ngIf="!hideChips" [ngSwitch]="type">
     <div class="chip--generic" *ngSwitchCase="'~g'">generic</div>
     <div class="chip--brand" *ngSwitchCase="'~b'">brand</div>
   </ng-container>

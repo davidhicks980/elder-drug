@@ -3,12 +3,10 @@
   width="24"
   height="24"
   viewBox="0 0 24 24"
-  [class.toggled]="toggled"
-  [class.right-arrow]="direction"
+  [class.right-arrow]="direction === 'RIGHT'"
   class="arrow__icon"
 >
-  <rect class="middle" width="17" height="2" x="3" y="11" />
-
   <rect class="top" width="17" height="2" x="3" y="6" />
+  <rect class="middle" width="17" height="2" x="3" y="11" />
   <rect class="bottom" width="17" height="2" x="3" y="16" />
 </svg>

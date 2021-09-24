@@ -7,21 +7,4 @@
     <ng-container [ngTemplateOutlet]="brand.templateRef"></ng-container>
   </div>
 </ng-container>
-<elder-drug-form (searching)="setSearchingStatus($event)" #searchForm>
-  <drug-form-submit style="display: absolute; bottom: 10px; left: 10%">
-    <button
-      style="
-        all: unset;
-        padding: 0.5em 2em;
-        background: blue;
-        color: white;
-        border-radius: 25px;
-        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
-        font-size: 1.5rem;
-        cursor: pointer;
-      "
-    >
-      Search
-    </button>
-  </drug-form-submit>
-</elder-drug-form>
+<elder-drug-form (searching)="setSearchingStatus($event)" #searchForm> </elder-drug-form>

@@ -170,6 +170,14 @@ export class AppComponent implements OnInit {
       'github',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/logo-github.svg')
     );
+    iconRegistry.addSvgIcon(
+      'x-delete',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/x-delete.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'edit',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/edit.svg')
+    );
   }
   title = 'ElderDrug';
 }
