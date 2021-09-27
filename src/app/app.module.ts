@@ -18,7 +18,6 @@ import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
 import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { caseSplitPipe } from './case-split.pipe';
 import { BrandComponent } from './components/brand/brand.component';
 import { VerticalComponent } from './components/brand/vertical/vertical.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
@@ -53,6 +52,7 @@ import { PopupContentComponent } from './components/table/dropdown/popup-content
 import { PopupComponent } from './components/table/dropdown/popup.component';
 import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
 import { ExpandedRowCardComponent } from './components/table/expanded-element/expanded-row-card/expanded-row-card.component';
+import { FilterInputComponent } from './components/table/filter-input/filter-input.component';
 import { FilterComponent } from './components/table/filter/filter.component';
 import { GroupRowComponent } from './components/table/group-row/group-row.component';
 import { CellComponent } from './components/table/row/cell.component';
@@ -80,10 +80,13 @@ import { GENERIC_DRUGS, genericDrugNames } from './injectables/generic-drugs.inj
 import { TABLE_ATTRIBUTES, tableList } from './injectables/table-attributes.injectable';
 import { TABLE_CONFIG, tableConfig } from './injectables/table-config.injectable';
 import { MaterialModule } from './material-module';
+import { caseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
+import { ToStringPipe } from './pipes/to-string.pipe';
 import { AddComponent } from './svg/add/add.component';
-import { ToStringPipe } from './to-string.pipe';
-import { FilterInputComponent } from './components/table/filter-input/filter-input.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
+import { HighlightMatchDirective } from './components/table/highlight-match.directive';
+
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -145,6 +148,8 @@ export const firestore = provideFirestore(() => getFirestore());
     ToggleIconDirective,
     FilterBarComponent,
     FilterInputComponent,
+    HighlightPipe,
+    HighlightMatchDirective,
   ],
   imports: [
     firebase,

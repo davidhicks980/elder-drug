@@ -95,7 +95,8 @@ export class LayoutComponent {
   loadDemo() {
     this.searchService.searchDrugs('loperamide');
     requestAnimationFrame(() => {
-      this.table.model.updateGroups(['SearchTerms']);
+      this.tableService.emitTableFilter({ column: '*', term: 'loperamide' });
+      // this.table.model.updateGroups(['SearchTerms']);
     });
   }
   ngAfterViewInit() {

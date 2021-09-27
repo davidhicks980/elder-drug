@@ -247,6 +247,31 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     });
   };
 
+  tableFilterPredicate(term: string, data: TableEntry<T>[]): TableEntry<T>[] {
+    let newRow = {},
+      exp = RegExp(term, 'gi');
+    return data.reduce((data, row) => {
+      let hasElements = false;
+      newRow = {};
+      for (let [key, value] of Object.entries(row)) {
+        if (typeof value === 'string') {
+          if ((value as string).toLowerCase().indexOf(term.toLowerCase())) {
+            newRow[key] = value;
+            continue;
+          } else {
+            hasElements = true;
+            newRow[key] = (value as string).replace(exp, `◬hl◬${term}◬hle◬`);
+          }
+        } else {
+          newRow[key] = value;
+        }
+      }
+      if (hasElements) {
+        data.push(newRow);
+      }
+      return data;
+    }, []);
+  }
   constructor(dataStream: BehaviorSubject<T[]>) {
     super();
     this._data = dataStream;
@@ -485,7 +510,10 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       return data;
     } else {
       const filters = Array.from(this.filters.entries());
-      return data.filter((obj) => this.filterPredicate(obj, filters));
+      console.log(filters[0][1]);
+      let dat = this.tableFilterPredicate(filters[0][1], data);
+      console.log(dat);
+      return dat;
     }
   }
 

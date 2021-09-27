@@ -49,9 +49,6 @@
             matTooltip="Sort by {{ field }}"
             [attr.tabIndex]="col === 0 ? '0' : '-1'"
             [keyGrid]="{ row: 0, col }"
-            [filter]="col"
-            [filterShown]="showFilters"
-            filterStyle="grid-row: 2"
           >
             <div class="header-content">
               {{ field | caseSplit | titlecase }}
