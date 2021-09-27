@@ -1,0 +1,34 @@
+@use 'palette' as *;
+.label {
+  font-weight: 500;
+}
+:host {
+  height: 2.3rem;
+  line-height: 2.3rem;
+  display: block;
+  background-color: $light-gray-1;
+  border-radius: 0 0 5px 5px;
+  user-select: all;
+  -webkit-user-select: none;
+  position: relative;
+  cursor: pointer;
+}
+:host(.is-expanded) {
+  border-bottom: 1px solid $light-gray-4;
+  border-radius: 0;
+}
+
+mat-icon {
+  vertical-align: middle;
+  transform: rotate(0deg);
+  transition: transform 0.2s;
+
+  height: 20px;
+  width: 30px;
+  :host(.is-expanded) & {
+    transform: rotate(90deg);
+  }
+}
+
+button[mat-icon-button] {
+}

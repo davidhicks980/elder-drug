@@ -17,20 +17,28 @@
   >
     <ul #list class="button-row-style hide-scrollbar">
       <li
+        (keydown.ArrowRight)="focusNext(item)"
+        (keydown.ArrowLeft)="focusPrevious(item)"
         #item
         *ngFor="let tab of state.tabs"
-        [style.zIndex]="tab.tableNumber === state.currentTable ? 1 : 0"
-        class="tab-button"
       >
-        <elder-tab-link
-          [active]="tab.tableNumber === state.currentTab"
-          [inactive]="tab.tableNumber != state.currentTab"
-          [collapse]="tab.tableNumber != 0"
-          [rounded]="rounded"
+        <button
+          #butn
+          (focusin)="toggleChildFocusStyles(butn)"
+          (focusout)="toggleChildFocusStyles(butn)"
+          class="tab-trigger"
           (click)="handleTabClick(tab.tableNumber)"
         >
-          {{ tab.shortName }}
-        </elder-tab-link>
+          <elder-tab-link
+            #link
+            [active]="tab.tableNumber === state.currentTab"
+            [inactive]="tab.tableNumber != state.currentTab"
+            [collapse]="tab.tableNumber != 0"
+            [rounded]="rounded"
+          >
+            {{ tab.shortName }}
+          </elder-tab-link>
+        </button>
       </li>
     </ul>
   </div>

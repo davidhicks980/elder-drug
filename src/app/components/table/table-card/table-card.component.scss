@@ -15,14 +15,7 @@
     width: 100%;
   }
 }
-
-.table-fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
-  justify-items: left;
-  padding: 1rem 0rem;
-  gap: 1rem;
-}
-.table-field {
-  border-right: 1px dotted $light-gray-1;
+.table {
+  background-color: white;
+  padding: 5px;
 }

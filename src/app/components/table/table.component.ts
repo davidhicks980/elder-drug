@@ -28,7 +28,11 @@ import { ExpandingEntry } from './ExpandingEntry';
 @Component({
   selector: 'elder-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss', './table.row.component.scss'],
+  styleUrls: [
+    './table.component.scss',
+    './table.row.component.scss',
+    './header-cell.table.component.scss',
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
@@ -89,7 +93,6 @@ export class TableComponent implements AfterViewInit {
         })
       )
       .subscribe((groups) => this.model.updateGroups(groups));
-
     this.tableService.tableFilter$.subscribe(({ column, term }) => {
       this.model.filter(column, term);
     });

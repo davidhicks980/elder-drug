@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   QueryList,
   TemplateRef,
   ViewChild,
@@ -16,11 +15,11 @@ import { filter, map, take } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
 import { ResizeService } from '../../services/resize.service';
+import { SearchService } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
+import { TableComponent } from '../table/table.component';
 import { layoutAnimations } from './layout.animations';
 import { scrollDirectionCb } from './scroll-direction.function';
-import { SIDEBAR_TOKEN, SidebarTokens, sidebarTokens } from './side-navigation/SidebarTokens';
-import { TOOLBAR_TOKENS, ToolbarTokens, toolbarTokens } from './top-toolbar/ToolbarTokens';
 
 export enum ScrollDirection {
   UP,
@@ -30,12 +29,7 @@ export enum ScrollDirection {
   selector: 'elder-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  providers: [
-    DataService,
-    { provide: SIDEBAR_TOKEN, useValue: sidebarTokens },
-    { provide: TOOLBAR_TOKENS, useValue: toolbarTokens },
-  ],
-
+  providers: [DataService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     layoutAnimations.enterLeaveShift('MobileSidebarShift', '-700px'),
@@ -50,6 +44,7 @@ export class LayoutComponent {
   @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
   @ViewChildren('mainWrapper') main: QueryList<ElementRef<HTMLElement>>;
 
+  @ViewChild(TableComponent) table: TableComponent;
   private scrollDirectionSource: BehaviorSubject<ScrollDirection> = new BehaviorSubject(
     ScrollDirection.DOWN
   );
@@ -97,6 +92,12 @@ export class LayoutComponent {
     );
   }
 
+  loadDemo() {
+    this.searchService.searchDrugs('loperamide');
+    requestAnimationFrame(() => {
+      this.table.model.updateGroups(['SearchTerms']);
+    });
+  }
   ngAfterViewInit() {
     this.togglePortalContent = new TemplatePortal(this.toggleTemplate, this.containerRef);
 
@@ -116,26 +117,16 @@ export class LayoutComponent {
         observer.observe(this.main.first.nativeElement);
       });
   }
-  get tokens() {
-    return {
-      sidebar: {
-        brand: this.sidebarTokens.BRAND_TEMPLATE,
-        toggle: this.sidebarTokens.TOGGLE_TEMPLATE,
-      },
-      toolbar: { toggle: this.toolbarTokens.TOGGLE_TEMPLATE },
-    };
-  }
+
   get selectedTable$() {
     return this.tableService.selection$;
   }
 
   constructor(
     public tableService: TableService,
+    private searchService: SearchService,
     public size: ResizeService,
-    private containerRef: ViewContainerRef,
-
-    @Inject(SIDEBAR_TOKEN) private sidebarTokens: SidebarTokens,
-    @Inject(TOOLBAR_TOKENS) private toolbarTokens: ToolbarTokens
+    private containerRef: ViewContainerRef
   ) {
     this.sidebarOpen$ = this.size.sidenavObserver;
     this.mobile$ = merge(this.size.mobile$, of(window.innerWidth < 600)) as Observable<boolean>;

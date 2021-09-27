@@ -1,0 +1,34 @@
+@use "palette" as *;
+:host {
+  @include common-control-style;
+  font-weight: 400;
+  padding: 0.3em 1em 0.3em 1em;
+  display: flex;
+  cursor: text;
+  align-items: center;
+  &::after {
+    content: none;
+  }
+  &:focus-within {
+    border-color: $primary-1;
+    @include shadow(2, true);
+    & input::placeholder {
+      color: $gray-3;
+    }
+  }
+}
+
+input {
+  all: unset;
+  padding-left: 5px;
+  width: 100%;
+
+  &::placeholder {
+    color: $gray-5;
+  }
+}
+
+.icon {
+  color: $gray-5;
+  height: 1.2em;
+}

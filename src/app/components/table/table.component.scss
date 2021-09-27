@@ -7,16 +7,14 @@
   &--wrapper {
     border: 1px solid $light-gray-5;
     border-radius: 4px;
+    @include shadow(3);
   }
 }
 .cell--header {
-  height: 2.5em;
-  line-height: 2.5rem;
-  padding-left: 0.5rem;
-  overflow: hidden;
-  border: 1px dotted #adb4b9;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  border: 1px solid $light-gray-5;
   border-width: 0 0 1px 1px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   &.has-filter-attached {
     border-bottom: 0;
   }
@@ -30,25 +28,6 @@
   }
 }
 
-.group-header-cell {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  line-height: 2rem;
-  border-bottom: 1px solid $light-gray-4;
-  box-shadow: inset 0px 1px 0px 0 #ffffff54;
-  background-color: $light-gray-1;
-  color: $gray-5;
-  flex: 1;
-  border-right: 1px solid $light-gray-4;
-
-  &:first-of-type {
-    &__content {
-      margin-left: 40px;
-    }
-  }
-}
 .expand-row__cell {
   height: 2rem;
   cursor: pointer;
@@ -126,11 +105,11 @@ mat-chip-list mat-chip.mat-standard-chip {
   width: 36px;
   line-height: 36px;
 }
-.chevron-button__chevron,
-.chevron {
+[svgIcon="chevron-right"] {
   transform: rotate(-0deg);
   transition: transform 0.2s;
-  &.--rotated {
+  vertical-align: middle;
+  &.is-rotated {
     transform: rotate(90deg);
   }
 }
@@ -150,7 +129,7 @@ mat-chip-list mat-chip.mat-standard-chip {
   padding: 20px;
   margin: 5px;
 }
-ed-table th.table-cell.expand-group-header.header {
+th.table-cell.expand-group-header.header {
   height: 30px;
   column-span: all;
   font-weight: 300;

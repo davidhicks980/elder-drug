@@ -15,6 +15,8 @@ a {
   padding: 0.4em 1em 0.3em 1em;
   border-radius: 5px;
   @include common-input-style;
+  background-color: $primary-1;
+  color: white;
 }
 
 .icon,
@@ -26,8 +28,6 @@ a {
 }
 
 .text {
-  font-size: 1rem;
   font-weight: 400;
   font-family: var(--elder-button--font);
-  padding: 0 5px;
 }

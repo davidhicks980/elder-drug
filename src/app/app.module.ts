@@ -26,6 +26,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { AnimatedArrowComponent } from './components/layout/menu-toggle/animated-arrow/animated-arrow.component';
 import { AnimatedXComponent } from './components/layout/menu-toggle/animated-x/animated-x.component';
 import { MenuToggleComponent } from './components/layout/menu-toggle/menu-toggle.component';
+import { ToggleIconDirective } from './components/layout/menu-toggle/toggle-icon.directive';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
 import {
   SearchButtonsComponent,
@@ -57,6 +58,7 @@ import { GroupRowComponent } from './components/table/group-row/group-row.compon
 import { CellComponent } from './components/table/row/cell.component';
 import { TableCardComponent } from './components/table/table-card/table-card.component';
 import { TableComponent } from './components/table/table.component';
+import { FilterBarComponent } from './components/table/toolbar/filter-bar.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
 import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
@@ -81,7 +83,7 @@ import { MaterialModule } from './material-module';
 import { JoinPipe } from './pipes/join.pipe';
 import { AddComponent } from './svg/add/add.component';
 import { ToStringPipe } from './to-string.pipe';
-import { ToggleIconDirective } from './components/layout/menu-toggle/toggle-icon.directive';
+import { FilterInputComponent } from './components/table/filter-input/filter-input.component';
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -141,6 +143,8 @@ export const firestore = provideFirestore(() => getFirestore());
     SidebarToggleDirective,
     AutocompleteContentComponent,
     ToggleIconDirective,
+    FilterBarComponent,
+    FilterInputComponent,
   ],
   imports: [
     firebase,

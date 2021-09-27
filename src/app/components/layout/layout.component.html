@@ -78,6 +78,7 @@
         </elder-sidebar>
       </section>
       <section #mainWrapper class="main__content" *ngIf="!state.sidebarOpen || !state.mobile">
+        <button (click)="loadDemo()">Demo</button>
         <elder-table-card #table>
           <elder-table-title>
             {{ state.selectedTable.shortName }}
@@ -85,38 +86,25 @@
           <elder-table-description>
             {{ state.selectedTable.description }}
           </elder-table-description>
+          <elder-filter-bar>
+            <elder-filter-input filter-search></elder-filter-input>
 
-          <div class="table-field">
-            <elder-popup #columnPopup>
-              <popup-label>Show Fields</popup-label>
+            <elder-popup filter-field-popup #columnPopup>
+              <popup-label>Fields</popup-label>
               <popup-placeholder [placeholderList]="table.columns | async"></popup-placeholder>
               <ng-template popup-content>
-                <elder-column-selector #columns></elder-column-selector>
-              </ng-template>
-            </elder-popup>
-          </div>
-          <div class="table-field">
-            <elder-popup #groupPopup>
-              <popup-label>Row Groups</popup-label>
+                <elder-column-selector #columns></elder-column-selector> </ng-template
+            ></elder-popup>
+            <elder-popup filter-group-popup #groupPopup>
+              <popup-label>Groups</popup-label>
               <popup-placeholder [placeholderList]="table.groups | async"></popup-placeholder>
               <ng-template popup-content>
                 <elder-group-by #groups></elder-group-by>
               </ng-template>
             </elder-popup>
-          </div>
-          <div class="table-field">
-            <elder-button #filterButton>
-              {{ filterButton.toggled ? "Remove" : "Add" }} Filters
-              <mat-icon elder-button-icon svgIcon="filter"></mat-icon>
-            </elder-button>
-          </div>
+          </elder-filter-bar>
 
-          <elder-table
-            [showFilters]="filterButton.toggled"
-            elderTableView
-            elderResize
-            class="elder-table"
-          >
+          <elder-table elderTableView elderResize class="elder-table">
             <div class="table-field filter">
               <elder-filter><p label>Filter columns</p></elder-filter>
             </div>

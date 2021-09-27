@@ -42,9 +42,7 @@ export class DataService {
   get drugList$(): Observable<string[]> {
     return this.dataSource
       .asObservable()
-      .pipe(
-        map((drugs) => Object.keys(drugs).map((drug) => drug.toLowerCase()))
-      );
+      .pipe(map((drugs) => Object.keys(drugs).map((drug) => drug.toLowerCase())));
   }
 
   get drugEntries(): Map<number, BeersEntry> {
@@ -60,6 +58,7 @@ export class DataService {
     this.getFirebaseData()
       .pipe(take(1))
       .subscribe((data) => {
+        console.log(data);
         this.dataSource.next(data);
       });
     this.entries = this.createBeersMap();

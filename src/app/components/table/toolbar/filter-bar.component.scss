@@ -1,0 +1,17 @@
+@use 'palette' as *;
+.popups {
+  display: flex;
+  align-items: space-between;
+  > * {
+    padding: 5px;
+  }
+}
+
+:host {
+  display: grid;
+  grid-template-columns: 40% 1fr 7rem 7rem;
+  align-items: flex-start;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 0.5rem 0;
+}

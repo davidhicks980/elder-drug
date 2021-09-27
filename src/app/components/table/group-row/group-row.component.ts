@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class GroupRowComponent {
   @Input('header') groupHeader: string = '';
-  @Input('field') field: string = '';
-  @Input('level') level: number = 0;
+  @Input() field: string = '';
   constructor() {}
 }

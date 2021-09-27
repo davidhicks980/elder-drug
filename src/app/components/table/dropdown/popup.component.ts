@@ -14,8 +14,9 @@ import {
 } from '@angular/core';
 import { matMenuAnimations } from '@angular/material/menu';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
+import { destroy } from '../../../services/destroy';
 import { PopupActions, PopupService } from '../../../services/popup.service';
 import { PopupContentDirective } from './popup-content.directive';
 
@@ -36,8 +37,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   @Input() ignoreClicks;
   component: OverlayRef | null;
   portal: TemplatePortal<unknown>;
-  private destroySubject = new Subject();
-  private destroyedObserver = this.destroySubject.asObservable();
+  destroy$ = new Subject();
   allowClicks: boolean = true;
   attached = new BehaviorSubject(false);
 
@@ -50,7 +50,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     private popupService: PopupService
   ) {}
   ngOnDestroy() {
-    this.destroySubject.next(true);
+    this.destroy$.next(true);
     this.component.detach();
     this.component.dispose();
   }
@@ -59,12 +59,12 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     this.component
       .outsidePointerEvents()
       .pipe(
+        destroy(this),
         filter(({ target }) => {
           return !trigger.contains(target as Element) && this.allowClicks;
-        }),
-        takeUntil(this.destroyedObserver)
+        })
       )
-      .subscribe(() => this.component.detach());
+      .subscribe(() => this.togglePopup(false));
   }
   listenForPortalActions() {
     this.popupService.actions$.subscribe((action) => {
@@ -73,7 +73,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
           this.allowClicks = false;
           break;
         case PopupActions.close:
-          this.component.detach();
+          this.togglePopup(false);
           break;
         case PopupActions.allowClose:
           this.allowClicks = true;
@@ -81,7 +81,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
         case PopupActions.preventOpen:
           throw Error('action not implemented');
         case PopupActions.open:
-          this.attachPopup();
+          this.togglePopup(true);
           break;
         case PopupActions.allowOpen:
           break;
@@ -103,31 +103,26 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     this.component = this.createOverlay(this.trigger);
     this.observeKeydown(this.component);
   }
-  attachPopup() {
-    this.attached.next(true);
-    return this.component.hasAttached()
-      ? null
-      : this.component.attach(this.portal);
-  }
-  togglePopup() {
-    if (this.component.hasAttached()) {
-      this.component.detach();
+
+  togglePopup(force?: boolean) {
+    if (this.component.hasAttached() || force === false) {
       this.attached.next(false);
+      this.component.detach();
     } else {
-      this.component.attach(this.portal);
       this.attached.next(true);
+      this.component.attach(this.portal);
     }
   }
   observeKeydown(component: OverlayRef) {
     component
       .keydownEvents()
-      .pipe(takeUntil(this.destroyedObserver))
+      .pipe(destroy(this))
       .subscribe((event) => {
         switch (event.code) {
           case 'Enter':
             break;
           case 'Escape':
-            this.component.detach();
+            this.togglePopup(false);
             break;
           case 'Tab':
             break;

@@ -10,7 +10,7 @@
       "LowerLimit": null,
       "UpperLimit": null,
       "DrugInteraction": null,
-      "Inclusion": "use as an antihypertensive, central acting",
+      "Inclusion": "Those using a central acting antihypertensive",
       "Exclusion": null,
       "Rationale": "High risk of adverse CNS effects; may cause bradycardia and orthostatic hypotension; not recommended as routine treatment for hypertension",
       "Recommendation": "Avoid",

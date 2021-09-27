@@ -160,15 +160,16 @@ fieldset {
 
 .mat-sort-header-arrow {
   color: currentColor !important;
-  width: 0.72em !important;
-  min-width: 0.72em !important;
+  width: 1.12em !important;
+  min-width: 0.32em !important;
   height: 1.6em !important;
+  margin: 0 !important;
 }
 
 .mat-sort-header-pointer-left,
 .mat-sort-header-pointer-right {
   background: currentColor;
-  width: 0.4em !important;
+  width: 0.6em !important;
   height: 0.12em !important;
 
   position: absolute;
@@ -185,7 +186,6 @@ fieldset {
   position: relative;
   &.right {
     border-left: 6px solid red;
-    margin-left: 5px;
     &::before {
       position: absolute;
       content: "";
@@ -198,6 +198,15 @@ fieldset {
       top: 50%;
       transform: translateY(-50%);
     }
+  }
+}
+
+.mat-sort-header-sorted .header-content {
+  text-decoration: underline;
+  text-decoration-color: $secondary-2-1;
+
+  &:hover {
+    text-decoration-color: $secondary-2-2;
   }
 }
 

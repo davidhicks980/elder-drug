@@ -1,6 +1,3 @@
-<label class="popup-trigger__label" for="popup-trigger">
-  <ng-content select="popup-label"></ng-content>
-</label>
 <div class="popup-wrapper">
   <button
     #trigger
@@ -9,20 +6,23 @@
     role="listbox"
     name="popup-trigger"
   >
-    <ng-content select="popup-placeholder"></ng-content>
-    <svg
-      class="popup-trigger__arrow"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      height="24"
-      width="24"
-      fill="currentColor"
-      [elderRotate]="component?.hasAttached()"
-      [degrees]="180"
-    >
-      <path d="M0 0h24v24H0V0z" fill="none" />
-      <path d="M7 10l5 5 5-5H7z" />
-    </svg>
+    <span class="popup-trigger__content">
+      <label class="popup-trigger__label" for="popup-trigger">
+        <ng-content select="popup-label"></ng-content>
+      </label>
+      <svg
+        class="popup-trigger__arrow"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height="24"
+        width="24"
+        fill="currentColor"
+        [class.active]="attached | async"
+      >
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path d="M7 10l5 5 5-5H7z" />
+      </svg>
+    </span>
   </button>
 </div>
 

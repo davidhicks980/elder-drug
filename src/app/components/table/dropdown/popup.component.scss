@@ -1,19 +1,27 @@
 @use "palette" as *;
 @use "bem-mixin" as *;
-
+@use "sass:color";
+:host {
+  --border-radius: 1.5em;
+}
 .popup-wrapper {
-  @include common-input-style;
-  @include common-input-layout;
+  display: block;
 }
 .popup-trigger {
-  display: flex;
-  align-items: center;
+  @include common-input-style;
+  padding: 0.2em 1em 0.2em 1.25em;
   outline: none;
   text-align: left;
-  justify-content: space-between;
+  position: relative;
+  border: 1px solid $light-gray-3;
+  &__content {
+    display: flex;
+    align-items: center;
+  }
   &__label {
-    background: white;
+    cursor: pointer;
     font-weight: 500;
+    pointer-events: none;
   }
   &__placeholder {
     min-width: 10ch;
@@ -25,5 +33,9 @@
   }
   &__arrow {
     position: relative;
+    transition: transform 0.1s ease-in;
+    &.active {
+      transform: scale(0.8);
+    }
   }
 }

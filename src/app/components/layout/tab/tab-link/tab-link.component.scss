@@ -1,7 +1,10 @@
 @use 'palette' as *;
-.tab-link {
-  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+:host {
+  display: block;
+  height: fit-content;
+  width: fit-content;
 }
+
 .tab__path {
   fill: url(#linear-base);
   clip-path: url(#path);

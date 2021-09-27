@@ -20,6 +20,7 @@ import { destroy } from '../../../services/destroy';
 import { TableService } from '../../../services/table.service';
 import { tabAnimations } from './tab.animations';
 
+const focusClass = 'focused';
 @Component({
   selector: 'elder-tabs',
   templateUrl: './tab.component.html',
@@ -60,6 +61,26 @@ export class TabComponent implements AfterViewInit, OnDestroy {
         this.list.nativeElement.scrollBy(left ? -5 : 5, 0);
       });
     $event.preventDefault();
+  }
+
+  focusNext(item: HTMLLIElement) {
+    let button = item?.nextElementSibling?.firstElementChild as HTMLButtonElement;
+    if (button instanceof HTMLButtonElement) {
+      button.focus();
+    } else if (item?.previousElementSibling) {
+      this.focusPrevious(item);
+    }
+  }
+  focusPrevious(item: HTMLLIElement) {
+    let button = item?.previousElementSibling?.firstElementChild as HTMLButtonElement;
+    if (button instanceof HTMLButtonElement) {
+      button.focus();
+    } else if (item?.nextElementSibling) {
+      this.focusNext(item);
+    }
+  }
+  toggleChildFocusStyles(item: HTMLElement) {
+    item.classList.add(focusClass);
   }
 
   ngOnDestroy() {

@@ -1,5 +1,8 @@
 @use "palette" as *;
 @use 'colors' as *;
+.tab-link {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
 @function encodecolor($string) {
   @if type-of($string) == "color" {
     $hex: str-slice(ie-hex-str($string), 4);
@@ -74,4 +77,15 @@ $radius: 50%;
 .left-overflow-button {
   @extend %overflow-button;
   left: 0;
+}
+
+.tab-trigger {
+  all: unset;
+  display: block;
+}
+
+.tab-trigger:focus {
+  elder-tab-link {
+    outline: 2px dotted blue;
+  }
 }

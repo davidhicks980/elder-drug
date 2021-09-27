@@ -1,7 +1,6 @@
 @use 'bem-mixin' as bem;
 @use 'palette' as *;
 .row {
-  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
   line-height: 2em;
@@ -13,6 +12,7 @@
     background-color: $light-gray-1;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
+    @include shadow(2);
 
     @include bem.mobileWidth {
       display: none;

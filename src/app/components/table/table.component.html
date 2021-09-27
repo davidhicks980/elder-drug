@@ -4,7 +4,6 @@
     mobile: mobile$ | async
   } as state"
 >
-  {{ state | json }}
   <div
     #elderTable
     id="elderTable"
@@ -28,7 +27,6 @@
       ></cdk-header-row>
 
       <!--Group rows-->
-
       <cdk-row
         *cdkRowDef="let row; columns: state.fields"
         class="row row--content"
@@ -39,10 +37,14 @@
         (keydown.space)="model.expand(row)"
       ></cdk-row>
 
-      <ng-container *ngFor="let field of state.fields; index as col" cdkColumnDef="{{ field }}">
+      <ng-container
+        *ngFor="let field of state.fields; index as col"
+        cdkColumnDef="{{ field }}"
+        [sticky]="field === 'Search Terms'"
+      >
         <ng-container *cdkHeaderCellDef>
           <cdk-header-cell
-            class="cell--header"
+            class="header"
             mat-sort-header
             matTooltip="Sort by {{ field }}"
             [attr.tabIndex]="col === 0 ? '0' : '-1'"
@@ -51,7 +53,7 @@
             [filterShown]="showFilters"
             filterStyle="grid-row: 2"
           >
-            <div class="cell--header__content">
+            <div class="header-content">
               {{ field | caseSplit | titlecase }}
             </div>
           </cdk-header-cell>
@@ -65,8 +67,7 @@
               <elder-cell-toggle *ngIf="field === state.fields[0]">
                 <button mat-icon-button>
                   <mat-icon
-                    [elderRotate]="model.checkIsExpanded(row)"
-                    [degrees]="90"
+                    [class.is-rotated]="model.checkIsExpanded(row)"
                     svgIcon="chevron-right"
                   ></mat-icon>
                 </button>
@@ -82,15 +83,17 @@
           <ng-template #groupTemplate>
             <cdk-cell *ngIf="col === 0">
               <elder-group-row
-                [field]="row.field"
-                [header]="row.groupHeader"
-                [level]="row._position.layer"
-              ></elder-group-row>
+                [class.is-expanded]="model.checkIsExpanded(row)"
+                [keyGrid]="{ row: 0, col: 0 }"
+                [cellPadding]="row._position.layer"
+              >
+                <group-field>{{ row.field | caseSplit }}</group-field>
+                <group-name>{{ row.groupHeader | titlecase }}</group-name>
+              </elder-group-row>
             </cdk-cell>
           </ng-template>
         </ng-container>
       </ng-container>
-
       <!--Header Row-->
     </cdk-table>
   </div>
