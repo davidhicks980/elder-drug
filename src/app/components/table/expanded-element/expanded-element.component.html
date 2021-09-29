@@ -1,19 +1,21 @@
 <div class="expanded-row" *ngIf="data as d">
-  <div @flyIn>
+  <div *elderLet="filterService.filter$ | async as filter" @flyIn>
     <div class="grid__12-col">
       <div class="header">
-        <h1 class="header__title">{{ d.Item }}</h1>
+        <h1 class="header__title" [innerHTML]="d.Item | highlight: filter"></h1>
         <mat-chip-list class="header__chips">
-          <mat-chip> {{ d.ItemType | titlecase }}</mat-chip>
+          <mat-chip [innerHtml]="d.ItemType | titlecase | highlight: filter"></mat-chip>
         </mat-chip-list>
-        <h2 class="header__subtitle">
-          {{ d.SearchTerms | titlecase }}
-        </h2>
+        <h2
+          [innerHTML]="d.SearchTerms | titlecase | highlight: filter"
+          class="header__subtitle"
+        ></h2>
       </div>
     </div>
     <div class="masonry-grid">
       <div *ngIf="d.Inclusion">
         <elder-expanded-row-card
+          [filter]="filter"
           [field]="'Guidance Applies To'"
           [entry]="d.Inclusion"
           [icon]="'unfold_less'"
@@ -23,6 +25,7 @@
 
       <div *ngIf="d.Exclusion">
         <elder-expanded-row-card
+          [filter]="filter"
           [field]="'Does Not Apply To'"
           [entry]="d.Exclusion"
           [icon]="'unfold_more'"
@@ -31,6 +34,7 @@
       </div>
       <div *ngIf="d.DiseaseState">
         <elder-expanded-row-card
+          [filter]="filter"
           [field]="'Caution In'"
           [entry]="d.DiseaseState"
           [icon]="'error'"
@@ -39,15 +43,16 @@
       </div>
       <div *ngIf="d.MaximumClearance || d.MinimumClearance">
         <div>
-          <b>{{ d.Recommendation }}</b> with clearance
+          <b [innerHTML]="d.Recommendation | highlight: filter"></b> with clearance
           <i><b>below</b></i>
-          {{ d.MaximumClearance }} and
+          <span [innerHTML]="d.MaximumClearance | highlight: filter"></span> and
           <i><b>above</b></i>
-          {{ d.MinimumClearance }}
+          <span [innerHTML]="d.MinimumClearance | highlight: filter"></span>
         </div>
       </div>
       <div *ngIf="d.Rationale">
         <elder-expanded-row-card
+          [filter]="filter"
           [field]="'Rationale'"
           [entry]="d.Rationale"
           [icon]="'light'"

@@ -10,7 +10,7 @@ export class ExpandedRowCardComponent implements OnInit {
   @Input() field: string = '';
   @Input() entry: string = '';
   @Input() icon: string = '';
-
+  @Input() filter: string = '';
   constructor() {}
 
   ngOnInit(): void {}

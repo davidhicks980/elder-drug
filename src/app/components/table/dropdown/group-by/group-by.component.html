@@ -44,9 +44,7 @@
               <mat-icon
                 inline="true"
                 [svgIcon]="
-                  groupedListItem.classList.contains('is-moveable')
-                    ? 'unfold_more'
-                    : 'draggable'
+                  groupedListItem.classList.contains('is-moveable') ? 'unfold_more' : 'draggable'
                 "
               ></mat-icon>
             </span>
@@ -63,9 +61,7 @@
               @fadeInPill
               tabindex="0"
               #removeButton
-              (click)="
-                ungroupItem(i); focusNextItem(groupedListItem, ungroupedList)
-              "
+              (click)="ungroupItem(i); focusNextItem(groupedListItem, ungroupedList)"
               (keydown)="navigateListGrid($event, groupedList)"
               class="list-content list-content__button--remove"
             >
@@ -104,9 +100,7 @@
         (cdkDragStarted)="blockPopupClose(ungrouped.id)"
         (cdkDragEnded)="canClick.set(ungrouped.id, true)"
         (keydown)="navigateListGrid($event, ungroupedList)"
-        (keydown.enter)="
-          groupItem(i); focusNextItem(ungroupedListItem, groupedList)
-        "
+        (keydown.enter)="groupItem(i); focusNextItem(ungroupedListItem, groupedList)"
       >
         <elder-list-content>
           <div listPrefix>
@@ -137,13 +131,6 @@
   </section>
   <mat-divider></mat-divider>
   <section class="footer">
-    <button
-      class="footer__button"
-      (click)="closePanel()"
-      #closeButton
-      mat-button
-    >
-      Close
-    </button>
+    <button class="footer__button" (click)="closePanel()" #closeButton mat-button>Close</button>
   </section>
 </div>

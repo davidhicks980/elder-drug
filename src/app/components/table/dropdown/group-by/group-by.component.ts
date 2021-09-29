@@ -45,7 +45,7 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
   canClick = new Map();
   draggableItem = -1;
   dropList: CdkDropList;
-  destroyed = new Subject();
+  destroy$ = new Subject();
 
   groupItem(item: number) {
     this.groupService.groupItem(item);
@@ -54,7 +54,7 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     this.groupService.ungroupItem(item);
   }
   ngOnDestroy() {
-    this.destroyed.next(true);
+    this.destroy$.next(true);
   }
   closePanel() {
     this.popupService.emitAction(PopupActions.close);
@@ -204,8 +204,5 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     private keyGridService: KeyGridService
   ) {
     this.canClick.set('grouped-droplist', true).set('ungrouped-droplist', true);
-    this.groupService.groupedItems$.subscribe((groups) => {
-      this.updatePlaceholder(groups);
-    });
   }
 }

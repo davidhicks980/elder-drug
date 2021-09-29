@@ -1,7 +1,6 @@
 <mat-icon svgIcon="{{ icon }}" class="icon is-info"></mat-icon>
-<h2 class="header">
-  {{ field }}
-</h2>
+<h2 class="header">{{ field }}</h2>
 <p class="content">
-  {{ entry | slice: 0:1 | uppercase }}{{ entry | slice: 1 }}
+  <span [innerHTML]="entry | slice: 0:1 | uppercase | highlight: filter"></span
+  ><span [innerHTML]="entry | slice: 1 | highlight: filter"></span>
 </p>

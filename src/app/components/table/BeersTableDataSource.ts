@@ -2,7 +2,7 @@ import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { ExpandingEntry } from './ExpandingEntry';
 import { RowExpansionMixin } from './RowExpansionMixin';
@@ -12,6 +12,12 @@ import { TableEntry } from './TableEntry';
 /** Shared base class with MDC-based implementation. */
 export const MAX_SAFE_INTEGER = 9007199254740991;
 
+export const HIGHLIGHT_START = '◬hl◬';
+export const HIGHLIGHT_END = '◬hle◬';
+export const HIGHLIGHT_REGEX = RegExp(
+  `${HIGHLIGHT_START}([\w\s',./;+=\-_"]+)${HIGHLIGHT_END}`,
+  'gi'
+);
 export class BeersTableDataSource<T> extends DataSource<T> {
   /** Stream that emits when a new data array is set on the data source. */
   private readonly _data: BehaviorSubject<T[]>;
@@ -20,7 +26,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   private readonly renderData = new BehaviorSubject<T[]>([]);
 
   /** Stream that emits when a new filter string is set on the data source. */
-  private readonly _filter = new BehaviorSubject<Map<string, string>>(new Map());
+  private readonly filterSource = new BehaviorSubject<string>('');
 
   /**
    * Subscription to the changes that should trigger an update to the table's rendered rows, such
@@ -36,11 +42,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    */
   private groupChange: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  columnSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  private columnSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
   columns$ = this.columnSource.asObservable();
-
-  _renderOnExpansion: boolean = false;
-  expansionChange = new BehaviorSubject(new Set());
+  private expansionSource = new BehaviorSubject('');
 
   /** Ingests a stream of any columns that are marked to be shown and that contain data
    * @property {headers} headers - A stream of headers from your table source.
@@ -81,32 +85,30 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     return !rowData._position.isGroup;
   }
   checkIsExpanded(row) {
-    return this.expansionChange.value.has(row._position.id);
+    return this.expandedRows.has(row._position.id);
   }
   checkIsParentExpanded = (row) => {
-    return !this.rowHasParent(row) || this.expansionChange.value.has(row._position.parentId);
+    return !this.rowHasParent(row) || this.expandedRows.has(row._position.parentId);
   };
 
   rowHasParent = (row) => row._position.hasParent;
 
+  private expandedRows = new Set();
   expand(row: ExpandingEntry) {
-    const id = row._position.id;
-    const expanded = this.expansionChange.value;
-    expanded.has(id) ? expanded.delete(id) : expanded.add(id);
-    this.expansionChange.next(expanded);
+    const { id } = row._position;
+    this.expandedRows.has(id) ? this.expandedRows.delete(id) : this.expandedRows.add(id);
+    this.expansionSource.next(id);
   }
   /**
    * Filter term that should be used to filter out objects from the data array. To override how
    * data objects match to this filter string, provide a custom function for filterPredicate.
    */
-  get filters(): Map<string, string> {
-    return this._filter.value;
+  get filters(): string {
+    return this.filterSource.value;
   }
-  filter(column: string, term: string) {
-    if (typeof column === 'string' && typeof term === 'string') {
-      const filters = this._filter.value;
-      term.length < 1 ? filters.delete(column) : filters.set(column, term);
-      this._filter.next(filters);
+  filter(term: string) {
+    if (typeof term === 'string') {
+      this.filterSource.next(term);
     }
   }
 
@@ -152,7 +154,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @param data Data object that is being accessed.
    * @param sortHeaderId The name of the column that represents the data.
    */
-  private _sortingDataAccessor: (data: T, sortHeaderId: string) => string | number = (
+  private sortingDataAccessor: (data: T, sortHeaderId: string) => string | number = (
     data: T,
     sortHeaderId: string
   ): string | number => {
@@ -189,8 +191,8 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     }
 
     return data.sort((a, b) => {
-      let valueA = this._sortingDataAccessor(a, active);
-      let valueB = this._sortingDataAccessor(b, active);
+      let valueA = this.sortingDataAccessor(a, active);
+      let valueB = this.sortingDataAccessor(b, active);
       // If there are data in the column that can be converted to a number,
       // it must be ensured that the rest of the data
       // is of the same type so as not to order incorrectly.
@@ -238,40 +240,26 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @param filter Filter entry structured as [key: columnName, value: filterText] that has been set on the data source.
    * @returns Whether the filter matches against the data
    */
-  filterPredicate: (data: T, filter: [string, string][]) => boolean = (
-    data: T,
-    filter: [string, string][]
-  ): boolean => {
-    return filter.every(([key, value]) => {
-      return (data[key] as string).trim().toLowerCase().indexOf(value) != -1;
-    });
-  };
 
-  tableFilterPredicate(term: string, data: TableEntry<T>[]): TableEntry<T>[] {
-    let newRow = {},
-      exp = RegExp(term, 'gi');
-    return data.reduce((data, row) => {
-      let hasElements = false;
-      newRow = {};
-      for (let [key, value] of Object.entries(row)) {
-        if (typeof value === 'string') {
-          if ((value as string).toLowerCase().indexOf(term.toLowerCase())) {
-            newRow[key] = value;
-            continue;
-          } else {
-            hasElements = true;
-            newRow[key] = (value as string).replace(exp, `◬hl◬${term}◬hle◬`);
-          }
-        } else {
-          newRow[key] = value;
-        }
-      }
-      if (hasElements) {
-        data.push(newRow);
-      }
-      return data;
-    }, []);
-  }
+  filterPredicate: (data: T, filter: string) => boolean = (data: T, filter: string): boolean => {
+    // Transform the data into a lowercase string of all property values.
+    const dataStr = Object.keys(data)
+      .reduce((currentTerm: string, key: string) => {
+        // Use an obscure Unicode character to delimit the words in the concatenated string.
+        // This avoids matches where the values of two columns combined will match the user's query
+        // (e.g. `Flute` and `Stop` will match `Test`). The character is intended to be something
+        // that has a very low chance of being typed in by somebody in a text field. This one in
+        // particular is "White up-pointing triangle with dot" from
+        // https://en.wikipedia.org/wiki/List_of_Unicode_characters
+        return currentTerm + (data as { [key: string]: any })[key] + '◬';
+      }, '')
+      .toLowerCase();
+
+    // Transform the filter by converting it to lowercase and removing whitespace.
+    const transformedFilter = filter.trim().toLowerCase();
+
+    return dataStr.indexOf(transformedFilter) != -1;
+  };
   constructor(dataStream: BehaviorSubject<T[]>) {
     super();
     this._data = dataStream;
@@ -342,7 +330,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       //If you are on the first layer, set the rootIndex equal to the index of the top node
       //Index is horizontal (within a group), layer is vertical and ascending (the height of the tree node)
       if (!groupTerm) {
-        groupTerm = ' [[No data]]';
+        groupTerm = `None`;
       }
       //Make the group name a string if it is an array
       if (Array.isArray(groupTerm)) {
@@ -437,9 +425,10 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       ? (merge(this._sort.sortChange, this._sort.initialized) as Observable<Sort | void>)
       : of(null);
 
+    const expansionChange = this.expansionSource.asObservable().pipe(debounceTime(30));
     const dataWithPositionalMetadata = this._data.pipe(map((data) => this.appendPosition(data)));
     // Watch for base data or filter changes to provide a filtered set of data.
-    const filteredData = combineLatest([dataWithPositionalMetadata, this._filter]).pipe(
+    const filteredData = combineLatest([dataWithPositionalMetadata, this.filterSource]).pipe(
       map(([data]) => this.filterData(data))
     );
     // Watch for filtered data or sort changes to provide an ordered set of data.
@@ -449,7 +438,8 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     const groupedData = combineLatest([sortedData, this.groupChange]).pipe(
       map(([data]) => this.groupData(data))
     );
-    const expandedData = combineLatest([groupedData, this.expansionChange]).pipe(
+
+    const expandedData = combineLatest([groupedData, expansionChange]).pipe(
       map(([data]) => this.expandData(data))
     );
     // Watched for paged data changes and send the result to the table to render.
@@ -461,14 +451,13 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   private expandData(
     data: (TableEntry<T> | FlatRowGroup<T>)[]
   ): (TableEntry<T> | FlatRowGroup<T>)[] {
-    let expandedRows = this.expansionChange.value;
     let i = 0;
     data.forEach((row) => {
       const { isGroup, id, parentId, layer } = row._position,
-        isShown = expandedRows.has(parentId) || !layer,
-        isExpanded = expandedRows.has(id);
+        isShown = this.expandedRows.has(parentId) || !layer,
+        isExpanded = this.expandedRows.has(id);
       if (!isShown && isExpanded) {
-        expandedRows.delete(id);
+        this.expandedRows.delete(id);
       }
       row._position.expanded = isShown && isExpanded;
       row._position.parentExpanded = isShown;
@@ -481,23 +470,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   }
 
   /**
-   * Filters any columns that do not contain data
-   *
-   * @param {*} [tableArray, headers]
-   * @returns {*}  {string[]}
-   */
-  private _filterEmptyColumns = ([tableArray, headers]: [T[], string[]]): string[] => {
-    let exists = {};
-    return tableArray
-      .map((table) => {
-        return headers.filter((header) => {
-          return table[header] && !exists.hasOwnProperty(header) ? (exists[header] = true) : false;
-        });
-      })
-      .flat();
-  };
-
-  /**
    * Returns a filtered data array where each filter object contains the filter string within
    * the result of the filterTermAccessor function. If no filter is set, returns the data array
    * as provided.
@@ -506,15 +478,11 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     // If there is a filter string, filter out data that does not contain it.
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overridden for customization.
-    if (this.filters.size === 0) {
-      return data;
-    } else {
-      const filters = Array.from(this.filters.entries());
-      console.log(filters[0][1]);
-      let dat = this.tableFilterPredicate(filters[0][1], data);
-      console.log(dat);
-      return dat;
-    }
+    let filter = this.filterSource.value;
+
+    return filter == null || filter === ''
+      ? data
+      : data.filter((obj) => this.filterPredicate(obj, filter));
   }
 
   /**

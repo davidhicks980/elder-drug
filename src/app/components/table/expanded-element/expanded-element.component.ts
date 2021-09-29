@@ -1,13 +1,16 @@
 import { trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { enterLeaveFadeTemplate, flyInTemplate } from '../../../animations/templates';
+import { FilterService } from '../../../services/filter.service';
 import { ExpandingEntry } from '../../table/ExpandingEntry';
 
 @Component({
   selector: 'elder-expanded-element',
   templateUrl: './expanded-element.component.html',
   styleUrls: ['./expanded-element.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fadeIn', enterLeaveFadeTemplate('1s', '1s')),
     trigger(
@@ -34,6 +37,7 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
 export class ExpandedElementComponent {
   private _data: Partial<ExpandingEntry>;
   map: { description: string; value: string }[];
+  filter: Observable<string>;
   @Input()
   public get data(): Partial<ExpandingEntry> {
     return this._data;
@@ -41,5 +45,7 @@ export class ExpandedElementComponent {
   public set data(value: Partial<ExpandingEntry>) {
     this._data = value;
   }
-  constructor() {}
+  constructor(public filterService: FilterService) {
+    this.filter = this.filterService.filter$;
+  }
 }

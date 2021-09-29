@@ -3,18 +3,19 @@
   font-weight: 500;
 }
 :host {
-  height: 2.3rem;
+  height: fit-content;
   line-height: 2.3rem;
-  display: block;
   background-color: $light-gray-1;
-  border-radius: 0 0 5px 5px;
   user-select: all;
   -webkit-user-select: none;
   position: relative;
   cursor: pointer;
-}
-:host(.is-expanded) {
   border-bottom: 1px solid $light-gray-4;
+  display: flex;
+  align-items: baseline;
+}
+
+:host(.is-expanded) {
   border-radius: 0;
 }
 

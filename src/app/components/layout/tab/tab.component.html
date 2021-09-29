@@ -23,10 +23,10 @@
         *ngFor="let tab of state.tabs"
       >
         <button
-          #butn
-          (focusin)="toggleChildFocusStyles(butn)"
-          (focusout)="toggleChildFocusStyles(butn)"
+          #tabButton
           class="tab-trigger"
+          (focusin)="toggleChildFocusStyles(tabButton)"
+          (focusout)="toggleChildFocusStyles(tabButton)"
           (click)="handleTabClick(tab.tableNumber)"
         >
           <elder-tab-link

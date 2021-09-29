@@ -1,7 +1,8 @@
 <ng-container
   *elderLet="{
     fields: model.columns$ | async,
-    mobile: mobile$ | async
+    mobile: mobile$ | async,
+    filter: filterService.filter$ | async
   } as state"
 >
   <div
@@ -17,6 +18,7 @@
       recycleRows
       [dataSource]="model"
       [fixedLayout]="true"
+      [trackBy]="trackBy"
       [class.isMobile]="state.mobile"
     >
       <!--Table headers-->
@@ -28,14 +30,26 @@
 
       <!--Group rows-->
       <cdk-row
+        class="row--content"
         *cdkRowDef="let row; columns: state.fields"
-        class="row row--content"
         [detail]="row | json"
         [expandDetail]="model.checkIsExpanded(row)"
         (click)="model.expand(row)"
-        (keydown.enter)="model.expand(row)"
-        (keydown.space)="model.expand(row)"
       ></cdk-row>
+      <ng-template cdkNoDataRow>
+        <div
+          style="
+            display: flex;
+            filter: grayscale(0.6);
+            opacity: 0.5;
+            align-items: center;
+            flex-direction: column;
+            padding: 1rem;
+          "
+        >
+          <elder-brand [logoRem]="7" [showTitle]="false"></elder-brand>
+        </div>
+      </ng-template>
 
       <ng-container
         *ngFor="let field of state.fields; index as col"
@@ -73,7 +87,7 @@
                 {{ field | caseSplit | titlecase }}
               </elder-cell-title>
               <elder-cell-content>
-                {{ row[field] | caseSplit | titlecase }}
+                <span [innerHtml]="row[field] | highlight: state.filter"> </span>
               </elder-cell-content>
             </elder-cell>
           </ng-container>

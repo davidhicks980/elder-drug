@@ -87,7 +87,7 @@
             {{ state.selectedTable.description }}
           </elder-table-description>
           <elder-filter-bar>
-            <elder-filter-input filter-search></elder-filter-input>
+            <elder-filter-input #tableFilter filter-search></elder-filter-input>
 
             <elder-popup filter-field-popup #columnPopup>
               <popup-label>Fields</popup-label>
@@ -104,10 +104,12 @@
             </elder-popup>
           </elder-filter-bar>
 
-          <elder-table elderTableView elderResize class="elder-table">
-            <div class="table-field filter">
-              <elder-filter><p label>Filter columns</p></elder-filter>
-            </div>
+          <elder-table
+            [filters]="tableFilter.filter | async"
+            elderTableView
+            elderResize
+            class="elder-table"
+          >
           </elder-table>
         </elder-table-card>
       </section>

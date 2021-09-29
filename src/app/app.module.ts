@@ -4,11 +4,11 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ObserversModule } from '@angular/cdk/observers';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,7 +55,9 @@ import { ExpandedRowCardComponent } from './components/table/expanded-element/ex
 import { FilterInputComponent } from './components/table/filter-input/filter-input.component';
 import { FilterComponent } from './components/table/filter/filter.component';
 import { GroupRowComponent } from './components/table/group-row/group-row.component';
+import { HighlightPipe } from './components/table/highlight.pipe';
 import { CellComponent } from './components/table/row/cell.component';
+import { SafeHtmlPipe } from './components/table/safe-html.pipe';
 import { TableCardComponent } from './components/table/table-card/table-card.component';
 import { TableComponent } from './components/table/table.component';
 import { FilterBarComponent } from './components/table/toolbar/filter-bar.component';
@@ -84,9 +86,6 @@ import { caseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './pipes/to-string.pipe';
 import { AddComponent } from './svg/add/add.component';
-import { HighlightPipe } from './pipes/highlight.pipe';
-import { HighlightMatchDirective } from './components/table/highlight-match.directive';
-
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -96,7 +95,6 @@ export const firestore = provideFirestore(() => getFirestore());
     LayoutComponent,
     ToolbarComponent,
     caseSplitPipe,
-    TableComponent,
     DrugFormComponent,
     SidebarComponent,
     ToStringPipe,
@@ -149,9 +147,11 @@ export const firestore = provideFirestore(() => getFirestore());
     FilterBarComponent,
     FilterInputComponent,
     HighlightPipe,
-    HighlightMatchDirective,
+    SafeHtmlPipe,
+    TableComponent,
   ],
   imports: [
+    CommonModule,
     firebase,
     firestore,
     BrowserModule,
@@ -170,7 +170,6 @@ export const firestore = provideFirestore(() => getFirestore());
     ObserversModule,
     CdkAccordionModule,
     A11yModule,
-    FlexLayoutModule,
   ],
   providers: [
     { provide: COLUMN_ATTRIBUTES, useValue: columnList },

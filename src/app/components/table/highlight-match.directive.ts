@@ -1,23 +1,54 @@
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
+import { HIGHLIGHT_REGEX, HIGHLIGHT_START } from './BeersTableDataSource';
+
 @Directive({
-  selector: '[highlightMatch]',
+  selector: '[highlight]',
 })
 export class HighlightMatchDirective {
-  private _highlightMatch;
+  element: HTMLElement;
+  private highlightText;
   @Input()
-  get highlightMatch() {
-    return this._highlightMatch;
+  get highlight() {
+    return this.highlightText;
   }
-  set highlightMatch(value) {
-    let openTag = RegExp('◬hl◬', 'gi'),
-      closeTag = RegExp('◬hle◬', 'gi');
-    if (openTag.test(value.toLowerCase())) {
-      let html = this.elementRef.nativeElement.innerHTML;
-      let out = html.replace(openTag, '<span class="highlight">').replace(closeTag, '</span>');
-      console.log(out);
-      this.r2.setProperty(this.elementRef.nativeElement, 'innerHTML', out);
+  set highlight(value: string) {
+    this.highlightText = value;
+    this.element = this.elementRef.nativeElement;
+    this.createHighlightNodes();
+  }
+
+  appendText(text: string) {
+    return this.r2.createText(text);
+  }
+  appendHighlightedText(text: string) {
+    return this.r2.appendChild(
+      this.elementRef.nativeElement,
+      this.r2.setProperty(this.r2.createElement('span') as HTMLSpanElement, 'textContent', text)
+    );
+  }
+  createHighlightNodes() {
+    if (this.element) {
+      let text = this.element.textContent;
+      console.log(text);
+      if (text.includes(HIGHLIGHT_START)) {
+        this.r2.setProperty(this.element, 'textContent', '');
+        let start = text.startsWith(HIGHLIGHT_START),
+          content = text.split(HIGHLIGHT_REGEX);
+        console.log(content);
+
+        content.forEach((fragment, index) => {
+          const highlight = start && index % 2 === 0;
+          if (highlight) {
+            this.appendHighlightedText(fragment);
+          } else {
+            this.appendText(fragment);
+          }
+        });
+      }
     }
   }
-  constructor(private elementRef: ElementRef, private r2: Renderer2) {}
+  constructor(private elementRef: ElementRef, private r2: Renderer2) {
+    this.createHighlightNodes();
+  }
 }
