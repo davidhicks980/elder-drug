@@ -12,7 +12,6 @@
     (keydown)="handleGridNavigation($event)"
   >
     <cdk-table
-      #table
       matSort
       class="drug-table"
       recycleRows
@@ -33,9 +32,10 @@
         class="row--content"
         *cdkRowDef="let row; columns: state.fields"
         [detail]="row | json"
-        [expandDetail]="model.checkIsExpanded(row)"
+        [expandDetail]="model.checkIsExpanded(row, false)"
         (click)="model.expand(row)"
       ></cdk-row>
+
       <ng-template cdkNoDataRow>
         <div
           style="
@@ -62,10 +62,10 @@
             mat-sort-header
             matTooltip="Sort by {{ field }}"
             [attr.tabIndex]="col === 0 ? '0' : '-1'"
-            [keyGrid]="{ row: 0, col }"
+            [keyGrid]="{ row: 0, col: this.col }"
           >
             <div class="header-content">
-              {{ field | caseSplit | titlecase }}
+              {{ field | splitcase | titlecase }}
             </div>
           </cdk-header-cell>
         </ng-container>
@@ -73,18 +73,18 @@
           <ng-container *ngIf="!row._position.isGroup; else groupTemplate">
             <elder-cell
               [cellPadding]="row._position.layer"
-              [keyGrid]="{ row: getRowIndex(row), col }"
+              [keyGrid]="{ row: getRowIndex(row), col: this.col }"
             >
-              <elder-cell-toggle *ngIf="field === state.fields[0]">
+              <elder-cell-toggle #cell *ngIf="field === state.fields[0]">
                 <button mat-icon-button>
                   <mat-icon
-                    [class.is-rotated]="model.checkIsExpanded(row)"
+                    [class.is-rotated]="model.checkIsExpanded(row, cell)"
                     svgIcon="chevron-right"
                   ></mat-icon>
                 </button>
               </elder-cell-toggle>
               <elder-cell-title *ngIf="state.mobile">
-                {{ field | caseSplit | titlecase }}
+                {{ field | splitcase | titlecase }}
               </elder-cell-title>
               <elder-cell-content>
                 <span [innerHtml]="row[field] | highlight: state.filter"> </span>
@@ -94,11 +94,12 @@
           <ng-template #groupTemplate>
             <cdk-cell *ngIf="col === 0">
               <elder-group-row
-                [class.is-expanded]="model.checkIsExpanded(row)"
+                #cell
+                [class.is-expanded]="model.checkIsExpanded(row, cell)"
                 [keyGrid]="{ row: 0, col: 0 }"
                 [cellPadding]="row._position.layer"
               >
-                <group-field>{{ row.field | caseSplit }}</group-field>
+                <group-field>{{ row.field | splitcase }}</group-field>
                 <group-name>{{ row.groupHeader | titlecase }}</group-name>
               </elder-group-row>
             </cdk-cell>

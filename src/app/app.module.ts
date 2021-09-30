@@ -1,10 +1,4 @@
-import { A11yModule } from '@angular/cdk/a11y';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ObserversModule } from '@angular/cdk/observers';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -45,7 +39,7 @@ import {
 } from './components/layout/top-toolbar/toolbar.component';
 import { ExpandToggleDirective } from './components/table/directives/expand-toggle.directive';
 import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
-import { ListContentComponent } from './components/table/dropdown/group-by/button/list-content.component';
+import { DropItemComponent } from './components/table/dropdown/group-by/button/drop-item.component';
 import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
 import { PopupContentDirective } from './components/table/dropdown/popup-content.directive';
 import { PopupContentComponent } from './components/table/dropdown/popup-content/popup-placeholder.component';
@@ -82,7 +76,7 @@ import { GENERIC_DRUGS, genericDrugNames } from './injectables/generic-drugs.inj
 import { TABLE_ATTRIBUTES, tableList } from './injectables/table-attributes.injectable';
 import { TABLE_CONFIG, tableConfig } from './injectables/table-config.injectable';
 import { MaterialModule } from './material-module';
-import { caseSplitPipe } from './pipes/case-split.pipe';
+import { CaseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './pipes/to-string.pipe';
 import { AddComponent } from './svg/add/add.component';
@@ -94,7 +88,7 @@ export const firestore = provideFirestore(() => getFirestore());
     AppComponent,
     LayoutComponent,
     ToolbarComponent,
-    caseSplitPipe,
+    CaseSplitPipe,
     DrugFormComponent,
     SidebarComponent,
     ToStringPipe,
@@ -113,7 +107,7 @@ export const firestore = provideFirestore(() => getFirestore());
     GroupByComponent,
     JoinPipe,
     ListKeyDirective,
-    ListContentComponent,
+    DropItemComponent,
     AutoFocusDirective,
     LetDirective,
     CellPaddingDirective,
@@ -151,25 +145,20 @@ export const firestore = provideFirestore(() => getFirestore());
     TableComponent,
   ],
   imports: [
-    CommonModule,
     firebase,
     firestore,
     BrowserModule,
     BrowserAnimationsModule,
     ElderRoutingModule,
     LayoutModule,
-    MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
-    OverlayModule,
-    ObserversModule,
-    CdkAccordionModule,
-    A11yModule,
+
+    MaterialModule,
   ],
   providers: [
     { provide: COLUMN_ATTRIBUTES, useValue: columnList },

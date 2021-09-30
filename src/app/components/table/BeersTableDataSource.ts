@@ -1,8 +1,8 @@
 import { _isNumberValue } from '@angular/cdk/coercion';
-import { DataSource } from '@angular/cdk/table';
+import { CdkCell, DataSource } from '@angular/cdk/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { ExpandingEntry } from './ExpandingEntry';
 import { RowExpansionMixin } from './RowExpansionMixin';
@@ -20,7 +20,7 @@ export const HIGHLIGHT_REGEX = RegExp(
 );
 export class BeersTableDataSource<T> extends DataSource<T> {
   /** Stream that emits when a new data array is set on the data source. */
-  private readonly _data: BehaviorSubject<T[]>;
+  private readonly dataSource: BehaviorSubject<T[]>;
 
   /** Stream emitting render data to the table (depends on ordered data changes). */
   private readonly renderData = new BehaviorSubject<T[]>([]);
@@ -32,7 +32,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * Subscription to the changes that should trigger an update to the table's rendered rows, such
    * as filtering, sorting, pagination, or base data changes.
    */
-  private _renderChangesSubscription: Subscription | null = null;
+  private renderChangesSubscription: Subscription | null = null;
 
   /**
    * The filtered set of data that has been matched by the filter string, or all the data if there
@@ -70,11 +70,12 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   }
   /** Array of objects that should be rendered by the table, where each object represents one row. */
   get data() {
-    return this._data.value;
+    return this.dataSource.value;
   }
   set data(data: T[]) {
-    this._data.next(data);
+    this.dataSource.next(data);
   }
+
   updateGroups(groups: string[]) {
     this.groupChange.next(groups);
   }
@@ -84,7 +85,8 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   checkIsRow(_, rowData) {
     return !rowData._position.isGroup;
   }
-  checkIsExpanded(row) {
+  checkIsExpanded(row: TableEntry<T> | FlatRowGroup<T>, ref?: CdkCell) {
+    if (ref) console.log(ref, row._position.id, this.expandedRows.has(row._position.id));
     return this.expandedRows.has(row._position.id);
   }
   checkIsParentExpanded = (row) => {
@@ -93,7 +95,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
 
   rowHasParent = (row) => row._position.hasParent;
 
-  private expandedRows = new Set();
+  private expandedRows: Set<string> = new Set();
   expand(row: ExpandingEntry) {
     const { id } = row._position;
     this.expandedRows.has(id) ? this.expandedRows.delete(id) : this.expandedRows.add(id);
@@ -262,7 +264,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   };
   constructor(dataStream: BehaviorSubject<T[]>) {
     super();
-    this._data = dataStream;
+    this.dataSource = dataStream;
     this.updateChangeSubscription();
   }
 
@@ -313,8 +315,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       let groupId = this.getPositionId(root, layer, groupIndex),
         groupTerm = levelEntry[field],
         hasParent = layer > 0,
-        id = groupId + parentId[2];
-
+        id = groupId + (parentId ?? '000');
       let groupPosition = {
         root,
         layer,
@@ -425,8 +426,9 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       ? (merge(this._sort.sortChange, this._sort.initialized) as Observable<Sort | void>)
       : of(null);
 
-    const expansionChange = this.expansionSource.asObservable().pipe(debounceTime(30));
-    const dataWithPositionalMetadata = this._data.pipe(map((data) => this.appendPosition(data)));
+    const dataWithPositionalMetadata = this.dataSource.pipe(
+      map((data) => this.appendPosition(data))
+    );
     // Watch for base data or filter changes to provide a filtered set of data.
     const filteredData = combineLatest([dataWithPositionalMetadata, this.filterSource]).pipe(
       map(([data]) => this.filterData(data))
@@ -439,12 +441,12 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       map(([data]) => this.groupData(data))
     );
 
-    const expandedData = combineLatest([groupedData, expansionChange]).pipe(
+    const expandedData = combineLatest([groupedData, this.expansionSource]).pipe(
       map(([data]) => this.expandData(data))
     );
     // Watched for paged data changes and send the result to the table to render.
-    this._renderChangesSubscription?.unsubscribe();
-    this._renderChangesSubscription = expandedData.subscribe((data) => {
+    this.renderChangesSubscription?.unsubscribe();
+    this.renderChangesSubscription = expandedData.subscribe((data) => {
       this.renderData.next(data as any);
     });
   }
@@ -452,19 +454,17 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     data: (TableEntry<T> | FlatRowGroup<T>)[]
   ): (TableEntry<T> | FlatRowGroup<T>)[] {
     let i = 0;
-    data.forEach((row) => {
+    data.forEach((row, index) => {
       const { isGroup, id, parentId, layer } = row._position,
-        isShown = this.expandedRows.has(parentId) || !layer,
+        isShown = this.expandedRows.has(parentId) || 0 === layer,
         isExpanded = this.expandedRows.has(id);
-      if (!isShown && isExpanded) {
-        this.expandedRows.delete(id);
-      }
+
       row._position.expanded = isShown && isExpanded;
       row._position.parentExpanded = isShown;
-      row._position.index = i;
+      row._position.index = index;
       //Expanded rows have two cells: the row cell, and the details cell. Hence, if isExpanded is true, move down by two to get to the next
       //expandable row.
-      i = isExpanded && !isGroup ? i + 2 : i + 1;
+      //i = isExpanded && !isGroup ? i + 2 : i + 1;
     });
     return data.filter((data) => data._position.parentExpanded);
   }
@@ -504,9 +504,10 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @docs-private
    */
   connect() {
-    if (!this._renderChangesSubscription) {
+    if (!this.renderChangesSubscription) {
       this.updateChangeSubscription();
     }
+
     return this.renderData.asObservable();
   }
 
@@ -516,7 +517,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
    * @docs-private
    */
   disconnect() {
-    this._renderChangesSubscription?.unsubscribe();
-    this._renderChangesSubscription = null;
+    this.renderChangesSubscription?.unsubscribe();
+    this.renderChangesSubscription = null;
   }
 }

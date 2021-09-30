@@ -5,132 +5,113 @@
   } as state"
   cdkDropListGroup
   #droplistGroup
-  class="group-row group-row__background"
+  class="modal"
 >
-  <h3 class="group-row__primary-header">Row Groups</h3>
-  <section>
-    <h4 class="group-row__secondary-header">Groups</h4>
-    <ol
-      cdkDropList
-      [cdkDropListData]="state.groupColumns"
-      [cdkDropListConnectedTo]="[ungrouped]"
-      (cdkDropListDropped)="drop($event)"
-      #grouped="cdkDropList"
-      #groupedList
-      class="list list--grouped"
-      role="listbox"
-      tabindex="0"
-      id="grouped-droplist"
-      [style.pointerEvents]="canClick.get(grouped.id) ? 'all' : 'none'"
-    >
-      <li
-        cdkDrag
-        id="{{ option }}"
-        role="option"
-        *ngFor="let option of state.groupColumns; index as i"
-        class="list-item grouped draggable"
-        cdkDragBoundary=".group-row"
-        [keyGrid]="{ row: i, col: 0 }"
-        role="option"
-        #groupedListItem
-        (keydown)="handleGrouplistKeydown($event, groupedList, i)"
-        (keydown.escape)="groupedList.focus()"
-        (cdkDragEnded)="canClick.set(grouped.id, true)"
-        (cdkDragStarted)="blockPopupClose(grouped.id)"
-      >
-        <elder-list-content>
-          <div listPrefix>
-            <span @fadeInPill class="list-content list-content__button--remove">
-              <mat-icon
-                inline="true"
-                [svgIcon]="
-                  groupedListItem.classList.contains('is-moveable') ? 'unfold_more' : 'draggable'
-                "
-              ></mat-icon>
-            </span>
-          </div>
-          <div class="list-content__label" listContent>{{ option }}</div>
-          <div class="list-content__button-group" listSuffix>
-            <button
-              matRipple
-              [matRippleCentered]="true"
-              [matRippleRadius]="12"
-              (focus)="tabbableGroupedItem = i"
-              matTooltip="Remove grouping by {{ option }}"
-              [keyGrid]="{ row: i, col: 1 }"
-              @fadeInPill
-              tabindex="0"
-              #removeButton
-              (click)="ungroupItem(i); focusNextItem(groupedListItem, ungroupedList)"
-              (keydown)="navigateListGrid($event, groupedList)"
-              class="list-content list-content__button--remove"
-            >
-              <mat-icon inline="true" svgIcon="x"></mat-icon>
-            </button>
-          </div>
-        </elder-list-content>
-      </li>
-    </ol>
-  </section>
+  <h1 class="title">Group Columns</h1>
+  <p class="caption">Drag column names to the <em>Groups</em> list to group drugs by field.</p>
   <mat-divider></mat-divider>
   <section>
-    <h4 class="group-row__secondary-header">Fields</h4>
-    <ul
+    <h2 class="subheading-2">Groups</h2>
+    <ol
+      [id]="groupListId"
+      #groupDroplistRef="cdkDropList"
+      #groupList
       cdkDropList
-      [cdkDropListData]="state.ungroupedColumns"
-      [cdkDropListConnectedTo]="[grouped]"
+      [cdkDropListData]="state.groupColumns"
+      [cdkDropListConnectedTo]="[ungroupDropList]"
       (cdkDropListDropped)="drop($event)"
-      #ungrouped="cdkDropList"
-      #ungroupedList
+      class="list"
       role="listbox"
-      class="list list--ungrouped"
-      id="ungrouped-droplist"
-      [style.pointerEvents]="canClick.get(ungrouped.id) ? 'all' : 'none'"
+      tabindex="0"
+      [class.noclick]="!isGroupClickable"
     >
-      <li
-        *ngFor="let item of state.ungroupedColumns; index as i"
-        cdkFocusInitial
-        cdkDrag
-        #ungroupedListItem
-        role="option"
-        class="list-item ungrouped"
-        cdkDragBoundary=".group-row"
-        [keyGrid]="{ row: i, col: 0 }"
-        tabindex="0"
-        (cdkDragStarted)="blockPopupClose(ungrouped.id)"
-        (cdkDragEnded)="canClick.set(ungrouped.id, true)"
-        (keydown)="navigateListGrid($event, ungroupedList)"
-        (keydown.enter)="groupItem(i); focusNextItem(ungroupedListItem, groupedList)"
-      >
-        <elder-list-content>
-          <div listPrefix>
-            <span @fadeInPill class="list-content list-content__button--remove">
-              <mat-icon inline="true" svgIcon="draggable"></mat-icon>
-            </span>
-          </div>
-          <div class="list-content__label" listContent>{{ item }}</div>
-          <div class="list-content__button-group" listSuffix>
+      <ng-container *ngIf="state.groupColumns.length; else noGroups">
+        <li
+          class="list-item"
+          *ngFor="let option of state.groupColumns; index as i"
+          #groupListItem
+          cdkDrag
+          role="option"
+          cdkDragBoundary=".group-row"
+          [id]="option"
+          [keyGrid]="{ row: i, col: 0 }"
+          (keydown)="handleGrouplistKeydown($event, groupList, i)"
+          (keydown.escape)="groupList.focus()"
+          (cdkDragEnded)="allowClicks(groupListId)"
+          (cdkDragStarted)="blockPopupClose(); denyClicks(groupListId)"
+        >
+          <elder-drop-item>
+            <mat-icon item-prefix inline="true" [svgIcon]="getListIcon(groupListItem)"></mat-icon>
+            <span class="item-content" item-content>{{ option | splitcase }}</span>
+
             <button
-              matRipple
-              [matRippleCentered]="true"
-              [matRippleRadius]="12"
-              matTooltip="Group by {{ item }}"
+              item-suffix
+              class="item-button-small"
+              mat-icon-button
+              matTooltip="Stop grouping by {{ option | splitcase }}"
               @fadeInPill
               #addButton
               [keyGrid]="{ row: i, col: 1 }"
-              (keydown)="navigateListGrid($event, ungroupedList)"
-              (mouseup)="groupItem(i)"
-              class="list-content list-content__button--add"
+              (keydown)="navigateListGrid($event, ungroupList)"
+              (click)="ungroup(i)"
             >
-              <mat-icon inline="true" svgIcon="add-2"></mat-icon>
+              <mat-icon inline="true" svgIcon="x"></mat-icon>
             </button>
-          </div>
-        </elder-list-content>
-      </li>
-    </ul>
+          </elder-drop-item></li
+      ></ng-container>
+      <ng-template #noGroups>
+        <em style="text-align: center; vertical-align: middle; color: gray">Drop Groups Here</em>
+      </ng-template>
+    </ol>
   </section>
-  <mat-divider></mat-divider>
+  <section>
+    <h2 class="subheading-2">Columns</h2>
+    <ol
+      [id]="ungroupListId"
+      role="listbox"
+      class="list"
+      [class.noclick]="!isUngroupClickable"
+      #ungroupList
+      #ungroupDropList="cdkDropList"
+      cdkDropList
+      [cdkDropListData]="state.ungroupedColumns"
+      [cdkDropListConnectedTo]="[groupDroplistRef]"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <li
+        class="list-item"
+        *ngFor="let item of state.ungroupedColumns; index as i"
+        #ungroupListItem
+        cdkDrag
+        role="option"
+        cdkDragBoundary=".group-row"
+        (cdkDragStarted)="blockPopupClose(); denyClicks(ungroupListId)"
+        (cdkDragEnded)="allowClicks(ungroupListId)"
+        (keydown.enter)="group(i); focusNextItem(ungroupListItem, groupList)"
+      >
+        <elder-drop-item>
+          <mat-icon item-prefix inline="true" svgIcon="draggable"></mat-icon>
+          <span class="item-content" item-content>{{ item | splitcase }}</span>
+          <button
+            item-suffix
+            class="item-button"
+            mat-icon-button
+            matTooltip="Group by {{ item }}"
+            @fadeInPill
+            #addButton
+            [keyGrid]="{ row: i, col: 0 }"
+            (keydown)="navigateListGrid($event, ungroupList)"
+            (click)="group(i)"
+          >
+            <mat-icon inline="true" svgIcon="add-2"></mat-icon>
+          </button>
+        </elder-drop-item>
+      </li>
+    </ol>
+  </section>
   <section class="footer">
-    <button class="footer__button" (click)="closePanel()" #closeButton mat-button>Close</button>
+    <button class="footer__button" (click)="closePanel()" #closeButton cdkFocusInitial mat-button>
+      Close
+    </button>
   </section>
 </div>

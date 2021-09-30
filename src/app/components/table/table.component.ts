@@ -1,3 +1,4 @@
+import { CdkTable } from '@angular/cdk/table';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -12,7 +13,6 @@ import {
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import stableStringify from 'json-stable-stringify';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
 import { FilterDirective } from '../../directives/filter.directive';
@@ -46,6 +46,7 @@ export class TableComponent implements AfterViewInit {
   @ViewChildren(FilterDirective) headerCells: QueryList<FilterDirective>;
   @ViewChild('elderTable') container: ElementRef;
   @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
+  @ViewChild(CdkTable) table: CdkTable<BeersSearchResult>;
   trackBy: (index: number, name: any) => boolean;
   @Input() get filters(): string {
     return this.model.filters;
@@ -59,7 +60,7 @@ export class TableComponent implements AfterViewInit {
   FIRST_ROW = 2;
   dataSource: BehaviorSubject<BeersSearchResult[]>;
   destroy$ = new Subject();
-
+  loading = new BehaviorSubject(false);
   rowCache = new Map();
 
   get mobile$() {
@@ -95,17 +96,16 @@ export class TableComponent implements AfterViewInit {
     this.columnService.selected$.pipe(destroy(this)).subscribe((selected) => {
       this.model.observeColumnChanges(selected);
     });
-    this.model.observeColumnChanges(this.columnService.columnInfo.selected);
-    this.groupService.groupedItems$
-      .pipe(
-        destroy(this),
-        map((groups) => {
-          return groups.map((group) => group.trim());
-        })
-      )
-      .subscribe((groups) => this.model.updateGroups(groups));
+    this.groupService.groupedItems$.pipe(destroy(this)).subscribe((groups) => {
+      this.model.updateGroups(groups);
+      this.changeDetect.markForCheck();
+    });
+    this.trackBy = this.getTrackByClosure();
+  }
+
+  getTrackByClosure() {
     const cache = new Map();
-    this.trackBy = (
+    return (
       index: number,
       row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>
     ): boolean => {

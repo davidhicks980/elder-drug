@@ -14,11 +14,16 @@
 }
 
 .popup-background {
-  border: 1px solid $gray-1;
   margin: 3px;
-  border-radius: 3px;
+  border-radius: 5px;
   background: white;
   max-height: 250px;
   overflow: auto;
+  border: 1px solid $light-gray-3;
   @include shadow(3);
+}
+
+h3 {
+  background: white;
+  position: sticky;
 }

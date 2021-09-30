@@ -1,7 +1,6 @@
 import { trigger } from '@angular/animations';
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -32,7 +31,7 @@ export const CLASS_MOVEABLE = 'is-moveable';
   animations: [trigger('fadeInPill', enterLeaveFadeTemplate('300ms ease-out', '300ms ease-out'))],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupByComponent implements OnDestroy, AfterViewInit {
+export class GroupByComponent implements OnDestroy {
   @Output() groupChange: EventEmitter<string[]> = new EventEmitter();
   @ViewChildren('removeButton') removeButtons: QueryList<ElementRef>;
   @ViewChildren('addButton') addButtons: QueryList<ElementRef>;
@@ -42,16 +41,21 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
   tabbableUngroupedItem: number = 0;
   pastGroups = new Set();
   options: Observable<string[]>;
-  canClick = new Map();
+  canClick = new Set();
   draggableItem = -1;
   dropList: CdkDropList;
   destroy$ = new Subject();
-
-  groupItem(item: number) {
-    this.groupService.groupItem(item);
+  groupListId = 'groupList';
+  ungroupListId = 'ungroupList';
+  ungroup(index: number) {
+    this.groupService.transferItemBetweenLists(false, index, 0);
   }
-  ungroupItem(item: number) {
-    this.groupService.ungroupItem(item);
+  group(index: number) {
+    this.groupService.transferItemBetweenLists(true, index, 0);
+  }
+
+  getListIcon(listItemRef: HTMLElement) {
+    return listItemRef.classList.contains('is-moveable') ? 'unfold_more' : 'draggable';
   }
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -62,28 +66,28 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
 
   stopMovingElement(elem: HTMLElement) {
     this.renderer.removeClass(elem, CLASS_MOVEABLE);
+    this.cdr.markForCheck();
   }
   startMovingElement(elem: HTMLElement) {
     this.renderer.addClass(elem, CLASS_MOVEABLE);
+    this.cdr.markForCheck();
   }
   canElementMove(elem: HTMLElement) {
     return elem.classList.contains(CLASS_MOVEABLE);
   }
   handleGrouplistKeydown($event: KeyboardEvent, list: ListElement, index: number) {
-    let { target, key } = $event;
-    let elem = target as HTMLElement;
-    if (ENTER_KEYS.includes(key)) {
-      if (this.canElementMove(elem)) {
-        this.stopMovingElement(elem);
-      } else {
-        this.startMovingElement(elem);
-      }
-      this.cdr.markForCheck();
-    } else if (ARROW_KEYS.includes(key)) {
-      if (this.canElementMove(elem)) {
-        this.handleVerticalKeypressOnMoveableItem($event, index, list, elem);
+    let { target, key } = $event,
+      elem = target as HTMLElement,
+      canMove = this.canElementMove(elem);
+    if (ARROW_KEYS.includes(key)) {
+      if (canMove) {
+        this.handleArrowKeypress($event, index, list, elem);
       } else {
         this.navigateListGrid($event, list);
+      }
+    } else if (ENTER_KEYS.includes(key)) {
+      if (!canMove) {
+        this.startMovingElement(elem);
       }
     } else {
       this.stopMovingElement(elem);
@@ -111,24 +115,24 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     }
   }
 
-  handleVerticalKeypressOnMoveableItem(
+  handleArrowKeypress(
     $event: KeyboardEvent,
     index: number,
     listElement: HTMLUListElement | HTMLOListElement,
     elem: any
   ) {
     $event.stopPropagation();
-    let { key } = $event;
-    let listChildren = Array.from(listElement.children) as HTMLElement[];
-    const { next, previous } = this.getSiblingItemIndices(listChildren, index);
-    let moveTo = 0;
+    let { key } = $event,
+      listItems = Array.from(listElement.children) as HTMLElement[],
+      moveTo = 0,
+      { next, previous } = this.getSiblingItemIndices(listItems, index);
     if (key === 'Down' || key === 'ArrowDown') {
       moveTo = next;
     }
     if (key === 'Up' || key === 'ArrowUp') {
       moveTo = previous;
     }
-    this.groupService.moveItemsInGroupList(index, moveTo);
+    this.groupService.moveItemInList(true, index, moveTo);
     this.cdr.markForCheck();
     this.startMovingElement(elem);
     requestAnimationFrame(() => {
@@ -136,9 +140,20 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-  blockPopupClose(container) {
-    this.canClick.set(container, false);
+  allowClicks(containerId: string) {
+    this.canClick.add(containerId);
+  }
+  denyClicks(containerId: string) {
+    this.canClick.delete(containerId);
+  }
+  blockPopupClose() {
     this.popupService.emitAction(PopupActions.preventClose);
+  }
+  get isGroupClickable() {
+    return this.canClick.has(this.groupListId);
+  }
+  get isUngroupClickable() {
+    return this.canClick.has(this.ungroupListId);
   }
 
   /**
@@ -169,33 +184,18 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    const isItemGrouped = event.container.id === 'grouped-droplist';
-    if (event.previousContainer === event.container) {
-      if (isItemGrouped) {
-        this.groupService.moveItemsInGroupList(event.previousIndex, event.currentIndex);
-      } else {
-        this.groupService.moveItemsInUngroupedList(event.previousIndex, event.currentIndex);
-      }
+    const droppedOnGroup = event.container.id === this.groupListId,
+      transfer = event.previousContainer.id != event.container.id,
+      { previousIndex, currentIndex } = event;
+    if (transfer) {
+      this.groupService.transferItemBetweenLists(droppedOnGroup, previousIndex, currentIndex);
     } else {
-      this.groupService.transferItemBetweenLists(
-        !isItemGrouped,
-        event.previousIndex,
-        event.currentIndex
-      );
+      this.groupService.moveItemInList(droppedOnGroup, previousIndex, currentIndex);
     }
     //Allow the popup to close after the item is transferred;
     this.popupService.emitAction(PopupActions.allowClose);
   }
-  ngAfterViewInit() {
-    this.updatePlaceholder(this.groupService.groups);
-  }
 
-  private updatePlaceholder(groups: string[]) {
-    this.popupService.emitPlaceholder({
-      text: groups[0],
-      itemCount: groups.length,
-    });
-  }
   constructor(
     private popupService: PopupService,
     public groupService: GroupByService,
@@ -203,6 +203,7 @@ export class GroupByComponent implements OnDestroy, AfterViewInit {
     private renderer: Renderer2,
     private keyGridService: KeyGridService
   ) {
-    this.canClick.set('grouped-droplist', true).set('ungrouped-droplist', true);
+    this.allowClicks(this.groupListId);
+    this.allowClicks(this.ungroupListId);
   }
 }

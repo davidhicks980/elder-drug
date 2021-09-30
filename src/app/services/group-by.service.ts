@@ -1,3 +1,4 @@
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -12,88 +13,58 @@ export class GroupByService {
   groupedItems$: Observable<string[]> = this.groupedItemSource.asObservable();
   private ungroupedItemSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
   ungroupedItems$ = this.ungroupedItemSource.asObservable();
+  grouped: string[] = [];
+  ungrouped: string[] = [];
   get groups() {
     return this.groupedItemSource.getValue();
   }
 
-  groupItem(index: number) {
-    const ungrouped = this.ungroupedItemSource.value;
-    this.groupedItemSource.next([...this.groupedItemSource.value, ungrouped.splice(index, 1)[0]]);
-    this.ungroupedItemSource.next(ungrouped);
+  addGroupedItems(items: string[]) {
+    this.grouped = this.dedupeItems([...this.grouped, ...items]);
+    this.emit('GROUPED');
   }
-  ungroupItem(index: number) {
-    const grouped = this.groupedItemSource.value;
-    this.ungroupedItemSource.next([...this.ungroupedItemSource.value, grouped.splice(index, 1)[0]]);
-    this.groupedItemSource.next(grouped);
+  addUngroupedItems(items: string[]) {
+    this.ungrouped = this.dedupeItems([...this.ungrouped, ...items]);
+    this.emit('UNGROUPED');
   }
-  addGroupedItems(group: string[]) {
-    this.groupedItemSource.next([...this.groupedItemSource.value, ...group]);
+  moveItemInList(grouped: boolean, from: number, to: number) {
+    moveItemInArray(grouped ? this.grouped : this.ungrouped, from, to);
+    this.emit(grouped ? 'GROUPED' : 'UNGROUPED');
   }
-  addUngroupedItems(group: string[]) {
-    this.ungroupedItemSource.next([...this.ungroupedItemSource.value, ...group]);
+  transferItemBetweenLists(toGroup: boolean, fromIndex: number, toIndex: number) {
+    transferArrayItem(
+      toGroup ? this.ungrouped : this.grouped,
+      toGroup ? this.grouped : this.ungrouped,
+      fromIndex,
+      toIndex
+    );
+    this.emit();
   }
-
-  private transferListItem(
-    from: BehaviorSubject<string[]>,
-    to: BehaviorSubject<string[]>,
-    fromIndex: number,
-    toIndex: number
-  ) {
-    const fromList = from.value,
-      item = fromList.splice(fromIndex, 1)[0],
-      toList = to.value;
-    toList.splice(toIndex, 0, item);
-    from.next(fromList);
-    to.next(toList);
-    return { fromList, toList };
-  }
-  private moveItemInList(list: BehaviorSubject<string[]>, from: number, to: number) {
-    let li = list.value,
-      value = li.splice(from, 1)[0];
-    li.splice(to, 0, value);
-    list.next(li);
-    return true;
-  }
-  transferItemBetweenLists(fromUngroupedList: boolean, fromIndex: number, toIndex: number) {
-    let lists = [this.groupedItemSource, this.ungroupedItemSource];
-    if (fromUngroupedList) {
-      lists.reverse();
+  emit(only?: 'GROUPED' | 'UNGROUPED') {
+    if (only != 'GROUPED') {
+      this.ungroupedItemSource.next(this.ungrouped.slice());
     }
-    const [previous, current] = lists;
-    this.transferListItem(previous, current, fromIndex, toIndex);
-  }
-
-  moveItemsInGroupList(from: number, to: number) {
-    this.moveItemInList(this.groupedItemSource, from, to);
-  }
-  moveItemsInUngroupedList(from: number, to: number) {
-    this.moveItemInList(this.ungroupedItemSource, from, to);
+    if (only != 'UNGROUPED') {
+      this.groupedItemSource.next(this.grouped.slice());
+    }
   }
 
   private dedupeItems(list: string[]) {
     return list.filter((item, i) => list.indexOf(item) === i);
   }
-  addItems({ ungrouped, grouped }: { ungrouped?: string[]; grouped?: string[] }, newList = false) {
-    let hasGrouped = Array.isArray(grouped);
-    let hasUngrouped = Array.isArray(ungrouped);
-    if (newList) {
-      if (hasUngrouped) {
-        this.ungroupedItemSource.next(ungrouped);
-      }
-      if (hasGrouped) {
-        this.groupedItemSource.next(grouped);
-      }
-    } else {
-      let dedupe = this.dedupeItems;
-      if (hasUngrouped) {
-        let items = this.ungroupedItemSource.getValue();
-        this.ungroupedItemSource.next(dedupe([...items, ...ungrouped]));
-      }
-      if (hasGrouped) {
-        let items = this.groupedItemSource.getValue();
-        this.groupedItemSource.next(dedupe([...items, ...grouped]));
-      }
+  addItems(
+    { ungrouped, grouped }: { ungrouped?: string[]; grouped?: string[] },
+    clear: boolean = false
+  ) {
+    if (clear) {
+      this.grouped.length = 0;
+      this.ungrouped.length = 0;
+    }
+    if (Array.isArray(ungrouped)) {
+      this.addUngroupedItems(ungrouped);
+    }
+    if (Array.isArray(grouped)) {
+      this.addGroupedItems(grouped);
     }
   }
-  constructor() {}
 }

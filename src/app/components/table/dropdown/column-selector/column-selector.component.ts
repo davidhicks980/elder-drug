@@ -1,52 +1,29 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatSelectionListChange } from '@angular/material/list';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { MatListOptionCheckboxPosition, MatSelectionListChange } from '@angular/material/list';
 
 import { ColumnService } from '../../../../services/columns.service';
-import { PopupService } from '../../../../services/popup.service';
 
 @Component({
   selector: 'elder-column-selector',
-  template: `
-    <ng-container *elderLet="selected$ | async as selected">
-      <div class="popup-background">
-        <mat-selection-list (selectionChange)="handleSelectionChange($event)">
-          <mat-list-option
-            *ngFor="let option of options$ | async"
-            checkboxPosition="before"
-            [value]="option"
-            [selected]="selected.includes(option)"
-            >{{ option | caseSplit }}</mat-list-option
-          >
-        </mat-selection-list>
-      </div></ng-container
-    >
-  `,
-
+  templateUrl: './column-selector.component.html',
   styleUrls: [`column-selector.component.scss`],
 })
-export class ColumnSelectorComponent {
+export class ColumnSelectorComponent implements OnDestroy {
   @Output() change: EventEmitter<string[]> = new EventEmitter();
   handleSelectionChange(change: MatSelectionListChange) {
-    const selections = change.source.selectedOptions.selected.map(
-      (val) => val.value
-    );
-    this.columnService.emitColumns(selections);
+    const selections = change.source.selectedOptions.selected.map((val) => val.value);
     this.change.emit(selections);
-    this.popupService.emitPlaceholder({
-      text: selections[0],
-      itemCount: selections.length,
-    });
+  }
+  get checkboxPosition(): MatListOptionCheckboxPosition {
+    return 'before';
   }
 
-  get options$() {
-    return this.columnService.columns$;
+  ngOnDestroy() {
+    this.change.complete();
   }
-  get selected$() {
-    return this.columnService.selected$;
+  constructor(public columnService: ColumnService) {
+    this.change
+      .asObservable()
+      .subscribe((selections) => this.columnService.emitColumns(selections));
   }
-
-  constructor(
-    private columnService: ColumnService,
-    private popupService: PopupService
-  ) {}
 }
