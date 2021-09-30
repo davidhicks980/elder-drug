@@ -170,6 +170,5 @@ export class SearchService {
     this.dataService.entriesMappedToTables$.subscribe((entries) => {
       this.drugEntryMapping = this.createDrugEntryMapping(entries);
     });
-    this.historySource.subscribe(console.log);
   }
 }

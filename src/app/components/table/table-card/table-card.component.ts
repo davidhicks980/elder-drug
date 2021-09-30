@@ -31,7 +31,6 @@ export class TableCardComponent {
       this.columnService.selected$,
       this.columnService.columns$,
     ]).subscribe(([groupedFields, ungroupedFields, selectedColumns, columns]) => {
-      console.log(groupedFields, selectedColumns);
       this.tableService.updateTableState(
         {
           groupedFields,

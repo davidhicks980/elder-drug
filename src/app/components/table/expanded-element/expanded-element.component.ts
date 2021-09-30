@@ -1,10 +1,10 @@
 import { trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import { timer } from 'rxjs';
 
-import { enterLeaveFadeTemplate, flyInTemplate } from '../../../animations/templates';
+import { flyInTemplate } from '../../../animations/templates';
 import { FilterService } from '../../../services/filter.service';
-import { ExpandingEntry } from '../../table/ExpandingEntry';
+import { BeersSearchResult } from '../../../services/search.service';
 
 @Component({
   selector: 'elder-expanded-element',
@@ -12,13 +12,12 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
   styleUrls: ['./expanded-element.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('fadeIn', enterLeaveFadeTemplate('1s', '1s')),
     trigger(
       'flyIn',
       flyInTemplate({
         enter: {
           startX: '0px',
-          startY: '-20%',
+          startY: '-200px',
           endX: '0px',
           endY: '0px',
         },
@@ -34,18 +33,23 @@ import { ExpandingEntry } from '../../table/ExpandingEntry';
     ),
   ],
 })
-export class ExpandedElementComponent {
-  private _data: Partial<ExpandingEntry>;
-  map: { description: string; value: string }[];
-  filter: Observable<string>;
-  @Input()
-  public get data(): Partial<ExpandingEntry> {
-    return this._data;
+export class ExpandedElementComponent<T extends BeersSearchResult> implements AfterViewInit {
+  private dataValue: T;
+  @Input() get data(): T {
+    return this.dataValue;
   }
-  public set data(value: Partial<ExpandingEntry>) {
-    this._data = value;
+  set data(value: T) {
+    this.dataValue = value;
   }
-  constructor(public filterService: FilterService) {
-    this.filter = this.filterService.filter$;
+  ngAfterViewInit() {
+    timer(1000)
+      .toPromise()
+      .then(() => this.renderer.removeClass(this.element.nativeElement, 'animate-in'));
+    this.renderer.addClass(this.element.nativeElement, 'animate-in');
   }
+  constructor(
+    public filterService: FilterService,
+    private element: ElementRef,
+    private renderer: Renderer2
+  ) {}
 }

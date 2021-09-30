@@ -7,6 +7,25 @@
   --body--font-family: var(--body--font), sans-serif;
 }
 
+@keyframes animate-in {
+  0% {
+    opacity: 0.5;
+    transform: translateY(-25px);
+    background-color: transparent;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px);
+    background-color: transparent;
+  }
+  100% {
+    opacity: 1;
+    background-color: $light-gray-1;
+  }
+}
+:host(.animate-in) .expanded-row {
+  animation: animate-in 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 .rationale {
   border-radius: 3px;
   padding: 20px;
@@ -14,8 +33,8 @@
   max-height: 200px;
   position: relative;
   border: 1px solid $light-gray-4;
+  display: flex;
   @include hoverable-shadow(5);
-  @include gr.flexbox(row, 10px);
   ////////////////////////////
   &:hover {
     border: 1px solid transparent;
@@ -55,7 +74,7 @@
     "subtitle subtitle";
   width: fit-content;
   align-items: center;
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   gap: 0.5rem;
 }
 .header__subtitle {
@@ -89,7 +108,7 @@
   overflow: hidden;
   background-color: $light-gray-1;
   border-bottom: 1px solid $light-gray-3;
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem 1rem;
   border-radius: 0px 0px 3px 3px;
 
   &__item-type {

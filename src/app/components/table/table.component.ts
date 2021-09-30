@@ -25,7 +25,6 @@ import { KeyGridService } from '../../services/key-grid.service';
 import { ResizeService } from '../../services/resize.service';
 import { BeersSearchResult, SearchService } from '../../services/search.service';
 import { BeersTableDataSource } from './BeersTableDataSource';
-import { ExpandingEntry } from './ExpandingEntry';
 import { FlatRowGroup } from './RowGroup';
 import { TableEntry } from './TableEntry';
 
@@ -79,6 +78,14 @@ export class TableComponent implements AfterViewInit {
       this.keyGridService.handleArrowKeys(event, this.getKeyGridCells());
     }
   }
+  rowShown(model: BeersTableDataSource<unknown>) {
+    return function (index: number, row: TableEntry<unknown> | FlatRowGroup<unknown>) {
+      return model.isRowShown(row);
+    };
+  }
+  getPadding(row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>) {
+    return row.position.parentId.length;
+  }
   constructor(
     private columnService: ColumnService,
     private groupService: GroupByService,
@@ -88,19 +95,18 @@ export class TableComponent implements AfterViewInit {
     private changeDetect: ChangeDetectorRef,
     public filterService: FilterService
   ) {
-    this.dataSource = new BehaviorSubject([]);
-    this.searchService.searchResults$.pipe(destroy(this)).subscribe((result) => {
-      this.dataSource.next(result);
-    });
-    this.model = new BeersTableDataSource(this.dataSource);
+    this.model = new BeersTableDataSource();
     this.columnService.selected$.pipe(destroy(this)).subscribe((selected) => {
-      this.model.observeColumnChanges(selected);
+      this.model.updateColumns(selected);
     });
-    this.groupService.groupedItems$.pipe(destroy(this)).subscribe((groups) => {
+    this.groupService.groupedItems$.subscribe((groups) => {
       this.model.updateGroups(groups);
       this.changeDetect.markForCheck();
     });
-    this.trackBy = this.getTrackByClosure();
+    this.searchService.searchResults$.pipe(destroy(this)).subscribe((result) => {
+      this.model.updateData(result);
+    });
+    this.getTrackByClosure();
   }
 
   getTrackByClosure() {
@@ -109,21 +115,18 @@ export class TableComponent implements AfterViewInit {
       index: number,
       row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>
     ): boolean => {
-      let { _position } = row,
+      let { position } = row,
         hashTerm = '';
       if ('field' in row) {
         hashTerm = row.field + row.groupHeader;
-      } else if ('SearchTerms' in row) {
-        hashTerm = row.SearchTerms;
+      } else if ('fields' in row) {
+        hashTerm = row.fields.SearchTerms;
       }
-      let hash = stableStringify({ hashTerm, ..._position, expanded: false });
+      let hash = stableStringify({ hashTerm, ...position, expanded: false });
       const match = cache.get(index) === hash;
       cache.set(index, hash);
       return match;
     };
-  }
-  getRowIndex(row: ExpandingEntry, add = 0) {
-    return row._position.index + this.FIRST_ROW + add;
   }
 
   ngAfterViewInit() {

@@ -1,5 +1,5 @@
 <div class="expanded-row" *ngIf="data as d">
-  <div *elderLet="filterService.filter$ | async as filter" @flyIn>
+  <div *elderLet="filterService.filter$ | async as filter">
     <div class="grid__12-col">
       <div class="header">
         <h1 class="header__title" [innerHTML]="d.Item | highlight: filter"></h1>

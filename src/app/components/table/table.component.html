@@ -30,9 +30,9 @@
       <!--Group rows-->
       <cdk-row
         class="row--content"
-        *cdkRowDef="let row; columns: state.fields"
-        [detail]="row | json"
-        [expandDetail]="model.checkIsExpanded(row, false)"
+        *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
+        [detail]="row"
+        [expandDetail]="model.checkIsExpanded(row)"
         (click)="model.expand(row)"
       ></cdk-row>
 
@@ -70,15 +70,12 @@
           </cdk-header-cell>
         </ng-container>
         <ng-container *cdkCellDef="let row">
-          <ng-container *ngIf="!row._position.isGroup; else groupTemplate">
-            <elder-cell
-              [cellPadding]="row._position.layer"
-              [keyGrid]="{ row: getRowIndex(row), col: this.col }"
-            >
+          <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
+            <elder-cell [cellPadding]="getPadding(row)">
               <elder-cell-toggle #cell *ngIf="field === state.fields[0]">
                 <button mat-icon-button>
                   <mat-icon
-                    [class.is-rotated]="model.checkIsExpanded(row, cell)"
+                    [class.is-rotated]="model.checkIsExpanded(row)"
                     svgIcon="chevron-right"
                   ></mat-icon>
                 </button>
@@ -87,7 +84,7 @@
                 {{ field | splitcase | titlecase }}
               </elder-cell-title>
               <elder-cell-content>
-                <span [innerHtml]="row[field] | highlight: state.filter"> </span>
+                <span [innerHtml]="row.fields[field] | highlight: state.filter"> </span>
               </elder-cell-content>
             </elder-cell>
           </ng-container>
@@ -95,9 +92,9 @@
             <cdk-cell *ngIf="col === 0">
               <elder-group-row
                 #cell
-                [class.is-expanded]="model.checkIsExpanded(row, cell)"
+                [class.is-expanded]="model.checkIsExpanded(row)"
                 [keyGrid]="{ row: 0, col: 0 }"
-                [cellPadding]="row._position.layer"
+                [cellPadding]="getPadding(row)"
               >
                 <group-field>{{ row.field | splitcase }}</group-field>
                 <group-name>{{ row.groupHeader | titlecase }}</group-name>
