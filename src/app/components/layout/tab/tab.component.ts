@@ -39,9 +39,6 @@ export class TabComponent implements AfterViewInit, OnDestroy {
   }
   intersectionObserver!: IntersectionObserver;
   currentTab$: Observable<number>;
-  loaded: boolean = false;
-  track: boolean = false;
-  mouseOver = 0;
   first: HTMLLIElement | false = false;
   last: HTMLLIElement | false = false;
   leftOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);

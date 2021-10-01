@@ -4,6 +4,7 @@
 .tab-overflow-container {
   height: 40px;
   max-width: 100%;
+  position: relative;
 }
 
 .tab-overflow-button {
@@ -49,9 +50,6 @@
       &:not(.is-active) {
         --tab-focus--filter: hue-rotate(-50deg) brightness(1.2);
       }
-      &.is-active {
-        --tab-focus--shadow: url(#linear-focus-shadow);
-      }
     }
   }
 }
@@ -63,14 +61,4 @@
   color: inherit;
   background: none;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
-}
-
-.linear-focus-shadow-bottom {
-  stop-color: #{$secondary-2-1};
-}
-.linear-focus-shadow-start {
-  stop-color: #{$light-gray-2};
-}
-.linear-focus-shadow-end {
-  stop-color: #{$light-gray-4};
 }
