@@ -8,6 +8,9 @@
     border: 1px solid $light-gray-5;
     border-radius: 4px;
     @include shadow(3);
+    @include mobileWidth {
+      background-color: $light-gray-1;
+    }
   }
 }
 .cell--header {

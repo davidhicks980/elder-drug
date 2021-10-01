@@ -20,29 +20,21 @@
   }
 }
 
-@keyframes active-row {
-  from {
-    background-color: color.scale($light-gray-2, $alpha: -50%, $saturation: 50%);
-  }
-  to {
-    background-color: transparent;
-  }
-}
-@keyframes transparent-row {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 .row--content {
   @extend %row;
   &:active {
-    background: transparent;
+    -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+    background-color: color.scale($primary-1, $alpha: -95%);
+  }
+  @include bem.mobileWidth {
+    padding: 0.5rem 0;
+    margin: 5px;
+    grid-template-columns: none;
+    background-color: white;
+    border-radius: 5px;
     position: relative;
-    animation: active-row 1s ease 1;
-    &::before {
+    @include hoverable-shadow(5);
+    &:not(.is-group-row)::before {
       content: "";
       height: 100%;
       width: 100%;
@@ -51,16 +43,8 @@
       left: 0px;
       bottom: 0px;
       position: absolute;
-      opacity: 0;
-      animation: transparent-row 500ms ease-in-out 1;
-      background-color: color.scale($dark-gray-3, $alpha: -98%);
+      border-radius: inherit;
+      @include shadow(3);
     }
-  }
-  @include bem.mobileWidth {
-    grid-template-rows: repeat(auto-fit, minmax(25px, 1fr));
-    grid-template-columns: none;
-    background-color: white;
-    margin: 5px;
-    border-radius: 5px;
   }
 }

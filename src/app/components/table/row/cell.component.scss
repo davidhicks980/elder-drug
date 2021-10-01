@@ -10,55 +10,37 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+  @include bem.mobileWidth {
+    height: 2.25rem;
+    line-height: 2.25rem;
+    border-bottom: none;
+  }
+}
+:host(.is-wrapped) {
+  height: auto;
+  max-height: 7rem;
+  line-height: 1.5rem;
+  white-space: normal;
+  & .content {
+    overflow: auto;
+  }
+}
+.toggle {
+  grid-area: toggle;
+}
+.content {
+  grid-area: content;
 }
 .cell {
   padding-left: 0.5rem;
 
   @include bem.mobileWidth {
     display: grid;
-    grid-template-columns: 35px 15ch auto;
+    grid-template-columns: 35px 20ch auto;
+    grid-template-areas: "toggle title content";
   }
-  &__content {
-    margin-left: 10px;
-    max-width: 100%;
-    display: inline-block;
-  }
-  &__chevron-container {
-    width: 36px;
-  }
-  &--header {
-    line-height: 3rem;
-    text-align: left;
-    font-family: var(--body-font), sans-serif;
-    font-weight: 500;
-    border: 1px solid $light-gray-4;
-    border-width: 0px 0px 1px 1px;
-    box-shadow: inset 0px 1px 0px 0 #ffffff54;
-    background-color: white;
-    color: $gray-5;
-    flex: 1;
-    @include bem.mobileWidth {
-      font-weight: 500;
-      font-family: var(--body-font), Arial, Helvetica, sans-serif;
-      width: 100px;
-      display: inline-block;
-    }
-    &:first-of-type {
-      border-left: none;
-      &--left-margin {
-        margin-left: 40px;
-      }
-    }
-    &__content {
-      margin-left: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-weight: 400;
-    }
-  }
-
-  &:hover {
-    filter: grayscale(0.5);
-  }
+}
+.title {
+  grid-area: title;
+  font-weight: 500;
 }

@@ -18,6 +18,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.DiseaseState, selected: true },
       { id: ColumnField.DrugInteraction, selected: false },
       { id: ColumnField.ShortName, selected: false },
+      { id: ColumnField.Rationale, selected: true },
     ],
   },
   {
@@ -31,6 +32,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.Inclusion, selected: true },
       { id: ColumnField.Recommendation, selected: false },
       { id: ColumnField.DiseaseState, selected: true },
+      { id: ColumnField.Rationale, selected: true },
     ],
   },
   {
@@ -45,6 +47,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.Inclusion, selected: false },
       { id: ColumnField.Exclusion, selected: false },
       { id: ColumnField.Recommendation, selected: true },
+      { id: ColumnField.Rationale, selected: true },
     ],
   },
   {
@@ -58,7 +61,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.Inclusion, selected: false },
       { id: ColumnField.Exclusion, selected: false },
       { id: ColumnField.Recommendation, selected: true },
-      { id: ColumnField.Rationale, selected: false },
+      { id: ColumnField.Rationale, selected: true },
     ],
   },
 ];

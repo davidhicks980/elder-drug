@@ -11,11 +11,9 @@ export enum TableCell {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CellComponent {
-  @Input() type: TableCell = TableCell.DATA;
-  @HostBinding('class.is-header') get isHeader() {
-    return this.type === TableCell.HEADER;
-  }
-  @HostBinding('class.is-data') get isData() {
-    return this.type === TableCell.DATA;
+  @Input('wrapContent') wrap: boolean = false;
+  @Input('toggle') showToggle: boolean = false;
+  @HostBinding('class.is-wrapped') get wrapped() {
+    return this.wrap;
   }
 }

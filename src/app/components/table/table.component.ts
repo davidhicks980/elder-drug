@@ -89,9 +89,9 @@ export class TableComponent implements AfterViewInit {
     private columnService: ColumnService,
     private groupService: GroupByService,
     private searchService: SearchService,
-    private resizeService: ResizeService,
     private keyGridService: KeyGridService,
     private changeDetect: ChangeDetectorRef,
+    public resizeService: ResizeService,
     public filterService: FilterService
   ) {
     this.model = new BeersTableDataSource();

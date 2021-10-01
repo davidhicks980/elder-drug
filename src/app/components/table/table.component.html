@@ -1,7 +1,7 @@
 <ng-container
   *elderLet="{
     fields: model.columns$ | async,
-    mobile: mobile$ | async,
+    mobile: resizeService.mobile$ | async,
     filter: filterService.filter$ | async
   } as state"
 >
@@ -18,22 +18,21 @@
       [dataSource]="model"
       [fixedLayout]="true"
       [trackBy]="trackBy"
-      [class.isMobile]="state.mobile"
     >
       <!--Table headers-->
       <cdk-header-row
         class="row--header"
         *cdkHeaderRowDef="state.fields; sticky: true; index as i"
-        [class.isMobile]="state.mobile"
       ></cdk-header-row>
 
       <!--Group rows-->
       <cdk-row
         class="row--content"
+        [class.is-group-row]="row.position.isGroup"
         *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
+        (click)="model.toggle(row)"
         [detailPanel]="row"
         [detailPanelExpanded]="model.checkIsExpanded(row)"
-        (click)="model.toggle(row)"
       ></cdk-row>
 
       <ng-template cdkNoDataRow>
@@ -71,7 +70,11 @@
         </ng-container>
         <ng-container *cdkCellDef="let row">
           <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
-            <elder-cell [padLeft]="getPadding(row)" [padLeftIncrement]="7.5">
+            <elder-cell
+              [wrapContent]="field === 'Rationale' && state.mobile"
+              [padLeft]="getPadding(row)"
+              [padLeftIncrement]="7.5"
+            >
               <elder-cell-toggle #cell *ngIf="field === state.fields[0]">
                 <button mat-icon-button>
                   <mat-icon

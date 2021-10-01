@@ -15,40 +15,24 @@
   border-bottom: 1px solid $light-gray-4;
   display: flex;
   align-items: baseline;
+  transition: background-color 500ms ease;
 }
 
 :host(.is-expanded) {
   border-radius: 0;
 }
 
-@keyframes transparent-row {
-  0% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 :host(:active) {
   position: relative;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
   user-select: none;
-  &::before {
-    content: "";
-    height: 100%;
-    width: 100%;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
-    position: absolute;
-    opacity: 0;
-    animation: transparent-row 500ms ease 1;
-    background-color: color.scale($primary-1, $alpha: -95%);
-  }
+  background-color: color.scale($primary-1, $alpha: -95%);
+}
+:host(:focus) {
+  position: relative;
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+  user-select: none;
+  background-color: color.scale($primary-1, $alpha: -95%);
 }
 mat-icon {
   vertical-align: middle;
