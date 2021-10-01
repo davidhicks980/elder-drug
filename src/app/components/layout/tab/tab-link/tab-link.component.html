@@ -3,7 +3,7 @@
   [class.active]="active"
   [class.collapse]="collapsed"
   [class.focused]="true"
-  tracking-gradient
+  [tracking-gradient]="true"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 200 37.5"
   class="tab"
@@ -18,11 +18,6 @@
       <stop offset="97%" style="stop-color: rgba(0, 0, 0, 0)" />
       <stop offset="100%" style="stop-color: rgba(255, 255, 255, 0.5)" />
     </linearGradient>
-
-    <radialGradient id="hover-highlight">
-      <stop offset="30%" stop-color="rgba(255,255,255,0.06)" />
-      <stop offset="95%" stop-color="rgba(255,255,255,0)" />
-    </radialGradient>
   </defs>
 
   <style type="text/css">
@@ -64,14 +59,6 @@
     *ngIf="!active"
     d="M193.52,34.47a8.71,8.71,0,0,1-2-5.48V8.5a9.16,9.16,0,0,0-2.19-5.43A9.6,9.6,0,0,0,181.92,0H18.08a9.6,9.6,0,0,0-7.4,3.06A9.16,9.16,0,0,0,8.49,8.5V29a8.71,8.71,0,0,1-2,5.48,8.92,8.92,0,0,1-6.48,3H200A8.92,8.92,0,0,1,193.52,34.47Z"
     fill="url(#linear-base)"
-  />
-
-  <rect
-    width="50px"
-    height="100px"
-    fill="url(#hover-highlight)"
-    class="tab-gradient"
-    id="tracking-gradient"
   />
 
   <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="tab__text">
