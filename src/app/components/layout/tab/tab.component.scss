@@ -44,9 +44,16 @@
   height: 40px;
   overflow: hidden;
   display: block;
-  &:focus-within {
-    &.tab-trigger {
-      --tab-focus--filter: brightness(1.1);
+}
+.tab-trigger {
+  &:focus {
+    elder-tab-link {
+      &:not(.is-active) {
+        --tab-focus--filter: hue-rotate(-50deg) brightness(1.2);
+      }
+      &.is-active {
+        --tab-focus--active-fill: url(#linear-focus-shadow);
+      }
     }
   }
 }
@@ -54,4 +61,11 @@
   all: unset;
   display: block;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
+
+.linear-focus-shadow-start {
+  stop-color: #{$light-gray-2};
+}
+.linear-focus-shadow-end {
+  stop-color: #{$light-gray-5};
 }

@@ -17,6 +17,7 @@
   >
     <ul #list class="tab-list">
       <li
+        class="tab-list-item"
         (keydown.ArrowRight)="focusNext(item)"
         (keydown.ArrowLeft)="focusPrevious(item)"
         #item
@@ -52,3 +53,13 @@
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>
 </div>
+
+<svg>
+  <defs>
+    <linearGradient spreadMethod="pad" id="linear-focus-shadow" x1="0%" y1="100%" x2="0%" y2="0%">
+
+      <stop offset="70%" class="linear-focus-shadow-start" />
+      <stop offset="100%" class="linear-focus-shadow-end" />
+    </linearGradient>
+  </defs>
+</svg>
