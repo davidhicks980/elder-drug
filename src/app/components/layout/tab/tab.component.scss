@@ -2,10 +2,8 @@
 @use "colors" as *;
 
 .tab-overflow-container {
-  overflow: visible;
   height: 40px;
   max-width: 100%;
-  position: relative;
 }
 
 .tab-overflow-button {
@@ -52,20 +50,27 @@
         --tab-focus--filter: hue-rotate(-50deg) brightness(1.2);
       }
       &.is-active {
-        --tab-focus--active-fill: url(#linear-focus-shadow);
+        --tab-focus--shadow: url(#linear-focus-shadow);
       }
     }
   }
 }
 .tab-trigger {
-  all: unset;
+  padding: 0;
+  border: none;
   display: block;
+  font: inherit;
+  color: inherit;
+  background: none;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
 }
 
+.linear-focus-shadow-bottom {
+  stop-color: #{$secondary-2-1};
+}
 .linear-focus-shadow-start {
   stop-color: #{$light-gray-2};
 }
 .linear-focus-shadow-end {
-  stop-color: #{$light-gray-5};
+  stop-color: #{$light-gray-4};
 }
