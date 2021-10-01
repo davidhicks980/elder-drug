@@ -3,33 +3,51 @@
   display: block;
   height: fit-content;
   width: fit-content;
-  transition: filter 0.25s ease-in 100ms;
-  filter: var(--tab-focus--filter);
-  --tab-focus--filter: hue-rotate(0deg) brightness(1);
-  --tab-focus--shadow: url(#linear-base);
+  transform: var(--tab--translate);
+  transition: filter 0.25s ease-in 100ms, transform 200ms ease-in;
+  filter: var(--tab--focus--filter);
   --tab--fill: #{$primary-1};
   --tab--color: #{$light-gray-2};
+  --tab--shadow: url(#linear-base);
+  --tab--focus--filter: hue-rotate(0deg) brightness(1);
+  --tab--clip--transform: translate(3%, -3%) scale(2);
+  --tab--translate: translate(0%);
+  --tab--font-weight: 400;
+  max-width: 195px;
 }
 
 :host(:hover) {
   --tab--fill: #{tint($primary-1, 7%)};
 }
-:host(.is-active) {
+:host(.selected) {
   --tab--fill: #{$light-gray-2};
   --tab--color: #{$dark-gray-2};
-  --tab-focus--shadow: none;
+  --tab--shadow: none;
+  --tab--font-weight: 500;
 }
-
-:host([collapse]) {
+:host(.rounded) {
+  --tab--clip--transform: translate(3%, -3%) scaleY(0.9) scaleX(0.85);
+  --tab--fill: transparent;
+  --tab--color: white;
+  max-width: 170px;
+}
+:host(:hover.rounded:not(.selected)) {
+  --tab--focus--filter: hue-rotate(0deg) brightness(1);
+  --tab--fill: #{tint($primary-2, 7%)};
+}
+:host(.rounded.selected) {
+  --tab--fill: #{tint($primary-1, 7%)};
+  --tab--color: white;
+  --tab--font-weight: 400;
+}
+:host(:not(.collapsed)) {
   margin-left: -14px;
 }
-.circular-clip.is-rounded {
-  transform: translate(3%, -3%) scale(0.9);
-  transition: transform 500ms ease-out;
-}
+
 .circular-clip {
   transform-origin: center center;
-  transform: translate(3%, -3%) scale(2);
+  transition: transform 500ms ease-out;
+  transform: var(--tab--clip--transform);
 }
 .tab {
   cursor: pointer;
@@ -39,21 +57,18 @@
   bottom: 0;
   height: 37.5px;
   background-image: linear-gradient(transparent 99.5%, white);
+  clip-path: url(#path);
   overflow: hidden;
 }
 .tab-path {
-  transition: opacity 200ms cubic-bezier(0.075, 0.82, 0.165, 1),
+  transition: opacity 400ms cubic-bezier(0.075, 0.82, 0.165, 1),
     fill 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
   fill: var(--tab--fill);
-  clip-path: url(#path);
 }
 .tab-shadow {
-  fill: var(--tab-focus--shadow);
+  fill: var(--tab--shadow);
 }
 .tab-text {
   fill: var(--tab--color);
-  font-weight: 400;
-  :host(.is-active) & {
-    font-weight: 500;
-  }
+  font-weight: var(--tab--font-weight);
 }

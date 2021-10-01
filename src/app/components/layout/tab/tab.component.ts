@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostBinding,
   HostListener,
   Input,
   OnDestroy,
@@ -29,7 +30,9 @@ const focusClass = 'focused';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabComponent implements AfterViewInit, OnDestroy {
-  @Input() rounded: boolean = false;
+  @HostBinding('class.rounded')
+  @Input()
+  rounded: boolean = false;
   @Output() activeTable = new EventEmitter<number>();
   @ViewChild('list') list: ElementRef<HTMLUListElement>;
   @ViewChildren('item') items: QueryList<ElementRef<HTMLLIElement>>;
@@ -41,8 +44,8 @@ export class TabComponent implements AfterViewInit, OnDestroy {
   currentTab$: Observable<number>;
   first: HTMLLIElement | false = false;
   last: HTMLLIElement | false = false;
-  leftOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  rightOverflow: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  leftOverflowSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  rightOverflowSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
   scrollable: boolean = false;
   destroy$ = new Subject();
   handleTabClick(table: number) {
@@ -53,7 +56,10 @@ export class TabComponent implements AfterViewInit, OnDestroy {
     let left = direction === 'LEFT';
     this.scrollable = true;
     interval(10)
-      .pipe(takeWhile(() => this.scrollable === true))
+      .pipe(
+        destroy(this),
+        takeWhile(() => this.scrollable === true)
+      )
       .subscribe(() => {
         this.list.nativeElement.scrollBy(left ? -5 : 5, 0);
       });
@@ -77,52 +83,48 @@ export class TabComponent implements AfterViewInit, OnDestroy {
     }
   }
   toggleChildFocusStyles(item: HTMLElement) {
-    item.classList.add(focusClass);
+    this.renderer.addClass(item, focusClass);
   }
-
   ngOnDestroy() {
     this.intersectionObserver.disconnect();
   }
-  private intersectingTabCallback(e: IntersectionObserverEntry[]) {
-    let entry = e[0];
-    if (this.first === entry.target) {
-      this.leftOverflow.next(!entry.isIntersecting);
-    }
-    if (this.last === entry.target) {
-      this.rightOverflow.next(!entry.isIntersecting);
+  ngAfterViewInit() {
+    this.intersectionObserver = this.createIntersectionObserver();
+    this.items.changes.pipe(destroy(this)).subscribe((tabs) => {
+      this.observeTabs(this.intersectionObserver);
+    });
+    this.observeTabs(this.intersectionObserver);
+  }
+  private intersectingTabCallback(entries: IntersectionObserverEntry[]) {
+    for (let entry of entries) {
+      if (this.first === entry.target) {
+        this.leftOverflowSource.next(entry.isIntersecting === false);
+      }
+      if (this.last === entry.target) {
+        this.rightOverflowSource.next(entry.isIntersecting === false);
+      }
     }
   }
-  applyIntersectionObserver() {
-    this.intersectionObserver = new IntersectionObserver(this.intersectingTabCallback.bind(this), {
+  private createIntersectionObserver() {
+    return new IntersectionObserver(this.intersectingTabCallback.bind(this), {
       root: this.list.nativeElement,
       threshold: [1],
     });
-    this.items.changes.subscribe((tabs) => {
-      this.setFlankingTabs();
-    });
-    this.setFlankingTabs();
   }
-  ngAfterViewInit() {
-    this.applyIntersectionObserver();
-  }
-  private setFlankingTabs() {
-    if (this.first) {
-      this.intersectionObserver.unobserve(this.first);
-    }
-    if (this.last) {
-      this.intersectionObserver.unobserve(this.last);
-    }
+
+  private observeTabs(observer: IntersectionObserver) {
     this.first = this.items.first?.nativeElement ?? false;
     this.last = this.items.last?.nativeElement ?? false;
     if (this.first instanceof HTMLElement) {
-      this.intersectionObserver.observe(this.first);
+      observer.observe(this.first);
     }
+    if (this.first === this.last) return;
     if (this.last instanceof HTMLElement) {
-      this.intersectionObserver.observe(this.last);
+      observer.observe(this.last);
     }
   }
 
-  constructor(public tableService: TableService, private r: Renderer2) {
+  constructor(public tableService: TableService, private renderer: Renderer2) {
     this.currentTab$ = merge(
       this.activeTable.asObservable(),
       this.tableService.selection$.pipe(map((table) => table.tableNumber))

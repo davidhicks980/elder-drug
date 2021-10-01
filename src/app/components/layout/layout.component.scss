@@ -1,7 +1,7 @@
 @use "palette" as *;
 @use "colors" as *;
-@use 'bem-mixin' as bem;
-@use 'sass:color';
+@use "bem-mixin" as bem;
+@use "sass:color";
 $content-height--full-header: calc(100vh - #{$header-full});
 
 $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
@@ -15,25 +15,24 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
   user-select: none;
 }
 
-.header {
+.toolbar {
   color: $gray;
   border-bottom: 1px solid $light-gray-5;
   height: 100%;
   width: 100%;
-  &__tabs {
+
+  &-tabs {
     margin-left: 2.5rem;
-    &.is-shifted {
-      margin-left: calc(260px + 2.5rem);
-    }
+    &.is-shifted,
     &.is-animating {
       margin-left: calc(260px + 2.5rem);
     }
+
     @include bem.mobileWidth {
       margin-left: 0px;
     }
   }
 }
-
 .main {
   &__content {
     grid-area: content;
@@ -60,13 +59,12 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
       position: absolute;
       top: -33px;
       right: -33px;
+      z-index: 1;
     }
   }
 }
 
 .layout {
-  height: 100vh;
-
   &.hide-overflow {
     overflow: hidden;
   }
@@ -95,14 +93,17 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
     position: sticky;
     top: -60px;
     height: 100px;
-
+    z-index: 1;
+    &.is-animating {
+      z-index: 0;
+    }
     &.is-hidden {
       display: none;
     }
   }
 }
 
-.toolbar__toggle,
+.toolbar-toggle,
 elder-animated-arrow {
   color: $gray-4;
 
@@ -110,7 +111,7 @@ elder-animated-arrow {
     color: $primary-4;
   }
   &--link {
-    @extend .toolbar__toggle;
+    @extend .toolbar-toggle;
   }
 }
 elder-menu-toggle elder-animated-arrow {

@@ -10,7 +10,7 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
@@ -42,13 +42,14 @@ export class LayoutComponent {
   @ViewChild('toggleTemplate') toggleTemplate: TemplateRef<HTMLElement>;
   togglePortalContent!: TemplatePortal;
   @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
+  @ViewChild('toolbar', { read: ElementRef }) toolbar: ElementRef<HTMLElement>;
   @ViewChildren('mainWrapper') main: QueryList<ElementRef<HTMLElement>>;
 
   @ViewChild(TableComponent) table: TableComponent;
-  private scrollDirectionSource: BehaviorSubject<ScrollDirection> = new BehaviorSubject(
+  private roundTabsSource: BehaviorSubject<ScrollDirection> = new BehaviorSubject(
     ScrollDirection.DOWN
   );
-  scrollDirection$ = this.scrollDirectionSource
+  roundTabs$ = this.roundTabsSource
     .asObservable()
     .pipe(map((direction) => direction === ScrollDirection.DOWN));
   private animationSource = new BehaviorSubject({
@@ -60,9 +61,10 @@ export class LayoutComponent {
   animating$ = this.animationSource.asObservable();
   mobile$: Observable<boolean>;
   sidebarOpen$: Observable<boolean>;
+  round: boolean;
 
   toggleSidenav() {
-    this.size.toggleSidenav();
+    this.resizeService.toggleSidenav();
   }
   getTogglePortal(condition: boolean) {
     if (condition) {
@@ -96,7 +98,6 @@ export class LayoutComponent {
     this.searchService.searchDrugs('loperamide');
     requestAnimationFrame(() => {
       this.tableService.emitTableFilter({ column: '*', term: 'loperamide' });
-      // this.table.model.updateGroups(['SearchTerms']);
     });
   }
   ngAfterViewInit() {
@@ -105,17 +106,14 @@ export class LayoutComponent {
     let options = { root: null, threshold: null };
     options.root = document;
     options.threshold = [0.4, 0.5, 0.6, 0.7, 0.8, 0.99];
-    const observer = new IntersectionObserver(
-      scrollDirectionCb(this.scrollDirectionSource),
-      options
-    );
+    const observer = new IntersectionObserver(scrollDirectionCb(this.roundTabsSource), options);
     this.main.changes
       .pipe(
         filter(() => !!this.main.first),
         take(1)
       )
       .subscribe(() => {
-        observer.observe(this.main.first.nativeElement);
+        observer.observe(this.toolbar.nativeElement);
       });
   }
 
@@ -126,10 +124,9 @@ export class LayoutComponent {
   constructor(
     public tableService: TableService,
     private searchService: SearchService,
-    public size: ResizeService,
+    public resizeService: ResizeService,
     private containerRef: ViewContainerRef
   ) {
-    this.sidebarOpen$ = this.size.sidenavObserver;
-    this.mobile$ = merge(this.size.mobile$, of(window.innerWidth < 600)) as Observable<boolean>;
+    this.sidebarOpen$ = this.resizeService.sidenavObserver;
   }
 }

@@ -1,9 +1,9 @@
 <ng-container
   *elderLet="{
     sidebarOpen: sidebarOpen$ | async,
-    mobile: mobile$ | async,
+    mobile: resizeService.mobile$ | async,
     animating: animating$ | async,
-    scrollDir: scrollDirection$ | async,
+    roundTabs: roundTabs$ | async,
     selectedTable: selectedTable$ | async
   } as state"
 >
@@ -11,9 +11,10 @@
     <div
       *ngIf="!state.sidebarOpen || !state.mobile || state.animating.sidebar"
       [class.is-mobile]="state.mobile"
+      [class.is-animating]="state.animating.sidebar"
       class="layout__header"
     >
-      <elder-toolbar [scrolled]="state.scrollDir" class="header">
+      <elder-toolbar #toolbar>
         <elder-menu-toggle
           elder-toolbar-toggle
           *ngIf="state.mobile"
@@ -25,12 +26,12 @@
 
         <nav
           elder-toolbar-tabs
-          class="header__tabs"
+          class="toolbar-tabs"
           [class.is-shifted]="state.sidebarOpen"
           [@FullSidebarShift]="getContentAnimationState(state)"
           [class.is-animating]="state.animating.sidebar"
         >
-          <elder-tabs [rounded]="state.scrollDir"> </elder-tabs>
+          <elder-tabs [rounded]="state.roundTabs && state.mobile"> </elder-tabs>
         </nav>
         <elder-brand
           elder-toolbar-brand
@@ -39,14 +40,14 @@
           [fontRem]="2.6"
           orientation="row"
         ></elder-brand>
-        <button class="toolbar__toggle" elder-toolbar-link mat-icon-button>
+        <button elder-toolbar-link class="toolbar-toggle" mat-icon-button>
           <mat-icon svgIcon="github"></mat-icon>
         </button>
       </elder-toolbar>
     </div>
     <main
-      [class.is-sidebar-open]="state.sidebarOpen"
       class="layout__main"
+      [class.is-sidebar-open]="state.sidebarOpen"
       [class.is-animating]="state.animating.sidebar"
       [@FullSidebarShift]="getContentAnimationState(state)"
       (@FullSidebarShift.start)="changeAnimationState($event, 'sidebar')"

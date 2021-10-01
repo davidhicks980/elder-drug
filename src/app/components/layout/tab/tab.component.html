@@ -4,7 +4,7 @@
     @fadeButtons
     mat-mini-fab
     class="tab-overflow-button tab-overflow-button-left"
-    *ngIf="leftOverflow | async"
+    *ngIf="leftOverflowSource | async"
   >
     <mat-icon svgIcon="chevron-left"></mat-icon>
   </button>
@@ -32,9 +32,8 @@
         >
           <elder-tab-link
             #link
-            [active]="tab.tableNumber === state.currentTab"
-            [inactive]="tab.tableNumber != state.currentTab"
-            [collapse]="tab.tableNumber != 0"
+            [selected]="tab.tableNumber === state.currentTab"
+            [collapsed]="tab.tableNumber != 0"
             [rounded]="rounded"
           >
             {{ tab.shortName }}
@@ -48,7 +47,7 @@
     mat-mini-fab
     @fadeButtons
     class="tab-overflow-button tab-overflow-button--right"
-    *ngIf="rightOverflow | async"
+    *ngIf="rightOverflowSource | async"
   >
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>

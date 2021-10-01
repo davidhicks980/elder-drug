@@ -1,10 +1,13 @@
 @use "palette" as *;
 @use "grid" as *;
 @use "colors" as *;
-@use 'bem-mixin' as bem;
+@use "bem-mixin" as bem;
 $toolbarActiveColor: $primary-1;
 $toolbarInactiveColor: white;
 
+:host {
+  display: block;
+}
 div.dialog {
   width: 50vw;
 }

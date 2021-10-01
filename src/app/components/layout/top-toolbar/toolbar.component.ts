@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ToolbarComponent {
   public iconName = 'menu';
-  @Input() scrolled;
   constructor(public dialog: MatDialog) {}
 
   openDisclaimerDialog() {

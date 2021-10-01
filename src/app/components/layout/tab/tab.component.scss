@@ -1,6 +1,15 @@
 @use "palette" as *;
 @use "colors" as *;
 
+:host {
+  display: block;
+  --overflow-button--background: #{$primary-4};
+  --overflow-button--icon-color: #{white};
+}
+:host(.rounded) {
+  --overflow-button--background: #{$secondary-2-2};
+  --overflow-button--icon-color: #{white};
+}
 .tab-overflow-container {
   height: 40px;
   max-width: 100%;
@@ -11,9 +20,9 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  background: $primary-4;
+  background-color: var(--overflow-button--background);
   z-index: 1;
-  color: white;
+  color: var(--overflow-button--icon-color);
   transform: scale(0.8);
   transform-origin: center center;
   &--right {
@@ -44,15 +53,7 @@
   overflow: hidden;
   display: block;
 }
-.tab-trigger {
-  &:focus {
-    elder-tab-link {
-      &:not(.is-active) {
-        --tab-focus--filter: hue-rotate(-50deg) brightness(1.2);
-      }
-    }
-  }
-}
+
 .tab-trigger {
   padding: 0;
   border: none;
@@ -61,4 +62,14 @@
   color: inherit;
   background: none;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
+
+.tab-trigger:focus elder-tab-link:not(.selected) {
+  --tab--focus--filter: hue-rotate(-50deg) brightness(1.2);
+}
+.tab-list-item:first-of-type elder-tab-link.rounded {
+  --tab--translate: translate(-5%);
+}
+.tab-list-item:not(:first-of-type) elder-tab-link.rounded {
+  --tab--translate: translate(-10%);
 }
