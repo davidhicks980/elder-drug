@@ -1,18 +1,30 @@
 @use "palette" as *;
-@use 'colors' as *;
-.tab-link {
-  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
-}
-@function encodecolor($string) {
-  @if type-of($string) == "color" {
-    $hex: str-slice(ie-hex-str($string), 4);
-    $string: unquote("#{$hex}");
-  }
-  $string: "%23" + $string;
-  @return $string;
+@use "colors" as *;
+
+.tab-overflow-container {
+  overflow: visible;
+  height: 40px;
+  max-width: 100%;
+  position: relative;
 }
 
-.button-row-style {
+.tab-overflow-button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: $primary-4;
+  z-index: 1;
+  color: white;
+  transform: scale(0.8);
+  transform-origin: center center;
+  &--right {
+    right: 0;
+  }
+  &--left {
+    left: 0;
+  }
+}
+.tab-list {
   display: inline-flex;
   list-style: none;
   margin: 0;
@@ -22,70 +34,24 @@
   height: 100%;
   overflow: auto;
   padding-right: 50px;
-  scroll-snap-type: y proximity;
-}
-li {
-  scroll-snap-align: start;
-}
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
-
-.nav-header {
-  margin: 0 0 0 10px;
-}
-
-.shadow {
-  width: 100%;
-  height: 100%;
-  z-index: 200;
-}
-
-.tabs {
+.tab-container {
   height: 40px;
-  max-width: 100%;
   overflow: hidden;
+  display: block;
+  &:focus-within {
+    &.tab-trigger {
+      --tab-focus--filter: brightness(1.1);
+    }
+  }
 }
-.tab-overflow-container {
-  overflow: visible;
-  height: 40px;
-  max-width: 100%;
-  position: relative;
-}
-
-$radius: 50%;
-%overflow-button {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background: $primary-4;
-  z-index: 1;
-  color: white;
-  transform: scale(0.8);
-  transform-origin: center center;
-}
-.right-overflow-button {
-  @extend %overflow-button;
-  right: 0;
-}
-.left-overflow-button {
-  @extend %overflow-button;
-  left: 0;
-}
-
 .tab-trigger {
   all: unset;
   display: block;
-}
-
-.tab-trigger:focus {
-  elder-tab-link {
-    outline: 2px dotted blue;
-  }
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
 }

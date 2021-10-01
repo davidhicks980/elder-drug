@@ -3,19 +3,19 @@
     (mousedown)="handleMouseDown($event, 'LEFT')"
     @fadeButtons
     mat-mini-fab
-    class="left-overflow-button"
+    class="tab-overflow-button tab-overflow-button-left"
     *ngIf="leftOverflow | async"
   >
     <mat-icon svgIcon="chevron-left"></mat-icon>
   </button>
-  <div
+  <nav
     *elderLet="{
       tabs: tableService.tableOptions$ | async,
       currentTab: currentTab$ | async
     } as state"
-    class="tabs"
+    class="tab-container"
   >
-    <ul #list class="button-row-style hide-scrollbar">
+    <ul #list class="tab-list">
       <li
         (keydown.ArrowRight)="focusNext(item)"
         (keydown.ArrowLeft)="focusPrevious(item)"
@@ -41,12 +41,12 @@
         </button>
       </li>
     </ul>
-  </div>
+  </nav>
   <button
     (mousedown)="handleMouseDown($event, 'RIGHT')"
     mat-mini-fab
     @fadeButtons
-    class="right-overflow-button"
+    class="tab-overflow-button tab-overflow-button--right"
     *ngIf="rightOverflow | async"
   >
     <mat-icon svgIcon="chevron-right"></mat-icon>
