@@ -1,19 +1,23 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, HostBinding, Input } from '@angular/core';
 
 @Directive({
-  selector: '[cellPadding]',
+  selector: '[padLeft]',
 })
 export class CellPaddingDirective {
-  private _cellPadding: number;
+  private pad: number = 0;
 
-  @Input()
-  public set cellPadding(value: number) {
-    this._cellPadding = value;
-    this.el.nativeElement.style.paddingLeft = value * 20 + 'px';
+  @HostBinding('style.paddingLeft')
+  get paddingLeft() {
+    return this.padding * this.increment + this.units;
   }
-  public get cellPadding(): number {
-    return this._cellPadding;
+  @Input('padLeftIncrement') increment = 10;
+  @Input('padLeftUnits') units = 'px';
+  @Input('padLeft')
+  set padding(value: number) {
+    if (this.pad === value) return;
+    this.pad = value;
   }
-
-  constructor(private el: ElementRef) {}
+  get padding(): number {
+    return this.pad;
+  }
 }

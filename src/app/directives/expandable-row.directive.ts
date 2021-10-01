@@ -4,7 +4,8 @@ import {
   ComponentRef,
   Directive,
   Input,
-  Renderer2,
+  OnDestroy,
+  OnInit,
   Type,
   ViewContainerRef,
 } from '@angular/core';
@@ -15,59 +16,51 @@ import { FlatRowGroup } from '../components/table/RowGroup';
 import { TableEntry } from '../components/table/TableEntry';
 import { BeersSearchResult } from '../services/search.service';
 
-type Ref<T> = ComponentRef<T>;
-const PLACEHOLDER_POSITION = {
-  position: {
-    id: '',
-    parentId: '',
-    isGroup: false,
-    hasParent: false,
-  },
-};
+type Result = Partial<TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>>;
 @Directive({
-  selector: '[detail]',
+  selector: '[detailPanel]',
 })
-export class ExpandableRowDirective {
-  @Input() set detail(
-    detail: Partial<FlatRowGroup<BeersSearchResult> | TableEntry<BeersSearchResult>>
-  ) {
-    this.dataSource.next(detail);
-  }
-  @Input('expandDetail') set expandDetail(expanded: boolean) {
-    this.togglePanel(expanded);
-  }
-  private dataSource: BehaviorSubject<
-    Partial<FlatRowGroup<BeersSearchResult> | TableEntry<BeersSearchResult>>
-  > = new BehaviorSubject(PLACEHOLDER_POSITION);
+export class ExpandableRowDirective implements OnDestroy, OnInit {
+  private expanded: boolean = false;
+  private updateSource: BehaviorSubject<{ expand: boolean; group: boolean }> = new BehaviorSubject({
+    expand: false,
+    group: true,
+  });
+  private groupRow: boolean;
+  private fields: BeersSearchResult;
   private expansionFactory: ComponentFactory<ExpandedElementComponent<BeersSearchResult>>;
   private expansionPanel: ComponentRef<ExpandedElementComponent<BeersSearchResult>>;
-
-  get detail(): Partial<FlatRowGroup<BeersSearchResult> | TableEntry<BeersSearchResult>> {
-    return this.dataSource.getValue();
-  }
-  get isGroupRow() {
-    return this.dataSource.value?.position?.isGroup;
-  }
-  getDetail() {
-    return this.dataSource.value;
-  }
-  togglePanel(expand: boolean) {
-    if (!expand || this.isGroupRow) {
-      this.destroyPanel(this.expansionPanel);
-      this.expansionPanel = undefined;
-    } else {
-      if (!this.expansionPanel) {
-        this.expansionPanel = this.createExpansionPanel();
-      }
-      this.updatePanelData();
+  private detail: Partial<FlatRowGroup<BeersSearchResult> | TableEntry<BeersSearchResult>>;
+  @Input() set detailPanel(detail: Result) {
+    let { position } = detail;
+    if (this.detail && this.detail?.position?.hash === position?.hash) {
+      return;
     }
+    this.detail = detail;
+    this.groupRow = position.isGroup;
+    if (this.groupRow === false) {
+      this.fields = (detail as TableEntry<unknown>).fields as BeersSearchResult;
+    }
+    this.updatePanel();
+  }
+  get detailPanel() {
+    return this.detail;
+  }
+  @Input()
+  set detailPanelExpanded(expanded: boolean) {
+    if (expanded != this.expanded) {
+      this.expanded = expanded;
+      this.updatePanel();
+    }
+  }
+  get detailPanelExpanded() {
+    return this.expanded;
+  }
+  private updatePanel() {
+    this.updateSource.next({ expand: this.expanded, group: this.groupRow });
   }
   private updatePanelData() {
-    if (!this.isGroupRow) {
-      this.expansionPanel.instance.data = (
-        this.getDetail() as TableEntry<BeersSearchResult>
-      ).fields;
-    }
+    this.expansionPanel.instance.data = this.fields;
   }
   private createExpansionPanel(): ComponentRef<ExpandedElementComponent<BeersSearchResult>> {
     if (!this.expansionFactory) {
@@ -75,20 +68,33 @@ export class ExpandableRowDirective {
     }
     return this.container.createComponent(this.expansionFactory);
   }
-
-  destroyPanel<T>(panel: ComponentRef<T>) {
-    if (panel) {
-      panel.destroy();
-    }
-  }
-  constructor(
-    private resolver: ComponentFactoryResolver,
-    private container: ViewContainerRef,
-    private renderer: Renderer2
-  ) {}
-
-  createFactory<T>(type: Type<T>): ComponentFactory<T> {
+  private createFactory<T>(type: Type<T>): ComponentFactory<T> {
     this.container.clear();
     return this.resolver.resolveComponentFactory(type) as ComponentFactory<T>;
   }
+  private destroyPanel() {
+    if (this.expansionPanel) {
+      this.expansionPanel.destroy();
+      this.expansionPanel = undefined;
+    }
+  }
+
+  ngOnDestroy() {
+    this.updateSource.complete();
+  }
+  ngOnInit() {
+    this.updateSource.asObservable().subscribe(({ expand, group }) => {
+      if (group || expand === false) {
+        this.destroyPanel();
+      } else {
+        if (!this.expansionPanel) {
+          this.expansionPanel = this.createExpansionPanel();
+        }
+        this.updatePanelData();
+      }
+    });
+    this.updatePanel();
+  }
+
+  constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) {}
 }

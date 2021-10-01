@@ -1,8 +1,8 @@
-@use 'bem-mixin' as bem;
-@use 'palette' as pal;
-
+@use "bem-mixin" as bem;
+@use "palette" as *;
+@use "sass:color";
 :host {
-  border-bottom: 1px solid pal.$light-gray-4;
+  border-bottom: 1px solid $light-gray-4;
   line-height: 2.7rem;
   height: 2.7rem;
   text-align: left;
@@ -31,11 +31,11 @@
     text-align: left;
     font-family: var(--body-font), sans-serif;
     font-weight: 500;
-    border: 1px solid pal.$light-gray-4;
+    border: 1px solid $light-gray-4;
     border-width: 0px 0px 1px 1px;
     box-shadow: inset 0px 1px 0px 0 #ffffff54;
     background-color: white;
-    color: pal.$gray-5;
+    color: $gray-5;
     flex: 1;
     @include bem.mobileWidth {
       font-weight: 500;

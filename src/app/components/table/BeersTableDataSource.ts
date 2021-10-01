@@ -1,6 +1,7 @@
 import { _isNumberValue } from '@angular/cdk/coercion';
 import { DataSource } from '@angular/cdk/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import stableStringify from 'json-stable-stringify';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -34,7 +35,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       this.updateChangeSubscription();
     }
     this.dataSource.next(data);
-    console.log(data, 'CHANGED', this.dataSource.getValue());
   }
 
   updateGroups(groups: string[]) {
@@ -44,25 +44,26 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   checkIsExpanded(row: TableEntry<T> | FlatRowGroup<T>) {
     return this.expandedRows.has(row.position.id);
   }
-  isRowShown(row: TableEntry<T> | FlatRowGroup<T>) {
+  checkIsRowShown(row: TableEntry<T> | FlatRowGroup<T>) {
     return this.expandedRows.has(row.position.parentId) || row.position.parentId.length === 0;
   }
   checkIsParentExpanded = (row: TableEntry<T> | FlatRowGroup<T>) => {
     return this.expandedRows.has(row.position.parentId);
   };
+  collapseChildren(id: string) {
+    this.expandedRows = new Set(Array.from(this.expandedRows).filter((ids) => !ids.startsWith(id)));
+  }
 
-  expand(row: ExpandingEntry) {
+  toggle(row: ExpandingEntry) {
     const { id } = row.position;
-    this.expandedRows.has(id) ? this.expandedRows.delete(id) : this.expandedRows.add(id);
+    this.expandedRows.has(id) ? this.collapseChildren(id) : this.expandedRows.add(id);
+    console.log(this.expandedRows);
     this.expansionSource.next(id);
   }
   get filters(): string {
     return this.filterSource.value;
   }
   filter(term: string) {
-    if (!this.renderChangesSubscription) {
-      return this.filterData({ ...this.dataSource.getValue() });
-    }
     if (typeof term === 'string') {
       this.filterSource.next(term);
     }
@@ -81,10 +82,8 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     const value = fields[sortHeaderId];
     if (_isNumberValue(value)) {
       const numberValue = Number(value);
-
       return numberValue < MAX_SAFE_INTEGER ? numberValue : value;
     }
-
     return value;
   }
 
@@ -148,7 +147,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     let field = '',
       fields = groupedFields.slice(),
       index = 0,
-      layerGroups = new Map() as Map<string, RowGroup<T>>;
+      groups = new Map() as Map<string, RowGroup<T>>;
     if (fields.length) {
       field = fields.shift();
     } else {
@@ -157,15 +156,15 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     for (let entry of entries) {
       let groupHeader = entry[field] ?? 'None',
         shallowEntry = { ...entry };
-      if (layerGroups.has(groupHeader)) {
-        layerGroups.get(groupHeader).rows.push(shallowEntry);
+      if (groups.has(groupHeader)) {
+        groups.get(groupHeader).rows.push(shallowEntry);
       } else {
-        layerGroups.set(groupHeader, {
+        groups.set(groupHeader, {
           field,
           groupHeader,
           rows: [shallowEntry],
           position: {
-            id: `${parentId}${index}`,
+            id: `${parentId}:${index}`,
             parentId,
             isGroup: true,
             hasParent: !!parentId.length,
@@ -176,7 +175,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     }
 
     let flatRows = [] as (FlatRowGroup<T> | TableEntry<T>)[];
-    for (let { rows, field, groupHeader, position } of layerGroups.values()) {
+    for (let { rows, field, groupHeader, position } of groups.values()) {
       let children = this.createRowGroups(rows, fields, position.id);
       let parent = { field, groupHeader, position };
       flatRows = [...flatRows, parent, ...children];
@@ -190,7 +189,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
       return {
         fields: { ...entry },
         position: {
-          id: String(index) + parentId,
+          id: `${parentId}:${index}`,
           parentId,
           isGroup: false,
           hasParent: !!parentId.length,
@@ -238,14 +237,47 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     const groupedData = combineLatest([sortedData, this.groupSource]).pipe(
       map(([data]) => this.groupData(data))
     );
-    const expandedData = combineLatest([groupedData, this.expansionSource]).pipe(
+    const hashedData = groupedData.pipe(map((data) => this.hashData(data)));
+    const expandedData = combineLatest([hashedData, this.expansionSource]).pipe(
       map(([data]) => this.expandData(data))
     );
 
     // Watched for paged data changes and send the result to the table to render.
     this.renderChangesSubscription?.unsubscribe();
-    this.renderChangesSubscription = expandedData.subscribe((data) => {
-      this.renderData.next(data as any);
+    this.renderChangesSubscription = expandedData.subscribe(
+      (data: (TableEntry<T> | FlatRowGroup<T>)[]) => {
+        this.renderData.next(data as any);
+      }
+    );
+  }
+
+  checkIsGroup(row: TableEntry<T> | FlatRowGroup<T>): boolean {
+    return row.position.isGroup;
+  }
+  fastHash(str: string): string {
+    let h = 0;
+    for (let i = 0, j = str.length; i < j; i++) {
+      h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+    }
+    return String(h);
+  }
+
+  hashData<Row extends TableEntry<T> | FlatRowGroup<T>>(entries: Row[]): Row[] {
+    return entries.map((entry) => {
+      let position = { ...entry.position },
+        compoundKey = { term: '', position };
+      if (!this.checkIsGroup(entry)) {
+        const { SearchTerms, EntryID } = (entry as TableEntry<T>).fields as Partial<{
+          SearchTerms: string;
+          EntryID: number;
+        }>;
+        compoundKey.term = SearchTerms + EntryID;
+      } else {
+        const { field, groupHeader } = entry as FlatRowGroup<T>;
+        compoundKey.term = field + groupHeader;
+      }
+      position.hash = this.fastHash(stableStringify(compoundKey));
+      return { ...entry, position };
     });
   }
 

@@ -1,6 +1,5 @@
 import { trigger } from '@angular/animations';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
-import { timer } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { flyInTemplate } from '../../../animations/templates';
 import { FilterService } from '../../../services/filter.service';
@@ -15,20 +14,8 @@ import { BeersSearchResult } from '../../../services/search.service';
     trigger(
       'flyIn',
       flyInTemplate({
-        enter: {
-          startX: '0px',
-          startY: '-200px',
-          endX: '0px',
-          endY: '0px',
-        },
-        enterTiming: '200ms ease',
-        leave: {
-          startX: '0px',
-          startY: '0px',
-          endX: '0px',
-          endY: '-100%',
-        },
-        leaveTiming: '200ms ease-in',
+        enter: { startY: '-20px', endY: '0px', startX: '0px', endX: '0px' },
+        enterTiming: '250ms ease-in',
       })
     ),
   ],
@@ -41,15 +28,10 @@ export class ExpandedElementComponent<T extends BeersSearchResult> implements Af
   set data(value: T) {
     this.dataValue = value;
   }
+
   ngAfterViewInit() {
-    timer(1000)
-      .toPromise()
-      .then(() => this.renderer.removeClass(this.element.nativeElement, 'animate-in'));
-    this.renderer.addClass(this.element.nativeElement, 'animate-in');
+    console.log('init');
   }
-  constructor(
-    public filterService: FilterService,
-    private element: ElementRef,
-    private renderer: Renderer2
-  ) {}
+
+  constructor(public filterService: FilterService) {}
 }

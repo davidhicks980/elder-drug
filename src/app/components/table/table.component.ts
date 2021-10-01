@@ -11,7 +11,6 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
-import stableStringify from 'json-stable-stringify';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
@@ -80,11 +79,11 @@ export class TableComponent implements AfterViewInit {
   }
   rowShown(model: BeersTableDataSource<unknown>) {
     return function (index: number, row: TableEntry<unknown> | FlatRowGroup<unknown>) {
-      return model.isRowShown(row);
+      return model.checkIsRowShown(row);
     };
   }
   getPadding(row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>) {
-    return row.position.parentId.length;
+    return (row.position.id.match(/:/g) ?? []).length;
   }
   constructor(
     private columnService: ColumnService,
@@ -96,6 +95,9 @@ export class TableComponent implements AfterViewInit {
     public filterService: FilterService
   ) {
     this.model = new BeersTableDataSource();
+    this.searchService.searchResults$.pipe(destroy(this)).subscribe((result) => {
+      this.model.updateData(result);
+    });
     this.columnService.selected$.pipe(destroy(this)).subscribe((selected) => {
       this.model.updateColumns(selected);
     });
@@ -103,10 +105,8 @@ export class TableComponent implements AfterViewInit {
       this.model.updateGroups(groups);
       this.changeDetect.markForCheck();
     });
-    this.searchService.searchResults$.pipe(destroy(this)).subscribe((result) => {
-      this.model.updateData(result);
-    });
-    this.getTrackByClosure();
+
+    this.trackBy = this.getTrackByClosure();
   }
 
   getTrackByClosure() {
@@ -115,16 +115,9 @@ export class TableComponent implements AfterViewInit {
       index: number,
       row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>
     ): boolean => {
-      let { position } = row,
-        hashTerm = '';
-      if ('field' in row) {
-        hashTerm = row.field + row.groupHeader;
-      } else if ('fields' in row) {
-        hashTerm = row.fields.SearchTerms;
-      }
-      let hash = stableStringify({ hashTerm, ...position, expanded: false });
-      const match = cache.get(index) === hash;
-      cache.set(index, hash);
+      console.log(row);
+      const match = cache.get(index) === row.position.hash;
+      cache.set(index, row.position.hash);
       return match;
     };
   }
@@ -136,6 +129,12 @@ export class TableComponent implements AfterViewInit {
     this.grid.changes.pipe(destroy(this)).subscribe((newCells: QueryList<KeyGridDirective>) => {
       this.gridCells = newCells.toArray();
     });
+    const results = this.searchService.searchResults;
+    const columns = this.columnService.selected;
+    const groups = this.groupService.groups;
+    this.model.updateData(results);
+    this.model.updateColumns(columns);
+    this.model.updateGroups(groups);
     this.changeDetect.markForCheck();
   }
 }

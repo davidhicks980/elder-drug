@@ -31,9 +31,9 @@
       <cdk-row
         class="row--content"
         *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
-        [detail]="row"
-        [expandDetail]="model.checkIsExpanded(row)"
-        (click)="model.expand(row)"
+        [detailPanel]="row"
+        [detailPanelExpanded]="model.checkIsExpanded(row)"
+        (click)="model.toggle(row)"
       ></cdk-row>
 
       <ng-template cdkNoDataRow>
@@ -71,7 +71,7 @@
         </ng-container>
         <ng-container *cdkCellDef="let row">
           <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
-            <elder-cell [cellPadding]="getPadding(row)">
+            <elder-cell [padLeft]="getPadding(row)" [padLeftIncrement]="7.5">
               <elder-cell-toggle #cell *ngIf="field === state.fields[0]">
                 <button mat-icon-button>
                   <mat-icon
@@ -94,7 +94,7 @@
                 #cell
                 [class.is-expanded]="model.checkIsExpanded(row)"
                 [keyGrid]="{ row: 0, col: 0 }"
-                [cellPadding]="getPadding(row)"
+                [padLeft]="getPadding(row)"
               >
                 <group-field>{{ row.field | splitcase }}</group-field>
                 <group-name>{{ row.groupHeader | titlecase }}</group-name>

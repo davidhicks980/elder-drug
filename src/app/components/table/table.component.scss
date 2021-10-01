@@ -64,42 +64,6 @@ mat-chip-list mat-chip.mat-standard-chip {
   cursor: pointer;
 }
 
-.expansion-panel {
-  background-color: $light-gray-1;
-  border-bottom: 1px solid $light-gray-3;
-}
-
-//Rationale header
-
-mat-icon.mat-icon-24 {
-  height: 36px;
-  width: 36px;
-  min-width: 45px;
-  margin-top: 5px;
-  &.info {
-    color: blue;
-  }
-  &.error {
-    color: red;
-  }
-  &.warning {
-    color: orange;
-  }
-}
-
-span.show-when-small {
-  display: none;
-}
-
-mat-chip-list mat-chip.mat-standard-chip {
-  min-height: 1.7em;
-  border-radius: 4px;
-  background-color: $primary-3;
-  color: white;
-  font-weight: 400;
-  cursor: pointer;
-}
-
 .chevron-button {
   height: 36px;
   width: 36px;
@@ -122,9 +86,7 @@ mat-chip-list mat-chip.mat-standard-chip {
 }
 .expansion-card {
   border-radius: 3px;
-  /* border: 1px solid blue; */
   background-color: rgb(255 255 255);
-  // box-shadow: 0 2px 1px 0 lightgrey;
   color: $primary-5;
   padding: 20px;
   margin: 5px;

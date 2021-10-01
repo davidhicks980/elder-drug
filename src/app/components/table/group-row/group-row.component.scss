@@ -1,10 +1,12 @@
-@use 'palette' as *;
+@use "palette" as *;
+@use "sass:color";
 .label {
   font-weight: 500;
 }
 :host {
   height: fit-content;
-  line-height: 2.3rem;
+  line-height: 1.5rem;
+  padding: 0.4rem 0;
   background-color: $light-gray-1;
   user-select: all;
   -webkit-user-select: none;
@@ -19,6 +21,35 @@
   border-radius: 0;
 }
 
+@keyframes transparent-row {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+:host(:active) {
+  position: relative;
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+  user-select: none;
+  &::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+    opacity: 0;
+    animation: transparent-row 500ms ease 1;
+    background-color: color.scale($primary-1, $alpha: -95%);
+  }
+}
 mat-icon {
   vertical-align: middle;
   transform: rotate(0deg);
@@ -29,7 +60,4 @@ mat-icon {
   :host(.is-expanded) & {
     transform: rotate(90deg);
   }
-}
-
-button[mat-icon-button] {
 }

@@ -1,5 +1,6 @@
-@use 'bem-mixin' as bem;
-@use 'palette' as *;
+@use "bem-mixin" as bem;
+@use "palette" as *;
+@use "sass:color";
 %row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
@@ -19,8 +20,42 @@
   }
 }
 
+@keyframes active-row {
+  from {
+    background-color: color.scale($light-gray-2, $alpha: -50%, $saturation: 50%);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes transparent-row {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .row--content {
   @extend %row;
+  &:active {
+    background: transparent;
+    position: relative;
+    animation: active-row 1s ease 1;
+    &::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      bottom: 0px;
+      position: absolute;
+      opacity: 0;
+      animation: transparent-row 500ms ease-in-out 1;
+      background-color: color.scale($dark-gray-3, $alpha: -98%);
+    }
+  }
   @include bem.mobileWidth {
     grid-template-rows: repeat(auto-fit, minmax(25px, 1fr));
     grid-template-columns: none;
