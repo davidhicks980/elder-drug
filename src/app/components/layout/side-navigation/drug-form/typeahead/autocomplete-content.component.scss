@@ -1,11 +1,12 @@
 @use "bem-mixin" as *;
-@use 'palette' as *;
+@use "palette" as *;
 
 .option__content {
   display: grid;
-  grid-template-columns: 2.5rem 1fr 4rem;
+  grid-template-columns: 2.8em 1fr 3.4em;
   align-items: center;
-  justify-items: start;
+  justify-items: center;
+  padding: 8px;
   :host(.chips-hidden) & {
     grid-template-columns: 2rem 1fr;
   }
@@ -17,7 +18,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100%;
+  width: 100%;
 }
 
 %chip-template {
@@ -28,6 +29,7 @@
   padding: 0.15em 0.5em;
   max-height: 1.8rem;
   line-height: 1.3rem;
+  width: fit-content;
 }
 .chip--generic {
   @extend %chip-template;

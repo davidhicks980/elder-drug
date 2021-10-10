@@ -18,5 +18,15 @@ mat-icon[data-add-icon] {
 }
 mat-icon[data-search-icon] {
   @extend %icon;
-  height: 1.8rem;
+  height: 1.7rem;
+  overflow: visible;
+}
+
+.search-button {
+  overflow: visible;
+  width: 40px;
+  height: 25px;
+}
+[disabled] [data-add-icon] {
+  color: $gray-1;
 }

@@ -1,6 +1,6 @@
-@use '~@angular/material' as mat;
-@use 'sass:color' as *;
-@use '~@angular/cdk';
+@use "~@angular/material" as mat;
+@use "sass:color" as *;
+@use "~@angular/cdk";
 @use "palette" as *;
 @use "bem-mixin" as *;
 @use "colors" as *;
@@ -22,6 +22,7 @@
   display: block;
   height: 100%;
 }
+
 %label {
   font-size: var(--label-size);
   color: var(--label-color);
@@ -38,8 +39,7 @@
 }
 .search-label {
   @extend %label;
-  padding-bottom: 0.75em;
-
+  padding-bottom: 8px;
   font-weight: 500;
   width: 100%;
   @include mobileWidth {
@@ -48,7 +48,7 @@
 }
 
 .form-container {
-  overflow: hidden;
+  overflow: auto;
   position: relative;
   z-index: 1;
   padding-top: 1.25em;
@@ -71,20 +71,23 @@
   --validation-border-scale: 0;
   --validation-border-height: 0;
   --border-radius: 5px;
+  --search-field--height: 2.8rem;
   border-radius: var(--border-radius);
-  min-height: 2.5em;
-  display: flex;
-  align-items: center;
+  min-height: var(--search-field--height);
   overflow: hidden;
   position: relative;
   transition: border-color 200ms ease-in;
-  padding: 0 0.3em;
-
+  padding: 0 0.5em;
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.8em 1fr 2.8em;
+  grid-template-rows: var(--search-field--height);
+  align-items: center;
   @include shadow(2);
   @include mat.elevation-transition;
   &:hover {
     --border-color: #{$light-gray-4};
-    @include shadow(3);
+    @include shadow(4);
   }
   &:not(.is-pinned)::after {
     @include mobileWidth {
@@ -154,8 +157,9 @@
     padding: 0 0.7rem;
     &.is-pinned {
       --border-radius: 0px;
-      min-height: 3.5rem;
+      --search-field--height: 3.5rem;
       --validation-border-scale: 1;
+      --border-color: transparent;
     }
   }
 }
@@ -175,15 +179,15 @@
   padding-left: 0.6em;
   font-size: 12.5pt;
   outline: none;
-
+  padding-top: 1px;
+  font-family: var(--body-font);
   border: none;
   pointer-events: all;
-  width: calc(100% - 35px);
   min-height: var(--input--height);
+  width: 100%;
 
   &::placeholder {
     color: $gray-3;
-    font-weight: 500;
   }
   @include mobileWidth {
     width: 100%;
@@ -191,6 +195,10 @@
   }
 }
 
+.search-icon {
+  display: flex;
+  justify-content: center;
+}
 .search-spinner-container {
   display: inline-block;
   vertical-align: center;

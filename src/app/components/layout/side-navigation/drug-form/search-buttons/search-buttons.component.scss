@@ -1,14 +1,9 @@
-@use 'palette' as*;
-@use 'bem-mixin' as *;
-@use 'grid' as *;
+@use "palette" as *;
+@use "bem-mixin" as *;
+@use "grid" as *;
 
 :host {
   grid-template-columns: 50% 50%;
   display: grid;
   justify-items: center;
-}
-
-.submit__button {
-  @include common-input-style;
-  @include common-input-layout;
 }

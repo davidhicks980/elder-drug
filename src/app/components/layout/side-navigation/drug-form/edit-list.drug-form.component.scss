@@ -1,28 +1,36 @@
-@use 'palette' as *;
-@use 'bem-mixin' as *;
-@use 'sass:color';
+@use "palette" as *;
+@use "bem-mixin" as *;
+@use "sass:color";
 %edit-text {
   color: $gray-5;
   font-weight: 500;
 }
 .edit-section {
+  overflow: auto;
+  max-height: 55vh;
   @include mobileWidth {
+    max-height: 40vh;
     display: flex;
     justify-content: center;
+    &.is-pinned {
+      max-height: 70vh;
+    }
   }
 }
 .edit-list {
   @include mobileWidth {
     width: 90%;
+    max-height: auto;
   }
 }
 
 .edit-item {
   color: $gray-4;
   display: list-item;
-  padding: 0.5em 2px;
 
+  padding: 0 0 0.5em 0;
   @include mobileWidth {
+    padding: 0.5em 2px;
     color: $secondary-2-2;
     border-bottom: 0;
   }
