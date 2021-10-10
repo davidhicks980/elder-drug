@@ -1,21 +1,69 @@
-@use 'bem-mixin' as bem;
-@use 'palette' as *;
-.table-card {
-  width: auto;
+@use "bem-mixin" as bem;
+@use "palette" as *;
+:host {
   background-color: white;
-  padding: 8px;
-  border-radius: 3px;
+  padding: 1rem;
+  border-radius: 5px;
   margin: 10px;
   border: none;
-  max-width: 1400px;
+  min-width: 90%;
+  max-width: 1100px;
   display: block;
+  position: relative;
+  height: fit-content;
+  @include pseudo-shadow(6);
+  &::after {
+    opacity: 0.5;
+    transition: opacity 500ms ease-in-out;
+  }
   @include bem.mobileWidth {
     background-color: transparent;
     margin: 0;
     width: 100%;
+    padding: 0px;
+  }
+}
+:host(:hover) {
+  &::after {
+    opacity: 1;
   }
 }
 .table {
   background-color: white;
   padding: 5px;
+  @include bem.mobileWidth {
+    padding: 1rem;
+    border-top: var(--common-border);
+  }
+}
+.header {
+  padding: 1rem 1rem 0.5rem 1rem;
+  @include bem.mobileWidth {
+    padding: 1rem;
+  }
+}
+.header-icon {
+  height: 1.15em;
+  width: 0.85em;
+  display: inline-block;
+}
+h1 {
+  font-weight: 500;
+  font-size: 28px;
+  padding-top: 1.5rem;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  letter-spacing: -0.05rem;
+  color: $gray-5;
+}
+header p {
+  color: $gray-4;
+  font-size: 16px;
+}
+
+.divider {
+  border: var(--common-border);
+  border-width: 0 0 1px 0;
+  margin: auto 5px 0 5px;
 }

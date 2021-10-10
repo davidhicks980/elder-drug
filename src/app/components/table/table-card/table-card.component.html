@@ -1,9 +1,18 @@
-<section class="table-card soft-shadow-2" mobileListener>
-  <h2><ng-content select="elder-table-title"></ng-content></h2>
-  <h3><ng-content select="elder-table-description"></ng-content></h3>
-  <mat-divider></mat-divider>
-  <div class="table">
-    <ng-content select="elder-filter-bar"></ng-content>
-    <ng-content select="[elderTableView]"></ng-content>
-  </div>
+<header class="header">
+  <h1 style="font-family: 'IBM Plex Sans'">
+    <span
+      [svgGradient]="{ '0': 'var(--primary-1)', '1': 'var(--secondary-2-1)' }"
+      [svgGradientName]="icon"
+      [svgGradientAngle]="45"
+      svgGradientType="linear"
+      class="header-icon"
+    ></span>
+    <ng-content select="elder-table-title"></ng-content>
+  </h1>
+  <p><ng-content select="elder-table-description"></ng-content></p>
+</header>
+<hr class="divider" />
+<section class="table">
+  <ng-content select="elder-filter-bar"></ng-content>
+  <ng-content select="[elderTableView]"></ng-content>
 </section>
