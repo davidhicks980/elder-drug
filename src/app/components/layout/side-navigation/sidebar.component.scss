@@ -1,7 +1,7 @@
 @use "palette" as *;
 @use "colors" as *;
 @use "grid" as *;
-@use 'bem-mixin' as bem;
+@use "bem-mixin" as bem;
 :host {
   height: 100%;
   display: block;
@@ -11,6 +11,7 @@
     grid-template-columns: 100%;
     grid-template-rows: 10vh 22vh 68vh;
     place-content: start center;
+    height: auto;
     box-shadow: none;
     grid-template-areas: "." "brand" "form";
     &::before {
@@ -32,17 +33,19 @@
   }
 }
 :host {
-  @include shadow(3);
-  @include hoverable-shadow(5);
+  position: relative;
+  z-index: 2;
+  @include hoverable-shadow(8);
+  &::after {
+    opacity: 0.5;
+  }
 }
 
 elder-drug-form {
   grid-area: form;
-  align-self: start;
-  justify-self: center;
   box-sizing: border-box;
   width: 100%;
-  transform: translateY(-40px);
+  max-height: 100%;
   @include bem.mobileWidth {
     overflow-y: auto;
     padding-top: 0px;
@@ -63,7 +66,7 @@ elder-drug-form {
   align-items: center;
   margin: 0px;
   font-weight: 400;
-  position: relative;
+  position: absolute;
   top: 0px;
   transform: translateY(-40px);
   width: 100%;
