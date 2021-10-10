@@ -15,3 +15,20 @@ export enum ColumnField {
   ShortName = 'ShortName',
   SearchTerms = 'SearchTerms',
 }
+export const columns = [
+  'EntryID',
+  'DiseaseState',
+  'Category',
+  'TableDefinition',
+  'Item',
+  'MinimumClearance',
+  'MaximumClearance',
+  'DrugInteraction',
+  'Inclusion',
+  'Exclusion',
+  'Rationale',
+  'Recommendation',
+  'RecommendationLineTwo',
+  'ShortName',
+  'SearchTerms',
+] as ColumnField[];
