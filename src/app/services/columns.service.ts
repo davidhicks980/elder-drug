@@ -1,11 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import { TABLE_CONFIG } from '../injectables/table-config.injectable';
-import { TableAttributes } from '../interfaces/TableAttributes';
-import { TableConfig } from '../interfaces/TableConfig';
-import { BeersSearchResult, SearchService } from './search.service';
+import { SearchService } from './search.service';
+import { TableService } from './table.service';
 
 const COLUMN_PLACEHOLDER = {
   keys: { selected: '', columns: '' },
@@ -26,46 +24,34 @@ type KeyedTableColumns = {
 })
 export class ColumnService {
   private columnSource = new BehaviorSubject<KeyedTableColumns>(COLUMN_PLACEHOLDER);
-  private columnsWithData: Set<string>;
+  private cache: Map<number, { columns: string[]; selected: string[] }> = new Map();
   columns$ = this.columnSource.asObservable().pipe(
     distinctUntilChanged((prev, curr) => prev.keys.columns === curr.keys.columns),
     map((source) => source.columns)
   );
   selected$ = this.columnSource.asObservable().pipe(
     distinctUntilChanged((prev, curr) => prev.keys.selected === curr.keys.selected),
-    map((column) => column.selected)
+    map((source) => source.selected)
   );
-  get columnInfo() {
-    return this.columnSource.value;
+
+  get selected() {
+    return this.columnSource.value.selected.slice();
   }
-  constructor(
-    @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
-    private searchService: SearchService
-  ) {
-    this.selected$.subscribe((res) => console.log('columns', res));
+  get columns() {
+    return this.columnSource.value.columns.slice();
+  }
+  constructor(private tableService: TableService, private searchService: SearchService) {
+    this.searchService.searchResults$.subscribe(() => this.cache.clear());
+    this.tableService.selection$.subscribe(({ tableNumber, selectedColumns, columns }) => {
+      if (this.cache.has(tableNumber)) {
+        let { selected, columns } = this.cache.get(tableNumber);
+        this.emitColumns(selected, columns);
+      } else {
+        this.emitColumns(selectedColumns, columns);
+      }
+    });
   }
 
-  changeTable(table: TableAttributes) {
-    let selectedColumns: string[] = [],
-      columns: string[] = [];
-    let { columnOptions } = this.tableConfig.find((column) => {
-      return column.id === table.tableNumber;
-    });
-    //Removes any columns that have no entries containing data. Otherwise, empty columns would create visual clutter with no benefit.
-    this.columnsWithData = this.createDatafulColumnSet(this.searchService.searchResults);
-    for (let { id, selected } of columnOptions) {
-      if (this.columnsWithData.has(id)) {
-        if (selected) {
-          selectedColumns.push(id);
-        }
-        columns.push(id);
-      }
-    }
-    this.emitColumns(selectedColumns, columns);
-  }
-  private createDatafulColumnSet(data: BeersSearchResult[]): Set<string> {
-    return new Set(data.map((e) => Object.keys(e).filter((k) => e[k])).flat(1));
-  }
   private keyColumns(selected: string[], columns: string[]): { selected: string; columns: string } {
     return {
       selected: selected.sort().join(','),
@@ -77,12 +63,12 @@ export class ColumnService {
   }
   emitColumns(selected?: string[], columns?: string[]) {
     if (!this.validateColumns(columns)) {
-      columns = this.columnSource.value.columns;
+      columns = this.columns;
     }
     if (!this.validateColumns(selected)) {
-      selected = this.columnSource.value.selected;
+      selected = this.selected;
     }
-
+    this.cache.set(this.tableService.table, { columns, selected });
     this.columnSource.next({
       keys: this.keyColumns(selected, columns),
       selected,
