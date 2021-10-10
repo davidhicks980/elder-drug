@@ -1,12 +1,13 @@
-@use 'bem-mixin' as *;
-@use 'palette' as pal;
-@use '~@davidhicks/sass-mixins/shadow-root' as host;
+@use "bem-mixin" as *;
+@use "palette" as pal;
+@use "~@davidhicks/sass-mixins/shadow-root" as host;
 :host {
   height: 38px;
   overflow: hidden;
   @include mobileWidth {
     height: 60px;
     padding: 0.5em 0;
+    margin-left: 0.65rem;
   }
 
   @include host.state(".is-error") {
@@ -25,13 +26,11 @@
   display: none;
   @include mobileWidth {
     display: block;
-    margin-left: 0.9rem;
   }
 }
 .text {
-  padding-top: 0.6em;
-  line-height: 1.3em;
-  font-size: calc(0.75 * 16px);
+  padding-top: 0.25em;
+  line-height: 1.2em;
   padding-left: 0.5em;
   @include mobileWidth {
     font-size: 1rem;
