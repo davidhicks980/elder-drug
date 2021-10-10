@@ -1,4 +1,7 @@
+@use "palette" as *;
 :root {
   --body-font: "Roboto", sans-serif;
   --header-font: "IBM Plex Sans", sans-serif;
+  --common-border: 1px solid #{$light-gray-5};
+  --common-label-color: #{$gray-5};
 }

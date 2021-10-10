@@ -2,7 +2,7 @@
 @use "sass:math";
 @use "sass:string";
 @use "sass:meta";
-
+@use "bem-mixin" as *;
 /// Slightly lighten a color
 /// @access public
 /// @param {Color} $color - color to tint
@@ -162,7 +162,7 @@ $dark-gray-5: #05090f;
 
 $color: #fafafb;
 
-@mixin shadow($depth, $inset: false) {
+@function shadow($depth, $inset: false) {
   $full: "";
   $comma: ",";
   $in: if($inset, "inset", "");
@@ -172,9 +172,28 @@ $color: #fafafb;
     }
     $full: $full + "#{$in 0 1px * $d 2px * $d rgb(87 107 138 / 7%)} #{$comma}";
   }
-  box-shadow: #{$full};
+  @return $full;
+}
+@mixin shadow($depth, $inset: false) {
+  box-shadow: #{shadow($depth, $inset)};
 }
 
+@mixin pseudo-shadow($depth: 5, $inset: false) {
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin: 0px;
+    @include shadow($depth, $inset);
+  }
+}
 @mixin hoverable-focus($depth) {
   &:focus::after {
     opacity: 0.8;
@@ -223,11 +242,10 @@ $color: #fafafb;
 }
 @mixin common-control-style {
   font-size: 1em;
-  border-radius: 1.5em;
   transition: border-color 200ms ease-out;
   font-family: "Roboto", sans-serif;
   user-select: none;
-  border: 1px solid $light-gray-4;
+  border: var(--common-border);
   background-color: white;
 }
 @mixin common-input-style(
@@ -245,33 +263,44 @@ $color: #fafafb;
   @include common-control-style;
   @include hoverable-shadow(3);
 
-  &:hover {
-  }
   &:active,
   &:focus:active {
-    border-color: $primary-1;
     background-image: linear-gradient($light-gray-2, color.scale($light-gray-2, $alpha: -50%));
-
     &:after {
       box-shadow: none;
       @include shadow(2, true);
     }
   }
+
   &:focus {
+    border-color: $primary-1;
+    box-shadow: inset 0 0 0 1px $primary-1;
+
     &:after {
       opacity: 0.4;
     }
   }
 }
 
-@mixin common-input-layout {
-  font-size: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-  font-weight: 500;
+@mixin common-input-focus-style {
+  &:focus-within {
+    box-shadow: 0 0 0 0.5px $primary-1;
+    border-color: $primary-1;
+
+    &::before {
+      opacity: 1;
+    }
+
+    & input::placeholder {
+      color: $gray-3;
+    }
+  }
+}
+@mixin common-label {
+  font-size: 12px;
   font-family: "Roboto", sans-serif;
+  color: var(--common-label-color);
+  font-weight: 500;
 }
 
 @mixin scrollbar {
@@ -290,4 +319,8 @@ $color: #fafafb;
     box-shadow: inset 0 0 0 10px $light-gray-4;
     -webkit-box-shadow: inset 0 0 0 10px $light-gray-4;
   }
+}
+
+@mixin common-border {
+  border: 1px solid $light-gray-5;
 }
