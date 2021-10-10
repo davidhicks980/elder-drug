@@ -5,7 +5,7 @@
 
 .drug-table {
   &--wrapper {
-    border: 1px solid $light-gray-5;
+    border: var(--common-border);
     border-radius: 4px;
     @include shadow(3);
     @include mobileWidth {

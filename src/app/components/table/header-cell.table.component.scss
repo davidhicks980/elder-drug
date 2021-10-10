@@ -1,6 +1,6 @@
-@use 'palette' as *;
-@use 'bem-mixin' as *;
-@use 'sass:color';
+@use "palette" as *;
+@use "bem-mixin" as *;
+@use "sass:color";
 .header {
   line-height: 3rem;
   height: 3rem;
@@ -26,8 +26,12 @@
     display: inline-block;
   }
 
+  &:last-of-type {
+    border-top-right-radius: 6px;
+  }
   &:first-of-type {
     border-left: none;
+    border-top-left-radius: 6px;
     &--left-margin {
       margin-left: 40px;
     }
