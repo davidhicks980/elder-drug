@@ -14,15 +14,15 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
-import { FilterDirective } from '../../directives/filter.directive';
 import { KeyGridDirective } from '../../directives/keygrid.directive';
 import { ColumnService } from '../../services/columns.service';
 import { destroy } from '../../services/destroy';
 import { FilterService } from '../../services/filter.service';
 import { GroupByService } from '../../services/group-by.service';
 import { KeyGridService } from '../../services/key-grid.service';
-import { ResizeService } from '../../services/resize.service';
-import { BeersSearchResult, SearchService } from '../../services/search.service';
+import { LayoutService } from '../../services/layout.service';
+import { BeersSearchResult } from '../../services/search.service';
+import { TableService } from '../../services/table.service';
 import { BeersTableDataSource } from './BeersTableDataSource';
 import { FlatRowGroup } from './RowGroup';
 import { TableEntry } from './TableEntry';
@@ -41,7 +41,6 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatSortHeader, { read: ElementRef })
   sortableHeaders: QueryList<ElementRef>;
-  @ViewChildren(FilterDirective) headerCells: QueryList<FilterDirective>;
   @ViewChild('elderTable') container: ElementRef;
   @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
   @ViewChild(CdkTable) table: CdkTable<BeersSearchResult>;
@@ -64,17 +63,10 @@ export class TableComponent implements AfterViewInit {
   get mobile$() {
     return this.resizeService.mobile$;
   }
-  getKeyGridCells(): KeyGridDirective[] {
-    let filters = this.headerCells.map(
-      (header) => header?.filterRef?.instance?.grid
-    ) as KeyGridDirective[];
 
-    const hasFilters = Array.isArray(filters) && filters.length > 0;
-    return hasFilters ? [...this.gridCells, ...filters] : this.gridCells;
-  }
   handleGridNavigation(event: KeyboardEvent) {
     if (ARROW_KEYS.includes(event.key)) {
-      this.keyGridService.handleArrowKeys(event, this.getKeyGridCells());
+      this.keyGridService.handleArrowKeys(event, this.gridCells);
     }
   }
   rowShown(model: BeersTableDataSource<unknown>) {
@@ -88,14 +80,14 @@ export class TableComponent implements AfterViewInit {
   constructor(
     private columnService: ColumnService,
     private groupService: GroupByService,
-    private searchService: SearchService,
+    private tableService: TableService,
     private keyGridService: KeyGridService,
     private changeDetect: ChangeDetectorRef,
-    public resizeService: ResizeService,
+    public resizeService: LayoutService,
     public filterService: FilterService
   ) {
     this.model = new BeersTableDataSource();
-    this.searchService.searchResults$.pipe(destroy(this)).subscribe((result) => {
+    this.tableService.entries$.pipe(destroy(this)).subscribe((result) => {
       this.model.updateData(result);
     });
     this.columnService.selected$.pipe(destroy(this)).subscribe((selected) => {
@@ -115,7 +107,6 @@ export class TableComponent implements AfterViewInit {
       index: number,
       row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>
     ): boolean => {
-      console.log(row);
       const match = cache.get(index) === row.position.hash;
       cache.set(index, row.position.hash);
       return match;
@@ -129,9 +120,10 @@ export class TableComponent implements AfterViewInit {
     this.grid.changes.pipe(destroy(this)).subscribe((newCells: QueryList<KeyGridDirective>) => {
       this.gridCells = newCells.toArray();
     });
-    const results = this.searchService.searchResults;
+    const results = this.tableService.entries;
     const columns = this.columnService.selected;
     const groups = this.groupService.groups;
+    console.log(results);
     this.model.updateData(results);
     this.model.updateColumns(columns);
     this.model.updateGroups(groups);
