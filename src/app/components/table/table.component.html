@@ -14,7 +14,6 @@
     <cdk-table
       matSort
       class="drug-table"
-      recycleRows
       [dataSource]="model"
       [fixedLayout]="true"
       [trackBy]="trackBy"
@@ -50,11 +49,7 @@
         </div>
       </ng-template>
 
-      <ng-container
-        *ngFor="let field of state.fields; index as col"
-        cdkColumnDef="{{ field }}"
-        [sticky]="field === 'Search Terms'"
-      >
+      <ng-container *ngFor="let field of state.fields; index as col" cdkColumnDef="{{ field }}">
         <ng-container *cdkHeaderCellDef>
           <cdk-header-cell
             class="header"
@@ -75,7 +70,7 @@
               [padLeft]="getPadding(row)"
               [padLeftIncrement]="7.5"
             >
-              <elder-cell-toggle #cell *ngIf="field === state.fields[0]">
+              <elder-cell-toggle #cell *ngIf="col === 0">
                 <button mat-icon-button>
                   <mat-icon
                     [class.is-rotated]="model.checkIsExpanded(row)"
@@ -87,7 +82,10 @@
                 {{ field | splitcase | titlecase }}
               </elder-cell-title>
               <elder-cell-content>
-                <span [innerHtml]="row.fields[field] | highlight: state.filter"> </span>
+                <span
+                  [innerHtml]="row.fields[field] | toString | titlecase | highlight: state.filter"
+                >
+                </span>
               </elder-cell-content>
             </elder-cell>
           </ng-container>
