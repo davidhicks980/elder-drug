@@ -1,5 +1,5 @@
 <h2 class="legend"><ng-content select="elder-sidebar-legend"></ng-content></h2>
-<ng-container *ngIf="!(searchForm.searchEmitter | async) && size.mobile$">
+<ng-container *ngIf="!(searchForm.searchEmitter | async) && layoutService.mobile$ | async">
   <div class="toggle__container">
     <ng-container [ngTemplateOutlet]="toggle.templateRef"></ng-container>
   </div>

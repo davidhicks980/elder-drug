@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, EventEmitter, HostBinding, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { ResizeService } from '../../../services/resize.service';
+import { LayoutService } from '../../../services/layout.service';
 import { SidebarBrandDirective, SidebarToggleDirective } from './sidebar-brand.directive';
 
 @Component({
@@ -14,16 +14,13 @@ import { SidebarBrandDirective, SidebarToggleDirective } from './sidebar-brand.d
 export class SidebarComponent {
   @HostBinding('class.is-searching') searching: boolean = false;
   @Output('searching') searchEmitter: EventEmitter<boolean> = new EventEmitter();
-
   @ContentChild(SidebarToggleDirective)
   toggle: SidebarToggleDirective;
   @ContentChild(SidebarBrandDirective)
   brand: SidebarBrandDirective;
   isSearching$: Observable<boolean> = of(false);
-
   setSearchingStatus(searching: boolean) {
     this.searching = searching;
   }
-
-  constructor(public size: ResizeService) {}
+  constructor(public layoutService: LayoutService) {}
 }
