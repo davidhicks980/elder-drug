@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import { GENERIC_DRUGS } from '../injectables/generic-drugs.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
@@ -8,6 +9,11 @@ import { DataService } from './data.service';
 export type BeersSearchResult = BeersEntry & {
   SearchTerms: string;
 };
+export interface SearchResult<T> {
+  results: T[];
+  timestamp: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,16 +28,32 @@ export class SearchService {
   private drugs: Set<string> = new Set();
   private drugIndex: Map<string, string[]> = new Map();
   private historySource: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  private searchResultsSource: BehaviorSubject<BeersSearchResult[]> = new BehaviorSubject([]);
+  private searchResultsSource: BehaviorSubject<SearchResult<BeersSearchResult>> =
+    new BehaviorSubject({
+      results: [],
+      timestamp: -1,
+    });
+  readonly searchResults$ = this.searchResultsSource.asObservable();
   private drugEntryMapping: Map<string, number[]> = new Map();
-  get searchResults$() {
-    return this.searchResultsSource.asObservable();
-  }
-  get searchResults() {
-    return this.searchResultsSource.getValue();
+  history$ = this.historySource.asObservable().pipe(
+    distinctUntilChanged((prev, next) => {
+      return prev.length === next.length && next.every((value) => prev.includes(value));
+    })
+  );
+  get searchResults(): SearchResult<BeersSearchResult> {
+    let results = this.searchResultsSource.value.results.map((row) => ({ ...row }));
+    let timestamp = this.searchResultsSource.value.timestamp;
+    return { results, timestamp };
   }
   storeHistory(drugs: string[]) {
     this.historySource.next(this.validateAndFormatSearch(drugs));
+  }
+
+  get history() {
+    return this.getHistory();
+  }
+  private getHistory() {
+    return this.historySource.getValue().slice();
   }
 
   filterTypeahead(entry: string): string[] {
@@ -39,11 +61,15 @@ export class SearchService {
       return ['loading'];
     }
     if (entry && typeof entry === 'string') {
-      entry = entry.toLowerCase();
-      return this.drugIndex
-        .get(entry.charAt(0))
-        .filter((val) => val.startsWith(entry))
-        .slice(0, 10);
+      let letter = entry.charAt(0).toLowerCase();
+      if (/([a-z])/.test(letter)) {
+        return this.drugIndex
+          .get(letter)
+          .filter((val) => val.startsWith(entry))
+          .slice(0, 10);
+      } else {
+        return [];
+      }
     } else {
       throw TypeError('Typeahead can only process strings');
     }
@@ -64,6 +90,7 @@ export class SearchService {
     }
     if (Array.isArray(drugs)) {
       return drugs
+        .slice()
         .map((drug) => drug.toLowerCase())
         .filter((drug) => {
           return typeof drug === 'string' && /[\w\s\,\_.\+\$]+/.test(drug) && this.drugs.has(drug);
@@ -120,34 +147,30 @@ export class SearchService {
       return drug.concat(generics[drug[0]].includes(drug) ? '~g' : '~b');
     });
   }
-  get history() {
-    return this.historySource.getValue();
-  }
 
   searchDrugs(terms?: string | string[]): void {
     //If there are no terms being searched, take the latest term from history.
     //Search history has already been validated and formatted
-    let drugs = this.validateAndFormatSearch(terms) || this.historySource.value;
+    let drugs = terms ? this.validateAndFormatSearch(terms) : this.getHistory();
     if (drugs?.length) {
       let results: Map<number, BeersSearchResult> = new Map(),
-        term = '',
-        index = 0,
         indices = [],
         entry = {};
-      while (drugs?.length) {
-        term = drugs.pop();
-        indices = this.drugEntryMapping.get(term) || [];
-        while (indices?.length) {
-          index = indices.pop();
+      for (let drug of drugs) {
+        indices = this.drugEntryMapping.get(drug);
+        for (let index of indices) {
           if (!results.has(index)) {
             entry = this.dataService.drugEntries.get(index) || {};
-            results.set(index, { ...entry, SearchTerms: term });
+            results.set(index, { ...entry, SearchTerms: drug });
           } else {
-            results.get(index).SearchTerms = results.get(index).SearchTerms + `, ${term}`;
+            results.get(index).SearchTerms = results.get(index).SearchTerms + `, ${drug}`;
           }
         }
       }
-      this.searchResultsSource.next(Array.from(results.values()));
+      this.searchResultsSource.next({
+        results: Array.from(results.values()),
+        timestamp: Date.now(),
+      });
     }
   }
 
