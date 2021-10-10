@@ -2,21 +2,15 @@
 @use "colors" as *;
 @use "bem-mixin" as bem;
 @use "sass:color";
-$content-height--full-header: calc(100vh - #{$header-full});
 
-$content-height--shrunken-header: calc(100vh - #{$header-shrunken});
-
-.disable-text-selection {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.layout {
+  &.hide-overflow {
+    overflow: hidden;
+  }
 }
 
 .toolbar {
-  color: $gray;
+  color: $gray-5;
   border-bottom: 1px solid $light-gray-5;
   height: 100%;
   width: 100%;
@@ -27,79 +21,75 @@ $content-height--shrunken-header: calc(100vh - #{$header-shrunken});
     &.is-animating {
       margin-left: calc(260px + 2.5rem);
     }
-
     @include bem.mobileWidth {
       margin-left: 0px;
     }
   }
 }
-.main {
-  &__content {
-    grid-area: content;
-    background-color: $light-gray-2;
-    overflow-x: hidden;
-    height: 100%;
-    width: 100%;
-    .is-animating & {
-      width: 100vw;
-    }
+
+.content {
+  grid-area: content;
+  background-color: $light-gray-2;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .is-animating & {
+    width: 100vw;
   }
-  &__sidebar {
-    grid-area: side;
-    width: 100%;
-    position: relative;
+}
+.sidebar {
+  grid-area: side;
+  width: 100%;
+  position: relative;
+  top: 0px;
+  overflow: visible;
+  @include bem.mobileWidth {
+    overflow: hidden;
     top: 0px;
-    @include bem.mobileWidth {
-      top: 0px;
-      position: absolute;
-      z-index: 10;
-      height: 100%;
-    }
-    &__toggle {
-      position: absolute;
-      top: -33px;
-      right: -33px;
-      z-index: 1;
-    }
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+  }
+  &-toggle {
+    position: absolute;
+    top: -33px;
+    right: -33px;
+    z-index: 5;
   }
 }
 
-.layout {
-  &.hide-overflow {
-    overflow: hidden;
+.main {
+  display: grid;
+  grid-template-columns: 0px 1fr;
+  grid-template-rows: calc(100vh - 100px);
+  grid-template-areas: "side content";
+  &.is-animating {
+    grid-template-areas: "side content content";
+    grid-template-columns: 260px 260px 1fr;
   }
+  &.is-sidebar-open {
+    grid-template-columns: 260px 1fr;
 
-  &__main {
-    display: grid;
-    grid-template-columns: 0px 1fr;
-    grid-template-rows: calc(100vh - 100px);
-    grid-template-areas: "side content";
-    &.is-animating {
-      grid-template-areas: "side content content";
-      grid-template-columns: 260px 260px 1fr;
-    }
-    &.is-sidebar-open {
-      grid-template-columns: 260px 1fr;
-
-      @include bem.mobileWidth {
-        display: block;
-      }
-    }
     @include bem.mobileWidth {
       display: block;
     }
   }
-  &__header {
-    position: sticky;
-    top: -60px;
-    height: 100px;
-    z-index: 1;
-    &.is-animating {
-      z-index: 0;
-    }
-    &.is-hidden {
-      display: none;
-    }
+  @include bem.mobileWidth {
+    display: block;
+  }
+}
+.header {
+  position: sticky;
+  top: -60px;
+  height: 100px;
+  z-index: 1;
+  &.is-animating {
+    z-index: 0;
+  }
+  &.is-hidden {
+    display: none;
   }
 }
 
@@ -122,7 +112,7 @@ elder-menu-toggle elder-animated-arrow {
     height: var(--icon-toggle--width, 2rem);
   }
 }
-.main__sidebar__toggle elder-menu-toggle {
+.sidebar-toggle elder-menu-toggle {
   pointer-events: all;
   -webkit-tap-highlight-color: transparent; /* for removing the highlight */
 

@@ -1,25 +1,26 @@
 import { AnimationEvent } from '@angular/animations';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  OnDestroy,
   QueryList,
   TemplateRef,
   ViewChild,
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { BehaviorSubject, Subject, timer } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
-import { ResizeService } from '../../services/resize.service';
+import { destroy } from '../../services/destroy';
+import { LayoutService } from '../../services/layout.service';
 import { SearchService } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
-import { TableComponent } from '../table/table.component';
 import { layoutAnimations } from './layout.animations';
-import { scrollDirectionCb } from './scroll-direction.function';
 
 export enum ScrollDirection {
   UP,
@@ -38,95 +39,86 @@ export enum ScrollDirection {
     layoutAnimations.statefulSidebarShift('TabsSidebarShift', 260),
   ],
 })
-export class LayoutComponent {
+export class LayoutComponent implements AfterViewInit, OnDestroy {
   @ViewChild('toggleTemplate') toggleTemplate: TemplateRef<HTMLElement>;
   togglePortalContent!: TemplatePortal;
-  @ViewChild('layout') mainWrapper: ElementRef<HTMLDivElement>;
-  @ViewChild('toolbar', { read: ElementRef }) toolbar: ElementRef<HTMLElement>;
-  @ViewChildren('mainWrapper') main: QueryList<ElementRef<HTMLElement>>;
-
-  @ViewChild(TableComponent) table: TableComponent;
-  private roundTabsSource: BehaviorSubject<ScrollDirection> = new BehaviorSubject(
-    ScrollDirection.DOWN
-  );
+  @ViewChildren('watchScroll') scrollMarker: QueryList<ElementRef<HTMLElement>>;
+  debounceTabRounding: number = 0;
+  private roundTabsSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
   roundTabs$ = this.roundTabsSource
     .asObservable()
-    .pipe(map((direction) => direction === ScrollDirection.DOWN));
-  private animationSource = new BehaviorSubject({
-    toggle: false,
-    sidebar: false,
-    content: false,
-    tabs: false,
-  });
-  animating$ = this.animationSource.asObservable();
-  mobile$: Observable<boolean>;
-  sidebarOpen$: Observable<boolean>;
-  round: boolean;
-
+    .pipe(debounce(() => timer(this.debounceTabRounding)));
+  sidebarAnimatingSource = new BehaviorSubject(false);
+  observer: IntersectionObserver;
+  destroy$ = new Subject();
   toggleSidenav() {
-    this.resizeService.toggleSidenav();
+    this.layoutService.toggleSidenav();
   }
   getTogglePortal(condition: boolean) {
     if (condition) {
       return this.togglePortalContent;
     }
   }
-  getContentAnimationState({ mobile, sidebarOpen }) {
+  getContentAnimationState({ mobile, sidebar }) {
     if (!mobile) {
-      return sidebarOpen ? 'open' : 'close';
+      return sidebar.open ? 'open' : 'close';
     }
   }
-  changeToggleState(toggle: boolean) {
-    requestAnimationFrame(() => {
-      this.animationSource.next({
-        toggle,
-        sidebar: this.animationSource.value.sidebar,
-        content: this.animationSource.value.content,
-        tabs: this.animationSource.value.tabs,
-      });
-    });
-  }
-  changeAnimationState({ phaseName }: AnimationEvent, id: string) {
-    this.animationSource.next(
-      Object.assign({}, this.animationSource.value, {
-        [id]: phaseName === 'start',
-      })
-    );
+
+  changeAnimationState({ phaseName }: AnimationEvent) {
+    this.sidebarAnimatingSource.next(phaseName === 'start');
   }
 
   loadDemo() {
-    this.searchService.searchDrugs('loperamide');
-    requestAnimationFrame(() => {
-      this.tableService.emitTableFilter({ column: '*', term: 'loperamide' });
-    });
+    this.searchService.storeHistory([
+      'Alprazolam',
+      'Morphine',
+      'Loperamide',
+      'Alcortin',
+      'Aller-Flo',
+      'Dofetilide',
+      'Warfarin',
+      'Aldactone',
+      'Sertraline',
+      'Ambien',
+    ]);
+    this.searchService.searchDrugs();
+  }
+  ngOnDestroy() {
+    this.observer.disconnect();
+    this.destroy$.next(false);
   }
   ngAfterViewInit() {
     this.togglePortalContent = new TemplatePortal(this.toggleTemplate, this.containerRef);
-
-    let options = { root: null, threshold: null };
-    options.root = document;
-    options.threshold = [0.4, 0.5, 0.6, 0.7, 0.8, 0.99];
-    const observer = new IntersectionObserver(scrollDirectionCb(this.roundTabsSource), options);
-    this.main.changes
-      .pipe(
-        filter(() => !!this.main.first),
-        take(1)
-      )
-      .subscribe(() => {
-        observer.observe(this.toolbar.nativeElement);
-      });
-  }
-
-  get selectedTable$() {
-    return this.tableService.selection$;
+    this.scrollMarker.changes
+      .pipe(destroy(this))
+      .subscribe(this.setupTabIntersectionObserver.bind(this));
+    this.scrollMarker.notifyOnChanges();
+    this.layoutService.openSidenav$.subscribe((open) => {
+      if (this.layoutService.isMobile && !open) {
+        this.debounceTabRounding = 0;
+        this.roundTabsSource.next(false);
+      }
+    });
   }
 
   constructor(
     public tableService: TableService,
     private searchService: SearchService,
-    public resizeService: ResizeService,
+    public layoutService: LayoutService,
     private containerRef: ViewContainerRef
-  ) {
-    this.sidebarOpen$ = this.resizeService.sidenavObserver;
+  ) {}
+
+  private setupTabIntersectionObserver({ first }: QueryList<ElementRef<HTMLDivElement>>) {
+    if (!this.observer) {
+      const options = { threshold: [0], rootMargin: '-80px 0px 0px 0px' };
+      this.observer = new IntersectionObserver((e: IntersectionObserverEntry[]) => {
+        this.debounceTabRounding = this.roundTabsSource.value ? 4000 : 0;
+        this.roundTabsSource.next(!e[0].isIntersecting);
+      }, options);
+    }
+    if (first?.nativeElement) {
+      this.observer.observe(first.nativeElement);
+    }
   }
 }

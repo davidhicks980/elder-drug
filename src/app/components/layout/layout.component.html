@@ -1,24 +1,27 @@
 <ng-container
   *elderLet="{
-    sidebarOpen: sidebarOpen$ | async,
-    mobile: resizeService.mobile$ | async,
-    animating: animating$ | async,
+    sidebar: {
+      open: layoutService.openSidenav$ | async,
+      animating: sidebarAnimatingSource | async
+    },
+    mobile: layoutService.mobile$ | async,
     roundTabs: roundTabs$ | async,
-    selectedTable: selectedTable$ | async
+    selectedTable: tableService.selection$ | async
   } as state"
 >
-  <div class="layout" [class.hide-overflow]="state.animating.sidebar || state.sidebarOpen">
+  <div class="layout" [class.hide-overflow]="state.sidebar.animating || state.sidebar.open">
     <div
-      *ngIf="!state.sidebarOpen || !state.mobile || state.animating.sidebar"
+      #header
+      *ngIf="!state.sidebar.open || !state.mobile || state.sidebar.animating"
       [class.is-mobile]="state.mobile"
-      [class.is-animating]="state.animating.sidebar"
-      class="layout__header"
+      [class.is-animating]="state.sidebar.animating"
+      class="header"
     >
       <elder-toolbar #toolbar>
         <elder-menu-toggle
           elder-toolbar-toggle
           *ngIf="state.mobile"
-          [toggled]="state.sidebarOpen && !state.animating.sidebar"
+          [toggled]="state.sidebar.open && !state.sidebar.animating"
           (toggle)="toggleSidenav()"
         >
           <elder-animated-arrow class="is-toggled" toggle-icon></elder-animated-arrow>
@@ -27,11 +30,11 @@
         <nav
           elder-toolbar-tabs
           class="toolbar-tabs"
-          [class.is-shifted]="state.sidebarOpen"
           [@FullSidebarShift]="getContentAnimationState(state)"
-          [class.is-animating]="state.animating.sidebar"
+          [class.is-shifted]="state.sidebar.open"
+          [class.is-animating]="state.sidebar.animating"
         >
-          <elder-tabs [rounded]="state.roundTabs && state.mobile"> </elder-tabs>
+          <elder-tabs [rounded]="state.roundTabs"> </elder-tabs>
         </nav>
         <elder-brand
           elder-toolbar-brand
@@ -46,27 +49,24 @@
       </elder-toolbar>
     </div>
     <main
-      class="layout__main"
-      [class.is-sidebar-open]="state.sidebarOpen"
-      [class.is-animating]="state.animating.sidebar"
+      #main
+      class="main"
+      [class.is-sidebar-open]="state.sidebar.open"
+      [class.is-animating]="state.sidebar.animating"
       [@FullSidebarShift]="getContentAnimationState(state)"
-      (@FullSidebarShift.start)="changeAnimationState($event, 'sidebar')"
-      (@FullSidebarShift.done)="changeAnimationState($event, 'sidebar')"
+      (@FullSidebarShift.start)="changeAnimationState($event)"
+      (@FullSidebarShift.done)="changeAnimationState($event)"
     >
-      <section [class.click-through]="!state.sidebarOpen" class="main__sidebar">
-        <div
-          (click)="changeToggleState(state.sidebarOpen)"
-          class="main__sidebar__toggle"
-          *ngIf="!state.mobile"
-        >
-          <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
+      <section [class.click-through]="!state.sidebar.open" class="sidebar">
+        <div class="sidebar-toggle" *ngIf="!state.mobile">
+          <elder-menu-toggle toggle [toggled]="state.sidebar.open" (toggle)="toggleSidenav()">
             <elder-animated-arrow toggle-icon></elder-animated-arrow>
           </elder-menu-toggle>
         </div>
 
-        <elder-sidebar *ngIf="state.sidebarOpen || state.animating.sidebar" #sidebar>
+        <elder-sidebar *ngIf="state.sidebar.open || state.sidebar.animating" #sidebar>
           <ng-template sidebar-toggle>
-            <elder-menu-toggle toggle [toggled]="state.sidebarOpen" (toggle)="toggleSidenav()">
+            <elder-menu-toggle toggle [toggled]="state.sidebar.open" (toggle)="toggleSidenav()">
               <elder-animated-arrow toggle-icon></elder-animated-arrow>
             </elder-menu-toggle>
           </ng-template>
@@ -78,9 +78,31 @@
           <elder-sidebar-legend *ngIf="!state.mobile"> Search Beers Criteria </elder-sidebar-legend>
         </elder-sidebar>
       </section>
-      <section #mainWrapper class="main__content" *ngIf="!state.sidebarOpen || !state.mobile">
-        <button (click)="loadDemo()">Demo</button>
-        <elder-table-card #table>
+      <section
+        #tableSection
+        class="content"
+        style="position: relative"
+        *ngIf="!state.sidebar.open || !state.mobile"
+      >
+        <div
+          #watchScroll
+          style="position: absolute; height: 20px; top: 105px; width: 100%; pointer-events: none"
+        ></div>
+        <button
+          style="
+            position: fixed;
+            right: 50px;
+            top: 0px;
+            z-index: 10000;
+            padding: 5px;
+            background: gray;
+            color: white;
+          "
+          (click)="loadDemo()"
+        >
+          Demo
+        </button>
+        <elder-table-card [icon]="state.selectedTable.tableIcon" #table>
           <elder-table-title>
             {{ state.selectedTable.shortName }}
           </elder-table-title>
@@ -88,17 +110,24 @@
             {{ state.selectedTable.description }}
           </elder-table-description>
           <elder-filter-bar>
-            <elder-filter-input #tableFilter filter-search></elder-filter-input>
+            <elder-filter-input
+              #tableFilter
+              filter-search
+              [hideLabel]="state.mobile"
+            ></elder-filter-input>
 
-            <elder-popup filter-field-popup #columnPopup>
+            <elder-popup
+              tooltipText="Show or hide columns"
+              icon="fields"
+              filter-field-popup
+              #columnPopup
+            >
               <popup-label>Fields</popup-label>
-              <popup-placeholder [placeholderList]="table.columns | async"></popup-placeholder>
               <ng-template popup-content>
                 <elder-column-selector #columns></elder-column-selector> </ng-template
             ></elder-popup>
-            <elder-popup filter-group-popup #groupPopup>
+            <elder-popup tooltipText="Group by column" icon="group" filter-group-popup #groupPopup>
               <popup-label>Groups</popup-label>
-              <popup-placeholder [placeholderList]="table.groups | async"></popup-placeholder>
               <ng-template popup-content>
                 <elder-group-by #groups></elder-group-by>
               </ng-template>
@@ -106,6 +135,7 @@
           </elder-filter-bar>
 
           <elder-table
+            #elderTable
             [filters]="tableFilter.filter | async"
             elderTableView
             elderResize
