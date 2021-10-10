@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FilterService } from '../../../services/filter.service';
 
@@ -10,6 +10,7 @@ import { FilterService } from '../../../services/filter.service';
 })
 export class FilterInputComponent {
   @Output() filter: EventEmitter<string> = new EventEmitter();
+  @Input() hideLabel: boolean = false;
   emitFilter($event: string) {
     this.filter.emit($event);
   }

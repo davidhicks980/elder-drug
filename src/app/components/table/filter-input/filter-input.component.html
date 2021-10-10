@@ -1,2 +1,15 @@
-<mat-icon class="icon" svgIcon="filter"></mat-icon>
-<input (input)="emitFilter(input.value)" #input placeholder="Heart Failure" type="text" />
+<!--<label *ngIf="!hideLabel" class="filter-label" for="entryfilter">Filter Entries</label>-->
+<div class="filter">
+  <span class="filter-icon-container">
+    <mat-icon class="filter-icon" svgIcon="filter"></mat-icon
+  ></span>
+  <input
+    #input
+    id="entryfilter"
+    type="text"
+    class="filter-input"
+    autocomplete="off"
+    placeholder="Heart Failure"
+    (input)="emitFilter(input.value)"
+  />
+</div>
