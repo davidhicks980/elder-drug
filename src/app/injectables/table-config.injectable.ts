@@ -7,7 +7,7 @@ import { TableConfig } from '../interfaces/TableConfig';
 export const tableConfig: TableConfig[] = [
   {
     description: 'General Info',
-    filters: [null],
+    filters: [],
     id: TableCategories.General,
     columnOptions: [
       { id: ColumnField.SearchTerms, selected: true },
@@ -15,7 +15,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.Exclusion, selected: false },
       { id: ColumnField.Inclusion, selected: false },
       { id: ColumnField.Recommendation, selected: true },
-      { id: ColumnField.DiseaseState, selected: true },
+      { id: ColumnField.DiseaseState, selected: false },
       { id: ColumnField.DrugInteraction, selected: false },
       { id: ColumnField.ShortName, selected: false },
       { id: ColumnField.Rationale, selected: true },
