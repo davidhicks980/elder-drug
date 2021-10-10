@@ -2,6 +2,7 @@
 @use "grid" as gr;
 @use "colors" as *;
 @use "bem-mixin" as *;
+@use "sass:color";
 :root {
   --title--font-family: var(--header--font), sans-serif;
   --body--font-family: var(--body--font), sans-serif;
@@ -60,7 +61,7 @@
 }
 
 .masonry-grid {
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
   display: grid;
 }
@@ -89,19 +90,16 @@
   margin: 0;
   padding: 0;
 }
-.header__chips {
+.header__chip {
   grid-area: chips;
-  mat-chip {
-    min-height: 1.5rem;
-    background-color: transparent;
-    color: $primary-2;
-    border: 1px solid $primary-2;
-    font-weight: 400;
-    cursor: pointer;
-    user-select: none;
-    &.mat-chip.mat-standard-chip::after {
-      background: $primary-1;
-    }
+  width: fit-content;
+  border: 1px solid var(--primary-1);
+  padding: 0.04em 0.65em;
+  border-radius: 1em;
+  cursor: pointer;
+  color: var(--primary-1);
+  &:hover {
+    background-color: color.scale($primary-1, $alpha: -90%);
   }
 }
 .expanded-row {

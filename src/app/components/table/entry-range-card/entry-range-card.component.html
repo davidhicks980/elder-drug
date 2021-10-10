@@ -1,0 +1,8 @@
+<mat-icon svgIcon="{{ icon }}" class="icon is-info"></mat-icon>
+<h2 class="header">{{ field }}</h2>
+<p class="content">
+  <span [innerHTML]="recommendation | highlight: filter"></span> with clearance
+  <span *ngIf="maximum">below <em [innerHTML]="max | highlight: filter"></em></span>
+  <span *ngIf="maximum && minimum"> and</span
+  ><span *ngIf="minimum"> above <em [innerHTML]="min | highlight: filter"></em></span>
+</p>

@@ -1,5 +1,5 @@
 import { trigger } from '@angular/animations';
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { flyInTemplate } from '../../../animations/templates';
 import { FilterService } from '../../../services/filter.service';
@@ -20,17 +20,13 @@ import { BeersSearchResult } from '../../../services/search.service';
     ),
   ],
 })
-export class ExpandedElementComponent<T extends BeersSearchResult> implements AfterViewInit {
+export class ExpandedElementComponent<T extends BeersSearchResult> {
   private dataValue: T;
   @Input() get data(): T {
     return this.dataValue;
   }
   set data(value: T) {
     this.dataValue = value;
-  }
-
-  ngAfterViewInit() {
-    console.log('init');
   }
 
   constructor(public filterService: FilterService) {}
