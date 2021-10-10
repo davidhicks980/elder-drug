@@ -1,24 +1,39 @@
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+
+import { SearchService } from './search.service';
+import { TableService } from './table.service';
 
 @Injectable()
 export class GroupByService {
+  private cache: Map<number, { grouped: string[]; ungrouped: string[] }> = new Map();
   private groupedItemSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  /**
-   * An observable containing the groupings displayed in the drug table.
-   * @readonly
-   * @memberof GroupByService
-   */
-  groupedItems$: Observable<string[]> = this.groupedItemSource.asObservable();
   private ungroupedItemSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  groupedItems$: Observable<string[]> = this.groupedItemSource.asObservable();
   ungroupedItems$ = this.ungroupedItemSource.asObservable();
-  grouped: string[] = [];
-  ungrouped: string[] = [];
+  private grouped: string[] = [];
+  private ungrouped: string[] = [];
   get groups() {
-    return this.groupedItemSource.getValue();
+    return this.groupedItemSource.getValue().slice();
   }
-
+  constructor(private tableService: TableService, private searchService: SearchService) {
+    //When a new search is conducted, clear the group cache
+    this.searchService.searchResults$.subscribe(() => {
+      this.cache.clear();
+    });
+    //When the table changes, add from the group cache if the cache has items. Otherwise, add all new columns as ungrouped options
+    this.tableService.selection$.subscribe(({ tableNumber, columns }) => {
+      if (!this.cache.has(tableNumber)) {
+        this.addUngroupedItems(columns);
+      } else {
+        this.addItems(this.cache.get(tableNumber), true);
+      }
+    });
+    combineLatest([this.groupedItems$, this.ungroupedItems$]).subscribe(([grouped, ungrouped]) => {
+      this.cache.set(tableService.table ?? 0, { grouped, ungrouped });
+    });
+  }
   addGroupedItems(items: string[]) {
     this.grouped = this.dedupeItems([...this.grouped, ...items]);
     this.emit('GROUPED');
@@ -50,7 +65,7 @@ export class GroupByService {
   }
 
   private dedupeItems(list: string[]) {
-    return list.filter((item, i) => list.indexOf(item) === i);
+    return list.filter((item, index) => list.indexOf(item) === index);
   }
   addItems(
     { ungrouped, grouped }: { ungrouped?: string[]; grouped?: string[] },
