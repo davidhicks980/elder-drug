@@ -1,151 +1,176 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 
-import { ColumnField } from '../enums/ColumnFields';
+import { ColumnField, columns } from '../enums/ColumnFields';
+import { TableCategories } from '../enums/TableCategories.enum';
 import { TABLE_ATTRIBUTES } from '../injectables/table-attributes.injectable';
 import { TABLE_CONFIG } from '../injectables/table-config.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
 import { TableAttributes } from '../interfaces/TableAttributes';
 import { TableConfig } from '../interfaces/TableConfig';
-import { SearchService } from './search.service';
+import { BeersSearchResult, SearchResult, SearchService } from './search.service';
 
-type TableState = {
-  groupedFields: string[];
-  ungroupedFields: string[];
-  selectedColumns: string[];
+type StateEntry = string[] | Record<string, string> | string;
+type TableConfiguration = TableAttributes & {
   columns: string[];
+  selectedColumns: string[];
 };
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
-  private tableSelectionSource: BehaviorSubject<TableAttributes> = new BehaviorSubject({
-    tableNumber: 1,
+  private selectionSource: BehaviorSubject<TableConfiguration> = new BehaviorSubject({
+    tableNumber: -1,
     fullTitle: '',
     shortName: '',
     identifier: '',
     tableIcon: '',
     description: '',
+    columns: [],
+    selectedColumns: [],
   });
-
-  private tableFilterSource = new Subject();
-  private tableLookup: Map<ColumnField, number>;
-  private _page: number;
-  selection$ = this.tableSelectionSource.asObservable();
-  tableFilter$ = this.tableFilterSource.asObservable();
-  tableState: Map<number, TableState> = new Map();
-
-  get activeTableState() {
-    return this.getTableState(this._page);
+  private columnFilterMap: Map<ColumnField, number>;
+  private entrySource: BehaviorSubject<BeersSearchResult[]> = new BehaviorSubject([]);
+  readonly entries$ = this.entrySource.asObservable();
+  readonly selection$ = this.selectionSource.asObservable();
+  state: Record<number, Map<string, StateEntry>> = {};
+  tableOptions$: Observable<TableAttributes[]>;
+  lastSearch: SearchResult<BeersSearchResult>;
+  tableIndices: TableCategories[];
+  get table(): number {
+    return this.selectionSource.value.tableNumber;
   }
-  get page(): number {
-    return this._page;
+  get tableConfiguration() {
+    if (this.table) {
+      return this.tableParameters.find((table) => table.id === this.table);
+    }
   }
-  set page(value: number) {
-    if (typeof value === 'number') {
-      this.emitSelectedTable(this._page);
+
+  private getInitialTableState(table: number) {
+    return this.tableParameters.find((config) => config.id === table);
+  }
+  private changeTable(index: number) {
+    let { entries, columns } = this.getFilteredSearchResults(index, this.lastSearch.results);
+    let configuration = this.getTableConfiguration(index, columns);
+    return { configuration, entries };
+  }
+  emitTableSelection(table: number) {
+    if (table && this.tableIndices.includes(table)) {
+      let { configuration, entries } = this.changeTable(table);
+      this.selectionSource.next(configuration);
+      this.entrySource.next(entries);
     } else {
-      throw TypeError('Selected page must be a number');
+      throw TypeError('Table is not available with your current search');
     }
   }
-
-  emitTableFilter(filter: { column: string; term: string }) {
-    this.tableFilterSource.next(filter);
+  /**
+   * Filters search results that do not contain data
+   *
+   * @private
+   * @returns {*}
+   * @memberof TableService
+   */
+  private getFilteredSearchResults(index: number, search: BeersSearchResult[]) {
+    let results = this.selectEntriesOnTable(index, search);
+    let columns = this.filterDatalessColumns(results);
+    let entries = this.filterDatalessEntries(results, columns);
+    return { columns, entries };
   }
 
-  getTableState(page: number): TableState {
-    if (!this.tableState.has(page)) {
-      const { columns, selectedColumns } = this.createTableState(page);
-      this.tableState.set(page, {
-        groupedFields: [],
-        ungroupedFields: columns,
-        columns,
-        selectedColumns,
-      });
-    }
-    return this.tableState.get(page);
+  private filterDatalessEntries(results: BeersSearchResult[], columnsWithData: Set<string>) {
+    return results.map((result) =>
+      Object.fromEntries(Object.entries(result).filter(([key, value]) => columnsWithData.has(key)))
+    ) as Partial<BeersSearchResult[]> & { SearchTerms: string };
   }
-  private createTableState(page: number): { columns: string[]; selectedColumns: string[] } {
-    let table = this.tableConfig.find((table) => table.id === page),
-      columns = { columns: [], selectedColumns: [] };
-    if (table?.columnOptions) {
-      return table?.columnOptions?.reduce((groups, column) => {
-        groups.columns.push(column.id);
-        if (column.selected) {
-          groups.selectedColumns.push(column.id);
+
+  /**
+   * @param {number} index The table number
+   * @param {BeersSearchResult[]} [results=[]] Search results are optional and are used to emitted only columns that contain data
+   * @returns  {TableConfiguration} Table configuration
+   * @memberof TableService
+   */
+  getTableConfiguration(index: number, results: Set<string> = new Set()): TableConfiguration {
+    let attributes = this.tableDescriptions.find((table) => table.tableNumber === index);
+    let { columnOptions } = this.getInitialTableState(index);
+    let selectedColumns = [];
+    let columns = [];
+    let datafulColumns = results.size ? results : new Set(columnOptions.map((cols) => cols.id));
+    for (let { id, selected } of columnOptions) {
+      if (datafulColumns.has(id)) {
+        columns.push(id);
+        if (selected) {
+          selectedColumns.push(id);
         }
-        return groups;
-      }, columns);
-    } else {
-      return columns;
+      }
     }
+    return { ...attributes, columns, selectedColumns };
   }
-
-  emitSelectedTable(page: number) {
-    let info = this.tables.filter((table) => table.tableNumber === page);
-    if (info.length) {
-      this._page = page;
-      this.tableSelectionSource.next(info[0]);
-    } else {
-      throw TypeError('Page does not exist');
-    }
+  private getTablesWithEntries(results: Partial<BeersEntry[]>): TableAttributes[] {
+    return Array.from(this.columnFilterMap)
+      .filter(([field, _]) => results.some((entry) => entry[field]))
+      .map(([_, table]) => table)
+      .concat(1)
+      .filter((table, index, arr) => arr.indexOf(table) === index)
+      .map((table) => this.tableDescriptions.find(({ tableNumber }) => tableNumber === table));
   }
-  filterActiveTables(searchResults: Partial<BeersEntry[]>, columns: ColumnField[]) {
-    return columns
-      .filter((column) => {
-        return this.tableLookup.has(column) && searchResults.some((table) => table[column]);
-      })
-      .map((column) => this.tableLookup.get(column));
-  }
-  get tables(): TableAttributes[] {
+  get tableDescriptions(): TableAttributes[] {
     return this.tableList;
   }
 
-  get tableOptions$(): Observable<TableAttributes[]> {
-    return this.searchService.searchResults$.pipe(
-      map((results) => {
-        if (results.length) {
-          let columns = Array.from(Object.keys(results[0])) as ColumnField[];
-          //Concat 1 because 1 is the general table and does not have filter fields
-          return this.filterActiveTables(results, columns)
-            .concat(1)
-            .map((page) => {
-              return this.tables.filter((table) => table.tableNumber === page)[0];
-            });
-        } else {
-          console.info('No search results');
-        }
-      })
-    );
+  /**
+   * Removes empty columns
+   *
+   * @private
+   * @param {BeersSearchResult[]} entries
+   * @returns {*}  {Set<string>}
+   * @memberof TableService
+   */
+  private filterDatalessColumns(entries: BeersSearchResult[]): Set<string> {
+    return new Set(entries.map((e) => Object.keys(e).filter((k) => !(e[k] == null))).flat(1));
   }
-  deepClone(obj) {
-    if (obj === null) return null;
-    let clone = Object.assign({}, obj);
-    Object.keys(clone).forEach(
-      (key) => (clone[key] = typeof obj[key] === 'object' ? this.deepClone(obj[key]) : obj[key])
-    );
-    if (Array.isArray(obj)) {
-      clone.length = obj.length;
-      return Array.from(clone);
-    }
-    return clone;
+
+  /**
+   * Returns search results that pertain to a particular table. The function filters entries that do not contain a table's defining
+   * columns. Defining columns are columns relevant to a purpose of a table -- e.g. for the drug interactions table, the 'Drug
+   * Interactions' column would be the defining column
+   * @param {BeersSearchResult[]} Results Search results
+   * @returns  {BeersSearchResult[]} Entries pertaining to the selected table
+   * @memberof TableService
+   */
+  private selectEntriesOnTable(
+    table: number,
+    entries: Partial<BeersSearchResult> & { SearchTerms: string }[]
+  ): Partial<BeersSearchResult> & { SearchTerms: string }[] {
+    let { filters } = this.getInitialTableState(table);
+    return entries.filter((entry) => !filters.length || filters.some((filter) => entry[filter]));
   }
-  updateTableState(state: Partial<TableState>, table: number) {
-    let oldState = this.deepClone(this.getTableState(this._page));
-    this.tableState.set(table, Object.assign(oldState, state));
+  get entries(): BeersSearchResult[] {
+    return this.entrySource.getValue().map((e) => ({ ...e }));
   }
 
   constructor(
-    @Inject(TABLE_CONFIG) private tableConfig: TableConfig[],
+    @Inject(TABLE_CONFIG) private tableParameters: TableConfig[],
     @Inject(TABLE_ATTRIBUTES) private tableList: TableAttributes[],
     private searchService: SearchService
   ) {
-    let columnTableMap = this.tableConfig
+    let columnTableMap = this.tableParameters
       .map(({ filters, id }) => filters.map((filter) => [filter, id]))
       .flat(1) as [ColumnField, number][];
-    this.tableLookup = new Map(columnTableMap);
-    this.searchService.searchResults$.subscribe(() => this.emitSelectedTable(1));
+    this.columnFilterMap = new Map(columnTableMap);
+    //Get searches that return entries and that are new
+    let result$ = this.searchService.searchResults$.pipe(filter(({ results }) => !!results.length));
+
+    this.tableOptions$ = result$.pipe(
+      map(({ results }) => [...this.getTablesWithEntries(results)]),
+      map((tables) => tables.sort((a, b) => a.shortName.localeCompare(b.shortName)))
+    );
+
+    this.tableOptions$.pipe(withLatestFrom(result$)).subscribe(([tables, results]) => {
+      this.tableIndices = tables.map((table) => table.tableNumber);
+      this.lastSearch = results;
+      this.emitTableSelection(1);
+    });
   }
 }
