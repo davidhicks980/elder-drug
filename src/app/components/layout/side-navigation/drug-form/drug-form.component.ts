@@ -25,13 +25,13 @@ import {
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { matFormFieldAnimations } from '@angular/material/form-field';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 
 import { TypeaheadState } from '../../../../interfaces/TypeaheadState';
 import { DataService } from '../../../../services/data.service';
 import { destroy } from '../../../../services/destroy';
-import { ResizeService } from '../../../../services/resize.service';
+import { LayoutService } from '../../../../services/layout.service';
 import { SearchService } from '../../../../services/search.service';
 import { CustomValidators } from '../../../../validators/index.validators';
 import { ErrorMessageComponent } from '../../../error-message/error-message.component';
@@ -70,26 +70,24 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   typeaheadTriggers: QueryList<MatAutocompleteTrigger>;
   @ViewChild(CdkPortal, { read: TemplateRef })
   errors: TemplateRef<ErrorMessageComponent>;
-  private destroySource = new Subject() as Subject<boolean>;
-  destroy$ = this.destroySource.asObservable().pipe(take(1));
+  destroy$: Subject<boolean> = new Subject();
   private focusSource = new BehaviorSubject({ focused: false, control: -1 });
   formControlFocused$ = this.focusSource.asObservable().pipe(
     takeUntil(this.destroy$),
     map((c) => c.focused)
   );
   searchInProgress$: Observable<boolean>;
-  mobile$: Observable<boolean>;
   private typeaheadSource: BehaviorSubject<TypeaheadState> = new BehaviorSubject(
     TYPEAHEAD_INITIAL_STATE
   );
   typeaheadState$: Observable<TypeaheadState> = this.typeaheadSource.asObservable();
   private pinSearchSource = new BehaviorSubject(false);
-  pinSearch$ = this.pinSearchSource.asObservable();
+  pinSearch$ = this.pinSearchSource.asObservable().pipe(distinctUntilChanged());
   errorMessages: Record<string, string> = {
     duplicate: `Drug has already been entered.`,
-    minlength: `Drug names must be at least 3 characters long.`,
-    maxlength: ` Drug names should be fewer than 70 characters.`,
-    pattern: `Drug names should only contain alphanumeric letters.`,
+    minlength: `Drug names must be at least 3 characters.`,
+    maxlength: `Drug names should be fewer than 70 characters.`,
+    pattern: `Drug names can only contain letters and numbers.`,
   };
   warningMessages: Record<string, string> = {
     termabsent: `Only drugs from the dropdown menu have guidance.`,
@@ -99,19 +97,40 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
   currentOptions: Set<string> = new Set();
   drugsGroup: FormGroup;
   ngOnDestroy() {
-    this.destroySource.next(true);
+    this.destroy$.next(true);
   }
   ngOnInit() {
-    this.drugList.controls = this.searchService.history.map((v) => new FormControl(v));
+    const previousControls = this.searchService.history.map((v) => new FormControl(v));
+    const { input, array } = this.getTermValidators();
+    const controls = {
+      drugInput: new FormControl('', input.sync, input.async),
+      drugList: new FormArray(previousControls, array.sync, array.async),
+    };
+    this.drugsGroup = this.form.group(controls, { updateOn: 'change' });
+    const getCurrentQueries = function () {
+      return this.drugList.value ?? [];
+    };
+    const uniqueTermValidator = CustomValidators.sync.uniqueTerms(getCurrentQueries.bind(this));
+    this.drugInput.addValidators(uniqueTermValidator);
+    this.drugList.controls.forEach((control) => control.addValidators(this.uniqueItemValidator));
+    this.drugsGroup.updateValueAndValidity();
+    this.watchHistory().subscribe((queries: string[]) => this.searchService.storeHistory(queries));
+    this.watchTypeaheadInput().subscribe((queryResult) => this.updateTypeahead(queryResult));
+    this.watchInputState('PENDING').subscribe((pending) => this.updateTypeahead({ pending }));
   }
   ngAfterViewInit() {
-    const searchObservers = [
-      this.formControlFocused$,
-      this.typeaheadState$.pipe(map((s) => s.length === 0)),
-    ];
-    this.createSearchProgressObserver(searchObservers).subscribe((result) =>
-      this.pinSearchSource.next(result)
-    );
+    combineLatest([this.layoutService.openSidenav$, this.layoutService.mobile$])
+      .pipe(
+        switchMap(([open, mobile]) =>
+          open && mobile
+            ? this.focusSource.asObservable().pipe(
+                map(({ control, focused }) => focused && control === -1),
+                takeWhile((value) => value === false, true)
+              )
+            : of(false)
+        )
+      )
+      .subscribe((pin) => this.pinSearchSource.next(pin));
     this.pinSearch$.subscribe((pinned) => this.searchEmitter.emit(pinned));
   }
 
@@ -119,7 +138,7 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     this.pinSearchSource.next(false);
   }
   constructor(
-    public size: ResizeService,
+    public layoutService: LayoutService,
     public database: DataService,
     private searchService: SearchService,
     private form: FormBuilder,
@@ -127,44 +146,21 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     public viewRef: ViewContainerRef
   ) {
     this.searchEmitter.emit(false);
-    const { input, array } = this.getTermValidators(),
-      controls = {
-        drugInput: new FormControl('', input.sync, input.async),
-        drugList: new FormArray([], array.sync, array.async),
-      };
-    this.drugsGroup = this.form.group(controls, { updateOn: 'change' });
-    const getCurrentQueries = function () {
-      return this.drugList.value ?? [];
-    };
-    this.drugInput.addValidators(CustomValidators.sync.uniqueTerms(getCurrentQueries.bind(this)));
-    this.watchHistory().subscribe((queries: string[]) => this.searchService.storeHistory(queries));
-    this.watchTypeaheadInput().subscribe((queryResult) => this.updateTypeahead(queryResult));
-    this.watchInputState('PENDING').subscribe((pending) => this.updateTypeahead({ pending }));
   }
 
-  createSearchProgressObserver([inputFocused, inputEmpty]: Observable<boolean>[]) {
-    return combineLatest([inputFocused, inputEmpty]).pipe(
-      debounceTime(100),
-      destroy(this),
-      filter(([focus, empty]) => {
-        return (focus && !empty) || (empty && !focus);
-      }),
-      map(([focus, _]) => focus),
-      distinctUntilChanged()
-    );
-  }
   private watchHistory(): Observable<unknown> {
-    return this.drugList.valueChanges.pipe(debounceTime(100), destroy(this));
+    return this.drugList.valueChanges.pipe(debounceTime(30), destroy(this));
   }
 
   private watchTypeaheadInput() {
     return this.drugsGroup.valueChanges.pipe(
-      debounceTime(10),
+      debounceTime(30),
       destroy(this),
       map(({ drugList, drugInput }: DrugFormControls) => {
-        const input = this.activeControl > -1 ? drugList[this.activeControl] : drugInput;
-        return this.lookupTypeaheadTerms(input);
+        return this.focusedControl > -1 ? drugList[this.focusedControl] : drugInput;
       }),
+      filter((input) => !!input?.length),
+      map((input) => this.lookupTypeaheadTerms(input)),
       filter((data) => Array.isArray(data)),
       map((data: string[][]) => ({
         data,
@@ -182,16 +178,12 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     );
   }
 
-  getTooltipText(tooltip: string) {
-    return this.drugInput.valid ? 'Add drug to search' : 'Choose a drug from the dropdown';
-  }
   setFocusStatus($event, activeInput: number) {
     this.focusSource.next({ focused: $event != null, control: activeInput });
   }
-  get activeControl() {
+  get focusedControl() {
     return this.focusSource.value.control;
   }
-
   get drugList(): FormArray {
     return this.drugsGroup.get('drugList') as FormArray;
   }
@@ -214,23 +206,23 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
     this.drugInput.invalid;
   }
 
-  search($event: Event) {
-    $event.preventDefault();
+  search($event?: Event) {
+    $event?.preventDefault();
     let search = [...this.drugList.value];
     if (search.length > 0) {
       this.searchService.searchDrugs(search);
-      this.size.toggleSidenav();
+      this.layoutService.toggleSidenav();
     }
   }
 
   chooseTerm({ option }: MatAutocompleteSelectedEvent) {
     if (
-      this.activeControl === -1 &&
+      this.focusedControl === -1 &&
       this.drugList.errors === null &&
       this.drugInput.errors === null
     ) {
       this.drugInput.setValue(option.value);
-      this.addTerm();
+      this.addListControl();
     }
   }
   getTermValidators(this: DrugFormComponent): {
@@ -259,11 +251,22 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
       },
     };
   }
-  addTerm() {
+  get uniqueItemValidator() {
+    const getCurrentQueries = function () {
+      return this.drugList.value ?? [];
+    };
+    return CustomValidators.sync.uniqueArrayTerm(getCurrentQueries.bind(this));
+  }
+  addListControl() {
     const { sync, async } = this.getTermValidators().input;
-    const newEditableInput = new FormControl(this.drugInput.value, sync, async);
+    const newEditableInput = new FormControl(
+      this.drugInput.value,
+      [...sync, this.uniqueItemValidator],
+      async
+    );
     this.drugList.push(newEditableInput);
-    window.requestAnimationFrame(() => {
+    this.drugsGroup.updateValueAndValidity();
+    requestAnimationFrame(() => {
       this.drugInput.setValue('');
     });
   }
@@ -301,6 +304,5 @@ export class DrugFormComponent implements OnDestroy, AfterViewInit {
 
   updateTypeahead(state: Partial<TypeaheadState>) {
     this.typeaheadSource.next(Object.assign(this.typeaheadSource.value, state));
-    console.log(state);
   }
 }

@@ -1,7 +1,8 @@
 <ng-container
   *elderLet="{
     pinSearch: pinSearch$ | async,
-    typeahead: typeaheadState$ | async
+    typeahead: typeaheadState$ | async,
+    mobile: layoutService.mobile$ | async
   } as state"
 >
   <form #drugform (ngSubmit)="search($event)" [formGroup]="drugsGroup">
@@ -15,6 +16,7 @@
         cdkMonitorSubtreeFocus
         (cdkFocusChange)="setFocusStatus($event, -1)"
       >
+        <label class="search-label" for="searchinput">Add drugs</label>
         <div
           class="search-field"
           #autoOrigin="matAutocompleteOrigin"
@@ -26,12 +28,15 @@
           [class.is-open]="searchInputAutoTrigger.panelOpen"
         >
           <button
-            mat-icon-button
-            *ngIf="!state.pinSearch; else toggle"
-            (click)="$event.preventDefault()"
-            [disabled]="drugInputIsEmpty"
-            [matTooltip]="getTooltipText('search')"
+            *ngIf="!state.pinSearch || !state.mobile; else toggle"
+            (click)="search()"
+            [matTooltip]="drugListLength > 0 ? 'Search drugs' : 'Add drugs to search'"
             matTooltipPosition="above"
+            matRipple
+            [matRippleRadius]="20"
+            [matRippleCentered]="true"
+            [matRippleUnbounded]="true"
+            class="search-icon"
           >
             <mat-icon
               data-search-icon
@@ -58,34 +63,39 @@
             #searchInputAutoTrigger="matAutocompleteTrigger"
             [matAutocomplete]="autocomplete"
             [matAutocompleteConnectedTo]="autoOrigin"
+            [matAutocompleteDisabled]="state.typeahead.length === 0"
             (keydown.enter)="searchInput.value.length || search($event)"
           />
           <div class="search-spinner-container" *ngIf="state.typeahead.pending; else addButton">
             <mat-spinner diameter="25"></mat-spinner>
           </div>
-
           <ng-template #addButton>
             <button
-              mat-icon-button
-              class="icon-button"
-              (click)="addTerm(); searchInput.focus(); $event.preventDefault()"
-              [disabled]="!drugInput.valid || !drugList.valid"
-              [matTooltip]="getTooltipText('add')"
+              (click)="addListControl(); searchInput.focus(); $event.preventDefault()"
+              matTooltip="Add drugs"
               matTooltipPosition="above"
               matTooltipClass="search-field__tooltip search-field__tooltip--arrow-tip"
+              matRipple
+              [matRippleRadius]="20"
+              [matRippleCentered]="true"
+              [matRippleUnbounded]="true"
+              [disabled]="!drugInput.valid || !drugList.valid"
+              class="search-icon"
             >
-              <mat-icon data-add-icon inline="true" svgIcon="add-2"></mat-icon></button
-          ></ng-template>
+              <mat-icon data-add-icon inline="true" svgIcon="add-2"></mat-icon>
+            </button>
+          </ng-template>
         </div>
         <elder-error-message
-          [errorMessages]="this.errorMessages"
-          [warningMessages]="this.warningMessages"
-          [errors]="this.drugInput.errors"
+          [errorMessages]="errorMessages"
+          [warningMessages]="warningMessages"
+          [errors]="drugInput.errors"
         ></elder-error-message>
       </div>
 
       <section
         class="edit-section"
+        [class.is-pinned]="state.pinSearch"
         [@shiftEditList]="
           (drugInput.errors || drugList.errors) && !drugInputIsEmpty && !state.pinSearch
             ? 'shift'
@@ -141,6 +151,7 @@
                 [formControlName]="index"
                 [matAutocomplete]="autocomplete"
                 [matAutocompleteConnectedTo]="editOrigin"
+                [matAutocompleteDisabled]="state.typeahead.length === 0"
                 matTooltip="Edit {{ drugName.value }}"
                 matTooltipPosition="below"
                 matTooltipClass="tooltip"
@@ -171,8 +182,9 @@
           <div class="typeahead__options">
             <mat-option
               [value]="option[0] + option[1]"
-              *ngFor="let option of state.typeahead.data | slice: 0:10"
               [title]="option[0] + option[1]"
+              [class.is-pinned]="state.pinSearch"
+              *ngFor="let option of state.typeahead.data | slice: 0:10"
             >
               <autocomplete-content
                 [hideChips]="!searchInputAutoTrigger.panelOpen"
@@ -186,6 +198,5 @@
         </mat-autocomplete>
       </section>
     </section>
-    <section class="submit-button"><ng-content select="drug-form-submit"></ng-content></section>
   </form>
 </ng-container>
