@@ -1,0 +1,6 @@
+<mat-icon svgIcon="{{ icon }}" class="icon is-info"></mat-icon>
+<h2 class="header">{{ field }}</h2>
+<p class="content">
+  <span [innerHTML]="entry | slice: 0:1 | uppercase | highlight: filter"></span
+  ><span [innerHTML]="entry | slice: 1 | highlight: filter"></span>
+</p>
