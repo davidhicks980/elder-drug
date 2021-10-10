@@ -19,9 +19,15 @@
     display: none;
   }
 }
+.row--content:last-of-type {
+  elder-cell {
+    border-bottom: none;
+  }
+}
 
 .row--content {
   @extend %row;
+  cursor: pointer;
   &:active {
     -webkit-tap-highlight-color: transparent; /* for removing the highlight */
     background-color: color.scale($primary-1, $alpha: -95%);
