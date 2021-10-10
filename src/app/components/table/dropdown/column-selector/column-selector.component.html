@@ -5,16 +5,18 @@
   } as state"
 >
   <div class="popup-background">
-    <mat-selection-list (selectionChange)="handleSelectionChange($event)">
-      <h3 matSubheader>Toggle Columns</h3>
-      <mat-divider></mat-divider>
-      <mat-list-option
-        *ngFor="let option of state.columns"
-        [checkboxPosition]="checkboxPosition"
-        [value]="option"
-        [selected]="state.selected.includes(option)"
-        >{{ option | splitcase }}</mat-list-option
-      >
-    </mat-selection-list>
+    <span class="mat-subheader column-select-subheader">Toggle Columns</span>
+    <mat-divider></mat-divider>
+    <div class="selection-list-container">
+      <mat-selection-list (selectionChange)="handleSelectionChange($event)">
+        <mat-list-option
+          *ngFor="let option of state.columns"
+          [checkboxPosition]="checkboxPosition"
+          [value]="option"
+          [selected]="state.selected.includes(option)"
+          >{{ option | splitcase }}</mat-list-option
+        >
+      </mat-selection-list>
+    </div>
   </div></ng-container
 >

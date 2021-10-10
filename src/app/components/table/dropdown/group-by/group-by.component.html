@@ -7,9 +7,11 @@
   #droplistGroup
   class="modal"
 >
-  <h1 class="title">Group Columns</h1>
-  <p class="caption">Drag column names to the <em>Groups</em> list to group drugs by field.</p>
-  <mat-divider></mat-divider>
+  <header>
+    <h1 class="title">Group Columns</h1>
+    <p class="caption">Drag column names to the <em>Groups</em> list to group drugs by field.</p>
+    <mat-divider></mat-divider>
+  </header>
   <section>
     <h2 class="subheading-2">Groups</h2>
     <ol
@@ -25,43 +27,39 @@
       tabindex="0"
       [class.noclick]="!isGroupClickable"
     >
-      <ng-container *ngIf="state.groupColumns.length; else noGroups">
-        <li
-          class="list-item"
-          *ngFor="let option of state.groupColumns; index as i"
-          #groupListItem
-          cdkDrag
-          role="option"
-          cdkDragBoundary=".group-row"
-          [id]="option"
-          [keyGrid]="{ row: i, col: 0 }"
-          (keydown)="handleGrouplistKeydown($event, groupList, i)"
-          (keydown.escape)="groupList.focus()"
-          (cdkDragEnded)="allowClicks(groupListId)"
-          (cdkDragStarted)="blockPopupClose(); denyClicks(groupListId)"
-        >
-          <elder-drop-item>
-            <mat-icon item-prefix inline="true" [svgIcon]="getListIcon(groupListItem)"></mat-icon>
-            <span class="item-content" item-content>{{ option | splitcase }}</span>
+      <li
+        class="list-item"
+        *ngFor="let option of state.groupColumns; index as i"
+        #groupListItem
+        cdkDrag
+        role="option"
+        cdkDragBoundary=".group-row"
+        [id]="option"
+        [keyGrid]="{ row: i, col: 0 }"
+        (keydown)="handleGrouplistKeydown($event, groupList, i)"
+        (keydown.escape)="groupList.focus()"
+        (cdkDragEnded)="allowClicks(groupListId)"
+        (cdkDragStarted)="blockPopupClose(); denyClicks(groupListId)"
+      >
+        <elder-drop-item>
+          <mat-icon item-prefix inline="true" [svgIcon]="getListIcon(groupListItem)"></mat-icon>
+          <span class="item-content" item-content>{{ option | splitcase }}</span>
 
-            <button
-              item-suffix
-              class="item-button-small"
-              mat-icon-button
-              matTooltip="Stop grouping by {{ option | splitcase }}"
-              @fadeInPill
-              #addButton
-              [keyGrid]="{ row: i, col: 1 }"
-              (keydown)="navigateListGrid($event, ungroupList)"
-              (click)="ungroup(i)"
-            >
-              <mat-icon inline="true" svgIcon="x"></mat-icon>
-            </button>
-          </elder-drop-item></li
-      ></ng-container>
-      <ng-template #noGroups>
-        <em style="text-align: center; vertical-align: middle; color: gray">Drop Groups Here</em>
-      </ng-template>
+          <button
+            item-suffix
+            class="item-button-small"
+            mat-icon-button
+            matTooltip="Stop grouping by {{ option | splitcase }}"
+            @fadeInPill
+            #addButton
+            [keyGrid]="{ row: i, col: 1 }"
+            (keydown)="navigateListGrid($event, ungroupList)"
+            (click)="ungroup(i)"
+          >
+            <mat-icon inline="true" svgIcon="x"></mat-icon>
+          </button>
+        </elder-drop-item>
+      </li>
     </ol>
   </section>
   <section>
@@ -108,10 +106,5 @@
         </elder-drop-item>
       </li>
     </ol>
-  </section>
-  <section class="footer">
-    <button class="footer__button" (click)="closePanel()" #closeButton cdkFocusInitial mat-button>
-      Close
-    </button>
   </section>
 </div>

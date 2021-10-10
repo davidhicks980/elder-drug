@@ -1,30 +1,17 @@
-<div class="popup-wrapper">
-  <button
-    #trigger
-    (click)="togglePopup()"
-    class="popup-trigger"
-    role="listbox"
-    name="popup-trigger"
-  >
-    <span class="popup-trigger__content">
-      <label class="popup-trigger__label" for="popup-trigger">
-        <ng-content select="popup-label"></ng-content>
-      </label>
-      <svg
-        class="popup-trigger__arrow"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        height="24"
-        width="24"
-        fill="currentColor"
-        [class.active]="attached | async"
-      >
-        <path d="M0 0h24v24H0V0z" fill="none" />
-        <path d="M7 10l5 5 5-5H7z" />
-      </svg>
-    </span>
-  </button>
-</div>
+<button
+  #trigger
+  (click)="togglePopup()"
+  role="listbox"
+  [class.active]="attached | async"
+  class="popup-trigger"
+  name="popup-trigger"
+  [matTooltip]="tooltipText"
+  matRipple
+  matRippleColor="rgba(150,160,180, 0.1)"
+>
+  <mat-icon class="popup-trigger__icon" svgIcon="{{ icon }}"></mat-icon>
+  <span class="popup-trigger__label"><ng-content select="popup-label"></ng-content></span>
+</button>
 
 <div #anchor></div>
 <ng-template id="anchor" #templatePortalContent>
@@ -32,7 +19,11 @@
     [@transformMenu]="(attached$ | async) ? 'enter' : 'void'"
     cdkTrapFocus
     cdkTrapFocusAutoCapture
+    class="panel__container"
   >
+    <button (click)="togglePopup(false)" mat-icon-button class="panel__close-button">
+      <mat-icon svgIcon="x"></mat-icon>
+    </button>
     <ng-container [ngTemplateOutlet]="content.templateRef"></ng-container>
   </div>
 </ng-template>

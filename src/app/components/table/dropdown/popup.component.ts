@@ -17,6 +17,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { destroy } from '../../../services/destroy';
+import { LayoutService } from '../../../services/layout.service';
 import { PopupActions, PopupService } from '../../../services/popup.service';
 import { PopupContentDirective } from './popup-content.directive';
 
@@ -32,9 +33,10 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   @ViewChild('templatePortalContent') template: TemplateRef<unknown>;
   @ViewChild('anchor') anchor: ElementRef;
   @ViewChild('trigger') trigger: ElementRef;
+  @Input() icon = '';
   @ContentChild(PopupContentDirective) content: PopupContentDirective;
   @Input() selectedOptions: string[] = [''];
-  @Input() ignoreClicks;
+  @Input() tooltipText = '';
   component: OverlayRef | null;
   portal: TemplatePortal<unknown>;
   destroy$ = new Subject();
@@ -45,9 +47,10 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     return this.attached.asObservable();
   }
   constructor(
-    private overlay: Overlay,
-    private view: ViewContainerRef,
-    private popupService: PopupService
+    private overlayService: Overlay,
+    private viewRef: ViewContainerRef,
+    private popupService: PopupService,
+    public layoutService: LayoutService
   ) {}
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -61,7 +64,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
       .pipe(
         destroy(this),
         filter(({ target }) => {
-          return !trigger.contains(target as Element) && this.allowClicks;
+          return !trigger.contains(target as Element);
         })
       )
       .subscribe(() => this.togglePopup(false));
@@ -99,7 +102,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   }
 
   initPopup() {
-    this.portal = new TemplatePortal(this.template, this.view);
+    this.portal = new TemplatePortal(this.template, this.viewRef);
     this.component = this.createOverlay(this.trigger);
     this.observeKeydown(this.component);
   }
@@ -133,21 +136,23 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
   }
 
   private createOverlay(anchor: ElementRef<HTMLElement>) {
-    return this.overlay.create({
-      positionStrategy: this.overlay
+    return this.overlayService.create({
+      positionStrategy: this.overlayService
         .position()
         .flexibleConnectedTo(anchor)
+        .withGrowAfterOpen(true)
+        .withViewportMargin(30)
         .withPositions([
           {
-            originX: 'center',
-            originY: 'center',
-            overlayX: 'center',
-            overlayY: 'center',
+            originX: 'end',
+            originY: 'top',
+            overlayX: 'end',
+            overlayY: 'top',
           },
         ])
         .withPush(true),
       disposeOnNavigation: true,
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      scrollStrategy: this.overlayService.scrollStrategies.reposition(),
     });
   }
 }
