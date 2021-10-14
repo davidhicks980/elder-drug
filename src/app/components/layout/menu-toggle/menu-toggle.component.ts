@@ -56,7 +56,11 @@ export class MenuToggleComponent implements AfterViewInit {
   @HostBinding('class.is-toggled') get toggleState() {
     return this.toggled;
   }
-  @HostListener('click', ['$event']) handleClick($event: MouseEvent) {
+  @HostBinding('class.is-flipped')
+  @Input()
+  flipped: boolean = false;
+  @HostListener('click', ['$event'])
+  handleClick($event: MouseEvent) {
     this.toggled = !this.toggled;
     this.toggle.emit(this.toggled);
   }

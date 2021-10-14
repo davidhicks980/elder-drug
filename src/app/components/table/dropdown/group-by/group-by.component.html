@@ -41,7 +41,7 @@
         (cdkDragEnded)="allowClicks(groupListId)"
         (cdkDragStarted)="blockPopupClose(); denyClicks(groupListId)"
       >
-        <elder-drop-item>
+        <elder-group-item>
           <mat-icon item-prefix inline="true" [svgIcon]="getListIcon(groupListItem)"></mat-icon>
           <span class="item-content" item-content>{{ option | splitcase }}</span>
 
@@ -58,7 +58,7 @@
           >
             <mat-icon inline="true" svgIcon="x"></mat-icon>
           </button>
-        </elder-drop-item>
+        </elder-group-item>
       </li>
     </ol>
   </section>

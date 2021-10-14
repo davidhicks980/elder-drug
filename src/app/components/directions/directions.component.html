@@ -1,0 +1,30 @@
+<div>
+  <span class="close-button"
+    ><button (click)="hide()" mat-icon-button>
+      <mat-icon svgIcon="x"></mat-icon></button
+  ></span>
+
+  <h1>
+    <mat-icon class="icon" [svgIcon]="icons.info"></mat-icon><span style="padding: 5px"></span
+    ><span> Getting Started</span>
+  </h1>
+
+  <p>Elder drug is a tool that simplifies geriatric medication management.</p>
+  <ol>
+    <li><span>Start typing a brand or generic drug name in the search field.</span></li>
+    <li>
+      <span
+        >Select the drug from the dropdown to add it to the search list. Multiple drugs can be added
+        to a single search.</span
+      >
+    </li>
+    <li>
+      <span
+        >Select the
+        <mat-icon aria-label="Search" class="search-icon" svgIcon="search"></mat-icon> icon or hit
+        <span class="keycap">ENTER</span>
+        to see matching Beers entries.</span
+      >
+    </li>
+  </ol>
+</div>

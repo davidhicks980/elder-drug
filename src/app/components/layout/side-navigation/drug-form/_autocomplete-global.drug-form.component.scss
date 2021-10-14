@@ -1,7 +1,7 @@
 @use "palette" as *;
 @use "colors" as *;
 @use "~@angular/material" as mat;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "sass:color";
 .typeahead {
   border-bottom-left-radius: 3px;

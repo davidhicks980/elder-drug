@@ -13,7 +13,7 @@ export const tableList: TableAttributes[] = [
     description: 'Information encompassing all categories of Beers Criteria',
   },
   {
-    tableNumber: TableCategories.PotentiallyInnappropriate,
+    tableNumber: TableCategories.PotentiallyInappropriate,
     fullTitle: 'Potentially Inappropriate Medication Use in Older Adults ',
     shortName: 'Inappropriate Medications in Older Adults',
     identifier: 'Inappropriate',
@@ -62,6 +62,4 @@ export const tableList: TableAttributes[] = [
   },
 ];
 
-export const TABLE_ATTRIBUTES = new InjectionToken<TableAttributes[]>(
-  'tables.attributes'
-);
+export const TABLE_ATTRIBUTES = new InjectionToken<TableAttributes[]>('tables.attributes');

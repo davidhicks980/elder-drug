@@ -50,7 +50,8 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     private overlayService: Overlay,
     private viewRef: ViewContainerRef,
     private popupService: PopupService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    private element: ElementRef
   ) {}
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -58,14 +59,12 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     this.component.dispose();
   }
   listenForPointerEvents() {
-    const trigger = this.trigger.nativeElement as HTMLElement;
+    let { nativeElement } = this.element as ElementRef<HTMLElement>;
     this.component
       .outsidePointerEvents()
       .pipe(
         destroy(this),
-        filter(({ target }) => {
-          return !trigger.contains(target as Element);
-        })
+        filter(({ target }) => !nativeElement.contains(target as Element) && this.allowClicks)
       )
       .subscribe(() => this.togglePopup(false));
   }
@@ -86,8 +85,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
         case PopupActions.open:
           this.togglePopup(true);
           break;
-        case PopupActions.allowOpen:
-          break;
+
         case PopupActions.destroy:
           throw Error('action not implemented');
         default:
@@ -120,19 +118,7 @@ export class PopupComponent implements AfterViewInit, OnDestroy {
     component
       .keydownEvents()
       .pipe(destroy(this))
-      .subscribe((event) => {
-        switch (event.code) {
-          case 'Enter':
-            break;
-          case 'Escape':
-            this.togglePopup(false);
-            break;
-          case 'Tab':
-            break;
-          default:
-            null;
-        }
-      });
+      .subscribe((event) => (event.code === 'Escape' ? this.togglePopup(false) : ''));
   }
 
   private createOverlay(anchor: ElementRef<HTMLElement>) {

@@ -24,11 +24,7 @@ export const layoutAnimations = {
       })
     ),
 
-  statefulSidebarShift: (
-    name: string,
-    amount: number,
-    states: string[] = ['open', 'close']
-  ) => {
+  statefulSidebarShift: (name: string, amount: number, states: number[] = [0, 1]) => {
     const [open, close] = states;
     return trigger(name, [
       transition(`${close} => ${open}`, [
@@ -39,7 +35,7 @@ export const layoutAnimations = {
             endX: '0px',
             endY: '0px',
           },
-          '500ms cubic-bezier(.51,.01,.13,.99)'
+          '400ms ease-in-out'
         ),
       ]),
       transition(`${open} => ${close}`, [
@@ -50,7 +46,7 @@ export const layoutAnimations = {
             endX: `${-1 * amount}px`,
             endY: '0px',
           },
-          '500ms cubic-bezier(.51,.01,.12,.77)'
+          '400ms ease-in-out'
         ),
       ]),
     ]);

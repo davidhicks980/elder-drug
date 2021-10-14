@@ -2,7 +2,7 @@
 @use "sass:math";
 @use "sass:string";
 @use "sass:meta";
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 /// Slightly lighten a color
 /// @access public
 /// @param {Color} $color - color to tint
@@ -162,7 +162,7 @@ $dark-gray-5: #05090f;
 
 $color: #fafafb;
 
-@function shadow($depth, $inset: false) {
+@function shadow($depth, $inset: false, $opacity: 13%) {
   $full: "";
   $comma: ",";
   $in: if($inset, "inset", "");
@@ -170,12 +170,12 @@ $color: #fafafb;
     @if $d == $depth {
       $comma: "";
     }
-    $full: $full + "#{$in 0 1px * $d 2px * $d rgb(87 107 138 / 7%)} #{$comma}";
+    $full: $full + "#{$in 0 1px * $d 1.5px * $d rgb(87 107 138 / #{$opacity})} #{$comma}";
   }
   @return $full;
 }
-@mixin shadow($depth, $inset: false) {
-  box-shadow: #{shadow($depth, $inset)};
+@mixin shadow($depth, $inset: false, $opacity: 10%) {
+  box-shadow: #{shadow($depth, $inset, $opacity)};
 }
 
 @mixin pseudo-shadow($depth: 5, $inset: false) {
@@ -318,6 +318,10 @@ $color: #fafafb;
     color: $light-gray-4;
     box-shadow: inset 0 0 0 10px $light-gray-4;
     -webkit-box-shadow: inset 0 0 0 10px $light-gray-4;
+  }
+  :host {
+    scrollbar-width: thin;
+    scrollbar-color: $gray-2 transparent;
   }
 }
 

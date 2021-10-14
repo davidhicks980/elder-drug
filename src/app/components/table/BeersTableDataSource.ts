@@ -17,14 +17,21 @@ export const HIGHLIGHT_REGEX = RegExp(
   `${HIGHLIGHT_START}([\w\s',./;+=\-_"]+)${HIGHLIGHT_END}`,
   'gi'
 );
+export function fastHash(str: string): string {
+  let h = 0;
+  for (let i = 0, j = str.length; i < j; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return String(h);
+}
 export class BeersTableDataSource<T> extends DataSource<T> {
   private dataSource: BehaviorSubject<T[]> = new BehaviorSubject([]);
-  private renderData = new BehaviorSubject<T[]>([]);
-  private readonly filterSource = new BehaviorSubject<string>('');
-  private renderChangesSubscription: Subscription | null = null;
   private groupSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
   private columnSource: BehaviorSubject<string[]> = new BehaviorSubject([]);
   private expansionSource = new BehaviorSubject('');
+  private filterSource = new BehaviorSubject<string>('');
+  private renderData = new BehaviorSubject<T[]>([]);
+  private renderChangesSubscription: Subscription | null = null;
   private expandedRows: Set<string> = new Set();
   columns$ = this.columnSource.asObservable();
   updateColumns(headers: string[]) {
@@ -57,7 +64,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   toggle(row: ExpandingEntry) {
     const { id } = row.position;
     this.expandedRows.has(id) ? this.collapseChildren(id) : this.expandedRows.add(id);
-    console.log(this.expandedRows);
     this.expansionSource.next(id);
   }
   get filters(): string {
@@ -254,13 +260,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   checkIsGroup(row: TableEntry<T> | FlatRowGroup<T>): boolean {
     return row.position.isGroup;
   }
-  fastHash(str: string): string {
-    let h = 0;
-    for (let i = 0, j = str.length; i < j; i++) {
-      h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
-    }
-    return String(h);
-  }
 
   hashData<Row extends TableEntry<T> | FlatRowGroup<T>>(entries: Row[]): Row[] {
     return entries.map((entry) => {
@@ -276,7 +275,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
         const { field, groupHeader } = entry as FlatRowGroup<T>;
         compoundKey.term = field + groupHeader;
       }
-      position.hash = this.fastHash(stableStringify(compoundKey));
+      position.hash = fastHash(stableStringify(compoundKey));
       return { ...entry, position };
     });
   }

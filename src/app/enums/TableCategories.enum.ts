@@ -1,6 +1,6 @@
 export enum TableCategories {
   General = 1,
-  PotentiallyInnappropriate,
+  PotentiallyInappropriate,
   DiseaseGuidance,
   Caution,
   DrugInteractions,

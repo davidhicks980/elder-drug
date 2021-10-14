@@ -2,7 +2,7 @@
 @use "sass:color" as *;
 @use "~@angular/cdk";
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "colors" as *;
 
 @include scrollbar;
@@ -179,7 +179,6 @@
   padding-left: 0.6em;
   font-size: 12.5pt;
   outline: none;
-  padding-top: 1px;
   font-family: var(--body-font);
   border: none;
   pointer-events: all;
@@ -204,4 +203,8 @@
   vertical-align: center;
   position: relative;
   padding-right: 5px;
+}
+
+.search-directions {
+  width: var(--directions-width);
 }

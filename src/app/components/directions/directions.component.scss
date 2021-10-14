@@ -1,0 +1,96 @@
+@use "palette" as *;
+
+:host {
+  --header--font-size: 24px;
+  --subheader--font-size: 16px;
+  --item--font-size: 14px;
+  height: fit-content;
+  padding: 2rem;
+  background: white;
+  border-radius: 5px;
+  margin: 2rem;
+  position: relative;
+  display: block;
+  max-width: fit-content;
+  @include shadow(3);
+  @include hoverable-shadow(6);
+}
+
+:host(.small) {
+  padding: 1rem;
+  margin: 0;
+  border: 1px solid $light-gray-3;
+  --header--font-size: calc(14px + 1vw);
+  --subheader--font-size: calc(9px + 1vw);
+  --item--font-size: calc(7px + 1vw);
+  & li {
+    padding: 0;
+  }
+  &::after {
+    content: none;
+  }
+}
+:host(.is-hidden) {
+  display: none;
+}
+
+h1 {
+  font-family: var(--header-font);
+  font-weight: 500;
+  color: $gray-5;
+  font-size: var(--header--font-size);
+  margin-bottom: 0.5em;
+  padding-top: 0.5em;
+  > * {
+    vertical-align: middle;
+  }
+}
+p {
+  font-size: var(--subheader--font-size);
+  color: $gray-5;
+  margin-bottom: 0.25em;
+}
+
+ol {
+  list-style: auto;
+  padding: 0.5em;
+}
+
+li {
+  font-size: var(--item--font-size);
+  list-style-position: inside;
+  list-style-type: auto;
+
+  color: $gray-5;
+  padding: 0.5rem 0;
+  & span {
+    margin: 5px;
+  }
+}
+
+.directions-container {
+  display: block;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: $gray-5;
+}
+.search-icon {
+  vertical-align: text-top;
+  height: 1.3em;
+  width: 1.3em;
+}
+
+.keycap {
+  padding: 3px 8px;
+  display: absolute;
+  background: black;
+  color: rgba(255, 255, 255, 0.877);
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 11px;
+}

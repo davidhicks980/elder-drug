@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'elder-drop-item',
+  selector: 'elder-group-item',
   templateUrl: './drop-item.component.html',
   styleUrls: ['./drop-item.component.scss'],
 })

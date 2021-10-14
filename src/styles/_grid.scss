@@ -1,7 +1,7 @@
-@use 'sass:map';
-@use 'bem-mixin' as *;
-$orientations: "baseline", "center", "end", "flex-end", "flex-start", "start",
-  "space-around", "space-between", "space-evenly", "stretch", "right";
+@use "sass:map";
+@use "breakpoints" as *;
+$orientations: "baseline", "center", "end", "flex-end", "flex-start", "start", "space-around",
+  "space-between", "space-evenly", "stretch", "right";
 
 $nest-level: "self", "content", "items";
 $arrangements: (

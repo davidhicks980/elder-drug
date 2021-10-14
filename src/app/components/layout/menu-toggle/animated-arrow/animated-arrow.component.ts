@@ -7,9 +7,6 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimatedArrowComponent {
-  @Input() direction: 'LEFT' | 'RIGHT' = 'LEFT';
-  @HostBinding('class.left-arrow') getDirection() {
-    return this.direction === 'LEFT';
-  }
+  @HostBinding('class.left-arrow') @Input() toLeft: boolean = true;
   constructor() {}
 }

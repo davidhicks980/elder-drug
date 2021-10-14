@@ -1,8 +1,6 @@
 <header>
-  <div class="toolbar">
-    <ng-content select="[elder-toolbar-toggle]"></ng-content>
-    <ng-content select="[elder-toolbar-brand]"></ng-content>
-    <ng-content select="[elder-toolbar-link]"></ng-content>
+  <div class="toolbar-first-row">
+    <ng-content select="toolbar-first-row"></ng-content>
 
     <!--<div class="button-wrapper">
       <button class="button-wrapper__button" (click)="openDesignDialog()">
@@ -18,6 +16,7 @@
       </button>    </div>
     -->
   </div>
-
-  <ng-content select="[elder-toolbar-tabs]"></ng-content>
+  <div class="toolbar-second-row">
+    <ng-content select="toolbar-second-row"></ng-content>
+  </div>
 </header>

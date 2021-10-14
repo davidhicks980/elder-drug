@@ -1,10 +1,10 @@
 @use "palette" as *;
 @use "grid" as gr;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 :host {
   --expanded-row--header-font: var(--header-font), sans-serif;
   --expanded-row--body-font: var(--body-font), sans-serif;
-  border-radius: 8px;
+  border-radius: 5px;
   color: $primary-5;
   background: white;
   border: 1px solid $light-gray-4;

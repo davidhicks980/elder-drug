@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 enum orientation {
   ROW,
@@ -11,9 +11,15 @@ enum orientation {
   styleUrls: ['./brand.component.scss', './_logo.brand.component.scss'],
 })
 export class BrandComponent {
-  @Input() orientation: orientation | 'column' | 'row' = orientation.ROW;
-  @Input() fontRem: number = 3.5;
-  @Input() logoRem: number = 3.5;
+  @HostBinding('style.--orientation')
+  @Input()
+  orientation: orientation | 'column' | 'row' = orientation.COLUMN;
+  @HostBinding('style.--font-size')
+  @Input()
+  fontSize: string = '3.5rem';
+  @HostBinding('style.--logo-size')
+  @Input()
+  logoSize: string = '3.5rem';
   @Input() showTitle: boolean = true;
   constructor() {}
 }

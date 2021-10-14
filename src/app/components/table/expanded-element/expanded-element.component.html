@@ -1,65 +1,67 @@
-<div class="expanded-row" *ngIf="data as d">
-  <div *elderLet="filterService.filter$ | async as filter">
-    <div class="grid__12-col">
-      <div class="header">
-        <h1 class="header__title" [innerHTML]="d.Item | titlecase | highlight: filter"></h1>
-        <span class="header__chip" [innerHtml]="d.ItemType | titlecase | highlight: filter"></span>
-        <h2
-          [innerHTML]="d.SearchTerms | titlecase | highlight: filter"
-          class="header__subtitle"
-        ></h2>
-      </div>
-    </div>
-    <div class="masonry-grid">
-      <div *ngIf="d.Inclusion">
-        <elder-entry-card
-          [filter]="filter"
-          [field]="'Guidance Applies To'"
-          [entry]="d.Inclusion"
-          [icon]="'unfold_less'"
-        >
-        </elder-entry-card>
-      </div>
+<div class="padding-box" *elderLet="filterService.filter$ | async as filter">
+  <div class="header">
+    <span class="header__title">
+      <h1 class="title__text" [innerHTML]="data.Item | titlecase | highlight: filter"></h1>
+      <span class="title__chip" [innerHtml]="data.ItemType | titlecase | highlight: filter"></span
+    ></span>
 
-      <div *ngIf="d.Exclusion">
-        <elder-entry-card
-          [filter]="filter"
-          [field]="'Does Not Apply To'"
-          [entry]="d.Exclusion"
-          [icon]="'unfold_more'"
-        >
-        </elder-entry-card>
-      </div>
-      <div *ngIf="d.DiseaseState">
-        <elder-entry-card
-          [filter]="filter"
-          [field]="'Caution In'"
-          [entry]="d.DiseaseState"
-          [icon]="'error'"
-        >
-        </elder-entry-card>
-      </div>
-      <div *ngIf="d.MaximumClearance || d.MinimumClearance">
-        <elder-entry-range-card
-          [filter]="filter"
-          [field]="'Renal Adjustments'"
-          [entry]="d.Rationale"
-          [icon]="'kidneys'"
-          [maximum]="d.MaximumClearance"
-          [minimum]="d.MinimumClearance"
-          [recommendation]="d.Recommendation"
-          [units]="'ml/min'"
-        ></elder-entry-range-card>
-      </div>
-      <div *ngIf="d.Rationale">
-        <elder-entry-card
-          [filter]="filter"
-          [field]="'Rationale'"
-          [entry]="d.Rationale"
-          [icon]="'light'"
-        >
-        </elder-entry-card>
-      </div>
+    <h2 class="header__subtitle">
+      Matches:
+      <span
+        class="header__subtitle__terms"
+        [innerHTML]="data.SearchTerms | titlecase | highlight: filter"
+      ></span>
+    </h2>
+  </div>
+  <div class="masonry-grid">
+    <div *ngIf="data.Inclusion">
+      <elder-entry-card
+        [filter]="filter"
+        [field]="'Guidance Applies To'"
+        [entry]="data.Inclusion"
+        [icon]="'unfold_less'"
+      >
+      </elder-entry-card>
+    </div>
+
+    <div *ngIf="data.Exclusion">
+      <elder-entry-card
+        [filter]="filter"
+        [field]="'Does Not Apply To'"
+        [entry]="data.Exclusion"
+        [icon]="'unfold_more'"
+      >
+      </elder-entry-card>
+    </div>
+    <div *ngIf="data.DiseaseState">
+      <elder-entry-card
+        [filter]="filter"
+        [field]="'Caution In'"
+        [entry]="data.DiseaseState"
+        [icon]="'error'"
+      >
+      </elder-entry-card>
+    </div>
+    <div *ngIf="data.MaximumClearance || data.MinimumClearance">
+      <elder-entry-range-card
+        [filter]="filter"
+        [field]="'Renal Adjustments'"
+        [entry]="data.Rationale"
+        [icon]="'kidneys'"
+        [maximum]="data.MaximumClearance"
+        [minimum]="data.MinimumClearance"
+        [recommendation]="data.Recommendation"
+        [units]="'ml/min'"
+      ></elder-entry-range-card>
+    </div>
+    <div *ngIf="data.Rationale">
+      <elder-entry-card
+        [filter]="filter"
+        [field]="'Rationale'"
+        [entry]="data.Rationale"
+        [icon]="'light'"
+      >
+      </elder-entry-card>
     </div>
   </div>
 </div>

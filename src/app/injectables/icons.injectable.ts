@@ -18,6 +18,7 @@ export const iconNames = Object.freeze({
   overflow_menu_vertical: 'overflow_menu_vertical',
   chevronleft: 'chevron-left',
   arrow_right: 'arrow_right',
+  arrow_left: 'arrow_left',
   menu: 'menu',
   heartekg: 'heart-ekg',
   chevron_down: 'chevron_down',
@@ -34,6 +35,9 @@ export const iconNames = Object.freeze({
   github: 'github',
   xdelete: 'x-delete',
   edit: 'edit',
+  info: 'info',
+  chevron_right: 'chevron_right',
+  chevron_right_alt: 'chevron-right-alt',
 });
 export type IconNames = typeof iconNames;
 export const ICON_NAMES = new InjectionToken<Record<string, string[]>>('icons');

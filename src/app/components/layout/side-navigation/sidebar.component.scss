@@ -1,19 +1,26 @@
 @use "palette" as *;
 @use "colors" as *;
 @use "grid" as *;
-@use "bem-mixin" as bem;
+@use "breakpoints" as bem;
+@use "sass:color";
 :host {
   height: 100%;
   display: block;
-
+  background: white;
+  position: relative;
+  z-index: 2;
+  @include hoverable-shadow(5);
+  &::after {
+    opacity: 0.5;
+  }
   @include bem.mobileWidth {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 10vh 22vh 68vh;
+    grid-template-rows: 10vh 22vh 63vh 5vh;
     place-content: start center;
     height: auto;
     box-shadow: none;
-    grid-template-areas: "." "brand" "form";
+    grid-template-areas: "." "brand" "form" "footer";
     &::before {
       background-color: white;
       content: "";
@@ -30,14 +37,6 @@
       grid-template-rows: 100vh;
       grid-template-areas: "form";
     }
-  }
-}
-:host {
-  position: relative;
-  z-index: 2;
-  @include hoverable-shadow(8);
-  &::after {
-    opacity: 0.5;
   }
 }
 
@@ -60,16 +59,16 @@ elder-drug-form {
   height: 40px;
   max-height: 40px;
   font-size: 12pt;
-  background-color: #062f74;
+  background-color: color.scale($primary-2, $alpha: -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0px;
   font-weight: 400;
   position: absolute;
-  top: 0px;
-  transform: translateY(-40px);
+  top: -40px;
   width: 100%;
+
   @include bem.mobileWidth {
     display: none;
   }
@@ -97,4 +96,16 @@ elder-drug-form {
   @include bem.mobileWidth {
     display: block;
   }
+}
+
+.footer__container {
+  grid-area: footer;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.219) 0%, $light-gray-2 5%);
+  color: $gray-4;
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding-top: 0.5vh;
+  font-size: 0.8em;
+  border-top: 1px solid $light-gray-4;
 }

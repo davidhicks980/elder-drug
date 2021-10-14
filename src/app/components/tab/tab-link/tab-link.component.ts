@@ -4,7 +4,7 @@ import { tabLinkAnimations } from './tab-link.animations';
 
 @Component({
   selector: 'elder-tab-link',
-  templateUrl: './tab-link.component.html',
+  templateUrl: './tab-link.component.svg',
   styleUrls: ['./tab-link.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [

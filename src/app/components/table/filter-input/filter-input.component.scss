@@ -1,5 +1,5 @@
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "sass:color";
 :host {
   font-size: var(--filter-input--font-size);
@@ -16,13 +16,13 @@
   padding: 0 0.25em;
   align-items: center;
   grid-template-columns: 2em 1fr;
-  border: var(--common-border);
+  border: 1px solid;
+  border-color: var(--filter-input--border-color);
   border-radius: var(--filter-input--radius);
   height: var(--filter-input--height);
   transition: outline 500ms ease-out, outline-offset 500ms ease;
   font-size: var(--filter-input--font-size);
 
-  outline-offset: 1px;
   outline-color: transparent;
   & ::placeholder {
     color: $gray-3;
@@ -30,7 +30,6 @@
   &:focus-within {
     outline: auto;
     outline-color: var(--primary-1);
-    outline-offset: 0px;
     & ::placeholder {
       color: $gray-2;
     }

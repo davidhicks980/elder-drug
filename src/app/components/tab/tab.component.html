@@ -24,13 +24,7 @@
         (keydown.ArrowLeft)="focusPrevious(item)"
         *ngFor="let tab of state.tabs; index as index"
       >
-        <button
-          #tabButton
-          class="tab-trigger"
-          (focusin)="toggleChildFocusStyles(tabButton)"
-          (focusout)="toggleChildFocusStyles(tabButton)"
-          (click)="handleTabClick(tab.tableNumber)"
-        >
+        <button #tabButton class="tab-trigger" (click)="handleTabClick(tab.tableNumber)">
           <elder-tab-link
             #link
             [selected]="tab.tableNumber === state.currentTab"

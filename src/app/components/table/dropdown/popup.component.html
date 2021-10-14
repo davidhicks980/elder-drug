@@ -2,12 +2,9 @@
   #trigger
   (click)="togglePopup()"
   role="listbox"
-  [class.active]="attached | async"
   class="popup-trigger"
   name="popup-trigger"
   [matTooltip]="tooltipText"
-  matRipple
-  matRippleColor="rgba(150,160,180, 0.1)"
 >
   <mat-icon class="popup-trigger__icon" svgIcon="{{ icon }}"></mat-icon>
   <span class="popup-trigger__label"><ng-content select="popup-label"></ng-content></span>

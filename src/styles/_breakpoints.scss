@@ -1,5 +1,6 @@
 @use "sass:string";
 @use "@davidhicks/sass-mixins/responsive" as *;
+@forward "@davidhicks/sass-mixins/responsive";
 
 $bp: (
   "zero": 0,

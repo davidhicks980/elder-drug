@@ -11,18 +11,16 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  Renderer2,
   SimpleChanges,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { BehaviorSubject, interval, merge, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, interval, Observable, Subject } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 
 import { destroy } from '../../services/destroy';
 import { TableService } from '../../services/table.service';
 
-const focusClass = 'focused';
 enum TabAnimationState {
   SHIFTED,
   UNSHIFTED,
@@ -40,8 +38,7 @@ export class TabComponent implements AfterViewInit, OnDestroy, OnChanges {
   @HostBinding('class.rounded')
   @Input()
   rounded: boolean = false;
-  animationState: TabAnimationState = TabAnimationState.UNSHIFTED;
-  hoveredTab: number;
+
   @HostBinding('class.shifted')
   get shifted() {
     return this.animationState === TabAnimationState.SHIFTED;
@@ -59,11 +56,6 @@ export class TabComponent implements AfterViewInit, OnDestroy, OnChanges {
     return this.animationState === TabAnimationState.UNSHIFTING;
   }
 
-  @HostListener('pointerover', ['$event'])
-  handleHover($event: AnimationEvent) {
-    if ($event.target instanceof HTMLLIElement) {
-    }
-  }
   @HostListener('animationend', ['$event'])
   handleAnimation($event: AnimationEvent) {
     if ($event.target instanceof HTMLLIElement) {
@@ -85,19 +77,8 @@ export class TabComponent implements AfterViewInit, OnDestroy, OnChanges {
   rightOverflowSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
   scrollable: boolean = false;
   destroy$ = new Subject();
-
-  markHovered(index: number) {
-    this.hoveredTab = index;
-  }
-  tabHasBorder(index) {
-    let selectedIndex = this.tableService.tableIndices.findIndex(
-      (value) => value === this.tableService.table
-    );
-    let diff = selectedIndex - index;
-    return diff > 1 || diff < 0;
-  }
+  animationState: TabAnimationState = TabAnimationState.UNSHIFTED;
   handleTabClick(table: number) {
-    this.activeTable.emit(table);
     this.tableService.emitTableSelection(table);
   }
   handleMouseDown($event: MouseEvent, direction: 'RIGHT' | 'LEFT') {
@@ -130,11 +111,13 @@ export class TabComponent implements AfterViewInit, OnDestroy, OnChanges {
       (this.list.nativeElement.lastElementChild as HTMLElement).focus();
     }
   }
-  toggleChildFocusStyles(item: HTMLElement) {
-    this.renderer.addClass(item, focusClass);
-  }
+
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['rounded'] && !changes['rounded'].firstChange) {
+    if (
+      typeof changes['rounded']?.previousValue === 'boolean' &&
+      typeof changes['rounded']?.currentValue === 'boolean'
+    ) {
+      console.log(changes['rounded']);
       this.animationState = this.rounded
         ? TabAnimationState.SHIFTING
         : TabAnimationState.UNSHIFTING;
@@ -180,10 +163,7 @@ export class TabComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  constructor(public tableService: TableService, private renderer: Renderer2) {
-    this.currentTab$ = merge(
-      this.activeTable.asObservable(),
-      this.tableService.selection$.pipe(map((table) => table.tableNumber))
-    ).pipe(destroy(this));
+  constructor(public tableService: TableService) {
+    this.currentTab$ = this.tableService.selection$.pipe(map((table) => table.tableNumber));
   }
 }

@@ -1,83 +1,77 @@
 @use "palette" as *;
 @use "colors" as *;
-@use "bem-mixin" as bem;
+@use "breakpoints" as *;
 @use "sass:color";
 
+@keyframes ShiftSidebarIn {
+  from {
+    transform: translateX(-260px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+@keyframes ShiftSidebarOut {
+  from {
+    transform: translateX(260px);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes MobileFadeSidebarIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+:host {
+  display: block;
+}
+
 .layout {
-  &.hide-overflow {
+  :host(:not(.closed)) & {
     overflow: hidden;
   }
 }
 
-.toolbar {
-  color: $gray-5;
-  border-bottom: 1px solid $light-gray-5;
-  height: 100%;
-  width: 100%;
-
-  &-tabs {
-    margin-left: 2.5rem;
-    &.is-shifted,
-    &.is-animating {
-      margin-left: calc(260px + 2.5rem);
+%shifted {
+  &-content,
+  &-sidebar {
+    @extend %shifted;
+    animation-duration: var(--shift-duration, 400ms);
+    animation-timing-function: ease-in-out;
+  }
+  &-content {
+    --shift-name: ShiftSidebarIn;
+  }
+  &-sidebar {
+    --shift-name: ShiftSidebarOut;
+  }
+  @include mobileWidth {
+    &-content {
+      --shift-name: none;
     }
-    @include bem.mobileWidth {
-      margin-left: 0px;
-    }
-  }
-}
-
-.content {
-  grid-area: content;
-  background-color: $light-gray-2;
-  overflow-x: hidden;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  .is-animating & {
-    width: 100vw;
-  }
-}
-.sidebar {
-  grid-area: side;
-  width: 100%;
-  position: relative;
-  top: 0px;
-  overflow: visible;
-  @include bem.mobileWidth {
-    overflow: hidden;
-    top: 0px;
-    position: absolute;
-    z-index: 10;
-    height: 100%;
-  }
-  &-toggle {
-    position: absolute;
-    top: -33px;
-    right: -33px;
-    z-index: 5;
-  }
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 0px 1fr;
-  grid-template-rows: calc(100vh - 100px);
-  grid-template-areas: "side content";
-  &.is-animating {
-    grid-template-areas: "side content content";
-    grid-template-columns: 260px 260px 1fr;
-  }
-  &.is-sidebar-open {
-    grid-template-columns: 260px 1fr;
-
-    @include bem.mobileWidth {
-      display: block;
+    &-sidebar {
+      --shift-name: MobileFadeSidebarIn;
+      transform-origin: top center;
+      animation-duration: var(--shift-duration, 200ms);
     }
   }
-  @include bem.mobileWidth {
-    display: block;
+  :host(.opening) & {
+    animation-direction: normal;
+    animation-name: var(--shift-name, none);
+  }
+  :host(.closing) & {
+    animation-direction: reverse;
+    animation-name: var(--shift-name, none);
   }
 }
 .header {
@@ -85,65 +79,147 @@
   top: -60px;
   height: 100px;
   z-index: 1;
-  &.is-animating {
+  :host(.closing) &,
+  :host(.opening) & {
     z-index: 0;
   }
-  &.is-hidden {
-    display: none;
+}
+.toolbar {
+  color: $gray-5;
+  border-bottom: 1px solid $light-gray-5;
+  height: 100%;
+  width: 100%;
+  &.is-elevated {
+    @include shadow(5);
   }
 }
-
-.toolbar-toggle,
-elder-animated-arrow {
-  color: $gray-4;
-
-  &:hover {
-    color: $primary-4;
+.toolbar-first-row {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.toolbar-second-row {
+  @extend %shifted-content;
+  padding-left: var(--toolbar-tabs--padding-left, 0.75rem);
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: left;
+  align-items: center;
+  gap: 0.75rem;
+  :host(.closing) &,
+  :host(.opening) & {
+    width: 100%;
   }
-  &--link {
-    @extend .toolbar-toggle;
+  :host(:not(.closed)) & {
+    --toolbar-tabs--padding-left: calc(260px + 0.75rem);
+  }
+  @include media-size("zero", "small") {
+    padding-left: 0px;
   }
 }
-elder-menu-toggle elder-animated-arrow {
-  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+.toolbar-tabs {
+  --tab-container--width: 100%;
 
-  @include bem.mobileWidth {
-    width: var(--icon-toggle--height, 2rem);
-    height: var(--icon-toggle--width, 2rem);
+  :host(.closing) &,
+  :host(.opening) & {
+    --tab-container--width: 100vw;
+    overflow: visible;
   }
 }
-.sidebar-toggle elder-menu-toggle {
-  pointer-events: all;
-  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
-
-  * {
-    color: #fff;
+.main {
+  @extend %shifted-content;
+  display: grid;
+  grid-template-columns: 0 1fr;
+  grid-template-rows: calc(100vh - 100px);
+  grid-template-areas: "side content";
+  :host(.closing) & {
+    grid-template-areas: "side content content";
+    grid-template-columns: 260px 260px 1fr;
   }
-  --icon-button--background: #{color.adjust(#fff, $alpha: -0.6)};
-  --icon-button--outline: #{color.adjust(#fff, $alpha: -0.3)};
-  --icon-button--active: #{color.adjust(#fff, $alpha: -0.3)};
-  --icon-toggle--height: 1.5rem;
-  --icon-toggle--width: 1.5rem;
+  :host(.opening) &,
+  :host(.opened) & {
+    grid-template-columns: 260px 1fr;
+  }
+  @include media-size("zero", "small") {
+    display: block;
+    min-height: calc(100vh - 100px);
+  }
 }
-
-.legend {
-  z-index: 1;
-  color: white;
-  height: 40px;
-  max-height: 40px;
-  font-size: 12pt;
-  background-color: #062f74;
+.table-section {
+  grid-area: content;
+  background-color: $light-gray-2;
+  overflow-x: hidden;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 0px;
-  font-weight: 400;
-  grid-area: legend;
-  @include bem.mobileWidth {
-    display: none;
+  width: 100%;
+  position: relative;
+  :host(.closing) &,
+  :host(.opening) & {
+    width: 100vw;
+    @include media-size("zero", "small") {
+      max-height: calc(100vh - 100px);
+      overflow: hidden;
+    }
+  }
+  @include media-size("zero", "small") {
+    display: block;
+    min-height: calc(100vh - 100px);
   }
 }
 
-.click-through {
+.table-card {
+  transform-origin: left center;
+}
+
+.rounded-tab-breakpoint {
+  position: absolute;
+  height: 20px;
+  top: 105px;
+  width: 100%;
   pointer-events: none;
+  visibility: hidden;
+}
+.sidebar-section {
+  overflow: visible;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0px;
+
+  :host(.closing) &,
+  :host(.opening) & {
+    overflow-x: clip;
+  }
+  :host(.closing) &,
+  :host(.closed) & {
+    pointer-events: none;
+  }
+  @include media-size("zero", "small") {
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+  }
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: -33px;
+  right: -33px;
+  z-index: 5;
+}
+
+.sidebar {
+  @extend %shifted-sidebar;
+}
+
+.toolbar-small-toggle {
+  --icon-button--size: 26px;
+  --icon-button--color: #fff;
+  --icon-button--active-color: #{#fff};
+  --icon-button--background-color: rgba(255, 255, 255, 0.2);
+  --icon-button--outline-color: #{color.scale(#fff, $alpha: -70%)};
+  --icon-button--shadow: #000;
 }

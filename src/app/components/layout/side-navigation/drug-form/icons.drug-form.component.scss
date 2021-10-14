@@ -11,13 +11,17 @@ button[mat-icon-button] {
 %icon {
   stroke: none;
   height: 2rem;
-  color: $gray-3;
 }
 mat-icon[data-add-icon] {
   @extend %icon;
+  color: $primary-1;
+  :disabled & {
+    color: $gray-3;
+  }
 }
 mat-icon[data-search-icon] {
   @extend %icon;
+  color: $gray-3;
   height: 1.7rem;
   overflow: visible;
 }

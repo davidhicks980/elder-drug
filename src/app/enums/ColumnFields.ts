@@ -12,7 +12,7 @@ export enum ColumnField {
   Rationale = 'Rationale',
   Recommendation = 'Recommendation',
   RecommendationLineTwo = 'RecommendationLineTwo',
-  ShortName = 'ShortName',
+  ShortName = 'ShortTableName',
   SearchTerms = 'SearchTerms',
 }
 export const columns = [
@@ -29,6 +29,6 @@ export const columns = [
   'Rationale',
   'Recommendation',
   'RecommendationLineTwo',
-  'ShortName',
+  'ShortTableName',
   'SearchTerms',
 ] as ColumnField[];

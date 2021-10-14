@@ -1,13 +1,12 @@
 @use "sass:color";
 @use "palette" as *;
 @use "colors" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 
 .drug-table {
   &--wrapper {
     border: var(--common-border);
     border-radius: 4px;
-    @include shadow(3);
     @include mobileWidth {
       background-color: $light-gray-1;
     }
@@ -28,111 +27,5 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-}
-
-.expand-row__cell {
-  height: 2rem;
-  cursor: pointer;
-  color: $gray-3;
-  line-height: 30px;
-  font-family: var(--body-font), sans-serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  flex: 1;
-  display: flex;
-  align-items: center;
-
-  &--open {
-    background-color: tint($primary-1, 90%);
-    color: $secondary-2-5;
-    transition: background-color 1s;
-  }
-}
-
-.h2 {
-  padding-bottom: 1px;
-  margin-bottom: 0.5em;
-  line-height: 1em;
-}
-
-mat-chip-list mat-chip.mat-standard-chip {
-  min-height: 1.7em;
-  border-radius: 4px;
-  background-color: $primary-3;
-  color: white;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.chevron-button {
-  height: 36px;
-  width: 36px;
-  line-height: 36px;
-}
-[svgIcon="chevron-right"] {
-  transform: rotate(-0deg);
-  transition: transform 0.2s;
-  vertical-align: middle;
-  &.is-rotated {
-    transform: rotate(90deg);
-  }
-}
-
-.expand-row__cell__sub-header {
-  height: 30px;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-left: 15px;
-}
-.expansion-card {
-  border-radius: 3px;
-  background-color: rgb(255 255 255);
-  color: $primary-5;
-  padding: 20px;
-  margin: 5px;
-}
-th.table-cell.expand-group-header.header {
-  height: 30px;
-  column-span: all;
-  font-weight: 300;
-  color: black;
-}
-
-button.absolute-position {
-  position: absolute;
-}
-
-@keyframes roll {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(90deg);
-  }
-}
-@keyframes rollback {
-  0% {
-    transform: rotate(90deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.table-fields {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  width: 100%;
-  margin: 10px 0 10px 0;
-  flex-wrap: wrap;
-  justify-content: center;
-  &__table-field {
-    flex: 1 1 150px; /*  Stretching: */
-    flex: 0 1 150px; /*  No stretching: */
-    margin: 5px;
   }
 }

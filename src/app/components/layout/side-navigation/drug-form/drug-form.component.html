@@ -79,7 +79,7 @@
               [matRippleRadius]="20"
               [matRippleCentered]="true"
               [matRippleUnbounded]="true"
-              [disabled]="!drugInput.valid || !drugList.valid"
+              [disabled]="!drugInput.valid"
               class="search-icon"
             >
               <mat-icon data-add-icon inline="true" svgIcon="add-2"></mat-icon>
@@ -92,7 +92,6 @@
           [errors]="drugInput.errors"
         ></elder-error-message>
       </div>
-
       <section
         class="edit-section"
         [class.is-pinned]="state.pinSearch"
@@ -102,13 +101,21 @@
             : 'unshift'
         "
       >
+        <ng-template #directions>
+          <elder-directions
+            *ngIf="state.mobile && layoutService.showDirections$ | async"
+            class="search-directions small"
+            [style.--directions-width]="state.pinSearch ? '89%' : '100%'"
+          >
+          </elder-directions>
+        </ng-template>
         <ul
           class="edit-list"
           #chipList
           formArrayName="drugList"
           aria-label="Drug selection"
           [class.not-shifted]="!((drugInput.errors || drugList.errors) && !drugInputIsEmpty)"
-          *ngIf="!drugListIsEmpty"
+          *ngIf="!drugListIsEmpty; else directions"
         >
           <h2 class="edit-title">Selected Drugs</h2>
 
@@ -127,7 +134,6 @@
               [class.has-attached]="editDrugAutoTrigger.panelOpen"
             >
               <button
-                mat-icon-button
                 class="edit-list-button"
                 (click)="deleteListControl(index); searchInputAutoTrigger.closePanel()"
                 matTooltip="Remove {{ drugName.value }}"
@@ -137,7 +143,7 @@
                 (mouseover)="editDrugTooltip.disabled = true"
                 (mouseleave)="editDrugTooltip.disabled = false"
               >
-                <mat-icon svgIcon="x-delete" class="edit-icon"></mat-icon>
+                <mat-icon svgIcon="x-delete" class="edit-list-button-icon"></mat-icon>
               </button>
               <input
                 class="edit-input"
@@ -160,9 +166,8 @@
               <button
                 class="edit-list-button"
                 (click)="editDrugField.focus(); $event.preventDefault()"
-                mat-icon-button
               >
-                <mat-icon svgIcon="edit"></mat-icon>
+                <mat-icon class="edit-list-button-icon" svgIcon="edit"></mat-icon>
               </button>
             </div>
             <elder-error-message

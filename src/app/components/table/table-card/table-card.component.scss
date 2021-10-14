@@ -1,4 +1,4 @@
-@use "bem-mixin" as bem;
+@use "breakpoints" as bem;
 @use "palette" as *;
 :host {
   background-color: white;
@@ -11,6 +11,7 @@
   display: block;
   position: relative;
   height: fit-content;
+
   @include pseudo-shadow(6);
   &::after {
     opacity: 0.5;
@@ -28,9 +29,14 @@
     opacity: 1;
   }
 }
+
+.card-container {
+  opacity: var(--table-card--opacity, 1);
+  transition: opacity 120ms ease-in-out;
+}
 .table {
   background-color: white;
-  padding: 5px;
+  padding: 1rem;
   @include bem.mobileWidth {
     padding: 1rem;
     border-top: var(--common-border);
@@ -47,7 +53,7 @@
   width: 0.85em;
   display: inline-block;
 }
-h1 {
+.header-h1 {
   font-weight: 500;
   font-size: 28px;
   padding-top: 1.5rem;
@@ -56,8 +62,9 @@ h1 {
   grid-template-columns: 36px 1fr;
   letter-spacing: -0.05rem;
   color: $gray-5;
+  font-family: "IBM Plex Sans";
 }
-header p {
+.header-p {
   color: $gray-4;
   font-size: 16px;
 }
@@ -66,4 +73,7 @@ header p {
   border: var(--common-border);
   border-width: 0 0 1px 0;
   margin: auto 5px 0 5px;
+  @include bem.mobileWidth {
+    display: none;
+  }
 }

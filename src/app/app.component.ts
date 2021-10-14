@@ -11,8 +11,7 @@ import { DataService } from './services/data.service';
   styleUrls: ['app.component.scss'],
   providers: [{ provide: ICON_NAMES, useValue: iconNames }],
 })
-export class AppComponent implements OnInit {
-  ngOnInit(): void {}
+export class AppComponent {
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
@@ -21,7 +20,6 @@ export class AppComponent implements OnInit {
   ) {
     this.registerIcons(iconRegistry, sanitizer, icons);
   }
-  title = 'ElderDrug';
 
   private registerIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, icons: IconNames) {
     Object.values(icons).forEach((icon) => {

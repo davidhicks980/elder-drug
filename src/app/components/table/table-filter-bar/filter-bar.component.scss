@@ -1,5 +1,5 @@
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 $radius: 6px;
 $mobile-height: 44px;
 $font-size: 16px;
@@ -9,6 +9,10 @@ elder-filter-bar {
   display: block;
   padding: 1em 0;
   --filter--border-width: 1px;
+  --filter--border-color: #{$light-gray-5};
+  &:hover {
+    --filter--border-color: #{$light-gray-4};
+  }
 }
 .filter-bar {
   width: 100%;
@@ -21,12 +25,12 @@ elder-filter-bar {
   }
   @include hoverable-shadow(3);
 }
-
 elder-filter-input {
   max-width: 275px;
   --filter-input--radius: #{$radius};
   --filter-input--height: #{2.25rem};
   --filter-input--font-size: 1rem;
+  --filter-input--border-color: var(--filter--border-color);
   .collapsed & {
     max-width: 500px;
     --filter-input--font-size: 1rem;
@@ -45,7 +49,7 @@ elder-popup {
   --popup--padding: 0.25rem 0.25rem;
   --popup--font-size: 1.3rem;
   --popup--border-width: 1px;
-
+  --popup--border-color: var(--filter--border-color);
   &:last-of-type {
     --popup--border-radius: 0 #{$radius} #{$radius} 0;
   }

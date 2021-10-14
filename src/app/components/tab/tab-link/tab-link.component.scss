@@ -25,7 +25,7 @@
 }
 
 :host(.rounded) {
-  --tab--clip--transform: translateY(-1.3px) scaleX(0.8) scaleY(0.9);
+  --tab--clip--transform: translateY(-1.3px) scaleX(0.85) scaleY(0.9);
   --tab--fill: transparent;
   --tab--color: white;
 }
@@ -68,8 +68,7 @@
 }
 
 .tab-path {
-  transition: opacity 400ms cubic-bezier(0.075, 0.82, 0.165, 1),
-    fill 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: opacity 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
   fill: var(--tab--fill);
 }
 

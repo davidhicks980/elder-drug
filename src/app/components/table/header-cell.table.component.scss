@@ -1,5 +1,5 @@
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "sass:color";
 .header {
   line-height: 3rem;

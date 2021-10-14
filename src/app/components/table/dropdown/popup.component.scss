@@ -1,5 +1,5 @@
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "sass:color";
 :host {
   --popup--font-size: auto;
@@ -16,18 +16,32 @@
   color: $gray-5;
   font-family: var(--body-font, sans-serif);
   border: 1px solid $light-gray-5;
+  border-color: var(--popup--border-color);
   line-height: var(--popup--line-height, 100%);
-  transition: border-color 500ms ease-in;
+  transition: outline-color 250ms ease-in;
   height: var(--popup--height, 100%);
   width: var(--popup--width, 100%);
   border-width: var(--popup--border-width, 0px);
-
+  outline-color: transparent;
+  background-image: linear-gradient(
+    to bottom,
+    $light-gray-1,
+    color.scale($light-gray-2, $alpha: -30%)
+  );
   &.active,
   &:focus,
   &:active {
-    border-color: $primary-1;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    z-index: 5;
+  }
+  &:focus {
+    outline-color: $primary-1;
+    background-image: linear-gradient(to bottom, $light-gray-1, $light-gray-2);
+  }
+  &:active {
+    background-image: linear-gradient(to top, $light-gray-2, $light-gray-3);
+  }
+  &.active {
+    background-image: linear-gradient(to top, $light-gray-1, $light-gray-2);
   }
 
   &__content {
@@ -47,13 +61,6 @@
 
   &__icon {
     display: inherit;
-  }
-  &__arrow {
-    position: relative;
-    transition: transform 0.1s ease-in;
-    &.active {
-      transform: scale(0.8);
-    }
   }
 }
 

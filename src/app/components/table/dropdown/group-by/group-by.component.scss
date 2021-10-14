@@ -1,6 +1,6 @@
 @use "palette" as *;
 @use "colors" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 :host {
   @include scrollbar;
 }

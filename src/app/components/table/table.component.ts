@@ -1,4 +1,3 @@
-import { CdkTable } from '@angular/cdk/table';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -12,6 +11,7 @@ import {
 } from '@angular/core';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { ARROW_KEYS } from '../../constants/keys.constants';
 import { KeyGridDirective } from '../../directives/keygrid.directive';
@@ -41,9 +41,7 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatSortHeader, { read: ElementRef })
   sortableHeaders: QueryList<ElementRef>;
-  @ViewChild('elderTable') container: ElementRef;
   @ViewChildren(KeyGridDirective) grid: QueryList<ElementRef>;
-  @ViewChild(CdkTable) table: CdkTable<BeersSearchResult>;
   trackBy: (index: number, name: any) => boolean;
   @Input() get filters(): string {
     return this.model.filters;
@@ -54,15 +52,8 @@ export class TableComponent implements AfterViewInit {
 
   model: BeersTableDataSource<BeersSearchResult>;
   gridCells: KeyGridDirective[];
-  FIRST_ROW = 2;
   dataSource: BehaviorSubject<BeersSearchResult[]>;
   destroy$ = new Subject();
-  loading = new BehaviorSubject(false);
-  rowCache = new Map();
-
-  get mobile$() {
-    return this.resizeService.mobile$;
-  }
 
   handleGridNavigation(event: KeyboardEvent) {
     if (ARROW_KEYS.includes(event.key)) {
@@ -83,13 +74,14 @@ export class TableComponent implements AfterViewInit {
     private tableService: TableService,
     private keyGridService: KeyGridService,
     private changeDetect: ChangeDetectorRef,
-    public resizeService: LayoutService,
+    public layoutService: LayoutService,
     public filterService: FilterService
   ) {
     this.model = new BeersTableDataSource();
-    this.tableService.entries$.pipe(destroy(this)).subscribe((result) => {
+    this.tableService.entries$.pipe(destroy(this), debounceTime(100)).subscribe((result) => {
       this.model.updateData(result);
     });
+
     this.columnService.selected$.pipe(destroy(this)).subscribe((selected) => {
       this.model.updateColumns(selected);
     });
@@ -123,7 +115,6 @@ export class TableComponent implements AfterViewInit {
     const results = this.tableService.entries;
     const columns = this.columnService.selected;
     const groups = this.groupService.groups;
-    console.log(results);
     this.model.updateData(results);
     this.model.updateColumns(columns);
     this.model.updateGroups(groups);

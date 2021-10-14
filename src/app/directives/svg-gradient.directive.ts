@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { take } from 'rxjs/operators';
 
@@ -35,6 +35,7 @@ export class SvgGradientDirective {
         });
     }
   }
+
   appendSVG(icon: SVGSVGElement) {
     this.renderer.selectRootElement(this.element.nativeElement);
     this.gradientId = this.generateGradientId();
@@ -42,6 +43,7 @@ export class SvgGradientDirective {
     this.renderer.appendChild(icon, def);
     this.fill = `url(#${this.gradientId})`;
     this.renderer.appendChild(this.element.nativeElement, icon);
+    this.changeDetect.markForCheck();
   }
 
   gradientId: string;
@@ -50,7 +52,8 @@ export class SvgGradientDirective {
   constructor(
     private element: ElementRef,
     private renderer: Renderer2,
-    private registry: MatIconRegistry
+    private registry: MatIconRegistry,
+    private changeDetect: ChangeDetectorRef
   ) {}
 
   private generateGradientId() {

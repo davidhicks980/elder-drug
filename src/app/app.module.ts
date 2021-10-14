@@ -10,25 +10,21 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { initializeApp } from 'firebase/app';
 
 import { environment } from '../environments/environment';
-import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrandComponent } from './components/brand/brand.component';
-import { VerticalComponent } from './components/brand/vertical/vertical.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
-import { GradientIconComponent } from './components/icon/icon.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { AnimatedArrowComponent } from './components/layout/menu-toggle/animated-arrow/animated-arrow.component';
 import { AnimatedXComponent } from './components/layout/menu-toggle/animated-x/animated-x.component';
 import { MenuToggleComponent } from './components/layout/menu-toggle/menu-toggle.component';
 import { ToggleIconDirective } from './components/layout/menu-toggle/toggle-icon.directive';
 import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
+import { SearchButtonsComponent } from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
+import { AutocompleteContentComponent } from './components/layout/side-navigation/drug-form/typeahead/autocomplete-content.component';
 import {
-  SearchButtonsComponent,
-} from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
-import {
-  AutocompleteContentComponent,
-} from './components/layout/side-navigation/drug-form/typeahead/autocomplete-content.component';
-import { SidebarBrandDirective, SidebarToggleDirective } from './components/layout/side-navigation/sidebar-brand.directive';
+  SidebarBrandDirective,
+  SidebarToggleDirective,
+} from './components/layout/side-navigation/sidebar-brand.directive';
 import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
 import {
   AboutComponent,
@@ -38,13 +34,11 @@ import {
 } from './components/layout/top-toolbar/toolbar.component';
 import { TabLinkComponent } from './components/tab/tab-link/tab-link.component';
 import { TabComponent } from './components/tab/tab.component';
-import { CellComponent } from './components/table/cell/cell.component';
 import { ExpandToggleDirective } from './components/table/directives/expand-toggle.directive';
 import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
 import { DropItemComponent } from './components/table/dropdown/group-by/button/drop-item.component';
 import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
 import { PopupContentDirective } from './components/table/dropdown/popup-content.directive';
-import { PopupContentComponent } from './components/table/dropdown/popup-content/popup-placeholder.component';
 import { PopupComponent } from './components/table/dropdown/popup.component';
 import { EntryRangeCardComponent } from './components/table/entry-range-card/entry-range-card.component';
 import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
@@ -81,6 +75,8 @@ import { CaseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './pipes/to-string.pipe';
 import { AddComponent } from './svg/add/add.component';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { ToolbarToggleDirective } from './components/layout/top-toolbar/elder-toolbar-toggle.directive';
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -117,7 +113,6 @@ export const firestore = provideFirestore(() => getFirestore());
     GroupRowComponent,
     ExpandedRowCardComponent,
     BrandComponent,
-    VerticalComponent,
     SearchButtonsComponent,
     MenuToggleComponent,
     AnimatedArrowComponent,
@@ -125,13 +120,10 @@ export const firestore = provideFirestore(() => getFirestore());
     TemplateContentDirective,
     TabLinkComponent,
     ErrorMessageComponent,
-    CellComponent,
     ExpandToggleDirective,
     AddComponent,
     TextIconButtonComponent,
     IconButtonDirective,
-    PopupContentDirective,
-    PopupContentComponent,
     SidebarBrandDirective,
     SidebarToggleDirective,
     AutocompleteContentComponent,
@@ -145,14 +137,15 @@ export const firestore = provideFirestore(() => getFirestore());
     EntryRangeCardComponent,
     RippleDirective,
     SvgGradientDirective,
-    GradientIconComponent,
+    DirectionsComponent,
+    ToolbarToggleDirective,
+    PopupContentDirective,
   ],
   imports: [
     firebase,
     firestore,
     BrowserModule,
     BrowserAnimationsModule,
-    ElderRoutingModule,
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
@@ -172,6 +165,5 @@ export const firestore = provideFirestore(() => getFirestore());
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [GradientIconComponent],
 })
 export class AppModule {}

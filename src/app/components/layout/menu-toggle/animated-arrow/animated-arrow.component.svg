@@ -3,7 +3,6 @@
   width="24"
   height="24"
   viewBox="0 0 24 24"
-  [class.right-arrow]="direction === 'RIGHT'"
   class="arrow__icon"
 >
   <rect class="top" width="17" height="2" x="3" y="6" />

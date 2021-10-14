@@ -1,4 +1,11 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
   selector: '[tracking-gradient]',
@@ -8,8 +15,11 @@ export class TrackingGradientDirective implements AfterViewInit {
   private width: number = 1;
   private height: number = 1;
   private track: boolean = false;
+  private throttled: boolean = false;
+
   gradientId: string;
   gradientChild: SVGRectElement;
+  removeMouseListener: () => void;
 
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 
@@ -24,9 +34,11 @@ export class TrackingGradientDirective implements AfterViewInit {
   private generateGradientId() {
     return String(Math.round(Math.random() * 10 ** 6)) + String(Date.now());
   }
+
   private createSVG(name: string) {
     return this.renderer.createElement(name, 'svg');
   }
+
   private setSVGAttribute(element: SVGElement, attribute: string, value: string) {
     this.renderer.setAttribute(element, attribute, value);
   }
@@ -61,9 +73,9 @@ export class TrackingGradientDirective implements AfterViewInit {
   ngAfterViewInit() {
     this.buildGradient();
   }
-  @HostListener('mousemove', ['$event'])
-  onMouseMove($event: MouseEvent) {
-    if (this.track && this.active) {
+  mouseMoveHandler($event: MouseEvent) {
+    if (this.track && this.active && !this.throttled) {
+      this.throttled = true;
       let xPos = -1 * (this.width / 2 - $event.offsetX);
       xPos = xPos > 140 ? 140 : xPos;
       xPos = xPos < 4 ? 4 : xPos;
@@ -73,16 +85,23 @@ export class TrackingGradientDirective implements AfterViewInit {
         'transform',
         `translate(${xPos}px, ${-1 * (this.height / 2 - $event.offsetY)}px)`
       );
+      setTimeout(() => (this.throttled = false), 20);
     }
   }
 
   @HostListener('mouseenter', ['$event'])
   onMouseEnter() {
+    this.renderer.appendChild(this.element.nativeElement, this.gradientChild);
+    this.removeMouseListener = this.renderer.listen(
+      this.element.nativeElement,
+      'mousemove',
+      this.mouseMoveHandler.bind(this)
+    );
     this.track = true;
-    this.renderer.setStyle(this.gradientChild, 'display', '');
   }
   @HostListener('mouseleave') onMouseLeave() {
     this.track = false;
-    this.renderer.setStyle(this.gradientChild, 'display', 'none');
+    this.removeMouseListener();
+    this.renderer.removeChild(this.element.nativeElement, this.gradientChild);
   }
 }

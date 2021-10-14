@@ -5,7 +5,7 @@
 @use "palette" as *;
 @use "grid" as *;
 @use "component-overrides" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "variables" as *;
 @use "sass:color";
 // Plus imports for other components in your app.
@@ -44,20 +44,13 @@ $search-angular-theme: mat.define-light-theme(
 html,
 body {
   height: 100%;
+  font-size: 16px;
 }
 body {
   margin: 0;
-  font-family: "Noto Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
 /****** Elad Shechter's RESET *******/
 /*** box sizing border-box for all elements ***/
 *,

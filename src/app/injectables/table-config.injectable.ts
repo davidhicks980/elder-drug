@@ -11,14 +11,14 @@ export const tableConfig: TableConfig[] = [
     id: TableCategories.General,
     columnOptions: [
       { id: ColumnField.SearchTerms, selected: true },
+      { id: ColumnField.ShortName, selected: true },
       { id: ColumnField.Item, selected: true },
       { id: ColumnField.Exclusion, selected: false },
       { id: ColumnField.Inclusion, selected: false },
       { id: ColumnField.Recommendation, selected: true },
       { id: ColumnField.DiseaseState, selected: false },
       { id: ColumnField.DrugInteraction, selected: false },
-      { id: ColumnField.ShortName, selected: false },
-      { id: ColumnField.Rationale, selected: true },
+      { id: ColumnField.Rationale, selected: false },
     ],
   },
   {
@@ -26,13 +26,13 @@ export const tableConfig: TableConfig[] = [
     filters: [ColumnField.DiseaseState],
     id: TableCategories.DiseaseGuidance,
     columnOptions: [
+      { id: ColumnField.DiseaseState, selected: true },
       { id: ColumnField.SearchTerms, selected: true },
       { id: ColumnField.Item, selected: true },
-      { id: ColumnField.Exclusion, selected: true },
-      { id: ColumnField.Inclusion, selected: true },
-      { id: ColumnField.Recommendation, selected: false },
-      { id: ColumnField.DiseaseState, selected: true },
-      { id: ColumnField.Rationale, selected: true },
+      { id: ColumnField.Exclusion, selected: false },
+      { id: ColumnField.Inclusion, selected: false },
+      { id: ColumnField.Recommendation, selected: true },
+      { id: ColumnField.Rationale, selected: false },
     ],
   },
   {
@@ -40,7 +40,7 @@ export const tableConfig: TableConfig[] = [
     id: TableCategories.RenalEffect,
     filters: [ColumnField.MaximumClearance, ColumnField.MinimumClearance],
     columnOptions: [
-      { id: ColumnField.SearchTerms, selected: true },
+      { id: ColumnField.SearchTerms, selected: false },
       { id: ColumnField.Item, selected: true },
       { id: ColumnField.MinimumClearance, selected: true },
       { id: ColumnField.MaximumClearance, selected: true },
@@ -61,7 +61,7 @@ export const tableConfig: TableConfig[] = [
       { id: ColumnField.Inclusion, selected: false },
       { id: ColumnField.Exclusion, selected: false },
       { id: ColumnField.Recommendation, selected: true },
-      { id: ColumnField.Rationale, selected: true },
+      { id: ColumnField.Rationale, selected: false },
     ],
   },
 ];

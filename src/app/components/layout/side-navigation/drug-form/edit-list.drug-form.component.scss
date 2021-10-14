@@ -1,5 +1,5 @@
 @use "palette" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 @use "sass:color";
 %edit-text {
   color: $gray-5;
@@ -9,7 +9,7 @@
   overflow: auto;
   max-height: 55vh;
   @include mobileWidth {
-    max-height: 40vh;
+    max-height: 45vh;
     display: flex;
     justify-content: center;
     &.is-pinned {
@@ -76,17 +76,17 @@
   &:hover {
     --validation-color: #{$secondary-2-2};
     --validation-background: #{color.scale($secondary-2-1, $alpha: -90%, $saturation: 50%)};
-    @include mobileWidth {
+    @include media-size("zero", "small") {
       --validation-color: #{$secondary-2-2};
     }
   }
 
   &:focus-within {
-    --validation-background: #{color.scale($light-gray-2, $alpha: -40%)};
-    --validation-border-height: 1px;
+    --validation-background: #{color.scale($light-gray-2, $alpha: -60%)};
+    --validation-border-height: 1.4px;
     --validation-border-scale: 1;
     --validation-color: #{$gray-4};
-    @include mobileWidth {
+    @include media-size("zero", "small") {
       --validation-border-height: 2px;
       --validation-color: #{$gray-4};
     }
@@ -104,9 +104,16 @@
 }
 
 .edit-list-button {
-  transform: scale(0.8);
-  transform-origin: center center;
   color: var(--validation-color, #{$gray-3});
+  padding: 0 0.5em;
+
+  @include media-size("zero", "small") {
+    height: 38px;
+  }
+}
+.edit-list-button-icon {
+  vertical-align: middle;
+  height: 18px;
 }
 
 .edit-field {
@@ -114,8 +121,8 @@
   flex-direction: row;
 }
 .edit-input {
-  all: unset;
   @extend %edit-text;
+  all: unset;
   color: var(--validation-color);
   font-weight: 400;
   text-transform: capitalize;
@@ -123,11 +130,10 @@
   cursor: text;
   min-width: 0;
   font-family: var(--body-font), sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
 
-  @include mobileWidth {
-    font-size: 1rem;
+  line-height: 2.5em;
+  @include media-size("zero", "small") {
     width: 90%;
-    padding: 0.5em 0;
   }
 }

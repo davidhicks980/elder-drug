@@ -1,0 +1,7 @@
+$opening: ":host(.opening) &";
+$closing: ":host(.closing) &";
+$opened: ":host(.opened) &";
+$closed: ":host(.closed) &";
+$not-closed: ":host(:not(.closed)) &";
+$not-opened: ":host(:not(.opened)) &";
+$animating: $opening + ", " + $closing;

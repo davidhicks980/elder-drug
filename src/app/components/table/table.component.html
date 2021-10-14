@@ -1,7 +1,7 @@
 <ng-container
   *elderLet="{
     fields: model.columns$ | async,
-    mobile: resizeService.mobile$ | async,
+    mobile: layoutService.mobile$ | async,
     filter: filterService.filter$ | async
   } as state"
 >
@@ -27,6 +27,7 @@
       <!--Group rows-->
       <cdk-row
         class="row--content"
+        [class.is-expanded]="model.checkIsExpanded(row)"
         [class.is-group-row]="row.position.isGroup"
         *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
         (click)="model.toggle(row)"
@@ -65,42 +66,39 @@
         </ng-container>
         <ng-container *cdkCellDef="let row">
           <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
-            <elder-cell
-              [wrapContent]="field === 'Rationale' && state.mobile"
+            <div
+              role="cell"
+              class="cell-container"
+              [class.is-icon-cell]="col === 0"
               [padLeft]="getPadding(row)"
               [padLeftIncrement]="7.5"
             >
-              <elder-cell-toggle #cell *ngIf="col === 0">
-                <button mat-icon-button>
-                  <mat-icon
-                    [class.is-rotated]="model.checkIsExpanded(row)"
-                    svgIcon="chevron-right"
-                  ></mat-icon>
-                </button>
-              </elder-cell-toggle>
-              <elder-cell-title *ngIf="state.mobile">
+              <button class="cell-chevron" *ngIf="col === 0">
+                <svg class="cell-chevron-icon" viewBox="0 0 24 24">
+                  <polygon points="8.1,3 6.9,4.1 14.8,12 6.9,19.9 8.1,21 17.1,12 8.1,3 " />
+                </svg>
+              </button>
+
+              <div *ngIf="state.mobile" class="cell-title">
                 {{ field | splitcase | titlecase }}
-              </elder-cell-title>
-              <elder-cell-content>
-                <span
-                  [innerHtml]="row.fields[field] | toString | titlecase | highlight: state.filter"
-                >
-                </span>
-              </elder-cell-content>
-            </elder-cell>
+              </div>
+              <div
+                class="cell-content"
+                [innerHtml]="row.fields[field] | toString | titlecase | highlight: state.filter"
+              ></div>
+            </div>
           </ng-container>
           <ng-template #groupTemplate>
-            <cdk-cell *ngIf="col === 0">
-              <elder-group-row
-                #cell
-                [class.is-expanded]="model.checkIsExpanded(row)"
-                [keyGrid]="{ row: 0, col: 0 }"
-                [padLeft]="getPadding(row)"
-              >
-                <group-field>{{ row.field | splitcase }}</group-field>
-                <group-name>{{ row.groupHeader | titlecase }}</group-name>
-              </elder-group-row>
-            </cdk-cell>
+            <elder-group-row
+              #cell
+              *ngIf="col === 0"
+              [class.is-expanded]="model.checkIsExpanded(row)"
+              [keyGrid]="{ row: 0, col: 0 }"
+              [padLeft]="getPadding(row)"
+            >
+              <group-field>{{ row.field | splitcase }}</group-field>
+              <group-name>{{ row.groupHeader | titlecase }}</group-name>
+            </elder-group-row>
           </ng-template>
         </ng-container>
       </ng-container>

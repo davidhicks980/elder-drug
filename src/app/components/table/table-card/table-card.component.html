@@ -1,18 +1,20 @@
-<header class="header">
-  <h1 style="font-family: 'IBM Plex Sans'">
-    <span
-      [svgGradient]="{ '0': 'var(--primary-1)', '1': 'var(--secondary-2-1)' }"
-      [svgGradientName]="icon"
-      [svgGradientAngle]="45"
-      svgGradientType="linear"
-      class="header-icon"
-    ></span>
-    <ng-content select="elder-table-title"></ng-content>
-  </h1>
-  <p><ng-content select="elder-table-description"></ng-content></p>
-</header>
-<hr class="divider" />
-<section class="table">
-  <ng-content select="elder-filter-bar"></ng-content>
-  <ng-content select="[elderTableView]"></ng-content>
-</section>
+<div class="card-container">
+  <header class="header">
+    <h1 class="header-h1">
+      <span
+        [svgGradient]="{ '0': 'var(--primary-1)', '1': 'var(--secondary-2-1)' }"
+        [svgGradientName]="icon"
+        [svgGradientAngle]="45"
+        svgGradientType="linear"
+        class="header-icon"
+      ></span>
+      <ng-content select="elder-table-title"></ng-content>
+    </h1>
+    <p class="header-p"><ng-content select="elder-table-description"></ng-content></p>
+  </header>
+  <hr class="divider" />
+  <section class="table">
+    <ng-content select="elder-filter-bar"></ng-content>
+    <ng-content select="[elderTableView]"></ng-content>
+  </section>
+</div>

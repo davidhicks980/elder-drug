@@ -1,10 +1,9 @@
-@use "bem-mixin" as bem;
+@use "breakpoints" as bem;
 @use "palette" as *;
 @use "sass:color";
 %row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-  line-height: 2em;
   border-radius: none;
 }
 .row--header {
@@ -20,37 +19,110 @@
   }
 }
 .row--content:last-of-type {
-  elder-cell {
-    border-bottom: none;
-  }
+  border-bottom: none;
 }
 
 .row--content {
   @extend %row;
+  --row--height: 2.8rem;
+  --row--active-background: #{color.scale($primary-1, $alpha: -95%)};
   cursor: pointer;
+  border-bottom: 1px solid $light-gray-4;
+  grid-template-rows: var(--row--height);
+  &.is-group-row {
+    grid-template-rows: auto;
+    border: none;
+  }
+  &:last-of-type {
+    border-bottom: none;
+    &.is-expanded {
+      border-bottom: 1px solid $light-gray-4;
+    }
+  }
   &:active {
     -webkit-tap-highlight-color: transparent; /* for removing the highlight */
-    background-color: color.scale($primary-1, $alpha: -95%);
+    background-color: var(--row--active-background);
+    &::before {
+      background-image: linear-gradient(
+        to right,
+        transparent 94%,
+        var(--row--active-background) 100%
+      );
+    }
   }
   @include bem.mobileWidth {
-    padding: 0.5rem 0;
-    margin: 5px;
     grid-template-columns: none;
     background-color: white;
-    border-radius: 5px;
     position: relative;
-    @include hoverable-shadow(5);
-    &:not(.is-group-row)::before {
-      content: "";
-      height: 100%;
-      width: 100%;
-      top: 0px;
-      right: 0px;
-      left: 0px;
-      bottom: 0px;
-      position: absolute;
-      border-radius: inherit;
-      @include shadow(3);
+    &.is-group-row {
+      &:first-of-type,
+      :first-of-type {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+      }
     }
+    &:not(.is-group-row) {
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid $light-gray-3;
+      padding: 0.5rem 0;
+      @include hoverable-shadow(5);
+    }
+  }
+}
+.cell-container {
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
+  line-height: var(--row--height);
+  height: var(--row--height);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  @include bem.mobileWidth {
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: 17ch auto;
+    margin-left: 40px;
+    grid-template-areas: "title content";
+    align-items: center;
+    padding-left: 0;
+    &.is-icon-cell {
+      margin-left: 0px;
+      grid-template-areas: "toggle title content";
+      grid-template-columns: 40px 17ch auto;
+    }
+  }
+}
+.cell-content {
+  padding-left: 0.5rem;
+  font-size: 14px;
+  vertical-align: middle;
+  height: var(--row--height);
+  display: inline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  @include bem.media-size("zero", "small") {
+    padding-left: 0;
+  }
+}
+
+.cell-title {
+  font-weight: 500;
+}
+.cell-chevron {
+  padding-left: 0.5rem;
+  @include bem.media-size("zero", "small") {
+    padding-left: 0;
+  }
+}
+.cell-chevron-icon {
+  transform: rotate(-0deg);
+  transition: transform 0.2s;
+  vertical-align: middle;
+  height: 18px;
+  transform-origin: center;
+  .is-expanded & {
+    transform: rotate(90deg);
   }
 }
