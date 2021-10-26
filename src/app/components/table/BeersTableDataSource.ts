@@ -47,6 +47,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   updateGroups(groups: string[]) {
     this.groupSource.next(groups);
   }
+  getUnits(entry: TableEntry<T>) {}
 
   checkIsExpanded(row: TableEntry<T> | FlatRowGroup<T>) {
     return this.expandedRows.has(row.position.id);
@@ -61,9 +62,13 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     this.expandedRows = new Set(Array.from(this.expandedRows).filter((ids) => !ids.startsWith(id)));
   }
 
-  toggle(row: ExpandingEntry) {
+  toggle(row: ExpandingEntry, force?: boolean) {
     const { id } = row.position;
-    this.expandedRows.has(id) ? this.collapseChildren(id) : this.expandedRows.add(id);
+    if (force === false || this.expandedRows.has(id)) {
+      this.collapseChildren(id);
+    } else {
+      this.expandedRows.add(id);
+    }
     this.expansionSource.next(id);
   }
   get filters(): string {

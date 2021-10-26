@@ -8,6 +8,7 @@
   border: none;
   min-width: 90%;
   max-width: 1100px;
+  width: 90%;
   display: block;
   position: relative;
   height: fit-content;
@@ -36,9 +37,10 @@
 }
 .table {
   background-color: white;
-  padding: 1rem;
+  padding: 1rem 1rem 30px 1rem;
+
   @include bem.mobileWidth {
-    padding: 1rem;
+    padding: 1rem 1rem 60px 1rem;
     border-top: var(--common-border);
   }
 }

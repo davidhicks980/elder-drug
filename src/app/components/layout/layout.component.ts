@@ -1,12 +1,10 @@
-import { animate, AnimationBuilder, AnimationEvent, keyframes, style } from '@angular/animations';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
-  Input,
+  HostListener,
   OnDestroy,
   QueryList,
   Renderer2,
@@ -15,25 +13,21 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
-import { debounce, map, mapTo, take, throwIfEmpty } from 'rxjs/operators';
+import { debounce, mapTo, pluck, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
-import { destroy } from '../../services/destroy';
-import { LayoutService } from '../../services/layout.service';
+import { destroy } from '../../functions/destroy';
+import { LayoutService, SearchDrawerState } from '../../services/layout.service';
 import { SearchService } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
 import { TableCardComponent } from '../table/table-card/table-card.component';
+import { AboutComponent, DisclaimerComponent } from '../toolbar/toolbar.component';
 
 export enum ScrollDirection {
   UP,
   DOWN,
-}
-export enum SidebarState {
-  OPENED,
-  OPENING,
-  CLOSED,
-  CLOSING,
 }
 
 @Component({
@@ -49,58 +43,42 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
   @ViewChild(TableCardComponent, { read: ElementRef }) tableCard: ElementRef<HTMLElement>;
   @ViewChildren('watchScroll') scrollMarker: QueryList<ElementRef<HTMLElement>>;
   debounceTabRounding: number = 0;
-  @HostBinding('style.--shift-duration')
-  @Input()
-  shiftAnimationDuration = '400ms';
-  @HostBinding('class.opened')
-  get isOpened() {
-    return this.sidebarState === SidebarState.OPENED;
+  @HostListener('animationend', ['$event'])
+  handleAnimationEnd($event: AnimationEventInit) {
+    if (
+      $event.animationName === 'ShiftSidebarIn' ||
+      $event.animationName === 'ShiftSidebarOut' ||
+      $event.animationName === 'MobileSlideIn'
+    ) {
+      this.layout.completeSearchDrawerAnimation();
+    }
   }
-  @HostBinding('class.opening')
-  get isOpening() {
-    return this.sidebarState === SidebarState.OPENING;
-  }
-  @HostBinding('class.closed')
-  get isClosed() {
-    return this.sidebarState === SidebarState.CLOSED;
-  }
-  @HostBinding('class.closing')
-  get isClosing() {
-    return this.sidebarState === SidebarState.CLOSING;
-  }
-  private sidebarStateSource: BehaviorSubject<SidebarState> = new BehaviorSubject(
-    SidebarState.OPENING
-  );
-  sidebarState$ = this.sidebarStateSource.asObservable().pipe(
-    map((state) => ({
-      opened: state === SidebarState.OPENED,
-      opening: state === SidebarState.OPENING,
-      closed: state === SidebarState.CLOSED,
-      closing: state === SidebarState.CLOSING,
-    }))
-  );
 
   private roundTabsSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
   roundTabs$ = this.roundTabsSource
     .asObservable()
     .pipe(debounce(() => timer(this.debounceTabRounding)));
-  tabIntersectionObserver: IntersectionObserver;
+  private tabIntersect$: IntersectionObserver;
   destroy$ = new Subject();
   searchStarted$: Observable<boolean>;
+  private tableShrinkAnimation: Animation;
 
-  get sidebarState() {
-    return this.sidebarStateSource.getValue();
+  // Nav drawer can only be used when on mobile.
+  // If user switches from mobile=>desktop=>mobile, close the nav drawer
+  private navigationDrawerSource = new BehaviorSubject(false);
+  navigationDrawer$ = this.layout.mobile$.pipe(
+    switchMap((mobile) => {
+      if (!mobile) {
+        this.navigationDrawerSource.next(false);
+      }
+      return this.navigationDrawerSource.asObservable();
+    })
+  );
+  toggleNavigationDrawer(force: boolean) {
+    this.navigationDrawerSource.next(
+      typeof force === 'boolean' ? force : !this.navigationDrawerSource.value
+    );
   }
-
-  private getTableCardShrinkFactor() {
-    if (this.element.nativeElement && this.tableCard?.nativeElement) {
-      let { scrollWidth } = this.element.nativeElement as HTMLElement;
-      return (scrollWidth - 260) / scrollWidth;
-    } else {
-      return 1;
-    }
-  }
-
   loadDemo() {
     this.searchService.storeHistory([
       'Alprazolam',
@@ -114,77 +92,116 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
       'Sertraline',
       'Ambien',
     ]);
-    this.searchService.searchDrugs();
+    this.searchService.searchTerms();
   }
   ngOnDestroy() {
-    this.tabIntersectionObserver.disconnect();
+    this.tabIntersect$.disconnect();
     this.destroy$.next(false);
   }
-  get animationDuration() {
-    return Number(this.shiftAnimationDuration.match(/[(\d)]+/)[0]);
+  get shiftDuration() {
+    return this.layout.isMobile
+      ? this.layout.mobileSearchDrawerShiftDuration
+      : this.layout.searchDrawerShiftDuration;
   }
-  private animateTableCardShrink() {
-    let setStyle = this.renderer.setStyle.bind(this.renderer);
-    let scale = this.getTableCardShrinkFactor(),
+
+  private buildTableShrinkAnimation(): Animation {
+    this.tableShrinkAnimation?.cancel();
+    let { scrollWidth } = this.host.nativeElement;
+    let scale = (scrollWidth - 260) / scrollWidth,
       { nativeElement } = this.tableCard;
-    setStyle(nativeElement, `transform`, `scaleX(${scale})`);
-    setStyle(nativeElement, 'transition', 'transform 400ms ease-in-out', 2);
-    setTimeout(() => {
-      nativeElement.offsetHeight;
-      setStyle(nativeElement, 'transition', 'none', 2);
-      setStyle(nativeElement, 'transform', 'scaleX(1)', 2);
-    }, this.animationDuration);
+    let keyframes = new KeyframeEffect(
+      nativeElement,
+      [{ transform: 'scaleX(1)' }, { transform: `scaleX(${scale})` }],
+      { duration: this.shiftDuration, easing: 'cubic-bezier(0.5, 0.15, 0.225, 1)' }
+    );
+    return new Animation(keyframes, document.timeline);
+  }
+  openDisclaimerDialog() {
+    this.dialog.open(DisclaimerComponent, { width: '500px' });
+  }
+  openAboutDialog() {
+    this.dialog.open(AboutComponent, { width: '500px' });
+  }
+  openErrorDialog() {
+    this.dialog.open(ErrorComponent, { width: '500px' });
+  }
+  openSearch() {
+    this.layout.toggleSidenav(true, true);
+  }
+  ngAfterViewInit() {
+    this.togglePortalContent = new TemplatePortal(this.toggleTemplate, this.container);
+    this.scrollMarker.changes.pipe(destroy(this)).subscribe(this.setupTabIntersect$.bind(this));
+    this.scrollMarker.notifyOnChanges();
+    this.layout.searchDrawerState$
+      .pipe(destroy(this), pluck(SearchDrawerState.OPENING))
+      .subscribe(this.animateSearchDrawer.bind(this));
   }
 
-  ngAfterViewInit() {
-    this.togglePortalContent = new TemplatePortal(this.toggleTemplate, this.containerRef);
-    this.scrollMarker.changes
-      .pipe(destroy(this))
-      .subscribe(this.setupTabIntersectionObserver.bind(this));
-    this.scrollMarker.notifyOnChanges();
-    this.roundTabs$.subscribe(console.log);
-    this.layoutService.openSidenav$.subscribe((open) => {
-      let { isMobile } = this.layoutService;
-      this.shiftAnimationDuration = this.layoutService.isMobile ? '200ms' : '400ms';
-      let [transitionState, endState] = open
-        ? [SidebarState.OPENING, SidebarState.OPENED]
-        : [SidebarState.CLOSING, SidebarState.CLOSED];
-      this.sidebarStateSource.next(transitionState);
-
-      setTimeout(() => {
-        this.sidebarStateSource.next(endState);
-      }, this.animationDuration);
-      if (open && !isMobile && this.tableCard) {
-        this.animateTableCardShrink();
+  animateSearchDrawer(open) {
+    let { isMobile } = this.layout;
+    let { nativeElement } = this.host;
+    this.renderer.setStyle(nativeElement, '--shift-duration', this.shiftDuration + 'ms', 2);
+    if (open && !isMobile && this.tableCard) {
+      this.tableShrinkAnimation?.finish();
+      if (this.tableShrinkAnimation?.currentTime != this.shiftDuration) {
+        this.tableShrinkAnimation = this.buildTableShrinkAnimation();
+        this.tableShrinkAnimation.onfinish = () => {
+          this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '1', 2);
+        };
       }
+      this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '0', 2);
+      this.tableShrinkAnimation.play();
+    }
+  }
+  constructor(
+    public tableService: TableService,
+    public searchService: SearchService,
+    public layout: LayoutService,
+    public dataService: DataService,
+    private container: ViewContainerRef,
+    private host: ElementRef<HTMLElement>,
+    private renderer: Renderer2,
+    public dialog: MatDialog
+  ) {
+    this.searchStarted$ = this.tableService.tableOptions$.pipe(take(1), mapTo(true));
+    this.dataService.error$.pipe(destroy(this), takeUntil(this.searchStarted$)).subscribe(() => {
+      this.dialog.open(ErrorComponent, { width: '500px' });
+    });
+    this.layout.searchDrawerState$.pipe(destroy(this)).subscribe((state) => {
+      let { nativeElement } = this.host;
+      Object.entries(state).map(([state, active]) => {
+        this.renderer[active ? 'addClass' : 'removeClass'](nativeElement, state);
+      });
     });
   }
 
-  constructor(
-    public tableService: TableService,
-    private searchService: SearchService,
-    public layoutService: LayoutService,
-    private containerRef: ViewContainerRef,
-    private element: ElementRef,
-    private renderer: Renderer2
-  ) {
-    this.searchStarted$ = this.tableService.tableOptions$.pipe(take(1), mapTo(true));
-    this.shiftAnimationDuration = this.layoutService.isMobile ? '200ms' : '400ms';
-  }
-
-  private setupTabIntersectionObserver({ first }: QueryList<ElementRef<HTMLDivElement>>) {
-    if (!this.tabIntersectionObserver) {
+  private setupTabIntersect$({ first }: QueryList<ElementRef<HTMLDivElement>>) {
+    if (!this.tabIntersect$) {
       const options = { threshold: [0], rootMargin: '-50px 0px 0px 0px' };
-      const tabsVisible = () => !(this.layoutService.isDrawerOpen && this.layoutService.isMobile);
-      this.tabIntersectionObserver = new IntersectionObserver((e: IntersectionObserverEntry[]) => {
-        this.debounceTabRounding = this.roundTabsSource.value ? 10000 : 0;
+      const tabsVisible = () => !(this.layout.isSidenavOpen && this.layout.isMobile);
+      this.tabIntersect$ = new IntersectionObserver((e: IntersectionObserverEntry[]) => {
+        this.debounceTabRounding = this.roundTabsSource.value ? 2000 : 0;
         if (tabsVisible()) {
           this.roundTabsSource.next(!e[0].isIntersecting);
         }
       }, options);
     }
     if (first?.nativeElement) {
-      this.tabIntersectionObserver.observe(first.nativeElement);
+      this.tabIntersect$.observe(first.nativeElement);
     }
   }
 }
+@Component({
+  selector: 'elder-error',
+  template: `
+    <h2 mat-dialog-title>Error</h2>
+    <div mat-dialog-content>
+      <p>
+        We're having trouble connecting to Elder Drug's database. If your internet is working
+        properly, try <a style="color: var(--primary-1)" href="elderdrug.com">refreshing</a> the
+        page. Otherwise, email me at david@davidhicks.dev and I'll see if I can find the problem.
+      </p>
+    </div>
+  `,
+})
+export class ErrorComponent {}

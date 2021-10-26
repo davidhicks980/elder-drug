@@ -1,0 +1,63 @@
+@use "palette" as *;
+@use "breakpoints" as *;
+@use "sass:color";
+:host {
+  font-size: var(--filter-input--font-size);
+  position: relative;
+}
+.filter-label {
+  position: absolute;
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  color: $gray-5;
+  font-weight: 500;
+  top: -20px;
+}
+.filter {
+  cursor: text;
+  display: grid;
+  font-weight: 400;
+  padding: 0 0.25em;
+  align-items: center;
+  grid-template-columns: 2em 1fr;
+  border: 1px solid;
+  border-color: var(--filter-input--border-color);
+  border-radius: var(--filter-input--radius);
+  height: var(--filter-input--height);
+  transition: outline-color 500ms linear;
+  font-size: var(--filter-input--font-size);
+  outline-width: 0;
+  outline-color: transparent;
+  & ::placeholder {
+    color: $gray-3;
+  }
+  &:focus-within {
+    @include focus-style;
+    outline-width: 2px;
+    border-color: $primary-1;
+    & ::placeholder {
+      color: $gray-2;
+    }
+    & .filter-icon {
+      color: color.scale($primary-1, $alpha: -20%);
+    }
+  }
+}
+
+.filter-input {
+  all: unset;
+  width: 100%;
+  padding-left: 0.25em;
+  height: calc(var(--filter-input--height) - 2px);
+  caret-color: color.scale($primary-1, $alpha: -20%);
+}
+.filter-icon {
+  height: inherit;
+  width: inherit;
+}
+.filter-icon-container {
+  color: $gray-5;
+  display: inline-block;
+  height: 1em;
+  width: 2em;
+}

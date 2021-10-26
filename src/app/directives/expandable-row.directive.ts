@@ -3,6 +3,7 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
+  HostBinding,
   Input,
   OnDestroy,
   OnInit,
@@ -21,7 +22,6 @@ type Result = Partial<TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchRe
   selector: '[detailPanel]',
 })
 export class ExpandableRowDirective implements OnDestroy, OnInit {
-  private expanded: boolean = false;
   private updateSource: BehaviorSubject<{ expand: boolean; group: boolean }> = new BehaviorSubject({
     expand: false,
     group: true,
@@ -46,18 +46,19 @@ export class ExpandableRowDirective implements OnDestroy, OnInit {
   get detailPanel() {
     return this.detail;
   }
+  @HostBinding('aria-expanded') ariaExpanded: boolean = false;
   @Input()
   set detailPanelExpanded(expanded: boolean) {
-    if (expanded != this.expanded) {
-      this.expanded = expanded;
+    if (expanded != this.ariaExpanded) {
+      this.ariaExpanded = expanded;
       this.updatePanel();
     }
   }
   get detailPanelExpanded() {
-    return this.expanded;
+    return this.ariaExpanded;
   }
   private updatePanel() {
-    this.updateSource.next({ expand: this.expanded, group: this.groupRow });
+    this.updateSource.next({ expand: this.ariaExpanded, group: this.groupRow });
   }
   private updatePanelData() {
     this.expansionPanel.instance.data = this.fields;

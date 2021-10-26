@@ -1,0 +1,23 @@
+<ng-container
+  *elderLet="{
+    selected: columnService.selected$ | async,
+    columns: columnService.columns$ | async,
+    mobile: layoutService.mobile$ | async
+  } as state"
+>
+  <div class="popup-background">
+    <span class="mat-subheader column-select-subheader">Toggle Columns</span>
+    <mat-divider></mat-divider>
+    <div class="selection-list-container">
+      <mat-selection-list (selectionChange)="handleSelectionChange($event)">
+        <mat-list-option
+          *ngFor="let option of state.columns"
+          [checkboxPosition]="state.mobile ? 'after' : 'before'"
+          [value]="option"
+          [selected]="state.selected.includes(option)"
+          >{{ option | splitcase }}</mat-list-option
+        >
+      </mat-selection-list>
+    </div>
+  </div></ng-container
+>

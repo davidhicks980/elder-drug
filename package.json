@@ -11,9 +11,9 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "defaults",
+      "not IE 11",
+      "maintained node versions"
     ],
     "development": [
       "last 1 chrome version",
@@ -34,9 +34,11 @@
     "@angular/material": "^12.0.0",
     "@angular/platform-browser": "^12.2.3",
     "@angular/platform-browser-dynamic": "^12.2.3",
+    "@angular/platform-server": "^12.2.3",
     "@angular/router": "^12.2.3",
     "@angular/service-worker": "^12.2.3",
     "@davidhicks/sass-mixins": "file:.yalc/@davidhicks/sass-mixins",
+    "@juggle/resize-observer": "^3.3.1",
     "angular-svg-icon": "^11.0.0",
     "core-js": "^3.16.4",
     "firebase": "^9.0.0",

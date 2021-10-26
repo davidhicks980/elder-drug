@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { doc, docData, DocumentData, Firestore } from '@angular/fire/firestore';
-import { Observable, ReplaySubject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { filter, map, mapTo, take, tap } from 'rxjs/operators';
 
 import { BEERS_ENTRIES } from '../injectables/brand-drugs.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
@@ -12,6 +12,8 @@ import { BeersEntry } from '../interfaces/BeersEntry';
 export class DataService {
   private dataSource: ReplaySubject<DocumentData> = new ReplaySubject(1);
   private entries: Map<number, BeersEntry>;
+  private errorSource = new Subject();
+  error$ = this.errorSource.asObservable();
   private getFirebaseData(): Observable<Record<string, number[]>> {
     return docData(doc(this.firestore, 'dropdown/dropdownItems'));
   }
@@ -29,9 +31,8 @@ export class DataService {
    * @memberof DataService
    * @returns {Record<string, number[]>}  Object containing drug names mapped to table numbers
    */
-  get entriesMappedToTables$(): Observable<Record<string, number[]>> {
-    return this.dataSource.asObservable();
-  }
+  entriesMappedToTables$: Observable<Record<string, number[]>> = this.dataSource.asObservable();
+
   /**
    * Returns a list of all drug names.
    *
@@ -39,12 +40,11 @@ export class DataService {
    * @memberof DataService
    * @returns {Observable<string[]>} a list of brand and generic drug names corresponding to Beers Criteria entries,
    */
-  get drugList$(): Observable<string[]> {
-    return this.dataSource
-      .asObservable()
-      .pipe(map((drugs) => Object.keys(drugs).map((drug) => drug.toLowerCase())));
-  }
+  drugList$: Observable<string[]> = this.dataSource
+    .asObservable()
+    .pipe(map((drugs) => Object.keys(drugs).map((drug) => drug.toLowerCase())));
 
+  dataAcquired$: Observable<boolean> = this.dataSource.asObservable().pipe(take(1), mapTo(true));
   get drugEntries(): Map<number, BeersEntry> {
     return this.entries;
   }
@@ -58,10 +58,16 @@ export class DataService {
     this.getFirebaseData()
       .pipe(take(1))
       .subscribe((data) => {
-        console.log(data);
-        this.dataSource.next(data);
+        if (typeof data === 'undefined') {
+          this.emitError();
+        } else {
+          this.dataSource.next(data);
+        }
       });
     this.entries = this.createBeersMap();
+  }
+  emitError() {
+    this.errorSource.next(true);
   }
 }
 

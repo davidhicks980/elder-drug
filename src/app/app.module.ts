@@ -1,5 +1,4 @@
 import { LayoutModule } from '@angular/cdk/layout';
-import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -13,55 +12,46 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { BrandComponent } from './components/brand/brand.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { AnimatedArrowComponent } from './components/layout/menu-toggle/animated-arrow/animated-arrow.component';
-import { AnimatedXComponent } from './components/layout/menu-toggle/animated-x/animated-x.component';
-import { MenuToggleComponent } from './components/layout/menu-toggle/menu-toggle.component';
-import { ToggleIconDirective } from './components/layout/menu-toggle/toggle-icon.directive';
-import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
-import { SearchButtonsComponent } from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
-import { AutocompleteContentComponent } from './components/layout/side-navigation/drug-form/typeahead/autocomplete-content.component';
+import { ErrorComponent, LayoutComponent } from './components/layout/layout.component';
+import { AnimatedArrowComponent } from './components/toggle/animated-arrow/animated-arrow.component';
+import { AnimatedXComponent } from './components/toggle/animated-x/animated-x.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { ToggleIconDirective } from './components/toggle/toggle-icon.directive';
+import { SearchFormComponent } from './components/search-form/search-form.component';
+
+import { AutocompleteContentComponent } from './components/autocomplete/autocomplete-content.component';
 import {
-  SidebarBrandDirective,
-  SidebarToggleDirective,
-} from './components/layout/side-navigation/sidebar-brand.directive';
-import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
+  SearchDrawerBrandDirective,
+  SearchDrawerToggleDirective,
+} from './components/search-drawer/search-drawer.directive';
+import { SearchFormDrawer } from './components/search-drawer/search-drawer.component';
 import {
   AboutComponent,
-  DesignComponent,
   DisclaimerComponent,
   ToolbarComponent,
-} from './components/layout/top-toolbar/toolbar.component';
-import { TabLinkComponent } from './components/tab/tab-link/tab-link.component';
-import { TabComponent } from './components/tab/tab.component';
-import { ExpandToggleDirective } from './components/table/directives/expand-toggle.directive';
-import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
-import { DropItemComponent } from './components/table/dropdown/group-by/button/drop-item.component';
-import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
-import { PopupContentDirective } from './components/table/dropdown/popup-content.directive';
-import { PopupComponent } from './components/table/dropdown/popup.component';
+} from './components/toolbar/toolbar.component';
+import { TabComponent } from './components/tabs/tab/tab.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { ColumnSelectorComponent } from './components/filter-popup/column-selector/column-selector.component';
+import { GroupItem } from './components/filter-popup/group-by/group-item/group-item.component';
+import { GroupFieldsComponent } from './components/filter-popup/group-by/group-fields.component';
+import { PopupContentDirective } from './components/filter-popup/popup-content.directive';
+import { PopupComponent } from './components/filter-popup/popup.component';
 import { EntryRangeCardComponent } from './components/table/entry-range-card/entry-range-card.component';
 import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
 import { ExpandedRowCardComponent } from './components/table/expanded-row-card/entry-card.component';
-import { FilterInputComponent } from './components/table/filter-input/filter-input.component';
+import { FilterInputComponent } from './components/filter-input/filter-input.component';
 import { GroupRowComponent } from './components/table/group-row/group-row.component';
 import { HighlightPipe } from './components/table/highlight.pipe';
 import { SafeHtmlPipe } from './components/table/safe-html.pipe';
 import { TableCardComponent } from './components/table/table-card/table-card.component';
-import { FilterBarComponent } from './components/table/table-filter-bar/filter-bar.component';
+import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { TableComponent } from './components/table/table.component';
-import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
-import { AutoFocusDirective } from './directives/auto-focus.directive';
-import { CellPaddingDirective } from './directives/cell-padding.directive';
 import { TemplateContentDirective } from './directives/content-template.directive';
-import { CreationSpyDirective } from './directives/creation-spy.directive';
 import { ExpandableRowDirective } from './directives/expandable-row.directive';
 import { IconButtonDirective } from './directives/icon-button.directive';
 import { KeyGridDirective } from './directives/keygrid.directive';
-import { ListKeyDirective } from './directives/list-key.directive';
 import { RippleDirective } from './directives/ripple.directive';
-import { RotateDirective } from './directives/rotate-icon.directive';
-import { RowToggleDirective } from './directives/row-toggle.directive';
 import { SvgGradientDirective } from './directives/svg-gradient.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
 import { LetDirective } from './directives/with.directive';
@@ -74,9 +64,14 @@ import { MaterialModule } from './material-module';
 import { CaseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { ToStringPipe } from './pipes/to-string.pipe';
-import { AddComponent } from './svg/add/add.component';
 import { DirectionsComponent } from './components/directions/directions.component';
-import { ToolbarToggleDirective } from './components/layout/top-toolbar/elder-toolbar-toggle.directive';
+import { HttpClientModule } from '@angular/common/http';
+import { NavigationDrawerComponent } from './components/navigation-drawer/navigation-drawer.component';
+import { RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppendPipe } from './components/table/append.pipe';
+import { SentenceCasePipe } from './components/table/sentencecase.pipe';
+import { ListKeyDirective } from './directives/list-key.directive';
 
 export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
@@ -87,45 +82,35 @@ export const firestore = provideFirestore(() => getFirestore());
     LayoutComponent,
     ToolbarComponent,
     CaseSplitPipe,
-    DrugFormComponent,
-    SidebarComponent,
     ToStringPipe,
     DisclaimerComponent,
     AboutComponent,
-    DesignComponent,
     ExpandedElementComponent,
-    RotateDirective,
     TrackingGradientDirective,
-    CreationSpyDirective,
-    TabComponent,
+    TabsComponent,
     ColumnSelectorComponent,
     PopupComponent,
-    GroupByComponent,
+    GroupFieldsComponent,
+    SearchFormComponent,
+    SearchFormDrawer,
     JoinPipe,
-    ListKeyDirective,
-    DropItemComponent,
-    AutoFocusDirective,
+    GroupItem,
     LetDirective,
-    CellPaddingDirective,
     KeyGridDirective,
     TableCardComponent,
     ExpandableRowDirective,
     GroupRowComponent,
     ExpandedRowCardComponent,
     BrandComponent,
-    SearchButtonsComponent,
-    MenuToggleComponent,
+    ToggleComponent,
     AnimatedArrowComponent,
     AnimatedXComponent,
     TemplateContentDirective,
-    TabLinkComponent,
+    TabComponent,
     ErrorMessageComponent,
-    ExpandToggleDirective,
-    AddComponent,
-    TextIconButtonComponent,
     IconButtonDirective,
-    SidebarBrandDirective,
-    SidebarToggleDirective,
+    SearchDrawerBrandDirective,
+    SearchDrawerToggleDirective,
     AutocompleteContentComponent,
     ToggleIconDirective,
     FilterBarComponent,
@@ -133,28 +118,43 @@ export const firestore = provideFirestore(() => getFirestore());
     HighlightPipe,
     SafeHtmlPipe,
     TableComponent,
-    RowToggleDirective,
     EntryRangeCardComponent,
     RippleDirective,
     SvgGradientDirective,
     DirectionsComponent,
-    ToolbarToggleDirective,
     PopupContentDirective,
+    NavigationDrawerComponent,
+    ErrorComponent,
+    AppendPipe,
+    SentenceCasePipe,
+    AutocompleteContentComponent,
+    ListKeyDirective,
   ],
   imports: [
     firebase,
     firestore,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     LayoutModule,
     FormsModule,
+    MaterialModule,
+    RouterModule.forRoot([
+      {
+        path: 'table',
+        component: LayoutComponent,
+      },
+      {
+        path: '**',
+        component: LayoutComponent,
+      },
+    ]),
+
     ReactiveFormsModule,
-    HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
-
-    MaterialModule,
+    HttpClientModule,
+    RouterModule,
   ],
   providers: [
     { provide: COLUMN_ATTRIBUTES, useValue: columnList },
@@ -162,7 +162,9 @@ export const firestore = provideFirestore(() => getFirestore());
     { provide: TABLE_CONFIG, useValue: tableConfig },
     { provide: GENERIC_DRUGS, useValue: genericDrugNames },
     { provide: BEERS_ENTRIES, useValue: beersEntries },
+    { provide: APP_BASE_HREF, useValue: '/' },
   ],
+
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

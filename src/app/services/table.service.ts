@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { filter, map, switchMap, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ColumnField, columns } from '../enums/ColumnFields';
 import { TableCategories } from '../enums/TableCategories.enum';
@@ -153,7 +154,9 @@ export class TableService {
   constructor(
     @Inject(TABLE_CONFIG) private tableParameters: TableConfig[],
     @Inject(TABLE_ATTRIBUTES) private tableList: TableAttributes[],
-    private searchService: SearchService
+    private searchService: SearchService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     let columnTableMap = this.tableParameters
       .map(({ filters, id }) => filters.map((filter) => [filter, id]))
@@ -170,7 +173,24 @@ export class TableService {
     this.tableOptions$.pipe(withLatestFrom(result$)).subscribe(([tables, results]) => {
       this.tableIndices = tables.map((table) => table.tableNumber);
       this.lastSearch = results;
-      this.emitTableSelection(1);
     });
+
+    this.tableOptions$
+      .pipe(
+        take(1),
+
+        switchMapTo(this.route.queryParams)
+      )
+      .subscribe((params) => {
+        let table = Number(params?.table);
+        if (this.tableIndices?.includes(table)) {
+          this.emitTableSelection(table);
+        } else {
+          this.router.navigate(['/search'], {
+            queryParams: { table: 1 },
+            queryParamsHandling: 'merge',
+          });
+        }
+      });
   }
 }

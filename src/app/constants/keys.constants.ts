@@ -1,19 +1,15 @@
-export const VERTICAL_ARROW_KEYS = [
-  'Up',
-  'ArrowUp',
-  'Down',
-  'ArrowDown',
-] as string[];
+export const VERTICAL_ARROWS = ['Up', 'ArrowUp', 'Down', 'ArrowDown'] as string[];
+export const HORIZONTAL_ARROWS = ['Right', 'ArrowRight', 'Left', 'ArrowLeft'] as string[];
+export const ARROWS = [...VERTICAL_ARROWS, ...HORIZONTAL_ARROWS] as string[];
+export const WHITESPACE_KEYS = [' ', 'Spacebar'];
+export const ESCAPE_KEYS = ['Escape', 'Esc'];
 
-export const HORIZONTAL_ARROW_KEYS = [
-  'Right',
-  'ArrowRight',
-  'Left',
-  'ArrowLeft',
-] as string[];
-export const ARROW_KEYS = [
-  ...VERTICAL_ARROW_KEYS,
-  ...HORIZONTAL_ARROW_KEYS,
-] as string[];
-
-export const ENTER_KEYS = [' ', 'Enter'];
+export const Keys = {
+  VERTICAL_ARROWS,
+  HORIZONTAL_ARROWS,
+  ARROWS,
+  ENTER: 'Enter',
+  TAB: 'Tab',
+  SPACEBAR: [' ', 'Spacebar'],
+  ESCAPE: ['Escape', 'Esc'],
+};

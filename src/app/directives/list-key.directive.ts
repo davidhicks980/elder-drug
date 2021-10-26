@@ -1,29 +1,26 @@
-import { FocusableOption, FocusKeyManager } from '@angular/cdk/a11y';
-import {
-  AfterContentInit,
-  ContentChildren,
-  Directive,
-  ElementRef,
-  QueryList,
-  Renderer2,
-} from '@angular/core';
+import { FocusableOption } from '@angular/cdk/a11y';
+import { Directive, ElementRef, HostBinding, Input } from '@angular/core';
 
 @Directive({
-  selector: '[elderListKey]',
+  selector: '[listKey]',
 })
-export class ListKeyDirective implements FocusableOption, AfterContentInit {
-  @ContentChildren(ListKeyDirective) ListItems: QueryList<ListKeyDirective>;
-  keyHandler: FocusKeyManager<ListKeyDirective>;
+export class ListKeyDirective implements FocusableOption {
+  @HostBinding('attr.label')
+  private label: string = '';
   focus() {
     this.element.nativeElement.focus();
   }
-  ngAfterContentInit() {
-    this.keyHandler = new FocusKeyManager(this.ListItems).withWrap();
+  @HostBinding('attr.disabled')
+  disabled?: boolean = false;
+
+  getLabel?() {
+    return this.label;
   }
-  onKeydown(event) {
-    this.keyHandler.onKeydown(event);
+  setLabel(value: string) {
+    this.label = String(value);
   }
-  constructor(private element: ElementRef, private renderer: Renderer2) {
-    this.renderer.setAttribute(this.element.nativeElement, 'tabindex', '0');
-  }
+  @Input()
+  listKey: string = '';
+
+  constructor(private element: ElementRef) {}
 }

@@ -4,11 +4,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Inject,
   Input,
   Renderer2,
 } from '@angular/core';
 
 import { flyInTemplate } from '../../../animations/templates';
+import { IconNames, ICON_NAMES } from '../../../injectables/icons.injectable';
 import { FilterService } from '../../../services/filter.service';
 import { BeersSearchResult } from '../../../services/search.service';
 
@@ -33,6 +35,7 @@ export class ExpandedElementComponent<T extends BeersSearchResult> implements Af
   constructor(
     public filterService: FilterService,
     private renderer: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    @Inject(ICON_NAMES) public iconNames: IconNames
   ) {}
 }

@@ -1,4 +1,11 @@
-import { animate, animation, AnimationReferenceMetadata, style, transition, useAnimation } from '@angular/animations';
+import {
+  animate,
+  animation,
+  AnimationReferenceMetadata,
+  style,
+  transition,
+  useAnimation,
+} from '@angular/animations';
 
 /** @params startOpacity, time, endOpacity */
 
@@ -79,7 +86,7 @@ export const flyInTemplate = (keyframes: {
   if (keyframes.enter) {
     let params = {
       ...keyframes.enter,
-      timing: keyframes.enterTiming ?? '1s ease',
+      timing: keyframes.enterTiming || '1s ease',
     };
 
     enter = useAnimation(customFlyIn, { params });
@@ -87,7 +94,7 @@ export const flyInTemplate = (keyframes: {
   if (keyframes.leave) {
     let params = {
       ...keyframes.leave,
-      timing: keyframes.leaveTiming ?? '1s ease',
+      timing: keyframes.leaveTiming || '1s ease',
     };
     leave = useAnimation(customFlyIn, {
       params,

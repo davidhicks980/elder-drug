@@ -18,7 +18,6 @@
   &:hover {
     border-color: tint($primary-1, 20%);
   }
-  @include hoverable-shadow(3);
 }
 .content {
   grid-area: content;

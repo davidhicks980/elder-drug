@@ -1,21 +1,16 @@
 import {
-  animate,
-  AnimationBuilder,
-  AnimationFactory,
-  AnimationPlayer,
-  style,
-} from '@angular/animations';
-import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ElementRef,
   Input,
-  OnInit,
-  Renderer2,
+  OnDestroy,
 } from '@angular/core';
+import { Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 import { ColumnService } from '../../../services/columns.service';
+import { destroy } from '../../../functions/destroy';
 import { FilterService } from '../../../services/filter.service';
 import { GroupByService } from '../../../services/group-by.service';
 import { TableService } from '../../../services/table.service';
@@ -27,45 +22,47 @@ import { TableService } from '../../../services/table.service';
   providers: [GroupByService, ColumnService, FilterService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableCardComponent implements OnInit {
+export class TableCardComponent implements OnDestroy {
   @Input() icon: string;
-  previousTable: number;
-  tableTransitions: { forwards: AnimationFactory; reverse: AnimationFactory };
-  animating: boolean = false;
-  createAnimations(distance: string): { forwards: AnimationFactory; reverse: AnimationFactory } {
-    let anime = (translate: string) =>
-      this.animation.build([
-        style({ transform: `translateX(${translate})`, opacity: 0 }),
-        animate('250ms ease-in-out', style({ transform: 'translateX(0px)', opacity: 1 })),
-      ]);
-    return { forwards: anime(distance), reverse: anime('-' + distance) };
+
+  previousTable: number = -1;
+  transitions: { forwards: Animation; reverse: Animation };
+  destroy$ = new Subject();
+  private buildAnimations(distance: string): Animation {
+    return new Animation(
+      new KeyframeEffect(
+        this.element.nativeElement,
+        [
+          { transform: `translateX(${distance})`, opacity: '0' },
+          { transform: `translateX(0px)`, opacity: '1' },
+        ],
+        { duration: 250, easing: 'ease-in-out' }
+      ),
+      document.timeline
+    );
   }
-  ngOnInit() {
-    this.tableTransitions = this.createAnimations('15px');
-    let hookAnimation = ((player: AnimationPlayer, finished: boolean) => () => {
-      if (finished) player.destroy();
-      this.animating = !finished;
-    }).bind(this);
-    this.tableService.selection$.pipe(distinctUntilChanged()).subscribe((table) => {
+  ngAfterViewInit() {
+    this.transitions = {
+      forwards: this.buildAnimations('20px'),
+      reverse: this.buildAnimations('-20px'),
+    };
+
+    this.tableService.selection$.pipe(destroy(this), distinctUntilChanged()).subscribe((table) => {
       let { tableNumber } = table;
-      if (tableNumber != this.previousTable && !this.animating) {
-        let direction: 'forwards' | 'reverse' =
-          tableNumber < this.previousTable ? 'reverse' : 'forwards';
-        let anime = this.tableTransitions[direction].create(this.element.nativeElement);
-        anime.onDone(hookAnimation(anime, true));
-        anime.onStart(hookAnimation(anime, false));
-        anime.play();
+      if (this.previousTable != tableNumber) {
+        this.transitions[this.previousTable < tableNumber ? 'forwards' : 'reverse'].play();
         this.previousTable = tableNumber;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
   constructor(
     private columnService: ColumnService,
     private groupService: GroupByService,
     private tableService: TableService,
-    private filterService: FilterService,
-    private renderer: Renderer2,
-    private element: ElementRef,
-    private animation: AnimationBuilder
+    private element: ElementRef<HTMLElement>
   ) {}
 }

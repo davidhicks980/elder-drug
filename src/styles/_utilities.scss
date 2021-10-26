@@ -1,0 +1,32 @@
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function fluid-type($baseSize, $minSize, $maxSize, $minViewportWidth, $maxViewportWidth) {
+  $minSize: strip-unit($minSize);
+  $maxSize: strip-unit($maxSize);
+  $minViewportWidth: strip-unit($minViewportWidth);
+  $maxViewportWidth: strip-unit($maxViewportWidth);
+  @return calc(
+    #{$baseSize} + (#{$maxSize} - #{$minSize}) * (100vw - #{$minViewportWidth}px) / (#{$maxViewportWidth} -
+          #{$minViewportWidth})
+  );
+}
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}

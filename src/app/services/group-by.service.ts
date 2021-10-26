@@ -1,6 +1,7 @@
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { destroy } from '../functions/destroy';
 
 import { SearchService } from './search.service';
 import { TableService } from './table.service';
@@ -14,25 +15,34 @@ export class GroupByService {
   ungroupedItems$ = this.ungroupedItemSource.asObservable();
   private grouped: string[] = [];
   private ungrouped: string[] = [];
-  get groups() {
+  destroy$ = new Subject();
+  get groupedItems() {
     return this.groupedItemSource.getValue().slice();
+  }
+  get ungroupedItems() {
+    return this.ungroupedItemSource.getValue().slice();
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
   constructor(private tableService: TableService, private searchService: SearchService) {
     //When a new search is conducted, clear the group cache
-    this.searchService.searchResults$.subscribe(() => {
+    this.searchService.searchResults$.pipe(destroy(this)).subscribe(() => {
       this.cache.clear();
     });
     //When the table changes, add from the group cache if the cache has items. Otherwise, add all new columns as ungrouped options
-    this.tableService.selection$.subscribe(({ tableNumber, columns }) => {
+    this.tableService.selection$.pipe(destroy(this)).subscribe(({ tableNumber, columns }) => {
       if (!this.cache.has(tableNumber)) {
         this.addUngroupedItems(columns);
       } else {
         this.addItems(this.cache.get(tableNumber), true);
       }
     });
-    combineLatest([this.groupedItems$, this.ungroupedItems$]).subscribe(([grouped, ungrouped]) => {
-      this.cache.set(tableService.table ?? 0, { grouped, ungrouped });
-    });
+    combineLatest([this.groupedItems$, this.ungroupedItems$])
+      .pipe(destroy(this))
+      .subscribe(([grouped, ungrouped]) => {
+        this.cache.set(tableService.table || 0, { grouped, ungrouped });
+      });
   }
   addGroupedItems(items: string[]) {
     this.grouped = this.dedupeItems([...this.grouped, ...items]);

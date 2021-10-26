@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Inject, Input } from '@angular/core';
 
 import { ICON_NAMES, IconNames } from '../../injectables/icons.injectable';
 import { LayoutService } from '../../services/layout.service';
@@ -10,6 +10,8 @@ import { LayoutService } from '../../services/layout.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DirectionsComponent {
+  @Input()
+  hideDescription: boolean = false;
   @HostBinding('class.is-hidden')
   get hidden() {
     return !this.layoutService.areDirectionsShown;

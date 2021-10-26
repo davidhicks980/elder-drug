@@ -1,0 +1,77 @@
+@use "breakpoints" as *;
+@use "palette" as *;
+aside {
+  --easeOutExpo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 0.6s;
+  display: grid;
+  grid-template-columns: 235px 1fr;
+  position: fixed;
+  top: 0;
+  max-height: 100vh;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  visibility: hidden;
+  height: 100vh;
+  z-index: 12;
+  width: 100vw;
+  transform: translateX(-110vw);
+  transition: transform var(--duration) var(--easeOutExpo), visibility 0s linear var(--duration);
+  will-change: transform;
+  @media (prefers-reduced-motion: reduce) {
+    --duration: 1ms;
+  }
+
+  &.drawer-shown {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--duration) var(--easeOutExpo);
+  }
+}
+
+elder-brand {
+  --brand--orientation: column;
+}
+.drawer {
+  @include shadow(8, false, 10%);
+  background-color: white;
+}
+
+.close-drawer {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  touch-action: manipulation;
+  &:focus {
+    outline: auto;
+  }
+}
+
+:host {
+  display: block;
+  &::before {
+    content: "";
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+  }
+}
+:host(.backdrop) {
+  &::before {
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    opacity: 1;
+    position: fixed;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+[elder-toggle] {
+  --icon-button--size: 42px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}

@@ -1,0 +1,30 @@
+<div class="dialog" fxFlex fxLayout="column" fxLayoutAlign="start center">
+  <h1 mat-dialog-title>ElderDrug Design</h1>
+  <div
+    style="
+      border-top: 1px solid rgba(128, 128, 128, 0.5);
+      border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+      font-size: 11pt;
+    "
+    mat-dialog-content
+  >
+    <p>
+      <br />
+      Elderdrug.com is an Angular project aimed at making Beers Criteria more accessible to students
+      and providers. Rather than having to search through a PDF, Elder Drug allows multiple drugs to
+      be searched in a single query. Elder Drug expands index terms to include brands and generics
+      for all entries, even those that only specify a class or therapeutic category (e.g.
+      'Antipsychotics' would include 'aripiprazole' and 'Abilify').
+      <br />
+      Many drugs in this database have been determined by querying Class/Therapeutic Category
+      members (e.g. Cyclooxygenase Inhibitors), and the resulting generic RxCUIs are used to query
+      brand names. The resulting database consists of thousands of drugs, so I cannot guarantee
+      accuracy for all entries. However, I will continue to test and fix any issues as they arise.
+    </p>
+  </div>
+  <br />
+
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close cdkFocusInitial>Close</button>
+  </div>
+</div>

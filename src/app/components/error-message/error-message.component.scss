@@ -1,39 +1,39 @@
 @use "breakpoints" as *;
-@use "palette" as pal;
-@use "~@davidhicks/sass-mixins/shadow-root" as host;
+@use "palette" as *;
+@use "sass:string";
 :host {
-  height: 38px;
-  overflow: hidden;
-  @include mobileWidth {
-    height: 60px;
+  height: 37px;
+  overflow: visible;
+  @include media-size("zero", "small") {
+    height: 53px;
     padding: 0.5em 0;
     margin-left: 0.65rem;
   }
-
-  @include host.state(".is-error") {
-    color: pal.$error-4;
-  }
-  @include host.state(".is-warning") {
-    color: pal.$complement-1;
-  }
 }
-.error-container {
+:host(.is-error),
+:host(.is-warning) {
+  color: $error-4;
+}
+
+.wrapper {
   display: flex;
   align-items: center;
 }
 
 .icon {
   display: none;
-  @include mobileWidth {
+  @include media-size("zero", "small") {
     display: block;
   }
 }
+
 .text {
   padding-top: 0.25em;
   line-height: 1.2em;
   padding-left: 0.5em;
-  @include mobileWidth {
-    font-size: 1rem;
+  @include media-size("zero", "small") {
+    font-size: 0.9rem;
+    font-size: fluid-type(14px, 12px, 16px, 200px, 600px);
     padding: 0 0.5em 0 0.5em;
   }
 }

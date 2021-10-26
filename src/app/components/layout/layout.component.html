@@ -1,85 +1,126 @@
 <ng-container
   *elderLet="{
-    mobile: layoutService.mobile$ | async,
+    mobile: layout.mobile$ | async,
     roundTabs: roundTabs$ | async,
     selectedTable: tableService.selection$ | async
   } as state"
 >
-  <ng-container *elderLet="sidebarState$ | async as sidebar"
-    ><div class="layout">
-      <div
-        #header
-        *ngIf="!sidebar.opened || !state.mobile"
-        [class.is-mobile]="state.mobile"
-        class="header"
-      >
-        <elder-toolbar [class.is-elevated]="state.roundTabs" class="toolbar" #toolbar>
+  <ng-container *elderLet="layout.searchDrawerState$ | async as sidebar">
+    <div class="layout">
+      <div #header [class.is-mobile]="state.mobile" class="header">
+        <elder-toolbar
+          [hiddenRows]="state.mobile ? [] : [2]"
+          [class.is-elevated]="state.roundTabs"
+          class="toolbar"
+          #toolbar
+        >
           <toolbar-first-row class="toolbar-first-row">
-            <elder-menu-toggle *ngIf="state.mobile" (toggle)="layoutService.toggleSidenav()">
-              <mat-icon toggle-icon svgIcon="menu"></mat-icon>
-            </elder-menu-toggle>
-            <elder-brand
-              elder-toolbar-brand
-              logoSize="2.5rem"
-              fontSize="2.3rem"
-              [showTitle]="!state.mobile"
-              orientation="column"
-            ></elder-brand>
-            <button class="toolbar-toggle" mat-icon-button>
-              <mat-icon svgIcon="github"></mat-icon>
-            </button>
+            <a
+              elder-toggle
+              diameter="46px"
+              *ngIf="state.mobile"
+              (click)="toggleNavigationDrawer(true)"
+            >
+              <mat-icon toggle-icon class="toolbar-toggle-icon" svgIcon="menu"></mat-icon
+            ></a>
+
+            <a class="link" href="/">
+              <elder-brand
+                elder-toolbar-brand
+                style="--brand--font-size: 2.3rem; --brand--orientation: column"
+                [style.--brand--logo-size]="state.mobile ? '50px' : '2.3rem'"
+                [showTitle]="!state.mobile"
+              ></elder-brand>
+            </a>
+            <span>
+              <ng-container *ngIf="!state.mobile"
+                ><button mat-button (click)="openAboutDialog()">About</button>
+                <button mat-button (click)="openDisclaimerDialog()">Disclaimer</button>
+              </ng-container>
+              <a class="link link-icon" href="https://github.com/davidhicks980/elder-drug">
+                <mat-icon svgIcon="github"></mat-icon
+              ></a>
+            </span>
           </toolbar-first-row>
-          <toolbar-second-row class="toolbar-second-row">
-            <elder-menu-toggle
+          <ng-container toolbar-second-row *ngIf="state.mobile">
+            <div class="search-field">
+              <mat-icon svgIcon="search"></mat-icon>
+              <button
+                aria-label="Tap to search and edit drugs"
+                (click)="openSearch()"
+                class="search-field-trigger"
+              >
+                <span class="search-field-trigger-text">
+                  {{ searchService.history$ | async | join | titlecase }}</span
+                >
+              </button>
+            </div>
+          </ng-container>
+          <toolbar-third-row class="toolbar-third-row">
+            <button
+              *ngIf="!state.mobile; else searchToggle"
+              elder-toggle
+              diameter="34px"
+              iconScale="0.75"
               class="toolbar-small-toggle"
-              *ngIf="!state.mobile"
-              [toggled]="sidebar.opened"
-              (toggle)="layoutService.toggleSidenav()"
+              [toggled]="sidebar.opened || sidebar.opening"
+              (toggle)="layout.toggleSidenav(true)"
             >
               <elder-animated-arrow toggle-icon></elder-animated-arrow>
-            </elder-menu-toggle>
+            </button>
+            <ng-template #searchToggle>
+              <button
+                elder-toggle
+                *ngIf="state.roundTabs"
+                diameter="36px"
+                iconScale="0.8"
+                class="toolbar-small-toggle search-toggle"
+                (toggle)="openSearch()"
+              >
+                <mat-icon toggle-icon svgIcon="search"></mat-icon>
+              </button>
+            </ng-template>
             <elder-tabs class="toolbar-tabs" [rounded]="state.roundTabs"> </elder-tabs>
-          </toolbar-second-row>
+          </toolbar-third-row>
         </elder-toolbar>
       </div>
       <main #main class="main">
         <section *ngIf="!sidebar.closed" class="sidebar-section">
-          <elder-sidebar class="sidebar" #sidebar>
-            <ng-template sidebar-toggle>
-              <elder-menu-toggle toggle (toggle)="layoutService.toggleSidenav()">
-                <mat-icon toggle-icon svgIcon="arrow_left"></mat-icon>
-              </elder-menu-toggle>
-            </ng-template>
-
-            <ng-template sidebar-brand>
-              <elder-brand brand orientation="row"></elder-brand>
-            </ng-template>
-
-            <elder-sidebar-legend *ngIf="!state.mobile">
+          <elder-search-drawer class="sidebar" #sidebar>
+            <search-drawer-legend *ngIf="!state.mobile">
               Search Beers Criteria
-            </elder-sidebar-legend>
-          </elder-sidebar>
+            </search-drawer-legend>
+            <ng-template search-drawer-toggle>
+              <a
+                elder-toggle
+                diameter="46px"
+                *ngIf="state.mobile"
+                (click)="toggleNavigationDrawer(true)"
+              >
+                <mat-icon toggle-icon class="toolbar-toggle-icon" svgIcon="menu"></mat-icon
+              ></a>
+            </ng-template>
+            <ng-template search-drawer-brand>
+              <elder-brand
+                style="
+                  --brand--font-size: 3.6rem;
+                  --brand--logo-size: 3.6rem;
+                  --brand--orientation: row;
+                "
+                brand
+              ></elder-brand>
+            </ng-template>
+          </elder-search-drawer>
         </section>
-        <section #tableSection class="table-section" *ngIf="!(state.mobile && sidebar.opened)">
+        <section
+          #tableSection
+          class="table-section"
+          [style.visibility]="!(state.mobile && sidebar.opened) ? 'visible' : 'hidden'"
+        >
           <div #watchScroll class="rounded-tab-breakpoint"></div>
-          <button
-            style="
-              position: fixed;
-              right: 50px;
-              top: 0px;
-              z-index: 10000;
-              padding: 5px;
-              background: gray;
-              color: white;
-            "
-            (click)="loadDemo()"
-          >
-            Demo
-          </button>
 
           <elder-table-card
             class="table-card"
-            [style.--table-card--opacity]="sidebar.opening ? 0 : 1"
             [icon]="state.selectedTable.tableIcon"
             *ngIf="searchStarted$ | async; else directions"
           >
@@ -97,41 +138,55 @@
               ></elder-filter-input>
 
               <elder-popup
+                [centered]="state.mobile"
+                filter-field-popup
                 tooltipText="Show or hide columns"
                 icon="fields"
-                filter-field-popup
-                #columnPopup
               >
                 <popup-label>Fields</popup-label>
                 <ng-template popup-content>
-                  <elder-column-selector #columns></elder-column-selector> </ng-template
-              ></elder-popup>
+                  <elder-column-selector></elder-column-selector>
+                </ng-template>
+              </elder-popup>
               <elder-popup
+                [centered]="state.mobile"
+                filter-group-popup
                 tooltipText="Group by column"
                 icon="group"
-                filter-group-popup
-                #groupPopup
               >
                 <popup-label>Groups</popup-label>
                 <ng-template popup-content>
-                  <elder-group-by #groups></elder-group-by>
+                  <elder-group-fields></elder-group-fields>
                 </ng-template>
               </elder-popup>
             </elder-filter-bar>
 
-            <elder-table
-              #elderTable
-              [filters]="tableFilter.filter | async"
-              elderTableView
-              elderResize
-              class="elder-table"
-            >
-            </elder-table>
+            <elder-table #elderTable [filters]="tableFilter.filter | async"> </elder-table>
           </elder-table-card>
           <ng-template #directions>
-            <elder-directions></elder-directions>
+            <elder-directions
+              [class.shift-directions-forwards]="sidebar.opening"
+              [class.shift-directions-backwards]="sidebar.closing"
+            ></elder-directions>
           </ng-template>
         </section>
-      </main></div
-  ></ng-container>
+      </main>
+    </div>
+  </ng-container>
+  <elder-navigation-drawer
+    (toggle)="toggleNavigationDrawer(false)"
+    [open]="navigationDrawer$ | async"
+  >
+    <ul>
+      <li class="nav-list-item">
+        <button class="nav-item" (click)="openAboutDialog()">About</button>
+      </li>
+      <li class="nav-list-item">
+        <button class="nav-item" (click)="openDisclaimerDialog()">Disclaimer</button>
+      </li>
+      <li class="nav-list-item">
+        <a href="mailto:davidhicks980@gmail.com" class="nav-item">Contact</a>
+      </li>
+    </ul>
+  </elder-navigation-drawer>
 </ng-container>

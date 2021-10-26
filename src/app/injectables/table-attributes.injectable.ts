@@ -25,8 +25,7 @@ export const tableList: TableAttributes[] = [
     shortName: 'Disease Interactions',
     identifier: 'DiseaseGuidance',
     tableIcon: 'heart-ekg',
-    description:
-      'The Disease Guidance table contains drugs that should be avoided in those with a specific disease.',
+    description: 'Drugs that should be avoided in patients with specific diseases.',
   },
   {
     tableNumber: TableCategories.Caution,
@@ -42,7 +41,7 @@ export const tableList: TableAttributes[] = [
     identifier: 'DrugInteractions',
     tableIcon: 'capsule',
     description:
-      'The Drug Interactions table contains concerning drug interactions specific to those over the age of 65. It does not include all drug interactions.',
+      'Drug interactions that arise in patients over the age of 65. Drug interactions applicable to the general population are not included in this table.',
   },
   {
     tableNumber: TableCategories.RenalEffect,
@@ -51,8 +50,7 @@ export const tableList: TableAttributes[] = [
     shortName: 'Renal Interactions',
     identifier: 'Clearance',
     tableIcon: 'kidneys',
-    description:
-      'The Renal Interactions table contains drugs that can be toxic in geriatric patients with reduced kidney function.',
+    description: 'Drugs that can be toxic in geriatric patients with reduced kidney function.',
   },
   {
     tableNumber: TableCategories.Anticholinergics,

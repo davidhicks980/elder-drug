@@ -1,0 +1,29 @@
+<button
+  #trigger
+  (click)="togglePopup()"
+  role="listbox"
+  class="popup-trigger"
+  name="popup-trigger"
+  [matTooltip]="tooltipText"
+>
+  <mat-icon class="popup-trigger__icon" svgIcon="{{ icon }}"></mat-icon>
+  <span class="popup-trigger__label"><ng-content select="popup-label"></ng-content></span>
+</button>
+
+<div #anchor></div>
+<ng-template #portalContent>
+  <div
+    [@transformMenu]="(attached$ | async) ? 'enter' : 'void'"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+    class="panel__container"
+  >
+    <div class="panel__close-button">
+      <button (click)="togglePopup(false)" mat-icon-button>
+        <mat-icon svgIcon="mat_x"></mat-icon>
+      </button>
+    </div>
+
+    <ng-container [ngTemplateOutlet]="content.templateRef"></ng-container>
+  </div>
+</ng-template>

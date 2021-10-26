@@ -1,0 +1,35 @@
+.arrow-icon {
+  --translateX: 0px;
+  --translateY: 0px;
+  --rotate: 0deg;
+  --scale: 1;
+  --flip: 1;
+  fill: currentColor;
+  transition: transform 2s ease-in;
+  .bottom,
+  .top {
+    transition: transform 0.3s ease-in;
+    transform: translate(
+        calc(var(--flip) * var(--translateX)),
+        calc(var(--flip) * var(--translateY))
+      )
+      rotate(calc(var(--flip) * var(--rotate))) scaleX(var(--scale));
+    transform-origin: center center;
+  }
+  :host(.left-arrow) & {
+    --flip: -1;
+  }
+
+  :host(.is-toggled) & {
+    --scale: 0.707;
+    --translateX: 5%;
+    .bottom {
+      --translateY: -1%;
+      --rotate: -45deg;
+    }
+    .top {
+      --translateY: 1%;
+      --rotate: 45deg;
+    }
+  }
+}

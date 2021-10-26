@@ -1,0 +1,80 @@
+@use "palette" as *;
+@use "breakpoints" as *;
+$radius: 6px;
+$mobile-height: 44px;
+$font-size: 16px;
+$height: 2.25rem;
+$width: 90px;
+elder-filter-bar {
+  display: block;
+  padding: 1em 0;
+  --filter--border-width: 1px;
+  --filter--border-color: #{$light-gray-5};
+  &:hover {
+    --filter--border-color: #{$light-gray-4};
+  }
+}
+.filter-bar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  .collapsed & {
+    height: $mobile-height;
+    position: relative;
+    border-radius: $radius;
+  }
+}
+elder-filter-input {
+  max-width: 275px;
+  --filter-input--radius: #{$radius};
+  --filter-input--height: #{2.25rem};
+  --filter-input--font-size: 1rem;
+  --filter-input--border-color: var(--filter--border-color);
+  .collapsed & {
+    max-width: 100%;
+    --filter-input--font-size: 1rem;
+    --filter-input--radius: #{$radius} 0 0 #{$radius};
+    --filter-input--height: #{$mobile-height};
+  }
+}
+$normal-height: 2.25rem;
+elder-popup {
+  --popup--height: #{$height};
+  --popup--width: #{$width};
+  --popup--line-height: #{$height};
+  --popup--padding: 0.25rem 0.25rem;
+  --popup--font-size: 1.3rem;
+  --popup--border-width: 1px;
+  --popup--border-color: var(--filter--border-color);
+  &:last-of-type {
+    --popup--border-radius: 0 #{$radius} #{$radius} 0;
+  }
+  &:first-of-type {
+    --popup--border-width: 1px 0 1px 1px;
+    --popup--border-radius: #{$radius} 0 0 #{$radius};
+  }
+}
+.segmented-popups {
+  display: flex;
+}
+
+elder-filter-bar.collapsed elder-popup:last-of-type {
+  --popup--border-radius: 0px #{$radius} #{$radius} 0;
+  --popup--height: #{$mobile-height};
+  --popup--width: #{$mobile-height};
+  --popup--line-height: #{$mobile-height};
+  --popup--padding: 0.25rem 0.25rem;
+  --popup--font-size: 1.3rem;
+  --popup--border-width: 1px;
+  --popup--label--display: none;
+}
+elder-filter-bar.collapsed elder-popup:first-of-type {
+  --popup--border-radius: 0px;
+  --popup--padding: 0.25rem 0.25rem;
+  --popup--height: #{$mobile-height};
+  --popup--width: #{$mobile-height};
+  --popup--line-height: #{$mobile-height};
+  --popup--font-size: 1.3rem;
+  --popup--border-width: 1px 0px 1px 0px;
+  --popup--label--display: none;
+}

@@ -1,5 +1,5 @@
 <ng-container *elderLet="this.message$ | async as message">
-  <div [@transitionMessages]="'enter'" class="error-container" *ngIf="isShown">
+  <div [@transitionMessages]="'enter'" class="wrapper" *ngIf="isShown">
     <mat-icon class="icon" [svgIcon]="message.type"></mat-icon>
     <span class="text">{{ message.message }} </span>
   </div>

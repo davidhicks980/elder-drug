@@ -17,9 +17,9 @@
     <div *ngIf="data.Inclusion">
       <elder-entry-card
         [filter]="filter"
-        [field]="'Guidance Applies To'"
+        [field]="'Applicable to'"
         [entry]="data.Inclusion"
-        [icon]="'unfold_less'"
+        [icon]="iconNames.includes"
       >
       </elder-entry-card>
     </div>
@@ -27,16 +27,16 @@
     <div *ngIf="data.Exclusion">
       <elder-entry-card
         [filter]="filter"
-        [field]="'Does Not Apply To'"
+        [field]="'Not applicable to'"
         [entry]="data.Exclusion"
-        [icon]="'unfold_more'"
+        [icon]="iconNames.excludes"
       >
       </elder-entry-card>
     </div>
     <div *ngIf="data.DiseaseState">
       <elder-entry-card
         [filter]="filter"
-        [field]="'Caution In'"
+        [field]="'Disease State'"
         [entry]="data.DiseaseState"
         [icon]="'error'"
       >

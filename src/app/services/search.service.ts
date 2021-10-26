@@ -1,6 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
+import { Location } from '@angular/common';
+import { Inject, Injectable, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, switchMapTo, take } from 'rxjs/operators';
 
 import { GENERIC_DRUGS } from '../injectables/generic-drugs.injectable';
 import { BeersEntry } from '../interfaces/BeersEntry';
@@ -11,6 +13,7 @@ export type BeersSearchResult = BeersEntry & {
 };
 export interface SearchResult<T> {
   results: T[];
+  terms: string[];
   timestamp: number;
 }
 
@@ -32,6 +35,7 @@ export class SearchService {
     new BehaviorSubject({
       results: [],
       timestamp: -1,
+      terms: [],
     });
   readonly searchResults$ = this.searchResultsSource.asObservable();
   private drugEntryMapping: Map<string, number[]> = new Map();
@@ -40,20 +44,26 @@ export class SearchService {
       return prev.length === next.length && next.every((value) => prev.includes(value));
     })
   );
+  get history() {
+    return this.historySource.value.slice();
+  }
   get searchResults(): SearchResult<BeersSearchResult> {
-    let results = this.searchResultsSource.value.results.map((row) => ({ ...row }));
-    let timestamp = this.searchResultsSource.value.timestamp;
-    return { results, timestamp };
+    let search = { ...this.searchResultsSource.value },
+      results = search.results.map((row) => ({ ...row })),
+      timestamp = search.timestamp,
+      terms = search.terms;
+    return { results, timestamp, terms };
   }
   storeHistory(drugs: string[]) {
     this.historySource.next(this.validateAndFormatSearch(drugs));
   }
-
-  get history() {
-    return this.getHistory();
-  }
-  private getHistory() {
-    return this.historySource.getValue().slice();
+  searchTerms(terms?: string | string[]) {
+    this.routerService.navigate(['/search'], {
+      queryParams: {
+        drug: Array.isArray(terms) && terms.length ? terms : this.historySource.value,
+      },
+      replaceUrl: true,
+    });
   }
 
   filterTypeahead(entry: string): string[] {
@@ -89,12 +99,12 @@ export class SearchService {
       drugs = [drugs as string];
     }
     if (Array.isArray(drugs)) {
+      if (!drugs.length) return [];
+      let isWord = /[\w\s\,\_.\+\$]+/;
       return drugs
         .slice()
-        .map((drug) => drug.toLowerCase())
-        .filter((drug) => {
-          return typeof drug === 'string' && /[\w\s\,\_.\+\$]+/.test(drug) && this.drugs.has(drug);
-        });
+        .map((drug) => String(drug).toLowerCase())
+        .filter((drug) => isWord.test(drug) && this.drugs.has(drug));
     } else {
       console.error('Provided drugs are not formatted correctly');
     }
@@ -148,10 +158,9 @@ export class SearchService {
     });
   }
 
-  searchDrugs(terms?: string | string[]): void {
-    //If there are no terms being searched, take the latest term from history.
-    //Search history has already been validated and formatted
-    let drugs = terms ? this.validateAndFormatSearch(terms) : this.getHistory();
+  private search(terms: string[]): void {
+    let drugs = this.validateAndFormatSearch(terms);
+    this.historySource.next(drugs);
     if (drugs?.length) {
       let results: Map<number, BeersSearchResult> = new Map(),
         indices = [],
@@ -168,6 +177,7 @@ export class SearchService {
         }
       }
       this.searchResultsSource.next({
+        terms: drugs,
         results: Array.from(results.values()),
         timestamp: Date.now(),
       });
@@ -181,9 +191,13 @@ export class SearchService {
   private createDrugEntryMapping(list: Record<string, number[]>) {
     return new Map(Object.entries(list).map(([k, v]) => [this.formatDrugKey(k), v]));
   }
+
   constructor(
     private dataService: DataService,
-    @Inject(GENERIC_DRUGS) private genericIndex: Record<string, string[]>
+    @Inject(GENERIC_DRUGS) private genericIndex: Record<string, string[]>,
+    //I use the location service because the router service is overkill for an application as simple as Elder Drug
+    private route: ActivatedRoute,
+    private routerService: Router
   ) {
     this.dataService.drugList$.subscribe((drugs) => {
       this.drugs = new Set(drugs);
@@ -193,5 +207,13 @@ export class SearchService {
     this.dataService.entriesMappedToTables$.subscribe((entries) => {
       this.drugEntryMapping = this.createDrugEntryMapping(entries);
     });
+
+    this.dataService.dataAcquired$
+      .pipe(take(1), switchMapTo(this.route.queryParams))
+      .subscribe((params: { drug?: string[] }) => {
+        if (params?.drug) {
+          this.search(params.drug);
+        }
+      });
   }
 }

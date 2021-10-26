@@ -1,9 +1,0 @@
-@use "palette" as *;
-@use "breakpoints" as *;
-@use "grid" as *;
-
-:host {
-  grid-template-columns: 50% 50%;
-  display: grid;
-  justify-items: center;
-}

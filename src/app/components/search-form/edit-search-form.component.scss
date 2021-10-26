@@ -1,0 +1,193 @@
+@use "palette" as *;
+@use "breakpoints" as *;
+@use "sass:color";
+%edit-text {
+  color: $gray-5;
+  font-weight: 500;
+}
+
+.edit__section {
+  @include mobileWidth {
+    display: flex;
+    justify-content: center;
+    padding: 0 3vw;
+    height: calc(100% - 97px);
+  }
+}
+.edit__list {
+  position: relative;
+  @include mobileWidth {
+    width: 90%;
+    display: inline-flex;
+    flex-direction: column;
+  }
+}
+
+.edit__items-wrapper {
+  overflow-y: auto;
+  height: calc(100vh - 260px);
+  padding-top: 10px;
+  @include media-size("zero", "small") {
+    height: inherit;
+
+    :host(.is-pinned) & {
+      overscroll-behavior: auto; /* default */
+      height: calc(100vh - 140px);
+    }
+  }
+}
+
+.edit__item {
+  color: $gray-4;
+  display: list-item;
+
+  padding: 0 0 0.5em 0;
+  @include mobileWidth {
+    padding: 0.5em 2px;
+    color: $secondary-2-2;
+    border-bottom: 0;
+  }
+}
+.item__content {
+  --validation-border-scale: 0.2;
+  --validation-border-height: 0;
+  --validation-color: #{$gray-4};
+  display: flex;
+  flex-direction: row;
+  max-width: inherit;
+  align-items: center;
+  background-color: var(--validation-background);
+  border-bottom: 2px solid var(--validation-color, transparent);
+  border-radius: 5px;
+  transition: background-color 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  border: 0px;
+  &::before {
+    content: "";
+    width: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: var(--validation-border-height);
+    background-color: var(--validation-color);
+    transform: scaleY(var(--validation-border-scale));
+    position: absolute;
+    transition: transform 300ms linear;
+    transform-origin: bottom center;
+    border-radius: 5px;
+  }
+  @include mobileWidth {
+    --validation-background: #{color.scale($secondary-2-1, $alpha: -90%, $saturation: 50%)};
+    --validation-color: #{$secondary-2-3};
+    border: 0;
+    padding: 0.2em 0.1em;
+  }
+  &.has-attached {
+    border-radius: 5px 5px 0 0;
+  }
+  &:hover {
+    --validation-color: #{$secondary-2-2};
+    --validation-background: #{color.scale($secondary-2-1, $alpha: -90%, $saturation: 50%)};
+    @include media-size("zero", "small") {
+      --validation-color: #{$secondary-2-2};
+    }
+  }
+
+  &:focus-within {
+    --validation-background: #{color.scale($light-gray-2, $alpha: -60%)};
+    --validation-border-height: 1.4px;
+    --validation-border-scale: 1;
+    --validation-color: #{$gray-4};
+    @include media-size("zero", "small") {
+      --validation-border-height: 2px;
+      --validation-color: #{$gray-4};
+    }
+  }
+  &.is-invalid,
+  &:focus-within.is-invalid {
+    --validation-color: #{$error-4};
+    --validation-background: #{getHighlightColor($error-1)};
+  }
+  &.is-missing,
+  &:focus-within.is-missing {
+    --validation-color: #{$complement-1};
+    --validation-background: #{getHighlightColor($complement-1)};
+  }
+}
+
+.item__button {
+  color: var(--validation-color, #{$gray-2});
+  padding: 0 0.5em;
+
+  @include media-size("zero", "small") {
+    height: 38px;
+  }
+  &__icon {
+    vertical-align: middle;
+    height: 22px;
+  }
+}
+
+.item__input {
+  @extend %edit-text;
+  all: unset;
+
+  color: var(--validation-color);
+  font-weight: 400;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  cursor: text;
+  min-width: 0;
+  font-family: var(--body-font), sans-serif;
+  font-size: 1rem;
+
+  line-height: 2.75em;
+
+  @include media-size("zero", "small") {
+    width: 90%;
+    line-height: 2em;
+    font-size: 1rem;
+  }
+}
+
+.edit__button--clear {
+  all: unset;
+  position: absolute;
+  right: 0px;
+  font-size: 11px;
+  padding: 0 10px;
+  background-color: color.scale($error-5, $alpha: -15%);
+  border-radius: 6px;
+  color: white;
+  line-height: 2.2;
+  top: 4px;
+  font-weight: 500;
+  cursor: pointer;
+
+  @include hoverable-shadow(2, false, 20%) {
+    &:focus {
+      --hoverable-shadow--opacity: 0.6;
+    }
+    &:active {
+      --hoverable-shadow--opacity: 1;
+    }
+  }
+  &:focus {
+    outline: auto;
+    outline-color: red;
+    outline-offset: 3px;
+  }
+  &:active {
+    outline-offset: 4px;
+    filter: brightness(0.95);
+  }
+}
+.edit__title {
+  font-size: var(--label-size);
+  color: var(--label-color);
+  font-family: var(--input-font);
+  padding: 0;
+  margin: 0;
+
+  font-weight: 500;
+}

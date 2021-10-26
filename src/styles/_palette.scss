@@ -58,18 +58,18 @@ $primary-1: rgba(15, 75, 177, 1);
 $primary-2: rgba(9, 58, 139, 1);
 $primary-3: rgba(6, 47, 116, 1);
 $primary-4: rgba(3, 35, 91, 1);
-$primary-5: rgba(1, 23, 60, 1);
+$primary-5: #01173c;
 
 // Main Secondary color (1) */
 $secondary-1: rgba(50, 20, 184, 1);
 $secondary-2: rgba(37, 13, 145, 1);
 $secondary-3: rgba(28, 8, 121, 1);
 $secondary-4: rgba(21, 4, 94, 1);
-$secondary-5: rgba(12, 1, 62, 1);
+$secondary-5: #0c013e;
 
 // Main Secondary color (2) */
 $secondary-2-1: rgba(0, 169, 146, 1);
-$secondary-2-2: rgba(0, 132, 114, 1);
+$secondary-2-2: #008472;
 $secondary-2-3: rgba(0, 110, 95, 1);
 $secondary-2-4: rgba(0, 86, 74, 1);
 $secondary-2-5: rgba(0, 56, 49, 1);
@@ -88,12 +88,8 @@ $palette: (
   "green-5": rgba(0, 56, 49, 1),
 );
 :root {
-  @each $name, $color in $palette {
-    @debug $color;
-    --#{$name}-transparent: #{color.scale($color, $alpha: -90%)};
-  }
   // Main Primary color */
-  --primary-1: rgba(15, 75, 177, 1);
+  --primary-1: #0f4bb1;
   --primary-2: rgba(9, 58, 139, 1);
   --primary-3: rgba(6, 47, 116, 1);
   --primary-4: rgba(3, 35, 91, 1);
@@ -170,7 +166,7 @@ $color: #fafafb;
     @if $d == $depth {
       $comma: "";
     }
-    $full: $full + "#{$in 0 1px * $d 1.5px * $d rgb(87 107 138 / #{$opacity})} #{$comma}";
+    $full: $full + "#{$in 0 1.1px * $d 1.5px * $d rgb(87 107 138 / #{$opacity})} #{$comma}";
   }
   @return $full;
 }
@@ -215,9 +211,10 @@ $color: #fafafb;
   }
 }
 
-@mixin hoverable-shadow($depth, $inset: false) {
+@mixin hoverable-shadow($depth, $inset: false, $opacity: 13%) {
+  @content;
   &:hover::after {
-    opacity: 0.8;
+    opacity: var(--hoverable-shadow--opacity, 0.8);
   }
   &::after {
     content: "";
@@ -227,19 +224,15 @@ $color: #fafafb;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
+    opacity: var(--hoverable-shadow--opacity, 0);
     border-radius: inherit;
     transition: opacity 0.3s ease-in-out;
     pointer-events: none;
     margin: 0px;
-    @include shadow($depth, $inset);
+    @include shadow($depth, $inset, $opacity);
   }
 }
 
-@mixin thick-outline {
-  outline: 2px dotted currentColor;
-  outline-offset: 1px;
-}
 @mixin common-control-style {
   font-size: 1em;
   transition: border-color 200ms ease-out;
@@ -305,7 +298,7 @@ $color: #fafafb;
 
 @mixin scrollbar {
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -314,10 +307,9 @@ $color: #fafafb;
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 3px;
     color: $light-gray-4;
-    box-shadow: inset 0 0 0 10px $light-gray-4;
-    -webkit-box-shadow: inset 0 0 0 10px $light-gray-4;
+    box-shadow: inset 0 0 0 5px rgb(176 183 189);
   }
   :host {
     scrollbar-width: thin;
@@ -327,4 +319,8 @@ $color: #fafafb;
 
 @mixin common-border {
   border: 1px solid $light-gray-5;
+}
+
+@mixin focus-style {
+  outline: 2px solid color.scale($primary-1, $alpha: -70%, $saturation: 30%);
 }

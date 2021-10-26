@@ -7,17 +7,17 @@ import { KeyGridDirective } from '../directives/keygrid.directive';
 })
 export class KeyGridService {
   firstRow: number = 0;
-  filterCells: Set<KeyGridDirective> = new Set();
   renderer: Renderer2;
 
-  updateFilterCells(cell: KeyGridDirective) {
-    this.filterCells.add(cell);
-  }
-
-  handleArrowKeys(event: KeyboardEvent, cells: KeyGridDirective[]) {
+  handleArrowKeys(
+    event: KeyboardEvent,
+    cells: KeyGridDirective[],
+    modify: boolean = true,
+    focus: boolean = true
+  ): { toRow: number; toCol: number } {
     const currentElem = event.target as HTMLElement,
-      row = Number(currentElem.getAttribute('row')),
-      col = Number(currentElem.getAttribute('column'));
+      row = Number(currentElem.getAttribute('data-row')),
+      col = Number(currentElem.getAttribute('data-column'));
     const { rowPos: r, columnPos: c } = this.getPositionFunctions(row, col),
       colCount = c.count(cells, row),
       rowCount = r.count(cells);
@@ -51,12 +51,16 @@ export class KeyGridService {
       default:
         return; // Quit if this doesn't handle the key event.
     }
-    const predicate = (item) => item.column === toCol && item.row === toRow;
+    const predicate = (item: KeyGridDirective) => item.column === toCol && item.row === toRow;
     const nextElem = cells.filter(predicate)[0]?.element;
-    this.renderer.setAttribute(nextElem, 'tabindex', '0');
-    this.renderer.setAttribute(currentElem, 'tabindex', '-1');
-    nextElem.focus();
-    return true;
+    if (modify) {
+      cells.forEach((el) => this.renderer.setAttribute(el.element, 'tabindex', '-1'));
+      if (nextElem) {
+        this.renderer.setAttribute(nextElem, 'tabindex', '0');
+      }
+    }
+    if (focus) nextElem?.focus();
+    return { toCol, toRow };
   }
 
   private getPositionFunctions(row: number, col: number) {
@@ -66,7 +70,7 @@ export class KeyGridService {
       isLast: (rowCount: number): boolean => row === rowCount,
       isFirst: () => row === 0,
       count: (cells: KeyGridDirective[]) => {
-        return cells.sort((a, b) => b.row - a.row)[0].row;
+        return Math.max(...cells.map((cell) => cell.row));
       },
     };
     const columnPos = {

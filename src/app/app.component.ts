@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -10,6 +10,7 @@ import { DataService } from './services/data.service';
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
   providers: [{ provide: ICON_NAMES, useValue: iconNames }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   constructor(

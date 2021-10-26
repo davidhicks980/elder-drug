@@ -9,7 +9,9 @@
     ><span> Getting Started</span>
   </h1>
 
-  <p>Elder drug is a tool that simplifies geriatric medication management.</p>
+  <p *ngIf="!hideDescription">
+    Elder drug is a tool that simplifies geriatric medication management.
+  </p>
   <ol>
     <li><span>Start typing a brand or generic drug name in the search field.</span></li>
     <li>

@@ -19,6 +19,7 @@
     "baseUrl": "."
   },
   "angularCompilerOptions": {
+    "baseUrl": "/",
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictTemplates": true,

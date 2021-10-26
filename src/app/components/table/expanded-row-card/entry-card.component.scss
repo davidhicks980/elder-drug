@@ -1,6 +1,7 @@
 @use "palette" as *;
 @use "grid" as gr;
 @use "breakpoints" as *;
+@use "sass:color";
 :host {
   --expanded-row--header-font: var(--header-font), sans-serif;
   --expanded-row--body-font: var(--body-font), sans-serif;
@@ -17,9 +18,8 @@
   gap: 0.35rem;
   transition: border-color 300ms ease-in;
   &:hover {
-    border-color: tint($primary-1, 20%);
+    border-color: color.scale($primary-1, $alpha: -50%);
   }
-  @include hoverable-shadow(3);
 }
 .content {
   grid-area: content;
@@ -31,7 +31,7 @@
 .header {
   color: $gray-5;
   grid-area: header;
-  font: 500 1.2rem/1.4rem var(--expanded-row--header-font);
+  font: 500 1.2rem/1.4rem var(--expanded-row--body-font);
   padding: 0.3rem 0;
   margin: 0;
 }

@@ -1,6 +1,15 @@
 @use "breakpoints" as bem;
 @use "palette" as *;
 @use "sass:color";
+.no-data-row {
+  display: flex;
+  filter: grayscale(0.6);
+  opacity: 0.5;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  --brand--logo-size: 7rem;
+}
 %row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
@@ -14,7 +23,7 @@
   border-top-left-radius: 4px;
   @include shadow(2);
 
-  @include bem.mobileWidth {
+  :host(.collapsed) & {
     display: none;
   }
 }
@@ -29,13 +38,15 @@
   cursor: pointer;
   border-bottom: 1px solid $light-gray-4;
   grid-template-rows: var(--row--height);
+  padding-left: var(--padding-left);
   &.is-group-row {
     grid-template-rows: auto;
     border: none;
   }
+
   &:last-of-type {
     border-bottom: none;
-    &.is-expanded {
+    &[aria-expanded] {
       border-bottom: 1px solid $light-gray-4;
     }
   }
@@ -50,7 +61,7 @@
       );
     }
   }
-  @include bem.mobileWidth {
+  :host(.collapsed) & {
     grid-template-columns: none;
     background-color: white;
     position: relative;
@@ -79,7 +90,7 @@
   height: var(--row--height);
   white-space: nowrap;
   text-overflow: ellipsis;
-  @include bem.mobileWidth {
+  :host(.collapsed) & {
     border-bottom: none;
     display: grid;
     grid-template-columns: 17ch auto;
@@ -102,17 +113,21 @@
   display: inline;
   text-overflow: ellipsis;
   overflow: hidden;
-  @include bem.media-size("zero", "small") {
+  :host(.collapsed) & {
     padding-left: 0;
   }
 }
 
 .cell-title {
   font-weight: 500;
+  display: none;
+  :host(.collapsed) & {
+    display: inline-block;
+  }
 }
 .cell-chevron {
   padding-left: 0.5rem;
-  @include bem.media-size("zero", "small") {
+  :host(.collapsed) & {
     padding-left: 0;
   }
 }
@@ -125,4 +140,24 @@
   .is-expanded & {
     transform: rotate(90deg);
   }
+}
+
+elder-group-row {
+  padding-left: calc(var(--left-padding) * 10px);
+  position: relative;
+  &::before {
+    content: "";
+    height: 90%;
+    width: 2px;
+    opacity: min(calc(var(--left-padding) * 100%), 80%);
+    top: 5%;
+    filter: hue-rotate(calc(var(--left-padding) * 30deg)) brightness(1.1);
+    bottom: 5%;
+    position: absolute;
+    background-color: $secondary-2-1;
+  }
+}
+
+.cell-container {
+  padding-left: calc(var(--left-padding) * 10px);
 }

@@ -6,16 +6,15 @@ import {
   Input,
   Renderer2,
 } from '@angular/core';
+import { debounce } from '../functions/debounce';
 
 @Directive({
   selector: '[tracking-gradient]',
 })
 export class TrackingGradientDirective implements AfterViewInit {
-  @Input('tracking-gradient') active: boolean = true;
   private width: number = 1;
   private height: number = 1;
   private track: boolean = false;
-  private throttled: boolean = false;
 
   gradientId: string;
   gradientChild: SVGRectElement;
@@ -25,8 +24,8 @@ export class TrackingGradientDirective implements AfterViewInit {
 
   private createGradientRect(id: string) {
     let rect = this.createSVG('rect') as SVGRectElement;
-    this.setSVGAttribute(rect, 'width', '50px');
-    this.setSVGAttribute(rect, 'height', '100px');
+    this.setSVGAttribute(rect, 'width', '120px');
+    this.setSVGAttribute(rect, 'height', '200px');
     this.setSVGAttribute(rect, 'fill', `url(#${id})`);
     return rect;
   }
@@ -49,9 +48,9 @@ export class TrackingGradientDirective implements AfterViewInit {
       stopStart = this.createSVG('stop') as SVGStopElement,
       stopEnd = this.createSVG('stop') as SVGStopElement;
     this.setSVGAttribute(gradient, 'id', id);
-    this.setSVGAttribute(stopStart, 'offset', '30%');
-    this.setSVGAttribute(stopStart, 'stop-color', 'rgba(255, 255, 255, 0.06)');
-    this.setSVGAttribute(stopEnd, 'offset', '95%');
+    this.setSVGAttribute(stopStart, 'offset', '0%');
+    this.setSVGAttribute(stopStart, 'stop-color', 'rgba(255, 255, 255, 0.08)');
+    this.setSVGAttribute(stopEnd, 'offset', '70%');
     this.setSVGAttribute(stopEnd, 'stop-color', 'rgba(255, 255, 255, 0)');
     this.renderer.appendChild(defs, gradient);
     this.renderer.appendChild(gradient, stopStart);
@@ -74,18 +73,16 @@ export class TrackingGradientDirective implements AfterViewInit {
     this.buildGradient();
   }
   mouseMoveHandler($event: MouseEvent) {
-    if (this.track && this.active && !this.throttled) {
-      this.throttled = true;
+    if (this.track) {
       let xPos = -1 * (this.width / 2 - $event.offsetX);
-      xPos = xPos > 140 ? 140 : xPos;
-      xPos = xPos < 4 ? 4 : xPos;
+      xPos = xPos > 90 ? 90 : xPos;
+      xPos = xPos < -20 ? -20 : xPos;
 
       this.renderer.setStyle(
         this.gradientChild,
         'transform',
         `translate(${xPos}px, ${-1 * (this.height / 2 - $event.offsetY)}px)`
       );
-      setTimeout(() => (this.throttled = false), 20);
     }
   }
 
@@ -95,7 +92,7 @@ export class TrackingGradientDirective implements AfterViewInit {
     this.removeMouseListener = this.renderer.listen(
       this.element.nativeElement,
       'mousemove',
-      this.mouseMoveHandler.bind(this)
+      debounce(this.mouseMoveHandler.bind(this), 20)
     );
     this.track = true;
   }

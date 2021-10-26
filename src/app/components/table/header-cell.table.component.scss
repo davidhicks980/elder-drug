@@ -19,7 +19,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  @include mobileWidth {
+  :host(.collapsed) & {
     font-weight: 500;
     font-family: var(--body-font), Arial, Helvetica, sans-serif;
     width: 100px;

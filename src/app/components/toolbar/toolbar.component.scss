@@ -1,0 +1,42 @@
+@use "palette" as *;
+@use "grid" as *;
+@use "colors" as *;
+@use "breakpoints" as *;
+$toolbarActiveColor: $primary-1;
+$toolbarInactiveColor: white;
+
+:host {
+  display: block;
+}
+
+header {
+  width: 100%;
+  height: var(--toolbar--height, 100px);
+  transition: transform 300ms ease-in;
+  display: grid;
+  grid-template-rows: 60px 40px;
+  grid-template-areas: "header" "tabs";
+  @include media-size("zero", "small") {
+    grid-template-rows: 75px 55px 40px;
+    grid-template-areas: "header" "search" "tabs";
+    height: var(--toolbar--mobile-height, 170px);
+    grid-template-columns: 100%;
+  }
+}
+
+.toolbar-first-row {
+  grid-area: header;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.28);
+  padding: 0px 0.75rem;
+}
+.toolbar-second-row {
+  grid-area: search;
+  padding: 2px 2% 9px 2%;
+
+  background: white;
+}
+.toolbar-third-row {
+  grid-area: tabs;
+  background-image: linear-gradient(to right, $primary-4, $primary-3);
+}

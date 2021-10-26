@@ -3,11 +3,14 @@
 @use "colors" as *;
 @use "breakpoints" as *;
 
+:host {
+  display: block;
+}
 .drug-table {
   &--wrapper {
     border: var(--common-border);
     border-radius: 4px;
-    @include mobileWidth {
+    :host(.collapsed) & {
       background-color: $light-gray-1;
     }
   }

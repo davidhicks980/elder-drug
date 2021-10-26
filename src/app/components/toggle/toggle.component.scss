@@ -1,0 +1,61 @@
+@use "palette" as pal;
+@use "sass:color";
+:host {
+  --icon-button--color: #{pal.$gray-4};
+  --icon-button--active-color: #{pal.$primary-3};
+  --icon-button--outline-color: #{color.scale(pal.$primary-1, $alpha: -50%)};
+  --icon-button--background-color: transparent;
+  --icon-button--shadow: #{pal.shadow(2, false, 20%)};
+  --icon-button--ring-opacity: 0;
+  --icon-button--icon-scale: 0.6;
+  outline: none;
+  scroll-behavior: none;
+}
+:host {
+  background: none;
+  border: none;
+  display: block;
+  line-height: 0px;
+  outline: none;
+  padding: calc(
+    (var(--icon-button--size) - var(--icon-button--size) * var(--icon-button--icon-scale)) / 2
+  );
+
+  position: relative;
+  color: var(--icon-button--color);
+  height: var(--icon-button--size);
+  width: var(--icon-button--size);
+  -webkit-tap-highlight-color: transparent;
+  z-index: 10;
+  &::before {
+    border-radius: 50%;
+    transform-origin: center;
+    box-sizing: border-box;
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: var(--icon-button--ring-opacity);
+    position: absolute;
+    transform: scale(1);
+    transition: transform 250ms cubic-bezier(0.175, 0.885, 0.32, 1),
+      opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1);
+    outline: 1px solid var(--icon-button--outline-color);
+    background-color: var(--icon-button--background-color);
+    box-shadow: var(--icon-button--shadow);
+  }
+
+  &:hover,
+  &:focus {
+    color: var(--icon-button--active-color);
+    --icon-button--ring-opacity: 1;
+  }
+  &:active {
+    --icon-button--ring-opacity: 0.7;
+    &::before {
+      transform: scale(1.1);
+    }
+  }
+}
