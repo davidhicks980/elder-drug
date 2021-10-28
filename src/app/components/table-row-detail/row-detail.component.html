@@ -15,35 +15,35 @@
   </div>
   <div class="masonry-grid">
     <div *ngIf="data.Inclusion">
-      <elder-entry-card
+      <elder-detail-card
         [filter]="filter"
         [field]="'Applicable to'"
         [entry]="data.Inclusion"
         [icon]="iconNames.includes"
       >
-      </elder-entry-card>
+      </elder-detail-card>
     </div>
 
     <div *ngIf="data.Exclusion">
-      <elder-entry-card
+      <elder-detail-card
         [filter]="filter"
         [field]="'Not applicable to'"
         [entry]="data.Exclusion"
         [icon]="iconNames.excludes"
       >
-      </elder-entry-card>
+      </elder-detail-card>
     </div>
     <div *ngIf="data.DiseaseState">
-      <elder-entry-card
+      <elder-detail-card
         [filter]="filter"
         [field]="'Disease State'"
         [entry]="data.DiseaseState"
         [icon]="'error'"
       >
-      </elder-entry-card>
+      </elder-detail-card>
     </div>
     <div *ngIf="data.MaximumClearance || data.MinimumClearance">
-      <elder-entry-range-card
+      <elder-range-card
         [filter]="filter"
         [field]="'Renal Adjustments'"
         [entry]="data.Rationale"
@@ -52,16 +52,16 @@
         [minimum]="data.MinimumClearance"
         [recommendation]="data.Recommendation"
         [units]="'ml/min'"
-      ></elder-entry-range-card>
+      ></elder-range-card>
     </div>
     <div *ngIf="data.Rationale">
-      <elder-entry-card
+      <elder-detail-card
         [filter]="filter"
         [field]="'Rationale'"
         [entry]="data.Rationale"
         [icon]="'light'"
       >
-      </elder-entry-card>
+      </elder-detail-card>
     </div>
   </div>
 </div>

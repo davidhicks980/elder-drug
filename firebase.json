@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/search-angular",
+    "public": "dist/elder-drug",
     "ignore": ["./keys", "firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

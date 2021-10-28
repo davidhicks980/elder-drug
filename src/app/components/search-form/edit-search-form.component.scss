@@ -116,15 +116,18 @@
 }
 
 .item__button {
-  color: var(--validation-color, #{$gray-2});
+  color: var(--validation-color, #{--icon--color});
   padding: 0 0.5em;
 
-  @include media-size("zero", "small") {
-    height: 38px;
-  }
   &__icon {
     vertical-align: middle;
-    height: 22px;
+    height: 18px;
+    @include media-size("zero", "small") {
+      height: 22px;
+    }
+  }
+  @include media-size("zero", "small") {
+    height: 38px;
   }
 }
 

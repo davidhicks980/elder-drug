@@ -10,14 +10,13 @@ elder-filter-bar {
   padding: 1em 0;
   --filter--border-width: 1px;
   --filter--border-color: #{$light-gray-5};
-  &:hover {
-    --filter--border-color: #{$light-gray-4};
-  }
 }
 .filter-bar {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr min-content;
+  position: relative;
+
   .collapsed & {
     height: $mobile-height;
     position: relative;
@@ -36,6 +35,7 @@ elder-filter-input {
     --filter-input--radius: #{$radius} 0 0 #{$radius};
     --filter-input--height: #{$mobile-height};
   }
+  position: relative;
 }
 $normal-height: 2.25rem;
 elder-popup {

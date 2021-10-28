@@ -1,3 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -7,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { initializeApp } from 'firebase/app';
-
+import { MaterialModule } from './material-module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { BrandComponent } from './components/brand/brand.component';
@@ -18,7 +21,6 @@ import { AnimatedXComponent } from './components/toggle/animated-x/animated-x.co
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { ToggleIconDirective } from './components/toggle/toggle-icon.directive';
 import { SearchFormComponent } from './components/search-form/search-form.component';
-
 import { AutocompleteContentComponent } from './components/autocomplete/autocomplete-content.component';
 import {
   SearchDrawerBrandDirective,
@@ -37,45 +39,37 @@ import { GroupItem } from './components/filter-popup/group-by/group-item/group-i
 import { GroupFieldsComponent } from './components/filter-popup/group-by/group-fields.component';
 import { PopupContentDirective } from './components/filter-popup/popup-content.directive';
 import { PopupComponent } from './components/filter-popup/popup.component';
-import { EntryRangeCardComponent } from './components/table/entry-range-card/entry-range-card.component';
-import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
-import { ExpandedRowCardComponent } from './components/table/expanded-row-card/entry-card.component';
+import { RangeCardComponent } from './components/table-range-card/detail-range-card.component';
+import { RowDetailComponent } from './components/table-row-detail/row-detail.component';
+import { RowDetailCardComponent } from './components/table-row-detail-card/detail-card.component';
 import { FilterInputComponent } from './components/filter-input/filter-input.component';
-import { GroupRowComponent } from './components/table/group-row/group-row.component';
-import { HighlightPipe } from './components/table/highlight.pipe';
-import { SafeHtmlPipe } from './components/table/safe-html.pipe';
-import { TableCardComponent } from './components/table/table-card/table-card.component';
+import { GroupRowComponent } from './components/table-group-row/group-row.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
+import { TableContainerComponent } from './components/table/table-container.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { TableComponent } from './components/table/table.component';
 import { TemplateContentDirective } from './directives/content-template.directive';
-import { ExpandableRowDirective } from './directives/expandable-row.directive';
+import { RowDetailDirective } from './components/table-row-detail/row-detail.directive';
 import { IconButtonDirective } from './directives/icon-button.directive';
 import { KeyGridDirective } from './directives/keygrid.directive';
-import { RippleDirective } from './directives/ripple.directive';
 import { SvgGradientDirective } from './directives/svg-gradient.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
-import { LetDirective } from './directives/with.directive';
+import { LetDirective } from './directives/let.directive';
+import { CaseSplitPipe } from './pipes/case-split.pipe';
+import { JoinPipe } from './pipes/join.pipe';
+import { ToStringPipe } from './pipes/to-string.pipe';
+import { AppendPipe } from './pipes/append.pipe';
+import { SentenceCasePipe } from './pipes/sentencecase.pipe';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { NavigationDrawerComponent } from './components/navigation-drawer/navigation-drawer.component';
 import { BEERS_ENTRIES, beersEntries } from './injectables/brand-drugs.injectable';
 import { COLUMN_ATTRIBUTES, columnList } from './injectables/column-attributes';
 import { GENERIC_DRUGS, genericDrugNames } from './injectables/generic-drugs.injectable';
 import { TABLE_ATTRIBUTES, tableList } from './injectables/table-attributes.injectable';
 import { TABLE_CONFIG, tableConfig } from './injectables/table-config.injectable';
-import { MaterialModule } from './material-module';
-import { CaseSplitPipe } from './pipes/case-split.pipe';
-import { JoinPipe } from './pipes/join.pipe';
-import { ToStringPipe } from './pipes/to-string.pipe';
-import { DirectionsComponent } from './components/directions/directions.component';
-import { HttpClientModule } from '@angular/common/http';
-import { NavigationDrawerComponent } from './components/navigation-drawer/navigation-drawer.component';
-import { RouterModule } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
-import { AppendPipe } from './components/table/append.pipe';
-import { SentenceCasePipe } from './components/table/sentencecase.pipe';
-import { ListKeyDirective } from './directives/list-key.directive';
-
-export const firebase = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
+export const firebaseModule = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
-
+const pipes = [];
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,9 +77,13 @@ export const firestore = provideFirestore(() => getFirestore());
     ToolbarComponent,
     CaseSplitPipe,
     ToStringPipe,
+    JoinPipe,
+    HighlightPipe,
+    AppendPipe,
+    SentenceCasePipe,
     DisclaimerComponent,
     AboutComponent,
-    ExpandedElementComponent,
+    RowDetailComponent,
     TrackingGradientDirective,
     TabsComponent,
     ColumnSelectorComponent,
@@ -93,14 +91,13 @@ export const firestore = provideFirestore(() => getFirestore());
     GroupFieldsComponent,
     SearchFormComponent,
     SearchFormDrawer,
-    JoinPipe,
     GroupItem,
     LetDirective,
     KeyGridDirective,
-    TableCardComponent,
-    ExpandableRowDirective,
+    TableContainerComponent,
+    RowDetailDirective,
     GroupRowComponent,
-    ExpandedRowCardComponent,
+    RowDetailCardComponent,
     BrandComponent,
     ToggleComponent,
     AnimatedArrowComponent,
@@ -115,46 +112,29 @@ export const firestore = provideFirestore(() => getFirestore());
     ToggleIconDirective,
     FilterBarComponent,
     FilterInputComponent,
-    HighlightPipe,
-    SafeHtmlPipe,
     TableComponent,
-    EntryRangeCardComponent,
-    RippleDirective,
+    RangeCardComponent,
     SvgGradientDirective,
     DirectionsComponent,
     PopupContentDirective,
     NavigationDrawerComponent,
     ErrorComponent,
-    AppendPipe,
-    SentenceCasePipe,
     AutocompleteContentComponent,
-    ListKeyDirective,
   ],
   imports: [
-    firebase,
+    firebaseModule,
     firestore,
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
     FormsModule,
     MaterialModule,
-    RouterModule.forRoot([
-      {
-        path: 'table',
-        component: LayoutComponent,
-      },
-      {
-        path: '**',
-        component: LayoutComponent,
-      },
-    ]),
-
+    RouterModule.forRoot([{ path: '**', component: LayoutComponent }]),
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
     HttpClientModule,
-    RouterModule,
   ],
   providers: [
     { provide: COLUMN_ATTRIBUTES, useValue: columnList },

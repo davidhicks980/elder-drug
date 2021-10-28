@@ -9,8 +9,7 @@
 
   mat-option {
     padding: 0;
-    height: 2.75rem;
-
+    height: 2.75rem !important;
     .mat-icon {
       margin: 0;
     }
@@ -26,7 +25,8 @@
       border-bottom-right-radius: 4px;
     }
     &.is-pinned {
-      height: 3rem;
+      height: 3.25rem;
+      line-height: 3.25rem !important;
     }
   }
 

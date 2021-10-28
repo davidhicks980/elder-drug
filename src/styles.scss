@@ -3,7 +3,6 @@
 @use "~@angular/material" as mat;
 @use "colors" as *;
 @use "palette" as *;
-@use "grid" as *;
 @use "component-overrides" as *;
 @use "breakpoints" as *;
 @use "variables" as *;
@@ -39,7 +38,26 @@ $search-angular-theme: mat.define-light-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($search-angular-theme);
+@include mat.button-theme($search-angular-theme);
+@include mat.list-theme($search-angular-theme);
+@include mat.pseudo-checkbox-theme($search-angular-theme);
+@include mat.tooltip-theme($search-angular-theme);
+@include mat.progress-spinner-theme($search-angular-theme);
+@include mat.sort-theme($search-angular-theme);
+@include mat.core-theme($search-angular-theme);
+@include mat.autocomplete-theme($search-angular-theme);
+@include mat.dialog-theme($search-angular-theme);
+@include mat.icon-theme($search-angular-theme);
+@include mat.divider-theme($search-angular-theme);
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 html,
 body {
@@ -217,4 +235,22 @@ body {
 
 .mat-icon-button {
   line-height: 24px !important;
+}
+
+:-webkit-scrollbar {
+  width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.1);
+  color: rgb(226, 226, 226);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  color: rgb(226, 226, 226);
+  box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
+  -webkit-box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
 }

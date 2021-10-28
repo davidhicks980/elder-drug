@@ -42,16 +42,23 @@
     transform: translateY(-67.4px) scale(1.05, 1.3);
   }
 }
+@keyframes MoveDirections {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-130px);
+  }
+}
 :host {
   display: block;
   --mobile-toolbar--height: 170px;
   --toolbar--height: 100px;
   --bezier: cubic-bezier(0.5, 0.15, 0.225, 1);
-  max-height: 100vh;
   max-width: 100vw;
-  width: 100vw;
+
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .layout {
@@ -95,9 +102,7 @@
     animation-name: var(--shift-name, none);
   }
 }
-//////////////
-///TOOLBAR////
-//////////////
+
 .header {
   position: sticky;
   top: -130px;
@@ -202,6 +207,7 @@
     --tab-container--width: 100vw;
     overflow: visible;
   }
+
   @include media-size("zero", "small") {
     transform: translateX(0px);
     transition: transform 300ms ease-out;
@@ -233,9 +239,6 @@
   width: 28px;
 }
 
-////////////////
-//////MAIN/////
-//////////////
 .main {
   @extend %shifted-content;
   display: grid;
@@ -263,7 +266,7 @@
   justify-content: center;
   width: 100%;
   position: relative;
-  padding-bottom: 100px;
+  padding-bottom: 250px;
   :host(.closing) &,
   :host(.opening) & {
     width: 100vw;
@@ -321,19 +324,10 @@
   @extend %shifted-sidebar;
 }
 
-@keyframes move-directions {
-  from {
-    transform: translateX(0px);
-  }
-  to {
-    transform: translateX(-130px);
-  }
-}
-
 %shift-directions {
-  animation: move-directions var(--bezier);
+  animation: MoveDirections var(--bezier);
   animation-duration: var(--shift-duration, 400);
-  @include mobileWidth {
+  @include media-size("zero", "small") {
     animation: none;
   }
 }

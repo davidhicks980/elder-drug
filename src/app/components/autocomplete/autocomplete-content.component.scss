@@ -5,8 +5,8 @@
   display: grid;
   align-items: center;
   justify-items: center;
-  padding: 8px;
-  grid-template-columns: 2.1em 1fr 3.4em;
+  padding: 0.5rem 8px;
+  grid-template-columns: 1.7em 1fr 3.4em;
   grid-template-rows: 1.6rem;
   @include media-size("zero", "small") {
     grid-template-columns: 2.8em 1fr 3.4em;
@@ -25,7 +25,7 @@
   width: 100%;
   padding-left: 5px;
   @include media-size("zero", "small") {
-    padding-left: 0px;
+    padding-left: 0;
   }
 }
 

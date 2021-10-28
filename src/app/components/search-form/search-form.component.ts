@@ -38,7 +38,10 @@ import { LayoutService } from '../../services/layout.service';
 import { SearchService } from '../../services/search.service';
 import { CustomValidators } from '../../validators/validators';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
-import { errorValidationMessages, warningValidationMessages } from './validation-messages';
+import {
+  errorValidationMessages,
+  warningValidationMessages,
+} from './validation-messages.search-form';
 
 const TYPEAHEAD_INITIAL_STATE = {
   pending: false,
@@ -63,9 +66,8 @@ const sliceTypeAndMatchingText = (entry: string) => (item: string) =>
 })
 export class SearchFormComponent implements OnDestroy, AfterViewInit {
   inputValid$: Observable<boolean>;
-  pinSearchSource: any;
   @HostBinding('class.is-pinned') get searchIsPinned() {
-    return this.layoutService.isSearchPinned;
+    return this.layoutService.isSearchPinned && this.layoutService.isMobile;
   }
   @ViewChildren('errors') errorTemplates: QueryList<TemplateRef<unknown>>;
   @ViewChild('searchInput') drugInputReference: ElementRef<HTMLInputElement>;
@@ -80,7 +82,7 @@ export class SearchFormComponent implements OnDestroy, AfterViewInit {
   );
   typeaheadState$: Observable<TypeaheadState> = this.typeaheadSource.asObservable();
   termExists$: Observable<ValidationErrors>;
-  uniqueSearchSource = new BehaviorSubject(false);
+  private uniqueSearchSource = new BehaviorSubject(false);
   uniqueSearch$ = this.uniqueSearchSource.asObservable();
   errorPortal: ComponentPortal<ErrorMessageComponent>;
   errorMessages = errorValidationMessages;
@@ -154,8 +156,8 @@ export class SearchFormComponent implements OnDestroy, AfterViewInit {
     this.searchService.history$.pipe(destroy(this), skip(1), take(1)).subscribe((val) => {
       this.uniqueSearchSource.next(true);
     });
-    this.watchTypeaheadInput().subscribe((queryResult) => this.updateTypeahead(queryResult));
-    this.watchInputState('PENDING').subscribe((pending) => this.updateTypeahead({ pending }));
+    this.watchTypeaheadInput().subscribe((queryResult) => this.updateTypeaheadState(queryResult));
+    this.watchInputState('PENDING').subscribe((pending) => this.updateTypeaheadState({ pending }));
   }
 
   ngAfterViewInit() {
@@ -313,7 +315,7 @@ export class SearchFormComponent implements OnDestroy, AfterViewInit {
       this.focusMonitor.focusVia(this.drugInputReference?.nativeElement, 'keyboard');
     });
   }
-  updateTypeahead(state: Partial<TypeaheadState>) {
+  updateTypeaheadState(state: Partial<TypeaheadState>) {
     this.typeaheadSource.next(Object.assign(this.typeaheadSource.value, state));
   }
 }

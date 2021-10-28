@@ -119,7 +119,7 @@
         >
           <div #watchScroll class="rounded-tab-breakpoint"></div>
 
-          <elder-table-card
+          <elder-table-container
             class="table-card"
             [icon]="state.selectedTable.tableIcon"
             *ngIf="searchStarted$ | async; else directions"
@@ -162,7 +162,7 @@
             </elder-filter-bar>
 
             <elder-table #elderTable [filters]="tableFilter.filter | async"> </elder-table>
-          </elder-table-card>
+          </elder-table-container>
           <ng-template #directions>
             <elder-directions
               [class.shift-directions-forwards]="sidebar.opening"

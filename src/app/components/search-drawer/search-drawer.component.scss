@@ -1,6 +1,5 @@
 @use "palette" as *;
 @use "colors" as *;
-@use "grid" as *;
 @use "breakpoints" as *;
 @use "sass:color";
 :host {
@@ -44,7 +43,7 @@
 .form {
   grid-area: form;
   display: block;
-  padding: 15px 15px 0 15px;
+  padding: 10px 10px 0 10px;
   @include media-size("zero", "small") {
     padding: 0 30px;
     transform: none;

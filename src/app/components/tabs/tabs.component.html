@@ -1,6 +1,6 @@
 <div class="tab-overflow-container" [class.fade-left]="leftOverflowSource | async">
   <button
-    (pointerdown)="handleMouseDown($event, 'LEFT')"
+    (pointerdown)="handleOverflowButtonClick($event, 'LEFT')"
     mat-mini-fab
     class="tab-overflow-button tab-overflow-button--left"
     *ngIf="leftOverflowSource | async"
@@ -46,7 +46,7 @@
     </ul>
   </nav>
   <button
-    (pointerdown)="handleMouseDown($event, 'RIGHT')"
+    (pointerdown)="handleOverflowButtonClick($event, 'RIGHT')"
     mat-mini-fab
     class="tab-overflow-button tab-overflow-button--right"
     *ngIf="rightOverflowSource | async"

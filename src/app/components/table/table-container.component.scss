@@ -1,4 +1,4 @@
-@use "breakpoints" as bem;
+@use "breakpoints" as *;
 @use "palette" as *;
 :host {
   background-color: white;
@@ -18,7 +18,7 @@
     opacity: 0.5;
     transition: opacity 500ms ease-in-out;
   }
-  @include bem.mobileWidth {
+  @include media-size("zero", "small") {
     background-color: transparent;
     margin: 0;
     width: 100%;
@@ -39,14 +39,14 @@
   background-color: white;
   padding: 1rem 1rem 30px 1rem;
 
-  @include bem.mobileWidth {
+  @include media-size("zero", "small") {
     padding: 1rem 1rem 60px 1rem;
     border-top: var(--common-border);
   }
 }
 .header {
   padding: 1rem 1rem 0.5rem 1rem;
-  @include bem.mobileWidth {
+  @include media-size("zero", "small") {
     padding: 1rem;
   }
 }
@@ -75,7 +75,7 @@
   border: var(--common-border);
   border-width: 0 0 1px 0;
   margin: auto 5px 0 5px;
-  @include bem.mobileWidth {
+  @include media-size("zero", "small") {
     display: none;
   }
 }

@@ -7,7 +7,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ToggleIconDirective } from '../components/menu-toggle/toggle-icon.directive';
+import { ToggleIconDirective } from '../components/toggle/toggle-icon.directive';
 
 @Directive({
   selector: '[elderIconButton]',

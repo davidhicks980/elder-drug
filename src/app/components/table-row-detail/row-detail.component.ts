@@ -1,4 +1,3 @@
-import { trigger } from '@angular/animations';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -9,18 +8,17 @@ import {
   Renderer2,
 } from '@angular/core';
 
-import { flyInTemplate } from '../../../animations/templates';
-import { IconNames, ICON_NAMES } from '../../../injectables/icons.injectable';
-import { FilterService } from '../../../services/filter.service';
-import { BeersSearchResult } from '../../../services/search.service';
+import { IconNames, ICON_NAMES } from '../../injectables/icons.injectable';
+import { FilterService } from '../../services/filter.service';
+import { BeersSearchResult } from '../../services/search.service';
 
 @Component({
-  selector: 'elder-expanded-element',
-  templateUrl: './expanded-element.component.html',
-  styleUrls: ['./expanded-element.component.scss'],
+  selector: 'elder-row-detail',
+  templateUrl: './row-detail.component.html',
+  styleUrls: ['./row-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExpandedElementComponent<T extends BeersSearchResult> implements AfterViewInit {
+export class RowDetailComponent<T extends BeersSearchResult> implements AfterViewInit {
   private dataValue: T;
   @Input() get data(): T {
     return this.dataValue;

@@ -35,20 +35,12 @@
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 .tab-overflow-button {
   position: absolute;
   top: 0;
   bottom: 0;
+  z-index: 5;
   background-color: var(--overflow-button--background);
-  z-index: 3;
   color: var(--overflow-button--icon-color);
   transform: scale(0.8);
   transform-origin: center center;
@@ -64,6 +56,16 @@
     display: none;
     animation: none;
   }
+  &::after {
+    content: "";
+    height: 44px;
+    width: 44px;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+  }
 }
 
 .tab-list {
@@ -78,6 +80,8 @@
   padding-right: 50px;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -127,9 +131,6 @@
   --tab--focus--filter: hue-rotate(-50deg) brightness(1.2);
 }
 
-.tab-list-item.selected {
-  z-index: 1;
-}
 @keyframes unshift {
   from {
     transform: translateX(calc(-1 * var(--shift--translateX)));
@@ -152,15 +153,14 @@
   --shift--translateX: calc(var(--position) * 22px);
   --shift--translateXend: calc((var(--position) - 1) * calc(-1 * var(--shift--increment)));
   --unshifted--translateX: calc(var(--shift--increment) * (var(--position) - 1));
-}
-.tab-list-item {
-  max-width: var(--list-item--width);
+  max-width: var(--list-item--width, 189px);
   display: flex;
   justify-content: center;
   position: relative;
 }
+
 :host(.shifting) .tab-list-item {
-  animation: shift 300ms ease-out;
+  animation: shift 200ms ease-out;
   animation-fill-mode: both;
 }
 :host(.unshifting) .tab-list-item {
@@ -170,4 +170,8 @@
 
 :host(.unshifted) .tab-list-item {
   transform: translateX(var(--unshifted--translateX));
+}
+
+.tab-list-item.selected {
+  z-index: 1;
 }

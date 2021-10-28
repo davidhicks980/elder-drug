@@ -1,27 +1,2 @@
-# SearchAngular
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+elder-drug-text
+Elderdrug.com was created to make it easier to search for drugs that could cause harm in patients over 65. It is composed of 1600 drugs that map to guidance from AGS. While I hope this is a useful tool, the drugs in this database were determined programmatically via RxNorm, so I cannot guarantee every entry will be accurate. For example, Loperamide will show up as an opioid to avoid in those over the age of 65, because it is an opioid. However, loperamide has extremely weak opioid activity, and is, as a result, relatively safe for those 65+. As such, if you choose to use Elder Drug, do so with the understanding that it should not be used to diagnose, treat, cure, or prevent any disease.

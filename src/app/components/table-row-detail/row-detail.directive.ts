@@ -11,27 +11,27 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { RowDetailComponent } from './row-detail.component';
+import { FlatRowGroup } from '../../interfaces/RowGroup';
+import { TableEntry } from '../../interfaces/TableEntry';
 
-import { ExpandedElementComponent } from '../components/table/expanded-element/expanded-element.component';
-import { FlatRowGroup } from '../components/table/RowGroup';
-import { TableEntry } from '../components/table/TableEntry';
-import { BeersSearchResult } from '../services/search.service';
+import { BeersSearchResult } from '../../services/search.service';
 
 type Result = Partial<TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>>;
 @Directive({
-  selector: '[detailPanel]',
+  selector: '[rowDetail]',
 })
-export class ExpandableRowDirective implements OnDestroy, OnInit {
+export class RowDetailDirective implements OnDestroy, OnInit {
   private updateSource: BehaviorSubject<{ expand: boolean; group: boolean }> = new BehaviorSubject({
     expand: false,
     group: true,
   });
   private groupRow: boolean;
   private fields: BeersSearchResult;
-  private expansionFactory: ComponentFactory<ExpandedElementComponent<BeersSearchResult>>;
-  private expansionPanel: ComponentRef<ExpandedElementComponent<BeersSearchResult>>;
+  private expansionFactory: ComponentFactory<RowDetailComponent<BeersSearchResult>>;
+  private expansionPanel: ComponentRef<RowDetailComponent<BeersSearchResult>>;
   private detail: Partial<FlatRowGroup<BeersSearchResult> | TableEntry<BeersSearchResult>>;
-  @Input() set detailPanel(detail: Result) {
+  @Input() set rowDetail(detail: Result) {
     let { position } = detail;
     if (this.detail && this.detail?.position?.hash === position?.hash) {
       return;
@@ -43,18 +43,18 @@ export class ExpandableRowDirective implements OnDestroy, OnInit {
     }
     this.updatePanel();
   }
-  get detailPanel() {
+  get rowDetail() {
     return this.detail;
   }
   @HostBinding('aria-expanded') ariaExpanded: boolean = false;
   @Input()
-  set detailPanelExpanded(expanded: boolean) {
+  set rowDetailVisible(expanded: boolean) {
     if (expanded != this.ariaExpanded) {
       this.ariaExpanded = expanded;
       this.updatePanel();
     }
   }
-  get detailPanelExpanded() {
+  get rowDetailVisible() {
     return this.ariaExpanded;
   }
   private updatePanel() {
@@ -63,9 +63,9 @@ export class ExpandableRowDirective implements OnDestroy, OnInit {
   private updatePanelData() {
     this.expansionPanel.instance.data = this.fields;
   }
-  private createExpansionPanel(): ComponentRef<ExpandedElementComponent<BeersSearchResult>> {
+  private createExpansionPanel(): ComponentRef<RowDetailComponent<BeersSearchResult>> {
     if (!this.expansionFactory) {
-      this.expansionFactory = this.createFactory(ExpandedElementComponent);
+      this.expansionFactory = this.createFactory(RowDetailComponent);
     }
     return this.container.createComponent(this.expansionFactory);
   }
@@ -96,6 +96,5 @@ export class ExpandableRowDirective implements OnDestroy, OnInit {
     });
     this.updatePanel();
   }
-
   constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) {}
 }

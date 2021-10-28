@@ -22,7 +22,7 @@ import { destroy } from '../../functions/destroy';
 import { LayoutService, SearchDrawerState } from '../../services/layout.service';
 import { SearchService } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
-import { TableCardComponent } from '../table/table-card/table-card.component';
+import { TableContainerComponent as TableContainerComponent } from '../table/table-container.component';
 import { AboutComponent, DisclaimerComponent } from '../toolbar/toolbar.component';
 
 export enum ScrollDirection {
@@ -40,7 +40,7 @@ export enum ScrollDirection {
 export class LayoutComponent implements AfterViewInit, OnDestroy {
   @ViewChild('toggleTemplate') toggleTemplate: TemplateRef<HTMLElement>;
   togglePortalContent!: TemplatePortal;
-  @ViewChild(TableCardComponent, { read: ElementRef }) tableCard: ElementRef<HTMLElement>;
+  @ViewChild(TableContainerComponent, { read: ElementRef }) tableCard: ElementRef<HTMLElement>;
   @ViewChildren('watchScroll') scrollMarker: QueryList<ElementRef<HTMLElement>>;
   debounceTabRounding: number = 0;
   @HostListener('animationend', ['$event'])
@@ -106,8 +106,8 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
 
   private buildTableShrinkAnimation(): Animation {
     this.tableShrinkAnimation?.cancel();
-    let { scrollWidth } = this.host.nativeElement;
-    let scale = (scrollWidth - 260) / scrollWidth,
+    let { offsetWidth } = this.host.nativeElement;
+    let scale = (offsetWidth - 260) / offsetWidth,
       { nativeElement } = this.tableCard;
     let keyframes = new KeyframeEffect(
       nativeElement,
@@ -146,7 +146,9 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
       if (this.tableShrinkAnimation?.currentTime != this.shiftDuration) {
         this.tableShrinkAnimation = this.buildTableShrinkAnimation();
         this.tableShrinkAnimation.onfinish = () => {
-          this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '1', 2);
+          setTimeout(() => {
+            this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '1', 2);
+          }, 75);
         };
       }
       this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '0', 2);
@@ -177,7 +179,7 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
 
   private setupTabIntersect$({ first }: QueryList<ElementRef<HTMLDivElement>>) {
     if (!this.tabIntersect$) {
-      const options = { threshold: [0], rootMargin: '-50px 0px 0px 0px' };
+      const options = { threshold: [0], rootMargin: '-95px 0px 0px 0px' };
       const tabsVisible = () => !(this.layout.isSidenavOpen && this.layout.isMobile);
       this.tabIntersect$ = new IntersectionObserver((e: IntersectionObserverEntry[]) => {
         this.debounceTabRounding = this.roundTabsSource.value ? 2000 : 0;

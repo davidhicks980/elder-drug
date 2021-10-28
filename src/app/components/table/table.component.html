@@ -32,8 +32,8 @@
         *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
         (click)="model.toggle(row)"
         (keydown.Enter)="model.toggle(row); $event.stopPropagation()"
-        [detailPanel]="row"
-        [detailPanelExpanded]="model.checkIsExpanded(row)"
+        [rowDetail]="row"
+        [rowDetailVisible]="model.checkIsExpanded(row)"
       ></cdk-row>
 
       <ng-template cdkNoDataRow>

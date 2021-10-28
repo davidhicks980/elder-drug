@@ -14,7 +14,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { BehaviorSubject, interval, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, interval, Observable, Subject, timer } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
 import { destroy } from '../../functions/destroy';
@@ -34,6 +34,9 @@ enum TabAnimationState {
 })
 export class TabsComponent implements AfterViewInit, OnDestroy {
   private rounded_: boolean = false;
+  @HostBinding('style.--animation-duration')
+  @Input('animation-duration')
+  animationDuration: number = 250;
   @HostBinding('class.rounded')
   @Input()
   get rounded(): boolean {
@@ -44,19 +47,10 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
     this.animationState = this.updateAnimationState(false);
   }
 
-  private updateAnimationState(animationFinished: boolean) {
-    let { SHIFTED, UNSHIFTED, SHIFTING, UNSHIFTING } = TabAnimationState;
-    if (animationFinished) {
-      return this.rounded_ ? SHIFTED : UNSHIFTED;
-    } else {
-      return this.rounded_ ? SHIFTING : UNSHIFTING;
-    }
-  }
-
   @HostListener('animationend', ['$event'])
   handleAnimation($event: AnimationEvent) {
     if ($event.target instanceof HTMLLIElement) {
-      this.animationState = this.updateAnimationState(true);
+      this.finishAnimation();
     }
   }
   @Output() activeTable = new EventEmitter<number>();
@@ -75,7 +69,6 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
     this.renderer.addClass(this.element.nativeElement, value);
     this._animationState = value;
   }
-
   intersectionObserver!: IntersectionObserver;
   currentTab$: Observable<number>;
   first: HTMLLIElement | false = false;
@@ -85,18 +78,29 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   scrollable: boolean = false;
   destroy$ = new Subject();
 
-  handleMouseDown($event: MouseEvent, direction: 'RIGHT' | 'LEFT') {
+  handleOverflowButtonClick($event: MouseEvent, direction: 'RIGHT' | 'LEFT') {
     let left = direction === 'LEFT';
-    this.scrollable = true;
-    interval(10)
-      .pipe(
-        destroy(this),
-        takeWhile(() => this.scrollable === true)
-      )
-      .subscribe(() => {
-        this.list.nativeElement.scrollBy(left ? -5 : 5, 0);
-      });
+    this.list.nativeElement.scrollBy(left ? -100 : 100, 0);
     $event.preventDefault();
+  }
+  private updateAnimationState(animationFinished: boolean) {
+    let { SHIFTED, UNSHIFTED, SHIFTING, UNSHIFTING } = TabAnimationState;
+    if (animationFinished) {
+      return this.rounded_ ? SHIFTED : UNSHIFTED;
+    } else {
+      //In case animations are disabled
+      setTimeout(() => this.finishAnimation(), this.animationDuration);
+      return this.rounded_ ? SHIFTING : UNSHIFTING;
+    }
+  }
+
+  finishAnimation() {
+    if (
+      this.animationState === TabAnimationState.SHIFTING ||
+      this.animationState === TabAnimationState.UNSHIFTING
+    ) {
+      this.animationState = this.updateAnimationState(true);
+    }
   }
 
   focusNext(item: HTMLElement) {
@@ -141,7 +145,7 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   private createIntersectionObserver() {
     return new IntersectionObserver(this.intersectingTabCallback.bind(this), {
       root: this.list.nativeElement,
-      threshold: [0.9],
+      threshold: [0.95],
     });
   }
 

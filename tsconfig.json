@@ -19,12 +19,12 @@
     "baseUrl": "."
   },
   "angularCompilerOptions": {
-    "baseUrl": "/",
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictTemplates": true,
-    "enableIvy": true
+    "enableIvy": true,
+    "removeComments": true
   },
-
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["src"]
 }

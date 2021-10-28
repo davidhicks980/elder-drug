@@ -1,5 +1,4 @@
 @use "palette" as *;
-@use "grid" as *;
 @use "colors" as *;
 @use "breakpoints" as *;
 $toolbarActiveColor: $primary-1;
@@ -38,5 +37,6 @@ header {
 }
 .toolbar-third-row {
   grid-area: tabs;
+  overflow-x: hidden;
   background-image: linear-gradient(to right, $primary-4, $primary-3);
 }

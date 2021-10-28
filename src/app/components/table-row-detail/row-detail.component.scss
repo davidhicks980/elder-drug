@@ -1,5 +1,4 @@
 @use "palette" as *;
-@use "grid" as gr;
 @use "colors" as *;
 @use "breakpoints" as *;
 @use "sass:color";
@@ -30,13 +29,12 @@
 
 :host {
   overflow: hidden;
-  background-image: $light-gray-1;
-  border-bottom: 1px solid $light-gray-3;
+  background-color: $light-gray-1;
+  border: 1px solid $light-gray-3;
+  border-width: 0 0 1px 0;
   padding: 1rem 1rem 1.5rem 1rem;
-  border-radius: 0px 0px 3px 3px;
   display: block;
   @include media-size("zero", "small") {
-    background-image: none;
     background-color: $light-gray-1;
   }
   &__item-type {
@@ -83,6 +81,7 @@
   color: var(--primary-1);
   margin: 0 0.75rem;
   font-size: 14px;
+  white-space: nowrap;
   &:hover {
     background-color: color.scale($primary-1, $alpha: -90%);
   }

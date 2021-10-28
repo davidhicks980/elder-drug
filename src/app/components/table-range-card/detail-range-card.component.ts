@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'elder-entry-range-card',
-  templateUrl: './entry-range-card.component.html',
-  styleUrls: ['./entry-range-card.component.scss'],
+  selector: 'elder-range-card',
+  templateUrl: './detail-range-card.component.html',
+  styleUrls: ['./detail-range-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntryRangeCardComponent {
+export class RangeCardComponent {
   @Input() field: string = '';
   @Input() entry: string = '';
   @Input() icon: string = '';

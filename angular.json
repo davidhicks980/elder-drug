@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "search-angular": {
+    "elder-drug": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/search-angular/browser",
+            "outputPath": "dist/elder-drug",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,18 +74,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "search-angular:build"
+            "browserTarget": "elder-drug:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "search-angular:build:production"
+              "browserTarget": "elder-drug:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "search-angular:build"
+            "browserTarget": "elder-drug:build"
           }
         },
         "test": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "search-angular:serve"
+            "devServerTarget": "elder-drug:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "search-angular:serve:production"
+              "devServerTarget": "elder-drug:serve:production"
             }
           }
         },
@@ -124,15 +124,13 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/search-angular/server",
+            "outputPath": "dist/elder-drug/server",
             "main": "src/main.server.ts",
             "tsConfig": "tsconfig.server.json",
             "optimization": false,
             "sourceMap": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
+              "includePaths": ["src/styles"]
             },
             "extractLicenses": false
           },
@@ -150,22 +148,9 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "app-shell": {
-          "builder": "@angular-devkit/build-angular:app-shell",
-          "options": {
-            "route": "shell"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "search-angular:build:production",
-              "serverTarget": "search-angular:server:production"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }
   },
-  "defaultProject": "search-angular"
+  "defaultProject": "elder-drug"
 }

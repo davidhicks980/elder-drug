@@ -1,28 +1,21 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChild,
-  ElementRef,
-  Input,
-  OnDestroy,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { ColumnService } from '../../../services/columns.service';
-import { destroy } from '../../../functions/destroy';
-import { FilterService } from '../../../services/filter.service';
-import { GroupByService } from '../../../services/group-by.service';
-import { TableService } from '../../../services/table.service';
+import { ColumnService } from '../../services/columns.service';
+import { destroy } from '../../functions/destroy';
+import { FilterService } from '../../services/filter.service';
+import { GroupByService } from '../../services/group-by.service';
+import { TableService } from '../../services/table.service';
 
 @Component({
-  selector: 'elder-table-card',
-  templateUrl: './table-card.component.html',
-  styleUrls: ['./table-card.component.scss'],
+  selector: 'elder-table-container',
+  templateUrl: './table-container.component.html',
+  styleUrls: ['./table-container.component.scss'],
   providers: [GroupByService, ColumnService, FilterService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableCardComponent implements OnDestroy {
+export class TableContainerComponent implements OnDestroy {
   @Input() icon: string;
 
   previousTable: number = -1;
@@ -36,7 +29,7 @@ export class TableCardComponent implements OnDestroy {
           { transform: `translateX(${distance})`, opacity: '0' },
           { transform: `translateX(0px)`, opacity: '1' },
         ],
-        { duration: 250, easing: 'ease-in-out' }
+        { duration: 175, easing: 'ease-in-out' }
       ),
       document.timeline
     );

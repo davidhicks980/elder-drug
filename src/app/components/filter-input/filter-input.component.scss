@@ -28,6 +28,8 @@
   font-size: var(--filter-input--font-size);
   outline-width: 0;
   outline-color: transparent;
+  background-image: linear-gradient(to top, #fff 92%, $light-gray-2);
+
   & ::placeholder {
     color: $gray-3;
   }
@@ -39,7 +41,7 @@
       color: $gray-2;
     }
     & .filter-icon {
-      color: color.scale($primary-1, $alpha: -20%);
+      color: $primary-1;
     }
   }
 }

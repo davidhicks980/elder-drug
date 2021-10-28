@@ -3,16 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export enum ScreenStatus {
-  xSmall = 1,
-  small = 2,
-  large = 3,
-}
-export enum DirectionsPosition {
-  hidden = 0,
-  sidebar = 1,
-  main = 2,
-}
 export enum SearchDrawerState {
   OPENED = 'opened',
   OPENING = 'opening',
@@ -20,11 +10,6 @@ export enum SearchDrawerState {
   CLOSING = 'closing',
 }
 
-export type LayoutStatus = {
-  sidenavOpen: boolean;
-  screenWidth: ScreenStatus;
-  mobileWidth: boolean;
-};
 @Injectable({
   providedIn: 'root',
 })
@@ -35,7 +20,7 @@ export class LayoutService {
   private showDirectionsSource = new BehaviorSubject<boolean>(true);
   showDirections$ = this.showDirectionsSource.asObservable();
   private mobileSearchDrawerShiftDuration_: number = 300;
-  private searchDrawerShiftDuration_: number = 400;
+  private searchDrawerShiftDuration_: number = 300;
   private pinnedSearchSource = new BehaviorSubject(false);
   private tableCollapsedSource = new BehaviorSubject(false);
   tableCollapsed$ = this.tableCollapsedSource.asObservable();
@@ -58,8 +43,8 @@ export class LayoutService {
     ) {
       //For some reason, the null coalescing operator does not work in production mode
       //So I have to determine the value of isForced prior to obtaining the sidebar state
-      const isForced = typeof force === 'boolean' ? force : !this.isSidenavOpen;
-      const nextState = isForced ? SearchDrawerState.OPENING : SearchDrawerState.CLOSING;
+      const opening = typeof force === 'boolean' ? force : !this.isSidenavOpen;
+      const nextState = opening ? SearchDrawerState.OPENING : SearchDrawerState.CLOSING;
       this.searchDrawerStateSource.next(nextState);
       if (nextState === SearchDrawerState.OPENING) {
         this.pinnedSearchSource.next(pinned);

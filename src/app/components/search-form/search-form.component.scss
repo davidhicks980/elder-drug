@@ -14,6 +14,7 @@
   --input-font--size: 12pt;
   --input--height: 2.7rem;
   --input--height--mobile: 2.75rem;
+  --icon--color: #{$gray-4};
   --label-color: #{$gray-5};
   --label-size: 1rem;
   --label-weight: 400;
@@ -62,23 +63,24 @@
   }
 }
 .search__field {
-  --border-color: #{$light-gray-4};
+  --border-color: #{$light-gray-5};
   --validation-border-color: var(--border-color);
   --validation-border-scale: 0;
   --validation-border-height: 0;
-  --border-radius: 8px;
-  --search-field--height: 44px;
+  --border-radius: 5px;
+  --search-field--height: 42px;
   border-radius: var(--border-radius);
   min-height: var(--search-field--height);
   overflow: hidden;
   position: relative;
   transition: border-color 200ms ease-in;
-  padding: 0 0.15em;
+  padding: 0 0.25em;
   position: relative;
   display: grid;
   grid-template-columns: 2.4em 1fr 2.4em;
   grid-template-rows: var(--search-field--height);
   align-items: center;
+
   @include mat.elevation-transition;
   @include media-size("zero", "small") {
     --border-radius: 2rem;
@@ -95,13 +97,8 @@
       --search-field--height: 3.5rem;
       --validation-border-scale: 1;
       --border-color: #{$light-gray-4};
-      border-bottom-color: var(--validation-border-color);
+      border-bottom-color: transparent;
     }
-  }
-
-  &:hover {
-    --border-color: #{$light-gray-2};
-    @include shadow(3, false, 0.05);
   }
 
   &::after {
@@ -114,7 +111,7 @@
     left: 0;
     bottom: 0;
     position: absolute;
-    border: 1px solid var(--border-color);
+    border: 1.1px solid var(--border-color);
     pointer-events: none;
     border-radius: var(--border-radius);
     border-bottom-color: var(--validation-border-color);
@@ -133,6 +130,11 @@
     transform-origin: bottom center;
   }
 
+  &:hover {
+    --border-color: #{$light-gray-3};
+    @include shadow(3, false, 0.12);
+  }
+
   &.is-open,
   &.is-missing,
   &.is-invalid {
@@ -141,7 +143,9 @@
   }
   &.is-open {
     --validation-border-color: #{$primary-1};
-    --border-radius: 5px 5px 0 0;
+    :host(:not(.is-pinned)) & {
+      --border-radius: 5px 5px 0 0;
+    }
   }
 
   &.is-invalid,
@@ -152,7 +156,7 @@
     &.is-missing,
     &.is-invalid {
       --border-color: #{$light-gray-4};
-      border-bottom-color: var(--border-color);
+      border-bottom-color: transparent;
     }
   }
   &.is-dirty {
@@ -172,7 +176,7 @@
   min-height: var(--input--height);
   width: 100%;
   &::placeholder {
-    color: $gray-4;
+    color: $gray-3;
   }
   @include media-size("zero", "small") {
     width: 100%;
@@ -203,13 +207,12 @@
 .icon-button--add {
   @extend %search-field-icon;
   height: 28px;
-
   color: #{color.scale($primary-1, $saturation: -50%)};
   @include media-size("zero", "small") {
     height: 36px !important;
   }
   &:disabled {
-    color: $gray-4;
+    color: var(--icon--color);
   }
 }
 
@@ -217,16 +220,14 @@
   @extend %search-field-icon;
   --icon-button--active-outline: #{$primary-1};
   --icon-button--shadow: 0;
-  --icon-button--color: #{$gray-3};
+  --icon-button--color: var(--icon--color);
   --icon-button--size: 36px !important;
   --icon-button--icon-scale: 0.6 !important;
   @include media-size("zero", "small") {
     --icon-button--size: 36px !important;
     --icon-button--icon-scale: 0.75 !important;
   }
-  &:disabled {
-    --icon-button--color: #{$gray-4};
-  }
+
   &:focus,
   &:active,
   &:focus:active {

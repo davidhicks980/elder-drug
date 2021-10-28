@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   Inject,
   Input,
   OnDestroy,
@@ -28,10 +27,10 @@ import { LayoutService } from '../../services/layout.service';
 import { ElementMediaQuery, ResizerService } from '../../services/resizer.service';
 import { BeersSearchResult } from '../../services/search.service';
 import { TableService } from '../../services/table.service';
-import { BeersTableDataSource } from './BeersTableDataSource';
-import { ExpandingEntry } from './ExpandingEntry';
-import { FlatRowGroup } from './RowGroup';
-import { TableEntry } from './TableEntry';
+import { BeersTableDataSource } from '../../interfaces/BeersTableDataSource';
+import { ExpandingEntry } from '../../interfaces/ExpandingEntry';
+import { FlatRowGroup } from '../../interfaces/RowGroup';
+import { TableEntry } from '../../interfaces/TableEntry';
 
 @Component({
   selector: 'elder-table',
@@ -84,10 +83,10 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     return (row.position.id.match(/:/g) ?? []).length - 1;
   }
   constructor(
+    @Inject(KeyGridService) private keyGridService: KeyGridService,
     private columnService: ColumnService,
     private groupService: GroupByService,
     private tableService: TableService,
-    @Inject(KeyGridService) private keyGridService: KeyGridService,
     private changeDetect: ChangeDetectorRef,
     public layoutService: LayoutService,
     public filterService: FilterService,
