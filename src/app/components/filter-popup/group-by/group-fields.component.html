@@ -1,0 +1,115 @@
+<div
+  *elderLet="{
+    groupColumns: groupService.groupedItems$ | async,
+    ungroupedColumns: groupService.ungroupedItems$ | async,
+    tabbableItem: tabbableItem$ | async
+  } as state"
+  cdkDropListGroup
+  #droplistGroup
+  class="modal"
+>
+  <header>
+    <h1 class="title">Group Columns</h1>
+    <p class="caption">
+      Drag column names to the <em>Groups</em> list to organize drugs by column.
+    </p>
+    <mat-divider></mat-divider>
+  </header>
+  <section>
+    <h2 class="subheading-2">Groups</h2>
+    <ul
+      [id]="groupListId"
+      role="listbox"
+      class="list"
+      [style.--item-count]="state.groupColumns.length"
+      #groupDropList="cdkDropList"
+      #groupList
+      cdkDropList
+      [cdkDropListData]="state.groupColumns"
+      [cdkDropListConnectedTo]="[ungroupDropList]"
+      (cdkDropListDropped)="drop($event)"
+      [class.noclick]="!isGroupClickable"
+    >
+      <li
+        class="list-item"
+        *ngFor="let option of state.groupColumns; index as i"
+        #groupListItem
+        cdkDrag
+        role="option"
+        cdkDragBoundary=".group-row"
+        [id]="option"
+        [keyGrid]="{ row: i, col: 0 }"
+        (keydown)="handleGroupItemKeydown($event, groupList, i)"
+        (keydown.escape)="groupList.focus()"
+        (cdkDragEnded)="allowClicks(groupListId)"
+        (cdkDragStarted)="blockPopupClose(); denyClicks(groupListId)"
+      >
+        <elder-group-item>
+          <mat-icon item-prefix inline="true" [svgIcon]="getListIcon(groupListItem)"></mat-icon>
+          <span item-content class="item-content">{{ option | splitcase }}</span>
+
+          <button
+            [attr.tabindex]="state.tabbableItem.grouped === i ? '0' : '-1'"
+            #groupRemoveButton
+            item-suffix
+            mat-icon-button
+            class="item-button-small"
+            matTooltip="Stop grouping by {{ option | splitcase }}"
+            @fadeInPill
+            [keyGrid]="{ row: i, col: 1 }"
+            (keydown)="navigateListGrid($event, ungroupList)"
+            (click)="ungroup(i)"
+          >
+            <mat-icon inline="true" svgIcon="x"></mat-icon>
+          </button>
+        </elder-group-item>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2 class="subheading-2">Columns</h2>
+    <ul
+      [id]="ungroupListId"
+      role="listbox"
+      class="list"
+      [style.--item-count]="state.ungroupedColumns.length"
+      [class.noclick]="!isUngroupClickable"
+      #ungroupList
+      #ungroupDropList="cdkDropList"
+      cdkDropList
+      [cdkDropListData]="state.ungroupedColumns"
+      [cdkDropListConnectedTo]="[groupDropList]"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <li
+        class="list-item"
+        *ngFor="let item of state.ungroupedColumns; index as i"
+        #ungroupListItem
+        cdkDrag
+        role="option"
+        cdkDragBoundary=".group-row"
+        (cdkDragStarted)="blockPopupClose(); denyClicks(ungroupListId)"
+        (cdkDragEnded)="allowClicks(ungroupListId)"
+      >
+        <elder-group-item>
+          <mat-icon item-prefix inline="true" svgIcon="draggable"></mat-icon>
+          <span class="item-content" item-content>{{ item | splitcase }}</span>
+          <button
+            #ungroupAddButton
+            item-suffix
+            mat-icon-button
+            [attr.tabindex]="state.tabbableItem.ungrouped === i ? '0' : '-1'"
+            class="item-button"
+            matTooltip="Group by {{ item | splitcase }}"
+            @fadeInPill
+            [keyGrid]="{ row: i, col: 0 }"
+            (keydown)="navigateListGrid($event, ungroupList)"
+            (click)="group(i)"
+          >
+            <mat-icon inline="true" svgIcon="add-2"></mat-icon>
+          </button>
+        </elder-group-item>
+      </li>
+    </ul>
+  </section>
+</div>

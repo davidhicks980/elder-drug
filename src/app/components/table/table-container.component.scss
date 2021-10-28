@@ -1,0 +1,81 @@
+@use "breakpoints" as *;
+@use "palette" as *;
+:host {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 10px;
+  border: none;
+  min-width: 90%;
+  max-width: 1100px;
+  width: 90%;
+  display: block;
+  position: relative;
+  height: fit-content;
+
+  @include pseudo-shadow(6);
+  &::after {
+    opacity: 0.5;
+    transition: opacity 500ms ease-in-out;
+  }
+  @include media-size("zero", "small") {
+    background-color: transparent;
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+  }
+}
+:host(:hover) {
+  &::after {
+    opacity: 1;
+  }
+}
+
+.card-container {
+  opacity: var(--table-card--opacity, 1);
+  transition: opacity 120ms ease-in-out;
+}
+.table {
+  background-color: white;
+  padding: 1rem 1rem 30px 1rem;
+
+  @include media-size("zero", "small") {
+    padding: 1rem 1rem 60px 1rem;
+    border-top: var(--common-border);
+  }
+}
+.header {
+  padding: 1rem 1rem 0.5rem 1rem;
+  @include media-size("zero", "small") {
+    padding: 1rem;
+  }
+}
+.header-icon {
+  height: 1.15em;
+  width: 0.85em;
+  display: inline-block;
+}
+.header-h1 {
+  font-weight: 500;
+  font-size: 28px;
+  padding-top: 1.5rem;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  letter-spacing: -0.05rem;
+  color: $gray-5;
+  font-family: "IBM Plex Sans";
+}
+.header-p {
+  color: $gray-4;
+  font-size: 16px;
+}
+
+.divider {
+  border: var(--common-border);
+  border-width: 0 0 1px 0;
+  margin: auto 5px 0 5px;
+  @include media-size("zero", "small") {
+    display: none;
+  }
+}

@@ -1,36 +1,163 @@
-@use 'bem-mixin' as bem;
-@use 'palette' as *;
-.row {
-  overflow: hidden;
+@use "breakpoints" as bem;
+@use "palette" as *;
+@use "sass:color";
+.no-data-row {
+  display: flex;
+  filter: grayscale(0.6);
+  opacity: 0.5;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  --brand--logo-size: 7rem;
+}
+%row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-  line-height: 2em;
   border-radius: none;
-  @include bem.modifier("expand") {
+}
+.row--header {
+  @extend %row;
+  font-weight: 500;
+  background-color: $light-gray-1;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  @include shadow(2);
+
+  :host(.collapsed) & {
+    display: none;
   }
-  @include bem.modifier("group") {
+}
+.row--content:last-of-type {
+  border-bottom: none;
+}
+
+.row--content {
+  @extend %row;
+  --row--height: 2.8rem;
+  --row--active-background: #{color.scale($primary-1, $alpha: -95%)};
+  cursor: pointer;
+  border-bottom: 1px solid $light-gray-4;
+  grid-template-rows: var(--row--height);
+  padding-left: var(--padding-left);
+  &.is-group-row {
+    grid-template-rows: auto;
+    border: none;
   }
-  @include bem.modifier("filter") {
-    grid-template-rows: 50% 50%;
-  }
-  @include bem.modifier("header") {
-    font-weight: 500;
-    background-color: $light-gray-1;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    @include bem.mobileWidth {
-      display: none;
+
+  &:last-of-type {
+    border-bottom: none;
+    &[aria-expanded] {
+      border-bottom: 1px solid $light-gray-4;
     }
   }
-  @include bem.nativeState("hover") {
+  &:active {
+    -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+    background-color: var(--row--active-background);
+    &::before {
+      background-image: linear-gradient(
+        to right,
+        transparent 94%,
+        var(--row--active-background) 100%
+      );
+    }
   }
-  @include bem.modifier("content") {
-    @include bem.mobileWidth {
-      grid-template-rows: repeat(auto-fit, minmax(25px, 1fr));
-      grid-template-columns: none;
-      background-color: white;
+  :host(.collapsed) & {
+    grid-template-columns: none;
+    background-color: white;
+    position: relative;
+    &.is-group-row {
+      &:first-of-type,
+      :first-of-type {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+    }
+    &:not(.is-group-row) {
       margin: 5px;
       border-radius: 5px;
+      border: 1px solid $light-gray-3;
+      padding: 0.5rem 0;
+      @include hoverable-shadow(3);
     }
   }
+}
+.cell-container {
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
+  line-height: var(--row--height);
+  height: var(--row--height);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  :host(.collapsed) & {
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: 17ch auto;
+    margin-left: 40px;
+    grid-template-areas: "title content";
+    align-items: center;
+    padding-left: 0;
+    &.is-icon-cell {
+      margin-left: 0px;
+      grid-template-areas: "toggle title content";
+      grid-template-columns: 40px 17ch auto;
+    }
+  }
+}
+.cell-content {
+  padding-left: 0.5rem;
+  font-size: 14px;
+  vertical-align: middle;
+  height: var(--row--height);
+  display: inline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  :host(.collapsed) & {
+    padding-left: 0;
+  }
+}
+
+.cell-title {
+  font-weight: 500;
+  display: none;
+  :host(.collapsed) & {
+    display: inline-block;
+  }
+}
+.cell-chevron {
+  padding-left: 0.5rem;
+  :host(.collapsed) & {
+    padding-left: 0;
+  }
+}
+.cell-chevron-icon {
+  transform: rotate(-0deg);
+  transition: transform 0.2s;
+  vertical-align: middle;
+  height: 18px;
+  transform-origin: center;
+  .is-expanded & {
+    transform: rotate(90deg);
+  }
+}
+
+elder-group-row {
+  padding-left: calc(var(--left-padding) * 10px);
+  position: relative;
+  &::before {
+    content: "";
+    height: 90%;
+    width: 2px;
+    opacity: min(calc(var(--left-padding) * 100%), 80%);
+    top: 5%;
+    filter: hue-rotate(calc(var(--left-padding) * 30deg)) brightness(1.1);
+    bottom: 5%;
+    position: absolute;
+    background-color: $secondary-2-1;
+  }
+}
+
+.cell-container {
+  padding-left: calc(var(--left-padding) * 10px);
 }

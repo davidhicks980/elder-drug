@@ -1,0 +1,36 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 188.65 36.75"
+  class="tab"
+  tracking-gradient
+
+>
+  <defs>
+    <linearGradient spreadMethod="pad" id="linear-base" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color: rgba(0, 0, 0, 0.4)" />
+      <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0.2)" />
+      <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0.1)" />
+      <stop offset="20%" style="stop-color: rgba(0, 0, 0, 0.05)" />
+      <stop offset="40%" style="stop-color: rgba(0, 0, 0, 0.025)" />
+      <stop offset="97%" style="stop-color: rgba(0, 0, 0, 0)" />
+      <stop offset="100%" style="stop-color: rgba(255, 255, 255, 0.5)" />
+    </linearGradient>
+    <clipPath id="path">
+      <rect  id="clip" class="circular-clip" width="188.65" height="36.75" rx="7.87" />
+    </clipPath>
+  </defs>
+  <path
+
+    class="tab-path"
+    d="M180.43,29.06h0V8a8.09,8.09,0,0,0-8.23-8H16.46A8.09,8.09,0,0,0,8.23,8v21.1h0A8.11,8.11,0,0,1,0,36.75H20.34v0h148v0h20.34A8.11,8.11,0,0,1,180.43,29.06Z"
+  />
+  <path
+    *ngIf="!rounded"
+    class="tab-shadow"
+
+    d="M180.43,29.06h0V8a8.09,8.09,0,0,0-8.23-8H16.46A8.09,8.09,0,0,0,8.23,8v21.1h0A8.11,8.11,0,0,1,0,36.75H20.34v0h148v0h20.34A8.11,8.11,0,0,1,180.43,29.06Z"
+  />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="tab-text">
+    <ng-content></ng-content>
+  </text>
+</svg>

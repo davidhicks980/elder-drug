@@ -1,0 +1,49 @@
+@use "breakpoints" as *;
+@use "palette" as *;
+
+.option__content {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 8px;
+  grid-template-columns: 1.7em 1fr 3.4em;
+  grid-template-rows: 1.6rem;
+  @include media-size("zero", "small") {
+    grid-template-columns: 2.8em 1fr 3.4em;
+  }
+  :host(.chips-hidden) & {
+    grid-template-columns: 2rem 1fr;
+  }
+}
+.option__icon {
+  color: $gray-1;
+}
+.option__text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding-left: 5px;
+  @include media-size("zero", "small") {
+    padding-left: 0;
+  }
+}
+
+%chip-template {
+  font-size: 0.8em;
+  border-radius: 0.5em;
+  color: white;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  padding: 0.15em 0.5em;
+  max-height: 1.8rem;
+  line-height: 1.3rem;
+  width: fit-content;
+}
+.chip--generic {
+  @extend %chip-template;
+  background-color: $primary-1;
+}
+.chip--brand {
+  @extend %chip-template;
+  background-color: $secondary-2-1;
+}

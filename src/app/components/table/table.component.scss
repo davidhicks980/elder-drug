@@ -1,227 +1,34 @@
 @use "sass:color";
 @use "palette" as *;
 @use "colors" as *;
-@use "bem-mixin" as *;
+@use "breakpoints" as *;
 
+:host {
+  display: block;
+}
 .drug-table {
-  @include modifier("wrapper") {
-    border: 1px solid $light-gray-5;
+  &--wrapper {
+    border: var(--common-border);
     border-radius: 4px;
-  }
-  @include state("mobile") {
-    background: blue;
-  }
-}
-
-.cell {
-  background: transparent;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-bottom: 1px solid $light-gray-3;
-
-  cursor: pointer;
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.group-header-cell {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  line-height: 2rem;
-  border-bottom: 1px solid $light-gray-4;
-  box-shadow: inset 0px 1px 0px 0 #ffffff54;
-  background-color: $light-gray-1;
-  color: $gray-5;
-  flex: 1;
-  border-right: 1px solid $light-gray-4;
-
-  @include nativeState("first-of-type") {
-    @include element("content") {
-      margin-left: 40px;
+    :host(.collapsed) & {
+      background-color: $light-gray-1;
     }
   }
 }
-.expand-row__cell {
-  height: 2rem;
-  cursor: pointer;
-  color: $gray-3;
-  line-height: 30px;
-  font-family: "IBM Plex Sans", sans-serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  flex: 1;
-  display: flex;
-  align-items: center;
-
-  &.--open {
-    background-color: tint($primary-1, 90%);
-    color: $secondary-2-5;
-    transition: background-color 1s;
+.cell--header {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  border: 1px solid $light-gray-5;
+  border-width: 0 0 1px 1px;
+  font-size: 0.9rem;
+  &.has-filter-attached {
+    border-bottom: 0;
   }
-}
-
-.cell {
-  display: inline-block;
-}
-.cell__chevron-container {
-  width: 36px;
-}
-
-.cell__mobile-header {
-  display: none;
-  font-weight: 500;
-  font-family: "IBM Plex Sans", Arial, Helvetica, sans-serif;
-}
-.cell__content {
-  margin-left: 10px;
-}
-
-@media (max-width: 600px) {
-  .cell__mobile-header {
-    width: 100px;
-    display: inline-block;
+  &:first-of-type {
+    border-left: 0;
   }
-  .cell__content {
-    max-width: 100%;
-    display: inline-block;
-  }
-
-  .drug-table {
-    width: auto;
-  }
-
-  .cell {
-    display: grid;
-    grid-template-columns: 35px 15ch auto;
-  }
-}
-.h2 {
-  padding-bottom: 1px;
-  margin-bottom: 0.5em;
-  line-height: 1em;
-}
-
-mat-chip-list mat-chip.mat-standard-chip {
-  min-height: 1.7em;
-  border-radius: 4px;
-  background-color: $primary-3;
-  color: white;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.expansion-panel {
-  background-color: $light-gray-1;
-  border-bottom: 1px solid $light-gray-3;
-}
-
-//Rationale header
-
-mat-icon.mat-icon-24 {
-  height: 36px;
-  width: 36px;
-  min-width: 45px;
-  margin-top: 5px;
-  &.info {
-    color: blue;
-  }
-  &.error {
-    color: red;
-  }
-  &.warning {
-    color: orange;
-  }
-}
-
-span.show-when-small {
-  display: none;
-}
-
-mat-chip-list mat-chip.mat-standard-chip {
-  min-height: 1.7em;
-  border-radius: 4px;
-  background-color: $primary-3;
-  color: white;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.chevron-button {
-  height: 36px;
-  width: 36px;
-  line-height: 36px;
-}
-.chevron-button__chevron,
-.chevron {
-  transform: rotate(-0deg);
-  transition: transform 0.2s;
-  &.--rotated {
-    transform: rotate(90deg);
-  }
-}
-
-.expand-row__cell__sub-header {
-  height: 30px;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-left: 15px;
-}
-.expansion-card {
-  border-radius: 3px;
-  /* border: 1px solid blue; */
-  background-color: rgb(255 255 255);
-  // box-shadow: 0 2px 1px 0 lightgrey;
-  color: $primary-5;
-  padding: 20px;
-  margin: 5px;
-}
-ed-table th.table-cell.expand-group-header.header {
-  height: 30px;
-  column-span: all;
-  font-weight: 300;
-  color: black;
-}
-
-button.absolute-position {
-  position: absolute;
-}
-
-@keyframes roll {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(90deg);
-  }
-}
-@keyframes rollback {
-  0% {
-    transform: rotate(90deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.table-fields {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  width: 100%;
-  margin: 10px 0 10px 0;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  @include element("table-field") {
-    flex: 1 1 150px; /*  Stretching: */
-    flex: 0 1 150px; /*  No stretching: */
-    margin: 5px;
+  &__content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

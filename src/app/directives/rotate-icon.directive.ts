@@ -1,23 +1,17 @@
-import { AnimationBuilder, AnimationPlayer } from '@angular/animations';
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, HostBinding, Input } from '@angular/core';
 
 @Directive({
-  selector: '[rotateIcon]',
+  selector: '[elderRotate]',
 })
 export class RotateDirective {
-  previousRotate = true;
-  private _rotate: boolean;
-  player: AnimationPlayer;
-  isOpen: any;
-  elementRef: any;
-  animationBuilder: AnimationBuilder;
-  playForward: Animation;
-  @HostListener('click', ['$event']) onClick($event) {}
-
-  createPlayer() {}
-
-  constructor(private el: ElementRef, animationBuilder: AnimationBuilder) {
-    this.animationBuilder = animationBuilder;
-    this.createPlayer();
+  @HostBinding('style.transform') get rotationStyle() {
+    return this.elderRotate ? `rotate(${this.degrees}deg)` : `rotate(0deg)`;
   }
+  @HostBinding('style.transition') get transitionStyle() {
+    return this.transition;
+  }
+
+  @Input() elderRotate: boolean = false;
+  @Input() transition: string = 'transform 300ms ease';
+  @Input() degrees;
 }

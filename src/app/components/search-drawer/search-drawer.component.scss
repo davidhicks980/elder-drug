@@ -1,0 +1,104 @@
+@use "palette" as *;
+@use "colors" as *;
+@use "breakpoints" as *;
+@use "sass:color";
+:host {
+  height: 100%;
+  display: block;
+  background: white;
+  position: relative;
+  z-index: 2;
+  @include hoverable-shadow(5);
+  &::after {
+    opacity: 0.5;
+  }
+  @include media-size("zero", "small") {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 64px minmax(100px, 150px) minmax(100px, 1fr) 30px;
+    place-content: start center;
+    box-shadow: none;
+    grid-template-areas: "." "brand" "form" "footer";
+    min-height: 500px;
+    height: 100vh;
+    &::before {
+      background-color: white;
+      content: "";
+      height: 100vh;
+      width: 100vw;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      bottom: 0px;
+      position: absolute;
+      overflow: hidden;
+    }
+    &.is-searching {
+      grid-template-rows: 100vh;
+      grid-template-areas: "form";
+    }
+  }
+}
+
+.form {
+  grid-area: form;
+  display: block;
+  padding: 10px 10px 0 10px;
+  @include media-size("zero", "small") {
+    padding: 0 30px;
+    transform: none;
+    &.is-pinned {
+      padding: 0px;
+    }
+  }
+}
+
+.legend {
+  z-index: 1;
+  color: white;
+  height: 40px;
+  max-height: 40px;
+  font-size: 12pt;
+  background-color: color.scale($primary-2, $alpha: -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  font-weight: 400;
+  position: absolute;
+  top: -40px;
+  width: 100%;
+
+  @include media-size("zero", "small") {
+    display: none;
+  }
+}
+
+.toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.brand {
+  grid-area: brand;
+  display: none;
+  @include media-size("zero", "small") {
+    display: block;
+  }
+}
+
+.footer {
+  grid-area: footer;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.219) 0%, $light-gray-2 5%);
+  color: $gray-4;
+  z-index: 1;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 30px;
+  text-align: center;
+  padding-top: 0.5vh;
+  font-size: 0.8em;
+  border-top: 1px solid $light-gray-4;
+}

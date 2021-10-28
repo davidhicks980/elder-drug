@@ -1,0 +1,15 @@
+<label class="filter-label" for="entryfilter">Filter</label>
+<div class="filter">
+  <span class="filter-icon-container">
+    <mat-icon class="filter-icon" svgIcon="filter"></mat-icon
+  ></span>
+  <input
+    #input
+    id="entryfilter"
+    type="text"
+    class="filter-input"
+    autocomplete="off"
+    placeholder="Heart Failure"
+    (input)="emitFilter(input.value)"
+  />
+</div>

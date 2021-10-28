@@ -1,0 +1,30 @@
+@use 'sass:map';
+
+@mixin gen-font-var(
+  $pref: '',
+  $include: (
+    'style': auto,
+    'variant': auto,
+    'size': auto,
+    'line-height': auto,
+    'family': auto,
+    'color': auto,
+    'text-transform': none,
+  )
+) {
+  $font-str: '';
+  $keys: map.keys($include);
+  @each $prop in $keys {
+    $default: map.get($include, $prop);
+    @if $prop == 'color' {
+      color: var(unquote('--#{$pref}--font-color'), $default);
+    } @else if $prop == 'line-height' {
+      line-height: var(unquote('--#{$pref}--line-height'), $default);
+    } @else if $prop == 'text-transform' {
+      text-transform: var(unquote('--#{$pref}--text-transform'), $default);
+    } @else {
+      $font-str: $font-str + 'var(--#{$pref}--font-#{$prop}, #{$default}) ';
+    }
+  }
+  font: unquote($font-str);
+}

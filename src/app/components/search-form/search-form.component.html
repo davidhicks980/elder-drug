@@ -1,0 +1,191 @@
+<ng-container
+  *elderLet="{
+    pinSearch: layoutService.pinnedSearch$ | async,
+    typeahead: typeaheadState$ | async,
+    mobile: layoutService.mobile$ | async
+  } as state"
+>
+  <form
+    #drugform
+    class="form"
+    [cdkTrapFocus]="state.mobile"
+    (ngSubmit)="search($event)"
+    [formGroup]="drugsGroup"
+  >
+    <div class="form__inner-wrapper" [class.is-widened]="state.pinSearch">
+      <div class="search" cdkMonitorSubtreeFocus (cdkFocusChange)="setFocusStatus($event, -1)">
+        <label class="search__label" for="searchinput">Add drugs</label>
+        <div
+          class="search__field"
+          #autoOrigin="matAutocompleteOrigin"
+          matAutocompleteOrigin
+          [class.is-missing]="drugInput.errors?.termabsent"
+          [class.is-invalid]="drugInput.invalid && drugInput.value.length"
+          [class.is-pinned]="state.pinSearch"
+          [class.is-dirty]="!searchInput.value.length"
+          [class.is-open]="searchInputAutoTrigger.panelOpen"
+        >
+          <button
+            elder-toggle
+            *ngIf="(uniqueSearch$ | async) || !state.pinSearch || !state.mobile; else toggle"
+            class="icon-button--search"
+            [matTooltip]="drugList.length > 0 ? 'Search drugs' : 'Add drugs to search'"
+            matTooltipPosition="above"
+            (click)="search(); $event.preventDefault()"
+          >
+            <mat-icon toggle-icon inline="true" svgIcon="search"></mat-icon>
+          </button>
+
+          <ng-template #toggle>
+            <button
+              elder-toggle
+              (toggle)="layoutService.toggleSidenav(false)"
+              [matTooltip]="'View results'"
+              [toggled]="true"
+            >
+              <elder-animated-arrow toggle-icon></elder-animated-arrow></button
+          ></ng-template>
+
+          <input
+            #searchInput
+            #searchInputAutoTrigger="matAutocompleteTrigger"
+            class="search__input"
+            type="text"
+            title="Search"
+            id="searchinput"
+            formControlName="drugInput"
+            placeholder="Zolpidem"
+            aria-label="Search brand or generic drug"
+            enterkeyhint="search"
+            aria-describedby="errors"
+            [matAutocomplete]="autocomplete"
+            [matAutocompleteConnectedTo]="autoOrigin"
+            [matAutocompleteDisabled]="searchInput.value.length === 0"
+            (keydown.enter)="searchInput.value.length || search($event)"
+          />
+
+          <div class="search__spinner-wrapper" *ngIf="state.typeahead.pending; else addButton">
+            <mat-spinner diameter="25"></mat-spinner>
+          </div>
+          <ng-template #addButton>
+            <button
+              (click)="addListControl(); searchInput.focus(); $event.preventDefault()"
+              matTooltip="Add drugs"
+              matTooltipPosition="above"
+              matRipple
+              [matRippleRadius]="20"
+              [matRippleCentered]="true"
+              [matRippleUnbounded]="true"
+              [disabled]="!drugInput.valid"
+              class="icon-button--add"
+            >
+              <mat-icon inline="true" svgIcon="add-2"></mat-icon>
+            </button>
+          </ng-template>
+        </div>
+        <elder-error-message
+          [errorMessages]="errorMessages"
+          [warningMessages]="warningMessages"
+          [errors]="drugInput.errors"
+        ></elder-error-message>
+      </div>
+      <!--I would normally decouple these two sections, but because the same autocomplete is shared amongst the two, it's difficult to do so-->
+      <section class="edit__section" [class.is-pinned]="state.pinSearch">
+        <ng-template #directions>
+          <elder-directions
+            *ngIf="state.mobile && layoutService.showDirections$ | async"
+            class="search-directions small"
+            [style.--directions-width]="state.pinSearch ? '89%' : '93%'"
+            [hideDescription]="true"
+          >
+          </elder-directions>
+        </ng-template>
+        <ul
+          class="edit__list"
+          #chipList
+          formArrayName="drugList"
+          aria-label="Drug selection"
+          *ngIf="drugList.length > 0; else directions"
+        >
+          <h2 class="edit__title">
+            Selected Drugs
+            <button (click)="clearSearchTerms($event)" class="edit__button--clear">CLEAR</button>
+          </h2>
+          <div class="edit__items-wrapper">
+            <li
+              *ngFor="let drugName of drugList.controls; index as index"
+              class="edit__item"
+              cdkMonitorSubtreeFocus
+              (cdkFocusChange)="setFocusStatus($event, index)"
+            >
+              <div
+                class="item__content"
+                #editOrigin="matAutocompleteOrigin"
+                matAutocompleteOrigin
+                [class.is-missing]="getListControl(index).errors?.invalidAsync"
+                [class.is-invalid]="getListControl(index)?.errors"
+                [class.has-attached]="editDrugAutoTrigger.panelOpen"
+              >
+                <button
+                  class="item__button"
+                  aria-label="Remove drug"
+                  (click)="deleteListControl(index); searchInputAutoTrigger.closePanel()"
+                >
+                  <mat-icon svgIcon="mat_x" class="item__button__icon"></mat-icon>
+                </button>
+                <input
+                  class="item__input"
+                  #editDrugField
+                  #editDrugAutoTrigger="matAutocompleteTrigger"
+                  (keydown.enter)="$event.preventDefault(); editDrugField.blur()"
+                  (blur)="editDrugField.value.length || deleteListControl(index)"
+                  [formControlName]="index"
+                  [matAutocomplete]="autocomplete"
+                  [matAutocompleteConnectedTo]="editOrigin"
+                  [matAutocompleteDisabled]="state.typeahead.length === 0"
+                />
+                <button
+                  tabindex="-1"
+                  aria-label="Edit drug"
+                  class="item__button"
+                  (click)="editDrugField.focus(); $event.preventDefault()"
+                >
+                  <mat-icon class="item__button__icon" svgIcon="edit"></mat-icon>
+                </button>
+              </div>
+              <elder-error-message
+                *ngIf="getListControl(index)?.errors"
+                [errorMessages]="this.errorMessages"
+                [warningMessages]="this.warningMessages"
+                [errors]="getListControl(index)?.errors"
+              ></elder-error-message>
+            </li>
+          </div>
+        </ul>
+        <mat-autocomplete
+          class="typeahead"
+          #autocomplete
+          autoActiveFirstOption
+          (optionSelected)="chooseTerm($event)"
+        >
+          <div class="typeahead__options">
+            <mat-option
+              [value]="option[0] + option[1]"
+              [title]="option[0] + option[1]"
+              [class.is-pinned]="state.pinSearch"
+              *ngFor="let option of state.typeahead.data | slice: 0:10"
+            >
+              <autocomplete-content
+                [hideChips]="!searchInputAutoTrigger.panelOpen"
+                [type]="option[2]"
+              >
+                <matched-content>{{ option[0] }}</matched-content>
+                <inferred-content>{{ option[1] }}</inferred-content>
+              </autocomplete-content>
+            </mat-option>
+          </div>
+        </mat-autocomplete>
+      </section>
+    </div>
+  </form>
+</ng-container>

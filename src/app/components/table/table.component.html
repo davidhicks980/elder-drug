@@ -1,100 +1,118 @@
-<div
-  *elderLet="model.displayedColumns$ | async as fields"
-  #elderTable
-  id="elderTable"
-  class="drug-table--wrapper"
-  (keydown)="handleGridNavigation($event)"
+<ng-container
+  *elderLet="{
+    fields: model.columns$ | async,
+    mobile: layoutService.mobile$ | async,
+    filter: filterService.filter$ | async
+  } as state"
 >
-  <cdk-table
-    [dataSource]="model"
-    class="drug-table"
-    #table
-    matSort
-    recycleRows
-    [fixedLayout]="true"
-    mobileListener
-    [trackBy]="trackRowBy"
+  <div
+    #elderTable
+    id="elderTable"
+    class="drug-table--wrapper"
+    (keydown)="handleGridNavigation($event)"
   >
-    <!--Table headers-->
-    <cdk-header-row
-      class="row row--header row--filter"
-      *cdkHeaderRowDef="fields; sticky: true; index as i"
-      mobileListener
-    ></cdk-header-row>
-
-    <!--Group rows-->
-
-    <cdk-row
-      *cdkRowDef="let row; columns: fields"
-      class="row row--content"
-      (click)="model.expand(row, $event)"
-      (keydown.enter)="model.expand(row, $event)"
-      (keydown.space)="model.expand(row, $event)"
-      [detail]="row | json"
-      [expandDetail]="model.checkIsExpanded(row)"
-    ></cdk-row>
-
-    <ng-container
-      *ngFor="let field of fields; index as colI"
-      cdkColumnDef="{{ field }}"
+    <cdk-table
+      matSort
+      class="drug-table"
+      [dataSource]="model"
+      [fixedLayout]="true"
+      [trackBy]="trackBy"
     >
-      <ng-container *cdkHeaderCellDef>
-        <cdk-header-cell
-          class="cell--header"
-          mat-sort-header
-          attr.tabIndex="{{ colI === 0 ? '0' : '-1' }}"
-          matTooltip="Sort by {{ field }}"
-          #headerCell
-          [filterColumn]="colI"
-          [keyGrid]="{ row: 0, col: colI }"
-        >
-          <div class="cell--header__content">
-            {{ field | caseSplit | titlecase }}
-          </div>
-        </cdk-header-cell>
-      </ng-container>
-      <ng-container *cdkCellDef="let row">
-        <ng-container *ngIf="!row._position.isGroup; else groupTemplate">
-          <cdk-cell
-            class="cell"
-            [cellPadding]="row._position.layer"
-            [keyGrid]="{ row: getRowIndex(row), col: colI }"
-            tabindex="-1"
-          >
-            <!--If the cell is first, add an expansion button to it-->
-            <span class="cell__chevron-container">
-              <button
-                *ngIf="field === fields[0]"
-                class="chevron-button"
-                mat-icon-button
-                tabindex="-1"
-              >
-                <mat-icon
-                  [class.--rotated]=""
-                  class="chevron-button__chevron"
-                  svgIcon="chevron_right"
-                ></mat-icon></button
-            ></span>
-            <span class="cell__mobile-header"
-              ><b>{{ field | caseSplit | titlecase }}</b></span
-            >
-            <span class="cell__content">{{
-              row[field] | caseSplit | titlecase
-            }}</span>
-          </cdk-cell>
-        </ng-container>
-        <ng-template #groupTemplate>
-          <cdk-cell *ngIf="colI === 0">
-            <elder-group-row
-              [field]="row.field"
-              [header]="row.groupHeader"
-              [level]="row._position.layer"
-            ></elder-group-row>
-          </cdk-cell>
-        </ng-template>
-      </ng-container>
-    </ng-container>
+      <!--Table headers-->
+      <cdk-header-row
+        class="row--header"
+        *cdkHeaderRowDef="state.fields; sticky: true; index as i"
+      ></cdk-header-row>
 
-    <!--Header Row-->
-  </cdk-table>
-</div>
+      <!--Group rows-->
+      <cdk-row
+        class="row--content"
+        [class.is-expanded]="model.checkIsExpanded(row)"
+        [class.is-group-row]="row.position.isGroup"
+        *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
+        (click)="model.toggle(row)"
+        (keydown.Enter)="model.toggle(row); $event.stopPropagation()"
+        [rowDetail]="row"
+        [rowDetailVisible]="model.checkIsExpanded(row)"
+      ></cdk-row>
+
+      <ng-template cdkNoDataRow>
+        <div class="no-data-row">
+          <elder-brand [showTitle]="false"></elder-brand>
+        </div>
+      </ng-template>
+
+      <ng-container *ngFor="let field of state.fields; index as col" cdkColumnDef="{{ field }}">
+        <ng-container *cdkHeaderCellDef>
+          <cdk-header-cell
+            class="header"
+            mat-sort-header
+            matTooltip="Sort by {{ field }}"
+            [attr.tabIndex]="col === 0 ? '0' : '-1'"
+            [keyGrid]="{ row: 0, col: this.col }"
+          >
+            <div class="header-content">
+              {{ field | splitcase | titlecase }}
+            </div>
+          </cdk-header-cell>
+        </ng-container>
+        <ng-container *cdkCellDef="let row; index as rowIndex">
+          <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
+            <div
+              role="cell"
+              class="cell-container"
+              [class.is-icon-cell]="col === 0"
+              [style.--left-padding]="getPadding(row)"
+              [keyGrid]="{ row: rowIndex + 1, col: this.col }"
+            >
+              <button
+                (keydown.enter)="model.toggle(row)"
+                (keydown.space)="model.toggle(row)"
+                class="cell-chevron"
+                aria-label="Expand row"
+                *ngIf="col === 0"
+              >
+                <svg
+                  [class.is-rotated]="model.checkIsExpanded(row)"
+                  class="cell-chevron-icon"
+                  viewBox="0 0 24 24"
+                >
+                  <polygon points="8.1,3 6.9,4.1 14.8,12 6.9,19.9 8.1,21 17.1,12 8.1,3 " />
+                </svg>
+              </button>
+
+              <div class="cell-title">
+                {{ field | splitcase | titlecase }}
+              </div>
+              <div
+                class="cell-content"
+                [innerHtml]="
+                  row.fields[field]
+                    | toString
+                    | sentencecase
+                    | appendunit: getUnit(field)
+                    | highlight: state.filter
+                "
+              ></div>
+            </div>
+          </ng-container>
+          <ng-template #groupTemplate>
+            <elder-group-row
+              #cell
+              *ngIf="col === 0"
+              [class.is-expanded]="model.checkIsExpanded(row)"
+              [keyGrid]="{ row: rowIndex + 1, col: 0 }"
+              [style.--left-padding]="getPadding(row)"
+              (keydown.ArrowRight)="toggleRow($event, row, true)"
+              (keydown.ArrowLeft)="toggleRow($event, row, false)"
+            >
+              <group-field>{{ row.field | splitcase }}</group-field>
+              <group-name>{{ row.groupHeader | sentencecase }}</group-name>
+            </elder-group-row>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+      <!--Header Row-->
+    </cdk-table>
+  </div>
+</ng-container>

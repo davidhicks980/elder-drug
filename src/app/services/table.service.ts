@@ -1,112 +1,196 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, switchMap, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+
+import { ColumnField, columns } from '../enums/ColumnFields';
+import { TableCategories } from '../enums/TableCategories.enum';
+import { TABLE_ATTRIBUTES } from '../injectables/table-attributes.injectable';
+import { TABLE_CONFIG } from '../injectables/table-config.injectable';
+import { BeersEntry } from '../interfaces/BeersEntry';
+import { TableAttributes } from '../interfaces/TableAttributes';
+import { TableConfig } from '../interfaces/TableConfig';
+import { BeersSearchResult, SearchResult, SearchService } from './search.service';
+
+type StateEntry = string[] | Record<string, string> | string;
+type TableConfiguration = TableAttributes & {
+  columns: string[];
+  selectedColumns: string[];
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
-  private tableStatusSource = new ReplaySubject<Table[]>(3);
-  tableStatus$ = this.tableStatusSource.asObservable();
-  private pageSource = new ReplaySubject<number>(1);
-  currentPage$ = this.pageSource.asObservable();
-  private descriptionSource = new Subject();
-  tableDescription$ = this.descriptionSource.asObservable();
-  private titleSource = new Subject();
-  tableTitle$ = this.titleSource.asObservable();
-  private tableFilterSource = new Subject();
-  tableFilter$ = this.tableFilterSource.asObservable();
-
-  emitTableFilter(filter: { column: string; term: string }) {
-    this.tableFilterSource.next(filter);
+  private selectionSource: BehaviorSubject<TableConfiguration> = new BehaviorSubject({
+    tableNumber: -1,
+    fullTitle: '',
+    shortName: '',
+    identifier: '',
+    tableIcon: '',
+    description: '',
+    columns: [],
+    selectedColumns: [],
+  });
+  private columnFilterMap: Map<ColumnField, number>;
+  private entrySource: BehaviorSubject<BeersSearchResult[]> = new BehaviorSubject([]);
+  readonly entries$ = this.entrySource.asObservable();
+  readonly selection$ = this.selectionSource.asObservable();
+  state: Record<number, Map<string, StateEntry>> = {};
+  tableOptions$: Observable<TableAttributes[]>;
+  lastSearch: SearchResult<BeersSearchResult>;
+  tableIndices: TableCategories[];
+  get table(): number {
+    return this.selectionSource.value.tableNumber;
+  }
+  get tableConfiguration() {
+    if (this.table) {
+      return this.tableParameters.find((table) => table.id === this.table);
+    }
   }
 
-  emitSelectedTables(selections: number[]) {
-    this.tableStatusSource.next(
-      this._tables.filter((table) => selections.includes(table.TableNumber))
+  private getInitialTableState(table: number) {
+    return this.tableParameters.find((config) => config.id === table);
+  }
+  private changeTable(index: number) {
+    let { entries, columns } = this.getFilteredSearchResults(index, this.lastSearch.results);
+    let configuration = this.getTableConfiguration(index, columns);
+    return { configuration, entries };
+  }
+  emitTableSelection(table: number) {
+    if (table && this.tableIndices.includes(table)) {
+      let { configuration, entries } = this.changeTable(table);
+      this.selectionSource.next(configuration);
+      this.entrySource.next(entries);
+    } else {
+      throw TypeError('Table is not available with your current search');
+    }
+  }
+  /**
+   * Filters search results that do not contain data
+   *
+   * @private
+   * @returns {*}
+   * @memberof TableService
+   */
+  private getFilteredSearchResults(index: number, search: BeersSearchResult[]) {
+    let results = this.selectEntriesOnTable(index, search);
+    let columns = this.filterDatalessColumns(results);
+    let entries = this.filterDatalessEntries(results, columns);
+    return { columns, entries };
+  }
+
+  private filterDatalessEntries(results: BeersSearchResult[], columnsWithData: Set<string>) {
+    return results.map((result) =>
+      Object.fromEntries(Object.entries(result).filter(([key, value]) => columnsWithData.has(key)))
+    ) as Partial<BeersSearchResult[]> & { SearchTerms: string };
+  }
+
+  /**
+   * @param {number} index The table number
+   * @param {BeersSearchResult[]} [results=[]] Search results are optional and are used to emitted only columns that contain data
+   * @returns  {TableConfiguration} Table configuration
+   * @memberof TableService
+   */
+  getTableConfiguration(index: number, results: Set<string> = new Set()): TableConfiguration {
+    let attributes = this.tableDescriptions.find((table) => table.tableNumber === index);
+    let { columnOptions } = this.getInitialTableState(index);
+    let selectedColumns = [];
+    let columns = [];
+    let datafulColumns = results.size ? results : new Set(columnOptions.map((cols) => cols.id));
+    for (let { id, selected } of columnOptions) {
+      if (datafulColumns.has(id)) {
+        columns.push(id);
+        if (selected) {
+          selectedColumns.push(id);
+        }
+      }
+    }
+    return { ...attributes, columns, selectedColumns };
+  }
+  private getTablesWithEntries(results: Partial<BeersEntry[]>): TableAttributes[] {
+    return Array.from(this.columnFilterMap)
+      .filter(([field, _]) => results.some((entry) => entry[field]))
+      .map(([_, table]) => table)
+      .concat(1)
+      .filter((table, index, arr) => arr.indexOf(table) === index)
+      .map((table) => this.tableDescriptions.find(({ tableNumber }) => tableNumber === table));
+  }
+  get tableDescriptions(): TableAttributes[] {
+    return this.tableList;
+  }
+
+  /**
+   * Removes empty columns
+   *
+   * @private
+   * @param {BeersSearchResult[]} entries
+   * @returns {*}  {Set<string>}
+   * @memberof TableService
+   */
+  private filterDatalessColumns(entries: BeersSearchResult[]): Set<string> {
+    return new Set(entries.map((e) => Object.keys(e).filter((k) => !(e[k] == null))).flat(1));
+  }
+
+  /**
+   * Returns search results that pertain to a particular table. The function filters entries that do not contain a table's defining
+   * columns. Defining columns are columns relevant to a purpose of a table -- e.g. for the drug interactions table, the 'Drug
+   * Interactions' column would be the defining column
+   * @param {BeersSearchResult[]} Results Search results
+   * @returns  {BeersSearchResult[]} Entries pertaining to the selected table
+   * @memberof TableService
+   */
+  private selectEntriesOnTable(
+    table: number,
+    entries: Partial<BeersSearchResult> & { SearchTerms: string }[]
+  ): Partial<BeersSearchResult> & { SearchTerms: string }[] {
+    let { filters } = this.getInitialTableState(table);
+    return entries.filter((entry) => !filters.length || filters.some((filter) => entry[filter]));
+  }
+  get entries(): BeersSearchResult[] {
+    return this.entrySource.getValue().map((e) => ({ ...e }));
+  }
+
+  constructor(
+    @Inject(TABLE_CONFIG) private tableParameters: TableConfig[],
+    @Inject(TABLE_ATTRIBUTES) private tableList: TableAttributes[],
+    private searchService: SearchService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    let columnTableMap = this.tableParameters
+      .map(({ filters, id }) => filters.map((filter) => [filter, id]))
+      .flat(1) as [ColumnField, number][];
+    this.columnFilterMap = new Map(columnTableMap);
+    //Get searches that return entries and that are new
+    let result$ = this.searchService.searchResults$.pipe(filter(({ results }) => !!results.length));
+
+    this.tableOptions$ = result$.pipe(
+      map(({ results }) => [...this.getTablesWithEntries(results)]),
+      map((tables) => tables.sort((a, b) => a.shortName.localeCompare(b.shortName)))
     );
-  }
 
-  emitCurrentPage(page: number) {
-    this.pageSource.next(page);
-    this.emitTableInformation(page);
-  }
-  emitTableInformation(page: number) {
-    let information = this.tables.filter(
-      (table) => table.TableNumber === page
-    )[0];
+    this.tableOptions$.pipe(withLatestFrom(result$)).subscribe(([tables, results]) => {
+      this.tableIndices = tables.map((table) => table.tableNumber);
+      this.lastSearch = results;
+    });
 
-    this.descriptionSource.next(information.Description);
-    this.titleSource.next(information.ShortName);
-  }
-  get tables(): Table[] {
-    return this._tables;
-  }
-  private readonly _tables = [
-    {
-      TableNumber: 1,
-      FullTitle: 'General Information for Each Table',
-      ShortName: 'All Results',
-      Identifier: 'Info',
-      TableIconName: 'general-health',
-      Description: 'Information encompassing all categories of Beers Criteria',
-    },
-    {
-      TableNumber: 2,
-      FullTitle: 'Potentially Inappropriate Medication Use in Older Adults ',
-      ShortName: 'Inappropriate Medications in Older Adults',
-      Identifier: 'Inappropriate',
-    },
-    {
-      TableNumber: 3,
-      FullTitle:
-        'Potentially Inappropriate Medication Use in Older Adults Due to Drug-Disease or Drug-Syndrome Interactions That May Exacerbate the Disease or Syndrome',
-      ShortName: 'Disease Interactions',
-      Identifier: 'DiseaseGuidance',
-      TableIconName: 'heart-ekg',
-      Description:
-        'The Disease Guidance table contains drugs that should be avoided in those with a specific disease.',
-    },
-    {
-      TableNumber: 4,
-      FullTitle: 'Drugs To Be Used With Caution in Older Adults',
-      ShortName: 'Use with Caution',
-      Identifier: 'Caution',
-    },
-    {
-      TableNumber: 5,
-      FullTitle:
-        'Potentially Clinically Important Drug-Drug Interactions That Should Be Avoided in Older Adults',
-      ShortName: 'Drug Interactions',
-      Identifier: 'DrugInteractions',
-      TableIconName: 'capsule',
-      Description:
-        'The Drug Interactions table contains concerning drug interactions specific to those over the age of 65. It does not include all drug interactions.',
-    },
-    {
-      TableNumber: 6,
-      FullTitle:
-        'Medications That Should Be Avoided or Have Their Dosage Reduced With Varying Levels of Kidney Function in Older Adults',
-      ShortName: 'Renal Interactions',
-      Identifier: 'Clearance',
-      TableIconName: 'kidneys',
-      Description:
-        'The Renal Interactions table contains drugs that can be toxic in geriatric patients with reduced kidney function.',
-    },
-    {
-      TableNumber: 7,
-      FullTitle: 'Drugs With Strong Anticholinergic Properties',
-      ShortName: 'Anticholinergics',
-      Identifier: 'Anticholinergics',
-    },
-  ] as Table[];
-  constructor() {}
-}
+    this.tableOptions$
+      .pipe(
+        take(1),
 
-export interface Table {
-  TableNumber: number;
-  FullTitle: string;
-  ShortName: string;
-  Identifier: string;
-  TableIconName?: string;
-  Description?: string;
+        switchMapTo(this.route.queryParams)
+      )
+      .subscribe((params) => {
+        let table = Number(params?.table);
+        if (this.tableIndices?.includes(table)) {
+          this.emitTableSelection(table);
+        } else {
+          this.router.navigate(['/search'], {
+            queryParams: { table: 1 },
+            queryParamsHandling: 'merge',
+          });
+        }
+      });
+  }
 }

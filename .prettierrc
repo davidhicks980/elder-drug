@@ -1,5 +1,6 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "quoteProps": "preserve"
+  "quoteProps": "preserve",
+  "printWidth": 100
 }

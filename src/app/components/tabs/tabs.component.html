@@ -1,0 +1,56 @@
+<div class="tab-overflow-container" [class.fade-left]="leftOverflowSource | async">
+  <button
+    (pointerdown)="handleOverflowButtonClick($event, 'LEFT')"
+    mat-mini-fab
+    class="tab-overflow-button tab-overflow-button--left"
+    *ngIf="leftOverflowSource | async"
+  >
+    <mat-icon svgIcon="chevron-left"></mat-icon>
+  </button>
+  <nav
+    *elderLet="{
+      tabs: tableService.tableOptions$ | async
+    } as state"
+    class="tab-container"
+  >
+    <ul #list class="tab-list">
+      <li
+        #item
+        class="tab-list-item"
+        [class.selected]="rla.isActive"
+        [style.--position]="index"
+        (keydown.ArrowRight)="focusNext(item)"
+        (keydown.ArrowLeft)="focusPrevious(item)"
+        *ngFor="let tab of state.tabs; index as index"
+      >
+        <a
+          option
+          #rla="routerLinkActive"
+          class="tab-trigger"
+          routerLink="/search/"
+          routerLinkActive="selected"
+          [queryParams]="{ table: tab.tableNumber }"
+          [queryParamsHandling]="'merge'"
+        >
+          <elder-tab-link
+            #link
+            [selected]="rla.isActive"
+            [collapsed]="tab.tableNumber != 0"
+            [rounded]="rounded"
+            param
+          >
+            {{ tab.shortName }}
+          </elder-tab-link>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <button
+    (pointerdown)="handleOverflowButtonClick($event, 'RIGHT')"
+    mat-mini-fab
+    class="tab-overflow-button tab-overflow-button--right"
+    *ngIf="rightOverflowSource | async"
+  >
+    <mat-icon svgIcon="chevron-right"></mat-icon>
+  </button>
+</div>

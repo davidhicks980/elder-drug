@@ -1,0 +1,67 @@
+<div class="padding-box" *elderLet="filterService.filter$ | async as filter">
+  <div class="header">
+    <span class="header__title">
+      <h1 class="title__text" [innerHTML]="data.Item | titlecase | highlight: filter"></h1>
+      <span class="title__chip" [innerHtml]="data.ItemType | titlecase | highlight: filter"></span
+    ></span>
+
+    <h2 class="header__subtitle">
+      Matches:
+      <span
+        class="header__subtitle__terms"
+        [innerHTML]="data.SearchTerms | titlecase | highlight: filter"
+      ></span>
+    </h2>
+  </div>
+  <div class="masonry-grid">
+    <div *ngIf="data.Inclusion">
+      <elder-detail-card
+        [filter]="filter"
+        [field]="'Applicable to'"
+        [entry]="data.Inclusion"
+        [icon]="iconNames.includes"
+      >
+      </elder-detail-card>
+    </div>
+
+    <div *ngIf="data.Exclusion">
+      <elder-detail-card
+        [filter]="filter"
+        [field]="'Not applicable to'"
+        [entry]="data.Exclusion"
+        [icon]="iconNames.excludes"
+      >
+      </elder-detail-card>
+    </div>
+    <div *ngIf="data.DiseaseState">
+      <elder-detail-card
+        [filter]="filter"
+        [field]="'Disease State'"
+        [entry]="data.DiseaseState"
+        [icon]="'error'"
+      >
+      </elder-detail-card>
+    </div>
+    <div *ngIf="data.MaximumClearance || data.MinimumClearance">
+      <elder-range-card
+        [filter]="filter"
+        [field]="'Renal Adjustments'"
+        [entry]="data.Rationale"
+        [icon]="'kidneys'"
+        [maximum]="data.MaximumClearance"
+        [minimum]="data.MinimumClearance"
+        [recommendation]="data.Recommendation"
+        [units]="'ml/min'"
+      ></elder-range-card>
+    </div>
+    <div *ngIf="data.Rationale">
+      <elder-detail-card
+        [filter]="filter"
+        [field]="'Rationale'"
+        [entry]="data.Rationale"
+        [icon]="'light'"
+      >
+      </elder-detail-card>
+    </div>
+  </div>
+</div>

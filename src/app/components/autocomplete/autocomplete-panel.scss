@@ -1,0 +1,50 @@
+@use "palette" as *;
+@use "colors" as *;
+@use "~@angular/material" as mat;
+@use "breakpoints" as *;
+@use "sass:color";
+.typeahead {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+
+  mat-option {
+    padding: 0;
+    height: 2.75rem !important;
+    .mat-icon {
+      margin: 0;
+    }
+    &:hover {
+      background: tint($light-gray-3, 20%);
+    }
+    &.mat-option.mat-active {
+      background: tint($light-gray-2, 10%);
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    &.is-pinned {
+      height: 3.25rem;
+      line-height: 3.25rem !important;
+    }
+  }
+
+  &.mat-autocomplete-panel {
+    @include mobileWidth {
+      max-height: 100%;
+    }
+    transform: translateY(3px) scale(0.95);
+    opacity: 0.2;
+    transition: transform 50ms ease-out, opacity 50ms ease-out;
+    &:not([class*="mat-elevation-z"]) {
+      @include shadow(3);
+      border: 1px solid $light-gray-4;
+    }
+    &.mat-autocomplete-visible {
+      transform: translateY(0px) scale(1);
+      opacity: 1;
+    }
+  }
+}
+@include scrollbar;

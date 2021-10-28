@@ -1,0 +1,30 @@
+@use 'sass:string';
+@use 'sass:map';
+$bp: (
+  'zero': 0,
+  'xsmall': 400px,
+  'small': 600px,
+  'medium': 900px,
+  'large': 1200px,
+  'xlarge': 1800px,
+);
+
+@mixin media-size($min: null, $max: null) {
+  $minString: null;
+  $maxString: null;
+  $join: '';
+  @if $min {
+    $minString: '( min-width: #{map.get($bp, $min)})';
+  }
+  @if $max {
+    $maxString: '( max-width: #{map.get($bp, $max) - 0.01px})';
+  }
+  @if $maxString and $minString {
+    $join: 'and';
+  }
+  $full: '#{$minString} #{$join} #{$maxString}';
+  $query: string.unquote($full);
+  @media #{$query} {
+    @content;
+  }
+}

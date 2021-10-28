@@ -1,0 +1,149 @@
+@use 'shadows' as *;
+
+%button {
+  align-items: center;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-family: var(--body-font);
+  font-weight: 500;
+  height: 2em;
+  justify-content: center;
+  position: relative;
+  touch-action: manipulation;
+}
+%button--primary {
+  --button--background--primary: var(--primary-11);
+  --button--color--primary: #fff;
+  --button--shadow--primary: var(--gray-6);
+  --button--shadow--primary--active: var(--gray-6);
+  @extend %button;
+
+  @include hoverable-shadow(2);
+  background: var(--button--background--primary);
+  color: var(--button--color--primary);
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    box-shadow: inset 0 1px 2px 2px rgba(0, 0, 0, 0.26);
+  }
+}
+
+%button--secondary {
+  --button--background--secondary: linear-gradient(
+    var(--gray-0),
+    var(--gray-1)
+  );
+
+  --button--color--secondary: var(--gray-11);
+  --button--shadow--secondary: inset 0 0 0 1px var(--gray-4);
+  --button--shadow--secondary--active: inset 0 0 0 1px var(--primary-7);
+  @extend %button;
+  @include hoverable-shadow(2);
+  background-image: var(--button--background--secondary);
+  box-shadow: var(--button--shadow--secondary);
+  color: var(--button--color--secondary);
+
+  &:hover {
+    filter: brightness(0.975);
+  }
+
+  &:active {
+    box-shadow: var(--button--shadow--secondary--active);
+    filter: brightness(0.95);
+  }
+
+  &:active::after {
+    opacity: 1;
+  }
+}
+
+%button--tertiary {
+  --button--background--tertiary: var(--secondary-2);
+  --button--color--tertiary: var(--secondary-12);
+  --button--shadow--tertiary: inset 0 0 0 1px var(--secondary-8);
+  --button--shadow--tertiary--active: inset 0 0 0 1px var(--primary-7);
+  @extend %button;
+  @include hoverable-shadow(2);
+  background-color: var(--button--background--tertiary);
+  box-shadow: var(--button--shadow--tertiary);
+  color: var(--button--color--tertiary);
+
+  &:hover {
+    filter: brightness(0.975);
+  }
+
+  &:active {
+    box-shadow: var(--button--shadow--tertiary--active);
+    filter: brightness(0.95);
+  }
+
+  :active::after {
+    opacity: 1;
+  }
+}
+@mixin button($height: 2em, $width: 20ch, $font-size: 0.8rem) {
+  %button {
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: var(--body-font);
+    font-size: calc(#{$height} * 0.5);
+    font-weight: 500;
+    height: $height;
+    position: relative;
+    touch-action: manipulation;
+    transition: all 250ms;
+    width: $width;
+  }
+
+  .button--primary {
+    --button--background--primary: var(--primary-11);
+    --button--color--primary: #fff;
+    --button--shadow--primary: var(--gray-6);
+    --button--shadow--primary--active: var(--gray-6);
+    @extend %button;
+
+    @include hoverable-shadow(2);
+    background: var(--button--background--primary);
+    color: var(--button--color--primary);
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      box-shadow: inset 0 1px 2px 2px rgba(0, 0, 0, 0.26);
+    }
+  }
+
+  .button--secondary {
+    --button--background--secondary: var(--gray-1);
+    --button--color--secondary: var(--gray-11);
+    --button--shadow--secondary: inset 0 0 0 1px var(--gray-6);
+    --button--shadow--secondary--active: inset 0 0 0 1px var(--primary-7);
+    @extend %button;
+    @include hoverable-shadow(2);
+    background-color: var(--button--background--secondary);
+    box-shadow: var(--button--shadow--secondary);
+    color: var(--button--color--secondary);
+
+    &:hover {
+      filter: brightness(0.975);
+    }
+
+    &:active {
+      box-shadow: var(--button--shadow--secondary--active);
+      filter: brightness(0.95);
+    }
+
+    &:active::after {
+      opacity: 1;
+    }
+  }
+}

@@ -1,7 +1,8 @@
 @use "sass:color";
 @use "sass:math";
 @use "sass:string";
-
+@use "sass:meta";
+@use "breakpoints" as *;
 /// Slightly lighten a color
 /// @access public
 /// @param {Color} $color - color to tint
@@ -27,11 +28,7 @@
 }
 
 @function scaleColor($color, $step) {
-  @return color.scale(
-    $color,
-    saturation(-#{$step * 10}),
-    brightness(#{$step * 10})
-  );
+  @return color.scale($color, saturation(-#{$step * 10}), brightness(#{$step * 10}));
 }
 @function getLighter($color, $step) {
   @if $step>0 and $step< 6 {
@@ -52,10 +49,7 @@
     $sat-unit: (100 - $sat) / 8;
     $dark-unit: (100 - $dark) / 5.5;
 
-    $newcolor: saturate(
-      darken($color, $dark-unit * $step),
-      $sat-unit * $multi * $step
-    );
+    $newcolor: saturate(darken($color, $dark-unit * $step), $sat-unit * $multi * $step);
     @return $newcolor;
   }
 }
@@ -64,18 +58,18 @@ $primary-1: rgba(15, 75, 177, 1);
 $primary-2: rgba(9, 58, 139, 1);
 $primary-3: rgba(6, 47, 116, 1);
 $primary-4: rgba(3, 35, 91, 1);
-$primary-5: rgba(1, 23, 60, 1);
+$primary-5: #01173c;
 
 // Main Secondary color (1) */
 $secondary-1: rgba(50, 20, 184, 1);
 $secondary-2: rgba(37, 13, 145, 1);
 $secondary-3: rgba(28, 8, 121, 1);
 $secondary-4: rgba(21, 4, 94, 1);
-$secondary-5: rgba(12, 1, 62, 1);
+$secondary-5: #0c013e;
 
 // Main Secondary color (2) */
 $secondary-2-1: rgba(0, 169, 146, 1);
-$secondary-2-2: rgba(0, 132, 114, 1);
+$secondary-2-2: #008472;
 $secondary-2-3: rgba(0, 110, 95, 1);
 $secondary-2-4: rgba(0, 86, 74, 1);
 $secondary-2-5: rgba(0, 56, 49, 1);
@@ -85,6 +79,41 @@ $complement-2: rgba(210, 135, 0, 1);
 $complement-3: rgba(175, 113, 0, 1); // Main Complement color */
 $complement-4: rgba(137, 88, 0, 1);
 $complement-5: rgba(90, 58, 0, 1);
+
+$palette: (
+  "green-1": rgba(0, 169, 146, 1),
+  "green-2": rgba(0, 132, 114, 1),
+  "green-3": rgba(0, 110, 95, 1),
+  "green-4": rgba(0, 86, 74, 1),
+  "green-5": rgba(0, 56, 49, 1),
+);
+:root {
+  // Main Primary color */
+  --primary-1: #0f4bb1;
+  --primary-2: rgba(9, 58, 139, 1);
+  --primary-3: rgba(6, 47, 116, 1);
+  --primary-4: rgba(3, 35, 91, 1);
+  --primary-5: rgba(1, 23, 60, 1);
+  // Main Secondary color (1) */
+  --secondary-1: rgba(50, 20, 184, 1);
+  --secondary-2: rgba(37, 13, 145, 1);
+  --secondary-3: rgba(28, 8, 121, 1);
+  --secondary-4: rgba(21, 4, 94, 1);
+  --secondary-5: rgba(12, 1, 62, 1);
+
+  // Main Secondary color (2) */
+  --secondary-2-1: rgba(0, 169, 146, 1);
+  --secondary-2-2: rgba(0, 132, 114, 1);
+  --secondary-2-3: rgba(0, 110, 95, 1);
+  --secondary-2-4: rgba(0, 86, 74, 1);
+  --secondary-2-5: rgba(0, 56, 49, 1);
+
+  --complement-2: rgba(210, 135, 0, 1);
+  --complement-1: rgba(255, 164, 0, 1);
+  --complement-3: rgba(175, 113, 0, 1); // Main Complement color */
+  --complement-4: rgba(137, 88, 0, 1);
+  --complement-5: rgba(90, 58, 0, 1);
+}
 
 $error: #d3231d;
 $error-1: #fce1d1;
@@ -129,12 +158,40 @@ $dark-gray-5: #05090f;
 
 $color: #fafafb;
 
-@mixin shadow($depth) {
-  box-shadow: 0 1px * $depth 2px * $depth rgb(87 107 138 / #{12% * $depth});
+@function shadow($depth, $inset: false, $opacity: 13%) {
+  $full: "";
+  $comma: ",";
+  $in: if($inset, "inset", "");
+  @for $d from 1 through $depth {
+    @if $d == $depth {
+      $comma: "";
+    }
+    $full: $full + "#{$in 0 1.1px * $d 1.5px * $d rgb(87 107 138 / #{$opacity})} #{$comma}";
+  }
+  @return $full;
+}
+@mixin shadow($depth, $inset: false, $opacity: 10%) {
+  box-shadow: #{shadow($depth, $inset, $opacity)};
 }
 
-@mixin hoverable-shadow($depth) {
-  &:hover::after {
+@mixin pseudo-shadow($depth: 5, $inset: false) {
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin: 0px;
+    @include shadow($depth, $inset);
+  }
+}
+@mixin hoverable-focus($depth) {
+  &:focus::after {
     opacity: 0.8;
   }
   &::after {
@@ -154,41 +211,116 @@ $color: #fafafb;
   }
 }
 
-@mixin thick-outline {
-  outline: 2px dotted currentColor;
-  outline-offset: 1px;
+@mixin hoverable-shadow($depth, $inset: false, $opacity: 13%) {
+  @content;
+  &:hover::after {
+    opacity: var(--hoverable-shadow--opacity, 0.8);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: var(--hoverable-shadow--opacity, 0);
+    border-radius: inherit;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin: 0px;
+    @include shadow($depth, $inset, $opacity);
+  }
 }
 
-@mixin commonInput {
-  font-size: Max(16px, 1em);
-  border: 1px solid $gray-1;
-  border-radius: 3px;
+@mixin common-control-style {
+  font-size: 1em;
+  transition: border-color 200ms ease-out;
+  font-family: "Roboto", sans-serif;
+  user-select: none;
+  border: var(--common-border);
   background-color: white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: $gray-5;
-  transition: background-color 0.5s ease-in;
+}
+@mixin common-input-style(
+  $color: $gray-5,
+  $inactive-border: $light-gray-3,
+  $active-color: $primary-1
+) {
+  cursor: pointer;
+  font-weight: 500;
   position: relative;
-  padding: 0.5em 0.35em;
-  @include hoverable-shadow(2);
-  &:active {
-    transition: background-color 0.2s ease-in;
+  background-image: linear-gradient(
+    color.scale($light-gray-2, $alpha: -50%),
+    color.scale($light-gray-2, $alpha: -70%)
+  );
+  @include common-control-style;
+  @include hoverable-shadow(3);
+
+  &:active,
+  &:focus:active {
+    background-image: linear-gradient($light-gray-2, color.scale($light-gray-2, $alpha: -50%));
     &:after {
-      opacity: 1;
+      box-shadow: none;
+      @include shadow(2, true);
     }
   }
+
   &:focus {
-    background-color: $light-gray-1;
-    transition: background-color 0.2s ease-in;
-    @include hoverable-shadow(3);
+    border-color: $primary-1;
+    box-shadow: inset 0 0 0 1px $primary-1;
 
     &:after {
       opacity: 0.4;
     }
   }
-  &:hover {
-    background-color: $light-gray-1;
-    transition: background-color 0.5s ease-in;
+}
+
+@mixin common-input-focus-style {
+  &:focus-within {
+    box-shadow: 0 0 0 0.5px $primary-1;
+    border-color: $primary-1;
+
+    &::before {
+      opacity: 1;
+    }
+
+    & input::placeholder {
+      color: $gray-3;
+    }
   }
+}
+@mixin common-label {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  color: var(--common-label-color);
+  font-weight: 500;
+}
+
+@mixin scrollbar {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: transparent;
+    box-shadow: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    color: $light-gray-4;
+    box-shadow: inset 0 0 0 5px rgb(176 183 189);
+  }
+  :host {
+    scrollbar-width: thin;
+    scrollbar-color: $gray-2 transparent;
+  }
+}
+
+@mixin common-border {
+  border: 1px solid $light-gray-5;
+}
+
+@mixin focus-style {
+  outline: 2px solid color.scale($primary-1, $alpha: -70%, $saturation: 30%);
 }

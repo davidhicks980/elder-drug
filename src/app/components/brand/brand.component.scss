@@ -1,35 +1,40 @@
-@use 'palette' as pal;
-@use 'colors' as col;
-.brand__wrapper {
+@use "palette" as pal;
+@use "colors" as col;
+@use "breakpoints" as *;
+:host {
+  display: grid;
   position: relative;
-  display: flex;
-  align-content: space-around;
+  grid-auto-flow: var(--brand--orientation, row);
+  justify-items: var(--brand--justify-items, center);
+  justify-content: var(--brand--justify-content, center);
   align-items: center;
-  flex-wrap: nowrap;
-  &__row {
-    width: 16em;
-  }
+  gap: 0.05em;
 }
 
+.brand__logo {
+  height: var(--brand--logo-size, 1rem);
+  width: var(--brand--logo-size, 1rem);
+  margin-bottom: 0.2rem;
+}
 .brand__title {
-  font-family: "Overpass";
+  font-family: var(--header-font);
+  font-size: var(--brand--font-size, 1rem);
   color: pal.$gray-5;
-  font-weight: 700;
-  letter-spacing: -0.15rem;
-  &__row {
-    top: 10px;
-    position: absolute;
-    left: 40px;
-    white-space: nowrap;
-  }
-}
-.brand__subtitle {
-  font-family: "Noto Sans JP";
   font-weight: 500;
-  color: pal.$gray-4;
-  margin: 0px;
-  line-height: 0px;
+  letter-spacing: -0.05em;
+  display: inline;
+  margin: 0;
 }
-h1 {
-  margin: 0px;
+
+.stem {
+  fill: #e6e7e8;
+}
+.shadows {
+  fill: #bcbec0;
+}
+.inner-bowl {
+  fill: url(#radial-gradient);
+}
+.snake-eyes {
+  fill: #fff;
 }

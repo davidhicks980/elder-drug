@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@davidhicks/sass-mixins": {
+      "version": "1.0.0",
+      "signature": "0d66ae8169d3de2177fea6eb607594f2",
+      "file": true
+    }
+  }
+}

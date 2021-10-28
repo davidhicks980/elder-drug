@@ -1,133 +1,150 @@
-import { A11yModule } from '@angular/cdk/a11y';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { LayoutModule } from '@angular/cdk/layout';
-import { ObserversModule } from '@angular/cdk/observers';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { initializeApp } from 'firebase/app';
-
+import { MaterialModule } from './material-module';
 import { environment } from '../environments/environment';
-import { ElderRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { caseSplitPipe } from './case-split.pipe';
 import { BrandComponent } from './components/brand/brand.component';
-import { VerticalComponent } from './components/brand/vertical/vertical.component';
-import { DropdownComponent } from './components/layout/dropdown/dropdown.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { DrugFormComponent } from './components/layout/side-navigation/drug-form/drug-form.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { ErrorComponent, LayoutComponent } from './components/layout/layout.component';
+import { AnimatedArrowComponent } from './components/toggle/animated-arrow/animated-arrow.component';
+import { AnimatedXComponent } from './components/toggle/animated-x/animated-x.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { ToggleIconDirective } from './components/toggle/toggle-icon.directive';
+import { SearchFormComponent } from './components/search-form/search-form.component';
+import { AutocompleteContentComponent } from './components/autocomplete/autocomplete-content.component';
 import {
-  SearchButtonsComponent,
-} from './components/layout/side-navigation/drug-form/search-buttons/search-buttons.component';
-import { SidebarComponent } from './components/layout/side-navigation/sidebar.component';
-import { TabComponent } from './components/layout/tab/tab.component';
+  SearchDrawerBrandDirective,
+  SearchDrawerToggleDirective,
+} from './components/search-drawer/search-drawer.directive';
+import { SearchFormDrawer } from './components/search-drawer/search-drawer.component';
 import {
   AboutComponent,
-  DesignComponent,
   DisclaimerComponent,
   ToolbarComponent,
-} from './components/layout/top-toolbar/toolbar.component';
-import { ColumnSelectorComponent } from './components/table/dropdown/column-selector/column-selector.component';
-import { ListContentComponent } from './components/table/dropdown/group-by/button/list-content.component';
-import { GroupByComponent } from './components/table/dropdown/group-by/group-by.component';
-import { PopupComponent } from './components/table/dropdown/popup.component';
-import { ExpandedElementComponent } from './components/table/expanded-element/expanded-element.component';
-import { ExpandedRowCardComponent } from './components/table/expanded-element/expanded-row-card/expanded-row-card.component';
-import { FilterComponent } from './components/table/filter/filter.component';
-import { GroupRowComponent } from './components/table/group-row/group-row.component';
-import { TableCardComponent } from './components/table/table-card/table-card.component';
+} from './components/toolbar/toolbar.component';
+import { TabComponent } from './components/tabs/tab/tab.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { ColumnSelectorComponent } from './components/filter-popup/column-selector/column-selector.component';
+import { GroupItem } from './components/filter-popup/group-by/group-item/group-item.component';
+import { GroupFieldsComponent } from './components/filter-popup/group-by/group-fields.component';
+import { PopupContentDirective } from './components/filter-popup/popup-content.directive';
+import { PopupComponent } from './components/filter-popup/popup.component';
+import { RangeCardComponent } from './components/table-range-card/detail-range-card.component';
+import { RowDetailComponent } from './components/table-row-detail/row-detail.component';
+import { RowDetailCardComponent } from './components/table-row-detail-card/detail-card.component';
+import { FilterInputComponent } from './components/filter-input/filter-input.component';
+import { GroupRowComponent } from './components/table-group-row/group-row.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
+import { TableContainerComponent } from './components/table/table-container.component';
+import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { TableComponent } from './components/table/table.component';
-import { ExpansionPanelComponent } from './components/unused/expansion-panel/expansion-panel.component';
-import { AutoFocusDirective } from './directives/auto-focus.directive';
-import { CellPaddingDirective } from './directives/cell-padding.directive';
-import { CreationSpyDirective } from './directives/creation-spy.directive';
-import { ExpandableRowDirective } from './directives/expandable-row.directive';
-import { FilterDirective } from './directives/filter.directive';
+import { TemplateContentDirective } from './directives/content-template.directive';
+import { RowDetailDirective } from './components/table-row-detail/row-detail.directive';
+import { IconButtonDirective } from './directives/icon-button.directive';
 import { KeyGridDirective } from './directives/keygrid.directive';
-import { ListKeyDirective } from './directives/list-key.directive';
-import { ResizeDirective } from './directives/resize.directive';
-import { RotateDirective } from './directives/rotate-icon.directive';
+import { SvgGradientDirective } from './directives/svg-gradient.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
-import { LetDirective } from './directives/with.directive';
-import { MaterialModule } from './material-module';
+import { LetDirective } from './directives/let.directive';
+import { CaseSplitPipe } from './pipes/case-split.pipe';
 import { JoinPipe } from './pipes/join.pipe';
-import { ToStringPipe } from './to-string.pipe';
-
-export const firebase = provideFirebaseApp(() =>
-  initializeApp(environment.firebaseConfig)
-);
+import { ToStringPipe } from './pipes/to-string.pipe';
+import { AppendPipe } from './pipes/append.pipe';
+import { SentenceCasePipe } from './pipes/sentencecase.pipe';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { NavigationDrawerComponent } from './components/navigation-drawer/navigation-drawer.component';
+import { BEERS_ENTRIES, beersEntries } from './injectables/brand-drugs.injectable';
+import { COLUMN_ATTRIBUTES, columnList } from './injectables/column-attributes';
+import { GENERIC_DRUGS, genericDrugNames } from './injectables/generic-drugs.injectable';
+import { TABLE_ATTRIBUTES, tableList } from './injectables/table-attributes.injectable';
+import { TABLE_CONFIG, tableConfig } from './injectables/table-config.injectable';
+export const firebaseModule = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
+const pipes = [];
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     ToolbarComponent,
-    caseSplitPipe,
-    TableComponent,
-    DrugFormComponent,
-    SidebarComponent,
+    CaseSplitPipe,
     ToStringPipe,
+    JoinPipe,
+    HighlightPipe,
+    AppendPipe,
+    SentenceCasePipe,
     DisclaimerComponent,
     AboutComponent,
-    DesignComponent,
-    ExpansionPanelComponent,
-    ExpandedElementComponent,
-    RotateDirective,
+    RowDetailComponent,
     TrackingGradientDirective,
-    CreationSpyDirective,
-    DropdownComponent,
-    TabComponent,
+    TabsComponent,
     ColumnSelectorComponent,
     PopupComponent,
-    ResizeDirective,
-    GroupByComponent,
-    JoinPipe,
-    ListKeyDirective,
-    ListContentComponent,
-    AutoFocusDirective,
+    GroupFieldsComponent,
+    SearchFormComponent,
+    SearchFormDrawer,
+    GroupItem,
     LetDirective,
-    CellPaddingDirective,
     KeyGridDirective,
-    FilterComponent,
-    FilterDirective,
-    TableCardComponent,
-    ExpandableRowDirective,
+    TableContainerComponent,
+    RowDetailDirective,
     GroupRowComponent,
-    ExpandedRowCardComponent,
+    RowDetailCardComponent,
     BrandComponent,
-    VerticalComponent,
-    SearchButtonsComponent,
+    ToggleComponent,
+    AnimatedArrowComponent,
+    AnimatedXComponent,
+    TemplateContentDirective,
+    TabComponent,
+    ErrorMessageComponent,
+    IconButtonDirective,
+    SearchDrawerBrandDirective,
+    SearchDrawerToggleDirective,
+    AutocompleteContentComponent,
+    ToggleIconDirective,
+    FilterBarComponent,
+    FilterInputComponent,
+    TableComponent,
+    RangeCardComponent,
+    SvgGradientDirective,
+    DirectionsComponent,
+    PopupContentDirective,
+    NavigationDrawerComponent,
+    ErrorComponent,
+    AutocompleteContentComponent,
   ],
   imports: [
-    firebase,
+    firebaseModule,
     firestore,
     BrowserModule,
     BrowserAnimationsModule,
-    ElderRoutingModule,
     LayoutModule,
-    MaterialModule,
     FormsModule,
+    MaterialModule,
+    RouterModule.forRoot([{ path: '**', component: LayoutComponent }]),
     ReactiveFormsModule,
-    HttpClientModule,
-    ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
-    OverlayModule,
-    ObserversModule,
-    CdkAccordionModule,
-    A11yModule,
-    FlexLayoutModule,
+    HttpClientModule,
   ],
-  providers: [ColumnSelectorComponent],
+  providers: [
+    { provide: COLUMN_ATTRIBUTES, useValue: columnList },
+    { provide: TABLE_ATTRIBUTES, useValue: tableList },
+    { provide: TABLE_CONFIG, useValue: tableConfig },
+    { provide: GENERIC_DRUGS, useValue: genericDrugNames },
+    { provide: BEERS_ENTRIES, useValue: beersEntries },
+    { provide: APP_BASE_HREF, useValue: '/' },
+  ],
+
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

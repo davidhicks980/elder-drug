@@ -1,0 +1,18 @@
+@use "sass:string";
+@use "@davidhicks/sass-mixins/responsive" as *;
+@forward "@davidhicks/sass-mixins/responsive";
+
+$bp: (
+  "zero": 0,
+  "xsmall": 400px,
+  "small": 600px,
+  "medium": 900px,
+  "large": 1200px,
+  "xlarge": 1800px,
+);
+
+@mixin mobileWidth {
+  @include media-size("zero", "small") {
+    @content;
+  }
+}

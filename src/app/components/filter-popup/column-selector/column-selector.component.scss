@@ -1,0 +1,44 @@
+@use "palette" as *;
+@use "colors" as *;
+@use "breakpoints" as *;
+:host {
+  @include scrollbar;
+  display: block;
+  width: 235px;
+  @include media-size("zero", "small") {
+    max-height: 80vh;
+    width: 60vw;
+  }
+}
+.column-select {
+  width: 100%;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.popup-background {
+  border-radius: 5px;
+  background: white;
+  border: 1px solid $light-gray-3;
+  @include shadow(3);
+}
+
+.column-select-subheader {
+  font-weight: 500;
+  color: $gray-5;
+}
+
+.selection-list-container {
+  overflow: auto;
+  max-height: 275px;
+  @include media-size("zero", "small") {
+    max-height: none;
+  }
+}
+
+mat-selection-list {
+  padding-top: 0px;
+}

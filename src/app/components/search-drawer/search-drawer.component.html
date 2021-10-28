@@ -1,0 +1,18 @@
+<ng-container *elderLet="layoutService.mobile$ | async as mobile"
+  ><h2 class="legend"><ng-content select="search-drawer-legend"></ng-content></h2>
+  <ng-container *ngIf="!(layoutService.pinnedSearch$ | async) && mobile">
+    <div class="toggle">
+      <ng-container [ngTemplateOutlet]="toggle.templateRef"></ng-container>
+    </div>
+    <div class="brand">
+      <ng-container [ngTemplateOutlet]="brand.templateRef"></ng-container>
+    </div>
+  </ng-container>
+  <elder-search-form class="form"> </elder-search-form>
+  <footer *ngIf="!(layoutService.pinnedSearch$ | async) && mobile" class="footer">
+    <span
+      >v2.0.0 · A project by
+      <a style="text-decoration: underline" href="https://www.davidhicks.dev">David Hicks</a></span
+    >
+  </footer>
+</ng-container>

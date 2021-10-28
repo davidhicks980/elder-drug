@@ -1,0 +1,81 @@
+@use "palette" as *;
+:host {
+  display: block;
+  height: fit-content;
+  width: fit-content;
+  transition: filter 0.15s ease-in;
+  filter: var(--tab--focus--filter);
+  --tab--fill: #{$primary-1};
+  --tab--color: #{$light-gray-2};
+  --tab--shadow: url(#linear-base);
+  --tab--focus--filter: hue-rotate(0deg) brightness(1);
+  --tab--clip--transform: translateY(0) scaleX(1.05) scaleY(1.05);
+  --tab--font-weight: 400;
+}
+
+:host(:hover) {
+  --tab--fill: #{tint($primary-1, 7%)};
+}
+
+:host(.selected) {
+  --tab--fill: #{$light-gray-2};
+  --tab--color: #{$dark-gray-2};
+  --tab--shadow: none;
+  --tab--font-weight: 500;
+}
+
+:host(.rounded) {
+  --tab--clip--transform: translateY(-1.3px) scaleX(0.85) scaleY(0.9);
+  --tab--fill: transparent;
+  --tab--color: white;
+}
+
+:host(:hover.rounded:not(.selected)) {
+  --tab--focus--filter: hue-rotate(0deg) brightness(1);
+  --tab--fill: #{tint($primary-2, 7%)};
+}
+
+:host(.rounded.selected) {
+  --tab--fill: #{tint($primary-1, 7%)};
+  --tab--color: white;
+  --tab--font-weight: 400;
+}
+:host(:not(.rounded)) .circular-clip {
+  transition-delay: 200ms;
+  animation-timing-function: ease-out;
+}
+
+:host(:not(.collapsed)) {
+  margin-left: -14px;
+}
+
+.circular-clip {
+  transform: var(--tab--clip--transform);
+  transform-origin: center center;
+  transition: transform 200ms linear;
+}
+
+.tab {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  z-index: 0;
+  bottom: 0;
+  height: 36.75px;
+  background-image: linear-gradient(transparent 99.5%, white);
+  clip-path: url(#path);
+  overflow: hidden;
+}
+
+.tab-path {
+  fill: var(--tab--fill);
+}
+
+.tab-shadow {
+  fill: var(--tab--shadow);
+}
+
+.tab-text {
+  fill: var(--tab--color);
+  font-weight: var(--tab--font-weight);
+}
