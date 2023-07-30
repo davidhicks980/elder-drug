@@ -19,8 +19,6 @@
         class="tab-list-item"
         [class.selected]="rla.isActive"
         [style.--position]="index"
-        (keydown.ArrowRight)="focusNext(item)"
-        (keydown.ArrowLeft)="focusPrevious(item)"
         *ngFor="let tab of state.tabs; index as index"
       >
         <a
@@ -31,6 +29,8 @@
           routerLinkActive="selected"
           [queryParams]="{ table: tab.tableNumber }"
           [queryParamsHandling]="'merge'"
+          (keydown.ArrowRight)="toggleNext(item)"
+          (keydown.ArrowLeft)="togglePrevious(item)"
         >
           <elder-tab-link
             #link

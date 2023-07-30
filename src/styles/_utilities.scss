@@ -1,3 +1,5 @@
+@use "sass:string";
+
 /// Remove the unit of a length
 /// @param {Number} $number - Number to remove unit from
 /// @return {Number} - Unitless number
@@ -29,4 +31,30 @@
   }
 
   @return $string;
+}
+@function getDataHexColor($color: #fff) {
+  @return string.unquote(string.slice("#{$color}", 2));
+}
+
+@mixin full-pseudo-element(
+  $type: "before",
+  $top: 0,
+  $right: 0,
+  $left: 0,
+  $bottom: 0,
+  $height: 100%,
+  $width: 100%
+) {
+  &::#{string.unquote($type)} {
+    content: "";
+    height: $height;
+    width: $width;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    position: absolute;
+
+    @content;
+  }
 }

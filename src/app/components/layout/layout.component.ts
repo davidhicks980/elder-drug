@@ -79,21 +79,6 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
       typeof force === 'boolean' ? force : !this.navigationDrawerSource.value
     );
   }
-  loadDemo() {
-    this.searchService.storeHistory([
-      'Alprazolam',
-      'Morphine',
-      'Loperamide',
-      'Alcortin',
-      'Aller-Flo',
-      'Dofetilide',
-      'Warfarin',
-      'Aldactone',
-      'Sertraline',
-      'Ambien',
-    ]);
-    this.searchService.searchTerms();
-  }
   ngOnDestroy() {
     this.tabIntersect$.disconnect();
     this.destroy$.next(false);
@@ -103,11 +88,10 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
       ? this.layout.mobileSearchDrawerShiftDuration
       : this.layout.searchDrawerShiftDuration;
   }
-
   private buildTableShrinkAnimation(): Animation {
     this.tableShrinkAnimation?.cancel();
-    let { offsetWidth } = this.host.nativeElement;
-    let scale = (offsetWidth - 260) / offsetWidth,
+    let { scrollWidth } = this.host.nativeElement;
+    let scale = (scrollWidth - 260) / scrollWidth,
       { nativeElement } = this.tableCard;
     let keyframes = new KeyframeEffect(
       nativeElement,
@@ -143,14 +127,12 @@ export class LayoutComponent implements AfterViewInit, OnDestroy {
     this.renderer.setStyle(nativeElement, '--shift-duration', this.shiftDuration + 'ms', 2);
     if (open && !isMobile && this.tableCard) {
       this.tableShrinkAnimation?.finish();
-      if (this.tableShrinkAnimation?.currentTime != this.shiftDuration) {
-        this.tableShrinkAnimation = this.buildTableShrinkAnimation();
-        this.tableShrinkAnimation.onfinish = () => {
-          setTimeout(() => {
-            this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '1', 2);
-          }, 75);
-        };
-      }
+      this.tableShrinkAnimation = this.buildTableShrinkAnimation();
+      this.tableShrinkAnimation.onfinish = () => {
+        setTimeout(() => {
+          this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '1', 2);
+        }, 75);
+      };
       this.renderer.setStyle(this.tableCard.nativeElement, '--table-card--opacity', '0', 2);
       this.tableShrinkAnimation.play();
     }

@@ -1,26 +1,24 @@
-import { ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  HostBinding,
+  Input,
+  Renderer2,
+} from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { take } from 'rxjs/operators';
 
 @Directive({
-  selector: '[svgGradient]',
+  selector: '[gradientIcon]',
 })
-export class SvgGradientDirective {
-  private _visible: string = '';
-  fill: string = '';
-  @ViewChild(SvgGradientDirective) children;
-  refresh: boolean;
-  svg: Promise<SVGElement>;
+export class GradientIconDirective {
+  icon: SVGSVGElement;
   @HostBinding('style.--svg-fill')
   get svgFill() {
     return this.fill;
   }
-  @Input('svgGradient')
-  gradient: Record<string, string> = { '0': '#fff', '1': '#000' };
-  @Input('svgGradientType') type: 'linear' | 'radial' = 'linear';
-  definition: SVGDefsElement;
-  @Input('svgGradientAngle') angle: number = 0;
-  @Input('svgGradientName')
+  @Input('gradientIcon')
   get name(): string {
     return this._visible;
   }
@@ -31,23 +29,41 @@ export class SvgGradientDirective {
         .getNamedSvgIcon(value)
         .pipe(take(1))
         .subscribe((icon: SVGSVGElement) => {
+          this.renderer.setAttribute(icon, 'fill', 'var(--svg-fill)');
+          this.icon = icon;
           this.appendSVG(icon);
         });
     }
   }
-
-  appendSVG(icon: SVGSVGElement) {
-    this.renderer.selectRootElement(this.element.nativeElement);
-    this.gradientId = this.generateGradientId();
-    let def = this.createGradientDefinition(this.gradientId);
-    this.renderer.appendChild(icon, def);
-    this.fill = `url(#${this.gradientId})`;
-    this.renderer.appendChild(this.element.nativeElement, icon);
-    this.changeDetect.markForCheck();
+  private _gradient: Record<string, string> = { '0': '#fff', '1': '#000' };
+  @Input('gradientIconStops')
+  get gradient(): Record<string, string> {
+    return this._gradient;
   }
-
+  set gradient(value: Record<string, string>) {
+    if (JSON.stringify(this._gradient) != JSON.stringify(value)) {
+      this._gradient = value;
+      this.appendSVG(this.icon);
+    }
+  }
+  @Input('gradientIconType') type: 'linear' | 'radial' = 'linear';
+  @Input('gradientIconAngle') angle: number = 0;
+  private _visible: string = '';
+  fill: string = '';
+  definition: SVGDefsElement;
   gradientId: string;
   svgGradient: SVGGradientElement;
+  appendSVG(icon: SVGSVGElement) {
+    if (icon) {
+      this.renderer.selectRootElement(this.element.nativeElement);
+      this.gradientId = this.generateGradientId();
+      let def = this.createGradientDefinition(this.gradientId);
+      this.renderer.appendChild(icon, def);
+      this.fill = `url(#${this.gradientId})`;
+      this.renderer.appendChild(this.element.nativeElement, icon);
+      this.changeDetect.markForCheck();
+    }
+  }
 
   constructor(
     private element: ElementRef,
@@ -68,7 +84,7 @@ export class SvgGradientDirective {
   }
 
   private createGradientDefinition(id: string) {
-    const svgGradient = this.createSVG(`${this.type}Gradient`) as SVGGradientElement;
+    let svgGradient = this.createSVG(`${this.type}Gradient`) as SVGGradientElement;
     let definition = this.createSVG('defs') as SVGDefsElement;
     this.setSVGAttribute(svgGradient, 'id', id)('gradientTransform', `rotate(${this.angle})`);
     this.createGradientStops(this.gradient).forEach((stop) => {

@@ -37,6 +37,6 @@ header {
 }
 .toolbar-third-row {
   grid-area: tabs;
-  overflow-x: hidden;
+  overflow: hidden;
   background-image: linear-gradient(to right, $primary-4, $primary-3);
 }

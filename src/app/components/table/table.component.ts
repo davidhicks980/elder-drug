@@ -31,6 +31,7 @@ import { BeersTableDataSource } from '../../interfaces/BeersTableDataSource';
 import { ExpandingEntry } from '../../interfaces/ExpandingEntry';
 import { FlatRowGroup } from '../../interfaces/RowGroup';
 import { TableEntry } from '../../interfaces/TableEntry';
+import { debounce } from '../../functions/debounce';
 
 @Component({
   selector: 'elder-table',
@@ -65,11 +66,6 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   dataSource: BehaviorSubject<BeersSearchResult[]>;
   destroy$ = new Subject();
 
-  handleGridNavigation(event: KeyboardEvent) {
-    if (Keys.ARROWS.includes(event.key)) {
-      this.keyGridService.handleArrowKeys(event, this.gridCells);
-    }
-  }
   toggleRow($event: Event, row: ExpandingEntry, force: boolean) {
     $event.stopPropagation();
     this.model.toggle(row, force);
@@ -79,7 +75,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
       return model.checkIsRowShown(row);
     };
   }
-  getPadding(row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>) {
+  getNestingLevel(row: TableEntry<BeersSearchResult> | FlatRowGroup<BeersSearchResult>) {
     return (row.position.id.match(/:/g) ?? []).length - 1;
   }
   constructor(

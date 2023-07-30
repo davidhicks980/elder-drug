@@ -10,7 +10,7 @@
   --overflow-button--icon-color: #{white};
   --shift--transition-delay: 0ms;
   --shift--increment: -8px;
-  --list-item--width: 189px;
+  --list-item--width: 182.5px;
 }
 :host(.rounded) {
   --overflow-button--background: #{$secondary-2-2};
@@ -151,9 +151,9 @@
 .tab-list-item {
   --position: 1;
   --shift--translateX: calc(var(--position) * 22px);
-  --shift--translateXend: calc((var(--position) - 1) * calc(-1 * var(--shift--increment)));
+  --shift--translateXend: calc((var(--position) - 1) * (-1 * var(--shift--increment)));
   --unshifted--translateX: calc(var(--shift--increment) * (var(--position) - 1));
-  max-width: var(--list-item--width, 189px);
+  max-width: var(--list-item--width, 182.5px);
   display: flex;
   justify-content: center;
   position: relative;

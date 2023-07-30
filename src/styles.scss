@@ -13,6 +13,7 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+// Foreground palette for light themes.
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -38,17 +39,18 @@ $search-angular-theme: mat.define-light-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+@include mat.core-theme($search-angular-theme);
 @include mat.button-theme($search-angular-theme);
 @include mat.list-theme($search-angular-theme);
 @include mat.pseudo-checkbox-theme($search-angular-theme);
 @include mat.tooltip-theme($search-angular-theme);
 @include mat.progress-spinner-theme($search-angular-theme);
 @include mat.sort-theme($search-angular-theme);
-@include mat.core-theme($search-angular-theme);
 @include mat.autocomplete-theme($search-angular-theme);
 @include mat.dialog-theme($search-angular-theme);
 @include mat.icon-theme($search-angular-theme);
 @include mat.divider-theme($search-angular-theme);
+@include mat.checkbox-theme($search-angular-theme);
 
 @keyframes fade-in {
   from {
@@ -253,4 +255,17 @@ body {
   color: rgb(226, 226, 226);
   box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
   -webkit-box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.178);
+}
+.mat-checkbox.no-transition,
+.mat-checkbox.no-transition .mat-checkbox-background {
+  transition: none;
+}
+.mat-checkbox-frame {
+  border-color: $gray-3;
+}
+.mat-checkbox .mat-ripple-element {
+  background-color: $gray-4;
+}
+.mat-button-focus-overlay {
+  background-color: $gray-5;
 }

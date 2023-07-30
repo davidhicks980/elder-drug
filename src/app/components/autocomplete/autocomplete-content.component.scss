@@ -41,9 +41,9 @@
 }
 .chip--generic {
   @extend %chip-template;
-  background-color: $primary-1;
+  background-image: diagonal-gradient($primary-1, top right, $lightness: 10%);
 }
 .chip--brand {
   @extend %chip-template;
-  background-color: $secondary-2-1;
+  background-image: diagonal-gradient($secondary-2-1, top right, $lightness: 10%);
 }

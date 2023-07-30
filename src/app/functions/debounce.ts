@@ -10,3 +10,14 @@ export function debounce(fn: (...args) => void, wait: number) {
     }, wait);
   };
 }
+export function debounceOnMicrotask(fn: (...args) => void) {
+  let block = false;
+  return function () {
+    let context = this;
+    if (block) return;
+    block = true;
+    requestAnimationFrame(() => {
+      fn.apply(context, arguments);
+    });
+  };
+}

@@ -1,10 +1,13 @@
 @use "palette" as *;
+@use "utilities" as *;
 @use "colors" as *;
 @use "breakpoints" as *;
 @use "sass:color";
+@use "sass:string";
 :host {
   @include scrollbar;
   display: block;
+  --group-list--background: #{$light-gray-1};
 }
 .column-select {
   width: 100%;
@@ -35,17 +38,17 @@ p {
 }
 .modal {
   display: grid;
-  grid-template-rows: 90px auto auto;
   pointer-events: all;
   border: 1px solid $light-gray-3;
   padding: 0 0.75rem 2rem 0.75rem;
   border-radius: 5px;
-  background: white;
+  background: var(--group-list--background);
   width: 275px;
   overflow: hidden;
-  max-height: 520px;
+  max-height: 600px;
+
   @include media-size("zero", "small") {
-    max-width: 300px;
+    max-width: 275px;
     width: 90vw;
     height: max-content;
     max-height: 95vh;
@@ -59,29 +62,66 @@ p {
   gap: 0.4rem;
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: 44px;
-  max-height: 200px;
-  height: calc(var(--item-count) * 44px);
-  background-color: $light-gray-1;
-  border: 1px solid $light-gray-3;
+  height: calc(var(--item-count) * 53px);
+  position: relative;
   border-radius: 5px;
+
   @include media-size("zero", "small") {
-    max-height: 250px;
-    height: calc(var(--item-count) * 44px);
+    max-height: 90vh;
+    height: calc(var(--item-count) * 53px);
+  }
+}
+.modal__header {
+  height: 110px;
+}
+.modal__content {
+  min-height: 44px;
+  max-height: 520px;
+  position: relative;
+  &::before {
+    content: "";
+    height: inherit;
+    width: 100%;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+    background-image: linear-gradient(
+      var(--group-list--background) 0%,
+      transparent 5px,
+      transparent calc(100% - 5px),
+      var(--group-list--background) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+@keyframes active-item {
+  from {
+    border-color: $light-gray-3;
+  }
+  to {
+    border-color: $secondary-2-1;
   }
 }
 
 .list-item {
   cursor: move;
   background: white;
-  color: $dark-gray-2;
+  color: $gray-4;
   list-style-position: inside;
   position: relative;
   border-radius: 5px;
   @include hoverable-shadow(3);
-  border: 1px solid $light-gray-3;
+  border: 1px solid $light-gray-4;
   transition: border-color 500ms ease-in;
   outline-color: transparent;
+
+  &.selected {
+    color: $gray-5;
+    border-color: $gray-3;
+  }
   &::after {
     content: "";
     height: 100%;
@@ -92,7 +132,7 @@ p {
     bottom: 0px;
     position: absolute;
     transition: opacity 500ms ease;
-    opacity: 0.2;
+    opacity: 0;
     @include shadow(6);
   }
 
@@ -101,6 +141,8 @@ p {
   }
   &:active,
   &:active:focus {
+    animation: active-item 0ms ease 110ms;
+    animation-fill-mode: forwards;
     &::after {
       opacity: 1;
     }
@@ -112,17 +154,16 @@ p {
   }
 
   &:focus {
-    outline: 2px solid $secondary-2-1;
+    outline: 2px solid $primary-1;
     outline-offset: 2px;
   }
-  &:focus.is-moveable {
-    outline: 3px solid color.scale($secondary-2-1, $alpha: -60%);
+  &.moveable {
+    outline: 3px solid color.scale($primary-1, $alpha: -60%);
     transition: outline-offset 200ms ease-in-out;
     outline-offset: 0px;
-    border-color: $secondary-2-1;
-    &.is-moveable {
-      text-decoration: underline;
-    }
+    border-color: $primary-1;
+    color: $gray-5;
+    font-weight: 500;
   }
 }
 .cdk-drag-animating {
@@ -143,6 +184,7 @@ p {
   border: 0;
   border-radius: 5px;
   cursor: move;
+
   &::before {
     border-radius: 5px;
     content: "";
@@ -157,24 +199,100 @@ p {
     @include shadow(8);
   }
 }
-.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+.cdk-drop-list-dragging :not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) !important;
 }
 
-.item-button {
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
-  overflow: hidden;
+$item-height: 42px;
+$item--appendage-width: 44px;
+$item-line-height: 16px;
+$item-icon--line-height: #{1.5 * 16px};
+$item-icon--padding: 8px;
+$item-checkbox--border-width: 1px;
+$item-checkbox--line-height: 22px;
+$padding: #{($item-height - $item-line-height) / 2};
+$item-checkbox--padding: #{($item-height - $item-checkbox--line-height) / 2};
+
+.item-appendage {
+  position: absolute;
+  &--right {
+    right: 0;
+    padding: $item-checkbox--padding;
+    height: $item-height;
+    width: $item--appendage-width;
+    line-height: $item-checkbox--line-height;
+    cursor: pointer;
+  }
+
+  &--left {
+    padding: $item-icon--padding 0;
+    line-height: $item-icon--line-height;
+    height: $item-height;
+    width: $item--appendage-width;
+    left: 0;
+    outline-color: transparent;
+    transition: outline-color 100ms ease-in, outline-offset 100ms ease-out;
+    border-radius: 50%;
+    &:focus {
+      outline: 1.4px solid color.scale($primary-1, $alpha: -50%);
+      color: $primary-1;
+      outline-offset: -5px;
+    }
+    .moveable &:focus {
+      outline-color: transparent;
+      outline-offset: 5px;
+      color: $primary-1;
+    }
+  }
 }
-.item-button-small {
-  height: 27px;
-  overflow: hidden;
-  width: 27px;
-  margin: 3px;
-}
+
 .item-content {
+  @extend .item-appendage;
   font-size: 1rem;
-  font-weight: 400;
   white-space: nowrap;
+  display: inline-block;
+  position: absolute;
+  left: $item--appendage-width;
+  line-height: $item-line-height;
+  padding: $padding 0;
+  height: $item-height;
+}
+
+.item-checkbox {
+  appearance: none;
+  height: $item-checkbox--line-height;
+  width: $item-checkbox--line-height;
+  outline: none;
+  position: relative;
+
+  overflow: visible;
+  filter: brightness(0.95);
+  shape-rendering: crispEdges;
+  @include checkbox($gray-3, $primary-1, 23px);
+  @include full-pseudo-element($top: -10px, $left: -10px, $height: 42px, $width: 42px) {
+    background-color: var(
+      --checkbox-ripple-color,
+      color.scale($light-gray-2, $saturation: -30%, $lightness: 20%)
+    );
+    opacity: var(--checkbox-ripple-opacity, 0);
+    transform: scale(var(--checkbox-ripple-scale, 0.7));
+    border-radius: 50%;
+    transition: transform 80ms ease-in-out, opacity 50ms ease-in-out;
+  }
+  &:hover {
+    filter: brightness(1.05) saturate(1.1);
+  }
+  &:active,
+  &:focus:active {
+    --checkbox-ripple-opacity: 0.2;
+    --checkbox-ripple-color: #{color.scale($primary-1, $saturation: 20%, $lightness: 10%)};
+    --checkbox-ripple-scale: 1;
+
+    filter: brightness(1.1);
+  }
+  &:focus {
+    --checkbox-ripple-opacity: 0.125;
+    --checkbox-ripple-color: #{color.scale($primary-1, $saturation: -45%, $lightness: 30%)};
+    --checkbox-ripple-scale: 0.9;
+  }
 }

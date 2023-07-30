@@ -103,7 +103,7 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  focusNext(item: HTMLElement) {
+  toggleNext(item: HTMLElement) {
     let button = item?.nextElementSibling?.firstElementChild as HTMLButtonElement;
     if (button instanceof HTMLButtonElement) {
       button.focus();
@@ -111,7 +111,7 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
       (this.list.nativeElement.firstElementChild as HTMLElement).focus();
     }
   }
-  focusPrevious(item: HTMLElement) {
+  togglePrevious(item: HTMLElement) {
     let button = item?.previousElementSibling?.firstElementChild as HTMLButtonElement;
     if (button instanceof HTMLButtonElement) {
       button.focus();

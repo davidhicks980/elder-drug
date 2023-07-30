@@ -5,6 +5,7 @@
   <div *ngIf="layoutService.mobile$ | async" class="toolbar-second-row">
     <ng-content select="[toolbar-second-row]"></ng-content>
   </div>
+
   <div class="toolbar-third-row">
     <ng-content select="toolbar-third-row"></ng-content>
   </div>

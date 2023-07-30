@@ -147,7 +147,8 @@
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  transition: outline-width 100ms ease-in-out;
+  outline-color: transparent;
+  transition: outline-color 100ms linear;
   :host(.opening) & {
     position: absolute;
     z-index: 100;
@@ -182,17 +183,18 @@
 
 .toolbar-third-row {
   @extend %shifted-content;
-  padding-left: var(--toolbar-tabs--padding-left, 0.25rem);
+  padding-left: var(--toolbar-tabs--padding-left, 0.45rem);
   display: grid;
   grid-auto-flow: column;
   justify-content: left;
+  overflow: visible;
   align-items: center;
   :host(.closing) &,
   :host(.opening) & {
     width: 100%;
   }
   :host(:not(.closed)) & {
-    --toolbar-tabs--padding-left: calc(260px + 0.25rem);
+    --toolbar-tabs--padding-left: calc(260px + 0.45rem);
   }
 
   @include media-size("zero", "small") {
@@ -201,6 +203,7 @@
 }
 .toolbar-tabs {
   --tab-container--width: 100%;
+  padding-left: 0.25rem;
 
   :host(.closing) &,
   :host(.opening) & {
@@ -211,9 +214,11 @@
   @include media-size("zero", "small") {
     transform: translateX(0px);
     transition: transform 300ms ease-out;
+    padding-left: 0px;
+    width: calc(100vw);
     &.rounded {
       transform: translateX(40px);
-      max-width: calc(100vw - 48px);
+      width: calc(100vw - 48px);
     }
   }
 }

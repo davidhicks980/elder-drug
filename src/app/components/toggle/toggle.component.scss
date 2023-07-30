@@ -8,27 +8,21 @@
   --icon-button--shadow: #{pal.shadow(2, false, 20%)};
   --icon-button--ring-opacity: 0;
   --icon-button--icon-scale: 0.6;
-  outline: none;
-  scroll-behavior: none;
+  --icon-button--radius: 50%;
 }
 :host {
-  background: none;
-  border: none;
   display: block;
-  line-height: 0px;
-  outline: none;
+  line-height: var(--icon-button--size);
   padding: calc(
     (var(--icon-button--size) - var(--icon-button--size) * var(--icon-button--icon-scale)) / 2
   );
-
   position: relative;
   color: var(--icon-button--color);
   height: var(--icon-button--size);
   width: var(--icon-button--size);
   -webkit-tap-highlight-color: transparent;
-  z-index: 10;
   &::before {
-    border-radius: 50%;
+    border-radius: var(--icon-button--radius);
     transform-origin: center;
     box-sizing: border-box;
     content: "";
@@ -37,6 +31,8 @@
     width: 100%;
     left: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
     opacity: var(--icon-button--ring-opacity);
     position: absolute;
     transform: scale(1);

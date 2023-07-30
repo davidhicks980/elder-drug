@@ -25,7 +25,7 @@
 }
 
 :host(.rounded) {
-  --tab--clip--transform: translateY(-1.3px) scaleX(0.85) scaleY(0.9);
+  --tab--clip--transform: translateY(-1.3px) scale(0.875, 0.9);
   --tab--fill: transparent;
   --tab--color: white;
 }
@@ -46,7 +46,7 @@
 }
 
 :host(:not(.collapsed)) {
-  margin-left: -14px;
+  margin-left: -10px;
 }
 
 .circular-clip {

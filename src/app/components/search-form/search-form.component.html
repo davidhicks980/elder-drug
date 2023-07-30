@@ -14,7 +14,7 @@
   >
     <div class="form__inner-wrapper" [class.is-widened]="state.pinSearch">
       <div class="search" cdkMonitorSubtreeFocus (cdkFocusChange)="setFocusStatus($event, -1)">
-        <label class="search__label" for="searchinput">Add drugs</label>
+        <label class="search__label" for="searchinput">Add Drugs</label>
         <div
           class="search__field"
           #autoOrigin="matAutocompleteOrigin"
@@ -25,37 +25,38 @@
           [class.is-dirty]="!searchInput.value.length"
           [class.is-open]="searchInputAutoTrigger.panelOpen"
         >
-          <button
-            elder-toggle
-            *ngIf="(uniqueSearch$ | async) || !state.pinSearch || !state.mobile; else toggle"
-            class="icon-button--search"
-            [matTooltip]="drugList.length > 0 ? 'Search drugs' : 'Add drugs to search'"
-            matTooltipPosition="above"
-            (click)="search(); $event.preventDefault()"
-          >
-            <mat-icon toggle-icon inline="true" svgIcon="search"></mat-icon>
-          </button>
+          <ng-container *ngIf="state.mobile">
+            <mat-icon
+              *ngIf="!drugList.length || !state.pinSearch; else toggle"
+              svgIcon="search"
+              aria-hidden="true"
+              class="decorative-search-icon"
+            ></mat-icon>
 
-          <ng-template #toggle>
-            <button
-              elder-toggle
-              (toggle)="layoutService.toggleSidenav(false)"
-              [matTooltip]="'View results'"
-              [toggled]="true"
-            >
-              <elder-animated-arrow toggle-icon></elder-animated-arrow></button
-          ></ng-template>
+            <ng-template #toggle>
+              <button
+                elder-toggle
+                (toggle)="layoutService.toggleSidenav(false)"
+                [matTooltip]="'Go back'"
+                [toggled]="true"
+                diameter="44px"
+                iconScale="0.7"
+                aria-label="Go back"
+                class="icon-button--back"
+              >
+                <mat-icon toggle-icon svgIcon="arrow_left"></mat-icon></button
+            ></ng-template>
+          </ng-container>
 
           <input
             #searchInput
             #searchInputAutoTrigger="matAutocompleteTrigger"
             class="search__input"
             type="text"
-            title="Search"
             id="searchinput"
             formControlName="drugInput"
             placeholder="Zolpidem"
-            aria-label="Search brand or generic drug"
+            aria-label="Search"
             enterkeyhint="search"
             aria-describedby="errors"
             [matAutocomplete]="autocomplete"
@@ -64,24 +65,36 @@
             (keydown.enter)="searchInput.value.length || search($event)"
           />
 
-          <div class="search__spinner-wrapper" *ngIf="state.typeahead.pending; else addButton">
+          <div class="search__spinner-wrapper" *ngIf="state.typeahead.pending; else searchControls">
             <mat-spinner diameter="25"></mat-spinner>
           </div>
-          <ng-template #addButton>
-            <button
-              (click)="addListControl(); searchInput.focus(); $event.preventDefault()"
-              matTooltip="Add drugs"
-              matTooltipPosition="above"
-              matRipple
-              [matRippleRadius]="20"
-              [matRippleCentered]="true"
-              [matRippleUnbounded]="true"
-              [disabled]="!drugInput.valid"
-              class="icon-button--add"
-            >
-              <mat-icon inline="true" svgIcon="add-2"></mat-icon>
-            </button>
+          <ng-template #searchControls>
+            <span>
+              <button
+                #add
+                (click)="addListControl(); searchInput.focus(); $event.preventDefault()"
+                matTooltip="Add {{ searchInput.value || '' }} to search"
+                matTooltipPosition="above"
+                matRipple
+                [matRippleCentered]="true"
+                [matRippleUnbounded]="true"
+                [disabled]="!drugInput.valid"
+                class="icon-button--add"
+                attr.aria-label="Add {{ searchInput.value || '' }} to search"
+              >
+                <mat-icon inline="true" svgIcon="add-2"></mat-icon></button
+            ></span>
           </ng-template>
+          <button
+            *ngIf="state.pinSearch || !state.mobile"
+            (click)="search($event, true); searchInput.focus(); $event.preventDefault()"
+            class="icon-button--search"
+            [class.is-mobile]="state.mobile"
+            elder-icon-button
+            [disabled]="!drugInput.valid && !drugList.length"
+          >
+            <mat-icon toggle-icon svgIcon="search"></mat-icon>
+          </button>
         </div>
         <elder-error-message
           [errorMessages]="errorMessages"
@@ -93,7 +106,7 @@
       <section class="edit__section" [class.is-pinned]="state.pinSearch">
         <ng-template #directions>
           <elder-directions
-            *ngIf="state.mobile && layoutService.showDirections$ | async"
+            *ngIf="!state.pinSearch && state.mobile && layoutService.showDirections$ | async"
             class="search-directions small"
             [style.--directions-width]="state.pinSearch ? '89%' : '93%'"
             [hideDescription]="true"
@@ -105,13 +118,28 @@
           #chipList
           formArrayName="drugList"
           aria-label="Drug selection"
-          *ngIf="drugList.length > 0; else directions"
+          *ngIf="drugList.length > 0 || state.pinSearch; else directions"
         >
           <h2 class="edit__title">
             Selected Drugs
-            <button (click)="clearSearchTerms($event)" class="edit__button--clear">CLEAR</button>
+            <button (click)="clearSearchTerms($event)" class="edit__button--clear">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M15 16h4v2h-4zm0-8h7v2h-7zm0 4h6v2h-6zM3 18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V8H3v10zM14 5h-3l-1-1H6L5 5H2v2h12z"
+                />
+              </svg>
+            </button>
           </h2>
           <div class="edit__items-wrapper">
+            <div
+              id="multi-search-label"
+              [class.cdk-visually-hidden]="drugList.length"
+              class="add-item-label edit__item"
+            >
+              Tap <mat-icon style="display: inline" svgIcon="add-2"></mat-icon> to add multiple
+              search terms.
+            </div>
             <li
               *ngFor="let drugName of drugList.controls; index as index"
               class="edit__item"
@@ -122,7 +150,6 @@
                 class="item__content"
                 #editOrigin="matAutocompleteOrigin"
                 matAutocompleteOrigin
-                [class.is-missing]="getListControl(index).errors?.invalidAsync"
                 [class.is-invalid]="getListControl(index)?.errors"
                 [class.has-attached]="editDrugAutoTrigger.panelOpen"
               >
@@ -163,7 +190,9 @@
           </div>
         </ul>
         <mat-autocomplete
-          class="typeahead"
+          [class]="
+            searchInputAutoTrigger.panelOpen && !state.mobile ? 'typeahead rounded' : 'typeahead'
+          "
           #autocomplete
           autoActiveFirstOption
           (optionSelected)="chooseTerm($event)"

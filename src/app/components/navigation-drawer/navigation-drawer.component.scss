@@ -73,5 +73,14 @@ elder-brand {
   --icon-button--size: 42px;
   position: absolute;
   top: 15px;
-  left: 15px;
+  left: 12.5px;
+  z-index: 1;
+}
+
+.drawer__brand {
+  padding-top: 30px;
+  --brand--orientation: row;
+  --brand--logo-size: 2.4rem;
+  --brand--font-size: 2.4rem;
+  padding-bottom: 32px;
 }

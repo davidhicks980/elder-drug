@@ -2,13 +2,14 @@
 @use "colors" as col;
 @use "breakpoints" as *;
 :host {
+  --brand--gap: 0.05em;
   display: grid;
   position: relative;
   grid-auto-flow: var(--brand--orientation, row);
   justify-items: var(--brand--justify-items, center);
   justify-content: var(--brand--justify-content, center);
   align-items: center;
-  gap: 0.05em;
+  gap: var(--brand--gap);
 }
 
 .brand__logo {

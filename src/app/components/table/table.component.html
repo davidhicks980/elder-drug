@@ -5,18 +5,16 @@
     filter: filterService.filter$ | async
   } as state"
 >
-  <div
-    #elderTable
-    id="elderTable"
-    class="drug-table--wrapper"
-    (keydown)="handleGridNavigation($event)"
-  >
+  <div #elderTable id="elderTable" class="drug-table--wrapper">
     <cdk-table
       matSort
       class="drug-table"
       [dataSource]="model"
       [fixedLayout]="true"
       [trackBy]="trackBy"
+      role="treegrid"
+      aria-label="Search Results"
+      [keyObserver]
     >
       <!--Table headers-->
       <cdk-header-row
@@ -31,7 +29,8 @@
         [class.is-group-row]="row.position.isGroup"
         *cdkRowDef="let row; columns: state.fields; when: rowShown(model)"
         (click)="model.toggle(row)"
-        (keydown.Enter)="model.toggle(row); $event.stopPropagation()"
+        (keydown.Enter)="model.toggle(row); $event.preventDefault()"
+        (keydown.Space)="model.toggle(row); $event.preventDefault()"
         [rowDetail]="row"
         [rowDetailVisible]="model.checkIsExpanded(row)"
       ></cdk-row>
@@ -47,9 +46,9 @@
           <cdk-header-cell
             class="header"
             mat-sort-header
-            matTooltip="Sort by {{ field }}"
-            [attr.tabIndex]="col === 0 ? '0' : '-1'"
-            [keyGrid]="{ row: 0, col: this.col }"
+            keyEmitter
+            [keyColumn]="this.col"
+            [keyRow]="0"
           >
             <div class="header-content">
               {{ field | splitcase | titlecase }}
@@ -57,19 +56,34 @@
           </cdk-header-cell>
         </ng-container>
         <ng-container *cdkCellDef="let row; index as rowIndex">
-          <ng-container *ngIf="!row.position.isGroup; else groupTemplate">
+          <ng-container *ngIf="row.position.isGroup; else rowTemplate">
+            <elder-group-row
+              keyEmitter
+              [keyRow]="rowIndex + 1"
+              [keyColumn]="0"
+              *ngIf="col === 0"
+              [class.is-expanded]="model.checkIsExpanded(row)"
+              [attr.aria-level]="getNestingLevel(row) + 1"
+              [style.--left-padding]="getNestingLevel(row)"
+            >
+              <group-field>{{ row.field | splitcase }}</group-field>
+              <group-name>{{ row.groupHeader | sentencecase }}</group-name>
+            </elder-group-row>
+          </ng-container>
+          <ng-template #rowTemplate>
             <div
-              role="cell"
+              role="gridcell"
               class="cell-container"
               [class.is-icon-cell]="col === 0"
-              [style.--left-padding]="getPadding(row)"
-              [keyGrid]="{ row: rowIndex + 1, col: this.col }"
+              [style.--left-padding]="getNestingLevel(row)"
+              keyEmitter
+              [keyColumn]="col"
+              [keyRow]="rowIndex + 1"
             >
               <button
-                (keydown.enter)="model.toggle(row)"
-                (keydown.space)="model.toggle(row)"
-                class="cell-chevron"
-                aria-label="Expand row"
+                tabindex="-1"
+                class="cell-chevron cdk-focus-hidden"
+                aria-hidden="true"
                 *ngIf="col === 0"
               >
                 <svg
@@ -81,10 +95,11 @@
                 </svg>
               </button>
 
-              <div class="cell-title">
+              <div role="columnheader" class="cell-title">
                 {{ field | splitcase | titlecase }}
               </div>
               <div
+                role="gridcell"
                 class="cell-content"
                 [innerHtml]="
                   row.fields[field]
@@ -95,20 +110,6 @@
                 "
               ></div>
             </div>
-          </ng-container>
-          <ng-template #groupTemplate>
-            <elder-group-row
-              #cell
-              *ngIf="col === 0"
-              [class.is-expanded]="model.checkIsExpanded(row)"
-              [keyGrid]="{ row: rowIndex + 1, col: 0 }"
-              [style.--left-padding]="getPadding(row)"
-              (keydown.ArrowRight)="toggleRow($event, row, true)"
-              (keydown.ArrowLeft)="toggleRow($event, row, false)"
-            >
-              <group-field>{{ row.field | splitcase }}</group-field>
-              <group-name>{{ row.groupHeader | sentencecase }}</group-name>
-            </elder-group-row>
           </ng-template>
         </ng-container>
       </ng-container>

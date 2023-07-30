@@ -20,7 +20,7 @@ export class LayoutService {
   private showDirectionsSource = new BehaviorSubject<boolean>(true);
   showDirections$ = this.showDirectionsSource.asObservable();
   private mobileSearchDrawerShiftDuration_: number = 300;
-  private searchDrawerShiftDuration_: number = 300;
+  private searchDrawerShiftDuration_: number = 375;
   private pinnedSearchSource = new BehaviorSubject(false);
   private tableCollapsedSource = new BehaviorSubject(false);
   tableCollapsed$ = this.tableCollapsedSource.asObservable();

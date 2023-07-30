@@ -1,34 +1,28 @@
 import { trigger } from '@angular/animations';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
-  Inject,
+  HostListener,
   OnDestroy,
   Output,
   QueryList,
   Renderer2,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, queueScheduler, Subject } from 'rxjs';
+import { debounceTime, observeOn, take } from 'rxjs/operators';
 
 import { enterLeaveFadeTemplate } from '../../../animations/templates';
-import { Keys, WHITESPACE_KEYS } from '../../../constants/keys.constants';
+import { Keys } from '../../../constants/keys.constants';
 import { KeyGridDirective } from '../../../directives/keygrid.directive';
-import { destroy } from '../../../functions/destroy';
 import { GroupByService } from '../../../services/group-by.service';
 import { KeyGridService } from '../../../services/key-grid.service';
 import { PopupActions, PopupService } from '../../../services/popup.service';
 
-type ListElement = HTMLOListElement | HTMLUListElement;
 export const CLASS_MOVEABLE = 'is-moveable';
-type DropListTabIndices = { grouped: number; ungrouped: number };
 @Component({
   selector: 'elder-group-fields',
   templateUrl: './group-fields.component.html',
@@ -37,65 +31,25 @@ type DropListTabIndices = { grouped: number; ungrouped: number };
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [{ provide: KeyGridService, useClass: KeyGridService }],
 })
-export class GroupFieldsComponent implements OnDestroy, AfterViewInit {
+export class GroupFieldsComponent implements OnDestroy {
   @Output() groupChange: EventEmitter<string[]> = new EventEmitter();
-  @ViewChildren('ungroupAddButton', { read: ElementRef }) ungroupedList: QueryList<
-    ElementRef<HTMLElement>
-  >;
-  @ViewChildren('groupRemoveButton', { read: ElementRef }) groupedList: QueryList<
-    ElementRef<HTMLElement>
-  >;
+  items$: Observable<{ group; selected }[]>;
+  @HostListener('keydown.Escape')
+  handleEscape() {
+    this.popupService.emitAction(PopupActions.close);
+  }
   @ViewChildren(KeyGridDirective)
-  gridElements: QueryList<KeyGridDirective>;
-  private tabbableItemSource: BehaviorSubject<DropListTabIndices> = new BehaviorSubject({
-    grouped: 0,
-    ungrouped: 0,
-  });
-  tabbableItem$ = this.tabbableItemSource.asObservable();
+  dragElements: QueryList<KeyGridDirective>;
   canClick = new Set();
   dropList: CdkDropList;
   destroy$ = new Subject();
   groupListId = 'groupList';
-  ungroupListId = 'ungroupList';
-  activeList: 'grouped' | 'ungrouped' = 'grouped';
+  keydownSource: Subject<Event> = new Subject();
+  moveableSource: BehaviorSubject<string> = new BehaviorSubject('');
+  moveable$ = this.moveableSource.asObservable();
+  keydown$ = this.keydownSource.asObservable();
+  checked: boolean = false;
 
-  get groupedTabIndex() {
-    return this.tabbableItemSource.value.grouped;
-  }
-  get ungroupedTabIndex() {
-    return this.tabbableItemSource.value.ungrouped;
-  }
-  ungroup(index: number) {
-    this.groupService.transferItemBetweenLists(false, index, 0);
-    this.activeList = 'grouped';
-  }
-  group(index: number) {
-    this.groupService.transferItemBetweenLists(true, index, 0);
-    this.activeList = 'ungrouped';
-  }
-  private inferTabIndex(grouped: keyof DropListTabIndices) {
-    return function (this: GroupFieldsComponent, items: QueryList<ElementRef<HTMLButtonElement>>) {
-      let limit = items?.length - 1;
-      let currentIndex = grouped === 'grouped' ? this.groupedTabIndex : this.ungroupedTabIndex;
-      let nextIndex = currentIndex <= limit ? currentIndex : 0;
-      this.updateTabIndex(nextIndex, grouped);
-      if (this.activeList === grouped) {
-        items.get(nextIndex)?.nativeElement?.focus();
-        this.activeList = undefined;
-      }
-    };
-  }
-  ngAfterViewInit() {
-    this.ungroupedList.changes
-      .pipe(destroy(this))
-      .subscribe(this.inferTabIndex('ungrouped').bind(this));
-    this.groupedList.changes
-      .pipe(destroy(this))
-      .subscribe(this.inferTabIndex('grouped').bind(this));
-  }
-  getListIcon(listItemRef: HTMLElement) {
-    return listItemRef.classList.contains('is-moveable') ? 'unfold_more' : 'draggable';
-  }
   ngOnDestroy() {
     this.destroy$.next(true);
   }
@@ -103,132 +57,71 @@ export class GroupFieldsComponent implements OnDestroy, AfterViewInit {
     this.popupService.emitAction(PopupActions.close);
   }
 
-  stopMovingElement(element: HTMLElement) {
-    this.renderer.removeClass(element, CLASS_MOVEABLE);
-    this.cdr.markForCheck();
+  emitKeydown($event: Event) {
+    this.keydownSource.next($event);
   }
-  startMovingElement(element: HTMLElement) {
-    this.renderer.addClass(element, CLASS_MOVEABLE);
-    this.cdr.markForCheck();
+  canElementMove(group: string) {
+    return this.moveableSource.value === group;
   }
-  canElementMove(element: HTMLElement) {
-    return element.classList.contains(CLASS_MOVEABLE);
+  toggleMovement(group: string) {
+    this.moveableSource.next(this.moveableSource.value === group ? '' : group);
   }
-  handleGroupItemKeydown(event: KeyboardEvent, list: ListElement, index: number) {
-    let { target, key } = event;
-    let element = target as HTMLElement;
-    let canMove = this.canElementMove(element);
-    let { ARROWS, ENTER, SPACEBAR, TAB, ESCAPE } = Keys;
-    if (ARROWS.includes(key)) {
-      if (canMove) {
-        this.handleArrowKeysOnMoveableItem(event, index, list, element);
-      } else {
-        this.navigateListGrid(event, list);
+  toggleGroup($event, group: string) {
+    this.groupService.toggleGroup(group);
+    this.renderer.setProperty($event.target, 'checked', this.groupService.enabledGroups.has(group));
+    this.cdr.detectChanges();
+  }
+  handleGroupItemKeydown(event: KeyboardEvent, group: string, index: number) {
+    let { key } = event;
+    let canMove = this.canElementMove(group);
+    if (canMove) {
+      event.preventDefault();
+      let { length } = this.groupService.items;
+      let isFirst = index === 0;
+      let isLast = index === length - 1;
+
+      switch (key) {
+        case 'ArrowDown':
+          this.groupService.moveItem(index, isLast ? 0 : index + 1);
+          break;
+        case 'ArrowUp':
+          this.groupService.moveItem(index, isFirst ? length - 1 : index - 1);
+          break;
+        case 'ArrowLeft':
+        case 'ArrowRight':
+          this.toggleMovement(group);
+          this.keydownSource.next(event);
+          return;
+        default:
+          return;
       }
-    } else if ([ENTER, ...SPACEBAR].includes(key)) {
-      if (canMove) {
-        this.stopMovingElement(element);
-      } else {
-        this.startMovingElement(element);
-      }
-      if (element instanceof HTMLLIElement) event.preventDefault();
-    } else if ([TAB, ...ESCAPE].includes(key)) {
-      if (canMove) {
-        this.stopMovingElement(element);
-      }
-      if (key === TAB) {
-        if (this.ungroupedList.length - 1 < this.ungroupedTabIndex) {
-          this.updateTabIndex(0, 'ungrouped');
-        }
-      }
+      this.cdr.detectChanges();
+      Promise.resolve().then(() => {
+        this.cdr.detectChanges();
+        this.focusMoveableItem();
+      });
+    } else {
+      this.keydownSource.next(event);
     }
   }
-  getSiblingItemIndices(list: any[], index: number) {
-    const lastIndex = list.length - 1,
-      isLast = index === lastIndex,
-      isFirst = index === 0,
-      next = isLast ? 0 : index + 1,
-      previous = isFirst ? lastIndex : index - 1;
-    return { next, previous };
-  }
 
+  focusMoveableItem() {
+    this.dragElements.find((element) => element.name === this.moveableSource.value).focusElement();
+  }
   navigateListGrid(event: KeyboardEvent, list: HTMLUListElement) {
     let { key } = event;
-    if (Keys.ARROWS.includes(key)) {
-      const items = this.gridElements.filter((directive) => list.contains(directive.element));
-      let { toRow } = this.keyGridService.handleArrowKeys(event, items, true, true);
-      this.updateTabIndex(toRow, list.id === this.groupListId ? 'grouped' : 'ungrouped');
-    } else if (Keys.ESCAPE.includes(key)) {
+    if (Keys.ESCAPE.includes(key)) {
       list.parentElement.focus();
-      this.popupService.emitAction(PopupActions.close);
     }
   }
 
-  handleArrowKeysOnMoveableItem(
-    $event: KeyboardEvent,
-    index: number,
-    listElement: HTMLUListElement | HTMLOListElement,
-    elem: any
-  ) {
-    $event.stopPropagation();
-    let { key } = $event,
-      listItems = Array.from(listElement.children) as HTMLElement[],
-      moveTo = 0,
-      { next, previous } = this.getSiblingItemIndices(listItems, index);
-    if (key === 'Down' || key === 'ArrowDown') {
-      moveTo = next;
-    }
-    if (key === 'Up' || key === 'ArrowUp') {
-      moveTo = previous;
-    }
-    this.groupService.moveItemInList(true, index, moveTo);
-    this.cdr.markForCheck();
-    this.startMovingElement(elem);
-    requestAnimationFrame(() => {
-      elem?.focus();
-    });
-  }
-
-  allowClicks(containerId: string) {
-    this.canClick.add(containerId);
-  }
-  denyClicks(containerId: string) {
-    this.canClick.delete(containerId);
-  }
   blockPopupClose() {
     this.popupService.emitAction(PopupActions.preventClose);
   }
-  get isGroupClickable() {
-    return this.canClick.has(this.groupListId);
-  }
-  get isUngroupClickable() {
-    return this.canClick.has(this.ungroupListId);
-  }
-
-  focusItem(index: number, list: QueryList<ElementRef<HTMLElement>>): void {
-    list.get(index)?.nativeElement?.focus();
-  }
-  updateGroupedTabIndex(index: number) {
-    this.tabbableItemSource.next({
-      grouped: index,
-      ungrouped: this.tabbableItemSource.value.ungrouped,
-    });
-  }
-  updateTabIndex(index: number, listName: keyof DropListTabIndices) {
-    let indices = { ...this.tabbableItemSource.value };
-    indices[listName] = index;
-    this.tabbableItemSource.next(indices);
-  }
 
   drop(event: CdkDragDrop<string[]>) {
-    const droppedOnGroup = event.container.id === this.groupListId,
-      transfer = event.previousContainer.id != event.container.id,
-      { previousIndex, currentIndex } = event;
-    if (transfer) {
-      this.groupService.transferItemBetweenLists(droppedOnGroup, previousIndex, currentIndex);
-    } else {
-      this.groupService.moveItemInList(droppedOnGroup, previousIndex, currentIndex);
-    }
+    const { previousIndex, currentIndex } = event;
+    this.groupService.moveItem(previousIndex, currentIndex);
     //Allow the popup to close after the item is transferred;
     this.popupService.emitAction(PopupActions.allowClose);
   }
@@ -237,10 +130,6 @@ export class GroupFieldsComponent implements OnDestroy, AfterViewInit {
     private popupService: PopupService,
     public groupService: GroupByService,
     private cdr: ChangeDetectorRef,
-    private renderer: Renderer2,
-    @Inject(KeyGridService) private keyGridService: KeyGridService
-  ) {
-    this.allowClicks(this.groupListId);
-    this.allowClicks(this.ungroupListId);
-  }
+    private renderer: Renderer2
+  ) {}
 }

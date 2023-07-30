@@ -27,7 +27,6 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { matFormFieldAnimations } from '@angular/material/form-field';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, skip, take } from 'rxjs/operators';
 
@@ -38,10 +37,7 @@ import { LayoutService } from '../../services/layout.service';
 import { SearchService } from '../../services/search.service';
 import { CustomValidators } from '../../validators/validators';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
-import {
-  errorValidationMessages,
-  warningValidationMessages,
-} from './validation-messages.search-form';
+import { errorValidationMessages, warningValidationMessages } from './validation-messages';
 
 const TYPEAHEAD_INITIAL_STATE = {
   pending: false,
@@ -61,7 +57,6 @@ const sliceTypeAndMatchingText = (entry: string) => (item: string) =>
   selector: 'elder-search-form',
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss', './edit-search-form.component.scss'],
-  animations: [matFormFieldAnimations.transitionMessages],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFormComponent implements OnDestroy, AfterViewInit {
@@ -219,10 +214,13 @@ export class SearchFormComponent implements OnDestroy, AfterViewInit {
     this.focusSource.next({ focused: $event != null, control: activeInput });
   }
 
-  search($event?: Event) {
+  search($event?: Event, includeInput: boolean = false) {
     $event?.preventDefault();
+    if (includeInput) {
+      this.addListControl();
+    }
     let search = [...this.drugList.value];
-    if (search.length > 0) {
+    if (search?.length > 0) {
       this.searchService.searchTerms(search);
       this.layoutService.toggleSidenav();
     }

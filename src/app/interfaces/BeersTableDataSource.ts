@@ -4,6 +4,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import stableStringify from 'json-stable-stringify';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { debounce } from '../functions/debounce';
+import { throttle } from '../functions/throttle';
 
 import { ExpandingEntry } from './ExpandingEntry';
 import { FlatRowGroup, RowGroup } from './RowGroup';
@@ -34,20 +36,15 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   private renderChangesSubscription: Subscription | null = null;
   private expandedRows: Set<string> = new Set();
   columns$ = this.columnSource.asObservable();
+  toggle: (row: ExpandingEntry, force?: boolean) => void;
+
   updateColumns(headers: string[]) {
     this.columnSource.next(headers);
-  }
-  updateData(data: T[]) {
-    if (!this.renderChangesSubscription) {
-      this.updateChangeSubscription();
-    }
-    this.dataSource.next(data);
   }
 
   updateGroups(groups: string[]) {
     this.groupSource.next(groups);
   }
-  getUnits(entry: TableEntry<T>) {}
 
   checkIsExpanded(row: TableEntry<T> | FlatRowGroup<T>) {
     return this.expandedRows.has(row.position.id);
@@ -62,15 +59,6 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     this.expandedRows = new Set(Array.from(this.expandedRows).filter((ids) => !ids.startsWith(id)));
   }
 
-  toggle(row: ExpandingEntry, force?: boolean) {
-    const { id } = row.position;
-    if (force === false || this.expandedRows.has(id)) {
-      this.collapseChildren(id);
-    } else {
-      this.expandedRows.add(id);
-    }
-    this.expansionSource.next(id);
-  }
   get filters(): string {
     return this.filterSource.value;
   }
@@ -148,6 +136,18 @@ export class BeersTableDataSource<T> extends DataSource<T> {
   constructor() {
     super();
     this.updateChangeSubscription();
+    this.toggle = throttle(function (row: ExpandingEntry, force: boolean) {
+      const { id } = row.position;
+      let expanded = this.expandedRows.has(id);
+      if (!expanded && force != false) {
+        this.expandedRows.add(id);
+      }
+      if (expanded && force != true) {
+        this.collapseChildren(id);
+      }
+
+      this.expansionSource.next(id);
+    }, 50);
   }
 
   private createRowGroups(
@@ -250,7 +250,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     );
     const hashedData = groupedData.pipe(map((data) => this.hashData(data)));
     const expandedData = combineLatest([hashedData, this.expansionSource]).pipe(
-      map(([data]) => this.expandData(data))
+      map(([data]) => this.filterCollapsedData(data))
     );
 
     // Watched for paged data changes and send the result to the table to render.
@@ -285,7 +285,7 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     });
   }
 
-  expandData(entries: (TableEntry<T> | FlatRowGroup<T>)[]) {
+  filterCollapsedData(entries: (TableEntry<T> | FlatRowGroup<T>)[]) {
     return entries.filter((entry) => {
       let { parentId } = entry?.position;
       return this.expandedRows.has(parentId) || parentId.length === 0;
@@ -305,6 +305,12 @@ export class BeersTableDataSource<T> extends DataSource<T> {
     return this.sortData(data, this.sort);
   }
 
+  updateData(data: T[]) {
+    if (!this.renderChangesSubscription) {
+      this.updateChangeSubscription();
+    }
+    this.dataSource.next(data);
+  }
   connect() {
     if (!this.renderChangesSubscription) {
       this.updateChangeSubscription();

@@ -51,8 +51,8 @@ import { TableComponent } from './components/table/table.component';
 import { TemplateContentDirective } from './directives/content-template.directive';
 import { RowDetailDirective } from './components/table-row-detail/row-detail.directive';
 import { IconButtonDirective } from './directives/icon-button.directive';
-import { KeyGridDirective } from './directives/keygrid.directive';
-import { SvgGradientDirective } from './directives/svg-gradient.directive';
+import { KeyGridDirective, KeyObserverDirective } from './directives/keygrid.directive';
+import { GradientIconDirective } from './directives/gradient-icon.directive';
 import { TrackingGradientDirective } from './directives/tracking-gradient.directive';
 import { LetDirective } from './directives/let.directive';
 import { CaseSplitPipe } from './pipes/case-split.pipe';
@@ -67,9 +67,14 @@ import { COLUMN_ATTRIBUTES, columnList } from './injectables/column-attributes';
 import { GENERIC_DRUGS, genericDrugNames } from './injectables/generic-drugs.injectable';
 import { TABLE_ATTRIBUTES, tableList } from './injectables/table-attributes.injectable';
 import { TABLE_CONFIG, tableConfig } from './injectables/table-config.injectable';
+import { ElderIconButtonComponent } from './components/toggle/toggle-plain/toggle-plain.component';
+import { MoveableItemDirective } from './components/filter-popup/group-by/moveable-item.directive';
+import {
+  MatCheckboxDefaultOptions,
+  MAT_CHECKBOX_DEFAULT_OPTIONS,
+} from '@angular/material/checkbox';
 export const firebaseModule = provideFirebaseApp(() => initializeApp(environment.firebaseConfig));
 export const firestore = provideFirestore(() => getFirestore());
-const pipes = [];
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,12 +119,15 @@ const pipes = [];
     FilterInputComponent,
     TableComponent,
     RangeCardComponent,
-    SvgGradientDirective,
+    GradientIconDirective,
     DirectionsComponent,
     PopupContentDirective,
     NavigationDrawerComponent,
     ErrorComponent,
     AutocompleteContentComponent,
+    ElderIconButtonComponent,
+    KeyObserverDirective,
+    MoveableItemDirective,
   ],
   imports: [
     firebaseModule,
@@ -143,6 +151,10 @@ const pipes = [];
     { provide: GENERIC_DRUGS, useValue: genericDrugNames },
     { provide: BEERS_ENTRIES, useValue: beersEntries },
     { provide: APP_BASE_HREF, useValue: '/' },
+    {
+      provide: MAT_CHECKBOX_DEFAULT_OPTIONS,
+      useValue: { clickAction: 'noop' } as MatCheckboxDefaultOptions,
+    },
   ],
 
   bootstrap: [AppComponent],

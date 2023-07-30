@@ -64,7 +64,6 @@
 }
 .search__field {
   --border-color: #{$light-gray-5};
-  --validation-border-color: var(--border-color);
   --validation-border-scale: 0;
   --validation-border-height: 0;
   --border-radius: 5px;
@@ -74,21 +73,28 @@
   overflow: hidden;
   position: relative;
   transition: border-color 200ms ease-in;
-  padding: 0 0.25em;
+  padding: 0 0 0 0.66em;
   position: relative;
   display: grid;
-  grid-template-columns: 2.4em 1fr 2.4em;
+  grid-template-columns: 1fr 44px 40px;
   grid-template-rows: var(--search-field--height);
   align-items: center;
+  justify-items: center;
+
+  background-image: linear-gradient(to top, #fff 92%, #eceeef);
+  grid-template-areas: "input add search";
 
   @include mat.elevation-transition;
   @include media-size("zero", "small") {
     --border-radius: 2rem;
     --border-color: #{$light-gray-4};
+    grid-template-columns: 2.8em 1fr 2.8em min-content;
+    grid-template-areas: "back input add search";
     grid-row: 1;
     padding: 0 0.7rem;
     justify-items: center;
     --search-field--height: 46px;
+    background-image: none;
     &::after {
       border-bottom-color: $light-gray-4;
     }
@@ -98,6 +104,7 @@
       --validation-border-scale: 1;
       --border-color: #{$light-gray-4};
       border-bottom-color: transparent;
+      grid-template-columns: 3em 1fr 3.8em min-content;
     }
   }
 
@@ -111,27 +118,35 @@
     left: 0;
     bottom: 0;
     position: absolute;
-    border: 1.1px solid var(--border-color);
+
     pointer-events: none;
     border-radius: var(--border-radius);
-    border-bottom-color: var(--validation-border-color);
+    border: 1px solid var(--validation-border-color, var(--border-color));
+    @include media-size("zero", "small") {
+      border: 1.1px solid var(--border-color);
+      border-bottom-color: var(--validation-border-color, var(--border-color));
+    }
   }
   &::before {
-    content: "";
-    width: 100%;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    height: var(--validation-border-height);
-    background-color: var(--validation-border-color);
-    transform: scaleX(var(--validation-border-scale)) scaleY(var(--validation-border-scale));
-    position: absolute;
-    transition: transform 200ms ease-in;
-    transform-origin: bottom center;
+    @include media-size("zero", "small") {
+      content: "";
+      width: 100%;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      height: var(--validation-border-height);
+      background-color: var(--validation-border-color);
+      transform: scaleX(var(--validation-border-scale)) scaleY(var(--validation-border-scale));
+      position: absolute;
+      transition: transform 200ms ease-in;
+      transform-origin: bottom center;
+    }
   }
 
   &:hover {
-    --border-color: #{$light-gray-3};
+    --border-color: #{$light-gray-2};
+
+    background: white;
     @include shadow(3, false, 0.12);
   }
 
@@ -144,16 +159,17 @@
   &.is-open {
     --validation-border-color: #{$primary-1};
     :host(:not(.is-pinned)) & {
-      --border-radius: 5px 5px 0 0;
+      --border-radius: 5px;
+      @include media-size("zero", "small") {
+        --border-radius: 5px 5px 0 0;
+      }
     }
   }
 
-  &.is-invalid,
-  &.is-missing {
+  &.is-invalid {
     --validation-border-color: #{$error-4};
   }
   &:not(:focus) {
-    &.is-missing,
     &.is-invalid {
       --border-color: #{$light-gray-4};
       border-bottom-color: transparent;
@@ -165,13 +181,12 @@
 }
 
 .search__input {
-  padding: 0px;
-  margin: 0px;
+  all: unset;
   padding-left: 0.25em;
-  font-size: var(--input--font-size, 1rem);
   outline: none;
-  font-family: var(--body-font);
   border: none;
+  font-size: var(--input--font-size, 1rem);
+  font-family: var(--body-font);
   pointer-events: all;
   min-height: var(--input--height);
   width: 100%;
@@ -180,7 +195,7 @@
   }
   @include media-size("zero", "small") {
     width: 100%;
-    padding-left: 0.6em;
+    padding-left: 1em;
     min-height: var(--input--height--mobile);
     --input--font-size: 18px;
     .is-pinned & {
@@ -193,6 +208,9 @@
   display: inline-block;
   vertical-align: center;
   position: relative;
+  grid-area: add;
+  @include media-size("zero", "small") {
+  }
 }
 
 .search-directions {
@@ -207,30 +225,71 @@
 .icon-button--add {
   @extend %search-field-icon;
   height: 28px;
-  color: #{color.scale($primary-1, $saturation: -50%)};
+  color: $primary-1;
+  grid-area: add;
   @include media-size("zero", "small") {
-    height: 36px !important;
+    height: 30px;
   }
-  &:disabled {
-    color: var(--icon--color);
+  &[disabled] {
+    color: $gray-2;
   }
 }
-
+.icon-button--back {
+  --icon-button--color: #{color.scale($primary-1, $alpha: -15%)};
+}
+.decorative-search-icon {
+  color: $gray-2;
+  grid-area: back;
+}
 .icon-button--search {
   @extend %search-field-icon;
-  --icon-button--active-outline: #{$primary-1};
-  --icon-button--shadow: 0;
-  --icon-button--color: var(--icon--color);
-  --icon-button--size: 36px !important;
-  --icon-button--icon-scale: 0.6 !important;
-  @include media-size("zero", "small") {
-    --icon-button--size: 36px !important;
-    --icon-button--icon-scale: 0.75 !important;
-  }
+  --icon-button--width: 40px;
+  --icon-button--height: 42px;
+  --icon-button--color: #{color.scale(#fff, $alpha: -10%)};
+  --search-button--gradient: #{diagonal-gradient($primary-1, top right, 10%)};
 
+  z-index: 1;
+  background: var(--validation-border-color, var(--search-button--gradient));
+  .search__field:hover & {
+    --search-button--gradient: #{diagonal-gradient(
+        color.scale($primary-1, $lightness: 10%),
+        top right,
+        10%
+      )};
+  }
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  grid-area: search;
   &:focus,
   &:active,
   &:focus:active {
-    --icon-button--ring-opacity: 1;
+    outline: 2px solid var(--focus-color, #fff);
+    outline-offset: -6px;
+  }
+  &.is-mobile {
+    --icon-button--width: 44px;
+    --icon-button--icon-scale: 0.7 !important;
+    --focus-color: transparent;
+    background-color: transparent;
+    position: relative;
+    background-image: diagonal-gradient($primary-1, top right);
+    border-radius: 8px;
+    &:disabled {
+      background-image: #{diagonal-gradient($gray-4, top right, 10%)};
+    }
+    @include absolute-before {
+      @include shadow(4, false, 13%);
+      border-radius: inherit;
+      transition: opacity 300ms linear;
+      z-index: -1;
+      opacity: 0.5;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      &::before {
+        opacity: 1;
+      }
+    }
   }
 }

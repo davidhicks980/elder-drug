@@ -35,6 +35,7 @@
   }
   &:focus {
     @include focus-style;
+    z-index: 0;
     position: relative;
     border-color: $primary-1;
     background-image: linear-gradient(to bottom, $light-gray-1, $light-gray-2);

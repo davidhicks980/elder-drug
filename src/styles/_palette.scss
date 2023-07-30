@@ -2,6 +2,7 @@
 @use "sass:math";
 @use "sass:string";
 @use "sass:meta";
+@forward "checkbox";
 @use "breakpoints" as *;
 /// Slightly lighten a color
 /// @access public
@@ -323,4 +324,22 @@ $color: #fafafb;
 
 @mixin focus-style {
   outline: 2px solid color.scale($primary-1, $alpha: -70%, $saturation: 30%);
+}
+
+@function diagonal-gradient($base, $direction: top, $lightness: 30%) {
+  @return linear-gradient(to #{$direction}, color.scale($base, $lightness: $lightness), $base);
+}
+
+@mixin absolute-before {
+  &::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+    @content;
+  }
 }

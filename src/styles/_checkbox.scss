@@ -1,0 +1,19 @@
+@use "utilities" as util;
+
+@mixin checkbox($border-color: #000, $color: #000, $size: 20px) {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAXklEQVRYw+3XuRUAIAhEwe3D+ilNI3vAyNDjoWR/SYFJQSLkd4pMTR6sJlPZr+/h5bP6jrDn9S6XrYH6BahrYLZEc5wHAAAAAAAAAAAAuJxPP37Tz/f0ByT9hSIkkgFmDe8MDgVTJQAAAABJRU5ErkJggg==");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'  height='24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath fill='%23#{util.getDataHexColor($border-color)}' d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E"),
+    linear-gradient(transparent, transparent);
+  background-size: #{$size} #{$size};
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  &:checked {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAA2klEQVRYR+3XsRXCMAxF0T9ByABZFVzQMIlXCbBH0mWGUEAOjkHRl4/cWapc+N3WBtq08Z4BETPWwp0RMRznFzWi7XJERPU6s1EGJvUys5MMaFfZbcDPjrjuzs7AiA7AuRbwzgPApQbwzQPBH/ifdwOkvBMg512AozwJ3PAszFNAANALhJYngPA593gU5A0AcMoIJk8AEsHlKWBP3E15EsgJPk8DKdEZ8gYgJbbR8yYgJ5i8EUgJLm8GNoLNFwArgiFfBNi2AeqKU/3xW/35Xv0DUv0L1aZNybwAngduO8RU5cIAAAAASUVORK5CYII=");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath fill='%23#{util.getDataHexColor($color)}'  d='M19 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z'/%3E%3C/svg%3E"),
+      linear-gradient(transparent, transparent);
+    background-size: #{$size} #{$size};
+    background-position: center;
+  }
+}

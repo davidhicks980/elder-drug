@@ -5,6 +5,7 @@
   class="popup-trigger"
   name="popup-trigger"
   [matTooltip]="tooltipText"
+  matTooltipTouchGestures="off"
 >
   <mat-icon class="popup-trigger__icon" svgIcon="{{ icon }}"></mat-icon>
   <span class="popup-trigger__label"><ng-content select="popup-label"></ng-content></span>
